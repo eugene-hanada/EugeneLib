@@ -42,11 +42,7 @@ namespace EugeneLib
 		Vector3Tmp<T> Refrect(const Vector3Tmp<T>& n);
 
 
-		template<ValueC T2>
-		operator Vector3Tmp<T2>() const
-		{
-			return { static_cast<T2>(x), static_cast<T2>(y) };
-		}
+		template<VauleC T2> operator Vector3Tmp<T2>() const;
 
 		Vector3Tmp<T> operator-() const;
 
@@ -82,25 +78,209 @@ namespace EugeneLib
 
 		Vector3Tmp<T>& operator%=(const Vector3Tmp<T>& vec);
 		Vector3Tmp<T>& operator%=(const T& val);
+
+		SimdVector ToSimdVector(void) const;
 	};
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator+(lVec.ToSimdVector(), rVec.ToSimdVector());
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x + rVec.x ,lVec.y + rVec.y, lVec.z + rVec.z };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const T& val)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator+(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x + val, lVec.y + val, lVec.z + val };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator-(lVec.ToSimdVector(), rVec.ToSimdVector());
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x - rVec.x, lVec.y - rVec.y , lVec.z - rVec.z };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const T& val)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator-(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x - val, lVec.y - val, lVec.z - val };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator*(lVec.ToSimdVector(), rVec.ToSimdVector());
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x * rVec.x, lVec.y * rVec.y, lVec.z * rVec.z };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const T& val)
+	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator*(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x * val, lVec.y * val, lVec.z * val };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator/(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		if (rVec.x == static_cast<T>(0) || rVec.y == static_cast<T>(0))
+		{
+			return lVec;
+		}
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator/(lVec.ToSimdVector(), rVec.ToSimdVector());
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x / rVec.x, lVec.y / rVec.y , lVec.z / rVec.z };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator/(const Vector3Tmp<T>& lVec, const T& val)
+	{
+		if (val == static_cast<T>(0))
+		{
+			return lVec;
+		}
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::operator/(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { lVec.x / val, lVec.y / val, lVec.z / val };
+		}
+	}
+
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator%(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		if (rVec.x == static_cast<T>(0) || rVec.y == static_cast<T>(0))
+		{
+			return lVec;
+		}
+
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), rVec.ToSimdVector());
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { std::fmod(lVec.x , rVec.x), std::fmod(lVec.y , rVec.y), std::fmod(lVec.z , rVec.z) };
+		}
+	}
+	template<ValueC T>
+	constexpr Vector3Tmp<T> operator%(const Vector3Tmp<T>& lVec, const T& val)
+	{
+		if (val == static_cast<T>(0))
+		{
+			return lVec;
+		}
+
+		if constexpr (std::is_floating_point<T>())
+		{
+			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
+			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { std::fmod(lVec.x , val), std::fmod(lVec.y , val), std::fmod(lVec.z , val) };
+		}
+	}
+
+	template<ValueC T>
+	bool operator==(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
+	{
+		return lVec.x == rVec.x && lVec.y == rVec.y && lVec.z == rVec.z;
+	}
+
 
 	template<ValueC T>
 	inline T Vector3Tmp<T>::Magnitude(void) const
 	{
+		if constexpr (std::is_floating_point<T>())
+		{
+			return DirectX::XMVector3Length(DirectX::XMVectorSet(x, y, z, 0)).m128_f32[0];
+		}
+		else
+		{
+			return std::sqrt(x * x + y * y + z * z);
+		}
 
-		return std::sqrt(std::fma(x, x, std::fma(y, y, z * z)));
 	}
 
 	template<ValueC T>
 	inline T Vector3Tmp<T>::SqMagnitude(void) const
 	{
-		return std::fma(x, x, std::fma(y, y, z * z));
+		if constexpr (std::is_floating_point<T>())
+		{
+			return DirectX::XMVector3LengthSq(DirectX::XMVectorSet(x, y, z, 0)).m128_f32[0];
+		}
+		else
+		{
+			return x * x + y * y + z * z;
+		}
 	}
 
 	template<ValueC T>
 	inline void Vector3Tmp<T>::Normalize(void)
 	{
 		T mag = Magnitude();
+		if (mag == static_cast<T>(0))
+		{
+			return;
+		}
 		x /= mag;
 		y /= mag;
 		z /= mag;
@@ -110,19 +290,27 @@ namespace EugeneLib
 	inline Vector3Tmp<T> Vector3Tmp<T>::Normalized(void) const
 	{
 		T mag = Magnitude();
-		return Vector3Tmp<T>{x / mag, y / mag, z / mag};
+		return { x / mag, y / mag , z / mag};
 	}
+
+	template<ValueC T>
+	inline Vector3Tmp<T> Vector3Tmp<T>::Refrect(const Vector3Tmp<T>& n)
+	{
+		return (*this) - (n * (static_cast<T>(2) * (x * n.x + y * n.y + z * n.z)));
+	}
+
+
 
 	template<ValueC T>
 	inline Vector3Tmp<T> Vector3Tmp<T>::operator-() const
 	{
-		return Vector3Tmp<T>{-x, -y, -z};
+		return { -x,-y , -z};
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T> Vector3Tmp<T>::operator+() const
 	{
-		return Vector3Tmp<T>{+x, +y, +z };
+		return { +x,+y, +z };
 	}
 
 	template<ValueC T>
@@ -137,146 +325,105 @@ namespace EugeneLib
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator+=(const T& val)
 	{
-		return { x + val, y + val, z + val };
+		x += val;
+		y += val;
+		z += val;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator-=(const Vector3Tmp<T>& vec)
 	{
-		return { x - vec.x, y - vec.y, z - vec.z };
+		x -= vec.x;
+		y -= vec.y;
+		z -= vec.z;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator-=(const T& val)
 	{
-		return { x - val, y - val, z - val };
+		x -= val;
+		y -= val;
+		z -= val;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator*=(const Vector3Tmp<T>& vec)
 	{
-		return { x * vec.x, y * vec.y, z * vec.z };
+		x *= vec.x;
+		y *= vec.y;
+		z *= vec.z;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator*=(const T& val)
 	{
-		return { x * val, y * val, z * val };
+		x *= val;
+		y *= val;
+		z *= val;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator/=(const Vector3Tmp<T>& vec)
 	{
-		return { x / vec.x, y / vec.y, z / vec.z };
+		if (vec.x == static_cast<T>(0) || vec.y == static_cast<T>(0) || vec.z == static_cast<T>(0))
+		{
+			return *this;
+		}
+		x /= vec.x;
+		y /= vec.y;
+		z /= vec.z;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator/=(const T& val)
 	{
-		return { x / val, y / val, z / val };
+		if (val == static_cast<T>(0))
+		{
+			return *this;
+		}
+		x /= val;
+		y /= val;
+		z /= val;
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator%=(const Vector3Tmp<T>& vec)
 	{
-		return { std::fmod(x ,vec.x), std::fmod(y , vec.y), std::fmod(z , vec.z) };
+		if (vec.x == static_cast<T>(0) || vec.y == static_cast<T>(0) || vec.z == static_cast<T>(0))
+		{
+			return *this;
+		}
+		x = static_cast<T>(std::fmod(x, vec, x));
+		y = static_cast<T>(std::fmod(y, vec.y));
+		z = static_cast<T>(std::fmod(z, vec.z));
+		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator%=(const T& val)
 	{
-		return { std::fmod(x , val), std::fmod(y , val), std::fmod(z , val) };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		return { lVec.x + rVec.x ,lVec.y + rVec.y, lVec.z + rVec.z };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const T& val)
-	{
-		return { lVec.x + val, lVec.y + val, lVec.z + val };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		return { lVec.x - rVec.x, lVec.y - rVec.y , lVec.z - rVec.z };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const T& val)
-	{
-		return { lVec.x - val, lVec.y - val , lVec.z - val };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		return { lVec.x * rVec.x, lVec.y * rVec.y, lVec.z * rVec.z };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const T& val)
-	{
-		return { lVec.x * val, lVec.y * val , lVec.z * val };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator/(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		if (rVec.x == static_cast<T>(0) || rVec.y == static_cast<T>(0))
-		{
-			return lVec;
-		}
-		return { lVec.x / rVec.x, lVec.y / rVec.y , lVec.z / rVec.z };
-	}
-
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator/(const Vector3Tmp<T>& lVec, const T& val)
-	{
 		if (val == static_cast<T>(0))
 		{
-			return lVec;
+			return *this;
 		}
-		return { lVec.x / val, lVec.y / val , lVec.z / val };
+		x = static_cast<T>(std::fmod(x, val));
+		y = static_cast<T>(std::fmod(y, val));
+		z = static_cast<T>(std::fmod(z, val));
+		return *this;
 	}
 
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator%(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		if (rVec.x == static_cast<T>(0) || rVec.y == static_cast<T>(0) || rVec.z == static_cast<T>(0))
-		{
-			return lVec;
-		}
-		return { std::fmod(lVec.x , rVec.x), std::fmod(lVec.y , rVec.y) , std::fmod(lVec.z, rVec.z) };
-	}
-	template<ValueC T>
-	constexpr Vector3Tmp<T> operator%(const Vector3Tmp<T>& lVec, const T& val)
-	{
-		if (val == static_cast<T>(0))
-		{
-			return lVec;
-		}
-		return { std::fmod(lVec.x , val), std::fmod(lVec.y , val), std::fmod(lVec.z, val) };
-	}
+	
 
-	template<ValueC T>
-	constexpr bool operator==(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		return lVec.x == rVec.x && lVec.y == rVec.y && lVec.z == rVec.z;
-	}
-
-	template<ValueC T>
-	constexpr bool operator!=(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
-	{
-		return !lVec == rVec;
-	}
+	
 
 	using Vector3 = Vector3Tmp<float>;
 	using Vector3D = Vector3Tmp<double>;
 	using Vector3I = Vector3Tmp<int>;
-
 };

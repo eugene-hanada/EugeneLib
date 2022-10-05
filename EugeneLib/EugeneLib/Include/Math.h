@@ -1,7 +1,7 @@
 #pragma once
 #include <algorithm>
 #include "Vector2.h"
-#include "Vector3.h"
+
 
 namespace EugeneLib
 {
@@ -26,7 +26,7 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector2Tmp<T> leftVector2{ static_cast<T>(-1),static_cast<T>(0) };
 
-	template<ValueC T>
+	/*template<ValueC T>
 	constexpr Vector3Tmp<T> zeroVector3{ static_cast<T>(0),static_cast<T>(0) ,static_cast<T>(0) };
 
 	template<ValueC T>
@@ -45,7 +45,7 @@ namespace EugeneLib
 	constexpr Vector3Tmp<T> leftVector3{ static_cast<T>(-1),static_cast<T>(0) ,static_cast<T>(0) };
 
 	template<ValueC T>
-	constexpr Vector3Tmp<T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };
+	constexpr Vector3Tmp<T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };*/
 
 	/// <summary>
 	/// ìÒèÊÇ∑ÇÈ

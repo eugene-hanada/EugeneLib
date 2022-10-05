@@ -2,9 +2,14 @@
 //
 #include <Windows.h>
 #include <filesystem>
-#include "../pch.h"
+#include "../Include/EugeneLib.h"
+//#include "../Include/EugeneLibException.h"
 
 WNDCLASSEX windowClass;
+EugeneLib::Vector2 wsize;
+MSG mes;
+
+EugeneLib::System* EugeneLib::System::instance_;
 
 // ウィンドウプロシージャ
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -19,26 +24,61 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 bool EugeneLib::System::Init(const Vector2& wsize, const std::u8string& title)
 {
-	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
+	try
+	{
+		instance_ = new System(wsize, title);
+	}
+	catch (const std::exception& e)
+	{
+		delete instance_;
+		throw e;
+	}
+	
+	return true;
+}
+
+bool EugeneLib::System::End()
+{
+	delete instance_;
+	return false;
+}
+
+bool EugeneLib::System::Update(void)
+{
+	if (PeekMessage(&mes, nullptr, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&mes);
+		DispatchMessage(&mes);
+	}
+	if (mes.message == WM_QUIT)
 	{
 		return false;
 	}
+	return true;
+}
 
-	std::filesystem::path tmpTitle{title};
-	
+EugeneLib::System::System(const Vector2& wsize, const std::u8string& title)
+{
+	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
+	{
+		//throw LibInitException();
+	}
+
+	std::filesystem::path tmpTitle{ title };
+
 	windowClass.cbSize = sizeof(WNDCLASSEX);
 	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
 	windowClass.lpszClassName = tmpTitle.c_str();
 	windowClass.hInstance = GetModuleHandle(nullptr);
 	if (!RegisterClassEx(&windowClass))
 	{
-		return false;
+		//throw LibInitException();
 	}
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(wsize.x), static_cast<long>(wsize.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
 	{
-		return false;
+		//throw LibInitException();
 	}
 
 	// ウィンドウの生成
@@ -57,15 +97,4 @@ bool EugeneLib::System::Init(const Vector2& wsize, const std::u8string& title)
 	);
 
 	ShowWindow(hwnd, SW_SHOW);
-	return false;
-}
-
-bool EugeneLib::System::End()
-{
-	return false;
-}
-
-bool EugeneLib::System::Update(void)
-{
-	return false;
 }

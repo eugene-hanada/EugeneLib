@@ -22,4 +22,11 @@ namespace EugeneLib
 	public:
 		LibInitException();
 	};
+
+	class LibReleseException :
+		EugeneLibException
+	{
+	public:
+		LibReleseException();
+	};
 };

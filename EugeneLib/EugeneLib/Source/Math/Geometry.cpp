@@ -1,4 +1,4 @@
-#include "../Include/Math.h"
+#include "../../Include/Math/Geometry.h"
 #include <cmath>
 
 float GetNormalizedAngle(float angle, float valMin, float valMax)

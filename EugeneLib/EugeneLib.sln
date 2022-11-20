@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "Sample\Sample.vcxproj", "{0A00D369-CBB0-419A-A334-614D1F7ADFE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB} = {893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EugeneLib", "EugeneLib\EugeneLib.vcxproj", "{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EugeneLib", "EugeneLib\EugeneLib.vcxproj", "{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +26,14 @@ Global
 		{0A00D369-CBB0-419A-A334-614D1F7ADFE2}.Release|x64.Build.0 = Release|x64
 		{0A00D369-CBB0-419A-A334-614D1F7ADFE2}.Release|x86.ActiveCfg = Release|Win32
 		{0A00D369-CBB0-419A-A334-614D1F7ADFE2}.Release|x86.Build.0 = Release|Win32
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Debug|x64.ActiveCfg = Debug|x64
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Debug|x64.Build.0 = Debug|x64
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Debug|x86.ActiveCfg = Debug|Win32
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Debug|x86.Build.0 = Debug|Win32
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Release|x64.ActiveCfg = Release|x64
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Release|x64.Build.0 = Release|x64
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Release|x86.ActiveCfg = Release|Win32
-		{BD72E16E-F062-4DCD-990D-27D26FDFD0C5}.Release|x86.Build.0 = Release|Win32
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Debug|x64.ActiveCfg = Debug|x64
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Debug|x64.Build.0 = Debug|x64
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Debug|x86.ActiveCfg = Debug|Win32
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Debug|x86.Build.0 = Debug|Win32
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Release|x64.ActiveCfg = Release|x64
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Release|x64.Build.0 = Release|x64
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Release|x86.ActiveCfg = Release|Win32
+		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

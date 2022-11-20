@@ -1,4 +1,4 @@
-#include "../Include/EugeneLibException.h"
+#include "../../Include/Common/EugeneLibException.h"
 
 
 EugeneLib::EugeneLibException::EugeneLibException(const std::string& mess) :
@@ -16,5 +16,10 @@ const char* EugeneLib::EugeneLibException::what() const noexcept
 
 EugeneLib::LibInitException::LibInitException() :
 	EugeneLibException{"初期化エラー"}
+{
+}
+
+EugeneLib::LibReleseException::LibReleseException() :
+	EugeneLibException{"解放処理エラー"}
 {
 }

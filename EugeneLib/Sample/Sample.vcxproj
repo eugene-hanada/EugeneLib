@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\eugen\Desktop\ほぼ個人\VS-project\EugeneLib\EugeneLib\EugeneLib\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\eugen\Desktop\ほぼ個人\VS-project\EugeneLib\EugeneLib\EugeneLib\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)EugeneLib\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)EugeneLib\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

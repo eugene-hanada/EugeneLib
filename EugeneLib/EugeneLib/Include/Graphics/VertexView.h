@@ -12,5 +12,5 @@ namespace EugeneLib
 		VertexView();
 	};
 
-	VertexView* CreateVertexView(size_t size, GpuResource& resource);
+	VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource);
 }

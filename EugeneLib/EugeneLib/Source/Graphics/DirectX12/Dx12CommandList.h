@@ -18,6 +18,7 @@ namespace EugeneLib
 	private:
 		void Begin(void) final;
 		void End(void) final;
+		void SetVertexView(VertexView& view) final;
 		void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) final;
 		void SetRenderTarget(RenderTargetViews& views) final;
 		void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0)final;

@@ -4,6 +4,7 @@
 #include <Graphics/GpuEngine.h>
 #include <Graphics/GpuResource.h>
 #include <Graphics/CommandList.h>
+#include <Math/Vector2.h>
 #include <memory>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -22,18 +23,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngien.reset(tmp);
 	}
 
+	EugeneLib::Vector2 vertex[3]
+	{
+		{-0.5f, -0.7f},
+		{0.0f,0.7f},
+		{0.5f, -0.7f}
+	};
 
 	// CPUからアクセスできるリソースを作成
 	std::unique_ptr <EugeneLib::GpuResource> resource;
-	resource.reset(EugeneLib::CreateUploadableResource(12, *graphics));
+	resource.reset(EugeneLib::CreateUploadableResource(sizeof(vertex), *graphics));
+	auto ptr = resource->Map();
+	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<EugeneLib::Vector2*>(ptr));
+	resource->UnMap();
 
 	// GPUだけでしか使えないリソースを作成
 	std::unique_ptr <EugeneLib::GpuResource> defResource;
-	defResource.reset(EugeneLib::CreateDefaultResource(12, *graphics));
+	defResource.reset(EugeneLib::CreateDefaultResource(sizeof(vertex), *graphics));
 
 	// コマンドリストを作成
 	std::unique_ptr<EugeneLib::CommandList> cmdList;
 	cmdList.reset(EugeneLib::CreateCommandList(*graphics));
+
+	cmdList->Begin();
+	cmdList->Copy(*defResource, *resource);
+	cmdList->End();
+
+	gpuEngien->Push(*cmdList);
+	gpuEngien->Execute();
+	gpuEngien->Wait();
 
 	float color[4]{ 1.0f,0.0f,0.0f,1.0f };
 	while (system->Update())
@@ -47,8 +65,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// レンダーターゲットをクリア
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());
 
-		// リソースのコピーをする
-		cmdList->Copy(*defResource, *resource);
+
 
 		// コマンド終了
 		cmdList->End();

@@ -7,7 +7,7 @@
 EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, Graphics& graphics)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer((size + 0xff) & ~0xff);
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
 	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,

@@ -3,7 +3,6 @@
 
 namespace EugeneLib
 {
-	// 色のフォーマット(DXGIのやつと同じ値になってます)
 	enum class Format
 	{
 		NON = 0,

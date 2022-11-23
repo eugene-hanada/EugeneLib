@@ -79,10 +79,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <LibraryPath>$(ProjectDIr)Source\ThirdParty\DirectXTex\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <LibraryPath>$(ProjectDIr)Source\ThirdParty\DirectXTex\Relese;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,7 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
+    <ClInclude Include="Include\Graphics\GraphicsPipeline.h" />
     <ClInclude Include="Include\Common\Debug.h" />
+    <ClInclude Include="Include\Graphics\Shader.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h" />
     <ClInclude Include="Include\Graphics\DepthStencilViews.h" />
@@ -187,8 +192,12 @@
     <ClInclude Include="Include\System\System.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
+    <ClInclude Include="Include\Graphics\TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
+    <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\GraphicsPipeline.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp" />
@@ -212,6 +221,7 @@
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
+    <ClCompile Include="Source\Graphics\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EugeneLib.rc" />

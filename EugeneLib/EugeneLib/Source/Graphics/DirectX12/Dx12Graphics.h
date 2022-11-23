@@ -19,6 +19,7 @@ namespace EugeneLib
 	{
 	public:
 		Dx12Graphics(System& system, GpuEngine*& gpuEngine);
+		~Dx12Graphics();
 	private:
 		void* GetDevice(void) const final;
 

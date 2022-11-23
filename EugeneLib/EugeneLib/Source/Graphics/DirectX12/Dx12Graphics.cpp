@@ -20,6 +20,10 @@ EugeneLib::Dx12Graphics::Dx12Graphics(System& system, GpuEngine*& outGpuEngine)
 	CreateBackBuffers(2);
 }
 
+EugeneLib::Dx12Graphics::~Dx12Graphics()
+{
+}
+
 void* EugeneLib::Dx12Graphics::GetDevice(void) const
 {
 	return device_.Get();
@@ -87,6 +91,10 @@ void EugeneLib::Dx12Graphics::CreateDevice(void)
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
 			// Œ©‚Â‚©‚Á‚½‚ç‚â‚ß‚é
+			for (auto& a : adapters)
+			{
+				a->Release();
+			}
 			fLavel = level;
 			return;
 		}

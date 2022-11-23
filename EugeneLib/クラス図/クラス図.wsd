@@ -1,0 +1,95 @@
+@startuml クラス図
+
+class System
+{
+
+}
+
+class CmdList
+{
+}
+
+enum GpuResourceType
+{
+    UPLOAD
+    DEFALUT
+    WRITE_BACK
+}
+
+abstract class GpuResource
+{
+   +void* Map(void)
+   +void UpMap(void)
+   +Copy(CmdList&,GpuResource&)
+}
+
+GpuResource -- CmdList : コピー命令をセット
+
+class DefaultResource
+{
+
+}
+
+class UploadableResource
+{
+
+}
+
+class TextureWriteResource
+{
+
+}
+
+GpuResource <|-- DefaultResource
+GpuResource <|-- UploadableResource
+GpuResource <|-- TextureWriteResource
+
+
+
+class VertexView
+{
+
+}
+
+class IndexView
+{
+
+}
+
+abstract class IaView
+{
+
+    +void Draw(CmdList& cmdList)
+    +void Set(CmdList& cmdList)
+}
+
+
+
+IaView <|-- VertexView
+IaView <|-- IndexedVertexView
+IaView -- CmdList : 描画命令かIAのセット
+
+
+
+class ShaderResourceViews
+{
+    +void Set(CmdList& , int ,int)
+    -size_t size
+    -ViewType type
+}
+
+
+class RenderDepthViews
+{
+   +void Set(CmdList&, int,int,int)
+   +void Set(CmdList& ,RenderDepthViewsZ& depth, int idx)
+}
+
+
+GpuResource -- ShaderResourceViews : 参照
+GpuResource -- IaView : 参照
+GpuResource -- RenderDepthViews: 参照
+ShaderResourceViews -- CmdList : ディスクリプタヒープのidxと\nルートパラメーターidxを\n指定してセット
+RenderDepthViews -- CmdList : レンダーターゲット及びデプスステンシルをセット
+
+@enduml

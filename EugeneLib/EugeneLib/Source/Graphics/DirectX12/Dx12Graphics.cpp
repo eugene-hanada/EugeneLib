@@ -8,6 +8,8 @@
 #include "../../../Include/Graphics/GpuEngine.h"
 #include "../../../Include/Graphics/GpuResource.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
+#include "../../../Include/Common/Debug.h"
+
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 

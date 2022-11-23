@@ -1,6 +1,7 @@
 #include "WindowsSystem.h"
 #include <Windows.h>
 #include <filesystem>
+#include "../../../Include/Common/Debug.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
 MSG msg;
@@ -20,11 +21,13 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {
+	DebugLog(u8"Comの初期化");
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
 		throw LibInitException();
 	}
 
+	DebugLog(u8"ウィンドウクラスの登録");
 	std::filesystem::path tmpTitle{ title };
 	windowClass.cbSize = sizeof(WNDCLASSEX);
 	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -35,6 +38,7 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 		throw LibInitException();
 	}
 
+	DebugLog(u8"ウィンドウサイズの設定");
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
@@ -42,6 +46,7 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 		throw LibInitException();
 	}
 
+	DebugLog(u8"ウィンドウの生成");
 	// ウィンドウの生成
 	hwnd = CreateWindow(
 		windowClass.lpszClassName,
@@ -56,7 +61,7 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 		windowClass.hInstance,
 		nullptr
 	);
-
+	DebugLog(u8"ウィンドウの表示");
 	ShowWindow(hwnd, SW_SHOW);
 
 }

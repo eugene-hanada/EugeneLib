@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <string_view>
 #include "../Math/Vector2.h"
 
 namespace EugeneLib

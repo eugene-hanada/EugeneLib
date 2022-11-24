@@ -1,5 +1,4 @@
 #pragma once
-#include <span>
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 
 namespace EugeneLib
@@ -8,7 +7,15 @@ namespace EugeneLib
 		public GraphicsPipeline
 	{
 	public:
-		Dx12GraphicsPipeline(std::span<ShaderInputLayout> layout, std::span<std::pair<Shader, ShaderType>> shaders);
+		Dx12GraphicsPipeline(
+			ShaderInputSpan layout,
+			ShaderTypePaisrSpan  shaders,
+			RenderTargetSpan rendertarges,
+			PrimitiveType primitive = PrimitiveType::Triangle,
+			bool isCulling = false,
+			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
+			SamplerSpan smplerLayout = SamplerSpan{})
+			;
 	private:
 	};
 }

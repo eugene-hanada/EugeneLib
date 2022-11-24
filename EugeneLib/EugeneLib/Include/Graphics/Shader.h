@@ -8,6 +8,8 @@ namespace EugeneLib
 	{
 	public:
 		Shader(const std::filesystem::path& path);
+		const char* GetPtr(void) const;
+		size_t GetSize(void) const;
 	private:
 		std::vector<char> code_;
 	};

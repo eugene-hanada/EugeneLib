@@ -9,9 +9,17 @@ EugeneLib::Shader::Shader(const std::filesystem::path& path)
 	{
 		return;
 	}
-	
 	code_.resize(file.tellg());
 	file.seekg(0);
 	file.read(code_.data(), code_.size());
+}
 
+const char* EugeneLib::Shader::GetPtr(void) const
+{
+	return code_.data();
+}
+
+size_t EugeneLib::Shader::GetSize(void) const
+{
+	return code_.size();
 }

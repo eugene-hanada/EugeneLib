@@ -2,8 +2,50 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
 
-EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, PrimitiveType primitive, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan smplerLayout)
+EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, PrimitiveType primitive, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout)
 {
+	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> ranges(shaderLayout.size());
+	for (size_t i = 0ull; i < ranges.size(); i++)
+	{
+		ranges[i].resize(shaderLayout[i].size());
+		for (size_t j = 0ull; j < ranges[i].size(); j++)
+		{
+			ranges[i][j].Init(
+				static_cast<D3D12_DESCRIPTOR_RANGE_TYPE>(shaderLayout[i][j].viewType_),
+				shaderLayout[i][j].numView_,
+				shaderLayout[i][j].baseRegister_
+			);
+		}
+	}
+
+	std::vector <CD3DX12_ROOT_PARAMETER> rootparam(ranges.size());
+	for (size_t i = 0ull; i < rootparam.size(); i++)
+	{
+		rootparam[i].InitAsDescriptorTable(static_cast<std::uint32_t>(ranges[i].size()), ranges[i].data());
+	}
+
+
+	std::vector<CD3DX12_STATIC_SAMPLER_DESC> samplers(samplerLayout.size());
+	for (size_t i = 0; i < samplers.size(); i++)
+	{
+		samplers[i].Init(
+			static_cast<std::uint32_t>(i),
+			static_cast<D3D12_FILTER>(samplerLayout[i].filter_),
+			static_cast<D3D12_TEXTURE_ADDRESS_MODE>(samplerLayout[i].u_),
+			static_cast<D3D12_TEXTURE_ADDRESS_MODE>(samplerLayout[i].v_)
+		);
+	}
+
+	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
+	rootSignatureDesc.Init(
+		static_cast<std::uint32_t>(rootparam.size()),
+		rootparam.data(), 
+		static_cast<std::uint32_t>(samplers.size()),
+		samplers.data(), 
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
+	);
+
+
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline;
 	for (auto& shader : shaders)
 	{

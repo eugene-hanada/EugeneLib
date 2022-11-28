@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <span>
+#include <vector>
 #include "GraphicsCommon.h"
 
 namespace EugeneLib
@@ -85,7 +86,7 @@ namespace EugeneLib
 	class Shader;
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
 	using ShaderTypePaisrSpan = std::span<std::pair<Shader, ShaderType>>;
-	using ShaderLayoutSpan = std::span<std::pair<ShaderLayout, std::uint64_t>>;
+	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
 	using SamplerSpan = std::span<SamplerLayout>;
 	using RenderTargetSpan = std::span <RendertargetLayout>;
 	class GraphicsPipeline

@@ -99,4 +99,13 @@ namespace EugeneLib
 		GraphicsPipeline();
 
 	};
+
+	GraphicsPipeline* CreateGraphicsPipeline(Graphics& grahics,
+		ShaderInputSpan layout,
+		ShaderTypePaisrSpan  shaders,
+		RenderTargetSpan rendertarges,
+		PrimitiveType primitive = PrimitiveType::Triangle,
+		bool isCulling = false,
+		ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
+		SamplerSpan samplerLayout = SamplerSpan{});
 }

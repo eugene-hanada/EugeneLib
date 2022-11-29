@@ -17,12 +17,13 @@ namespace EugeneLib
 			ShaderInputSpan layout,
 			ShaderTypePaisrSpan  shaders,
 			RenderTargetSpan rendertarges,
-			PrimitiveType primitive = PrimitiveType::Triangle,
-			bool isCulling = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan smplerLayout = SamplerSpan{})
+			PrimitiveType primitive ,
+			bool isCulling ,
+			ShaderLayoutSpan shaderLayout,
+			SamplerSpan smplerLayout )
 			;
 	private:
+		void* GetPipeline(void) const final;
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 		Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState_;
 	};

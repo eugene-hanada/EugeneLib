@@ -4,7 +4,9 @@
 #include <Graphics/GpuEngine.h>
 #include <Graphics/GpuResource.h>
 #include <Graphics/CommandList.h>
+#include <Graphics/GraphicsPipeline.h>
 #include <Math/Vector2.h>
+#include <Graphics/Shader.h>
 #include <memory>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -29,6 +31,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{0.0f,0.7f},
 		{0.5f, -0.7f}
 	};
+
+	std::vector<EugeneLib::ShaderInputLayout> layout
+	{
+		{"POSITION", 0, EugeneLib::Format::R32G32_FLOAT},
+		{"TEXCOORD", 0, EugeneLib::Format::R32G32_FLOAT}
+	};
+	std::vector<std::pair<EugeneLib::Shader,EugeneLib::ShaderType>> shaders
+	{
+
+	};
+	std::vector<EugeneLib::RendertargetLayout> rendertargets
+	{
+		{EugeneLib::Format::R8G8B8A8_UNORM, EugeneLib::BlendType::Non}
+	};
+
+	EugeneLib::CreateGraphicsPipeline(*graphics, layout, shaders, rendertargets);
+
 
 	// CPUからアクセスできるリソースを作成
 	std::unique_ptr <EugeneLib::GpuResource> resource;

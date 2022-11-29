@@ -82,6 +82,8 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline;
+	gpipeline.pRootSignature = rootSignature_.Get();
+
 	for (auto& shader : shaders)
 	{
 		switch (shader.second)
@@ -172,4 +174,9 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 		return;
 	}
+}
+
+void* EugeneLib::Dx12GraphicsPipeline::GetPipeline(void) const
+{
+	return pipelineState_.Get();
 }

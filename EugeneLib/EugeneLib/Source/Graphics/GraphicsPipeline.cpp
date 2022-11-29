@@ -1,5 +1,7 @@
 #include "../../Include/Graphics/GraphicsPipeline.h"
 
+#include "DirectX12/Dx12GraphicsPipeline.h"
+
 EugeneLib::GraphicsPipeline::~GraphicsPipeline()
 {
 }
@@ -21,4 +23,18 @@ EugeneLib::ShaderInputLayout::ShaderInputLayout(const char* semanticName, std::u
 EugeneLib::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode v, SampleFilter filter) :
 	u_{u}, v_{v}, filter_{filter}
 {
+}
+
+EugeneLib::GraphicsPipeline* EugeneLib::CreateGraphicsPipeline(
+	Graphics& grahics, 
+	ShaderInputSpan layout,
+	ShaderTypePaisrSpan shaders,
+	RenderTargetSpan rendertarges,
+	PrimitiveType primitive,
+	bool isCulling, 
+	ShaderLayoutSpan shaderLayout,
+	SamplerSpan samplerLayout
+)
+{
+	return new Dx12GraphicsPipeline{grahics, layout, shaders, rendertarges, primitive, isCulling, shaderLayout, samplerLayout};
 }

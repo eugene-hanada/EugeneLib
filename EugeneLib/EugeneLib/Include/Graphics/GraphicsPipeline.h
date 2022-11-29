@@ -84,6 +84,7 @@ namespace EugeneLib
 	};
 
 	class Shader;
+	class Graphics;
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
 	using ShaderTypePaisrSpan = std::span<std::pair<Shader, ShaderType>>;
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;

@@ -1,8 +1,19 @@
 #include "Dx12GraphicsPipeline.h"
+#include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
+#include "../../../Include/Graphics/Graphics.h"
 
-EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, PrimitiveType primitive, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout)
+EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
+	Graphics& grahics,
+	ShaderInputSpan layout,
+	ShaderTypePaisrSpan shaders,
+	RenderTargetSpan rendertarges,
+	PrimitiveType primitive,
+	bool isCulling,
+	ShaderLayoutSpan shaderLayout,
+	SamplerSpan samplerLayout
+)
 {
 	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> ranges(shaderLayout.size());
 	for (size_t i = 0ull; i < ranges.size(); i++)
@@ -44,6 +55,30 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, Sh
 		samplers.data(), 
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
 	);
+
+	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
+	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
+	if (FAILED(D3D12SerializeRootSignature(
+		&rootSignatureDesc,
+		D3D_ROOT_SIGNATURE_VERSION_1,
+		&rootSigBlob,
+		&errorBlob)
+	))
+	{
+		// throw‚©‚­
+		return ;
+	}
+
+	auto device = static_cast<ID3D12Device*>(grahics.GetDevice());
+	if (FAILED(device->CreateRootSignature(
+		0,
+		rootSigBlob->GetBufferPointer(),
+		rootSigBlob->GetBufferSize(),
+		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf())))
+		)
+	{
+		return ;
+	}
 
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline;
@@ -88,7 +123,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, Sh
 
 	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
 	gpipeline.PrimitiveTopologyType = static_cast<D3D12_PRIMITIVE_TOPOLOGY_TYPE>(primitive);
-	gpipeline.NumRenderTargets = rendertarges.size();
+	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());
 
 	for (size_t i = 0; i < rendertarges.size(); i++)
 	{
@@ -122,6 +157,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, Sh
 			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_DEST_COLOR;
 			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
 			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
+			break;
 		default:
 			break;
 		}
@@ -131,5 +167,9 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(ShaderInputSpan layout, Sh
 	gpipeline.SampleDesc.Count = 1;
 	gpipeline.SampleDesc.Quality = 0;
 
+	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelineState_.ReleaseAndGetAddressOf()))))
+	{
 
+		return;
+	}
 }

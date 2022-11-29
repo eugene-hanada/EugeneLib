@@ -7,6 +7,7 @@
 #include <Graphics/GraphicsPipeline.h>
 #include <Math/Vector2.h>
 #include <Graphics/Shader.h>
+#include <Graphics/VertexView.h>
 #include <memory>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -25,40 +26,57 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngien.reset(tmp);
 	}
 
-	EugeneLib::Vector2 vertex[3]
+	struct Vertex
 	{
-		{-0.5f, -0.7f},
-		{0.0f,0.7f},
-		{0.5f, -0.7f}
+		EugeneLib::Vector2 pos;
+		EugeneLib::Vector2 uv;
 	};
 
+	Vertex vertex[3]
+	{
+		{{ -0.5f, -0.7f}, {0.5f, 0.0f}},
+		{{0.0f,0.7f},{1.0f,1.0f} },
+		{{0.5f, -0.7f}, {0.0f,1.0f}}
+	};
+
+	// 頂点シェーダの入力のレイアウト
 	std::vector<EugeneLib::ShaderInputLayout> layout
 	{
 		{"POSITION", 0, EugeneLib::Format::R32G32_FLOAT},
 		{"TEXCOORD", 0, EugeneLib::Format::R32G32_FLOAT}
 	};
+
+	// シェーダー
 	std::vector<std::pair<EugeneLib::Shader,EugeneLib::ShaderType>> shaders
 	{
-
+		{EugeneLib::Shader{"VertexShader.vso"}, EugeneLib::ShaderType::Vertex},
+		{EugeneLib::Shader{"PixelShader.pso"}, EugeneLib::ShaderType::Pixel}
 	};
+
+	// レンダーターゲット
 	std::vector<EugeneLib::RendertargetLayout> rendertargets
 	{
 		{EugeneLib::Format::R8G8B8A8_UNORM, EugeneLib::BlendType::Non}
 	};
 
-	EugeneLib::CreateGraphicsPipeline(*graphics, layout, shaders, rendertargets);
+	std::unique_ptr<EugeneLib::GraphicsPipeline> gpipeLine;
+	gpipeLine.reset(EugeneLib::CreateGraphicsPipeline(*graphics, layout, shaders, rendertargets));
 
 
 	// CPUからアクセスできるリソースを作成
 	std::unique_ptr <EugeneLib::GpuResource> resource;
 	resource.reset(EugeneLib::CreateUploadableResource(sizeof(vertex), *graphics));
 	auto ptr = resource->Map();
-	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<EugeneLib::Vector2*>(ptr));
+	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<Vertex*>(ptr));
 	resource->UnMap();
 
 	// GPUだけでしか使えないリソースを作成
 	std::unique_ptr <EugeneLib::GpuResource> defResource;
 	defResource.reset(EugeneLib::CreateDefaultResource(sizeof(vertex), *graphics));
+
+	// 頂点ビュー
+	std::unique_ptr<EugeneLib::VertexView> vertexView;
+	vertexView.reset(EugeneLib::CreateVertexView(sizeof(Vertex), 3ull, *defResource));
 
 	// コマンドリストを作成
 	std::unique_ptr<EugeneLib::CommandList> cmdList;
@@ -72,7 +90,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
-	float color[4]{ 1.0f,0.0f,0.0f,1.0f };
+	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (system->Update())
 	{
 		// コマンドの開始
@@ -80,11 +98,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// レンダーターゲットのセット
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
+		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
 
 		// レンダーターゲットをクリア
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());
 
+		cmdList->SetGraphicsPipeline(*gpipeLine);
 
+		cmdList->SetPrimitiveType(EugeneLib::PrimitiveType::Triangle);
+
+		cmdList->SetVertexView(*vertexView);
+
+		cmdList->Draw(3);
+
+
+		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 
 		// コマンド終了
 		cmdList->End();

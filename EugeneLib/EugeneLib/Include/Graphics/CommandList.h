@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <span>
+#include "GraphicsCommon.h"
 
 namespace EugeneLib
 {
@@ -9,15 +10,18 @@ namespace EugeneLib
 	class DepthStencilViews;
 	class VertexView;
 	class GpuResource;
+	class GraphicsPipeline;
 	class CommandList
 	{
 	public:
 		virtual ~CommandList();
 		virtual void Begin(void) = 0;
 		virtual void End(void) = 0;
+		virtual void SetGraphicsPipeline(GraphicsPipeline& gpipeline) = 0;
+		virtual void SetPrimitiveType(PrimitiveType type) = 0;
 		virtual void SetVertexView(VertexView& view) = 0;
 		/*virtual void SetIndexView() = 0;*/
-		/*virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount) = 0;*/
+		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0) = 0;

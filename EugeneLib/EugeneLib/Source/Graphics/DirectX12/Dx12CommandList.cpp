@@ -7,6 +7,7 @@
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include "../../../Include/Graphics/GpuResource.h"
 #include "../../../Include/Graphics/VertexView.h"
+#include "Dx12GraphicsPipeline.h"
 
 EugeneLib::Dx12CommandList::Dx12CommandList(Graphics& graphics)
 {
@@ -43,10 +44,27 @@ void EugeneLib::Dx12CommandList::End(void)
 	cmdList_->Close();
 }
 
+void EugeneLib::Dx12CommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
+{
+	auto pipeline{ static_cast<Dx12GraphicsPipeline::PipeLine*>(gpipeline.GetPipeline()) };
+	cmdList_->SetPipelineState(pipeline->state_.Get());
+	cmdList_->SetGraphicsRootSignature(pipeline->rootSignature_.Get());
+}
+
+void EugeneLib::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
+{
+	cmdList_->IASetPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(type));
+}
+
 void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());
 	cmdList_->IASetVertexBuffers(0, 1, ptr);
+}
+
+void EugeneLib::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
+{
+	cmdList_->DrawInstanced(vertexCount, instanceCount, 0, 0);
 }
 
 void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_t idx)

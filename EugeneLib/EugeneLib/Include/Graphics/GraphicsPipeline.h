@@ -37,13 +37,6 @@ namespace EugeneLib
 		BlendType blendType_;
 	};
 
-	enum class PrimitiveType
-	{
-		Point = 1,
-		Line = 2,
-		Triangle = 3
-	};
-
 	enum class ViewType
 	{
 		Texture,
@@ -94,7 +87,7 @@ namespace EugeneLib
 	{
 	public:
 		virtual ~GraphicsPipeline();
-		virtual void* GetPipeline(void) const = 0;
+		virtual void* GetPipeline(void) = 0;
 	protected:
 		GraphicsPipeline();
 

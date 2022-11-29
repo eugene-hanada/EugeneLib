@@ -57,5 +57,10 @@ namespace EugeneLib
 		std::uint16_t mipLevels;			// ミップマップレベル
 	};
 
-
+	enum class PrimitiveType
+	{
+		Point = 1,
+		Line = 2,
+		Triangle = 4
+	};
 }

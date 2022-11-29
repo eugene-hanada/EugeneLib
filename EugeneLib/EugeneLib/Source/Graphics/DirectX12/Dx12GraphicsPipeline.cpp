@@ -47,12 +47,24 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		);
 	}
 
+	CD3DX12_ROOT_PARAMETER* paramP = nullptr;
+	if (rootparam.size() > 0)
+	{
+		paramP = rootparam.data();
+	}
+
+	CD3DX12_STATIC_SAMPLER_DESC* samplP = nullptr;
+	if (samplers.size() > 0)
+	{
+		samplP = samplers.data();
+	}
+
 	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
 	rootSignatureDesc.Init(
 		static_cast<std::uint32_t>(rootparam.size()),
-		rootparam.data(), 
+		paramP,
 		static_cast<std::uint32_t>(samplers.size()),
-		samplers.data(), 
+		samplP,
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
 	);
 
@@ -74,15 +86,15 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf())))
+		IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
 		return ;
 	}
 
 
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline;
-	gpipeline.pRootSignature = rootSignature_.Get();
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline{};
+	gpipeline.pRootSignature = pipeline_.rootSignature_.Get();
 
 	for (auto& shader : shaders)
 	{
@@ -114,6 +126,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		inputLayout[i].InstanceDataStepRate = 0;
 	}
 
+	
 	gpipeline.InputLayout.NumElements = static_cast<std::uint32_t>(inputLayout.size());
 	gpipeline.InputLayout.pInputElementDescs = inputLayout.data();
 
@@ -123,10 +136,20 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	// ブレンド設定系
 	gpipeline.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 
+	// トポロジー設定
 	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
-	gpipeline.PrimitiveTopologyType = static_cast<D3D12_PRIMITIVE_TOPOLOGY_TYPE>(primitive);
+	gpipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());
 
+	// ラスタライザ周りの設定
+	gpipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+
+	if (!isCulling)
+	{
+		gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		// カリングをしない
+	}
+
+	// レンダーターゲット設定
 	for (size_t i = 0; i < rendertarges.size(); i++)
 	{
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(rendertarges[i].format_);
@@ -169,14 +192,16 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.SampleDesc.Count = 1;
 	gpipeline.SampleDesc.Quality = 0;
 
-	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelineState_.ReleaseAndGetAddressOf()))))
-	{
+	gpipeline.DepthStencilState.DepthEnable = false;
+	gpipeline.DepthStencilState.StencilEnable = false;
 
+	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
+	{
 		return;
 	}
 }
 
-void* EugeneLib::Dx12GraphicsPipeline::GetPipeline(void) const
+void* EugeneLib::Dx12GraphicsPipeline::GetPipeline(void)
 {
-	return pipelineState_.Get();
+	return (&pipeline_);
 }

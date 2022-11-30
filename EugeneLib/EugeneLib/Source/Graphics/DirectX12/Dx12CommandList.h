@@ -20,6 +20,7 @@ namespace EugeneLib
 		void End(void) final;
 		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
 		void SetPrimitiveType(PrimitiveType type) final;
+		void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) final;
 		void SetVertexView(VertexView& view) final;
 		void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) final;
 		void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) final;

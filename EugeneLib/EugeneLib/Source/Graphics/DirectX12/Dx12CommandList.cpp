@@ -56,6 +56,12 @@ void EugeneLib::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
 	cmdList_->IASetPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(type));
 }
 
+void EugeneLib::Dx12CommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
+{
+	CD3DX12_RECT rect{ leftTop.x,leftTop.y, rightBottom.x,rightBottom.y };
+	cmdList_->RSSetScissorRects(1,&rect);
+}
+
 void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());

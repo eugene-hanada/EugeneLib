@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <span>
 #include "GraphicsCommon.h"
+#include "../Math/Vector2.h"
 
 namespace EugeneLib
 {
@@ -19,7 +20,9 @@ namespace EugeneLib
 		virtual void End(void) = 0;
 		virtual void SetGraphicsPipeline(GraphicsPipeline& gpipeline) = 0;
 		virtual void SetPrimitiveType(PrimitiveType type) = 0;
+		virtual void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) = 0;
 		virtual void SetVertexView(VertexView& view) = 0;
+
 		/*virtual void SetIndexView() = 0;*/
 		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;

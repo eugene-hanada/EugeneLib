@@ -62,6 +62,12 @@ void EugeneLib::Dx12CommandList::SetScissorrect(const Vector2I& leftTop, const V
 	cmdList_->RSSetScissorRects(1,&rect);
 }
 
+void EugeneLib::Dx12CommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
+{
+	CD3DX12_VIEWPORT viewport{ leftTop.x, leftTop.y, size.x,size.y,depthMin,depthMax };
+	cmdList_->RSSetViewports(1, &viewport);
+}
+
 void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());

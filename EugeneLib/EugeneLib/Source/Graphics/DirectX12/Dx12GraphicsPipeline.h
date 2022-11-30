@@ -17,7 +17,7 @@ namespace EugeneLib
 			ShaderInputSpan layout,
 			ShaderTypePaisrSpan  shaders,
 			RenderTargetSpan rendertarges,
-			PrimitiveType primitive,
+			TopologyType topologyType,
 			bool isCulling,
 			ShaderLayoutSpan shaderLayout,
 			SamplerSpan smplerLayout)

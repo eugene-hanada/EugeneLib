@@ -9,7 +9,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	ShaderInputSpan layout,
 	ShaderTypePaisrSpan shaders,
 	RenderTargetSpan rendertarges,
-	PrimitiveType primitive,
+	TopologyType topologyType,
 	bool isCulling,
 	ShaderLayoutSpan shaderLayout,
 	SamplerSpan samplerLayout
@@ -138,7 +138,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	// トポロジー設定
 	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
-	gpipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	gpipeline.PrimitiveTopologyType = static_cast<D3D12_PRIMITIVE_TOPOLOGY_TYPE>(topologyType);
 	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());
 
 	// ラスタライザ周りの設定

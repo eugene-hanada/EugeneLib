@@ -14,7 +14,7 @@ struct VertexOutput
 VertexOutput main(VertexInput input)
 {
 	VertexOutput output;
-	output.svPos = float4(0, 0, 0, 0);
+	output.svPos = float4(1, 1, 1, 1);
     output.svPos.xy = input.pos;
 	output.uv = input.uv;
 	return output;

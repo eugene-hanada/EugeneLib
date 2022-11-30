@@ -76,6 +76,14 @@ namespace EugeneLib
 		SampleFilter filter_;
 	};
 
+	enum class TopologyType
+	{
+		Point = 1,
+		Line = 2,
+		Triangle = 3,
+		Patch = 4
+	};
+
 	class Shader;
 	class Graphics;
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
@@ -97,7 +105,7 @@ namespace EugeneLib
 		ShaderInputSpan layout,
 		ShaderTypePaisrSpan  shaders,
 		RenderTargetSpan rendertarges,
-		PrimitiveType primitive = PrimitiveType::Triangle,
+		TopologyType topologyType = TopologyType::Triangle,
 		bool isCulling = false,
 		ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
 		SamplerSpan samplerLayout = SamplerSpan{});

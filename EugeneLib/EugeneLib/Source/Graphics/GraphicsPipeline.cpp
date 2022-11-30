@@ -30,11 +30,11 @@ EugeneLib::GraphicsPipeline* EugeneLib::CreateGraphicsPipeline(
 	ShaderInputSpan layout,
 	ShaderTypePaisrSpan shaders,
 	RenderTargetSpan rendertarges,
-	PrimitiveType primitive,
+	TopologyType topologyType,
 	bool isCulling, 
 	ShaderLayoutSpan shaderLayout,
 	SamplerSpan samplerLayout
 )
 {
-	return new Dx12GraphicsPipeline{grahics, layout, shaders, rendertarges, primitive, isCulling, shaderLayout, samplerLayout};
+	return new Dx12GraphicsPipeline{grahics, layout, shaders, rendertarges, topologyType, isCulling, shaderLayout, samplerLayout};
 }

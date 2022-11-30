@@ -107,6 +107,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
 
+		cmdList->SetViewPort({ 0.0f,0.0f }, { 1280.0f, 720.0f });
+
 		cmdList->SetPrimitiveType(EugeneLib::PrimitiveType::Triangle);
 
 		cmdList->SetVertexView(*vertexView);

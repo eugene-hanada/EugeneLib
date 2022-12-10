@@ -161,3 +161,38 @@ void EugeneLib::Dx12CommandList::Copy(GpuResource& destination, GpuResource& sou
 	ID3D12Resource* dst{ static_cast<ID3D12Resource*>(destination.GetResource()) };
 	cmdList_->CopyResource(dst, src);
 }
+
+void EugeneLib::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource& source)
+{
+	auto dx12source{ static_cast<ID3D12Resource*>(source.GetResource()) };
+	auto dx12destination{ static_cast<ID3D12Resource*>(destination.GetResource()) };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(dx12source->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
+	cmdList_->ResourceBarrier(1, &barrier);
+
+
+	D3D12_TEXTURE_COPY_LOCATION dest{};
+	dest.pResource = dx12destination;
+	dest.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
+	dest.SubresourceIndex = 0;
+
+	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
+	UINT64  totalSize = 0;
+	D3D12_RESOURCE_DESC desc{ dx12destination->GetDesc() };
+	D3D12_TEXTURE_COPY_LOCATION  src{};
+	device->GetCopyableFootprints(&desc, 0, 1, 0, &footprint, nullptr, nullptr, &totalSize);
+	src.pResource = dx12source;
+	src.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
+	src.PlacedFootprint = footprint;
+
+	cmdList_->CopyTextureRegion(&dest, 0, 0, 0, &src, nullptr);
+
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	cmdList_->ResourceBarrier(1, &barrier);
+}

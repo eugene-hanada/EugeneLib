@@ -48,7 +48,7 @@ namespace EugeneLib
 	};
 
 	// テクスチャバッファ作成用データ
-	struct TextureFormatData
+	struct TextureInfo
 	{
 		std::uint64_t width;			// 横幅
 		std::uint64_t height;			// 縦幅

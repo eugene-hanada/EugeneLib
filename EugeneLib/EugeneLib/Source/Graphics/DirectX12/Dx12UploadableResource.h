@@ -1,5 +1,6 @@
 #pragma once
 #include "../DirectX12/Dx12GpuResource.h"
+#include "../../../Include/Graphics/GraphicsCommon.h"
 
 namespace EugeneLib
 {
@@ -8,6 +9,7 @@ namespace EugeneLib
 	{
 	public:
 		Dx12UploadableResource(size_t size, Graphics& graphics);
+		Dx12UploadableResource(Texture& texture, Graphics& graphics);
 	private:
 		void* Map(void) final;
 		void UnMap(void) final;

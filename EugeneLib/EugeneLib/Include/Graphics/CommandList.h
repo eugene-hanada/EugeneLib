@@ -36,6 +36,9 @@ namespace EugeneLib
 		virtual void TransitionRenderTargetEnd(GpuResource& resource) = 0;
 
 		virtual void Copy(GpuResource& destination, GpuResource& source) = 0;
+
+		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;
+
 		virtual void* GetCommandList(void) const = 0;
 	};
 

@@ -57,3 +57,21 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(const Vector2& size, Format 
 		throw EugeneLibException("レンダーターゲット用リソースの作成に失敗");
 	}
 }
+
+EugeneLib::Dx12DefaultResource::Dx12DefaultResource(const TextureInfo& formatData, Graphics& graphics)
+{
+	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(formatData.format), formatData.width, formatData.height);
+	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
+	if (FAILED(device->CreateCommittedResource(
+		&heapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		nullptr,
+		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+	)))
+	{
+		throw EugeneLibException("テクスチャリソース作成");
+	}
+}

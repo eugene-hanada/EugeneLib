@@ -33,6 +33,7 @@ namespace EugeneLib
 		void TransitionRenderTargetBegin(GpuResource& resource) final;
 		void TransitionRenderTargetEnd(GpuResource& resource) final;
 		void Copy(GpuResource& destination, GpuResource& source) final;
+		void CopyTexture(GpuResource& destination, GpuResource& source) final;
 		ComPtr< ID3D12CommandAllocator> cmdAllocator_;
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
 

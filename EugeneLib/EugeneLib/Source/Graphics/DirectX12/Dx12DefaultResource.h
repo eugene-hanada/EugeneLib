@@ -14,6 +14,7 @@ namespace EugeneLib
 		Dx12DefaultResource(size_t size, Graphics& graphics);
 		Dx12DefaultResource(std::uint32_t idx, Graphics& graphics);
 		Dx12DefaultResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor, Graphics& graphics);
+		Dx12DefaultResource(const TextureInfo& formatData, Graphics& graphics);
 	private:
 	};
 }

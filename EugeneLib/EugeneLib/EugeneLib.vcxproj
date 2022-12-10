@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
-    <LibraryPath>$(ProjectDIr)Source\ThirdParty\DirectXTex\Debug;$(LibraryPath)</LibraryPath>
+    <OutDir>$(solutiondir)Debug\</OutDir>
+    <LibraryPath>C:\Users\eugen\Desktop\ほぼ個人\VS-project\EugeneLib\EugeneLib\EugeneLib\Source\ThirdParty\DirectXTex\DirectXTex\Bin\Desktop_2022_Win10\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -192,7 +192,7 @@
     <ClInclude Include="Include\System\System.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
-    <ClInclude Include="Include\Graphics\TextureLoader.h" />
+    <ClInclude Include="Include\Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
@@ -221,7 +221,7 @@
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
-    <ClCompile Include="Source\Graphics\TextureLoader.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EugeneLib.rc" />

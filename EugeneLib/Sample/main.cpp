@@ -8,6 +8,7 @@
 #include <Math/Vector2.h>
 #include <Graphics/Shader.h>
 #include <Graphics/VertexView.h>
+#include <Graphics/TextureLoader.h>
 #include <memory>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -89,6 +90,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Push(*cmdList);
 	gpuEngien->Execute();
 	gpuEngien->Wait();
+
+	EugeneLib::LoadTexture("./Logo.png");
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (system->Update())

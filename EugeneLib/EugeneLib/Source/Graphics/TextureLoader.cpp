@@ -19,5 +19,8 @@ std::unordered_map<std::string, std::function<void(const std::filesystem::path&)
 void EugeneLib::LoadTexture(const std::filesystem::path& path)
 {
 	auto exe = path.extension();
+	DirectX::TexMetadata* data{ nullptr };
+	DirectX::ScratchImage img;
+	DirectX::LoadFromWICFile(path.c_str(), DirectX::WIC_FLAGS_NONE, data, img);
 
 }

@@ -1,7 +1,7 @@
 #include "../../Include/Graphics/Texture.h"
 #include <unordered_map>
 #include <functional>
-#include "../ThirdParty/DirectXTex/DirectXTex/DirectXTex.h"
+#include "../../DirectXTex/DirectXTex/DirectXTex.h"
 #include "../../Include/Common/EugeneLibException.h"
 
 #pragma comment(lib,"DirectXTex.lib")

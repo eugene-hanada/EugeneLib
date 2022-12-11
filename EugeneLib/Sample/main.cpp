@@ -25,6 +25,7 @@ std::unique_ptr<EugeneLib::VertexView> vertexView;
 // テクスチャデータ
 std::unique_ptr <EugeneLib::GpuResource> upTextureBuffer;
 std::unique_ptr <EugeneLib::GpuResource> textureBuffer;
+std::unique_ptr < EugeneLib::ShaderResourceViews> textureView_;
 
 
 
@@ -66,7 +67,25 @@ void InitGraphicsPipeline(void)
 		{EugeneLib::Format::R8G8B8A8_UNORM, EugeneLib::BlendType::Non}
 	};
 
-	gpipeLine.reset(EugeneLib::CreateGraphicsPipeline(*graphics, layout, shaders, rendertargets));
+	std::vector<EugeneLib::ShaderLayout> shaderLayout
+	{
+		{EugeneLib::ShaderLayout{EugeneLib::ViewType::ConstantBuffer, 0,0}}
+	};
+
+	std::vector< EugeneLib::SamplerLayout> sampler
+	{
+		EugeneLib::SamplerLayout{}
+	};
+
+	gpipeLine.reset(EugeneLib::CreateGraphicsPipeline(
+		*graphics,
+		layout,
+		shaders,
+		rendertargets,
+		EugeneLib::TopologyType::Triangle,
+		false
+
+	));
 
 }
 
@@ -106,7 +125,8 @@ void InitTexture(void)
 	EugeneLib::Texture tex("./Logo.png");
 	upTextureBuffer.reset(EugeneLib::CreateUploadableResource(tex, *graphics));
 	textureBuffer.reset(EugeneLib::CreateTextureResource(tex.GetInfo(), *graphics));
-	
+	textureView_.reset(EugeneLib::CreateShaderResourceViews(*graphics, 1));
+	textureView_->CreateTexture(*textureBuffer, 0);
 }
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)

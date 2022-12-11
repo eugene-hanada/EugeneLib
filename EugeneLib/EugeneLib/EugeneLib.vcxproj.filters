@@ -117,6 +117,9 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EugeneLib.cpp">
@@ -198,6 +201,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

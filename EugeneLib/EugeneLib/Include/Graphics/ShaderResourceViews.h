@@ -16,4 +16,6 @@ namespace EugeneLib
 		ShaderResourceViews(size_t size);
 		size_t size_;
 	};
+
+	ShaderResourceViews* CreateShaderResourceViews(Graphics& graphics, size_t size);
 }

@@ -7,6 +7,7 @@
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include "../../../Include/Graphics/GpuResource.h"
 #include "../../../Include/Graphics/VertexView.h"
+#include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "Dx12GraphicsPipeline.h"
 
 EugeneLib::Dx12CommandList::Dx12CommandList(Graphics& graphics)
@@ -72,6 +73,20 @@ void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());
 	cmdList_->IASetVertexBuffers(0, 1, ptr);
+}
+
+void EugeneLib::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx)
+{
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart()};
+	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * viewsIdx;
+	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
+	cmdList_->SetGraphicsRootDescriptorTable(paramIdx, handle);
 }
 
 void EugeneLib::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)

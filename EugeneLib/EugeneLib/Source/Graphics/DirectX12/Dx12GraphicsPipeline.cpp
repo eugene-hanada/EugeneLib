@@ -3,6 +3,7 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Graphics/Graphics.h"
+#include "../../../Include/Common/EugeneLibException.h"
 
 EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	Graphics& grahics,
@@ -78,7 +79,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	))
 	{
 		// throwかく
-		return ;
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 
 	auto device = static_cast<ID3D12Device*>(grahics.GetDevice());

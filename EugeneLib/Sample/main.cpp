@@ -67,9 +67,9 @@ void InitGraphicsPipeline(void)
 		{EugeneLib::Format::R8G8B8A8_UNORM, EugeneLib::BlendType::Non}
 	};
 
-	std::vector<EugeneLib::ShaderLayout> shaderLayout
+	std::vector<std::vector<EugeneLib::ShaderLayout>> shaderLayout
 	{
-		{EugeneLib::ShaderLayout{EugeneLib::ViewType::ConstantBuffer, 0,0}}
+		{EugeneLib::ShaderLayout{EugeneLib::ViewType::Texture, 0,0}}
 	};
 
 	std::vector< EugeneLib::SamplerLayout> sampler
@@ -83,8 +83,8 @@ void InitGraphicsPipeline(void)
 		shaders,
 		rendertargets,
 		EugeneLib::TopologyType::Triangle,
-		false
-
+		false,
+		shaderLayout
 	));
 
 }
@@ -162,6 +162,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());
 
 		cmdList->SetGraphicsPipeline(*gpipeLine);
+
+		cmdList->SetShaderResourceView(*textureView_, 0, 0);
 
 		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
 

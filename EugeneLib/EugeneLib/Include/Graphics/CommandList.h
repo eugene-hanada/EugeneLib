@@ -12,6 +12,7 @@ namespace EugeneLib
 	class VertexView;
 	class GpuResource;
 	class GraphicsPipeline;
+	class ShaderResourceViews;
 	class CommandList
 	{
 	public:
@@ -22,7 +23,11 @@ namespace EugeneLib
 		virtual void SetPrimitiveType(PrimitiveType type) = 0;
 		virtual void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) = 0;
 		virtual void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f) = 0;
+		
 		virtual void SetVertexView(VertexView& view) = 0;
+
+		virtual void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) = 0;
+
 
 		/*virtual void SetIndexView() = 0;*/
 		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;

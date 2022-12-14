@@ -37,6 +37,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	}
 
 
+
 	std::vector<CD3DX12_STATIC_SAMPLER_DESC> samplers(samplerLayout.size());
 	for (size_t i = 0; i < samplers.size(); i++)
 	{
@@ -62,8 +63,8 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
 	rootSignatureDesc.Init(
-		static_cast<std::uint32_t>(rootparam.size()),
-		paramP,
+		rootparam.size(),
+		rootparam.data(),
 		static_cast<std::uint32_t>(samplers.size()),
 		samplP,
 		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
@@ -90,7 +91,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
-		return ;
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include "../ThirdParty/DirectXMath/DirectXMath.h"
 #include "Vector2.h"
 
 
@@ -184,5 +185,10 @@ namespace EugeneLib
 	{
 		return { std::clamp(val.x,min.x,max.x),std::clamp(val.y,min.y,max.y) };
 	}
+
+
+	using Matrix4x4 = DirectX::XMFLOAT4X4;
+
+	void Get2DMatrix(Matrix4x4& out, const Vector2& size);
 
 };

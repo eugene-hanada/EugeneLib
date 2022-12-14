@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <EugeneLib.h>
+#include <Math/Geometry.h>
 #include <memory>
 
 // システム系(Windows関連の処理のクラス)
@@ -26,6 +27,10 @@ std::unique_ptr<EugeneLib::VertexView> vertexView;
 std::unique_ptr <EugeneLib::GpuResource> upTextureBuffer;
 std::unique_ptr <EugeneLib::GpuResource> textureBuffer;
 std::unique_ptr < EugeneLib::ShaderResourceViews> textureView_;
+
+std::unique_ptr <EugeneLib::GpuResource> upMatrixBuffer;
+std::unique_ptr <EugeneLib::GpuResource> matrixBuffer;
+std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
 
 
 
@@ -69,7 +74,8 @@ void InitGraphicsPipeline(void)
 
 	std::vector<std::vector<EugeneLib::ShaderLayout>> shaderLayout
 	{
-		{EugeneLib::ShaderLayout{EugeneLib::ViewType::Texture, 0,0}}
+		{EugeneLib::ShaderLayout{EugeneLib::ViewType::ConstantBuffer, 1,0}},
+		{EugeneLib::ShaderLayout{EugeneLib::ViewType::Texture, 1,0}}
 	};
 
 	std::vector< EugeneLib::SamplerLayout> sampler
@@ -84,7 +90,8 @@ void InitGraphicsPipeline(void)
 		rendertargets,
 		EugeneLib::TopologyType::Triangle,
 		false,
-		shaderLayout
+		shaderLayout,
+		sampler
 	));
 
 }
@@ -98,11 +105,12 @@ struct Vertex
 
 void InitVertex(void)
 {
-	Vertex vertex[3]
+	Vertex vertex[4]
 	{
-		{{ -0.5f, -0.7f}, {0.5f, 0.0f}},
-		{{0.0f,0.7f},{1.0f,1.0f} },
-		{{0.5f, -0.7f}, {0.0f,1.0f}}
+		{{0.0f,0.0f},{0.0f,0.0f}},
+		{{246.0f,0.0f},{1.0f,0.0f}},
+		{{0.0f, 246.0f},{0.0f, 1.0f}},
+		{{246.0f,246.0f},{1.0f, 1.0f}}
 	};
 
 
@@ -117,7 +125,7 @@ void InitVertex(void)
 	vertexBuffer.reset(EugeneLib::CreateDefaultResource(sizeof(vertex), *graphics));
 
 	// 頂点ビュー
-	vertexView.reset(EugeneLib::CreateVertexView(sizeof(Vertex), 3ull, *vertexBuffer));
+	vertexView.reset(EugeneLib::CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
 }
 
 void InitTexture(void)
@@ -129,6 +137,20 @@ void InitTexture(void)
 	textureView_->CreateTexture(*textureBuffer, 0);
 }
 
+void InitConstantBuffer(void)
+{
+	EugeneLib::Matrix4x4 matrix;
+	EugeneLib::Get2DMatrix(matrix, { 1280.0f, 720.0f });
+	upMatrixBuffer.reset(EugeneLib::CreateUploadableResource(512, *graphics));
+	*static_cast<EugeneLib::Matrix4x4*>(upMatrixBuffer->Map()) = matrix;
+	upMatrixBuffer->UnMap();
+
+	matrixBuffer.reset(EugeneLib::CreateDefaultResource(512, *graphics));
+	matrixView_.reset(EugeneLib::CreateShaderResourceViews(*graphics, 1));
+	matrixView_->CreateConstantBuffer(*matrixBuffer, 0);
+	
+}
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 
@@ -136,8 +158,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	InitGraphicsPipeline();
 	InitVertex();
 	InitTexture();
+	InitConstantBuffer();
 
 	cmdList->Begin();
+	cmdList->Copy(*matrixBuffer, *upMatrixBuffer);
 	cmdList->Copy(*vertexBuffer, *upVertexBuffer);
 	cmdList->CopyTexture(*textureBuffer, *upTextureBuffer);
 	cmdList->End();
@@ -163,17 +187,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->SetGraphicsPipeline(*gpipeLine);
 
-		cmdList->SetShaderResourceView(*textureView_, 0, 0);
+		cmdList->SetShaderResourceView(*matrixView_, 0, 0);
+
+		cmdList->SetShaderResourceView(*textureView_, 0, 1);
 
 		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
 
 		cmdList->SetViewPort({ 0.0f,0.0f }, { 1280.0f, 720.0f });
 
-		cmdList->SetPrimitiveType(EugeneLib::PrimitiveType::Triangle);
+		cmdList->SetPrimitiveType(EugeneLib::PrimitiveType::TriangleStrip);
 
 		cmdList->SetVertexView(*vertexView);
 
-		cmdList->Draw(3);
+		cmdList->Draw(4);
 
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());

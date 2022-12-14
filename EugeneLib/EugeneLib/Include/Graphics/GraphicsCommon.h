@@ -61,6 +61,7 @@ namespace EugeneLib
 	{
 		Point = 1,
 		Line = 2,
-		Triangle = 4
+		Triangle = 4,
+		TriangleStrip = 5
 	};
 }

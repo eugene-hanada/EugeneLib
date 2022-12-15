@@ -30,9 +30,11 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(Texture& texture, Grap
 	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
 	// アップロード先のdescをそうていする
 	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint{};
-	UINT64  totalSize;
+	std::uint64_t totalSize;
+	std::uint64_t rowSize;
+	std::uint32_t numRaw;
 	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(texture.GetInfo().format), texture.GetInfo().width, texture.GetInfo().height);
-	device->GetCopyableFootprints(&footDesc, 0, 1, 0, &footprint, nullptr, nullptr, &totalSize);
+	device->GetCopyableFootprints(&footDesc, 0, 1, 0, &footprint, &numRaw, &rowSize, &totalSize);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(totalSize);
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
@@ -51,7 +53,13 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(Texture& texture, Grap
 
 	std::uint8_t* ptr{ nullptr };
 	resource_->Map(0, nullptr, reinterpret_cast<void**>(&ptr));
-	std::copy(texture.GetData().begin(), texture.GetData().end(), ptr + footprint.Offset);
+	auto texPtr = texture.GetData();
+	for (std::uint32_t i = 0u; i < numRaw; i++)
+	{
+		std::copy_n(texPtr, rowSize, ptr);
+		ptr += footprint.Footprint.RowPitch;
+		texPtr += rowSize;
+	}
 	resource_->Unmap(0, nullptr);
 }
 

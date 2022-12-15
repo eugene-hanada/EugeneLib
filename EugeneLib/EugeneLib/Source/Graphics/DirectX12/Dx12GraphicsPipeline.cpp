@@ -63,7 +63,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
 	rootSignatureDesc.Init(
-		rootparam.size(),
+		static_cast<std::uint32_t>(rootparam.size()),
 		rootparam.data(),
 		static_cast<std::uint32_t>(samplers.size()),
 		samplP,

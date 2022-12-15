@@ -86,7 +86,7 @@ void EugeneLib::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& view
 	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart()};
 	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * viewsIdx;
 	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
-	cmdList_->SetGraphicsRootDescriptorTable(paramIdx, handle);
+	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }
 
 void EugeneLib::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)

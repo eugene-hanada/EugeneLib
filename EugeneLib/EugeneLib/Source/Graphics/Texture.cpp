@@ -85,3 +85,8 @@ const std::vector<std::uint8_t>& EugeneLib::Texture::GetData(void) const&
 {
 	return data_[0];
 }
+
+std::uint8_t* EugeneLib::Texture::GetData(void)&
+{
+	return data_[0].data();
+}

@@ -42,7 +42,7 @@ namespace EugeneLib
 		Vector3Tmp<T> Refrect(const Vector3Tmp<T>& n);
 
 
-		template<VauleC T2> operator Vector3Tmp<T2>() const;
+		template<ValueC T2> operator Vector3Tmp<T2>() const;
 
 		Vector3Tmp<T> operator-() const;
 
@@ -79,7 +79,6 @@ namespace EugeneLib
 		Vector3Tmp<T>& operator%=(const Vector3Tmp<T>& vec);
 		Vector3Tmp<T>& operator%=(const T& val);
 
-		SimdVector ToSimdVector(void) const;
 	};
 
 	template<ValueC T>

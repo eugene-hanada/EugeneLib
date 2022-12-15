@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Math\Vector3.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
     <ClInclude Include="Include\Graphics\GraphicsPipeline.h" />

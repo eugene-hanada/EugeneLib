@@ -61,7 +61,11 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(const Vector2& size, Format 
 EugeneLib::Dx12DefaultResource::Dx12DefaultResource(const TextureInfo& formatData, Graphics& graphics)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(formatData.format), formatData.width, formatData.height);
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+		static_cast<DXGI_FORMAT>(formatData.format)
+		, static_cast<std::uint32_t>(formatData.width),
+		static_cast<std::uint32_t>(formatData.height)
+	);
 	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,

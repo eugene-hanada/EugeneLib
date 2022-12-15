@@ -31,3 +31,25 @@ void EugeneLib::Get2DMatrix(Matrix4x4& out, const Vector2& size)
 	out.m[3][0] = -1.0f;
 	out.m[3][1] = 1.0f;
 }
+
+void EugeneLib::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& target, const Vector3& up)
+{
+	DirectX::XMFLOAT3 tmpEye{ eye.x,eye.y,eye.z };
+	DirectX::XMFLOAT3 tmpTarget{ target.x,target.y, target.z };
+	DirectX::XMFLOAT3 tmpUp{ up.x,up.y, up.z };
+	DirectX::XMStoreFloat4x4(
+		&out, 
+		DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&tmpEye), DirectX::XMLoadFloat3(&tmpTarget), DirectX::XMLoadFloat3(&tmpUp))
+	);
+}
+
+void EugeneLib::GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near, float far)
+{
+	
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixPerspectiveFovLH(fov, aspect, near, far));
+}
+
+void EugeneLib::GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near, float far)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixOrthographicLH(size.x, size.y, near, far));
+}

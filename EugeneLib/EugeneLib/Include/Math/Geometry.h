@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "../ThirdParty/DirectXMath/DirectXMath.h"
 #include "Vector2.h"
-
+#include "Vector3.h"
 
 namespace EugeneLib
 {
@@ -27,7 +27,7 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector2Tmp<T> leftVector2{ static_cast<T>(-1),static_cast<T>(0) };
 
-	/*template<ValueC T>
+	template<ValueC T>
 	constexpr Vector3Tmp<T> zeroVector3{ static_cast<T>(0),static_cast<T>(0) ,static_cast<T>(0) };
 
 	template<ValueC T>
@@ -46,7 +46,7 @@ namespace EugeneLib
 	constexpr Vector3Tmp<T> leftVector3{ static_cast<T>(-1),static_cast<T>(0) ,static_cast<T>(0) };
 
 	template<ValueC T>
-	constexpr Vector3Tmp<T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };*/
+	constexpr Vector3Tmp<T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };
 
 	/// <summary>
 	/// ìÒèÊÇ∑ÇÈ
@@ -191,4 +191,9 @@ namespace EugeneLib
 
 	void Get2DMatrix(Matrix4x4& out, const Vector2& size);
 
+	void GetLookAtMatrix(Matrix4x4& out,const Vector3& eye, const Vector3& target, const Vector3& up);
+
+	void GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near = 0.1f, float far = 1000.0f);
+
+	void GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near = 0.1f, float far = 1000.0f);
 };

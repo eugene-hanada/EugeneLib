@@ -5,7 +5,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/Texture.h"
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, ID3D12Device* device)
+EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,size_t size)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
@@ -22,7 +22,7 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, ID3D12Dev
 	}
 }
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(Texture& texture, ID3D12Device* device)
+EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Texture& texture)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// アップロード先のdescをそうていする

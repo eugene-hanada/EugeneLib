@@ -50,42 +50,47 @@ EugeneLib::GraphicsPipeline* EugeneLib::Dx12Graphics::CreateGraphicsPipeline(Sha
 
 EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateUploadableResource(size_t size) const
 {
-	return new Dx12UploadableResource{size,device_.Get()};
+	return new Dx12UploadableResource{ device_.Get(),size};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateUploadableResource(Texture& texture) const
+EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateUploadableTextureResource(Texture& texture) const
 {
-	return new Dx12UploadableResource{texture,device_.Get()};
+	return new Dx12UploadableResource{ device_.Get(),texture};
 }
 
 EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateDefaultResource(size_t size) const
 {
-	return new Dx12DefaultResource{size, device_.Get()};
+	return new Dx12DefaultResource{ device_.Get(),size};
 }
 
 EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateSwapChainResource(std::uint32_t idx) const
 {
-	return new Dx12DefaultResource{ idx, swapChain_.Get()};
+	return new Dx12DefaultResource{ swapChain_.Get(), idx};
 }
 
 EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateTextureResource(const TextureInfo& formatData) const
 {
-	return new Dx12DefaultResource{formatData,device_.Get()};
+	return new Dx12DefaultResource{ device_.Get(), formatData};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateDefaultResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const
+EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const
 {
-	return new Dx12DefaultResource{size,format,clearColor,device_.Get()};
+	return new Dx12DefaultResource{ device_.Get(), size,format,clearColor};
+}
+
+EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateDepthResource(const Vector2& size, Format format, float clearValue) const
+{
+	return new Dx12DefaultResource{device_.Get(),size,format, clearValue};
 }
 
 EugeneLib::ShaderResourceViews* EugeneLib::Dx12Graphics::CreateShaderResourceViews(size_t size) const
 {
-	return new Dx12ShaderResourceViews{size,device_.Get()};
+	return new Dx12ShaderResourceViews{ device_.Get(), size};
 }
 
 EugeneLib::RenderTargetViews* EugeneLib::Dx12Graphics::CreateRenderTargetViews(size_t size, bool isShaderVisible) const
 {
-	return new Dx12RenderTargetViews{size,isShaderVisible,device_.Get()};
+	return new Dx12RenderTargetViews{ device_.Get(), size,isShaderVisible};
 }
 
 EugeneLib::VertexView* EugeneLib::Dx12Graphics::CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const
@@ -95,7 +100,7 @@ EugeneLib::VertexView* EugeneLib::Dx12Graphics::CreateVertexView(size_t size, si
 
 EugeneLib::GpuEngine* EugeneLib::Dx12Graphics::CreateGpuEngine(size_t maxSize) const
 {
-	return new Dx12GpuEngine{ maxSize, device_.Get()};
+	return new Dx12GpuEngine{ device_.Get(), maxSize};
 }
 
 

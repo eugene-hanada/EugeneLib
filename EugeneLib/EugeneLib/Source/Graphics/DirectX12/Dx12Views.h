@@ -12,7 +12,7 @@ namespace EugeneLib
 	public:
 		virtual ~Dx12Views();
 	protected:
-		Dx12Views(size_t size, bool isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE type, ID3D12Device* device);
+		Dx12Views(ID3D12Device* device, size_t size, bool isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE type);
 		Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> descriptorHeap_;
 	private:
 	};

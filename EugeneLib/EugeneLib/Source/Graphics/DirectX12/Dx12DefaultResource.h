@@ -14,10 +14,11 @@ namespace EugeneLib
 		public Dx12GpuResource
 	{
 	public:
-		Dx12DefaultResource(size_t size, ID3D12Device* device);
-		Dx12DefaultResource(std::uint32_t idx, IDXGISwapChain4* swapChain);
-		Dx12DefaultResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor, ID3D12Device* device);
-		Dx12DefaultResource(const TextureInfo& formatData, ID3D12Device* device);
+		Dx12DefaultResource(ID3D12Device* device, size_t size);
+		Dx12DefaultResource(IDXGISwapChain4* swapChain,std::uint32_t idx);
+		Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, const std::span<float, 4>& clearColor);
+		Dx12DefaultResource(ID3D12Device* device, const TextureInfo& formatData);
+		Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, float clearValue = 1.0f);
 	private:
 	};
 }

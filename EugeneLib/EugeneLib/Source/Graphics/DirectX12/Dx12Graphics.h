@@ -33,12 +33,13 @@ namespace EugeneLib
 			SamplerSpan samplerLayout = SamplerSpan{}) const final;
 
 		GpuResource* CreateUploadableResource(size_t size) const final;
-		GpuResource* CreateUploadableResource(Texture& texture) const final;
+		GpuResource* CreateUploadableTextureResource(Texture& texture) const final;
 
 		GpuResource* CreateDefaultResource(size_t size) const final;
 		GpuResource* CreateSwapChainResource(std::uint32_t idx) const final;
 		GpuResource* CreateTextureResource(const TextureInfo& formatData) const final;
-		GpuResource* CreateDefaultResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const final;
+		GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const final;
+		GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const final;
 
 		ShaderResourceViews* CreateShaderResourceViews(size_t size) const final;
 

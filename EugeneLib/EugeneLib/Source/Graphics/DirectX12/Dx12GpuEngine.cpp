@@ -90,7 +90,7 @@
 //		}
 //	}
 
-EugeneLib::Dx12GpuEngine::Dx12GpuEngine(size_t maxSize, ID3D12Device* device) :
+EugeneLib::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 	fenceVal_{0}
 {
 	commandLists_.resize(maxSize);

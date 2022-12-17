@@ -31,11 +31,12 @@ namespace EugeneLib
 		) const = 0;
 		
 		virtual GpuResource* CreateUploadableResource(size_t size) const = 0;
-		virtual GpuResource* CreateUploadableResource(Texture& texture) const = 0;
+		virtual GpuResource* CreateUploadableTextureResource(Texture& texture) const = 0;
 
 		virtual GpuResource* CreateDefaultResource(size_t size) const = 0;
 		virtual GpuResource* CreateTextureResource(const TextureInfo& formatData) const = 0;
-		virtual GpuResource* CreateDefaultResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const = 0;
+		virtual GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const = 0;
+		virtual GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const = 0;
 
 		virtual ShaderResourceViews* CreateShaderResourceViews(size_t size) const = 0;
 

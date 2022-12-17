@@ -11,8 +11,8 @@ namespace EugeneLib
 		public Dx12GpuResource
 	{
 	public:
-		Dx12UploadableResource(size_t size, ID3D12Device* device);
-		Dx12UploadableResource(Texture& texture, ID3D12Device* device);
+		Dx12UploadableResource(ID3D12Device* device,size_t size);
+		Dx12UploadableResource(ID3D12Device* device, Texture& texture);
 	private:
 		void* Map(void) final;
 		void UnMap(void) final;

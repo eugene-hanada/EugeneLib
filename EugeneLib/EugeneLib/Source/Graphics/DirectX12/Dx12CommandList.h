@@ -8,6 +8,7 @@ struct ID3D12GraphicsCommandList;
 
 namespace EugeneLib
 {
+	class GpuResource;
 	class Dx12CommandList :
 		public CommandList
 	{

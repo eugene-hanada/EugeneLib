@@ -45,6 +45,8 @@ namespace EugeneLib
 
 		RenderTargetViews* CreateRenderTargetViews(size_t size, bool isShaderVisible) const final;
 
+		DepthStencilViews* CreateDepthStencilViews(size_t size) const final;
+
 		VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const final;
 
 		void CreateDevice(void);

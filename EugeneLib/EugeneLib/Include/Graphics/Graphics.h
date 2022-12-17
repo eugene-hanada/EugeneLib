@@ -12,6 +12,7 @@ namespace EugeneLib
 	class GpuResource;
 	class Texture;
 	class ShaderResourceViews;
+	class DepthStencilViews;
 	class VertexView;
 
 	class Graphics
@@ -41,6 +42,8 @@ namespace EugeneLib
 		virtual ShaderResourceViews* CreateShaderResourceViews(size_t size) const = 0;
 
 		virtual RenderTargetViews* CreateRenderTargetViews(size_t size, bool isShaderVisible) const = 0;
+
+		virtual DepthStencilViews* CreateDepthStencilViews(size_t size) const = 0;
 
 		virtual VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const = 0;
 

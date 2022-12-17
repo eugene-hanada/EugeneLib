@@ -170,6 +170,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Wait();
 
 	auto depth = graphics->CreateDepthResource({ 1280.0f,720.0f }, EugeneLib::Format::R32_TYPELESS);
+	
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())

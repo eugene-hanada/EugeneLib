@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
     <ClInclude Include="Include\Math\Vector3.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Include\Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />

@@ -12,6 +12,7 @@
 #include "Dx12ShaderResourceViews.h"
 #include "Dx12RenderTargetViews.h"
 #include "Dx12VertexView.h"
+#include "Dx12DepthStencilViews.h"
 
 #include "../../../Include/Common/Debug.h"
 
@@ -91,6 +92,11 @@ EugeneLib::ShaderResourceViews* EugeneLib::Dx12Graphics::CreateShaderResourceVie
 EugeneLib::RenderTargetViews* EugeneLib::Dx12Graphics::CreateRenderTargetViews(size_t size, bool isShaderVisible) const
 {
 	return new Dx12RenderTargetViews{ device_.Get(), size,isShaderVisible};
+}
+
+EugeneLib::DepthStencilViews* EugeneLib::Dx12Graphics::CreateDepthStencilViews(size_t size) const
+{
+	return new Dx12DepthStencilViews{ device_.Get(), size};
 }
 
 EugeneLib::VertexView* EugeneLib::Dx12Graphics::CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const

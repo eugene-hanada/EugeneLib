@@ -90,7 +90,7 @@
 //		}
 //	}
 
-EugeneLib::Dx12GpuEngine::Dx12GpuEngine(size_t maxSize, Graphics& graphics) :
+EugeneLib::Dx12GpuEngine::Dx12GpuEngine(size_t maxSize, ID3D12Device* device) :
 	fenceVal_{0}
 {
 	commandLists_.resize(maxSize);
@@ -110,7 +110,7 @@ EugeneLib::Dx12GpuEngine::Dx12GpuEngine(size_t maxSize, Graphics& graphics) :
 	// ここはコマンドリストと合わせる
 	cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-	auto device = static_cast<ID3D12Device*>(graphics.GetDevice());
+	
 	// キューを生成
 	if (FAILED(device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))))
 	{

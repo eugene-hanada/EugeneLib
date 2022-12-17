@@ -1,6 +1,7 @@
 #include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
 
+
 EugeneLib::System::System(const EugeneLib::Vector2& size, const std::u8string& title) :
 	windowSize_{size}, title_{title}
 {
@@ -24,4 +25,9 @@ void* EugeneLib::System::GetWindowHandle(void) const
 EugeneLib::System* EugeneLib::CreateSystem(const Vector2& size, const std::u8string& title)
 {
 	return new WindowsSystem{size,title};
+}
+
+void EugeneLib::CreateSystem(System*& system, const Vector2& size, const std::u8string& title)
+{
+	system = new WindowsSystem{ size,title };
 }

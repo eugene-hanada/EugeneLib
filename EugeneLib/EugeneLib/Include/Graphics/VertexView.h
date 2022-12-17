@@ -2,7 +2,6 @@
 
 namespace EugeneLib
 {
-	class GpuResource;
 	class VertexView
 	{
 	public:
@@ -11,6 +10,4 @@ namespace EugeneLib
 	protected:
 		VertexView();
 	};
-
-	VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource);
 }

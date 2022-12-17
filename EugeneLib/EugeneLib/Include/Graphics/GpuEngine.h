@@ -16,6 +16,4 @@ namespace EugeneLib
 	protected:
 		GpuEngine();
 	};
-
-	GpuEngine* CreateGpuEngine(size_t maxSize, Graphics& graphics);
 }

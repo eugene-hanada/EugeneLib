@@ -3,6 +3,7 @@
 #include <wrl.h>
 #include <vector>
 
+struct ID3D12Device;
 struct ID3D12CommandList;
 struct ID3D12CommandQueue;
 struct ID3D12Fence;
@@ -14,7 +15,7 @@ namespace EugeneLib
 		public GpuEngine
 	{
 	public:
-		Dx12GpuEngine(size_t maxSize, Graphics& graphics);
+		Dx12GpuEngine(size_t maxSize, ID3D12Device* device);
 
 	private:
 		

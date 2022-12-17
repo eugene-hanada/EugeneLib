@@ -8,7 +8,7 @@ namespace EugeneLib
 		public Dx12Views, public ShaderResourceViews
 	{
 	public:
-		Dx12ShaderResourceViews(Graphics& graphics, size_t size);
+		Dx12ShaderResourceViews(size_t size, ID3D12Device* device);
 		void CreateTexture(GpuResource& resource, size_t idx) final;
 		void CreateConstantBuffer(GpuResource& resource, size_t idx) final;
 		void* GetViews(void) const final;

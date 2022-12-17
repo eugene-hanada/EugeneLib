@@ -5,11 +5,10 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/Texture.h"
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, Graphics& graphics)
+EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, ID3D12Device* device)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
-	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -23,11 +22,9 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(size_t size, Graphics&
 	}
 }
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(Texture& texture, Graphics& graphics)
+EugeneLib::Dx12UploadableResource::Dx12UploadableResource(Texture& texture, ID3D12Device* device)
 {
-
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	auto device{ static_cast<ID3D12Device*>(graphics.GetDevice()) };
 	// アップロード先のdescをそうていする
 	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint{};
 	std::uint64_t totalSize;

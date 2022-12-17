@@ -6,6 +6,7 @@ struct D3D12_VERTEX_BUFFER_VIEW;
 
 namespace EugeneLib
 {
+	class GpuResource;
 	class Dx12VertexView :
 		public VertexView
 	{

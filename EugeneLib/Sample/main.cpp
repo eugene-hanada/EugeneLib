@@ -42,12 +42,12 @@ void Init(void)
 	{
 		// グラフィックの機能のクラスを作成しコマンドリストを実行するクラスをセット
 		EugeneLib::GpuEngine* tmp;
-		graphics.reset(EugeneLib::CreateGraphics(*libSys, tmp));
+		graphics.reset(libSys->CreateGraphics(tmp));
 		gpuEngien.reset(tmp);
 	}
 
 	// コマンドリストを作成
-	cmdList.reset(EugeneLib::CreateCommandList(*graphics));
+	cmdList.reset(graphics->CreateCommandList());
 }
 
 void InitGraphicsPipeline(void)
@@ -83,8 +83,7 @@ void InitGraphicsPipeline(void)
 		EugeneLib::SamplerLayout{}
 	};
 
-	gpipeLine.reset(EugeneLib::CreateGraphicsPipeline(
-		*graphics,
+	gpipeLine.reset(graphics->CreateGraphicsPipeline(
 		layout,
 		shaders,
 		rendertargets,
@@ -116,24 +115,24 @@ void InitVertex(void)
 
 	// CPUからアクセスできるリソースを作成
 
-	upVertexBuffer.reset(EugeneLib::CreateUploadableResource(sizeof(vertex), *graphics));
+	upVertexBuffer.reset(graphics->CreateUploadableResource(sizeof(vertex)));
 	auto ptr = upVertexBuffer->Map();
 	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<Vertex*>(ptr));
 	upVertexBuffer->UnMap();
 
 	// GPUだけでしか使えないリソースを作成
-	vertexBuffer.reset(EugeneLib::CreateDefaultResource(sizeof(vertex), *graphics));
+	vertexBuffer.reset(graphics->CreateDefaultResource(sizeof(vertex)));
 
 	// 頂点ビュー
-	vertexView.reset(EugeneLib::CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
+	vertexView.reset(graphics->CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
 }
 
 void InitTexture(void)
 {
 	EugeneLib::Texture tex("./Logo.png");
-	upTextureBuffer.reset(EugeneLib::CreateUploadableResource(tex, *graphics));
-	textureBuffer.reset(EugeneLib::CreateTextureResource(tex.GetInfo(), *graphics));
-	textureView_.reset(EugeneLib::CreateShaderResourceViews(*graphics, 1));
+	upTextureBuffer.reset(graphics->CreateUploadableResource(tex));
+	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
+	textureView_.reset(graphics->CreateShaderResourceViews(1));
 	textureView_->CreateTexture(*textureBuffer, 0);
 }
 
@@ -141,12 +140,12 @@ void InitConstantBuffer(void)
 {
 	EugeneLib::Matrix4x4 matrix;
 	EugeneLib::Get2DMatrix(matrix, { 1280.0f, 720.0f });
-	upMatrixBuffer.reset(EugeneLib::CreateUploadableResource(512, *graphics));
+	upMatrixBuffer.reset(graphics->CreateUploadableResource(256));
 	*static_cast<EugeneLib::Matrix4x4*>(upMatrixBuffer->Map()) = matrix;
 	upMatrixBuffer->UnMap();
 
-	matrixBuffer.reset(EugeneLib::CreateDefaultResource(512, *graphics));
-	matrixView_.reset(EugeneLib::CreateShaderResourceViews(*graphics, 1));
+	matrixBuffer.reset(graphics->CreateDefaultResource(256));
+	matrixView_.reset(graphics->CreateShaderResourceViews(1));
 	matrixView_->CreateConstantBuffer(*matrixBuffer, 0);
 	
 }

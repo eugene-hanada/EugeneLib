@@ -9,7 +9,7 @@ namespace EugeneLib
 		public Dx12Views, public RenderTargetViews
 	{
 	public:
-		Dx12RenderTargetViews(Graphics& graphics, size_t size, bool isShaderVisible);
+		Dx12RenderTargetViews(size_t size, bool isShaderVisible, ID3D12Device* device);
 	private:
 		void Create(GpuResource& resource, size_t idx, const Format& format) final;
 		void* GetViews(void) const;

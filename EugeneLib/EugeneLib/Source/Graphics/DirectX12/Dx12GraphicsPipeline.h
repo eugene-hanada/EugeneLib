@@ -2,6 +2,7 @@
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 #include <wrl.h>
 
+struct ID3D12Device;
 struct ID3D12RootSignature;
 struct ID3D12PipelineState;
 
@@ -13,7 +14,7 @@ namespace EugeneLib
 	{
 	public:
 		Dx12GraphicsPipeline(
-			Graphics& grahics,
+			ID3D12Device* device,
 			ShaderInputSpan layout,
 			ShaderTypePaisrSpan  shaders,
 			RenderTargetSpan rendertarges,

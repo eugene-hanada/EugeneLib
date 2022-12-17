@@ -2,8 +2,8 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/GpuResource.h"
 
-EugeneLib::Dx12ShaderResourceViews::Dx12ShaderResourceViews(Graphics& graphics, size_t size) :
-	Dx12Views{graphics,size,true,D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV}, ShaderResourceViews{size}
+EugeneLib::Dx12ShaderResourceViews::Dx12ShaderResourceViews(size_t size, ID3D12Device* device) :
+	Dx12Views{size,true,D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, device}, ShaderResourceViews{size}
 {
 }
 

@@ -10,6 +10,7 @@ namespace EugeneLib
 	public:
 		WindowsSystem(const Vector2& size, const std::u8string& title);
 		~WindowsSystem();
+		Graphics* CreateGraphics(GpuEngine*& gpuEngine) const& final;
 		void* GetWindowHandle(void) const final;
 	private:
 		bool Update(void) final;

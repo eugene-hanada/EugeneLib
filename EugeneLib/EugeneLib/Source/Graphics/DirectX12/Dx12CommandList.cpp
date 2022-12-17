@@ -10,9 +10,8 @@
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "Dx12GraphicsPipeline.h"
 
-EugeneLib::Dx12CommandList::Dx12CommandList(Graphics& graphics)
+EugeneLib::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 {
-	auto device = static_cast<ID3D12Device*>(graphics.GetDevice());
 	if (FAILED(device->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
 	{

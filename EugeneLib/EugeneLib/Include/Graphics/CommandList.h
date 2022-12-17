@@ -46,7 +46,4 @@ namespace EugeneLib
 
 		virtual void* GetCommandList(void) const = 0;
 	};
-
-	CommandList* CreateCommandList(Graphics& graphics);
-
 }

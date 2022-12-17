@@ -100,13 +100,4 @@ namespace EugeneLib
 		GraphicsPipeline();
 
 	};
-
-	GraphicsPipeline* CreateGraphicsPipeline(Graphics& grahics,
-		ShaderInputSpan layout,
-		ShaderTypePaisrSpan  shaders,
-		RenderTargetSpan rendertarges,
-		TopologyType topologyType = TopologyType::Triangle,
-		bool isCulling = false,
-		ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-		SamplerSpan samplerLayout = SamplerSpan{});
 }

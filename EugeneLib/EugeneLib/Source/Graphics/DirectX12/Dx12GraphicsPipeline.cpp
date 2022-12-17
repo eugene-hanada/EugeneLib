@@ -6,7 +6,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 
 EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
-	Graphics& grahics,
+	ID3D12Device* device,
 	ShaderInputSpan layout,
 	ShaderTypePaisrSpan shaders,
 	RenderTargetSpan rendertarges,
@@ -83,7 +83,6 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 
-	auto device = static_cast<ID3D12Device*>(grahics.GetDevice());
 	if (FAILED(device->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),

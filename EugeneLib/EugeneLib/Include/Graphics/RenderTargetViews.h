@@ -18,6 +18,4 @@ namespace EugeneLib
 		size_t size_;
 	};
 
-	RenderTargetViews* CreateRenderTargetViews(Graphics& graphics, size_t size, bool isShaderVisible);
-
 }

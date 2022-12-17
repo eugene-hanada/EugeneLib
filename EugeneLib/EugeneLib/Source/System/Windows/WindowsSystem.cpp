@@ -4,6 +4,8 @@
 #include "../../../Include/Common/Debug.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
+#include "../../Graphics/DirectX12/Dx12Graphics.h"
+
 MSG msg;
 WNDCLASSEX windowClass;
 HWND hwnd;
@@ -70,6 +72,11 @@ EugeneLib::WindowsSystem::~WindowsSystem()
 {
 	CoUninitialize();
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+}
+
+EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine) const&
+{
+	return new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine};
 }
 
 void* EugeneLib::WindowsSystem::GetWindowHandle(void) const

@@ -24,17 +24,3 @@ EugeneLib::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode
 	u_{u}, v_{v}, filter_{filter}
 {
 }
-
-EugeneLib::GraphicsPipeline* EugeneLib::CreateGraphicsPipeline(
-	Graphics& grahics, 
-	ShaderInputSpan layout,
-	ShaderTypePaisrSpan shaders,
-	RenderTargetSpan rendertarges,
-	TopologyType topologyType,
-	bool isCulling, 
-	ShaderLayoutSpan shaderLayout,
-	SamplerSpan samplerLayout
-)
-{
-	return new Dx12GraphicsPipeline{grahics, layout, shaders, rendertarges, topologyType, isCulling, shaderLayout, samplerLayout};
-}

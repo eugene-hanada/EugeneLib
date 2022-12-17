@@ -2,6 +2,7 @@
 #include <wrl.h>
 #include "../../../Include/Graphics/CommandList.h"
 
+struct ID3D12Device;
 struct ID3D12CommandAllocator;
 struct ID3D12GraphicsCommandList;
 
@@ -13,7 +14,7 @@ namespace EugeneLib
 		template<class T>
 		using ComPtr = Microsoft::WRL::ComPtr<T>;
 	public:
-		Dx12CommandList(Graphics& graphics);
+		Dx12CommandList(ID3D12Device* device);
 		void* GetCommandList(void) const final;
 	private:
 		void Begin(void) final;

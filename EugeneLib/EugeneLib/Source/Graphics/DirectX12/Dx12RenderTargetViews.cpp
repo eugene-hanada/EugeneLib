@@ -1,8 +1,8 @@
 #include "Dx12RenderTargetViews.h"
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Graphics/GpuResource.h"
-EugeneLib::Dx12RenderTargetViews::Dx12RenderTargetViews(Graphics& graphics, size_t size, bool isShaderVisible) :
-	Dx12Views{graphics,size, isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE_RTV },
+EugeneLib::Dx12RenderTargetViews::Dx12RenderTargetViews(size_t size, bool isShaderVisible, ID3D12Device* device) :
+	Dx12Views{size, isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, device },
 	RenderTargetViews{size}
 {
 }

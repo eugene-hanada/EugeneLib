@@ -8,6 +8,7 @@
 #include "../../../Include/Graphics/GpuResource.h"
 #include "../../../Include/Graphics/VertexView.h"
 #include "../../../Include/Graphics/ShaderResourceViews.h"
+#include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
 
 EugeneLib::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
@@ -167,6 +168,19 @@ void EugeneLib::Dx12CommandList::TransitionRenderTargetEnd(GpuResource& resource
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
 	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void EugeneLib::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, size_t idx)
+{
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
+	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	handle.ptr += static_cast<ULONG_PTR>(idx) * static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+	cmdList_->ClearDepthStencilView(handle, D3D12_CLEAR_FLAG_DEPTH, clearValue, 0, 0, nullptr);
 }
 
 void EugeneLib::Dx12CommandList::Copy(GpuResource& destination, GpuResource& source)

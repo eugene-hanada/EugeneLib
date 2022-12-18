@@ -37,6 +37,9 @@ namespace EugeneLib
 		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
 		void TransitionRenderTargetBegin(GpuResource& resource) final;
 		void TransitionRenderTargetEnd(GpuResource& resource) final;
+
+		void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, size_t idx = 0) final;
+
 		void Copy(GpuResource& destination, GpuResource& source) final;
 		void CopyTexture(GpuResource& destination, GpuResource& source) final;
 		ComPtr< ID3D12CommandAllocator> cmdAllocator_;

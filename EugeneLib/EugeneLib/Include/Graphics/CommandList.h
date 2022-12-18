@@ -40,6 +40,9 @@ namespace EugeneLib
 		virtual void TransitionRenderTargetBegin(GpuResource& resource) = 0;
 		virtual void TransitionRenderTargetEnd(GpuResource& resource) = 0;
 
+		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, size_t idx = 0) = 0;
+
+
 		virtual void Copy(GpuResource& destination, GpuResource& source) = 0;
 
 		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;

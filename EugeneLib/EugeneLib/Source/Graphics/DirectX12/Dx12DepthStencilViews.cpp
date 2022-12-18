@@ -27,3 +27,8 @@ void EugeneLib::Dx12DepthStencilViews::Create(GpuResource& resource, size_t idx)
 
 	device->CreateDepthStencilView(dx12Resource, &viewDesc, handle);
 }
+
+void* EugeneLib::Dx12DepthStencilViews::GetViews(void) const
+{
+	return descriptorHeap_.Get();
+}

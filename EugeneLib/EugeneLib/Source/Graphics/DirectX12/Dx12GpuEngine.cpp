@@ -5,6 +5,8 @@
 #include "Dx12Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
+#include "../../../Include/Common/Debug.h"
+
 //namespace EugeneLib
 //{
 //
@@ -121,6 +123,11 @@ EugeneLib::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 	{
 		throw EugeneLibException("GpuEngineÇÃÉtÉFÉìÉXçÏê¨é∏îs");
 	}
+}
+
+EugeneLib::Dx12GpuEngine::~Dx12GpuEngine()
+{
+	DebugLog(u8"gpuEngine");
 }
 
 //	void GpuEngine::ReSize(size_t size)

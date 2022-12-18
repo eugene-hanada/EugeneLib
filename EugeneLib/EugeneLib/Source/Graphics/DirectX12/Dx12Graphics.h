@@ -63,10 +63,11 @@ namespace EugeneLib
 
 		void Present(void) final;
 
-		// DirectX12のデバイス
-		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
 		// ファクトリ
 		Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_{ nullptr };
+
+		// DirectX12のデバイス
+		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
 
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };

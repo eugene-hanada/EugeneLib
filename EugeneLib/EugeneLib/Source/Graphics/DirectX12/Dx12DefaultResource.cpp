@@ -86,7 +86,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const V
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
-		D3D12_RESOURCE_STATE_COMMON,
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,
 		&clear,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))

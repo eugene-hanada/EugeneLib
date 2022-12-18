@@ -28,6 +28,9 @@ EugeneLib::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine
 
 EugeneLib::Dx12Graphics::~Dx12Graphics()
 {
+	swapChain_->Release();
+	swapChain_.Detach();
+	DebugLog(u8"ƒeƒXƒg");
 }
 
 EugeneLib::CommandList* EugeneLib::Dx12Graphics::CreateCommandList(void) const
@@ -233,6 +236,7 @@ void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, G
 	{
 		throw LibInitException();
 	}
+	swapchain->Release();
 }
 
 void EugeneLib::Dx12Graphics::CreateBackBuffers(size_t bufferCount)

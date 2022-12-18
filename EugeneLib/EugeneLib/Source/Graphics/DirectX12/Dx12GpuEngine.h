@@ -16,7 +16,7 @@ namespace EugeneLib
 	{
 	public:
 		Dx12GpuEngine(ID3D12Device* device, size_t maxSize);
-
+		~Dx12GpuEngine();
 	private:
 		
 		void Execute(void) final;

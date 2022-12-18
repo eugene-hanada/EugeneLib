@@ -10,4 +10,6 @@
 #include "Graphics/RenderTargetViews.h"
 #include "Graphics/VertexView.h"
 #include "Graphics/ShaderResourceViews.h"
+#include "Graphics/DepthStencilViews.h"
+
 #include "Graphics/Texture.h"

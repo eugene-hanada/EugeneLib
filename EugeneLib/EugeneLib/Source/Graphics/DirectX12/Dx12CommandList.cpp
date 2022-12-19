@@ -133,6 +133,21 @@ void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 
 void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx, size_t dsViewsIdx)
 {
+	auto rtDHeap{ static_cast<ID3D12DescriptorHeap*>(renderTargetViews.GetViews()) };
+	auto dsDHeap{ static_cast<ID3D12DescriptorHeap*>(depthViews.GetViews()) };
+	auto handle{ rtDHeap->GetCPUDescriptorHandleForHeapStart() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(rtDHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto rtHandle = rtDHeap->GetCPUDescriptorHandleForHeapStart();
+	rtHandle.ptr += rtViewsIdx * static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+
+	auto dsHandle = dsDHeap->GetCPUDescriptorHandleForHeapStart();
+	dsHandle.ptr += dsViewsIdx * static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV));
+
+	cmdList_->OMSetRenderTargets(1, &rtHandle, false, &dsHandle);
 }
 
 void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, DepthStencilViews& depthViews, size_t rtViewsIdx)

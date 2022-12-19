@@ -173,6 +173,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto depthView = graphics->CreateDepthStencilViews(1);
 	depthView->Create(*depth, 0);
 
+	cmdList->ClearDepth(*depthView);
+
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())
 	{

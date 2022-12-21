@@ -17,17 +17,8 @@ const EugeneLib::Vector2& EugeneLib::System::GetWindowSize(void) const&
 	return windowSize_;
 }
 
-void* EugeneLib::System::GetWindowHandle(void) const
-{
-	return nullptr;
-}
 
 EugeneLib::System* EugeneLib::CreateSystem(const Vector2& size, const std::u8string& title)
 {
 	return new WindowsSystem{size,title};
-}
-
-void EugeneLib::CreateSystem(System*& system, const Vector2& size, const std::u8string& title)
-{
-	system = new WindowsSystem{ size,title };
 }

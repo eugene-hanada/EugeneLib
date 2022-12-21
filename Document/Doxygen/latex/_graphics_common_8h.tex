@@ -1,0 +1,88 @@
+\hypertarget{_graphics_common_8h}{}\doxysection{C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Include/\+Graphics/\+Graphics\+Common.h ファイル}
+\label{_graphics_common_8h}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/GraphicsCommon.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/GraphicsCommon.h}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+Graphics\+Common.\+h の依存先関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{_graphics_common_8h__incl}
+\end{center}
+\end{figure}
+被依存関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_graphics_common_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Eugene\+Lib\+::\+Texture\+Info}}
+\end{DoxyCompactItemize}
+\doxysubsection*{名前空間}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_eugene_lib}{Eugene\+Lib}}
+\end{DoxyCompactItemize}
+\doxysubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Eugene\+Lib\+::\+Format}} \{ \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b}{Eugene\+Lib\+::\+NON}} = 0
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7}{Eugene\+Lib\+::\+R32\+G32\+B32\+A32\+\_\+\+TYPELESS}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259}{Eugene\+Lib\+::\+R32\+G32\+B32\+A32\+\_\+\+FLOAT}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9}{Eugene\+Lib\+::\+R32\+G32\+B32\+A32\+\_\+\+UINT}} = 3
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192}{Eugene\+Lib\+::\+R32\+G32\+B32\+A32\+\_\+\+SINT}} = 4
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2}{Eugene\+Lib\+::\+R32\+G32\+B32\+\_\+\+TYPELESS}} = 5
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305}{Eugene\+Lib\+::\+R32\+G32\+B32\+\_\+\+FLOAT}} = 6
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8}{Eugene\+Lib\+::\+R32\+G32\+B32\+\_\+\+UINT}} = 7
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278}{Eugene\+Lib\+::\+R32\+G32\+B32\+\_\+\+SINT}} = 8
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+TYPELESS}} = 9
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+FLOAT}} = 10
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+UNORM}} = 11
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+UINT}} = 12
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+SNORM}} = 13
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242}{Eugene\+Lib\+::\+R16\+G16\+B16\+A16\+\_\+\+SINT}} = 14
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70}{Eugene\+Lib\+::\+R32\+G32\+\_\+\+TYPELESS}} = 15
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848}{Eugene\+Lib\+::\+R32\+G32\+\_\+\+FLOAT}} = 16
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca}{Eugene\+Lib\+::\+R32\+G32\+\_\+\+UINT}} = 17
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90}{Eugene\+Lib\+::\+R32\+G32\+\_\+\+SINT}} = 18
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7}{Eugene\+Lib\+::\+R10\+G10\+B10\+A2\+\_\+\+TYPELESS}} = 23
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f}{Eugene\+Lib\+::\+R10\+G10\+B10\+A2\+\_\+\+UNORM}} = 24
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5}{Eugene\+Lib\+::\+R10\+G10\+B10\+A2\+\_\+\+UINT}} = 25
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187}{Eugene\+Lib\+::\+R11\+G11\+B10\+\_\+\+FLOAT}} = 26
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+TYPELESS}} = 27
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+UNORM}} = 28
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+UNORM\+\_\+\+SRGB}} = 29
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+UINT}} = 30
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+SNORM}} = 31
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0}{Eugene\+Lib\+::\+R8\+G8\+B8\+A8\+\_\+\+SINT}} = 32
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+TYPELESS}} = 33
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+FLOAT}} = 34
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+UNORM}} = 35
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+UINT}} = 36
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+SNORM}} = 37
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08}{Eugene\+Lib\+::\+R16\+G16\+\_\+\+SINT}} = 38
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9}{Eugene\+Lib\+::\+R32\+\_\+\+TYPELESS}} = 39
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a}{Eugene\+Lib\+::\+D32\+\_\+\+FLOAT}} = 40
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272}{Eugene\+Lib\+::\+R32\+\_\+\+FLOAT}} = 41
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218}{Eugene\+Lib\+::\+R32\+\_\+\+UINT}} = 42
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565}{Eugene\+Lib\+::\+R32\+\_\+\+SINT}} = 43
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26}{Eugene\+Lib\+::\+Primitive\+Type}} \{ \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c}{Eugene\+Lib\+::\+Point}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4}{Eugene\+Lib\+::\+Line}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b}{Eugene\+Lib\+::\+Triangle}} = 4
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c}{Eugene\+Lib\+::\+Triangle\+Strip}} = 5
+ \}
+\end{DoxyCompactItemize}

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12GraphicsPipeline.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_926e273c8c7db72a32b290dc6e00b5df.html">Source</a></li><li class="navelem"><a class="el" href="dir_b7e9bc4e65ae6548aa23be9524aab2d3.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_b147292b669f0cfc7303598d1d401471.html">DirectX12</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Dx12GraphicsPipeline.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_dx12_graphics_pipeline_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;../../../Include/Graphics/GraphicsPipeline.h&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;wrl.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">struct </span>ID3D12Device;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span>ID3D12RootSignature;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">struct </span>ID3D12PipelineState;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_dx12_graphics_pipeline.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_dx12_graphics_pipeline.html">Dx12GraphicsPipeline</a> :</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_lib_1_1_graphics_pipeline.html">GraphicsPipeline</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_class" href="class_eugene_lib_1_1_dx12_graphics_pipeline.html">Dx12GraphicsPipeline</a>(</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            ID3D12Device* device,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">ShaderInputSpan</a> layout,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">ShaderTypePaisrSpan</a>  shaders,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">RenderTargetSpan</a> rendertarges,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <a class="code hl_enumeration" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">TopologyType</a> topologyType,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <span class="keywordtype">bool</span> isCulling,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a> shaderLayout,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a> smplerLayout)</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            ;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html">   27</a></span>        <span class="keyword">struct </span><a class="code hl_struct" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html">PipeLine</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a818741a1f58d43900e76921c6db6f959">   29</a></span>            Microsoft::WRL::ComPtr&lt;ID3D12RootSignature&gt; <a class="code hl_variable" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a818741a1f58d43900e76921c6db6f959">rootSignature_</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a3f3062bec9447e95d890d4d569815bde">   30</a></span>            Microsoft::WRL::ComPtr&lt;ID3D12PipelineState&gt; <a class="code hl_variable" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a3f3062bec9447e95d890d4d569815bde">state_</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        };</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordtype">void</span>* GetPipeline(<span class="keywordtype">void</span>) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <a class="code hl_struct" href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html">PipeLine</a> pipeline_;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
+<div class="ttc" id="aclass_eugene_lib_1_1_dx12_graphics_pipeline_html"><div class="ttname"><a href="class_eugene_lib_1_1_dx12_graphics_pipeline.html">EugeneLib::Dx12GraphicsPipeline</a></div><div class="ttdef"><b>Definition:</b> Dx12GraphicsPipeline.h:14</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_pipeline_html"><div class="ttname"><a href="class_eugene_lib_1_1_graphics_pipeline.html">EugeneLib::GraphicsPipeline</a></div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:95</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a0765cdda58b96e8bed41fc369891ec05"><div class="ttname"><a href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">EugeneLib::ShaderInputSpan</a></div><div class="ttdeci">std::span&lt; ShaderInputLayout &gt; ShaderInputSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:89</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a1858c7f8938f8ee70626101303307d33"><div class="ttname"><a href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">EugeneLib::ShaderTypePaisrSpan</a></div><div class="ttdeci">std::span&lt; std::pair&lt; Shader, ShaderType &gt; &gt; ShaderTypePaisrSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:90</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a9bf14c3e1ef931a13bd1c33631720cd3"><div class="ttname"><a href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">EugeneLib::ShaderLayoutSpan</a></div><div class="ttdeci">std::span&lt; std::vector&lt; ShaderLayout &gt; &gt; ShaderLayoutSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:91</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_ae9eac1fcea6ea0cb1159c46a3473d6cc"><div class="ttname"><a href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">EugeneLib::RenderTargetSpan</a></div><div class="ttdeci">std::span&lt; RendertargetLayout &gt; RenderTargetSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:93</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_af2ab79b03994356102601c6daa1c70d3"><div class="ttname"><a href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">EugeneLib::TopologyType</a></div><div class="ttdeci">TopologyType</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:80</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_afd18882203b29039f5377be96997d5d1"><div class="ttname"><a href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">EugeneLib::SamplerSpan</a></div><div class="ttdeci">std::span&lt; SamplerLayout &gt; SamplerSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:92</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line_html"><div class="ttname"><a href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html">EugeneLib::Dx12GraphicsPipeline::PipeLine</a></div><div class="ttdef"><b>Definition:</b> Dx12GraphicsPipeline.h:28</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line_html_a3f3062bec9447e95d890d4d569815bde"><div class="ttname"><a href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a3f3062bec9447e95d890d4d569815bde">EugeneLib::Dx12GraphicsPipeline::PipeLine::state_</a></div><div class="ttdeci">Microsoft::WRL::ComPtr&lt; ID3D12PipelineState &gt; state_</div><div class="ttdef"><b>Definition:</b> Dx12GraphicsPipeline.h:30</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line_html_a818741a1f58d43900e76921c6db6f959"><div class="ttname"><a href="struct_eugene_lib_1_1_dx12_graphics_pipeline_1_1_pipe_line.html#a818741a1f58d43900e76921c6db6f959">EugeneLib::Dx12GraphicsPipeline::PipeLine::rootSignature_</a></div><div class="ttdeci">Microsoft::WRL::ComPtr&lt; ID3D12RootSignature &gt; rootSignature_</div><div class="ttdef"><b>Definition:</b> Dx12GraphicsPipeline.h:29</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

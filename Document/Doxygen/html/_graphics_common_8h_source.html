@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/GraphicsCommon.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_441f5a6782dcabbe74e32fbfbb5693d8.html">Include</a></li><li class="navelem"><a class="el" href="dir_ce250fc331356bffd40833be7102636b.html">Graphics</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">GraphicsCommon.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_graphics_common_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">    6</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b">NON</a> = 0,</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7">R32G32B32A32_TYPELESS</a> = 1,</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259">R32G32B32A32_FLOAT</a> = 2,</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9">R32G32B32A32_UINT</a> = 3,</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192">R32G32B32A32_SINT</a> = 4,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2">R32G32B32_TYPELESS</a> = 5,</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305">R32G32B32_FLOAT</a> = 6,</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8">R32G32B32_UINT</a> = 7,</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278">R32G32B32_SINT</a> = 8,</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af">R16G16B16A16_TYPELESS</a> = 9,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629">R16G16B16A16_FLOAT</a> = 10,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4">R16G16B16A16_UNORM</a> = 11,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b">R16G16B16A16_UINT</a> = 12,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22">R16G16B16A16_SNORM</a> = 13,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242">R16G16B16A16_SINT</a> = 14,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70">R32G32_TYPELESS</a> = 15,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848">R32G32_FLOAT</a> = 16,</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca">R32G32_UINT</a> = 17,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90">R32G32_SINT</a> = 18,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7">R10G10B10A2_TYPELESS</a> = 23,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f">R10G10B10A2_UNORM</a> = 24,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5">R10G10B10A2_UINT</a> = 25,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187">R11G11B10_FLOAT</a> = 26,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315">R8G8B8A8_TYPELESS</a> = 27,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62">R8G8B8A8_UNORM</a> = 28,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1">R8G8B8A8_UNORM_SRGB</a> = 29,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4">R8G8B8A8_UINT</a> = 30,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef">R8G8B8A8_SNORM</a> = 31,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0">R8G8B8A8_SINT</a> = 32,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099">R16G16_TYPELESS</a> = 33,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280">R16G16_FLOAT</a> = 34,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc">R16G16_UNORM</a> = 35,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3">R16G16_UINT</a> = 36,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191">R16G16_SNORM</a> = 37,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08">R16G16_SINT</a> = 38,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9">R32_TYPELESS</a> = 39,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a">D32_FLOAT</a> = 40,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272">R32_FLOAT</a> = 41,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218">R32_UINT</a> = 42,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565">R32_SINT</a> = 43,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// テクスチャバッファ作成用データ</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html">   51</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html#a7b622667353fc5478e88ecc8ce561764">   53</a></span>        std::uint64_t <a class="code hl_variable" href="struct_eugene_lib_1_1_texture_info.html#a7b622667353fc5478e88ecc8ce561764">width</a>;            <span class="comment">// 横幅</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html#a94c54cfbfdf1c0fe3e1367458e7876ed">   54</a></span>        std::uint64_t <a class="code hl_variable" href="struct_eugene_lib_1_1_texture_info.html#a94c54cfbfdf1c0fe3e1367458e7876ed">height</a>;           <span class="comment">// 縦幅</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html#a58a87bbaa9349c49143a245712d72ccd">   55</a></span>        <a class="code hl_enumeration" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a> <a class="code hl_variable" href="struct_eugene_lib_1_1_texture_info.html#a58a87bbaa9349c49143a245712d72ccd">format</a>;          <span class="comment">// フォーマット</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html#af891405b9e9cea2724654fc0827e78ee">   56</a></span>        std::uint64_t <a class="code hl_variable" href="struct_eugene_lib_1_1_texture_info.html#af891405b9e9cea2724654fc0827e78ee">arraySize</a>;        <span class="comment">// 配列サイズ</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="struct_eugene_lib_1_1_texture_info.html#a65e27a7174b1a92616fc0bfaf3b79ea1">   57</a></span>        std::uint16_t <a class="code hl_variable" href="struct_eugene_lib_1_1_texture_info.html#a65e27a7174b1a92616fc0bfaf3b79ea1">mipLevels</a>;            <span class="comment">// ミップマップレベル</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    };</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26">   60</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26">PrimitiveType</a></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c">Point</a> = 1,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4">Line</a> = 2,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b">Triangle</a> = 4,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_enumvalue" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c">TriangleStrip</a> = 5</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    };</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>}</div>
+<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26">EugeneLib::PrimitiveType</a></div><div class="ttdeci">PrimitiveType</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:61</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c">EugeneLib::PrimitiveType::TriangleStrip</a></div><div class="ttdeci">@ TriangleStrip</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c">EugeneLib::PrimitiveType::Point</a></div><div class="ttdeci">@ Point</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4">EugeneLib::PrimitiveType::Line</a></div><div class="ttdeci">@ Line</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b">EugeneLib::PrimitiveType::Triangle</a></div><div class="ttdeci">@ Triangle</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78b"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">EugeneLib::Format</a></div><div class="ttdeci">Format</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:7</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3">EugeneLib::Format::R16G16_UINT</a></div><div class="ttdeci">@ R16G16_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848">EugeneLib::Format::R32G32_FLOAT</a></div><div class="ttdeci">@ R32G32_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af">EugeneLib::Format::R16G16B16A16_TYPELESS</a></div><div class="ttdeci">@ R16G16B16A16_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f">EugeneLib::Format::R10G10B10A2_UNORM</a></div><div class="ttdeci">@ R10G10B10A2_UNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9">EugeneLib::Format::R32G32B32A32_UINT</a></div><div class="ttdeci">@ R32G32B32A32_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a">EugeneLib::Format::D32_FLOAT</a></div><div class="ttdeci">@ D32_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2">EugeneLib::Format::R32G32B32_TYPELESS</a></div><div class="ttdeci">@ R32G32B32_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272">EugeneLib::Format::R32_FLOAT</a></div><div class="ttdeci">@ R32_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1">EugeneLib::Format::R8G8B8A8_UNORM_SRGB</a></div><div class="ttdeci">@ R8G8B8A8_UNORM_SRGB</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0">EugeneLib::Format::R8G8B8A8_SINT</a></div><div class="ttdeci">@ R8G8B8A8_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef">EugeneLib::Format::R8G8B8A8_SNORM</a></div><div class="ttdeci">@ R8G8B8A8_SNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280">EugeneLib::Format::R16G16_FLOAT</a></div><div class="ttdeci">@ R16G16_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099">EugeneLib::Format::R16G16_TYPELESS</a></div><div class="ttdeci">@ R16G16_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242">EugeneLib::Format::R16G16B16A16_SINT</a></div><div class="ttdeci">@ R16G16B16A16_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9">EugeneLib::Format::R32_TYPELESS</a></div><div class="ttdeci">@ R32_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22">EugeneLib::Format::R16G16B16A16_SNORM</a></div><div class="ttdeci">@ R16G16B16A16_SNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4">EugeneLib::Format::R8G8B8A8_UINT</a></div><div class="ttdeci">@ R8G8B8A8_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4">EugeneLib::Format::R16G16B16A16_UNORM</a></div><div class="ttdeci">@ R16G16B16A16_UNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187">EugeneLib::Format::R11G11B10_FLOAT</a></div><div class="ttdeci">@ R11G11B10_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b">EugeneLib::Format::NON</a></div><div class="ttdeci">@ NON</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259">EugeneLib::Format::R32G32B32A32_FLOAT</a></div><div class="ttdeci">@ R32G32B32A32_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629">EugeneLib::Format::R16G16B16A16_FLOAT</a></div><div class="ttdeci">@ R16G16B16A16_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8">EugeneLib::Format::R32G32B32_UINT</a></div><div class="ttdeci">@ R32G32B32_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc">EugeneLib::Format::R16G16_UNORM</a></div><div class="ttdeci">@ R16G16_UNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7">EugeneLib::Format::R10G10B10A2_TYPELESS</a></div><div class="ttdeci">@ R10G10B10A2_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565">EugeneLib::Format::R32_SINT</a></div><div class="ttdeci">@ R32_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08">EugeneLib::Format::R16G16_SINT</a></div><div class="ttdeci">@ R16G16_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b">EugeneLib::Format::R16G16B16A16_UINT</a></div><div class="ttdeci">@ R16G16B16A16_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191">EugeneLib::Format::R16G16_SNORM</a></div><div class="ttdeci">@ R16G16_SNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305">EugeneLib::Format::R32G32B32_FLOAT</a></div><div class="ttdeci">@ R32G32B32_FLOAT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca">EugeneLib::Format::R32G32_UINT</a></div><div class="ttdeci">@ R32G32_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90">EugeneLib::Format::R32G32_SINT</a></div><div class="ttdeci">@ R32G32_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278">EugeneLib::Format::R32G32B32_SINT</a></div><div class="ttdeci">@ R32G32B32_SINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218">EugeneLib::Format::R32_UINT</a></div><div class="ttdeci">@ R32_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5">EugeneLib::Format::R10G10B10A2_UINT</a></div><div class="ttdeci">@ R10G10B10A2_UINT</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62">EugeneLib::Format::R8G8B8A8_UNORM</a></div><div class="ttdeci">@ R8G8B8A8_UNORM</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315">EugeneLib::Format::R8G8B8A8_TYPELESS</a></div><div class="ttdeci">@ R8G8B8A8_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70">EugeneLib::Format::R32G32_TYPELESS</a></div><div class="ttdeci">@ R32G32_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7">EugeneLib::Format::R32G32B32A32_TYPELESS</a></div><div class="ttdeci">@ R32G32B32A32_TYPELESS</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192">EugeneLib::Format::R32G32B32A32_SINT</a></div><div class="ttdeci">@ R32G32B32A32_SINT</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html">EugeneLib::TextureInfo</a></div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:52</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html_a58a87bbaa9349c49143a245712d72ccd"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html#a58a87bbaa9349c49143a245712d72ccd">EugeneLib::TextureInfo::format</a></div><div class="ttdeci">Format format</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:55</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html_a65e27a7174b1a92616fc0bfaf3b79ea1"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html#a65e27a7174b1a92616fc0bfaf3b79ea1">EugeneLib::TextureInfo::mipLevels</a></div><div class="ttdeci">std::uint16_t mipLevels</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:57</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html_a7b622667353fc5478e88ecc8ce561764"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html#a7b622667353fc5478e88ecc8ce561764">EugeneLib::TextureInfo::width</a></div><div class="ttdeci">std::uint64_t width</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:53</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html_a94c54cfbfdf1c0fe3e1367458e7876ed"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html#a94c54cfbfdf1c0fe3e1367458e7876ed">EugeneLib::TextureInfo::height</a></div><div class="ttdeci">std::uint64_t height</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:54</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html_af891405b9e9cea2724654fc0827e78ee"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html#af891405b9e9cea2724654fc0827e78ee">EugeneLib::TextureInfo::arraySize</a></div><div class="ttdeci">std::uint64_t arraySize</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:56</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

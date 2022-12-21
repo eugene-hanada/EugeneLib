@@ -1,0 +1,98 @@
+\hypertarget{class_eugene_lib_1_1_dx12_shader_resource_views}{}\doxysection{Eugene\+Lib\+::Dx12\+Shader\+Resource\+Views クラス}
+\label{class_eugene_lib_1_1_dx12_shader_resource_views}\index{EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}}
+
+
+{\ttfamily \#include $<$Dx12\+Shader\+Resource\+Views.\+h$>$}
+
+
+
+Eugene\+Lib\+::Dx12\+Shader\+Resource\+Views の継承関係図\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_eugene_lib_1_1_dx12_shader_resource_views__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Eugene\+Lib\+::Dx12\+Shader\+Resource\+Views 連携図\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_eugene_lib_1_1_dx12_shader_resource_views__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_ab22ea4c0250a62355621b0f299ca960a}{Dx12\+Shader\+Resource\+Views}} (ID3\+D12\+Device $\ast$device, size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_a2077a2798dfc62f9c1b4a8c247fcb9ad}{Create\+Texture}} (\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{Gpu\+Resource}} \&resource, size\+\_\+t idx) final
+\item 
+void \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_af9bc3bed79943d9f05902b71411a27b6}{Create\+Constant\+Buffer}} (\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{Gpu\+Resource}} \&resource, size\+\_\+t idx) final
+\item 
+void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_a81ac3405f4904417472759c34ba5b5a9}{Get\+Views}} (void) const final
+\end{DoxyCompactItemize}
+\doxysubsection*{その他の継承メンバ}
+
+
+\doxysubsection{構築子と解体子}
+\mbox{\Hypertarget{class_eugene_lib_1_1_dx12_shader_resource_views_ab22ea4c0250a62355621b0f299ca960a}\label{class_eugene_lib_1_1_dx12_shader_resource_views_ab22ea4c0250a62355621b0f299ca960a}} 
+\index{EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}!Dx12ShaderResourceViews@{Dx12ShaderResourceViews}}
+\index{Dx12ShaderResourceViews@{Dx12ShaderResourceViews}!EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{Dx12ShaderResourceViews()}{Dx12ShaderResourceViews()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+Dx12\+Shader\+Resource\+Views\+::\+Dx12\+Shader\+Resource\+Views (\begin{DoxyParamCaption}\item[{ID3\+D12\+Device $\ast$}]{device,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_dx12_shader_resource_views_af9bc3bed79943d9f05902b71411a27b6}\label{class_eugene_lib_1_1_dx12_shader_resource_views_af9bc3bed79943d9f05902b71411a27b6}} 
+\index{EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}!CreateConstantBuffer@{CreateConstantBuffer}}
+\index{CreateConstantBuffer@{CreateConstantBuffer}!EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{CreateConstantBuffer()}{CreateConstantBuffer()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Dx12\+Shader\+Resource\+Views\+::\+Create\+Constant\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{Gpu\+Resource}} \&}]{resource,  }\item[{size\+\_\+t}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_ac613c186b47e00616cfef5aff11dc7b4}{Eugene\+Lib\+::\+Shader\+Resource\+Views}}を実装しています。
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_eugene_lib_1_1_dx12_shader_resource_views_af9bc3bed79943d9f05902b71411a27b6_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_eugene_lib_1_1_dx12_shader_resource_views_a2077a2798dfc62f9c1b4a8c247fcb9ad}\label{class_eugene_lib_1_1_dx12_shader_resource_views_a2077a2798dfc62f9c1b4a8c247fcb9ad}} 
+\index{EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}!CreateTexture@{CreateTexture}}
+\index{CreateTexture@{CreateTexture}!EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{CreateTexture()}{CreateTexture()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Dx12\+Shader\+Resource\+Views\+::\+Create\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{Gpu\+Resource}} \&}]{resource,  }\item[{size\+\_\+t}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_ae84a381fb810e87e935c82dc9fbd8d30}{Eugene\+Lib\+::\+Shader\+Resource\+Views}}を実装しています。
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_eugene_lib_1_1_dx12_shader_resource_views_a2077a2798dfc62f9c1b4a8c247fcb9ad_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_eugene_lib_1_1_dx12_shader_resource_views_a81ac3405f4904417472759c34ba5b5a9}\label{class_eugene_lib_1_1_dx12_shader_resource_views_a81ac3405f4904417472759c34ba5b5a9}} 
+\index{EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}!GetViews@{GetViews}}
+\index{GetViews@{GetViews}!EugeneLib::Dx12ShaderResourceViews@{EugeneLib::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{GetViews()}{GetViews()}}
+{\footnotesize\ttfamily void $\ast$ Eugene\+Lib\+::\+Dx12\+Shader\+Resource\+Views\+::\+Get\+Views (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_a12dce581a8c763bfe63f42eb4bb24f05}{Eugene\+Lib\+::\+Shader\+Resource\+Views}}を実装しています。
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+Graphics/\+Direct\+X12/\mbox{\hyperlink{_dx12_shader_resource_views_8h}{Dx12\+Shader\+Resource\+Views.\+h}}\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+Graphics/\+Direct\+X12/\mbox{\hyperlink{_dx12_shader_resource_views_8cpp}{Dx12\+Shader\+Resource\+Views.\+cpp}}\end{DoxyCompactItemize}

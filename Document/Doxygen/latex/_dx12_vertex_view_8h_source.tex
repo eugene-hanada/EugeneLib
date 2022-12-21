@@ -1,0 +1,28 @@
+\hypertarget{_dx12_vertex_view_8h_source}{}\doxysection{Dx12\+Vertex\+View.\+h}
+\label{_dx12_vertex_view_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12VertexView.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12VertexView.h}}
+\mbox{\hyperlink{_dx12_vertex_view_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/VertexView.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{struct }D3D12\_VERTEX\_BUFFER\_VIEW;}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9     \textcolor{keyword}{class }GpuResource;}
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_dx12_vertex_view}{Dx12VertexView}} :}
+\DoxyCodeLine{11         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_vertex_view}{VertexView}}}
+\DoxyCodeLine{12     \{}
+\DoxyCodeLine{13     \textcolor{keyword}{public}:}
+\DoxyCodeLine{14         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_vertex_view}{Dx12VertexView}}(\textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{size\_t} vertexNum, \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource);}
+\DoxyCodeLine{15         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_vertex_view_afe58db010f87d717a37a914d07949b44}{\string~Dx12VertexView}}();}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{private}:}
+\DoxyCodeLine{18         \textcolor{keywordtype}{void}* GetView(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{19         std::unique\_ptr<D3D12\_VERTEX\_BUFFER\_VIEW> bufferView\_;}
+\DoxyCodeLine{20     \};}
+\DoxyCodeLine{21 \}}
+\DoxyCodeLine{22 }
+
+\end{DoxyCode}

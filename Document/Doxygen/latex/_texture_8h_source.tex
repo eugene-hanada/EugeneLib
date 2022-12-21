@@ -1,0 +1,26 @@
+\hypertarget{_texture_8h_source}{}\doxysection{Texture.\+h}
+\label{_texture_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/Texture.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/Texture.h}}
+\mbox{\hyperlink{_texture_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <filesystem>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_graphics_common_8h}{GraphicsCommon.h}}"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_texture}{Texture}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_eugene_lib_1_1_texture}{Texture}}(\textcolor{keyword}{const} std::filesystem::path\& path);}
+\DoxyCodeLine{13         \textcolor{keyword}{const} \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{TextureInfo}}\& \mbox{\hyperlink{class_eugene_lib_1_1_texture_a52dbb1eed3ab0fd19ca15c396bf05fd8}{GetInfo}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{14         \textcolor{keyword}{const} std::vector<std::uint8\_t>\& \mbox{\hyperlink{class_eugene_lib_1_1_texture_a90206404d7b16fba9857d4281b2d0410}{GetData}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{15         std::uint8\_t* \mbox{\hyperlink{class_eugene_lib_1_1_texture_a90206404d7b16fba9857d4281b2d0410}{GetData}}(\textcolor{keywordtype}{void})\&;}
+\DoxyCodeLine{16     \textcolor{keyword}{private}:}
+\DoxyCodeLine{17         std::vector<std::vector<std::uint8\_t>> data\_;}
+\DoxyCodeLine{18         \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{TextureInfo}} info\_;}
+\DoxyCodeLine{19     \};}
+\DoxyCodeLine{20 \}}
+
+\end{DoxyCode}

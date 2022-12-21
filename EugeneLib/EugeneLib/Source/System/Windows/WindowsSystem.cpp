@@ -6,10 +6,29 @@
 
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 
+/// <summary>
+/// メッセージ
+/// </summary>
 MSG msg;
+
+/// <summary>
+/// ウィンドウクラス
+/// </summary>
 WNDCLASSEX windowClass;
+
+/// <summary>
+/// ウィンドウハンドル
+/// </summary>
 HWND hwnd;
 
+/// <summary>
+/// ウィンドウプロシージャ
+/// </summary>
+/// <param name="hwnd"></param>
+/// <param name="msg"></param>
+/// <param name="wparam"></param>
+/// <param name="lparam"></param>
+/// <returns></returns>
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	if (msg == WM_DESTROY)
@@ -77,11 +96,6 @@ EugeneLib::WindowsSystem::~WindowsSystem()
 EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine) const&
 {
 	return new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine};
-}
-
-void* EugeneLib::WindowsSystem::GetWindowHandle(void) const
-{
-	return &hwnd;
 }
 
 bool EugeneLib::WindowsSystem::Update(void)

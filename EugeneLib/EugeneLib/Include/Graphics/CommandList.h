@@ -27,9 +27,6 @@ namespace EugeneLib
 		virtual void SetVertexView(VertexView& view) = 0;
 
 		virtual void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) = 0;
-
-
-		/*virtual void SetIndexView() = 0;*/
 		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views) = 0;

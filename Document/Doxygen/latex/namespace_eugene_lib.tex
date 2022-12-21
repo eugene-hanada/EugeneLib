@@ -1,0 +1,1400 @@
+\hypertarget{namespace_eugene_lib}{}\doxysection{Eugene\+Lib 名前空間}
+\label{namespace_eugene_lib}\index{EugeneLib@{EugeneLib}}
+\doxysubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_command_list}{Command\+List}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_depth_stencil_views}{Depth\+Stencil\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_command_list}{Dx12\+Command\+List}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12\+Default\+Resource}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_depth_stencil_views}{Dx12\+Depth\+Stencil\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_gpu_engine}{Dx12\+Gpu\+Engine}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_gpu_resource}{Dx12\+Gpu\+Resource}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_graphics}{Dx12\+Graphics}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_graphics_pipeline}{Dx12\+Graphics\+Pipeline}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_render_target_views}{Dx12\+Render\+Target\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views}{Dx12\+Shader\+Resource\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_uploadable_resource}{Dx12\+Uploadable\+Resource}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_vertex_view}{Dx12\+Vertex\+View}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_dx12_views}{Dx12\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_eugene_lib_exception}{Eugene\+Lib\+Exception}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{Gpu\+Engine}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{Gpu\+Resource}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}}
+\begin{DoxyCompactList}\small\item\em グラフィックスの処理を行うクラス  \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_graphics_pipeline}{Graphics\+Pipeline}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_lib_init_exception}{Lib\+Init\+Exception}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_lib_relese_exception}{Lib\+Relese\+Exception}}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_rendertarget_layout}{Rendertarget\+Layout}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{Render\+Target\+Views}}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_sampler_layout}{Sampler\+Layout}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_shader}{Shader}}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_shader_input_layout}{Shader\+Input\+Layout}}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_shader_layout}{Shader\+Layout}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{Shader\+Resource\+Views}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_system}{System}}
+\begin{DoxyCompactList}\small\item\em OS等の処理をするクラス  \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_texture}{Texture}}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Texture\+Info}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_vertex_view}{Vertex\+View}}
+\item 
+class \mbox{\hyperlink{class_eugene_lib_1_1_windows_system}{Windows\+System}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{concept_eugene_lib_1_1_value_c}{ValueC}}
+\end{DoxyCompactItemize}
+\doxysubsection*{型定義}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a129d4fa1b1b6052493d535b0037706ca}{Color\+RGBA}} = \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}$<$ float, 4 $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a6c300659e2bcb376d0b08ffbb8ce98c3}{Color\+RGB}} = \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}$<$ float, 3 $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a0765cdda58b96e8bed41fc369891ec05}{Shader\+Input\+Span}} = std\+::span$<$ \mbox{\hyperlink{struct_eugene_lib_1_1_shader_input_layout}{Shader\+Input\+Layout}} $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a1858c7f8938f8ee70626101303307d33}{Shader\+Type\+Paisr\+Span}} = std\+::span$<$ std\+::pair$<$ \mbox{\hyperlink{class_eugene_lib_1_1_shader}{Shader}}, \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}{Shader\+Type}} $>$ $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}{Shader\+Layout\+Span}} = std\+::span$<$ std\+::vector$<$ \mbox{\hyperlink{struct_eugene_lib_1_1_shader_layout}{Shader\+Layout}} $>$ $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}{Sampler\+Span}} = std\+::span$<$ \mbox{\hyperlink{struct_eugene_lib_1_1_sampler_layout}{Sampler\+Layout}} $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_ae9eac1fcea6ea0cb1159c46a3473d6cc}{Render\+Target\+Span}} = std\+::span$<$ \mbox{\hyperlink{struct_eugene_lib_1_1_rendertarget_layout}{Rendertarget\+Layout}} $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} = \mbox{\hyperlink{struct_direct_x_1_1_x_m_f_l_o_a_t4_x4}{Direct\+X\+::\+XMFLOAT4\+X4}}
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ float $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a3fc084b043149a8d545bd7aa715e07a0}{Vector2D}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ double $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_ae743a03ccdd138d1dea5accbd56dbaa9}{Vector2I}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ int $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ float $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_a4aa4ee92776ea8efe535fa5962208420}{Vector3D}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ double $>$
+\item 
+using \mbox{\hyperlink{namespace_eugene_lib_abb83859768a32a2cb32743c425f31734}{Vector3I}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ int $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{列挙型}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}} \{ \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b}{NON}} = 0
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7}{R32\+G32\+B32\+A32\+\_\+\+TYPELESS}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259}{R32\+G32\+B32\+A32\+\_\+\+FLOAT}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9}{R32\+G32\+B32\+A32\+\_\+\+UINT}} = 3
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192}{R32\+G32\+B32\+A32\+\_\+\+SINT}} = 4
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2}{R32\+G32\+B32\+\_\+\+TYPELESS}} = 5
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305}{R32\+G32\+B32\+\_\+\+FLOAT}} = 6
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8}{R32\+G32\+B32\+\_\+\+UINT}} = 7
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278}{R32\+G32\+B32\+\_\+\+SINT}} = 8
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af}{R16\+G16\+B16\+A16\+\_\+\+TYPELESS}} = 9
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629}{R16\+G16\+B16\+A16\+\_\+\+FLOAT}} = 10
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4}{R16\+G16\+B16\+A16\+\_\+\+UNORM}} = 11
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b}{R16\+G16\+B16\+A16\+\_\+\+UINT}} = 12
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22}{R16\+G16\+B16\+A16\+\_\+\+SNORM}} = 13
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242}{R16\+G16\+B16\+A16\+\_\+\+SINT}} = 14
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70}{R32\+G32\+\_\+\+TYPELESS}} = 15
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848}{R32\+G32\+\_\+\+FLOAT}} = 16
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca}{R32\+G32\+\_\+\+UINT}} = 17
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90}{R32\+G32\+\_\+\+SINT}} = 18
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7}{R10\+G10\+B10\+A2\+\_\+\+TYPELESS}} = 23
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f}{R10\+G10\+B10\+A2\+\_\+\+UNORM}} = 24
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5}{R10\+G10\+B10\+A2\+\_\+\+UINT}} = 25
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187}{R11\+G11\+B10\+\_\+\+FLOAT}} = 26
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315}{R8\+G8\+B8\+A8\+\_\+\+TYPELESS}} = 27
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62}{R8\+G8\+B8\+A8\+\_\+\+UNORM}} = 28
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1}{R8\+G8\+B8\+A8\+\_\+\+UNORM\+\_\+\+SRGB}} = 29
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4}{R8\+G8\+B8\+A8\+\_\+\+UINT}} = 30
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef}{R8\+G8\+B8\+A8\+\_\+\+SNORM}} = 31
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0}{R8\+G8\+B8\+A8\+\_\+\+SINT}} = 32
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099}{R16\+G16\+\_\+\+TYPELESS}} = 33
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280}{R16\+G16\+\_\+\+FLOAT}} = 34
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc}{R16\+G16\+\_\+\+UNORM}} = 35
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3}{R16\+G16\+\_\+\+UINT}} = 36
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191}{R16\+G16\+\_\+\+SNORM}} = 37
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08}{R16\+G16\+\_\+\+SINT}} = 38
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9}{R32\+\_\+\+TYPELESS}} = 39
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a}{D32\+\_\+\+FLOAT}} = 40
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272}{R32\+\_\+\+FLOAT}} = 41
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218}{R32\+\_\+\+UINT}} = 42
+, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565}{R32\+\_\+\+SINT}} = 43
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26}{Primitive\+Type}} \{ \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c}{Point}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4}{Line}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b}{Triangle}} = 4
+, \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c}{Triangle\+Strip}} = 5
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}{Shader\+Type}} \{ \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3ab22b929ba52471a02d18bb3a4e4472e6}{Vertex}}
+, \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3a08822b3ae4e2aede0afe08abe600e9c0}{Pixel}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1}{Blend\+Type}} \{ \newline
+\mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6679e65c932b2c5ad98080ee21a4f0d4}{Non}}
+, \mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6132295fcf5570fb8b0a944ef322a598}{Alpha}}
+, \mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aec211f7c20af43e742bf2570c3cb84f9}{Add}}
+, \mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1ae80155eceb940c89e2de63ad05868db2}{Sub}}
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aa7e871520a392b978d3c9e6344c4407f}{Inv}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4}{View\+Type}} \{ \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b}{Texture}}
+, \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa70ac1bcddec0749b07fe85f2d6733ad}{Unodered\+Accsec}}
+, \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4af09d0dd3c08eeabc5b432609f31d0a8c}{Constant\+Buffer}}
+, \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4a5bca2f066df1fe641b2b779db2a63c0a}{Sampler}}
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2}{Texture\+Address\+Mode}} \{ \newline
+\mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2aa212b19ef5f2fb30acf92e6cbccc1f2d}{Wrap}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a2403def5083f02105e7802b3b315681e}{Mirror}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a08825280e3f8137556325061ba67ff8c}{Clamp}} = 3
+, \mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a070554647306343cbea29ebfdd278ba8}{Border}} = 4
+, \newline
+\mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2abbfe58735042c726d2d04562ea4e265a}{Mirror\+Once}} = 5
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1}{Sample\+Filter}} \{ \mbox{\hyperlink{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a2a3cd5946cfd317eb99c3d32e35e2d4c}{Point}} = 0
+, \mbox{\hyperlink{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a32a843da6ea40ab3b17a3421ccdf671b}{Linear}} = 0x15
+, \mbox{\hyperlink{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a3cc429d7ee5b21a397fdc636221f8280}{Anisotropic}} = 0x55
+ \}
+\item 
+enum class \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3}{Topology\+Type}} \{ \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a2a3cd5946cfd317eb99c3d32e35e2d4c}{Point}} = 1
+, \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a4803e6b9e63dabf04de980788d6a13c4}{Line}} = 2
+, \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b}{Triangle}} = 3
+, \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a156e10596fdc76ee5300bab931d89c0f}{Patch}} = 4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_a7ffe6b3e372aab0c459d12d502777c4e}{Square}} (T val)
+\begin{DoxyCompactList}\small\item\em 二乗する  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_a0e1e998514c1311d90e421e2856d66ea}{Dot}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\begin{DoxyCompactList}\small\item\em 内積(Vector2用)  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_ad945eba7518d3a64cd6656182e7c7d3a}{Cross}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\begin{DoxyCompactList}\small\item\em 外積(Vector2用)  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_abe2f9194d7aaffa2291e013801046cd0}{Deg2\+Rad}} (const T \&deg)
+\begin{DoxyCompactList}\small\item\em 度数法を弧度法にする  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_ad23ce15d5f694499a7ac0d1a93d56f54}{Rad2\+Deg}} (const T \&rad)
+\begin{DoxyCompactList}\small\item\em 弧度法を度数法にする  \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespace_eugene_lib_a50c52789dbd243f7f03c7be5af97f288}{Get\+Normalized\+Angle}} (float angle, float val\+Min=0.\+0f, float val\+Max=\mbox{\hyperlink{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}{pi2}}$<$ float $>$)
+\begin{DoxyCompactList}\small\item\em 角度を指定範囲に正規化する  \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespace_eugene_lib_a63321a8221e83102d1a31aac6496eb6d}{Get\+Normalized\+Angle}} (double angle, double val\+Min=0.\+0f, double val\+Max=\mbox{\hyperlink{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}{pi2}}$<$ double $>$)
+\item 
+constexpr float \mbox{\hyperlink{namespace_eugene_lib_ade1fb993b850ac6c2eb81104f8999804}{Clamp}} (float val, float min\+Val, float max\+Val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\T \mbox{\hyperlink{namespace_eugene_lib_a9a4c0952dbcb276cc0fc08d89f511228}{Get\+Angle2\+Vector}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&v1, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&v2)
+\begin{DoxyCompactList}\small\item\em Vector2と\+Vector2の間の角度を求める  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_a8cdb785a345cb79b85f816656e0eeebc}{Learp}} (const T \&a, const T \&b, const T \&t)
+\begin{DoxyCompactList}\small\item\em aとbをtで線形補完する関数  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a6a20949e00469f238aa030991fbb1d73}{Learp}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&a, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&b, const T \&t)
+\begin{DoxyCompactList}\small\item\em ベクトルaとベクトルbをtで線形補完する関数  \end{DoxyCompactList}\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_ac53fd223c082c6cfe4a8a878d4d1d5c4}{Clamp}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&val, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&min, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&max)
+\begin{DoxyCompactList}\small\item\em Vector2\+Tmpを\+Clampする  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_eugene_lib_ae0004909ca91904dc67d4549b70a10bb}{Get2\+DMatrix}} (\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&out, const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&size)
+\item 
+void \mbox{\hyperlink{namespace_eugene_lib_ab9041182893d9ed489f1aacd31baf02b}{Get\+Look\+At\+Matrix}} (\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&out, const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&eye, const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&target, const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&up)
+\item 
+void \mbox{\hyperlink{namespace_eugene_lib_a9d40c0b1a8890bf82b6699b86bd9c1ed}{Get\+Perspective\+Fov\+Matrix}} (\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&out, float fov, float aspect, float near=0.\+1f, float far=1000.\+0f)
+\item 
+void \mbox{\hyperlink{namespace_eugene_lib_a77ff0c5fca3668e198894e5417efee7e}{Get\+Orthographic\+Matrix}} (\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&out, const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&size, float near=0.\+1f, float far=1000.\+0f)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a6283de2b7fccb56838673824afdab52b}{operator+}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a37be3a610b53e9b9c25742480376111e}{operator+}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a891cc1f704f9c103650ea0d190eb0811}{operator-\/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_af57df76ed47c493a740a32e8e0998039}{operator-\/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a169c47bf2426eebde633f19b16a3c528}{operator$\ast$}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a94d5089344b0677050b0ec6c4096003d}{operator$\ast$}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a1387498b5d48e893efff8a8601d6866a}{operator/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_ac7d0961fb3d9a090e763fe92bba64ce4}{operator/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a00d4e246c82bbf861975e50fe41ff2a9}{operator\%}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a09ff8d6bcaa9554ad151b4522e70fe46}{operator\%}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_eugene_lib_a8c8c36b7160186d9c7a2ae8606e8ebf9}{operator==}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr bool \mbox{\hyperlink{namespace_eugene_lib_aa7a4cec7587c4377b676532c5fee70b7}{operator!=}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_af5ffd5e2a25949e725beb7cb2f408cae}{operator+}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a401a3e34f4a10dcb9ed0199910b7b4ac}{operator+}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a4ac646e16bd673665d345149b56fb081}{operator-\/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_abd8a670b5ccf85263c1def0cbcb9bb5e}{operator-\/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a7d5dc79184c4f4fabb6af21a473794db}{operator$\ast$}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a1c87a069d39c59fba122abf5b1b528b4}{operator$\ast$}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a5a476463a7969e05bf7e73c3c511cb31}{operator/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_ade75be5581c0eaa08e7e6446888ffd01}{operator/}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a21d22edeb1beeda5d5c77eff6115ef47}{operator\%}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_aa22eec835c92fa593f89e93c2efce7b7}{operator\%}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const T \&val)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\bool \mbox{\hyperlink{namespace_eugene_lib_ae9b526e7d23878d88da34f3fcdc87bf8}{operator==}} (const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&l\+Vec, const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&r\+Vec)
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_system}{System}} $\ast$ \mbox{\hyperlink{namespace_eugene_lib_aff3a24058af4aadff5f383b2e213ccf7}{Create\+System}} (const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&size, const std\+::u8string \&title)
+\begin{DoxyCompactList}\small\item\em Systemの作成  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a0509ab25fbb41e4f3150fdb9dcbfd966}{zero\+Vector2}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a00d72781c0207d88d93a590eff0a093b}{up\+Vector2}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(-\/1) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_aefec71361344551e16fbfddfaa2b0743}{down\+Vector2}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(1) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_aa6cc2d8390059906d680e3c54bea827d}{right\+Vector2}} \{ static\+\_\+cast$<$T$>$(1),static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a0f945aeed0d1510251fa6bbdebddf22d}{left\+Vector2}} \{ static\+\_\+cast$<$T$>$(-\/1),static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_af12721ff6de17d3bbb58bfbcb58f6ad6}{zero\+Vector3}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a67c452d84f94d0c8760d08f2e2df3edc}{up\+Vector3}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(1) ,static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_aefecdb4a6ee9fb9c1905cd622682a6c7}{down\+Vector3}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(-\/1) ,static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_ae99c9f911e6edebd43deaf8312cf4d40}{forward\+Vector3}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(1) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a69c1905929f82f977ed74f10e87010ff}{back\+Vector3}} \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(-\/1) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_a14308ac3e378e6d6b83d42ab538d60d9}{left\+Vector3}} \{ static\+\_\+cast$<$T$>$(-\/1),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \mbox{\hyperlink{namespace_eugene_lib_ae173839f9c01344cbc80ced784ac6b0a}{right\+Vector3}} \{ static\+\_\+cast$<$T$>$(1),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_a4ada80a7e61d2717ff89ca0b37481863}{pi}} = static\+\_\+cast$<$T$>$(3.\+1415926535897932384626433832795)
+\item 
+{\footnotesize template$<$ValueC T$>$ }\\constexpr T \mbox{\hyperlink{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}{pi2}} = \mbox{\hyperlink{namespace_eugene_lib_a4ada80a7e61d2717ff89ca0b37481863}{pi}}$<$T$>$ $\ast$static\+\_\+cast$<$T$>$(2.\+0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{型定義詳解}
+\mbox{\Hypertarget{namespace_eugene_lib_a6c300659e2bcb376d0b08ffbb8ce98c3}\label{namespace_eugene_lib_a6c300659e2bcb376d0b08ffbb8ce98c3}} 
+\index{EugeneLib@{EugeneLib}!ColorRGB@{ColorRGB}}
+\index{ColorRGB@{ColorRGB}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ColorRGB}{ColorRGB}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a6c300659e2bcb376d0b08ffbb8ce98c3}{Eugene\+Lib\+::\+Color\+RGB}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}$<$float, 3$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a129d4fa1b1b6052493d535b0037706ca}\label{namespace_eugene_lib_a129d4fa1b1b6052493d535b0037706ca}} 
+\index{EugeneLib@{EugeneLib}!ColorRGBA@{ColorRGBA}}
+\index{ColorRGBA@{ColorRGBA}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ColorRGBA}{ColorRGBA}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a129d4fa1b1b6052493d535b0037706ca}{Eugene\+Lib\+::\+Color\+RGBA}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}$<$float, 4$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}\label{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}} 
+\index{EugeneLib@{EugeneLib}!Matrix4x4@{Matrix4x4}}
+\index{Matrix4x4@{Matrix4x4}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Matrix4x4}{Matrix4x4}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Eugene\+Lib\+::\+Matrix4x4}} = typedef \mbox{\hyperlink{struct_direct_x_1_1_x_m_f_l_o_a_t4_x4}{Direct\+X\+::\+XMFLOAT4\+X4}}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae9eac1fcea6ea0cb1159c46a3473d6cc}\label{namespace_eugene_lib_ae9eac1fcea6ea0cb1159c46a3473d6cc}} 
+\index{EugeneLib@{EugeneLib}!RenderTargetSpan@{RenderTargetSpan}}
+\index{RenderTargetSpan@{RenderTargetSpan}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{RenderTargetSpan}{RenderTargetSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_ae9eac1fcea6ea0cb1159c46a3473d6cc}{Eugene\+Lib\+::\+Render\+Target\+Span}} = typedef std\+::span $<$\mbox{\hyperlink{struct_eugene_lib_1_1_rendertarget_layout}{Rendertarget\+Layout}}$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}\label{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}} 
+\index{EugeneLib@{EugeneLib}!SamplerSpan@{SamplerSpan}}
+\index{SamplerSpan@{SamplerSpan}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{SamplerSpan}{SamplerSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}{Eugene\+Lib\+::\+Sampler\+Span}} = typedef std\+::span$<$\mbox{\hyperlink{struct_eugene_lib_1_1_sampler_layout}{Sampler\+Layout}}$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a0765cdda58b96e8bed41fc369891ec05}\label{namespace_eugene_lib_a0765cdda58b96e8bed41fc369891ec05}} 
+\index{EugeneLib@{EugeneLib}!ShaderInputSpan@{ShaderInputSpan}}
+\index{ShaderInputSpan@{ShaderInputSpan}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ShaderInputSpan}{ShaderInputSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a0765cdda58b96e8bed41fc369891ec05}{Eugene\+Lib\+::\+Shader\+Input\+Span}} = typedef std\+::span$<$\mbox{\hyperlink{struct_eugene_lib_1_1_shader_input_layout}{Shader\+Input\+Layout}}$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}\label{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}} 
+\index{EugeneLib@{EugeneLib}!ShaderLayoutSpan@{ShaderLayoutSpan}}
+\index{ShaderLayoutSpan@{ShaderLayoutSpan}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ShaderLayoutSpan}{ShaderLayoutSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}{Eugene\+Lib\+::\+Shader\+Layout\+Span}} = typedef std\+::span$<$std\+::vector$<$\mbox{\hyperlink{struct_eugene_lib_1_1_shader_layout}{Shader\+Layout}}$>$ $>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a1858c7f8938f8ee70626101303307d33}\label{namespace_eugene_lib_a1858c7f8938f8ee70626101303307d33}} 
+\index{EugeneLib@{EugeneLib}!ShaderTypePaisrSpan@{ShaderTypePaisrSpan}}
+\index{ShaderTypePaisrSpan@{ShaderTypePaisrSpan}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ShaderTypePaisrSpan}{ShaderTypePaisrSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a1858c7f8938f8ee70626101303307d33}{Eugene\+Lib\+::\+Shader\+Type\+Paisr\+Span}} = typedef std\+::span$<$std\+::pair$<$\mbox{\hyperlink{class_eugene_lib_1_1_shader}{Shader}}, \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}{Shader\+Type}}$>$ $>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}\label{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}} 
+\index{EugeneLib@{EugeneLib}!Vector2@{Vector2}}
+\index{Vector2@{Vector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector2}{Vector2}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Eugene\+Lib\+::\+Vector2}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$float$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a3fc084b043149a8d545bd7aa715e07a0}\label{namespace_eugene_lib_a3fc084b043149a8d545bd7aa715e07a0}} 
+\index{EugeneLib@{EugeneLib}!Vector2D@{Vector2D}}
+\index{Vector2D@{Vector2D}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector2D}{Vector2D}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a3fc084b043149a8d545bd7aa715e07a0}{Eugene\+Lib\+::\+Vector2D}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$double$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae743a03ccdd138d1dea5accbd56dbaa9}\label{namespace_eugene_lib_ae743a03ccdd138d1dea5accbd56dbaa9}} 
+\index{EugeneLib@{EugeneLib}!Vector2I@{Vector2I}}
+\index{Vector2I@{Vector2I}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector2I}{Vector2I}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_ae743a03ccdd138d1dea5accbd56dbaa9}{Eugene\+Lib\+::\+Vector2I}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$int$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}\label{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}} 
+\index{EugeneLib@{EugeneLib}!Vector3@{Vector3}}
+\index{Vector3@{Vector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector3}{Vector3}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Eugene\+Lib\+::\+Vector3}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$float$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a4aa4ee92776ea8efe535fa5962208420}\label{namespace_eugene_lib_a4aa4ee92776ea8efe535fa5962208420}} 
+\index{EugeneLib@{EugeneLib}!Vector3D@{Vector3D}}
+\index{Vector3D@{Vector3D}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector3D}{Vector3D}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_a4aa4ee92776ea8efe535fa5962208420}{Eugene\+Lib\+::\+Vector3D}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$double$>$}
+
+\mbox{\Hypertarget{namespace_eugene_lib_abb83859768a32a2cb32743c425f31734}\label{namespace_eugene_lib_abb83859768a32a2cb32743c425f31734}} 
+\index{EugeneLib@{EugeneLib}!Vector3I@{Vector3I}}
+\index{Vector3I@{Vector3I}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Vector3I}{Vector3I}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespace_eugene_lib_abb83859768a32a2cb32743c425f31734}{Eugene\+Lib\+::\+Vector3I}} = typedef \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$int$>$}
+
+
+
+\doxysubsection{列挙型詳解}
+\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1}} 
+\index{EugeneLib@{EugeneLib}!BlendType@{BlendType}}
+\index{BlendType@{BlendType}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{BlendType}{BlendType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1}{Eugene\+Lib\+::\+Blend\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Non@{Non}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Non@{Non}}}\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6679e65c932b2c5ad98080ee21a4f0d4}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6679e65c932b2c5ad98080ee21a4f0d4}} 
+Non&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha@{Alpha}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Alpha@{Alpha}}}\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6132295fcf5570fb8b0a944ef322a598}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1a6132295fcf5570fb8b0a944ef322a598}} 
+Alpha&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Add@{Add}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Add@{Add}}}\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aec211f7c20af43e742bf2570c3cb84f9}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aec211f7c20af43e742bf2570c3cb84f9}} 
+Add&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sub@{Sub}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Sub@{Sub}}}\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1ae80155eceb940c89e2de63ad05868db2}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1ae80155eceb940c89e2de63ad05868db2}} 
+Sub&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Inv@{Inv}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Inv@{Inv}}}\mbox{\Hypertarget{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aa7e871520a392b978d3c9e6344c4407f}\label{namespace_eugene_lib_afe2e8caadf9422c71b9e10714289f4a1aa7e871520a392b978d3c9e6344c4407f}} 
+Inv&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}} 
+\index{EugeneLib@{EugeneLib}!Format@{Format}}
+\index{Format@{Format}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Format}{Format}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Eugene\+Lib\+::\+Format}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NON@{NON}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!NON@{NON}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7624ad70a400ab16bed0602ac396f02b}} 
+NON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32A32\_TYPELESS@{R32G32B32A32\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32A32\_TYPELESS@{R32G32B32A32\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafc92334bd9da483bc6a45e1b6b4d24e7}} 
+R32\+G32\+B32\+A32\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32A32\_FLOAT@{R32G32B32A32\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32A32\_FLOAT@{R32G32B32A32\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba82bb90f92345314d9299d3e77d87f259}} 
+R32\+G32\+B32\+A32\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32A32\_UINT@{R32G32B32A32\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32A32\_UINT@{R32G32B32A32\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b993e1cc925013e7f5aff710f0033e9}} 
+R32\+G32\+B32\+A32\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32A32\_SINT@{R32G32B32A32\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32A32\_SINT@{R32G32B32A32\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bafd9ca5bb13785040311bc3b0dbe4f192}} 
+R32\+G32\+B32\+A32\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32\_TYPELESS@{R32G32B32\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32\_TYPELESS@{R32G32B32\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba17112b4511323fc3d9688260830843a2}} 
+R32\+G32\+B32\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32\_FLOAT@{R32G32B32\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32\_FLOAT@{R32G32B32\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad05d603c5884ae9ccc392513becba305}} 
+R32\+G32\+B32\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32\_UINT@{R32G32B32\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32\_UINT@{R32G32B32\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8a0c94872edade84a5320f3cb31ac6a8}} 
+R32\+G32\+B32\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32B32\_SINT@{R32G32B32\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32B32\_SINT@{R32G32B32\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae53d190f1e9fa67fb47bc8c053b53278}} 
+R32\+G32\+B32\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_TYPELESS@{R16G16B16A16\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_TYPELESS@{R16G16B16A16\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba095ead84ae8cfa2a1c13fdc0fa2648af}} 
+R16\+G16\+B16\+A16\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_FLOAT@{R16G16B16A16\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_FLOAT@{R16G16B16A16\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba8877c88854b09a122f3533a4de543629}} 
+R16\+G16\+B16\+A16\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_UNORM@{R16G16B16A16\_UNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_UNORM@{R16G16B16A16\_UNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba69b3ab5e66e03b0dd25f21107ff04da4}} 
+R16\+G16\+B16\+A16\+\_\+\+UNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_UINT@{R16G16B16A16\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_UINT@{R16G16B16A16\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9e1fb7eae42b4f0b636e6bde9a33cf4b}} 
+R16\+G16\+B16\+A16\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_SNORM@{R16G16B16A16\_SNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_SNORM@{R16G16B16A16\_SNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba6395668b27c2bf19e4eaa4dbb06c0d22}} 
+R16\+G16\+B16\+A16\+\_\+\+SNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16B16A16\_SINT@{R16G16B16A16\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16B16A16\_SINT@{R16G16B16A16\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5700a5767ec14fdb361879186ff5d242}} 
+R16\+G16\+B16\+A16\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32\_TYPELESS@{R32G32\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32\_TYPELESS@{R32G32\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf9bab926eae737c9f0e718c7aeb6de70}} 
+R32\+G32\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32\_FLOAT@{R32G32\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32\_FLOAT@{R32G32\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba034e2a26f1b92822236e0095a5ca1848}} 
+R32\+G32\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32\_UINT@{R32G32\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32\_UINT@{R32G32\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bad0a8fa71e3197bbf9b23d6d93235f3ca}} 
+R32\+G32\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32G32\_SINT@{R32G32\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32G32\_SINT@{R32G32\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78bae00f80e3640e18f2997325c36fe0ef90}} 
+R32\+G32\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R10G10B10A2\_TYPELESS@{R10G10B10A2\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R10G10B10A2\_TYPELESS@{R10G10B10A2\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba982eb881704fafe1440b0ba720a349b7}} 
+R10\+G10\+B10\+A2\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R10G10B10A2\_UNORM@{R10G10B10A2\_UNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R10G10B10A2\_UNORM@{R10G10B10A2\_UNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0b98d86112a7d1c13253a54dc368826f}} 
+R10\+G10\+B10\+A2\+\_\+\+UNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R10G10B10A2\_UINT@{R10G10B10A2\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R10G10B10A2\_UINT@{R10G10B10A2\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf3748f42b5cc8bc07da32114bf541df5}} 
+R10\+G10\+B10\+A2\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R11G11B10\_FLOAT@{R11G11B10\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R11G11B10\_FLOAT@{R11G11B10\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba7551860e61046d5fb270dd52e1a4b187}} 
+R11\+G11\+B10\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_TYPELESS@{R8G8B8A8\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_TYPELESS@{R8G8B8A8\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf72fa791516c793594b5f4f943af6315}} 
+R8\+G8\+B8\+A8\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_UNORM@{R8G8B8A8\_UNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_UNORM@{R8G8B8A8\_UNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf55c1c722034e92213df328d31e33c62}} 
+R8\+G8\+B8\+A8\+\_\+\+UNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_UNORM\_SRGB@{R8G8B8A8\_UNORM\_SRGB}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_UNORM\_SRGB@{R8G8B8A8\_UNORM\_SRGB}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2d00fbcd05d552791494b5799db714e1}} 
+R8\+G8\+B8\+A8\+\_\+\+UNORM\+\_\+\+SRGB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_UINT@{R8G8B8A8\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_UINT@{R8G8B8A8\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba67db604c7206857ceb4fe94ee620cae4}} 
+R8\+G8\+B8\+A8\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_SNORM@{R8G8B8A8\_SNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_SNORM@{R8G8B8A8\_SNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba3f078e8cba824b14d56a1de8ce6e93ef}} 
+R8\+G8\+B8\+A8\+\_\+\+SNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R8G8B8A8\_SINT@{R8G8B8A8\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R8G8B8A8\_SINT@{R8G8B8A8\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba371d6f9af5590e4d6f25cdb002854ef0}} 
+R8\+G8\+B8\+A8\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_TYPELESS@{R16G16\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_TYPELESS@{R16G16\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba53a4c970b36e5e0760b5d709b8ca8099}} 
+R16\+G16\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_FLOAT@{R16G16\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_FLOAT@{R16G16\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba4f5847ebfcf03e87d28d26da8e7c8280}} 
+R16\+G16\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_UNORM@{R16G16\_UNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_UNORM@{R16G16\_UNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9330163522c11f1879d051de71aaf4cc}} 
+R16\+G16\+\_\+\+UNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_UINT@{R16G16\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_UINT@{R16G16\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba01aa628941c3b48fea869c081e0611a3}} 
+R16\+G16\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_SNORM@{R16G16\_SNORM}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_SNORM@{R16G16\_SNORM}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baaf5b25237ef4bc08c7d4e902d87fa191}} 
+R16\+G16\+\_\+\+SNORM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R16G16\_SINT@{R16G16\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R16G16\_SINT@{R16G16\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba9d7ccb74bbc2a2aca0d0688f85266a08}} 
+R16\+G16\+\_\+\+SINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32\_TYPELESS@{R32\_TYPELESS}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32\_TYPELESS@{R32\_TYPELESS}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba5b48989c0201198bda57a0024e2e2bd9}} 
+R32\+\_\+\+TYPELESS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D32\_FLOAT@{D32\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!D32\_FLOAT@{D32\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba0cd740d22f1f39e5fe71d013370a8e5a}} 
+D32\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32\_FLOAT@{R32\_FLOAT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32\_FLOAT@{R32\_FLOAT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba2598f201b222b270e09b7913987d7272}} 
+R32\+\_\+\+FLOAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32\_UINT@{R32\_UINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32\_UINT@{R32\_UINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78baf010bb9e5a699e4cb9c80b2f5d982218}} 
+R32\+\_\+\+UINT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R32\_SINT@{R32\_SINT}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!R32\_SINT@{R32\_SINT}}}\mbox{\Hypertarget{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565}\label{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78ba99d5ccfc1a21572c753cbf0640bd2565}} 
+R32\+\_\+\+SINT&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26}\label{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26}} 
+\index{EugeneLib@{EugeneLib}!PrimitiveType@{PrimitiveType}}
+\index{PrimitiveType@{PrimitiveType}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{PrimitiveType}{PrimitiveType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26}{Eugene\+Lib\+::\+Primitive\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Point@{Point}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Point@{Point}}}\mbox{\Hypertarget{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c}\label{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a2a3cd5946cfd317eb99c3d32e35e2d4c}} 
+Point&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Line@{Line}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Line@{Line}}}\mbox{\Hypertarget{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4}\label{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a4803e6b9e63dabf04de980788d6a13c4}} 
+Line&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Triangle@{Triangle}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Triangle@{Triangle}}}\mbox{\Hypertarget{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b}\label{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a5e5500cb2b82eb72d550de644bd1b64b}} 
+Triangle&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TriangleStrip@{TriangleStrip}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!TriangleStrip@{TriangleStrip}}}\mbox{\Hypertarget{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c}\label{namespace_eugene_lib_a7c8f297b12d5ffe597cf183906fa1f26a1da0b9ead8b051940a89214bae22831c}} 
+Triangle\+Strip&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1}\label{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1}} 
+\index{EugeneLib@{EugeneLib}!SampleFilter@{SampleFilter}}
+\index{SampleFilter@{SampleFilter}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{SampleFilter}{SampleFilter}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1}{Eugene\+Lib\+::\+Sample\+Filter}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Point@{Point}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Point@{Point}}}\mbox{\Hypertarget{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a2a3cd5946cfd317eb99c3d32e35e2d4c}\label{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a2a3cd5946cfd317eb99c3d32e35e2d4c}} 
+Point&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Linear@{Linear}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Linear@{Linear}}}\mbox{\Hypertarget{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a32a843da6ea40ab3b17a3421ccdf671b}\label{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a32a843da6ea40ab3b17a3421ccdf671b}} 
+Linear&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Anisotropic@{Anisotropic}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Anisotropic@{Anisotropic}}}\mbox{\Hypertarget{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a3cc429d7ee5b21a397fdc636221f8280}\label{namespace_eugene_lib_a7e046fcfbaa5e400f9b719dc4bc394b1a3cc429d7ee5b21a397fdc636221f8280}} 
+Anisotropic&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}\label{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}} 
+\index{EugeneLib@{EugeneLib}!ShaderType@{ShaderType}}
+\index{ShaderType@{ShaderType}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ShaderType}{ShaderType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3}{Eugene\+Lib\+::\+Shader\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vertex@{Vertex}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Vertex@{Vertex}}}\mbox{\Hypertarget{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3ab22b929ba52471a02d18bb3a4e4472e6}\label{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3ab22b929ba52471a02d18bb3a4e4472e6}} 
+Vertex&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pixel@{Pixel}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Pixel@{Pixel}}}\mbox{\Hypertarget{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3a08822b3ae4e2aede0afe08abe600e9c0}\label{namespace_eugene_lib_a977527c0208fb1ed91040ddaefe498a3a08822b3ae4e2aede0afe08abe600e9c0}} 
+Pixel&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2}} 
+\index{EugeneLib@{EugeneLib}!TextureAddressMode@{TextureAddressMode}}
+\index{TextureAddressMode@{TextureAddressMode}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{TextureAddressMode}{TextureAddressMode}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2}{Eugene\+Lib\+::\+Texture\+Address\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wrap@{Wrap}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Wrap@{Wrap}}}\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2aa212b19ef5f2fb30acf92e6cbccc1f2d}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2aa212b19ef5f2fb30acf92e6cbccc1f2d}} 
+Wrap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mirror@{Mirror}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Mirror@{Mirror}}}\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a2403def5083f02105e7802b3b315681e}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a2403def5083f02105e7802b3b315681e}} 
+Mirror&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Clamp@{Clamp}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Clamp@{Clamp}}}\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a08825280e3f8137556325061ba67ff8c}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a08825280e3f8137556325061ba67ff8c}} 
+Clamp&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Border@{Border}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Border@{Border}}}\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a070554647306343cbea29ebfdd278ba8}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2a070554647306343cbea29ebfdd278ba8}} 
+Border&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MirrorOnce@{MirrorOnce}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!MirrorOnce@{MirrorOnce}}}\mbox{\Hypertarget{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2abbfe58735042c726d2d04562ea4e265a}\label{namespace_eugene_lib_a3fae370b7262d35cbe195b18aaef08c2abbfe58735042c726d2d04562ea4e265a}} 
+Mirror\+Once&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3}\label{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3}} 
+\index{EugeneLib@{EugeneLib}!TopologyType@{TopologyType}}
+\index{TopologyType@{TopologyType}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{TopologyType}{TopologyType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3}{Eugene\+Lib\+::\+Topology\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Point@{Point}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Point@{Point}}}\mbox{\Hypertarget{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a2a3cd5946cfd317eb99c3d32e35e2d4c}\label{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a2a3cd5946cfd317eb99c3d32e35e2d4c}} 
+Point&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Line@{Line}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Line@{Line}}}\mbox{\Hypertarget{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a4803e6b9e63dabf04de980788d6a13c4}\label{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a4803e6b9e63dabf04de980788d6a13c4}} 
+Line&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Triangle@{Triangle}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Triangle@{Triangle}}}\mbox{\Hypertarget{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b}\label{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b}} 
+Triangle&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Patch@{Patch}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Patch@{Patch}}}\mbox{\Hypertarget{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a156e10596fdc76ee5300bab931d89c0f}\label{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a156e10596fdc76ee5300bab931d89c0f}} 
+Patch&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4}\label{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4}} 
+\index{EugeneLib@{EugeneLib}!ViewType@{ViewType}}
+\index{ViewType@{ViewType}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{ViewType}{ViewType}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4}{Eugene\+Lib\+::\+View\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{列挙値}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Texture@{Texture}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Texture@{Texture}}}\mbox{\Hypertarget{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b}\label{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b}} 
+Texture&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UnoderedAccsec@{UnoderedAccsec}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!UnoderedAccsec@{UnoderedAccsec}}}\mbox{\Hypertarget{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa70ac1bcddec0749b07fe85f2d6733ad}\label{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4aa70ac1bcddec0749b07fe85f2d6733ad}} 
+Unodered\+Accsec&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConstantBuffer@{ConstantBuffer}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!ConstantBuffer@{ConstantBuffer}}}\mbox{\Hypertarget{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4af09d0dd3c08eeabc5b432609f31d0a8c}\label{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4af09d0dd3c08eeabc5b432609f31d0a8c}} 
+Constant\+Buffer&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sampler@{Sampler}!EugeneLib@{EugeneLib}}\index{EugeneLib@{EugeneLib}!Sampler@{Sampler}}}\mbox{\Hypertarget{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4a5bca2f066df1fe641b2b779db2a63c0a}\label{namespace_eugene_lib_affc713c8fdbe6c629508dd68706cdce4a5bca2f066df1fe641b2b779db2a63c0a}} 
+Sampler&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{namespace_eugene_lib_ac53fd223c082c6cfe4a8a878d4d1d5c4}\label{namespace_eugene_lib_ac53fd223c082c6cfe4a8a878d4d1d5c4}} 
+\index{EugeneLib@{EugeneLib}!Clamp@{Clamp}}
+\index{Clamp@{Clamp}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Clamp()}{Clamp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::\+Clamp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{val,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{min,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{max }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Vector2\+Tmpを\+Clampする  
+
+
+\begin{DoxyParams}{引数}
+{\em val} & Clampしたい値 \\
+\hline
+{\em min} & 最小値 \\
+\hline
+{\em max} & 最大値 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+Clamp後の値 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_ade1fb993b850ac6c2eb81104f8999804}\label{namespace_eugene_lib_ade1fb993b850ac6c2eb81104f8999804}} 
+\index{EugeneLib@{EugeneLib}!Clamp@{Clamp}}
+\index{Clamp@{Clamp}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Clamp()}{Clamp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr float Eugene\+Lib\+::\+Clamp (\begin{DoxyParamCaption}\item[{float}]{val,  }\item[{float}]{min\+Val,  }\item[{float}]{max\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aff3a24058af4aadff5f383b2e213ccf7}\label{namespace_eugene_lib_aff3a24058af4aadff5f383b2e213ccf7}} 
+\index{EugeneLib@{EugeneLib}!CreateSystem@{CreateSystem}}
+\index{CreateSystem@{CreateSystem}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{CreateSystem()}{CreateSystem()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_eugene_lib_1_1_system}{Eugene\+Lib\+::\+System}} $\ast$ Eugene\+Lib\+::\+Create\+System (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&}]{size,  }\item[{const std\+::u8string \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Systemの作成  
+
+
+\begin{DoxyParams}{引数}
+{\em size} & ウィンドウサイズ \\
+\hline
+{\em title} & タイトル \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_ad945eba7518d3a64cd6656182e7c7d3a}\label{namespace_eugene_lib_ad945eba7518d3a64cd6656182e7c7d3a}} 
+\index{EugeneLib@{EugeneLib}!Cross@{Cross}}
+\index{Cross@{Cross}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Cross()}{Cross()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Cross (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+外積(Vector2用)  
+
+
+\begin{DoxyParams}{引数}
+{\em l\+Vec} & \\
+\hline
+{\em r\+Vec} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+被呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_ad945eba7518d3a64cd6656182e7c7d3a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_abe2f9194d7aaffa2291e013801046cd0}\label{namespace_eugene_lib_abe2f9194d7aaffa2291e013801046cd0}} 
+\index{EugeneLib@{EugeneLib}!Deg2Rad@{Deg2Rad}}
+\index{Deg2Rad@{Deg2Rad}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Deg2Rad()}{Deg2Rad()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Deg2\+Rad (\begin{DoxyParamCaption}\item[{const T \&}]{deg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+度数法を弧度法にする  
+
+
+\begin{DoxyParams}{引数}
+{\em deg} & 変換したい度数法の値 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_a0e1e998514c1311d90e421e2856d66ea}\label{namespace_eugene_lib_a0e1e998514c1311d90e421e2856d66ea}} 
+\index{EugeneLib@{EugeneLib}!Dot@{Dot}}
+\index{Dot@{Dot}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Dot()}{Dot()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Dot (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+内積(Vector2用)  
+
+
+\begin{DoxyParams}{引数}
+{\em l\+Vec} & \\
+\hline
+{\em r\+Vec} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+被呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{namespace_eugene_lib_a0e1e998514c1311d90e421e2856d66ea_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_ae0004909ca91904dc67d4549b70a10bb}\label{namespace_eugene_lib_ae0004909ca91904dc67d4549b70a10bb}} 
+\index{EugeneLib@{EugeneLib}!Get2DMatrix@{Get2DMatrix}}
+\index{Get2DMatrix@{Get2DMatrix}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Get2DMatrix()}{Get2DMatrix()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Get2\+DMatrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&}]{out,  }\item[{const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&}]{size }\end{DoxyParamCaption})}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_ae0004909ca91904dc67d4549b70a10bb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a9a4c0952dbcb276cc0fc08d89f511228}\label{namespace_eugene_lib_a9a4c0952dbcb276cc0fc08d89f511228}} 
+\index{EugeneLib@{EugeneLib}!GetAngle2Vector@{GetAngle2Vector}}
+\index{GetAngle2Vector@{GetAngle2Vector}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetAngle2Vector()}{GetAngle2Vector()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+T Eugene\+Lib\+::\+Get\+Angle2\+Vector (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{v1,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{v2 }\end{DoxyParamCaption})}
+
+
+
+Vector2と\+Vector2の間の角度を求める  
+
+
+\begin{DoxyParams}{引数}
+{\em v1} & \\
+\hline
+{\em v2} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_a9a4c0952dbcb276cc0fc08d89f511228_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_ab9041182893d9ed489f1aacd31baf02b}\label{namespace_eugene_lib_ab9041182893d9ed489f1aacd31baf02b}} 
+\index{EugeneLib@{EugeneLib}!GetLookAtMatrix@{GetLookAtMatrix}}
+\index{GetLookAtMatrix@{GetLookAtMatrix}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetLookAtMatrix()}{GetLookAtMatrix()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Get\+Look\+At\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&}]{out,  }\item[{const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&}]{eye,  }\item[{const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&}]{target,  }\item[{const \mbox{\hyperlink{namespace_eugene_lib_aaf0ab6031df29e80b88b856ee6d65334}{Vector3}} \&}]{up }\end{DoxyParamCaption})}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_ab9041182893d9ed489f1aacd31baf02b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a63321a8221e83102d1a31aac6496eb6d}\label{namespace_eugene_lib_a63321a8221e83102d1a31aac6496eb6d}} 
+\index{EugeneLib@{EugeneLib}!GetNormalizedAngle@{GetNormalizedAngle}}
+\index{GetNormalizedAngle@{GetNormalizedAngle}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetNormalizedAngle()}{GetNormalizedAngle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Eugene\+Lib\+::\+Get\+Normalized\+Angle (\begin{DoxyParamCaption}\item[{double}]{angle,  }\item[{double}]{val\+Min = {\ttfamily 0.0f},  }\item[{double}]{val\+Max = {\ttfamily \mbox{\hyperlink{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}{pi2}}$<$~double~$>$} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a50c52789dbd243f7f03c7be5af97f288}\label{namespace_eugene_lib_a50c52789dbd243f7f03c7be5af97f288}} 
+\index{EugeneLib@{EugeneLib}!GetNormalizedAngle@{GetNormalizedAngle}}
+\index{GetNormalizedAngle@{GetNormalizedAngle}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetNormalizedAngle()}{GetNormalizedAngle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Eugene\+Lib\+::\+Get\+Normalized\+Angle (\begin{DoxyParamCaption}\item[{float}]{angle,  }\item[{float}]{val\+Min = {\ttfamily 0.0f},  }\item[{float}]{val\+Max = {\ttfamily \mbox{\hyperlink{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}{pi2}}$<$~float~$>$} }\end{DoxyParamCaption})}
+
+
+
+角度を指定範囲に正規化する  
+
+
+\begin{DoxyParams}{引数}
+{\em angle} & 変換する値 \\
+\hline
+{\em val\+Min} & 最小値(デフォルト=0) \\
+\hline
+{\em val\+Max} & 最大値(デフォルト=pi2) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_a77ff0c5fca3668e198894e5417efee7e}\label{namespace_eugene_lib_a77ff0c5fca3668e198894e5417efee7e}} 
+\index{EugeneLib@{EugeneLib}!GetOrthographicMatrix@{GetOrthographicMatrix}}
+\index{GetOrthographicMatrix@{GetOrthographicMatrix}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetOrthographicMatrix()}{GetOrthographicMatrix()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Get\+Orthographic\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&}]{out,  }\item[{const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&}]{size,  }\item[{float}]{near = {\ttfamily 0.1f},  }\item[{float}]{far = {\ttfamily 1000.0f} }\end{DoxyParamCaption})}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_a77ff0c5fca3668e198894e5417efee7e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a9d40c0b1a8890bf82b6699b86bd9c1ed}\label{namespace_eugene_lib_a9d40c0b1a8890bf82b6699b86bd9c1ed}} 
+\index{EugeneLib@{EugeneLib}!GetPerspectiveFovMatrix@{GetPerspectiveFovMatrix}}
+\index{GetPerspectiveFovMatrix@{GetPerspectiveFovMatrix}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{GetPerspectiveFovMatrix()}{GetPerspectiveFovMatrix()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+Get\+Perspective\+Fov\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_eugene_lib_af7f780f02c67f6d1f9f032c3f813ed72}{Matrix4x4}} \&}]{out,  }\item[{float}]{fov,  }\item[{float}]{aspect,  }\item[{float}]{near = {\ttfamily 0.1f},  }\item[{float}]{far = {\ttfamily 1000.0f} }\end{DoxyParamCaption})}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_eugene_lib_a9d40c0b1a8890bf82b6699b86bd9c1ed_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a8cdb785a345cb79b85f816656e0eeebc}\label{namespace_eugene_lib_a8cdb785a345cb79b85f816656e0eeebc}} 
+\index{EugeneLib@{EugeneLib}!Learp@{Learp}}
+\index{Learp@{Learp}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Learp()}{Learp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Learp (\begin{DoxyParamCaption}\item[{const T \&}]{a,  }\item[{const T \&}]{b,  }\item[{const T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+aとbをtで線形補完する関数  
+
+
+\begin{DoxyParams}{引数}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+{\em t} & 　1.0f から0.0fの値　\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_a6a20949e00469f238aa030991fbb1d73}\label{namespace_eugene_lib_a6a20949e00469f238aa030991fbb1d73}} 
+\index{EugeneLib@{EugeneLib}!Learp@{Learp}}
+\index{Learp@{Learp}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Learp()}{Learp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::\+Learp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{a,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{b,  }\item[{const T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+ベクトルaとベクトルbをtで線形補完する関数  
+
+
+\begin{DoxyParams}{引数}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+{\em t} & 1.\+0f から0.0fの値 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_aa7a4cec7587c4377b676532c5fee70b7}\label{namespace_eugene_lib_aa7a4cec7587c4377b676532c5fee70b7}} 
+\index{EugeneLib@{EugeneLib}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr bool Eugene\+Lib\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a09ff8d6bcaa9554ad151b4522e70fe46}\label{namespace_eugene_lib_a09ff8d6bcaa9554ad151b4522e70fe46}} 
+\index{EugeneLib@{EugeneLib}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator\% (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a00d4e246c82bbf861975e50fe41ff2a9}\label{namespace_eugene_lib_a00d4e246c82bbf861975e50fe41ff2a9}} 
+\index{EugeneLib@{EugeneLib}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator\% (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aa22eec835c92fa593f89e93c2efce7b7}\label{namespace_eugene_lib_aa22eec835c92fa593f89e93c2efce7b7}} 
+\index{EugeneLib@{EugeneLib}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator\% (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{namespace_eugene_lib_aa22eec835c92fa593f89e93c2efce7b7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a21d22edeb1beeda5d5c77eff6115ef47}\label{namespace_eugene_lib_a21d22edeb1beeda5d5c77eff6115ef47}} 
+\index{EugeneLib@{EugeneLib}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator\% (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{namespace_eugene_lib_a21d22edeb1beeda5d5c77eff6115ef47_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a94d5089344b0677050b0ec6c4096003d}\label{namespace_eugene_lib_a94d5089344b0677050b0ec6c4096003d}} 
+\index{EugeneLib@{EugeneLib}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a169c47bf2426eebde633f19b16a3c528}\label{namespace_eugene_lib_a169c47bf2426eebde633f19b16a3c528}} 
+\index{EugeneLib@{EugeneLib}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a1c87a069d39c59fba122abf5b1b528b4}\label{namespace_eugene_lib_a1c87a069d39c59fba122abf5b1b528b4}} 
+\index{EugeneLib@{EugeneLib}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{namespace_eugene_lib_a1c87a069d39c59fba122abf5b1b528b4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a7d5dc79184c4f4fabb6af21a473794db}\label{namespace_eugene_lib_a7d5dc79184c4f4fabb6af21a473794db}} 
+\index{EugeneLib@{EugeneLib}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{namespace_eugene_lib_a7d5dc79184c4f4fabb6af21a473794db_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a37be3a610b53e9b9c25742480376111e}\label{namespace_eugene_lib_a37be3a610b53e9b9c25742480376111e}} 
+\index{EugeneLib@{EugeneLib}!operator+@{operator+}}
+\index{operator+@{operator+}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a6283de2b7fccb56838673824afdab52b}\label{namespace_eugene_lib_a6283de2b7fccb56838673824afdab52b}} 
+\index{EugeneLib@{EugeneLib}!operator+@{operator+}}
+\index{operator+@{operator+}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a401a3e34f4a10dcb9ed0199910b7b4ac}\label{namespace_eugene_lib_a401a3e34f4a10dcb9ed0199910b7b4ac}} 
+\index{EugeneLib@{EugeneLib}!operator+@{operator+}}
+\index{operator+@{operator+}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{namespace_eugene_lib_a401a3e34f4a10dcb9ed0199910b7b4ac_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_af5ffd5e2a25949e725beb7cb2f408cae}\label{namespace_eugene_lib_af5ffd5e2a25949e725beb7cb2f408cae}} 
+\index{EugeneLib@{EugeneLib}!operator+@{operator+}}
+\index{operator+@{operator+}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{namespace_eugene_lib_af5ffd5e2a25949e725beb7cb2f408cae_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_af57df76ed47c493a740a32e8e0998039}\label{namespace_eugene_lib_af57df76ed47c493a740a32e8e0998039}} 
+\index{EugeneLib@{EugeneLib}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a891cc1f704f9c103650ea0d190eb0811}\label{namespace_eugene_lib_a891cc1f704f9c103650ea0d190eb0811}} 
+\index{EugeneLib@{EugeneLib}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_abd8a670b5ccf85263c1def0cbcb9bb5e}\label{namespace_eugene_lib_abd8a670b5ccf85263c1def0cbcb9bb5e}} 
+\index{EugeneLib@{EugeneLib}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{namespace_eugene_lib_abd8a670b5ccf85263c1def0cbcb9bb5e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a4ac646e16bd673665d345149b56fb081}\label{namespace_eugene_lib_a4ac646e16bd673665d345149b56fb081}} 
+\index{EugeneLib@{EugeneLib}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{namespace_eugene_lib_a4ac646e16bd673665d345149b56fb081_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_ac7d0961fb3d9a090e763fe92bba64ce4}\label{namespace_eugene_lib_ac7d0961fb3d9a090e763fe92bba64ce4}} 
+\index{EugeneLib@{EugeneLib}!operator/@{operator/}}
+\index{operator/@{operator/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a1387498b5d48e893efff8a8601d6866a}\label{namespace_eugene_lib_a1387498b5d48e893efff8a8601d6866a}} 
+\index{EugeneLib@{EugeneLib}!operator/@{operator/}}
+\index{operator/@{operator/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ade75be5581c0eaa08e7e6446888ffd01}\label{namespace_eugene_lib_ade75be5581c0eaa08e7e6446888ffd01}} 
+\index{EugeneLib@{EugeneLib}!operator/@{operator/}}
+\index{operator/@{operator/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const T \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{namespace_eugene_lib_ade75be5581c0eaa08e7e6446888ffd01_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a5a476463a7969e05bf7e73c3c511cb31}\label{namespace_eugene_lib_a5a476463a7969e05bf7e73c3c511cb31}} 
+\index{EugeneLib@{EugeneLib}!operator/@{operator/}}
+\index{operator/@{operator/}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ Eugene\+Lib\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{namespace_eugene_lib_a5a476463a7969e05bf7e73c3c511cb31_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_eugene_lib_a8c8c36b7160186d9c7a2ae8606e8ebf9}\label{namespace_eugene_lib_a8c8c36b7160186d9c7a2ae8606e8ebf9}} 
+\index{EugeneLib@{EugeneLib}!operator==@{operator==}}
+\index{operator==@{operator==}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr bool Eugene\+Lib\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae9b526e7d23878d88da34f3fcdc87bf8}\label{namespace_eugene_lib_ae9b526e7d23878d88da34f3fcdc87bf8}} 
+\index{EugeneLib@{EugeneLib}!operator==@{operator==}}
+\index{operator==@{operator==}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+bool Eugene\+Lib\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{l\+Vec,  }\item[{const \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$ T $>$ \&}]{r\+Vec }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ad23ce15d5f694499a7ac0d1a93d56f54}\label{namespace_eugene_lib_ad23ce15d5f694499a7ac0d1a93d56f54}} 
+\index{EugeneLib@{EugeneLib}!Rad2Deg@{Rad2Deg}}
+\index{Rad2Deg@{Rad2Deg}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Rad2Deg()}{Rad2Deg()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Rad2\+Deg (\begin{DoxyParamCaption}\item[{const T \&}]{rad }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+弧度法を度数法にする  
+
+
+\begin{DoxyParams}{引数}
+{\em rad} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespace_eugene_lib_a7ffe6b3e372aab0c459d12d502777c4e}\label{namespace_eugene_lib_a7ffe6b3e372aab0c459d12d502777c4e}} 
+\index{EugeneLib@{EugeneLib}!Square@{Square}}
+\index{Square@{Square}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{Square()}{Square()}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::\+Square (\begin{DoxyParamCaption}\item[{T}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+二乗する  
+
+
+\begin{DoxyParams}{引数}
+{\em val} & 二乗したい値 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+二乗した値 
+\end{DoxyReturn}
+
+
+\doxysubsection{変数詳解}
+\mbox{\Hypertarget{namespace_eugene_lib_a69c1905929f82f977ed74f10e87010ff}\label{namespace_eugene_lib_a69c1905929f82f977ed74f10e87010ff}} 
+\index{EugeneLib@{EugeneLib}!backVector3@{backVector3}}
+\index{backVector3@{backVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{backVector3}{backVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::back\+Vector3 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(-\/1) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aefec71361344551e16fbfddfaa2b0743}\label{namespace_eugene_lib_aefec71361344551e16fbfddfaa2b0743}} 
+\index{EugeneLib@{EugeneLib}!downVector2@{downVector2}}
+\index{downVector2@{downVector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{downVector2}{downVector2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$T$>$ Eugene\+Lib\+::down\+Vector2 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(1) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aefecdb4a6ee9fb9c1905cd622682a6c7}\label{namespace_eugene_lib_aefecdb4a6ee9fb9c1905cd622682a6c7}} 
+\index{EugeneLib@{EugeneLib}!downVector3@{downVector3}}
+\index{downVector3@{downVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{downVector3}{downVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::down\+Vector3 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(-\/1) ,static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae99c9f911e6edebd43deaf8312cf4d40}\label{namespace_eugene_lib_ae99c9f911e6edebd43deaf8312cf4d40}} 
+\index{EugeneLib@{EugeneLib}!forwardVector3@{forwardVector3}}
+\index{forwardVector3@{forwardVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{forwardVector3}{forwardVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::forward\+Vector3 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(1) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a0f945aeed0d1510251fa6bbdebddf22d}\label{namespace_eugene_lib_a0f945aeed0d1510251fa6bbdebddf22d}} 
+\index{EugeneLib@{EugeneLib}!leftVector2@{leftVector2}}
+\index{leftVector2@{leftVector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{leftVector2}{leftVector2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$T$>$ Eugene\+Lib\+::left\+Vector2 \{ static\+\_\+cast$<$T$>$(-\/1),static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a14308ac3e378e6d6b83d42ab538d60d9}\label{namespace_eugene_lib_a14308ac3e378e6d6b83d42ab538d60d9}} 
+\index{EugeneLib@{EugeneLib}!leftVector3@{leftVector3}}
+\index{leftVector3@{leftVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{leftVector3}{leftVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::left\+Vector3 \{ static\+\_\+cast$<$T$>$(-\/1),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a4ada80a7e61d2717ff89ca0b37481863}\label{namespace_eugene_lib_a4ada80a7e61d2717ff89ca0b37481863}} 
+\index{EugeneLib@{EugeneLib}!pi@{pi}}
+\index{pi@{pi}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{pi}{pi}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::pi = static\+\_\+cast$<$T$>$(3.\+1415926535897932384626433832795)\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}\label{namespace_eugene_lib_ae36587b7f557b8b5ee2236767ca728a6}} 
+\index{EugeneLib@{EugeneLib}!pi2@{pi2}}
+\index{pi2@{pi2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{pi2}{pi2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr T Eugene\+Lib\+::pi2 = \mbox{\hyperlink{namespace_eugene_lib_a4ada80a7e61d2717ff89ca0b37481863}{pi}}$<$T$>$ $\ast$static\+\_\+cast$<$T$>$(2.\+0)\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_aa6cc2d8390059906d680e3c54bea827d}\label{namespace_eugene_lib_aa6cc2d8390059906d680e3c54bea827d}} 
+\index{EugeneLib@{EugeneLib}!rightVector2@{rightVector2}}
+\index{rightVector2@{rightVector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{rightVector2}{rightVector2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$T$>$ Eugene\+Lib\+::right\+Vector2 \{ static\+\_\+cast$<$T$>$(1),static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_ae173839f9c01344cbc80ced784ac6b0a}\label{namespace_eugene_lib_ae173839f9c01344cbc80ced784ac6b0a}} 
+\index{EugeneLib@{EugeneLib}!rightVector3@{rightVector3}}
+\index{rightVector3@{rightVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{rightVector3}{rightVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::right\+Vector3 \{ static\+\_\+cast$<$T$>$(1),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a00d72781c0207d88d93a590eff0a093b}\label{namespace_eugene_lib_a00d72781c0207d88d93a590eff0a093b}} 
+\index{EugeneLib@{EugeneLib}!upVector2@{upVector2}}
+\index{upVector2@{upVector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{upVector2}{upVector2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$T$>$ Eugene\+Lib\+::up\+Vector2 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(-\/1) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a67c452d84f94d0c8760d08f2e2df3edc}\label{namespace_eugene_lib_a67c452d84f94d0c8760d08f2e2df3edc}} 
+\index{EugeneLib@{EugeneLib}!upVector3@{upVector3}}
+\index{upVector3@{upVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{upVector3}{upVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::up\+Vector3 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(1) ,static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_a0509ab25fbb41e4f3150fdb9dcbfd966}\label{namespace_eugene_lib_a0509ab25fbb41e4f3150fdb9dcbfd966}} 
+\index{EugeneLib@{EugeneLib}!zeroVector2@{zeroVector2}}
+\index{zeroVector2@{zeroVector2}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{zeroVector2}{zeroVector2}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2\+Tmp}}$<$T$>$ Eugene\+Lib\+::zero\+Vector2 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{namespace_eugene_lib_af12721ff6de17d3bbb58bfbcb58f6ad6}\label{namespace_eugene_lib_af12721ff6de17d3bbb58bfbcb58f6ad6}} 
+\index{EugeneLib@{EugeneLib}!zeroVector3@{zeroVector3}}
+\index{zeroVector3@{zeroVector3}!EugeneLib@{EugeneLib}}
+\doxysubsubsection{\texorpdfstring{zeroVector3}{zeroVector3}}
+{\footnotesize\ttfamily template$<$ValueC T$>$ \\
+constexpr \mbox{\hyperlink{class_eugene_lib_1_1_vector3_tmp}{Vector3\+Tmp}}$<$T$>$ Eugene\+Lib\+::zero\+Vector3 \{ static\+\_\+cast$<$T$>$(0),static\+\_\+cast$<$T$>$(0) ,static\+\_\+cast$<$T$>$(0) \}\hspace{0.3cm}{\ttfamily [constexpr]}}
+

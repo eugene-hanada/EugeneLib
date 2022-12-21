@@ -1,0 +1,43 @@
+\hypertarget{_texture_8cpp}{}\doxysection{C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+Graphics/\+Texture.cpp ファイル}
+\label{_texture_8cpp}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/Texture.cpp@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/Texture.cpp}}
+{\ttfamily \#include \char`\"{}../../\+Include/\+Graphics/\+Texture.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include \char`\"{}../../\+Direct\+XTex/\+Direct\+XTex/\+Direct\+XTex.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../\+Include/\+Common/\+Eugene\+Lib\+Exception.\+h\char`\"{}}\newline
+Texture.\+cpp の依存先関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_texture_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_load}{Load}}
+\item 
+struct \mbox{\hyperlink{struct_load_dss}{Load\+Dss}}
+\end{DoxyCompactItemize}
+\doxysubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::function$<$ bool(const std\+::filesystem\+::path \&, \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Eugene\+Lib\+::\+Texture\+Info}} \&, std\+::vector$<$ std\+::vector$<$ std\+::uint8\+\_\+t $>$ $>$ \&)$>$ $>$ \mbox{\hyperlink{_texture_8cpp_a5b355090337b6702dc8b40d02f1a5c18}{func\+Tbl}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{変数詳解}
+\mbox{\Hypertarget{_texture_8cpp_a5b355090337b6702dc8b40d02f1a5c18}\label{_texture_8cpp_a5b355090337b6702dc8b40d02f1a5c18}} 
+\index{Texture.cpp@{Texture.cpp}!funcTbl@{funcTbl}}
+\index{funcTbl@{funcTbl}!Texture.cpp@{Texture.cpp}}
+\doxysubsubsection{\texorpdfstring{funcTbl}{funcTbl}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, std\+::function$<$bool(const std\+::filesystem\+::path\&, \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Eugene\+Lib\+::\+Texture\+Info}}\&, std\+::vector$<$std\+::vector$<$std\+::uint8\+\_\+t$>$$>$\&)$>$ $>$ func\+Tbl}
+
+{\bfseries 初期値\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}.png"{}},\mbox{\hyperlink{struct_load}{Load}}()\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}.jpg"{}},\mbox{\hyperlink{struct_load}{Load}}()\},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

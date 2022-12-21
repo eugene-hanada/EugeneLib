@@ -1,0 +1,167 @@
+\hypertarget{class_eugene_lib_1_1_system}{}\doxysection{Eugene\+Lib\+::System クラス}
+\label{class_eugene_lib_1_1_system}\index{EugeneLib::System@{EugeneLib::System}}
+
+
+OS等の処理をするクラス   
+
+
+
+
+{\ttfamily \#include $<$System.\+h$>$}
+
+
+
+Eugene\+Lib\+::System の継承関係図
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{class_eugene_lib_1_1_system__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Eugene\+Lib\+::System 連携図
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{class_eugene_lib_1_1_system__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}{Update}} (void)=0
+\begin{DoxyCompactList}\small\item\em 更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}{$\sim$\+System}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ  \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \& \mbox{\hyperlink{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}{Get\+Window\+Size}} (void) const \&
+\begin{DoxyCompactList}\small\item\em ウィンドウサイズを取得する  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}} $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_system_a497a20166d0353b367531057ab675bc0}{Create\+Graphics}} (\mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{Gpu\+Engine}} $\ast$\&gpu\+Engine) const \&=0
+\begin{DoxyCompactList}\small\item\em Graphicsをを生成する  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}{System}} (const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&size, const std\+::u8string \&title)
+\begin{DoxyCompactList}\small\item\em コンストラクタ  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \mbox{\hyperlink{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}{window\+Size\+\_\+}}
+\begin{DoxyCompactList}\small\item\em ウィンドウサイズ  \end{DoxyCompactList}\item 
+std\+::u8string \mbox{\hyperlink{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}{title\+\_\+}}
+\begin{DoxyCompactList}\small\item\em タイトル  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+OS等の処理をするクラス  
+
+\doxysubsection{構築子と解体子}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}\label{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}} 
+\index{EugeneLib::System@{EugeneLib::System}!````~System@{$\sim$System}}
+\index{````~System@{$\sim$System}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{$\sim$System()}{~System()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+System\+::$\sim$\+System (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+デストラクタ  
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}\label{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}} 
+\index{EugeneLib::System@{EugeneLib::System}!System@{System}}
+\index{System@{System}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{System()}{System()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+System\+::\+System (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&}]{size,  }\item[{const std\+::u8string \&}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+コンストラクタ  
+
+
+\begin{DoxyParams}{引数}
+{\em size} & ウィンドウサイズ \\
+\hline
+{\em title} & ウィンドウタイトル \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a497a20166d0353b367531057ab675bc0}\label{class_eugene_lib_1_1_system_a497a20166d0353b367531057ab675bc0}} 
+\index{EugeneLib::System@{EugeneLib::System}!CreateGraphics@{CreateGraphics}}
+\index{CreateGraphics@{CreateGraphics}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{CreateGraphics()}{CreateGraphics()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}} $\ast$ Eugene\+Lib\+::\+System\+::\+Create\+Graphics (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{Gpu\+Engine}} $\ast$\&}]{gpu\+Engine }\end{DoxyParamCaption}) const \&\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Graphicsをを生成する  
+
+
+\begin{DoxyParams}{引数}
+{\em gpu\+Engine} & Gpu\+Engineのポインタの参照 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+Graphicsのポインタ 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_eugene_lib_1_1_windows_system_a37e29255ea29d61b93d5adcbd3681dec}{Eugene\+Lib\+::\+Windows\+System}}で実装されています。
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}\label{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}} 
+\index{EugeneLib::System@{EugeneLib::System}!GetWindowSize@{GetWindowSize}}
+\index{GetWindowSize@{GetWindowSize}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{GetWindowSize()}{GetWindowSize()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Eugene\+Lib\+::\+Vector2}} \& Eugene\+Lib\+::\+System\+::\+Get\+Window\+Size (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const \&}
+
+
+
+ウィンドウサイズを取得する  
+
+\begin{DoxyReturn}{戻り値}
+ウィンドウサイズ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}\label{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}} 
+\index{EugeneLib::System@{EugeneLib::System}!Update@{Update}}
+\index{Update@{Update}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual bool Eugene\+Lib\+::\+System\+::\+Update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)  
+
+\begin{DoxyReturn}{戻り値}
+継続すべき時true、終了すべき時false 
+\end{DoxyReturn}
+
+
+\doxysubsection{メンバ詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}\label{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}} 
+\index{EugeneLib::System@{EugeneLib::System}!title\_@{title\_}}
+\index{title\_@{title\_}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{title\_}{title\_}}
+{\footnotesize\ttfamily std\+::u8string Eugene\+Lib\+::\+System\+::title\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+タイトル  
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}\label{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}} 
+\index{EugeneLib::System@{EugeneLib::System}!windowSize\_@{windowSize\_}}
+\index{windowSize\_@{windowSize\_}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{windowSize\_}{windowSize\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} Eugene\+Lib\+::\+System\+::window\+Size\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ウィンドウサイズ  
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Include/\+System/\mbox{\hyperlink{_system_8h}{System.\+h}}\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+System/\mbox{\hyperlink{_system_8cpp}{System.\+cpp}}\end{DoxyCompactItemize}

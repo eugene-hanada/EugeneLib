@@ -1,0 +1,23 @@
+\hypertarget{_dx12_shader_resource_views_8h_source}{}\doxysection{Dx12\+Shader\+Resource\+Views.\+h}
+\label{_dx12_shader_resource_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12ShaderResourceViews.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12ShaderResourceViews.h}}
+\mbox{\hyperlink{_dx12_shader_resource_views_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/ShaderResourceViews.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_dx12_views_8h}{Dx12Views.h}}"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views}{Dx12ShaderResourceViews}} :}
+\DoxyCodeLine{8         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_dx12_views}{Dx12Views}}, \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{ShaderResourceViews}}}
+\DoxyCodeLine{9     \{}
+\DoxyCodeLine{10     \textcolor{keyword}{public}:}
+\DoxyCodeLine{11         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views}{Dx12ShaderResourceViews}}(ID3D12Device* device, \textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{12         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_a2077a2798dfc62f9c1b4a8c247fcb9ad}{CreateTexture}}(\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource, \textcolor{keywordtype}{size\_t} idx) \textcolor{keyword}{final};}
+\DoxyCodeLine{13         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_af9bc3bed79943d9f05902b71411a27b6}{CreateConstantBuffer}}(\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource, \textcolor{keywordtype}{size\_t} idx) \textcolor{keyword}{final};}
+\DoxyCodeLine{14         \textcolor{keywordtype}{void}* \mbox{\hyperlink{class_eugene_lib_1_1_dx12_shader_resource_views_a81ac3405f4904417472759c34ba5b5a9}{GetViews}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{15     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{16     \};}
+\DoxyCodeLine{17 \}}
+
+\end{DoxyCode}

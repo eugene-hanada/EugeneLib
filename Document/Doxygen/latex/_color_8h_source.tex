@@ -1,0 +1,60 @@
+\hypertarget{_color_8h_source}{}\doxysection{Color.\+h}
+\label{_color_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Color.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Color.h}}
+\mbox{\hyperlink{_color_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_math_concepts_8h}{Math/MathConcepts.h}}"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     template<ValueC T, size\_t Num, T MaxValue = static\_cast<T>(1), T MinValue = \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0)>}
+\DoxyCodeLine{9     \textcolor{keyword}{class} \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_eugene_lib_1_1_color_a9f40c3a6d726d01fce3d4a1c309b4806}{Color}}()}
+\DoxyCodeLine{13         \{}
+\DoxyCodeLine{14             color\_.fill(MaxValue);}
+\DoxyCodeLine{15         \}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_color_a28e32eb12d407b96ea2520ae967e6be6}{SetValue}}(\textcolor{keywordtype}{size\_t} idx, \textcolor{keyword}{const} T\& value)}
+\DoxyCodeLine{18         \{}
+\DoxyCodeLine{19             color\_[idx] = std::clamp(value, MinValue, MaxValue);}
+\DoxyCodeLine{20         \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keyword}{const} std::array<T, Num>\& \mbox{\hyperlink{class_eugene_lib_1_1_color_aa0cf4367d40c1c45b414420c66591f08}{ToArray}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const}\&}
+\DoxyCodeLine{23         \{}
+\DoxyCodeLine{24             \textcolor{keywordflow}{return} color\_;}
+\DoxyCodeLine{25         \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_color_aeff7f2e17e10604aa5d3b7af3fd60fd4}{GetSize}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{28 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{29             \textcolor{keywordflow}{return} Num;}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_color_a1bff5de9bd04ba57dcded52d4c4602d6}{GetMax}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{33 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{34             \textcolor{keywordflow}{return} MaxValue;}
+\DoxyCodeLine{35         \}}
+\DoxyCodeLine{36         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_color_aacf41b58028e26ae41aa25c64ff56bd9}{GetMin}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{37 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{38             \textcolor{keywordflow}{return} MinValue;}
+\DoxyCodeLine{39         \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41         \textcolor{keyword}{const} T\& \mbox{\hyperlink{class_eugene_lib_1_1_color_ade24b949aac9f67d61d5ae86d6742c7c}{operator[]}}(\textcolor{keywordtype}{size\_t} idx)}
+\DoxyCodeLine{42         \{}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return} color\_[idx];}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{private}:}
+\DoxyCodeLine{47         std::array<T, Num> color\_;}
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_lib_1_1_color}{ColorRGBA}} = \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color<float, 4>}};}
+\DoxyCodeLine{51     \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_lib_1_1_color}{ColorRGB}} = \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color<float, 3>}};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \}}
+
+\end{DoxyCode}

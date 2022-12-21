@@ -1,0 +1,84 @@
+\hypertarget{_dx12_graphics_8h_source}{}\doxysection{Dx12\+Graphics.\+h}
+\label{_dx12_graphics_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12Graphics.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12Graphics.h}}
+\mbox{\hyperlink{_dx12_graphics_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <wrl.h>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/Graphics.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../../../Include/Math/Vector2.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{struct }ID3D12Device;}
+\DoxyCodeLine{9 \textcolor{keyword}{struct }IDXGIFactory6;}
+\DoxyCodeLine{10 \textcolor{keyword}{struct }IDXGISwapChain4;}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{13 \{}
+\DoxyCodeLine{14     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_dx12_graphics}{Dx12Graphics}} :}
+\DoxyCodeLine{15         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}}}
+\DoxyCodeLine{16     \{}
+\DoxyCodeLine{17     \textcolor{keyword}{public}:}
+\DoxyCodeLine{18         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_graphics}{Dx12Graphics}}(HWND\& \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hwnd}}, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{GpuEngine}}*\& gpuEngine);}
+\DoxyCodeLine{19         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_graphics_ac5e4e6f13ed1fe8f0b6bdda0212bc06b}{\string~Dx12Graphics}}();}
+\DoxyCodeLine{20     }
+\DoxyCodeLine{21         }
+\DoxyCodeLine{22     \textcolor{keyword}{private}:}
+\DoxyCodeLine{23         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{GpuEngine}}* CreateGpuEngine(\textcolor{keywordtype}{size\_t} maxSize) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \mbox{\hyperlink{class_eugene_lib_1_1_command_list}{CommandList}}* CreateCommandList(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{26         \mbox{\hyperlink{class_eugene_lib_1_1_graphics_pipeline}{GraphicsPipeline}}* CreateGraphicsPipeline(}
+\DoxyCodeLine{27             \mbox{\hyperlink{namespace_eugene_lib_a0765cdda58b96e8bed41fc369891ec05}{ShaderInputSpan}} layout,}
+\DoxyCodeLine{28             \mbox{\hyperlink{namespace_eugene_lib_a1858c7f8938f8ee70626101303307d33}{ShaderTypePaisrSpan}}  shaders,}
+\DoxyCodeLine{29             \mbox{\hyperlink{namespace_eugene_lib_ae9eac1fcea6ea0cb1159c46a3473d6cc}{RenderTargetSpan}} rendertarges,}
+\DoxyCodeLine{30             \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3}{TopologyType}} topologyType = \mbox{\hyperlink{namespace_eugene_lib_af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b}{TopologyType::Triangle}},}
+\DoxyCodeLine{31             \textcolor{keywordtype}{bool} isCulling = \textcolor{keyword}{false},}
+\DoxyCodeLine{32             \mbox{\hyperlink{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}{ShaderLayoutSpan}} shaderLayout = \mbox{\hyperlink{namespace_eugene_lib_a9bf14c3e1ef931a13bd1c33631720cd3}{ShaderLayoutSpan}}\{\},}
+\DoxyCodeLine{33             \mbox{\hyperlink{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}{SamplerSpan}} samplerLayout = \mbox{\hyperlink{namespace_eugene_lib_afd18882203b29039f5377be96997d5d1}{SamplerSpan}}\{\}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateUploadableResource(\textcolor{keywordtype}{size\_t} size) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{36         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateUploadableTextureResource(\mbox{\hyperlink{class_eugene_lib_1_1_texture}{Texture}}\& texture) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateDefaultResource(\textcolor{keywordtype}{size\_t} size) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{39         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateSwapChainResource(std::uint32\_t idx) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{40         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateTextureResource(\textcolor{keyword}{const} \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{TextureInfo}}\& formatData) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{41         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateRenderTargetResource(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}} format, \textcolor{keyword}{const} std::span<float, 4>\& clearColor) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{42         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}* CreateDepthResource(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}} format, \textcolor{keywordtype}{float} clearValue = 1.0f) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{ShaderResourceViews}}* CreateShaderResourceViews(\textcolor{keywordtype}{size\_t} size) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}* CreateRenderTargetViews(\textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{bool} isShaderVisible) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         \mbox{\hyperlink{class_eugene_lib_1_1_depth_stencil_views}{DepthStencilViews}}* CreateDepthStencilViews(\textcolor{keywordtype}{size\_t} size) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \mbox{\hyperlink{class_eugene_lib_1_1_vertex_view}{VertexView}}* CreateVertexView(\textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{size\_t} vertexNum, \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} CreateDevice(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} CreateSwapChain(HWND\& \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hwnd}}, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{GpuEngine}}*\& gpuEngine);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         \textcolor{keywordtype}{void} CreateBackBuffers(\textcolor{keywordtype}{size\_t} bufferCount);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58         \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& GetBackBufferResource(\textcolor{keywordtype}{void}) \textcolor{keyword}{final};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         \mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}\& GetViews(\textcolor{keywordtype}{void}) \textcolor{keyword}{final};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62         \textcolor{keywordtype}{size\_t} GetNowBackBufferIndex(\textcolor{keywordtype}{void}) \textcolor{keyword}{final};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} Present(\textcolor{keywordtype}{void}) \textcolor{keyword}{final};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66         \textcolor{comment}{// ファクトリ}}
+\DoxyCodeLine{67         Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory\_\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{comment}{// DirectX12のデバイス}}
+\DoxyCodeLine{70         Microsoft::WRL::ComPtr<ID3D12Device> device\_\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{comment}{// スワップチェイン}}
+\DoxyCodeLine{73         Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain\_\{ \textcolor{keyword}{nullptr} \};}
+\DoxyCodeLine{74     }
+\DoxyCodeLine{75         std::vector<std::unique\_ptr<GpuResource>> buffers\_;}
+\DoxyCodeLine{76         std::unique\_ptr<RenderTargetViews> renderTargetViews\_;}
+\DoxyCodeLine{77     \};}
+\DoxyCodeLine{78 \}}
+
+\end{DoxyCode}

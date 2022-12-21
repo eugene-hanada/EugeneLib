@@ -1,0 +1,3124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/ThirdParty/DirectXMath/DirectXPackedVector.inl ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_441f5a6782dcabbe74e32fbfbb5693d8.html">Include</a></li><li class="navelem"><a class="el" href="dir_ddefd98ef9ad41868c0b6899a1665f92.html">ThirdParty</a></li><li class="navelem"><a class="el" href="dir_409ca3fee388feacbe0962486015e532.html">DirectXMath</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle"><div class="title">DirectXPackedVector.inl ファイル</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><div class="dynheader">
+被依存関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl__dep__incl.png" border="0" usemap="#a_c_1_2_users_2eugen_2_desktop_2_programming_2_eugene_lib_2_eugene_lib_2_eugene_lib_2_include_2_third_party_2_direct_x_math_2_direct_x_packed_vector_8inldep" alt=""/></div>
+<map name="a_c_1_2_users_2eugen_2_desktop_2_programming_2_eugene_lib_2_eugene_lib_2_eugene_lib_2_include_2_third_party_2_direct_x_math_2_direct_x_packed_vector_8inldep" id="a_c_1_2_users_2eugen_2_desktop_2_programming_2_eugene_lib_2_eugene_lib_2_eugene_lib_2_include_2_third_party_2_direct_x_math_2_direct_x_packed_vector_8inldep">
+<area shape="rect" title=" " alt="" coords="5,5,253,89"/>
+<area shape="rect" href="_direct_x_packed_vector_8h.html" title=" " alt="" coords="5,137,253,221"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:aad43528ba7c15aec4803804d4aeb6286"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#aad43528ba7c15aec4803804d4aeb6286">XMConvertHalfToFloat</a> (HALF Value) noexcept</td></tr>
+<tr class="separator:aad43528ba7c15aec4803804d4aeb6286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3d91fd5b347f0093843b17e6f02085"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ float *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a4f3d91fd5b347f0093843b17e6f02085">XMConvertHalfToFloatStream</a> (float *pOutputStream, size_t OutputStride, const HALF *pInputStream, size_t InputStride, size_t HalfCount) noexcept</td></tr>
+<tr class="separator:a4f3d91fd5b347f0093843b17e6f02085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad38cdf5da44d6c7a00f2a18f4e693ca"><td class="memItemLeft" align="right" valign="top">HALF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#aad38cdf5da44d6c7a00f2a18f4e693ca">XMConvertFloatToHalf</a> (float Value) noexcept</td></tr>
+<tr class="separator:aad38cdf5da44d6c7a00f2a18f4e693ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2e23ede96b59c8978636b99a0375685"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ HALF *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad2e23ede96b59c8978636b99a0375685">XMConvertFloatToHalfStream</a> (HALF *pOutputStream, size_t OutputStride, const float *pInputStream, size_t InputStride, size_t FloatCount) noexcept</td></tr>
+<tr class="separator:ad2e23ede96b59c8978636b99a0375685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286d309496a4412ffa6fabdd825268d0"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a286d309496a4412ffa6fabdd825268d0">XMLoadColor</a> (const XMCOLOR *pSource) noexcept</td></tr>
+<tr class="separator:a286d309496a4412ffa6fabdd825268d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae809566952c379fc61a7d9ba5b031cc0"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ae809566952c379fc61a7d9ba5b031cc0">XMLoadHalf2</a> (const XMHALF2 *pSource) noexcept</td></tr>
+<tr class="separator:ae809566952c379fc61a7d9ba5b031cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d81dfa3c171d3b1ce7d25a6b786894"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad7d81dfa3c171d3b1ce7d25a6b786894">XMLoadShortN2</a> (const XMSHORTN2 *pSource) noexcept</td></tr>
+<tr class="separator:ad7d81dfa3c171d3b1ce7d25a6b786894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae85c94b8ed33e1d7608f025891512bd3"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ae85c94b8ed33e1d7608f025891512bd3">XMLoadShort2</a> (const XMSHORT2 *pSource) noexcept</td></tr>
+<tr class="separator:ae85c94b8ed33e1d7608f025891512bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdaa43d5a9397ac57e093fbf37a0b1c6"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#acdaa43d5a9397ac57e093fbf37a0b1c6">XMLoadUShortN2</a> (const XMUSHORTN2 *pSource) noexcept</td></tr>
+<tr class="separator:acdaa43d5a9397ac57e093fbf37a0b1c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55090fdd59d20d5cb02aa1c9dafa264c"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a55090fdd59d20d5cb02aa1c9dafa264c">XMLoadUShort2</a> (const XMUSHORT2 *pSource) noexcept</td></tr>
+<tr class="separator:a55090fdd59d20d5cb02aa1c9dafa264c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adafdcbcb167e4fba04b1f978baa97db8"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#adafdcbcb167e4fba04b1f978baa97db8">XMLoadByteN2</a> (const XMBYTEN2 *pSource) noexcept</td></tr>
+<tr class="separator:adafdcbcb167e4fba04b1f978baa97db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a510f211d3e5d6165a8e51b1a85c597a1"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a510f211d3e5d6165a8e51b1a85c597a1">XMLoadByte2</a> (const XMBYTE2 *pSource) noexcept</td></tr>
+<tr class="separator:a510f211d3e5d6165a8e51b1a85c597a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa521032d040cac42d96403c997c315"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a4fa521032d040cac42d96403c997c315">XMLoadUByteN2</a> (const XMUBYTEN2 *pSource) noexcept</td></tr>
+<tr class="separator:a4fa521032d040cac42d96403c997c315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e2752c3e5eff206b4a9d3918632b97"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a47e2752c3e5eff206b4a9d3918632b97">XMLoadUByte2</a> (const XMUBYTE2 *pSource) noexcept</td></tr>
+<tr class="separator:a47e2752c3e5eff206b4a9d3918632b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae79b26c42da74909b9865f650eb59667"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ae79b26c42da74909b9865f650eb59667">XMLoadU565</a> (const XMU565 *pSource) noexcept</td></tr>
+<tr class="separator:ae79b26c42da74909b9865f650eb59667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6e9e3829de2a2f9cb77246d684a9cc"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3b6e9e3829de2a2f9cb77246d684a9cc">XMLoadFloat3PK</a> (const XMFLOAT3PK *pSource) noexcept</td></tr>
+<tr class="separator:a3b6e9e3829de2a2f9cb77246d684a9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42392d6b6748d63543d02803606d319d"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a42392d6b6748d63543d02803606d319d">XMLoadFloat3SE</a> (const XMFLOAT3SE *pSource) noexcept</td></tr>
+<tr class="separator:a42392d6b6748d63543d02803606d319d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae07f3e7da29caf532f2da803a46a7a98"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ae07f3e7da29caf532f2da803a46a7a98">XMLoadHalf4</a> (const XMHALF4 *pSource) noexcept</td></tr>
+<tr class="separator:ae07f3e7da29caf532f2da803a46a7a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35c258b8db05a01e882f62e36f8c6f12"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a35c258b8db05a01e882f62e36f8c6f12">XMLoadShortN4</a> (const XMSHORTN4 *pSource) noexcept</td></tr>
+<tr class="separator:a35c258b8db05a01e882f62e36f8c6f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2edc09a42109b148135c3fa7061ffc25"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a2edc09a42109b148135c3fa7061ffc25">XMLoadShort4</a> (const XMSHORT4 *pSource) noexcept</td></tr>
+<tr class="separator:a2edc09a42109b148135c3fa7061ffc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae454f344b12269e5b0855aeb2828eff8"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ae454f344b12269e5b0855aeb2828eff8">XMLoadUShortN4</a> (const XMUSHORTN4 *pSource) noexcept</td></tr>
+<tr class="separator:ae454f344b12269e5b0855aeb2828eff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad38f88e4c661ca0a25ad7e24af751e4c"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad38f88e4c661ca0a25ad7e24af751e4c">XMLoadUShort4</a> (const XMUSHORT4 *pSource) noexcept</td></tr>
+<tr class="separator:ad38f88e4c661ca0a25ad7e24af751e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25ef73a074d626ab5c713b69d1e5ffce"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a25ef73a074d626ab5c713b69d1e5ffce">XMLoadXDecN4</a> (const XMXDECN4 *pSource) noexcept</td></tr>
+<tr class="separator:a25ef73a074d626ab5c713b69d1e5ffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad808c324164262c403b1e48dbebbe5aa"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad808c324164262c403b1e48dbebbe5aa">XMLoadXDec4</a> (const XMXDEC4 *pSource) noexcept</td></tr>
+<tr class="separator:ad808c324164262c403b1e48dbebbe5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac65a3352e504a4bfa8af0a8f3dae2204"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ac65a3352e504a4bfa8af0a8f3dae2204">XMLoadUDecN4</a> (const XMUDECN4 *pSource) noexcept</td></tr>
+<tr class="separator:ac65a3352e504a4bfa8af0a8f3dae2204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a669b03c352ab672235d476088c954a70"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a669b03c352ab672235d476088c954a70">XMLoadUDecN4_XR</a> (const XMUDECN4 *pSource) noexcept</td></tr>
+<tr class="separator:a669b03c352ab672235d476088c954a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2477e0aca0bafd06984b190f1aa4e3"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a9c2477e0aca0bafd06984b190f1aa4e3">XMLoadUDec4</a> (const XMUDEC4 *pSource) noexcept</td></tr>
+<tr class="separator:a9c2477e0aca0bafd06984b190f1aa4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77435449f564f46a317956b0d03761fd"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a77435449f564f46a317956b0d03761fd">XMLoadDecN4</a> (const XMDECN4 *pSource) noexcept</td></tr>
+<tr class="separator:a77435449f564f46a317956b0d03761fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa493ae6f1db08ca00a00d1dd5b2004"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3aa493ae6f1db08ca00a00d1dd5b2004">XMLoadDec4</a> (const XMDEC4 *pSource) noexcept</td></tr>
+<tr class="separator:a3aa493ae6f1db08ca00a00d1dd5b2004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe157bbdd480b4126b85134ea6180335"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#abe157bbdd480b4126b85134ea6180335">XMLoadUByteN4</a> (const XMUBYTEN4 *pSource) noexcept</td></tr>
+<tr class="separator:abe157bbdd480b4126b85134ea6180335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23ee469c1cff9f314879706590685824"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a23ee469c1cff9f314879706590685824">XMLoadUByte4</a> (const XMUBYTE4 *pSource) noexcept</td></tr>
+<tr class="separator:a23ee469c1cff9f314879706590685824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0815f290e72e94154c90bb682f9fdf54"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a0815f290e72e94154c90bb682f9fdf54">XMLoadByteN4</a> (const XMBYTEN4 *pSource) noexcept</td></tr>
+<tr class="separator:a0815f290e72e94154c90bb682f9fdf54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3237e07fb6cb19c502ea2189ddd654b7"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3237e07fb6cb19c502ea2189ddd654b7">XMLoadByte4</a> (const XMBYTE4 *pSource) noexcept</td></tr>
+<tr class="separator:a3237e07fb6cb19c502ea2189ddd654b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63e2cdf5a0083e3910c6ee3b9648a713"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a63e2cdf5a0083e3910c6ee3b9648a713">XMLoadUNibble4</a> (const XMUNIBBLE4 *pSource) noexcept</td></tr>
+<tr class="separator:a63e2cdf5a0083e3910c6ee3b9648a713"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab09052133c452e021cdb7089daf61c20"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ab09052133c452e021cdb7089daf61c20">XMLoadU555</a> (const XMU555 *pSource) noexcept</td></tr>
+<tr class="separator:ab09052133c452e021cdb7089daf61c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9dc67c2de6a704c459709daf6895fa5"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad9dc67c2de6a704c459709daf6895fa5">XMStoreColor</a> (XMCOLOR *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ad9dc67c2de6a704c459709daf6895fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df6842256fe83357c43c67d8c3a37a6"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a0df6842256fe83357c43c67d8c3a37a6">XMStoreHalf2</a> (XMHALF2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a0df6842256fe83357c43c67d8c3a37a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab19ee30750847e9711d5a33bc1b2342c"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ab19ee30750847e9711d5a33bc1b2342c">XMStoreShortN2</a> (XMSHORTN2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ab19ee30750847e9711d5a33bc1b2342c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c7a4cbe3e3b0d02daf5ae06eceba8ed"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a6c7a4cbe3e3b0d02daf5ae06eceba8ed">XMStoreShort2</a> (XMSHORT2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a6c7a4cbe3e3b0d02daf5ae06eceba8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d4c036cd78344c248f5f5969cf1d47c"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3d4c036cd78344c248f5f5969cf1d47c">XMStoreUShortN2</a> (XMUSHORTN2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a3d4c036cd78344c248f5f5969cf1d47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d3c7307efda8330e7d6f99144c3815"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a91d3c7307efda8330e7d6f99144c3815">XMStoreUShort2</a> (XMUSHORT2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a91d3c7307efda8330e7d6f99144c3815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3a1cf493cf1326e5e5f850a055887c"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a6e3a1cf493cf1326e5e5f850a055887c">XMStoreByteN2</a> (XMBYTEN2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a6e3a1cf493cf1326e5e5f850a055887c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adebd48e6d37f3d6088154971523ce548"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#adebd48e6d37f3d6088154971523ce548">XMStoreByte2</a> (XMBYTE2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:adebd48e6d37f3d6088154971523ce548"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb8efcc90fc8d943a1cf083d9904d15"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#aebb8efcc90fc8d943a1cf083d9904d15">XMStoreUByteN2</a> (XMUBYTEN2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:aebb8efcc90fc8d943a1cf083d9904d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06843b340595ded592855083ac15848"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad06843b340595ded592855083ac15848">XMStoreUByte2</a> (XMUBYTE2 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ad06843b340595ded592855083ac15848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539a11fb13530873de833467a180c453"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a539a11fb13530873de833467a180c453">XMStoreU565</a> (XMU565 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a539a11fb13530873de833467a180c453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21aae8469d8f87b263f45c656a2c0d8a"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a21aae8469d8f87b263f45c656a2c0d8a">XMStoreFloat3PK</a> (XMFLOAT3PK *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a21aae8469d8f87b263f45c656a2c0d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68361ac992c598631d172c881204181"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad68361ac992c598631d172c881204181">XMStoreFloat3SE</a> (XMFLOAT3SE *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ad68361ac992c598631d172c881204181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c39656ef2a2ba0345f51f795ade4fcb"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3c39656ef2a2ba0345f51f795ade4fcb">XMStoreHalf4</a> (XMHALF4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a3c39656ef2a2ba0345f51f795ade4fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a572a578ebf4dc3525bb8921e44a03358"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a572a578ebf4dc3525bb8921e44a03358">XMStoreShortN4</a> (XMSHORTN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a572a578ebf4dc3525bb8921e44a03358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a0ba7ce5a63bf2e4f9cc9aad4226cae"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a3a0ba7ce5a63bf2e4f9cc9aad4226cae">XMStoreShort4</a> (XMSHORT4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a3a0ba7ce5a63bf2e4f9cc9aad4226cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9990f80fcf0b0793dcd0b691753b708f"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a9990f80fcf0b0793dcd0b691753b708f">XMStoreUShortN4</a> (XMUSHORTN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a9990f80fcf0b0793dcd0b691753b708f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c933649d2b8f5c22207216ea4400652"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a0c933649d2b8f5c22207216ea4400652">XMStoreUShort4</a> (XMUSHORT4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a0c933649d2b8f5c22207216ea4400652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c8457610f51b27ee654b7de8e217ee3"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a0c8457610f51b27ee654b7de8e217ee3">XMStoreXDecN4</a> (XMXDECN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a0c8457610f51b27ee654b7de8e217ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ae25e07fd467942460ab387598ca8f"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a35ae25e07fd467942460ab387598ca8f">XMStoreXDec4</a> (XMXDEC4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a35ae25e07fd467942460ab387598ca8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac552c98eba6092cbaabd3ad808a719ea"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ac552c98eba6092cbaabd3ad808a719ea">XMStoreUDecN4</a> (XMUDECN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ac552c98eba6092cbaabd3ad808a719ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada3a692082423d74f91bf5041c4125dd"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ada3a692082423d74f91bf5041c4125dd">XMStoreUDecN4_XR</a> (XMUDECN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ada3a692082423d74f91bf5041c4125dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7efee87310d6572aa504c18385e5166"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad7efee87310d6572aa504c18385e5166">XMStoreUDec4</a> (XMUDEC4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ad7efee87310d6572aa504c18385e5166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16cf782edb83f7e2d77154862c1177ca"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a16cf782edb83f7e2d77154862c1177ca">XMStoreDecN4</a> (XMDECN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a16cf782edb83f7e2d77154862c1177ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa85da221400888fc4c62404271053a77"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#aa85da221400888fc4c62404271053a77">XMStoreDec4</a> (XMDEC4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:aa85da221400888fc4c62404271053a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad19435556f54a0f83a98455f0febb48d"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ad19435556f54a0f83a98455f0febb48d">XMStoreUByteN4</a> (XMUBYTEN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ad19435556f54a0f83a98455f0febb48d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9728fa78697c60143adab1e794ef18"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a1e9728fa78697c60143adab1e794ef18">XMStoreUByte4</a> (XMUBYTE4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a1e9728fa78697c60143adab1e794ef18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1cda4f479528ad7283f1d22370cbff4"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#ab1cda4f479528ad7283f1d22370cbff4">XMStoreByteN4</a> (XMBYTEN4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:ab1cda4f479528ad7283f1d22370cbff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23b94ebd45ce5dc78a64304b09df161b"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a23b94ebd45ce5dc78a64304b09df161b">XMStoreByte4</a> (XMBYTE4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a23b94ebd45ce5dc78a64304b09df161b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf0cc3d7c0b91430e20bb336797b43b8"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#acf0cc3d7c0b91430e20bb336797b43b8">XMStoreUNibble4</a> (XMUNIBBLE4 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:acf0cc3d7c0b91430e20bb336797b43b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8830a949de508a2377fcbddcf2f24879"><td class="memItemLeft" align="right" valign="top">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_direct_x_packed_vector_8inl.html#a8830a949de508a2377fcbddcf2f24879">XMStoreU555</a> (XMU555 *pDestination, FXMVECTOR V) noexcept</td></tr>
+<tr class="separator:a8830a949de508a2377fcbddcf2f24879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">関数詳解</h2>
+<a id="aad38cdf5da44d6c7a00f2a18f4e693ca" name="aad38cdf5da44d6c7a00f2a18f4e693ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad38cdf5da44d6c7a00f2a18f4e693ca">&#9670;&#160;</a></span>XMConvertFloatToHalf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HALF XMConvertFloatToHalf </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aad38cdf5da44d6c7a00f2a18f4e693ca_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aad38cdf5da44d6c7a00f2a18f4e693ca_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aad38cdf5da44d6c7a00f2a18f4e693ca_icgraph" id="a_direct_x_packed_vector_8inl_aad38cdf5da44d6c7a00f2a18f4e693ca_icgraph">
+<area shape="rect" title=" " alt="" coords="244,127,392,152"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#ad2e23ede96b59c8978636b99a0375685" title=" " alt="" coords="5,5,196,31"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_h_a_l_f2.html#a96281e642c1b1cec3caf7a7bfb447565" title=" " alt="" coords="23,55,178,95"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_h_a_l_f4.html#aad55edf768e7113264cc95d5696da17b" title=" " alt="" coords="23,119,178,159"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#a0df6842256fe83357c43c67d8c3a37a6" title=" " alt="" coords="51,184,151,209"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#a3c39656ef2a2ba0345f51f795ade4fcb" title=" " alt="" coords="51,233,151,259"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad2e23ede96b59c8978636b99a0375685" name="ad2e23ede96b59c8978636b99a0375685"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2e23ede96b59c8978636b99a0375685">&#9670;&#160;</a></span>XMConvertFloatToHalfStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ HALF * XMConvertFloatToHalfStream </td>
+          <td>(</td>
+          <td class="paramtype">HALF *&#160;</td>
+          <td class="paramname"><em>pOutputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>OutputStride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float *&#160;</td>
+          <td class="paramname"><em>pInputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>InputStride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>FloatCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad2e23ede96b59c8978636b99a0375685_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad2e23ede96b59c8978636b99a0375685_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad2e23ede96b59c8978636b99a0375685_cgraph" id="a_direct_x_packed_vector_8inl_ad2e23ede96b59c8978636b99a0375685_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,196,31"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad38cdf5da44d6c7a00f2a18f4e693ca" title=" " alt="" coords="244,5,392,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aad43528ba7c15aec4803804d4aeb6286" name="aad43528ba7c15aec4803804d4aeb6286"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad43528ba7c15aec4803804d4aeb6286">&#9670;&#160;</a></span>XMConvertHalfToFloat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float XMConvertHalfToFloat </td>
+          <td>(</td>
+          <td class="paramtype">HALF&#160;</td>
+          <td class="paramname"><em>Value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aad43528ba7c15aec4803804d4aeb6286_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aad43528ba7c15aec4803804d4aeb6286_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aad43528ba7c15aec4803804d4aeb6286_icgraph" id="a_direct_x_packed_vector_8inl_aad43528ba7c15aec4803804d4aeb6286_icgraph">
+<area shape="rect" title=" " alt="" coords="244,55,392,80"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#a4f3d91fd5b347f0093843b17e6f02085" title=" " alt="" coords="5,5,196,31"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#ae809566952c379fc61a7d9ba5b031cc0" title=" " alt="" coords="52,55,149,80"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#ae07f3e7da29caf532f2da803a46a7a98" title=" " alt="" coords="52,104,149,129"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4f3d91fd5b347f0093843b17e6f02085" name="a4f3d91fd5b347f0093843b17e6f02085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f3d91fd5b347f0093843b17e6f02085">&#9670;&#160;</a></span>XMConvertHalfToFloatStream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ float * XMConvertHalfToFloatStream </td>
+          <td>(</td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>pOutputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>OutputStride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const HALF *&#160;</td>
+          <td class="paramname"><em>pInputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>InputStride</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>HalfCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a4f3d91fd5b347f0093843b17e6f02085_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a4f3d91fd5b347f0093843b17e6f02085_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a4f3d91fd5b347f0093843b17e6f02085_cgraph" id="a_direct_x_packed_vector_8inl_a4f3d91fd5b347f0093843b17e6f02085_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,196,31"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad43528ba7c15aec4803804d4aeb6286" title=" " alt="" coords="244,5,392,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a510f211d3e5d6165a8e51b1a85c597a1" name="a510f211d3e5d6165a8e51b1a85c597a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510f211d3e5d6165a8e51b1a85c597a1">&#9670;&#160;</a></span>XMLoadByte2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadByte2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMBYTE2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3237e07fb6cb19c502ea2189ddd654b7" name="a3237e07fb6cb19c502ea2189ddd654b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3237e07fb6cb19c502ea2189ddd654b7">&#9670;&#160;</a></span>XMLoadByte4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadByte4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMBYTE4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adafdcbcb167e4fba04b1f978baa97db8" name="adafdcbcb167e4fba04b1f978baa97db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adafdcbcb167e4fba04b1f978baa97db8">&#9670;&#160;</a></span>XMLoadByteN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadByteN2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMBYTEN2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0815f290e72e94154c90bb682f9fdf54" name="a0815f290e72e94154c90bb682f9fdf54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0815f290e72e94154c90bb682f9fdf54">&#9670;&#160;</a></span>XMLoadByteN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadByteN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMBYTEN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a286d309496a4412ffa6fabdd825268d0" name="a286d309496a4412ffa6fabdd825268d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a286d309496a4412ffa6fabdd825268d0">&#9670;&#160;</a></span>XMLoadColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadColor </td>
+          <td>(</td>
+          <td class="paramtype">const XMCOLOR *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3aa493ae6f1db08ca00a00d1dd5b2004" name="a3aa493ae6f1db08ca00a00d1dd5b2004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa493ae6f1db08ca00a00d1dd5b2004">&#9670;&#160;</a></span>XMLoadDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadDec4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMDEC4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77435449f564f46a317956b0d03761fd" name="a77435449f564f46a317956b0d03761fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77435449f564f46a317956b0d03761fd">&#9670;&#160;</a></span>XMLoadDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMDECN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b6e9e3829de2a2f9cb77246d684a9cc" name="a3b6e9e3829de2a2f9cb77246d684a9cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b6e9e3829de2a2f9cb77246d684a9cc">&#9670;&#160;</a></span>XMLoadFloat3PK()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadFloat3PK </td>
+          <td>(</td>
+          <td class="paramtype">const XMFLOAT3PK *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3b6e9e3829de2a2f9cb77246d684a9cc_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3b6e9e3829de2a2f9cb77246d684a9cc_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3b6e9e3829de2a2f9cb77246d684a9cc_cgraph" id="a_direct_x_packed_vector_8inl_a3b6e9e3829de2a2f9cb77246d684a9cc_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,128,31"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a6a8f3221557308b06a96184e6ae2745a" title=" " alt="" coords="176,5,289,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a42392d6b6748d63543d02803606d319d" name="a42392d6b6748d63543d02803606d319d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42392d6b6748d63543d02803606d319d">&#9670;&#160;</a></span>XMLoadFloat3SE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadFloat3SE </td>
+          <td>(</td>
+          <td class="paramtype">const XMFLOAT3SE *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae809566952c379fc61a7d9ba5b031cc0" name="ae809566952c379fc61a7d9ba5b031cc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae809566952c379fc61a7d9ba5b031cc0">&#9670;&#160;</a></span>XMLoadHalf2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadHalf2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMHALF2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ae809566952c379fc61a7d9ba5b031cc0_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ae809566952c379fc61a7d9ba5b031cc0_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ae809566952c379fc61a7d9ba5b031cc0_cgraph" id="a_direct_x_packed_vector_8inl_ae809566952c379fc61a7d9ba5b031cc0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,103,31"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad43528ba7c15aec4803804d4aeb6286" title=" " alt="" coords="151,5,299,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae07f3e7da29caf532f2da803a46a7a98" name="ae07f3e7da29caf532f2da803a46a7a98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae07f3e7da29caf532f2da803a46a7a98">&#9670;&#160;</a></span>XMLoadHalf4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadHalf4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMHALF4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ae07f3e7da29caf532f2da803a46a7a98_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ae07f3e7da29caf532f2da803a46a7a98_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ae07f3e7da29caf532f2da803a46a7a98_cgraph" id="a_direct_x_packed_vector_8inl_ae07f3e7da29caf532f2da803a46a7a98_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,103,31"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad43528ba7c15aec4803804d4aeb6286" title=" " alt="" coords="151,5,299,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae85c94b8ed33e1d7608f025891512bd3" name="ae85c94b8ed33e1d7608f025891512bd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae85c94b8ed33e1d7608f025891512bd3">&#9670;&#160;</a></span>XMLoadShort2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadShort2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMSHORT2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2edc09a42109b148135c3fa7061ffc25" name="a2edc09a42109b148135c3fa7061ffc25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2edc09a42109b148135c3fa7061ffc25">&#9670;&#160;</a></span>XMLoadShort4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadShort4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMSHORT4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad7d81dfa3c171d3b1ce7d25a6b786894" name="ad7d81dfa3c171d3b1ce7d25a6b786894"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7d81dfa3c171d3b1ce7d25a6b786894">&#9670;&#160;</a></span>XMLoadShortN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadShortN2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMSHORTN2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35c258b8db05a01e882f62e36f8c6f12" name="a35c258b8db05a01e882f62e36f8c6f12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c258b8db05a01e882f62e36f8c6f12">&#9670;&#160;</a></span>XMLoadShortN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadShortN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMSHORTN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab09052133c452e021cdb7089daf61c20" name="ab09052133c452e021cdb7089daf61c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab09052133c452e021cdb7089daf61c20">&#9670;&#160;</a></span>XMLoadU555()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadU555 </td>
+          <td>(</td>
+          <td class="paramtype">const XMU555 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae79b26c42da74909b9865f650eb59667" name="ae79b26c42da74909b9865f650eb59667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae79b26c42da74909b9865f650eb59667">&#9670;&#160;</a></span>XMLoadU565()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadU565 </td>
+          <td>(</td>
+          <td class="paramtype">const XMU565 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a47e2752c3e5eff206b4a9d3918632b97" name="a47e2752c3e5eff206b4a9d3918632b97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47e2752c3e5eff206b4a9d3918632b97">&#9670;&#160;</a></span>XMLoadUByte2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUByte2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUBYTE2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a23ee469c1cff9f314879706590685824" name="a23ee469c1cff9f314879706590685824"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ee469c1cff9f314879706590685824">&#9670;&#160;</a></span>XMLoadUByte4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUByte4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUBYTE4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fa521032d040cac42d96403c997c315" name="a4fa521032d040cac42d96403c997c315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fa521032d040cac42d96403c997c315">&#9670;&#160;</a></span>XMLoadUByteN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUByteN2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUBYTEN2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abe157bbdd480b4126b85134ea6180335" name="abe157bbdd480b4126b85134ea6180335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe157bbdd480b4126b85134ea6180335">&#9670;&#160;</a></span>XMLoadUByteN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUByteN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUBYTEN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c2477e0aca0bafd06984b190f1aa4e3" name="a9c2477e0aca0bafd06984b190f1aa4e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c2477e0aca0bafd06984b190f1aa4e3">&#9670;&#160;</a></span>XMLoadUDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUDec4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUDEC4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac65a3352e504a4bfa8af0a8f3dae2204" name="ac65a3352e504a4bfa8af0a8f3dae2204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac65a3352e504a4bfa8af0a8f3dae2204">&#9670;&#160;</a></span>XMLoadUDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUDECN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a669b03c352ab672235d476088c954a70" name="a669b03c352ab672235d476088c954a70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a669b03c352ab672235d476088c954a70">&#9670;&#160;</a></span>XMLoadUDecN4_XR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUDecN4_XR </td>
+          <td>(</td>
+          <td class="paramtype">const XMUDECN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a63e2cdf5a0083e3910c6ee3b9648a713" name="a63e2cdf5a0083e3910c6ee3b9648a713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63e2cdf5a0083e3910c6ee3b9648a713">&#9670;&#160;</a></span>XMLoadUNibble4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUNibble4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUNIBBLE4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a55090fdd59d20d5cb02aa1c9dafa264c" name="a55090fdd59d20d5cb02aa1c9dafa264c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55090fdd59d20d5cb02aa1c9dafa264c">&#9670;&#160;</a></span>XMLoadUShort2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUShort2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUSHORT2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad38f88e4c661ca0a25ad7e24af751e4c" name="ad38f88e4c661ca0a25ad7e24af751e4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad38f88e4c661ca0a25ad7e24af751e4c">&#9670;&#160;</a></span>XMLoadUShort4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUShort4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUSHORT4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acdaa43d5a9397ac57e093fbf37a0b1c6" name="acdaa43d5a9397ac57e093fbf37a0b1c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdaa43d5a9397ac57e093fbf37a0b1c6">&#9670;&#160;</a></span>XMLoadUShortN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUShortN2 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUSHORTN2 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae454f344b12269e5b0855aeb2828eff8" name="ae454f344b12269e5b0855aeb2828eff8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae454f344b12269e5b0855aeb2828eff8">&#9670;&#160;</a></span>XMLoadUShortN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadUShortN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMUSHORTN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad808c324164262c403b1e48dbebbe5aa" name="ad808c324164262c403b1e48dbebbe5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad808c324164262c403b1e48dbebbe5aa">&#9670;&#160;</a></span>XMLoadXDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadXDec4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMXDEC4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25ef73a074d626ab5c713b69d1e5ffce" name="a25ef73a074d626ab5c713b69d1e5ffce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25ef73a074d626ab5c713b69d1e5ffce">&#9670;&#160;</a></span>XMLoadXDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ XMVECTOR <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMLoadXDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">const XMXDECN4 *&#160;</td>
+          <td class="paramname"><em>pSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adebd48e6d37f3d6088154971523ce548" name="adebd48e6d37f3d6088154971523ce548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adebd48e6d37f3d6088154971523ce548">&#9670;&#160;</a></span>XMStoreByte2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreByte2 </td>
+          <td>(</td>
+          <td class="paramtype">XMBYTE2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_cgraph" id="a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,111,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="159,31,275,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="159,80,274,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="159,133,274,159"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="323,5,483,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="351,55,454,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="353,104,452,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="531,5,715,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="341,154,464,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_icgraph" id="a_direct_x_packed_vector_8inl_adebd48e6d37f3d6088154971523ce548_icgraph">
+<area shape="rect" title=" " alt="" coords="209,13,315,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_b_y_t_e2.html#ad5de7e10436c0cd46f725fe4fea37954" title=" " alt="" coords="5,5,161,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a23b94ebd45ce5dc78a64304b09df161b" name="a23b94ebd45ce5dc78a64304b09df161b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23b94ebd45ce5dc78a64304b09df161b">&#9670;&#160;</a></span>XMStoreByte4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreByte4 </td>
+          <td>(</td>
+          <td class="paramtype">XMBYTE4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_cgraph" id="a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,111,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="159,31,275,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="159,80,274,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="159,133,274,159"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="323,5,483,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="351,55,454,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="353,104,452,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="531,5,715,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="341,154,464,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_icgraph" id="a_direct_x_packed_vector_8inl_a23b94ebd45ce5dc78a64304b09df161b_icgraph">
+<area shape="rect" title=" " alt="" coords="209,13,315,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_b_y_t_e4.html#a1a495d9658d3c9962f0cf85739505c3b" title=" " alt="" coords="5,5,161,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6e3a1cf493cf1326e5e5f850a055887c" name="a6e3a1cf493cf1326e5e5f850a055887c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e3a1cf493cf1326e5e5f850a055887c">&#9670;&#160;</a></span>XMStoreByteN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreByteN2 </td>
+          <td>(</td>
+          <td class="paramtype">XMBYTEN2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_cgraph" id="a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,83,120,108"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="171,8,287,33"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="172,57,287,83"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="168,107,291,132"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="172,157,287,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="339,5,499,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="367,55,470,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="369,104,468,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="547,5,731,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="357,154,480,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_icgraph" id="a_direct_x_packed_vector_8inl_a6e3a1cf493cf1326e5e5f850a055887c_icgraph">
+<area shape="rect" title=" " alt="" coords="228,13,343,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_b_y_t_e_n2.html#ab8b81ef18ad19901940beaf7832f08df" title=" " alt="" coords="5,5,180,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab1cda4f479528ad7283f1d22370cbff4" name="ab1cda4f479528ad7283f1d22370cbff4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1cda4f479528ad7283f1d22370cbff4">&#9670;&#160;</a></span>XMStoreByteN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreByteN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMBYTEN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_cgraph" id="a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,120,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="174,5,290,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="175,55,289,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="171,104,293,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a5797862d044e70b4c048ebdcf0e2ceca" title=" " alt="" coords="168,153,296,179"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="344,5,504,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="373,55,475,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="375,104,473,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="552,5,736,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_icgraph" id="a_direct_x_packed_vector_8inl_ab1cda4f479528ad7283f1d22370cbff4_icgraph">
+<area shape="rect" title=" " alt="" coords="228,13,343,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_b_y_t_e_n4.html#a2d57f2037033190561d3cf33cf8d1384" title=" " alt="" coords="5,5,180,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad9dc67c2de6a704c459709daf6895fa5" name="ad9dc67c2de6a704c459709daf6895fa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9dc67c2de6a704c459709daf6895fa5">&#9670;&#160;</a></span>XMStoreColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreColor </td>
+          <td>(</td>
+          <td class="paramtype">XMCOLOR *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_cgraph" id="a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,107,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="160,5,276,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="157,55,279,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="161,104,275,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="155,157,281,183"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="329,93,452,133"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="333,157,448,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="339,207,442,232"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="500,108,660,133"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="529,157,631,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="531,207,629,232"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="708,108,892,133"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_icgraph" id="a_direct_x_packed_vector_8inl_ad9dc67c2de6a704c459709daf6895fa5_icgraph">
+<area shape="rect" title=" " alt="" coords="217,13,319,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_c_o_l_o_r.html#abfaa9f0004e6fc4a250b7e1fa7c0bfb1" title=" " alt="" coords="5,5,169,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa85da221400888fc4c62404271053a77" name="aa85da221400888fc4c62404271053a77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa85da221400888fc4c62404271053a77">&#9670;&#160;</a></span>XMStoreDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreDec4 </td>
+          <td>(</td>
+          <td class="paramtype">XMDEC4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_cgraph" id="a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,107,56"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="155,5,271,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="155,55,270,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="319,5,479,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="347,55,450,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="349,104,448,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="527,5,711,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_icgraph" id="a_direct_x_packed_vector_8inl_aa85da221400888fc4c62404271053a77_icgraph">
+<area shape="rect" title=" " alt="" coords="207,13,308,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_d_e_c4.html#a78e8cd527b2f4d92ad7fa3dfe04995d6" title=" " alt="" coords="5,5,159,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a16cf782edb83f7e2d77154862c1177ca" name="a16cf782edb83f7e2d77154862c1177ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16cf782edb83f7e2d77154862c1177ca">&#9670;&#160;</a></span>XMStoreDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMDECN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_cgraph" id="a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,116,80"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="167,5,283,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="168,55,283,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="164,104,287,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="335,5,495,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="363,55,466,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="365,104,464,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="543,5,727,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_icgraph" id="a_direct_x_packed_vector_8inl_a16cf782edb83f7e2d77154862c1177ca_icgraph">
+<area shape="rect" title=" " alt="" coords="213,13,324,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_d_e_c_n4.html#a0b4b18d787d840aaf9ca88d6b27a26db" title=" " alt="" coords="5,5,165,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a21aae8469d8f87b263f45c656a2c0d8a" name="a21aae8469d8f87b263f45c656a2c0d8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21aae8469d8f87b263f45c656a2c0d8a">&#9670;&#160;</a></span>XMStoreFloat3PK()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreFloat3PK </td>
+          <td>(</td>
+          <td class="paramtype">XMFLOAT3PK *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_cgraph" id="a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,131,31"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a12bf78c1841bcd2c0fca8e2574e99c11" title=" " alt="" coords="179,5,295,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_icgraph" id="a_direct_x_packed_vector_8inl_a21aae8469d8f87b263f45c656a2c0d8a_icgraph">
+<area shape="rect" title=" " alt="" coords="260,13,385,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_f_l_o_a_t3_p_k.html#a4ba911d0378224b2c0d3b4683759f390" title=" " alt="" coords="5,5,212,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad68361ac992c598631d172c881204181" name="ad68361ac992c598631d172c881204181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68361ac992c598631d172c881204181">&#9670;&#160;</a></span>XMStoreFloat3SE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreFloat3SE </td>
+          <td>(</td>
+          <td class="paramtype">XMFLOAT3SE *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_cgraph" id="a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_cgraph">
+<area shape="rect" title=" " alt="" coords="5,42,131,67"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="179,5,301,45"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a12bf78c1841bcd2c0fca8e2574e99c11" title=" " alt="" coords="182,70,298,95"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_icgraph" id="a_direct_x_packed_vector_8inl_ad68361ac992c598631d172c881204181_icgraph">
+<area shape="rect" title=" " alt="" coords="260,13,385,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_f_l_o_a_t3_s_e.html#a848e298c532b74bf0b6b65feb8044cd5" title=" " alt="" coords="5,5,212,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0df6842256fe83357c43c67d8c3a37a6" name="a0df6842256fe83357c43c67d8c3a37a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df6842256fe83357c43c67d8c3a37a6">&#9670;&#160;</a></span>XMStoreHalf2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreHalf2 </td>
+          <td>(</td>
+          <td class="paramtype">XMHALF2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a0df6842256fe83357c43c67d8c3a37a6_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a0df6842256fe83357c43c67d8c3a37a6_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a0df6842256fe83357c43c67d8c3a37a6_cgraph" id="a_direct_x_packed_vector_8inl_a0df6842256fe83357c43c67d8c3a37a6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,105,80"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad38cdf5da44d6c7a00f2a18f4e693ca" title=" " alt="" coords="153,5,301,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#aa026bc59455acd16c574f8bf48fa8ef7" title=" " alt="" coords="174,55,281,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a9a61c0d86ce69c259d5175d678f8a44a" title=" " alt="" coords="173,104,281,129"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3c39656ef2a2ba0345f51f795ade4fcb" name="a3c39656ef2a2ba0345f51f795ade4fcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c39656ef2a2ba0345f51f795ade4fcb">&#9670;&#160;</a></span>XMStoreHalf4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreHalf4 </td>
+          <td>(</td>
+          <td class="paramtype">XMHALF4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3c39656ef2a2ba0345f51f795ade4fcb_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3c39656ef2a2ba0345f51f795ade4fcb_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3c39656ef2a2ba0345f51f795ade4fcb_cgraph" id="a_direct_x_packed_vector_8inl_a3c39656ef2a2ba0345f51f795ade4fcb_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,105,56"/>
+<area shape="rect" href="_direct_x_packed_vector_8inl.html#aad38cdf5da44d6c7a00f2a18f4e693ca" title=" " alt="" coords="153,5,301,31"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="169,55,285,80"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6c7a4cbe3e3b0d02daf5ae06eceba8ed" name="a6c7a4cbe3e3b0d02daf5ae06eceba8ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c7a4cbe3e3b0d02daf5ae06eceba8ed">&#9670;&#160;</a></span>XMStoreShort2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreShort2 </td>
+          <td>(</td>
+          <td class="paramtype">XMSHORT2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_cgraph" id="a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,115,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="163,31,279,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="163,80,278,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="163,133,278,159"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="327,5,487,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="355,55,458,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="357,104,456,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="535,5,719,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="345,154,468,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_icgraph" id="a_direct_x_packed_vector_8inl_a6c7a4cbe3e3b0d02daf5ae06eceba8ed_icgraph">
+<area shape="rect" title=" " alt="" coords="229,13,339,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_s_h_o_r_t2.html#a8f393c6df71838ea1be28d99bbdcf8ea" title=" " alt="" coords="5,5,181,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3a0ba7ce5a63bf2e4f9cc9aad4226cae" name="a3a0ba7ce5a63bf2e4f9cc9aad4226cae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a0ba7ce5a63bf2e4f9cc9aad4226cae">&#9670;&#160;</a></span>XMStoreShort4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreShort4 </td>
+          <td>(</td>
+          <td class="paramtype">XMSHORT4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_cgraph" id="a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,115,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="163,31,279,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="163,80,278,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="163,133,278,159"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="327,5,487,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="355,55,458,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="357,104,456,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="535,5,719,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="345,154,468,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_icgraph" id="a_direct_x_packed_vector_8inl_a3a0ba7ce5a63bf2e4f9cc9aad4226cae_icgraph">
+<area shape="rect" title=" " alt="" coords="229,13,339,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_s_h_o_r_t4.html#abae6c3e1012d23e7862252f422833f5f" title=" " alt="" coords="5,5,181,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab19ee30750847e9711d5a33bc1b2342c" name="ab19ee30750847e9711d5a33bc1b2342c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab19ee30750847e9711d5a33bc1b2342c">&#9670;&#160;</a></span>XMStoreShortN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreShortN2 </td>
+          <td>(</td>
+          <td class="paramtype">XMSHORTN2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_cgraph" id="a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,83,124,108"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="175,8,291,33"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="176,57,291,83"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="172,107,295,132"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="176,157,291,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="343,5,503,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="371,55,474,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="373,104,472,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="551,5,735,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="361,154,484,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_icgraph" id="a_direct_x_packed_vector_8inl_ab19ee30750847e9711d5a33bc1b2342c_icgraph">
+<area shape="rect" title=" " alt="" coords="248,13,367,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_s_h_o_r_t_n2.html#aa442ef9b4bddbefc271e9fb183d38416" title=" " alt="" coords="5,5,200,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a572a578ebf4dc3525bb8921e44a03358" name="a572a578ebf4dc3525bb8921e44a03358"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a572a578ebf4dc3525bb8921e44a03358">&#9670;&#160;</a></span>XMStoreShortN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreShortN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMSHORTN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_cgraph" id="a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_cgraph">
+<area shape="rect" title=" " alt="" coords="5,83,124,108"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="175,8,291,33"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="176,57,291,83"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="172,107,295,132"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="176,157,291,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="343,5,503,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="371,55,474,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="373,104,472,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="551,5,735,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="361,154,484,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_icgraph" id="a_direct_x_packed_vector_8inl_a572a578ebf4dc3525bb8921e44a03358_icgraph">
+<area shape="rect" title=" " alt="" coords="248,13,367,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_s_h_o_r_t_n4.html#ab71d56b61fafb516f3152cfbc139bf06" title=" " alt="" coords="5,5,200,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a8830a949de508a2377fcbddcf2f24879" name="a8830a949de508a2377fcbddcf2f24879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8830a949de508a2377fcbddcf2f24879">&#9670;&#160;</a></span>XMStoreU555()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreU555 </td>
+          <td>(</td>
+          <td class="paramtype">XMU555 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_cgraph" id="a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,107,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="155,31,271,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="155,80,270,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="155,129,270,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="161,179,264,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="319,5,479,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="347,55,450,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="349,104,448,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="527,5,711,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="337,154,460,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_icgraph" id="a_direct_x_packed_vector_8inl_a8830a949de508a2377fcbddcf2f24879_icgraph">
+<area shape="rect" title=" " alt="" coords="207,13,308,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u555.html#a6558867de4e97837ff4a3402a20b1120" title=" " alt="" coords="5,5,159,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a539a11fb13530873de833467a180c453" name="a539a11fb13530873de833467a180c453"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a539a11fb13530873de833467a180c453">&#9670;&#160;</a></span>XMStoreU565()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreU565 </td>
+          <td>(</td>
+          <td class="paramtype">XMU565 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_cgraph" id="a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,107,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="155,31,271,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="155,80,270,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="155,129,270,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="161,179,264,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="319,5,479,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="347,55,450,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="349,104,448,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="527,5,711,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="337,154,460,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_icgraph" id="a_direct_x_packed_vector_8inl_a539a11fb13530873de833467a180c453_icgraph">
+<area shape="rect" title=" " alt="" coords="207,13,308,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u565.html#a8d35d940548f6f4fb0179bdcb4b672c4" title=" " alt="" coords="5,5,159,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad06843b340595ded592855083ac15848" name="ad06843b340595ded592855083ac15848"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad06843b340595ded592855083ac15848">&#9670;&#160;</a></span>XMStoreUByte2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUByte2 </td>
+          <td>(</td>
+          <td class="paramtype">XMUBYTE2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_cgraph" id="a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,120,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="168,31,284,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="169,80,283,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="169,129,283,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="175,179,277,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="332,5,492,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="361,55,463,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="363,104,461,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="540,5,724,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="351,154,473,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_icgraph" id="a_direct_x_packed_vector_8inl_ad06843b340595ded592855083ac15848_icgraph">
+<area shape="rect" title=" " alt="" coords="228,13,343,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_b_y_t_e2.html#ad15215a14dd78b11aef11af82482f887" title=" " alt="" coords="5,5,180,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1e9728fa78697c60143adab1e794ef18" name="a1e9728fa78697c60143adab1e794ef18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e9728fa78697c60143adab1e794ef18">&#9670;&#160;</a></span>XMStoreUByte4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUByte4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUBYTE4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_cgraph" id="a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,120,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="168,31,284,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="169,80,283,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="169,129,283,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="175,179,277,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="332,5,492,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="361,55,463,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="363,104,461,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="540,5,724,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="351,154,473,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_icgraph" id="a_direct_x_packed_vector_8inl_a1e9728fa78697c60143adab1e794ef18_icgraph">
+<area shape="rect" title=" " alt="" coords="228,13,343,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_b_y_t_e4.html#aada7321e33674d7cc36f66f9f08f7e3d" title=" " alt="" coords="5,5,180,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aebb8efcc90fc8d943a1cf083d9904d15" name="aebb8efcc90fc8d943a1cf083d9904d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb8efcc90fc8d943a1cf083d9904d15">&#9670;&#160;</a></span>XMStoreUByteN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUByteN2 </td>
+          <td>(</td>
+          <td class="paramtype">XMUBYTEN2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_cgraph" id="a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,128,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="191,5,307,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a9ec2f16c6c7b5874b41450a6fd50a96a" title=" " alt="" coords="176,55,323,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="186,104,313,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a5797862d044e70b4c048ebdcf0e2ceca" title=" " alt="" coords="185,153,313,179"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="371,80,485,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="377,129,479,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="533,31,693,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="562,80,665,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="564,129,663,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="741,31,925,56"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_icgraph" id="a_direct_x_packed_vector_8inl_aebb8efcc90fc8d943a1cf083d9904d15_icgraph">
+<area shape="rect" title=" " alt="" coords="245,13,368,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_b_y_t_e_n2.html#a0491d507378e3058b9023b6533d0f179" title=" " alt="" coords="5,5,197,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad19435556f54a0f83a98455f0febb48d" name="ad19435556f54a0f83a98455f0febb48d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad19435556f54a0f83a98455f0febb48d">&#9670;&#160;</a></span>XMStoreUByteN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUByteN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUBYTEN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_cgraph" id="a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,128,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="182,5,298,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="179,55,301,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="177,104,303,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a5797862d044e70b4c048ebdcf0e2ceca" title=" " alt="" coords="176,153,304,179"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="352,80,467,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="358,129,461,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="515,31,675,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="543,80,646,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="545,129,644,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="723,31,907,56"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_icgraph" id="a_direct_x_packed_vector_8inl_ad19435556f54a0f83a98455f0febb48d_icgraph">
+<area shape="rect" title=" " alt="" coords="245,13,368,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_b_y_t_e_n4.html#a3394713ec6307022749a93ff4c462796" title=" " alt="" coords="5,5,197,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad7efee87310d6572aa504c18385e5166" name="ad7efee87310d6572aa504c18385e5166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7efee87310d6572aa504c18385e5166">&#9670;&#160;</a></span>XMStoreUDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUDec4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUDEC4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_cgraph" id="a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,116,80"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="164,5,280,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="165,55,279,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="171,104,273,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="328,5,488,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="357,55,459,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="359,104,457,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="536,5,720,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_icgraph" id="a_direct_x_packed_vector_8inl_ad7efee87310d6572aa504c18385e5166_icgraph">
+<area shape="rect" title=" " alt="" coords="213,13,324,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_d_e_c4.html#abe9067035681be1a6577f44926ab68d9" title=" " alt="" coords="5,5,165,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac552c98eba6092cbaabd3ad808a719ea" name="ac552c98eba6092cbaabd3ad808a719ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac552c98eba6092cbaabd3ad808a719ea">&#9670;&#160;</a></span>XMStoreUDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUDECN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_cgraph" id="a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,124,80"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="177,5,293,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="174,55,297,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="172,104,299,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="347,79,461,104"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="353,128,455,153"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="509,29,669,55"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="538,79,641,104"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="540,128,639,153"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="717,29,901,55"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_icgraph" id="a_direct_x_packed_vector_8inl_ac552c98eba6092cbaabd3ad808a719ea_icgraph">
+<area shape="rect" title=" " alt="" coords="232,13,351,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_d_e_c_n4.html#a099c445882d18ed6944fe4289e042300" title=" " alt="" coords="5,5,184,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ada3a692082423d74f91bf5041c4125dd" name="ada3a692082423d74f91bf5041c4125dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada3a692082423d74f91bf5041c4125dd">&#9670;&#160;</a></span>XMStoreUDecN4_XR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUDecN4_XR </td>
+          <td>(</td>
+          <td class="paramtype">XMUDECN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_ada3a692082423d74f91bf5041c4125dd_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_ada3a692082423d74f91bf5041c4125dd_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_ada3a692082423d74f91bf5041c4125dd_cgraph" id="a_direct_x_packed_vector_8inl_ada3a692082423d74f91bf5041c4125dd_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,148,80"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="211,5,327,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="212,55,327,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a9ec2f16c6c7b5874b41450a6fd50a96a" title=" " alt="" coords="196,104,343,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="391,5,551,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="419,55,522,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="421,104,520,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="599,5,783,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="acf0cc3d7c0b91430e20bb336797b43b8" name="acf0cc3d7c0b91430e20bb336797b43b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf0cc3d7c0b91430e20bb336797b43b8">&#9670;&#160;</a></span>XMStoreUNibble4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUNibble4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUNIBBLE4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_cgraph" id="a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,128,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="176,31,292,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="177,80,291,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="177,129,291,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="183,179,285,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="340,5,500,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="369,55,471,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="371,104,469,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="548,5,732,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="359,154,481,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_icgraph" id="a_direct_x_packed_vector_8inl_acf0cc3d7c0b91430e20bb336797b43b8_icgraph">
+<area shape="rect" title=" " alt="" coords="252,13,375,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_n_i_b_b_l_e4.html#a8154825667f274589a2e2ed359fb29f5" title=" " alt="" coords="5,5,204,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a91d3c7307efda8330e7d6f99144c3815" name="a91d3c7307efda8330e7d6f99144c3815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d3c7307efda8330e7d6f99144c3815">&#9670;&#160;</a></span>XMStoreUShort2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUShort2 </td>
+          <td>(</td>
+          <td class="paramtype">XMUSHORT2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_cgraph" id="a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,124,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="172,31,288,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="173,80,287,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="173,129,287,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="179,179,281,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="336,5,496,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="365,55,467,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="367,104,465,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="544,5,728,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="355,154,477,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_icgraph" id="a_direct_x_packed_vector_8inl_a91d3c7307efda8330e7d6f99144c3815_icgraph">
+<area shape="rect" title=" " alt="" coords="248,13,367,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_s_h_o_r_t2.html#ac4b5f8325b3cf68e9a9dbe8eade85c77" title=" " alt="" coords="5,5,200,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0c933649d2b8f5c22207216ea4400652" name="a0c933649d2b8f5c22207216ea4400652"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c933649d2b8f5c22207216ea4400652">&#9670;&#160;</a></span>XMStoreUShort4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUShort4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUSHORT4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_cgraph" id="a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_cgraph">
+<area shape="rect" title=" " alt="" coords="5,105,124,131"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="172,31,288,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="173,80,287,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="173,129,287,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="179,179,281,204"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="336,5,496,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="365,55,467,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="367,104,465,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="544,5,728,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="355,154,477,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_icgraph" id="a_direct_x_packed_vector_8inl_a0c933649d2b8f5c22207216ea4400652_icgraph">
+<area shape="rect" title=" " alt="" coords="248,13,367,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_s_h_o_r_t4.html#a9c598ed1199971aa2e4ce836305b1a3c" title=" " alt="" coords="5,5,200,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a3d4c036cd78344c248f5f5969cf1d47c" name="a3d4c036cd78344c248f5f5969cf1d47c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d4c036cd78344c248f5f5969cf1d47c">&#9670;&#160;</a></span>XMStoreUShortN2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUShortN2 </td>
+          <td>(</td>
+          <td class="paramtype">XMUSHORTN2 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_cgraph" id="a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,132,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="195,5,311,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a9ec2f16c6c7b5874b41450a6fd50a96a" title=" " alt="" coords="180,55,327,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="190,104,317,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a5797862d044e70b4c048ebdcf0e2ceca" title=" " alt="" coords="189,153,317,179"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="375,80,489,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="381,129,483,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="537,31,697,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="566,80,669,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="568,129,667,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="745,31,929,56"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_icgraph" id="a_direct_x_packed_vector_8inl_a3d4c036cd78344c248f5f5969cf1d47c_icgraph">
+<area shape="rect" title=" " alt="" coords="265,13,392,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_s_h_o_r_t_n2.html#abbeb9e1e2646f28acd5b3be3e57860b2" title=" " alt="" coords="5,5,217,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a9990f80fcf0b0793dcd0b691753b708f" name="a9990f80fcf0b0793dcd0b691753b708f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9990f80fcf0b0793dcd0b691753b708f">&#9670;&#160;</a></span>XMStoreUShortN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreUShortN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMUSHORTN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_cgraph" id="a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,132,105"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="195,5,311,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a9ec2f16c6c7b5874b41450a6fd50a96a" title=" " alt="" coords="180,55,327,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a459c43da14cfa324c5ec107b620e5c2f" title=" " alt="" coords="190,104,317,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a5797862d044e70b4c048ebdcf0e2ceca" title=" " alt="" coords="189,153,317,179"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="375,80,489,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ae435eb43e01de8625e5931cb8f9ed1c0" title=" " alt="" coords="381,129,483,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="537,31,697,56"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="566,80,669,105"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="568,129,667,155"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="745,31,929,56"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_icgraph" id="a_direct_x_packed_vector_8inl_a9990f80fcf0b0793dcd0b691753b708f_icgraph">
+<area shape="rect" title=" " alt="" coords="265,13,392,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_u_s_h_o_r_t_n4.html#a67103b3050e97262cfbff8444cb5d4f2" title=" " alt="" coords="5,5,217,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a35ae25e07fd467942460ab387598ca8f" name="a35ae25e07fd467942460ab387598ca8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ae25e07fd467942460ab387598ca8f">&#9670;&#160;</a></span>XMStoreXDec4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreXDec4 </td>
+          <td>(</td>
+          <td class="paramtype">XMXDEC4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_cgraph" id="a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,113,56"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="161,5,277,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="162,55,277,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="325,5,485,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="354,55,457,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="356,104,455,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="533,5,717,31"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_icgraph" id="a_direct_x_packed_vector_8inl_a35ae25e07fd467942460ab387598ca8f_icgraph">
+<area shape="rect" title=" " alt="" coords="209,13,317,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_x_d_e_c4.html#afc41b8f8803221b9cd6229bf8c27da4a" title=" " alt="" coords="5,5,161,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0c8457610f51b27ee654b7de8e217ee3" name="a0c8457610f51b27ee654b7de8e217ee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c8457610f51b27ee654b7de8e217ee3">&#9670;&#160;</a></span>XMStoreXDecN4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Use_decl_annotations_ void <a class="el" href="_direct_x_math_8h.html#a9720795adbcd10e5807c888cf625f6fa">XM_CALLCONV</a> XMStoreXDecN4 </td>
+          <td>(</td>
+          <td class="paramtype">XMXDECN4 *&#160;</td>
+          <td class="paramname"><em>pDestination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FXMVECTOR&#160;</td>
+          <td class="paramname"><em>V</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_cgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_cgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_cgraph" id="a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,83,123,108"/>
+<area shape="rect" href="_direct_x_math_convert_8inl.html#a41c5bc8021ac7c09f41e13da983d342d" title=" " alt="" coords="174,8,290,33"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad381cab96f5a858efaf10b330dfb94ab" title=" " alt="" coords="175,57,289,83"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a7bf02b583947166e579f08c160dd6f89" title=" " alt="" coords="171,107,293,132"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ac4d5a936dc111a78f26c74c44372c9d8" title=" " alt="" coords="175,157,289,183"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#ad7857a144e9b701655c532529a84260c" title=" " alt="" coords="341,5,501,31"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a043bb311077723eb77e5fe9e1c94600a" title=" " alt="" coords="370,55,473,80"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a80e23b4a1a0e150a6491c881a07277f7" title=" " alt="" coords="372,104,471,129"/>
+<area shape="rect" href="_direct_x_math_vector_8inl.html#a282981ff1fdffb6a14cbd480d3527512" title=" " alt="" coords="549,5,733,31"/>
+<area shape="rect" href="namespace_internal.html#a5367d5aebe85cdc210a7bd00eacb9e7d" title=" " alt="" coords="360,154,483,194"/>
+</map>
+</div>
+<div class="dynheader">
+被呼び出し関係図:</div>
+<div class="dyncontent">
+<div class="center"><img src="_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_icgraph.png" border="0" usemap="#a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_icgraph" alt=""/></div>
+<map name="a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_icgraph" id="a_direct_x_packed_vector_8inl_a0c8457610f51b27ee654b7de8e217ee3_icgraph">
+<area shape="rect" title=" " alt="" coords="228,13,345,38"/>
+<area shape="rect" href="struct_direct_x_1_1_packed_vector_1_1_x_m_x_d_e_c_n4.html#a4aba85c1414cb5a1080c0d445ad82d78" title=" " alt="" coords="5,5,180,45"/>
+</map>
+</div>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

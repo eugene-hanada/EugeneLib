@@ -1,0 +1,30 @@
+\hypertarget{_dx12_default_resource_8h_source}{}\doxysection{Dx12\+Default\+Resource.\+h}
+\label{_dx12_default_resource_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12DefaultResource.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12DefaultResource.h}}
+\mbox{\hyperlink{_dx12_default_resource_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../DirectX12/Dx12GpuResource.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <span>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/GraphicsCommon.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../../../Include/Math/Vector2.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{struct }ID3D12Device;}
+\DoxyCodeLine{9 \textcolor{keyword}{struct }IDXGISwapChain4;}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{12 \{}
+\DoxyCodeLine{13     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}} :}
+\DoxyCodeLine{14         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_dx12_gpu_resource}{Dx12GpuResource}}}
+\DoxyCodeLine{15     \{}
+\DoxyCodeLine{16     \textcolor{keyword}{public}:}
+\DoxyCodeLine{17         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}}(ID3D12Device* device, \textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{18         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}}(IDXGISwapChain4* swapChain,std::uint32\_t idx);}
+\DoxyCodeLine{19         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}}(ID3D12Device* device,\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}} format, \textcolor{keyword}{const} std::span<float, 4>\& clearColor);}
+\DoxyCodeLine{20         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}}(ID3D12Device* device, \textcolor{keyword}{const} \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{TextureInfo}}\& formatData);}
+\DoxyCodeLine{21         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_default_resource}{Dx12DefaultResource}}(ID3D12Device* device,\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}} format, \textcolor{keywordtype}{float} clearValue = 1.0f);}
+\DoxyCodeLine{22     \textcolor{keyword}{private}:}
+\DoxyCodeLine{23     \};}
+\DoxyCodeLine{24 \}}
+
+\end{DoxyCode}

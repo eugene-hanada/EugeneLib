@@ -165,19 +165,34 @@ void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std
 
 void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color)
 {
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
+	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+	// レンダーターゲットの最大数が8なのでその分確保
+	for (size_t i = 0; i < views.GetSize(); i++)
+	{
+		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+		cmdList_->ClearRenderTargetView(handle, color.data(), 0, nullptr);
+	}
+	
 }
 
 void EugeneLib::Dx12CommandList::TransitionRenderTargetBegin(GpuResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
 void EugeneLib::Dx12CommandList::TransitionRenderTargetEnd(GpuResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_COMMON);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 

@@ -1,0 +1,22 @@
+\hypertarget{_shader_8h_source}{}\doxysection{Shader.\+h}
+\label{_shader_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/Shader.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/Shader.h}}
+\mbox{\hyperlink{_shader_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <filesystem>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_shader}{Shader}}}
+\DoxyCodeLine{8     \{}
+\DoxyCodeLine{9     \textcolor{keyword}{public}:}
+\DoxyCodeLine{10         \mbox{\hyperlink{class_eugene_lib_1_1_shader}{Shader}}(\textcolor{keyword}{const} std::filesystem::path\& path);}
+\DoxyCodeLine{11         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{class_eugene_lib_1_1_shader_ab839b09c57c2ff5faa41c6926063cb8f}{GetPtr}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{12         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a256f3347af8}{GetSize}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{13     \textcolor{keyword}{private}:}
+\DoxyCodeLine{14         std::vector<char> code\_;}
+\DoxyCodeLine{15     \};}
+\DoxyCodeLine{16 \}}
+
+\end{DoxyCode}

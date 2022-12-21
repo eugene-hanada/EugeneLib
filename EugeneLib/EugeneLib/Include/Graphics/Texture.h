@@ -5,16 +5,45 @@
 
 namespace EugeneLib
 {
-
+	/// <summary>
+	/// テクスチャ
+	/// </summary>
 	class Texture
 	{
 	public:
+		
+		/// <summary>
+		/// コンストラクタ(指定したテクスチャファイルを読み込む)
+		/// </summary>
+		/// <param name="path"> テクスチャファイルのパス </param>
 		Texture(const std::filesystem::path& path);
+
+		/// <summary>
+		/// テクスチャの情報を取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		const TextureInfo& GetInfo(void) const&;
+
+
 		const std::vector<std::uint8_t>& GetData(void) const&;
+
+		/// <summary>
+		/// テクスチャデータを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> テクスチャデータ </returns>
 		std::uint8_t* GetData(void)&;
 	private:
+
+		/// <summary>
+		/// テクスチャデータ
+		/// </summary>
 		std::vector<std::vector<std::uint8_t>> data_;
+
+		/// <summary>
+		/// テクスチャ情報
+		/// </summary>
 		TextureInfo info_;
 	};
 }

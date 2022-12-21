@@ -174,6 +174,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	depthView->Create(*depth, 0);
 
 	cmdList->ClearDepth(*depthView);
+	cmdList->SetRenderTarget(graphics->GetViews(), *depthView, graphics->GetNowBackBufferIndex());
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())

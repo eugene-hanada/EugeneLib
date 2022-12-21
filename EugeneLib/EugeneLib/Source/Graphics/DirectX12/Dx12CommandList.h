@@ -33,7 +33,6 @@ namespace EugeneLib
 		void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) final;
 		void SetRenderTarget(RenderTargetViews& views) final;
 		void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0)final;
-		void SetRenderTarget(RenderTargetViews& views, DepthStencilViews& depthViews, size_t rtViewsIdx = 0) final;
 		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, size_t idx = 0) final;
 		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
 		void TransitionRenderTargetBegin(GpuResource& resource) final;

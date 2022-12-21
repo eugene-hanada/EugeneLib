@@ -150,10 +150,6 @@ void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTarget
 	cmdList_->OMSetRenderTargets(1, &rtHandle, false, &dsHandle);
 }
 
-void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, DepthStencilViews& depthViews, size_t rtViewsIdx)
-{
-}
-
 void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, size_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };

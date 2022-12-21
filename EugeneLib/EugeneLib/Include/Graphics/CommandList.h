@@ -34,7 +34,6 @@ namespace EugeneLib
 		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& views) = 0;
 		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0) = 0;
-		virtual void SetRenderTarget(RenderTargetViews& views, DepthStencilViews& depthViews, size_t rtViewsIdx = 0) = 0;
 		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float,4> color, size_t idx = 0) = 0;
 		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) = 0;
 		virtual void TransitionRenderTargetBegin(GpuResource& resource) = 0;

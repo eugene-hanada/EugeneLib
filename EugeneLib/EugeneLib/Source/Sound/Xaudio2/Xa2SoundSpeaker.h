@@ -19,7 +19,7 @@ namespace EugeneLib
 		void Play(void) const final;
 		void Stop(void) const final;
 		bool IsEnd(void) const final;
-
+		void SetPitchRate(float rate) final;
 		IXAudio2SourceVoice* source_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
 	};

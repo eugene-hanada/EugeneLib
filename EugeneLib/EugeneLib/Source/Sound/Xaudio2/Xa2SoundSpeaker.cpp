@@ -1,5 +1,6 @@
 #include "Xa2SoundSpeaker.h"
 #include <xaudio2.h>
+#include <algorithm>
 #include "../../../Include/Sound/Wave.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
@@ -57,4 +58,9 @@ bool EugeneLib::Xa2SoundSpeaker::IsEnd(void) const
 	XAUDIO2_VOICE_STATE state;
 	source_->GetState(&state);
 	return state.BuffersQueued <= 0;
+}
+
+void EugeneLib::Xa2SoundSpeaker::SetPitchRate(float rate)
+{
+	source_->SetFrequencyRatio(std::clamp(rate, XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MAX_FREQ_RATIO));
 }

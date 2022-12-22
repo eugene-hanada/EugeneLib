@@ -181,6 +181,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
+	
 	soundSpeaker->Play();
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };

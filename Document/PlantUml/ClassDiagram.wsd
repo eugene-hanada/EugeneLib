@@ -106,12 +106,12 @@ namespace EugeneLib {
     }
 
 
-    abstract class SoundEmitter
+    abstract class SoundSpeaker
     {
 
     }
 
-    abstract class Sound3DEmitter
+    abstract class Sound3DSpeaker
     {
 
     }
@@ -123,7 +123,7 @@ namespace EugeneLib {
 
     abstract class Sound3DController
     {
-        
+
     }
 }
 @enduml

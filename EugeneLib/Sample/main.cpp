@@ -28,11 +28,15 @@ std::unique_ptr <EugeneLib::GpuResource> upTextureBuffer;
 std::unique_ptr <EugeneLib::GpuResource> textureBuffer;
 std::unique_ptr < EugeneLib::ShaderResourceViews> textureView_;
 
+// 行列データ
 std::unique_ptr <EugeneLib::GpuResource> upMatrixBuffer;
 std::unique_ptr <EugeneLib::GpuResource> matrixBuffer;
 std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
 
-
+// サウンド系
+std::unique_ptr<EugeneLib::Sound> sound;
+std::unique_ptr<EugeneLib::SoundSpeaker> soundSpeaker;
+std::unique_ptr<EugeneLib::Wave> wave;
 
 void Init(void)
 {
@@ -150,6 +154,13 @@ void InitConstantBuffer(void)
 	
 }
 
+void InitSound(void)
+{
+	sound.reset(EugeneLib::CreateSound());
+	wave = std::make_unique<EugeneLib::Wave>(L"./exp.wav");
+	soundSpeaker.reset(sound->CreateSoundSpeaker(*wave));
+}
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 
@@ -158,6 +169,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	InitVertex();
 	InitTexture();
 	InitConstantBuffer();
+	InitSound();
 
 	cmdList->Begin();
 	cmdList->Copy(*matrixBuffer, *upMatrixBuffer);
@@ -169,12 +181,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
-	auto depth = graphics->CreateDepthResource({ 1280.0f,720.0f }, EugeneLib::Format::R32_TYPELESS);
-	auto depthView = graphics->CreateDepthStencilViews(1);
-	depthView->Create(*depth, 0);
-
-	cmdList->ClearDepth(*depthView);
-	cmdList->SetRenderTarget(graphics->GetViews(), *depthView, graphics->GetNowBackBufferIndex());
+	soundSpeaker->Play();
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())

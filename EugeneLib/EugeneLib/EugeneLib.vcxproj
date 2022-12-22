@@ -159,6 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Sound\Sound.h" />
+    <ClInclude Include="Include\Sound\SoundCommon.h" />
+    <ClInclude Include="Include\Sound\SoundSpeaker.h" />
+    <ClInclude Include="Include\Sound\Wave.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
     <ClInclude Include="Include\Math\Vector3.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
@@ -196,8 +200,12 @@
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
     <ClInclude Include="Include\Graphics\Texture.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\SoundSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Sound.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
@@ -223,10 +231,13 @@
     <ClCompile Include="Source\EugeneLib.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />
     <ClCompile Include="Source\Math\Geometry.cpp" />
+    <ClCompile Include="Source\Sound\Wave.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EugeneLib.rc" />

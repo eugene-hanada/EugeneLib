@@ -5,6 +5,7 @@
 #include "../../../Include/Sound/Wave.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
+
 EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel)
 {
 	WAVEFORMATEX format{
@@ -45,24 +46,23 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave,
 
 EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 {
+	source_->Stop();
 	source_->DestroyVoice();
 }
 
 void EugeneLib::Xa2SoundSpeaker::Play(void) const
 {
-
 	if (FAILED(source_->FlushSourceBuffers())|| 
 		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
 		FAILED(source_->Start()))
 	{
 		throw EugeneLibException("failedPlay");
 	}
-
 }
 
 void EugeneLib::Xa2SoundSpeaker::Stop(void) const
 {
-	source_->Stop();
+	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
 
 bool EugeneLib::Xa2SoundSpeaker::IsEnd(void) const

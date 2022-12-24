@@ -1,10 +1,11 @@
 #include "Xa2SoundSpeaker.h"
 #include <xaudio2.h>
+#include <xaudio2fx.h>
 #include <algorithm>
 #include "../../../Include/Sound/Wave.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
-EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave)
+EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel)
 {
 	WAVEFORMATEX format{
 		wave.GetFmt().type,
@@ -27,10 +28,19 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave)
 	buffer_->AudioBytes = static_cast<unsigned int>(wave.GetData().size() * sizeof(wave.GetData()[0]));
 	buffer_->LoopCount = 0;
 
+	if (buffer_->LoopLength > 0)
+	{
+		buffer_->LoopCount = 1;
+	}
+
 	if(FAILED(source_->SubmitSourceBuffer(buffer_.get())))
 	{
 		throw EugeneLibException("ソースボイス生成失敗");
 	}
+
+
+	outChannel_ = outChannel;
+	inChannel_ = format.nChannels;
 }
 
 EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker()
@@ -40,12 +50,14 @@ EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 
 void EugeneLib::Xa2SoundSpeaker::Play(void) const
 {
-	if (FAILED(source_->Start()))
+
+	if (FAILED(source_->FlushSourceBuffers())|| 
+		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
+		FAILED(source_->Start()))
 	{
 		throw EugeneLibException("failedPlay");
 	}
 
-	
 }
 
 void EugeneLib::Xa2SoundSpeaker::Stop(void) const
@@ -63,4 +75,17 @@ bool EugeneLib::Xa2SoundSpeaker::IsEnd(void) const
 void EugeneLib::Xa2SoundSpeaker::SetPitchRate(float rate)
 {
 	source_->SetFrequencyRatio(std::clamp(rate, XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MAX_FREQ_RATIO));
+}
+
+void EugeneLib::Xa2SoundSpeaker::SetVolume(float volume)
+{
+	source_->SetVolume(volume * volume);
+}
+
+void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
+{
+	if (outChannel_ == volumes.size())
+	{
+		source_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
+	}
 }

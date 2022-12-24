@@ -15,6 +15,8 @@ namespace EugeneLib
 		~Xa2Sound();
 	private:
 		void SetVolume(float volume) final;
+	
+		void SetPan(std::span<float> volumes) final;
 
 		SoundSpeaker* CreateSoundSpeaker(const Wave& wave) const final;
 

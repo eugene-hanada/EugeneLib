@@ -23,7 +23,10 @@ EugeneLib::Xa2Sound::Xa2Sound()
 	{
 		throw EugeneLibException("マスタリングボイスの作成に失敗");
 	}
-	mastering_->SetVolume(1.0f);
+	
+	XAUDIO2_VOICE_DETAILS details;
+	mastering_->GetVoiceDetails(&details);
+	inChannel_ = outChannel_ = details.InputChannels;
 }
 
 EugeneLib::Xa2Sound::~Xa2Sound()
@@ -33,10 +36,18 @@ EugeneLib::Xa2Sound::~Xa2Sound()
 
 void EugeneLib::Xa2Sound::SetVolume(float volume)
 {
-	mastering_->SetVolume(volume);
+	mastering_->SetVolume(volume * volume);
+}
+
+void EugeneLib::Xa2Sound::SetPan(std::span<float> volumes)
+{
+	if (outChannel_ == volumes.size())
+	{
+		mastering_->SetOutputMatrix(nullptr, outChannel_, outChannel_, volumes.data());
+	}
 }
 
 EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wave) const
 {
-	return new Xa2SoundSpeaker{xaudio2_.Get(),wave};
+	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_};
 }

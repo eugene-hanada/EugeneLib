@@ -1,4 +1,5 @@
 #pragma once
+#include "SoundBase.h"
 
 namespace EugeneLib
 {
@@ -7,7 +8,8 @@ namespace EugeneLib
 	/// <summary>
 	/// サウンドを再生するクラス
 	/// </summary>
-	class SoundSpeaker
+	class SoundSpeaker :
+		public SoundBase
 	{
 	public:
 		virtual ~SoundSpeaker();

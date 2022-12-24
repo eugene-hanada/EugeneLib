@@ -1,4 +1,5 @@
 #pragma once
+#include "SoundBase.h"
 
 namespace EugeneLib
 {
@@ -7,7 +8,8 @@ namespace EugeneLib
 	/// <summary>
 	/// サウンド用のクラス
 	/// </summary>
-	class Sound
+	class Sound :
+		public SoundBase
 	{
 	public:
 		virtual ~Sound();
@@ -18,12 +20,6 @@ namespace EugeneLib
 		/// <param name="wave"></param>
 		/// <returns></returns>
 		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave) const = 0;
-
-		/// <summary>
-		/// 全体のボリュームをセットする
-		/// </summary>
-		/// <param name="volume"> ボリューム </param>
-		virtual void SetVolume(float volume) = 0;
 
 	protected:
 		Sound();

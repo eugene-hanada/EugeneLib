@@ -181,12 +181,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
-	
+	std::vector<float> volumes{ 1.0f, 0.0f };
+	soundSpeaker->SetPan(volumes);
 	soundSpeaker->Play();
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())
 	{
+
+		if (soundSpeaker->IsEnd())
+		{
+			soundSpeaker->Play();
+		}
+
 		// コマンドの開始
 		cmdList->Begin();
 

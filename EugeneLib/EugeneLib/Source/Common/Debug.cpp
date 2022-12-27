@@ -28,18 +28,29 @@ void EugeneLib::Debug::Log(const std::u8string& log1, const std::u8string& log2)
 {
 	Log(log1 + log2);
 }
-//
-//void EugeneLib::Debug::Log(const Vector2& vec)
-//{
-//	std::filesystem::path tmp{ std::format("x={0:f}y={1:f}", vec.x, vec.y) };
-//	Log(tmp.u8string());
-//}
-//
-//void EugeneLib::Debug::Log(const Vector2& vec, const std::u8string& log)
-//{
-//	std::filesystem::path tmp{ std::format("x={0:f}y={1:f}", vec.x, vec.y) };
-//	Log(tmp.u8string(), log);
-//}
+
+void EugeneLib::Debug::Log(const Vector2& vec)
+{
+	std::filesystem::path tmp{ std::format("x={0:f}y={1:f}", vec.x, vec.y) };
+	Log(tmp.u8string());
+}
+
+void EugeneLib::Debug::Log(const Vector2& vec, const std::u8string& log)
+{
+	std::filesystem::path tmp{ std::format("x={0:f}y={1:f}", vec.x, vec.y) };
+	Log(tmp.u8string(), log);
+}
+void EugeneLib::Debug::Log(float val)
+{
+	std::filesystem::path tmp{ std::format("{0:f}", val) };
+	Log(tmp.u8string());
+}
+
+void EugeneLib::Debug::Log(float val, const std::u8string& log)
+{
+	std::filesystem::path tmp{ std::format("{0:f}", val) };
+	Log(tmp.u8string(), log);
+}
 
 
 EugeneLib::Debug::Debug()

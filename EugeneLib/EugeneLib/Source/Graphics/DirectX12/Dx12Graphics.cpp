@@ -19,11 +19,11 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-EugeneLib::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine)
+EugeneLib::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
 {
 	CreateDevice();
-	CreateSwapChain(hwnd, size,gpuEngine);
-	CreateBackBuffers(2);
+	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
+	CreateBackBuffers(bufferNum);
 }
 
 EugeneLib::Dx12Graphics::~Dx12Graphics()
@@ -182,7 +182,7 @@ void EugeneLib::Dx12Graphics::CreateDevice(void)
 	throw LibInitException();
 }
 
-void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine)
+void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
 {
 	gpuEngine = CreateGpuEngine(10);
 
@@ -208,27 +208,25 @@ void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, G
 	// DXGI_USAGE_BACK_BUFFERこんままで
 	swapchainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
-	// バッファーの数ダブルバッファ-なので2
-	swapchainDesc.BufferCount = 2;
-
-	// バックバッファ-は伸び縮みできるように設定
+	swapchainDesc.BufferCount = bufferNum;
 	swapchainDesc.Scaling = DXGI_SCALING_STRETCH;
-
-	// フリップ後にすぐに破棄するように設定
 	swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-
-	// 特に指定しないのでDXGI_ALPHA_MODE_UNSPECIFIEDで
 	swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
-
-	// フルスクリーン-ウィンドウの切り替え可能に設定
 	swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 
 	ID3D12CommandQueue* cmdQueue{ static_cast<ID3D12CommandQueue*>(gpuEngine->GetQueue()) };
 
+	DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullScrDesc{};
+	fullScrDesc.Windowed = true;
+	fullScrDesc.RefreshRate.Denominator = 1;
+	fullScrDesc.RefreshRate.Numerator = 75;
+	fullScrDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
+	fullScrDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+
 	// スワップチェインの生成
 	IDXGISwapChain1* swapchain = nullptr;
-	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, nullptr, nullptr, &swapchain)))
+	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
 		throw LibInitException();
 	}

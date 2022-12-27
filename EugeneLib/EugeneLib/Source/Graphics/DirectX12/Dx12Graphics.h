@@ -15,7 +15,7 @@ namespace EugeneLib
 		public Graphics
 	{
 	public:
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine);
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum);
 		~Dx12Graphics();
 	
 		
@@ -51,7 +51,7 @@ namespace EugeneLib
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum);
 
 		void CreateBackBuffers(size_t bufferCount);
 

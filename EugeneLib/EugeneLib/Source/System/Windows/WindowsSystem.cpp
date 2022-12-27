@@ -93,9 +93,9 @@ EugeneLib::WindowsSystem::~WindowsSystem()
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 }
 
-EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine) const&
+EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum) const&
 {
-	return new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine};
+	return new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum };
 }
 
 bool EugeneLib::WindowsSystem::Update(void)

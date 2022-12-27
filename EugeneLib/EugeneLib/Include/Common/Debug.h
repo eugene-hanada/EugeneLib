@@ -18,11 +18,11 @@ namespace EugeneLib
 
 		void Log(const std::u8string& log);
 		void Log(const std::u8string& log1, const std::u8string& log2);
-		/*void Log(const Vector2& vec);
-		void Log(const Vector2& vec, const std::u8string& log);*/
+		void Log(const Vector2& vec);
+		void Log(const Vector2& vec, const std::u8string& log);
+		void Log(float val);
+		void Log(float val, const std::u8string& log);
 
-		/**template<class... T>
-		void Log(const std::u8string& log1, const T&... log2s);*/
 
 	private:
 		Debug();

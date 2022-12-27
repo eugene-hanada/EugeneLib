@@ -39,7 +39,7 @@ namespace EugeneLib
 		/// </summary>
 		/// <param name="gpuEngine"> GpuEngineのポインタの参照 </param>
 		/// <returns> Graphicsのポインタ </returns>
-		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine) const& = 0;
+		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum = 2) const& = 0;
 
 	protected:
 

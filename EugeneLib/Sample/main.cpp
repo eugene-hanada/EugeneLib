@@ -2,6 +2,7 @@
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
+#include <Common/Debug.h>
 
 // システム系(Windows関連の処理のクラス)
 std::unique_ptr<EugeneLib::System> libSys;
@@ -46,7 +47,7 @@ void Init(void)
 	{
 		// グラフィックの機能のクラスを作成しコマンドリストを実行するクラスをセット
 		EugeneLib::GpuEngine* tmp;
-		graphics.reset(libSys->CreateGraphics(tmp));
+		graphics.reset(libSys->CreateGraphics(tmp,3));
 		gpuEngien.reset(tmp);
 	}
 
@@ -200,6 +201,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// レンダーターゲットのセット
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
+
+		DebugLog(graphics->GetNowBackBufferIndex());
 
 		// レンダーターゲットをクリア
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());

@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "Sample\Sample.vcxproj", "{0A00D369-CBB0-419A-A334-614D1F7ADFE2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB} = {893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EugeneLib", "EugeneLib\EugeneLib.vcxproj", "{893B1D9C-6EA7-44C2-ADD9-22C4A9678BBB}"
 EndProject

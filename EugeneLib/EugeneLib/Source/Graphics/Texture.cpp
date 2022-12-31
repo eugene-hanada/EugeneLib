@@ -4,9 +4,6 @@
 #include "../../DirectXTex/DirectXTex/DirectXTex.h"
 #include "../../Include/Common/EugeneLibException.h"
 
-#pragma comment(lib,"DirectXTex.lib")
-
-
 struct Load
 {
 	bool operator()(const std::filesystem::path& path, EugeneLib::TextureInfo& info, std::vector<std::vector<std::uint8_t>>& data )

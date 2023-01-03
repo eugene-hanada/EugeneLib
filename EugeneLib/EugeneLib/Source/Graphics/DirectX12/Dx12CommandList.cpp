@@ -7,6 +7,7 @@
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include "../../../Include/Graphics/GpuResource.h"
 #include "../../../Include/Graphics/VertexView.h"
+#include "../../../Include/Graphics/IndexView.h"
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
@@ -73,6 +74,12 @@ void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());
 	cmdList_->IASetVertexBuffers(0, 1, ptr);
+}
+
+void EugeneLib::Dx12CommandList::SetIndexView(IndexView& view)
+{
+	auto ptr = static_cast<D3D12_INDEX_BUFFER_VIEW*>(view.GetView());
+	cmdList_->IASetIndexBuffer(ptr);
 }
 
 void EugeneLib::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx)

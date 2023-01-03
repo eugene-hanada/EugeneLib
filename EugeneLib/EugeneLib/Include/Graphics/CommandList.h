@@ -10,6 +10,7 @@ namespace EugeneLib
 	class RenderTargetViews;
 	class DepthStencilViews;
 	class VertexView;
+	class IndexView;
 	class GpuResource;
 	class GraphicsPipeline;
 	class ShaderResourceViews;
@@ -71,6 +72,12 @@ namespace EugeneLib
 		/// </summary>
 		/// <param name="view"> 頂点ビュー </param>
 		virtual void SetVertexView(VertexView& view) = 0;
+
+		/// <summary>
+		/// インデックスビューをセットする
+		/// </summary>
+		/// <param name="view"> インデックスビュー </param>
+		virtual void SetIndexView(IndexView& view) = 0;
 
 		/// <summary>
 		/// シェーダーリソースをセットする

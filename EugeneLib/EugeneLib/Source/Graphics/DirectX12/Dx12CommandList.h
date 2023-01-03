@@ -25,7 +25,7 @@ namespace EugeneLib
 		void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) final;
 		void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f);
 		void SetVertexView(VertexView& view) final;
-
+		void SetIndexView(IndexView& view) final;
 		void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) final;
 
 		void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) final;

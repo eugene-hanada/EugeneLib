@@ -159,11 +159,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
     <ClInclude Include="Include\Sound\Sound.h" />
     <ClInclude Include="Include\Sound\SoundCommon.h" />
     <ClInclude Include="Include\Sound\SoundSpeaker.h" />
     <ClInclude Include="Include\Sound\Wave.h" />
     <ClInclude Include="Include\Sound\SoundBase.h" />
+    <ClInclude Include="Include\Graphics\IndexView.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
     <ClInclude Include="Include\Math\Vector3.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
@@ -205,6 +207,8 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
+    <ClCompile Include="Source\Graphics\IndexView.cpp" />
     <ClCompile Include="Source\Sound\SoundBase.cpp" />
     <ClCompile Include="Source\Sound\SoundSpeaker.cpp" />
     <ClCompile Include="Source\Sound\Sound.cpp" />

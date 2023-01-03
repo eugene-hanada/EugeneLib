@@ -24,6 +24,7 @@ set(GraphicsSource
     Source/Graphics/DepthStencilViews.cpp
     Source/Graphics/ShaderResourceViews.cpp
     Source/Graphics/VertexView.cpp
+    Source/Graphics/IndexView.cpp
     Source/Graphics/Shader.cpp
     Source/Graphics/Texture.cpp
 )
@@ -41,6 +42,7 @@ set(GraphicsApiSource
     Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
     Source/Graphics/DirectX12/Dx12UploadableResource.cpp
     Source/Graphics/DirectX12/Dx12VertexView.cpp
+    Source/Graphics/DirectX12/Dx12IndexView.cpp
     Source/Graphics/DirectX12/Dx12Views.cpp
 )
 

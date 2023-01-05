@@ -18,7 +18,7 @@ namespace EugeneLib
 	
 		void SetPan(std::span<float> volumes) final;
 
-		SoundSpeaker* CreateSoundSpeaker(const Wave& wave) const final;
+		SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const final;
 
 		Microsoft::WRL::ComPtr<IXAudio2> xaudio2_;
 		IXAudio2MasteringVoice* mastering_;

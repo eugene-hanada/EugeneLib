@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
     <ClInclude Include="Include\Sound\Sound.h" />
     <ClInclude Include="Include\Sound\SoundCommon.h" />
@@ -205,8 +206,10 @@
     <ClInclude Include="Include\Graphics\Texture.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\SoundControl.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
     <ClCompile Include="Source\Graphics\IndexView.cpp" />
     <ClCompile Include="Source\Sound\SoundBase.cpp" />
@@ -244,9 +247,13 @@
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EugeneLib.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

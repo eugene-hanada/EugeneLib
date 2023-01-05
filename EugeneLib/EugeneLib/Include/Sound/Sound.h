@@ -19,7 +19,7 @@ namespace EugeneLib
 		/// </summary>
 		/// <param name="wave"></param>
 		/// <returns></returns>
-		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave) const = 0;
+		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const = 0;
 
 	protected:
 		Sound();

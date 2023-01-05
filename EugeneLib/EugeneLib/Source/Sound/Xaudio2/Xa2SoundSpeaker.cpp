@@ -3,10 +3,12 @@
 #include <xaudio2fx.h>
 #include <algorithm>
 #include "../../../Include/Sound/Wave.h"
+#include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
 
-EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel)
+EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel, const float maxPitchRate) :
+	SoundSpeaker{maxPitchRate}
 {
 	WAVEFORMATEX format{
 		wave.GetFmt().type,
@@ -18,7 +20,7 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave,
 		0u
 	};
 
-	if (FAILED(xaudio2->CreateSourceVoice(&source_, &format)))
+	if (FAILED(xaudio2->CreateSourceVoice(&source_, &format, 0, maxPitchRate)))
 	{
 		throw EugeneLibException("ソースボイス生成失敗");
 	}
@@ -88,4 +90,12 @@ void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
 	{
 		source_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
 	}
+}
+
+void EugeneLib::Xa2SoundSpeaker::SetOutput(SoundControl& control)
+{
+	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
+	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
+	source_->SetOutputVoices(&sends);
 }

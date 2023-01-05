@@ -47,7 +47,7 @@ void EugeneLib::Xa2Sound::SetPan(std::span<float> volumes)
 	}
 }
 
-EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wave) const
+EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wave, const float maxPitchRate ) const
 {
-	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_};
+	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
 }

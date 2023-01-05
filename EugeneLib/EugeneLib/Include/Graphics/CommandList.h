@@ -95,6 +95,14 @@ namespace EugeneLib
 		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="indexCount"></param>
+		/// <param name="instanceNum"></param>
+		/// <param name="offset"></param>
+		virtual void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) = 0;
+
+		/// <summary>
 		/// レンダーターゲットをセットする
 		/// </summary>
 		/// <param name="views"> レンダーターゲットのビュー </param>

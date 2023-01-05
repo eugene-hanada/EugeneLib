@@ -62,6 +62,7 @@ set(SoundSource
     Source/Sound/Sound.cpp
     Source/Sound/SoundBase.cpp
     Source/Sound/SoundSpeaker.cpp
+    Source/Sound/SoundControl.cpp
     Source/Sound/Wave.cpp
 )
 
@@ -69,6 +70,7 @@ set(SoundSource
 set(SoundApiSource
     Source/Sound/Xaudio2/Xa2Sound.cpp
     Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+    Source/Sound/Xaudio2/Xa2SoundControl.cpp
 )
 
 # DirectXTexをセット

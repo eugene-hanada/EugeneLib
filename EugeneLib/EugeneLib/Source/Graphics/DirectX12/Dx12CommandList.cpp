@@ -101,6 +101,11 @@ void EugeneLib::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t i
 	cmdList_->DrawInstanced(vertexCount, instanceCount, 0, 0);
 }
 
+void EugeneLib::Dx12CommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
+{
+	cmdList_->DrawIndexedInstanced(indexCount, instanceNum, offset, 0, 0);
+}
+
 void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };

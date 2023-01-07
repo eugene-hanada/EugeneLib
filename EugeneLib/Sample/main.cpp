@@ -37,6 +37,7 @@ std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
 // ÉTÉEÉìÉhån
 std::unique_ptr<EugeneLib::Sound> sound;
 std::unique_ptr<EugeneLib::SoundSpeaker> soundSpeaker;
+std::unique_ptr < EugeneLib::SoundControl> soundCtrl;
 std::unique_ptr<EugeneLib::Wave> wave;
 
 void Init(void)
@@ -158,8 +159,9 @@ void InitConstantBuffer(void)
 void InitSound(void)
 {
 	sound.reset(EugeneLib::CreateSound());
-	wave = std::make_unique<EugeneLib::Wave>(L"./exp.wav");
+	wave = std::make_unique<EugeneLib::Wave>(L"./MusicSurround.wav");
 	soundSpeaker.reset(sound->CreateSoundSpeaker(*wave));
+
 }
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -182,8 +184,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
-	std::vector<float> volumes{ 1.0f, 0.0f };
-	soundSpeaker->SetPan(volumes);
 	soundSpeaker->Play();
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };

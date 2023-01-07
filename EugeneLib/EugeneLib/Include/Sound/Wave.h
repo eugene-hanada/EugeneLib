@@ -27,9 +27,14 @@ namespace EugeneLib
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		const std::vector<unsigned char>& GetData(void) const&
+		const std::vector<std::uint8_t>& GetData(void) const&
 		{
 			return data_;
+		}
+
+		const SoundFormatEx& GetEx(void) const&
+		{
+			return exData_;
 		}
 
 	private:
@@ -48,10 +53,12 @@ namespace EugeneLib
 
 
 		// データ
-		std::vector<unsigned char> data_;
+		std::vector<std::uint8_t> data_;
 
 		// fmt
 		SoundFormat fmt_;
+
+		SoundFormatEx exData_;
 
 		// RiFFチャンク
 		struct RIFF

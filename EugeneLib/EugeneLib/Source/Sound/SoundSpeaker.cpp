@@ -9,7 +9,3 @@ EugeneLib::SoundSpeaker::SoundSpeaker(const float maxPitchRate) :
 EugeneLib::SoundSpeaker::~SoundSpeaker()
 {
 }
-
-EugeneLib::SoundSpeaker::SoundSpeaker()
-{
-}

@@ -1,13 +1,9 @@
-#include "IndexView.h"
+#include "../../Include/Graphics/IndexView.h"
 
 EugeneLib::IndexView::~IndexView()
 {
 }
 
-void* EugeneLib::IndexView::GetView(void) const
-{
-    return nullptr;
-}
 
 EugeneLib::IndexView::IndexView()
 {

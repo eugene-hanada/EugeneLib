@@ -51,3 +51,9 @@ EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wav
 {
 	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
 }
+
+EugeneLib::SoundControl* EugeneLib::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+{
+
+	return nullptr;
+}

@@ -9,9 +9,14 @@ float EugeneLib::SoundBase::GetVolume(void) const
 	return volume_;
 }
 
-std::uint16_t EugeneLib::SoundBase::GetOututChannel(void) const
+std::uint16_t EugeneLib::SoundBase::GetOutChannel(void) const
 {
 	return outChannel_;
+}
+
+std::uint16_t EugeneLib::SoundBase::GetInChannel(void) const
+{
+	return inChannel_;
 }
 
 EugeneLib::SoundBase::SoundBase() :

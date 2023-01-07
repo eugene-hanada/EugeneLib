@@ -20,4 +20,5 @@
 #include "Sound/Sound.h"
 #include "Sound/SoundSpeaker.h"
 #include "Sound/Wave.h"
+#include "Sound/SoundControl.h"
 

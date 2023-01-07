@@ -10,21 +10,35 @@
 EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel, const float maxPitchRate) :
 	SoundSpeaker{maxPitchRate}
 {
-	WAVEFORMATEX format{
+	WAVEFORMATEXTENSIBLE formatEx;
+	formatEx.Format = {
 		wave.GetFmt().type,
 		wave.GetFmt().channel,
 		wave.GetFmt().sample,
 		wave.GetFmt().byte,
 		wave.GetFmt().block,
 		wave.GetFmt().bit,
-		0u
+		wave.GetFmt().ex
 	};
+	formatEx.Samples.wReserved = wave.GetEx().reserved;
+	formatEx.dwChannelMask = wave.GetEx().channelMask;
+	formatEx.SubFormat.Data1 = wave.GetEx().d1;
+	formatEx.SubFormat.Data2 = wave.GetEx().d2;
+	formatEx.SubFormat.Data3 = wave.GetEx().d3;
+	std::copy(std::begin(wave.GetEx().d4), std::end(wave.GetEx().d4), formatEx.SubFormat.Data4);
 
-	if (FAILED(xaudio2->CreateSourceVoice(&source_, &format, 0, maxPitchRate)))
+	struct WaveData
+	{
+		WAVEFORMATEX* formatPtr;
+		const std::uint8_t* startPtr;
+	};
+	WaveData d;
+	d.formatPtr = &formatEx.Format;
+
+	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, maxPitchRate)))
 	{
 		throw EugeneLibException("ソースボイス生成失敗");
 	}
-
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
 	buffer_->pAudioData = wave.GetData().data();
@@ -41,9 +55,8 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave,
 		throw EugeneLibException("ソースボイス生成失敗");
 	}
 
-
 	outChannel_ = outChannel;
-	inChannel_ = format.nChannels;
+	inChannel_ = formatEx.Format.nChannels;
 }
 
 EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker()

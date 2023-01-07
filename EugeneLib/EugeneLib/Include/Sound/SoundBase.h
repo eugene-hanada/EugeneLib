@@ -33,8 +33,14 @@ namespace EugeneLib
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		std::uint16_t GetOututChannel(void) const;
+		std::uint16_t GetOutChannel(void) const;
 
+		/// <summary>
+		/// “ü—Íƒ`ƒƒƒ“ƒlƒ‹‚ðŽæ“¾‚·‚é
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		std::uint16_t GetInChannel(void) const;
 	protected:
 		SoundBase();
 

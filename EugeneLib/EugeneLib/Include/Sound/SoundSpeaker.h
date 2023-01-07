@@ -13,7 +13,7 @@ namespace EugeneLib
 		public SoundBase
 	{
 	public:
-		SoundSpeaker(const float maxPitchRate);
+
 		virtual ~SoundSpeaker();
 		virtual void Play(void) const = 0;
 		virtual void Stop(void) const = 0;
@@ -21,8 +21,7 @@ namespace EugeneLib
 		virtual void SetPitchRate(float rate) = 0;
 		virtual void SetOutput(SoundControl& control) = 0;
 	protected:
-		SoundSpeaker();
-
+		SoundSpeaker(const float maxPitchRate);
 		const float maxPitchRate_;
 	};
 }

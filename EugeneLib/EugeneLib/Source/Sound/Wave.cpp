@@ -2,6 +2,8 @@
 #include <fstream>
 #include "../../Include/Common/EugeneLibException.h"
 
+#include "../../Include/Common/Debug.h"
+
 EugeneLib::Wave::Wave(const std::filesystem::path& path) :
 	fmt_{}
 {
@@ -18,7 +20,7 @@ EugeneLib::Wave::Wave(const std::filesystem::path& path) :
 	std::string id;
 	id.resize(4);
 	std::string fmtStr{ 'f','m','t',' ' };
-
+	std::string dataStr{ 'd','a','t','a' };
 	while (true)
 	{
 		file.read(id.data(), 4);
@@ -31,9 +33,15 @@ EugeneLib::Wave::Wave(const std::filesystem::path& path) :
 		{
 			LoadFmt(file);
 		}
-		else
+		else if (id == dataStr)
 		{
 			LoadData(file);
+		}
+		else
+		{
+			std::uint32_t size{ 0 };
+			file.read(reinterpret_cast<char*>(&size), sizeof(size));
+			file.ignore(size);
 		}
 	}
 
@@ -42,6 +50,15 @@ EugeneLib::Wave::Wave(const std::filesystem::path& path) :
 void EugeneLib::Wave::LoadFmt(std::ifstream& file)
 {
 	file.read(reinterpret_cast<char*>(&fmt_), sizeof(fmt_));
+	if (fmt_.type == 1u)
+	{
+		auto now = file.tellg();
+		now -= 2ull;
+		file.seekg(now);
+		fmt_.ex = 0u;
+		return;
+	}
+	file.read(reinterpret_cast<char*>(&exData_), sizeof(exData_));
 }
 
 void EugeneLib::Wave::LoadData(std::ifstream& file)

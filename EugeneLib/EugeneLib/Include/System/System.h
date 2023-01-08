@@ -16,6 +16,17 @@ namespace EugeneLib
 	public:
 
 		/// <summary>
+		/// マウスの構造体
+		/// </summary>
+		struct Mouse
+		{
+			Vector2 pos;
+			bool left = false;
+			bool right = false;
+			float wheel = 0.0f;
+		};
+
+		/// <summary>
 		/// 更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)
 		/// </summary>
 		/// <param name=""></param>
@@ -41,6 +52,7 @@ namespace EugeneLib
 		/// <returns> Graphicsのポインタ </returns>
 		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum = 2) const& = 0;
 
+		virtual void GetMouse(Mouse& outMouse) const&;
 	protected:
 
 		/// <summary>

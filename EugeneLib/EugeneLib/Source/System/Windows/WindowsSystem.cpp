@@ -6,6 +6,8 @@
 
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 
+#include "../../../Include/Common/Debug.h"
+
 /// <summary>
 /// メッセージ
 /// </summary>
@@ -21,6 +23,8 @@ WNDCLASSEX windowClass;
 /// </summary>
 HWND hwnd;
 
+EugeneLib::System::Mouse mouse;
+
 /// <summary>
 /// ウィンドウプロシージャ
 /// </summary>
@@ -31,12 +35,34 @@ HWND hwnd;
 /// <returns></returns>
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	if (msg == WM_DESTROY)
+	mouse.wheel = 0.0f;
+	switch (msg)
 	{
+	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
+	case WM_LBUTTONDOWN:
+		mouse.left = true;
+		return 0;
+	case WM_LBUTTONUP:
+		mouse.left = false;
+		return 0;
+	case WM_RBUTTONDOWN:
+		mouse.right = true;
+		return 0;
+	case WM_RBUTTONUP:
+		mouse.right = false;
+		return 0;
+	case WM_MOUSEMOVE:
+		mouse.pos.x = LOWORD(lparam);
+		mouse.pos.y = HIWORD(lparam);
+		return 0;
+	case WM_MOUSEWHEEL:
+		mouse.wheel = GET_WHEEL_DELTA_WPARAM(wparam);
+		return 0;
+	default:
+		return DefWindowProc(hwnd, msg, wparam, lparam);
 	}
-	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
 EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
@@ -110,4 +136,9 @@ bool EugeneLib::WindowsSystem::Update(void)
 		return false;
 	}
 	return true;
+}
+
+void EugeneLib::WindowsSystem::GetMouse(Mouse& outMouse) const&
+{
+	outMouse = mouse;
 }

@@ -13,6 +13,7 @@ namespace EugeneLib
 		Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum) const& final;
 	private:
 		bool Update(void) final;
+		void GetMouse(Mouse& outMouse) const& final;
 
 	};
 }

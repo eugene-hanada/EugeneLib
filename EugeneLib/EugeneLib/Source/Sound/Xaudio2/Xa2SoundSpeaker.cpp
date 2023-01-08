@@ -27,14 +27,6 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave,
 	formatEx.SubFormat.Data3 = wave.GetEx().d3;
 	std::copy(std::begin(wave.GetEx().d4), std::end(wave.GetEx().d4), formatEx.SubFormat.Data4);
 
-	struct WaveData
-	{
-		WAVEFORMATEX* formatPtr;
-		const std::uint8_t* startPtr;
-	};
-	WaveData d;
-	d.formatPtr = &formatEx.Format;
-
 	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, maxPitchRate)))
 	{
 		throw EugeneLibException("ソースボイス生成失敗");

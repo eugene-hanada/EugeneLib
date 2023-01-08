@@ -1,6 +1,9 @@
 #include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
 
+void EugeneLib::System::GetMouse(Mouse& outMouse) const&
+{
+}
 
 EugeneLib::System::System(const EugeneLib::Vector2& size, const std::u8string& title) :
 	windowSize_{size}, title_{title}

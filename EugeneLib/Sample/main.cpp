@@ -35,10 +35,10 @@ std::unique_ptr <EugeneLib::GpuResource> matrixBuffer;
 std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
 
 // サウンド系
+std::unique_ptr<EugeneLib::Wave> wave;
 std::unique_ptr<EugeneLib::Sound> sound;
 std::unique_ptr<EugeneLib::SoundSpeaker> soundSpeaker;
 std::unique_ptr < EugeneLib::SoundControl> soundCtrl;
-std::unique_ptr<EugeneLib::Wave> wave;
 
 void Init(void)
 {
@@ -189,7 +189,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	while (libSys->Update())
 	{
-
+		EugeneLib::System::Mouse mouse;
+		libSys->GetMouse(mouse);
+		DebugLog(mouse.pos);
 		if (soundSpeaker->IsEnd())
 		{
 			soundSpeaker->Play();
@@ -201,8 +203,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// レンダーターゲットのセット
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
-
-		DebugLog(graphics->GetNowBackBufferIndex());
 
 		// レンダーターゲットをクリア
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());

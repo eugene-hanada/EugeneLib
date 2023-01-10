@@ -3,6 +3,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 
 #include "../Xaudio2/Xa2SoundSpeaker.h"
+#include "../Xaudio2/Xa2SoundControl.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
@@ -54,6 +55,5 @@ EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wav
 
 EugeneLib::SoundControl* EugeneLib::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-
-	return nullptr;
+	return new Xa2SoundControl{xaudio2_.Get(), sample, inputChannel, outChannel};
 }

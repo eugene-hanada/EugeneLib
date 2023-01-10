@@ -14,6 +14,11 @@ EugeneLib::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sam
 	outChannel_ = outChannel;
 }
 
+EugeneLib::Xa2SoundControl::~Xa2SoundControl()
+{
+	submix_->DestroyVoice();
+}
+
 void* EugeneLib::Xa2SoundControl::Get(void)
 {
 	return submix_;

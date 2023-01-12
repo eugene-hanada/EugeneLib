@@ -159,7 +159,7 @@ void InitConstantBuffer(void)
 void InitSound(void)
 {
 	sound.reset(EugeneLib::CreateSound());
-	wave = std::make_unique<EugeneLib::Wave>(L"./MusicSurround.wav");
+	wave = std::make_unique<EugeneLib::Wave>(L"./exp.wav");
 	soundSpeaker.reset(sound->CreateSoundSpeaker(*wave));
 	soundCtrl.reset(sound->CreateSoundControl(48000, 2, 2));
 }
@@ -191,11 +191,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//soundCtrl->SetPan(volumes);
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
+	std::uint8_t key[256];
 	while (libSys->Update())
 	{
 		EugeneLib::System::Mouse mouse;
 		libSys->GetMouse(mouse);
-		DebugLog(mouse.pos);
+		//DebugLog(mouse.pos);
 		if (soundSpeaker->IsEnd())
 		{
 			soundSpeaker->Play();
@@ -244,6 +245,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// スクリーンをバックバッファに入れ替えする
 		graphics->Present();
+
+
+		if (GetKeyboardState(key))
+		{
+			for (int i = 0; i < 256; i++)
+			{
+				if ((key[i] & 0x80))
+				{
+					DebugLog(i, u8"押されました");
+				}
+			}
+		}
 	}
 
 	

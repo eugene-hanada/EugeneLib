@@ -65,6 +65,8 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	}
 }
 
+
+
 EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {

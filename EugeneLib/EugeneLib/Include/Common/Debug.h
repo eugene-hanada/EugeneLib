@@ -22,7 +22,8 @@ namespace EugeneLib
 		void Log(const Vector2& vec, const std::u8string& log);
 		void Log(float val);
 		void Log(float val, const std::u8string& log);
-
+		void Log(std::int32_t val);
+		void Log(std::int32_t val, const std::u8string& log);
 
 	private:
 		Debug();

@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.20)
 project(EugeneLib)
 
 # c++20を使うのでセット
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)

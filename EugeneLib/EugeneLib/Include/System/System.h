@@ -27,6 +27,25 @@ namespace EugeneLib
 		};
 
 		/// <summary>
+		/// キーボードのID
+		/// </summary>
+		enum class KeyID
+		{
+			TAB,
+			CAPSLOCK,
+			LEFT_SHIFT,
+			LEFT_CTRL,
+			ESCAPE,
+			SPACE,
+			Alt,
+			BACK_SPACE,
+			ENTER,
+			RIGHT_SHIFT,
+			UP,
+
+		};
+
+		/// <summary>
 		/// 更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)
 		/// </summary>
 		/// <param name=""></param>

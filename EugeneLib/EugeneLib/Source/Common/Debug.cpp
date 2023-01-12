@@ -59,7 +59,7 @@ void EugeneLib::Debug::Log(std::int32_t val)
 
 void EugeneLib::Debug::Log(std::int32_t val, const std::u8string& log)
 {
-	std::filesystem::path tmp{ std::format("{0:f}", val) };
+	std::filesystem::path tmp{ std::format("{0:d}", val) };
 	Log(tmp.u8string(), log);
 }
 

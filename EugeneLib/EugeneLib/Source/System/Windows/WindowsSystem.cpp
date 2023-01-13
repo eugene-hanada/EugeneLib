@@ -113,6 +113,7 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 	DebugLog(u8"ウィンドウの表示");
 	ShowWindow(hwnd, SW_SHOW);
 
+	key_.fill(false);
 }
 
 EugeneLib::WindowsSystem::~WindowsSystem()
@@ -137,10 +138,33 @@ bool EugeneLib::WindowsSystem::Update(void)
 	{
 		return false;
 	}
+	key_.fill(false);
+	std::uint8_t k[256];
+	if (GetKeyboardState(k))
+	{
+		for (int i = 0; i < 256; i++)
+		{
+			if (k[i] & 0x80)
+			{
+				key_[i] = true;
+			}
+		}
+	}
 	return true;
 }
 
 void EugeneLib::WindowsSystem::GetMouse(Mouse& outMouse) const&
 {
 	outMouse = mouse;
+}
+
+bool EugeneLib::WindowsSystem::IsHitKey(KeyID keyID) const
+{
+	return key_[static_cast<int>(keyID)];
+}
+
+bool EugeneLib::WindowsSystem::GetKeyData(KeyData& keyData) const
+{
+	keyData = key_;
+	return true;
 }

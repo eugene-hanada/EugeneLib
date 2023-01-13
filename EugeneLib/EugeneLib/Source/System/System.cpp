@@ -5,6 +5,16 @@ void EugeneLib::System::GetMouse(Mouse& outMouse) const&
 {
 }
 
+bool EugeneLib::System::IsHitKey(KeyID keyID) const
+{
+	return false;
+}
+
+bool EugeneLib::System::GetKeyData(KeyData& keyData) const
+{
+	return false;
+}
+
 EugeneLib::System::System(const EugeneLib::Vector2& size, const std::u8string& title) :
 	windowSize_{size}, title_{title}
 {

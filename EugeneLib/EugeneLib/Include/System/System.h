@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <string_view>
+#include <array>
 #include "../Math/Vector2.h"
 
 namespace EugeneLib
@@ -14,6 +15,7 @@ namespace EugeneLib
 	class System
 	{
 	public:
+		using KeyData = std::array<bool, 256>;
 
 		/// <summary>
 		/// マウスの構造体
@@ -124,7 +126,26 @@ namespace EugeneLib
 		/// <returns> Graphicsのポインタ </returns>
 		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum = 2) const& = 0;
 
+		/// <summary>
+		/// マウスの情報を取得する
+		/// </summary>
+		/// <param name="outMouse"></param>
+		/// <returns></returns>
 		virtual void GetMouse(Mouse& outMouse) const&;
+
+		/// <summary>
+		/// キーが押されているか
+		/// </summary>
+		/// <param name="keyID"> 押されているキーのID </param>
+		/// <returns> 押されているときtrue、押されていないときfalse </returns>
+		virtual bool IsHitKey(KeyID keyID) const;
+
+		/// <summary>
+		/// キー入力情報を取得する
+		/// </summary>
+		/// <param name="keySpan"> キー情報 </param>
+		/// <returns> キー情報がある場合はtrue、ない場合はfalse </returns>
+		virtual bool GetKeyData(KeyData& keyData) const;
 	protected:
 
 		/// <summary>

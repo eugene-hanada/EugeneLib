@@ -191,7 +191,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//soundCtrl->SetPan(volumes);
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
-	std::uint8_t key[256];
+	std::array<bool,256> key;
+	std::array<std::uint8_t, 256> keyBuff;
+	keyBuff.fill(0);
 	while (libSys->Update())
 	{
 		EugeneLib::System::Mouse mouse;
@@ -246,17 +248,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// スクリーンをバックバッファに入れ替えする
 		graphics->Present();
 
-
-		if (GetKeyboardState(key))
+		libSys->GetKeyData(key);
+		for (int i = 0; i < 256; i++)
 		{
-			for (int i = 0; i < 256; i++)
+			if (key[i])
 			{
-				if ((key[i] & 0x80))
-				{
-					DebugLog(i, u8"押されました");
-				}
+				DebugLog(i,u8"が押されました");
 			}
 		}
+
+		if (libSys->IsHitKey(EugeneLib::System::KeyID::SPACE))
+		{
+			break;
+		}
+	
 	}
 
 	

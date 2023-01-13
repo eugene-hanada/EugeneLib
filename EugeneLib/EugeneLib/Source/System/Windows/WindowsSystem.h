@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include "../../../Include/System/System.h"
 
 
@@ -14,6 +15,8 @@ namespace EugeneLib
 	private:
 		bool Update(void) final;
 		void GetMouse(Mouse& outMouse) const& final;
-
+		bool IsHitKey(KeyID keyID) const final;
+		bool GetKeyData(KeyData& keyData) const final;
+		KeyData key_;
 	};
 }

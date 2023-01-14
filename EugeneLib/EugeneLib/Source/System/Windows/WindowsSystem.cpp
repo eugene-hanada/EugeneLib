@@ -1,5 +1,6 @@
 #include "WindowsSystem.h"
 #include <Windows.h>
+#include <Xinput.h>
 #include <filesystem>
 #include "../../../Include/Common/Debug.h"
 #include "../../../Include/Common/EugeneLibException.h"
@@ -7,6 +8,8 @@
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 
 #include "../../../Include/Common/Debug.h"
+
+#pragma comment(lib, "Xinput.lib")
 
 /// <summary>
 /// メッセージ
@@ -24,6 +27,8 @@ WNDCLASSEX windowClass;
 HWND hwnd;
 
 EugeneLib::System::Mouse mouse;
+
+EugeneLib::Graphics* graphics = nullptr;
 
 /// <summary>
 /// ウィンドウプロシージャ
@@ -112,8 +117,6 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 	);
 	DebugLog(u8"ウィンドウの表示");
 	ShowWindow(hwnd, SW_SHOW);
-
-	key_.fill(false);
 }
 
 EugeneLib::WindowsSystem::~WindowsSystem()
@@ -124,7 +127,11 @@ EugeneLib::WindowsSystem::~WindowsSystem()
 
 EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum) const&
 {
-	return new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum };
+	if (graphics != nullptr)
+	{
+		return graphics;
+	}
+	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum });
 }
 
 bool EugeneLib::WindowsSystem::Update(void)
@@ -138,15 +145,6 @@ bool EugeneLib::WindowsSystem::Update(void)
 	{
 		return false;
 	}
-	key_.fill(false);
-	std::uint8_t k[256];
-	if (GetKeyboardState(k))
-	{
-		for (auto id : KeyID())
-		{
-			key_[std::underlying_type<KeyID>::type(id)] = k[codeTable_[std::underlying_type<KeyID>::type(id)]] & 0x80;
-		}
-	}
 	return true;
 }
 
@@ -157,17 +155,51 @@ void EugeneLib::WindowsSystem::GetMouse(Mouse& outMouse) const&
 
 bool EugeneLib::WindowsSystem::IsHitKey(KeyID keyID) const
 {
-	return key_[static_cast<int>(keyID)];
+	return GetKeyState(codeTable_[std::underlying_type<KeyID>::type(keyID)]) & 0x8000;
 }
 
-bool EugeneLib::WindowsSystem::GetKeyData(KeyData& keyData) const
+bool EugeneLib::WindowsSystem::GetKeyData(KeyDataSpan& keyData) const
 {
-	keyData = key_;
+	std::uint8_t k[256];
+	if (!GetKeyboardState(k))
+	{
+		return false;
+	}
+	for (auto id : KeyID())
+	{
+		keyData[std::underlying_type<KeyID>::type(id)] = k[codeTable_[std::underlying_type<KeyID>::type(id)]] & 0x80;
+	}
 	return true;
 }
 
 bool EugeneLib::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	codeTable_ = keyCodeTable;
+	return true;
+}
+
+bool EugeneLib::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
+{
+	XINPUT_STATE state;
+	if (XInputGetState(idx, &state) != ERROR_SUCCESS)
+	{
+		return false;
+	}
+	
+	for (int i = 0; i < static_cast<int>(pad.buttons.size()); i++)
+	{
+		if (state.Gamepad.wButtons != 0)
+		{
+			pad.buttons[i] = (state.Gamepad.wButtons & (0x0001 << i));
+		}
+	}
+
+	pad.leftTrigger_ = static_cast<float>(state.Gamepad.bLeftTrigger) / 255.0f;
+	pad.rightTrigger_ = static_cast<float>(state.Gamepad.bRightTrigger) / 255.0f;
+	pad.leftThumb_.x = static_cast<float>(state.Gamepad.sThumbLX) / 32767.0f;
+	pad.leftThumb_.y = static_cast<float>(state.Gamepad.sThumbLY) / 32767.0f;
+	pad.rightThumb_.x = static_cast<float>(state.Gamepad.sThumbRX) / 32767.0f;
+	pad.rightThumb_.y = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
+
 	return true;
 }

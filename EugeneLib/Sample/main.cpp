@@ -191,6 +191,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//soundCtrl->SetPan(volumes);
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
+	EugeneLib::GamePad pad;
 	while (libSys->Update())
 	{
 		EugeneLib::System::Mouse mouse;
@@ -245,9 +246,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// スクリーンをバックバッファに入れ替えする
 		graphics->Present();
 
+		auto r = libSys->GetGamePad(pad, 0);
 		if (libSys->IsHitKey(EugeneLib::KeyID::SPACE))
 		{
 			break;
+		}
+		if (pad.IsHit(EugeneLib::PadID::A))
+		{
+			break;
+		}
+
+		for (int i = 0; i < 14; i++)
+		{
+			auto mask = (0x0001 << (i));
+			DebugLog(i);
 		}
 
 	

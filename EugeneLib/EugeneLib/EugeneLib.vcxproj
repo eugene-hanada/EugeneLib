@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\System\GamePad.h" />
     <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Include\System\KeyID.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\System\GamePad.cpp" />
     <ClCompile Include="Source\Sound\SoundControl.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
     <ClCompile Include="Source\Graphics\IndexView.cpp" />

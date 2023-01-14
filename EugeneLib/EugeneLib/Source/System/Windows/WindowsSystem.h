@@ -16,13 +16,9 @@ namespace EugeneLib
 		bool Update(void) final;
 		void GetMouse(Mouse& outMouse) const& final;
 		bool IsHitKey(KeyID keyID) const final;
-		bool GetKeyData(KeyData& keyData) const final;
+		bool GetKeyData(KeyDataSpan& keyData) const final;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
-
-		/// <summary>
-		/// キー情報
-		/// </summary>
-		KeyData key_;
+		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 
 		/// <summary>
 		/// キーコードのテーブル

@@ -162,6 +162,7 @@
     <ClInclude Include="Include\System\GamePad.h" />
     <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Include\System\KeyID.h" />
+    <ClInclude Include="Include\Sound\Sound3DControl.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
     <ClInclude Include="Include\Sound\Sound.h" />
     <ClInclude Include="Include\Sound\SoundCommon.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
     <ClCompile Include="Source\System\GamePad.cpp" />
     <ClCompile Include="Source\Sound\SoundControl.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />

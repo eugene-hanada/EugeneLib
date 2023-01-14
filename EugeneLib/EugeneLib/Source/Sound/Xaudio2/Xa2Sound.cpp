@@ -36,7 +36,10 @@ EugeneLib::Xa2Sound::Xa2Sound()
 	mastering_->GetChannelMask(&tmpMask);
 	channelMask_ = tmpMask;
 	
-	auto result = X3DAudioInitialize(channelMask_, 340.0f, handle);
+	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
+	{
+		throw EugeneLibException("X3DAudio‚Ì‰Šú‰»‚É¸”s");
+	}
 }
 
 EugeneLib::Xa2Sound::~Xa2Sound()

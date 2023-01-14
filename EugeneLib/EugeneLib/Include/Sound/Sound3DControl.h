@@ -7,7 +7,7 @@ namespace EugeneLib
 		public SoundBase
 	{
 	public:
-
+	 virtual void Update3DSound(const Vector3& emitterPos);
 	private:
 
 	};

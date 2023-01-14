@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Sound\SoundControl.h" />
+    <ClInclude Include="Include\System\KeyID.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
     <ClInclude Include="Include\Sound\Sound.h" />
     <ClInclude Include="Include\Sound\SoundCommon.h" />

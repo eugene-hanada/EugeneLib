@@ -142,12 +142,9 @@ bool EugeneLib::WindowsSystem::Update(void)
 	std::uint8_t k[256];
 	if (GetKeyboardState(k))
 	{
-		for (int i = 0; i < 256; i++)
+		for (auto id : KeyID())
 		{
-			if (k[i] & 0x80)
-			{
-				key_[i] = true;
-			}
+			key_[std::underlying_type<KeyID>::type(id)] = k[codeTable_[std::underlying_type<KeyID>::type(id)]] & 0x80;
 		}
 	}
 	return true;
@@ -166,5 +163,11 @@ bool EugeneLib::WindowsSystem::IsHitKey(KeyID keyID) const
 bool EugeneLib::WindowsSystem::GetKeyData(KeyData& keyData) const
 {
 	keyData = key_;
+	return true;
+}
+
+bool EugeneLib::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+{
+	codeTable_ = keyCodeTable;
 	return true;
 }

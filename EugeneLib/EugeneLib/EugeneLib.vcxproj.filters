@@ -159,6 +159,9 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Include\System\KeyID.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EugeneLib.cpp">

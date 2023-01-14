@@ -191,6 +191,8 @@ namespace EugeneLib
 
 	void Get2DMatrix(Matrix4x4& out, const Vector2& size);
 
+	void Get2DTranslateMatrix(Matrix4x4& out, const Vector2& pos);
+
 	void GetLookAtMatrix(Matrix4x4& out,const Vector3& eye, const Vector3& target, const Vector3& up);
 
 	void GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near = 0.1f, float far = 1000.0f);

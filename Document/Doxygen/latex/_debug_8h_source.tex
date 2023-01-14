@@ -22,24 +22,28 @@
 \DoxyCodeLine{18 }
 \DoxyCodeLine{19         \textcolor{keywordtype}{void} Log(\textcolor{keyword}{const} std::u8string\& log);}
 \DoxyCodeLine{20         \textcolor{keywordtype}{void} Log(\textcolor{keyword}{const} std::u8string\& log1, \textcolor{keyword}{const} std::u8string\& log2);}
-\DoxyCodeLine{21         \textcolor{comment}{/*void Log(const Vector2\& vec);}}
-\DoxyCodeLine{22 \textcolor{comment}{        void Log(const Vector2\& vec, const std::u8string\& log);*/}}
-\DoxyCodeLine{23 }
-\DoxyCodeLine{27     \textcolor{keyword}{private}:}
-\DoxyCodeLine{28         Debug();}
-\DoxyCodeLine{29         \string~Debug();}
-\DoxyCodeLine{30         Debug(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
-\DoxyCodeLine{31         \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
-\DoxyCodeLine{32     \};}
-\DoxyCodeLine{33 }
+\DoxyCodeLine{21         \textcolor{keywordtype}{void} Log(\textcolor{keyword}{const} Vector2\& vec);}
+\DoxyCodeLine{22         \textcolor{keywordtype}{void} Log(\textcolor{keyword}{const} Vector2\& vec, \textcolor{keyword}{const} std::u8string\& log);}
+\DoxyCodeLine{23         \textcolor{keywordtype}{void} Log(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{24         \textcolor{keywordtype}{void} Log(\textcolor{keywordtype}{float} val, \textcolor{keyword}{const} std::u8string\& log);}
+\DoxyCodeLine{25         \textcolor{keywordtype}{void} Log(std::int32\_t val);}
+\DoxyCodeLine{26         \textcolor{keywordtype}{void} Log(std::int32\_t val, \textcolor{keyword}{const} std::u8string\& log);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keyword}{private}:}
+\DoxyCodeLine{29         Debug();}
+\DoxyCodeLine{30         \string~Debug();}
+\DoxyCodeLine{31         Debug(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{33     \};}
 \DoxyCodeLine{34 }
 \DoxyCodeLine{35 }
-\DoxyCodeLine{36 \}}
-\DoxyCodeLine{37 }
-\DoxyCodeLine{38 \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{39 }
-\DoxyCodeLine{40 \textcolor{preprocessor}{\#define DebugLog(...) }}
-\DoxyCodeLine{41 }
-\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define DebugLog(...) }}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

@@ -29,11 +29,11 @@
 \DoxyCodeLine{25         \textcolor{keywordtype}{void} SetScissorrect(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2I}}\& leftTop, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2I}}\& rightBottom) \textcolor{keyword}{final};}
 \DoxyCodeLine{26         \textcolor{keywordtype}{void} SetViewPort(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& leftTop, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}}\& size, \textcolor{keywordtype}{float} depthMin = 0.0f, \textcolor{keywordtype}{float} depthMax = 1.0f);}
 \DoxyCodeLine{27         \textcolor{keywordtype}{void} SetVertexView(\mbox{\hyperlink{class_eugene_lib_1_1_vertex_view}{VertexView}}\& view) \textcolor{keyword}{final};}
-\DoxyCodeLine{28 }
+\DoxyCodeLine{28         \textcolor{keywordtype}{void} SetIndexView(\mbox{\hyperlink{class_eugene_lib_1_1_index_view}{IndexView}}\& view) \textcolor{keyword}{final};}
 \DoxyCodeLine{29         \textcolor{keywordtype}{void} SetShaderResourceView(\mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{ShaderResourceViews}}\& views, \textcolor{keywordtype}{size\_t} viewsIdx, \textcolor{keywordtype}{size\_t} paramIdx) \textcolor{keyword}{final};}
 \DoxyCodeLine{30 }
 \DoxyCodeLine{31         \textcolor{keywordtype}{void} Draw(std::uint32\_t vertexCount, std::uint32\_t instanceCount = 1) \textcolor{keyword}{final};}
-\DoxyCodeLine{32 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} DrawIndexed(std::uint32\_t indexCount, std::uint32\_t instanceNum = 1, std::uint32\_t offset = 0) \textcolor{keyword}{final};}
 \DoxyCodeLine{33         \textcolor{keywordtype}{void} SetRenderTarget(\mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}\& views, \textcolor{keywordtype}{size\_t} idx = 0) \textcolor{keyword}{final};}
 \DoxyCodeLine{34         \textcolor{keywordtype}{void} SetRenderTarget(\mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}\& views) \textcolor{keyword}{final};}
 \DoxyCodeLine{35         \textcolor{keywordtype}{void} SetRenderTarget(\mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}\& renderTargetViews, \mbox{\hyperlink{class_eugene_lib_1_1_depth_stencil_views}{DepthStencilViews}}\& depthViews, \textcolor{keywordtype}{size\_t} rtViewsIdx = 0, \textcolor{keywordtype}{size\_t} dsViewsIdx = 0)\textcolor{keyword}{final};}

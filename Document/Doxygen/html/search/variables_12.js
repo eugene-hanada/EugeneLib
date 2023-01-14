@@ -7,5 +7,6 @@ var searchData=
   ['tomato_4',['Tomato',['../namespace_direct_x_1_1_colors.html#a2900ccf06203a79c4ef315ae6ecf9c9f',1,'DirectX::Colors::Tomato()'],['../namespace_direct_x_1_1_colors_linear.html#aebf219772ad99f874dd38edd20f13fcd',1,'DirectX::ColorsLinear::Tomato()']]],
   ['topslope_5',['TopSlope',['../struct_direct_x_1_1_bounding_frustum.html#af48aaa06e51d102007ebdf21237eb8f7',1,'DirectX::BoundingFrustum']]],
   ['transparent_6',['Transparent',['../namespace_direct_x_1_1_colors.html#a07ed82476e79ec63f303a788f7594d95',1,'DirectX::Colors::Transparent()'],['../namespace_direct_x_1_1_colors_linear.html#ab2f6cf64e59ece92521cd27386a788cc',1,'DirectX::ColorsLinear::Transparent()']]],
-  ['turquoise_7',['Turquoise',['../namespace_direct_x_1_1_colors.html#a01e8c09901e857e43754be6076aa9ad4',1,'DirectX::Colors::Turquoise()'],['../namespace_direct_x_1_1_colors_linear.html#a8601925e0bf14eb60de322cd5b3537b0',1,'DirectX::ColorsLinear::Turquoise()']]]
+  ['turquoise_7',['Turquoise',['../namespace_direct_x_1_1_colors.html#a01e8c09901e857e43754be6076aa9ad4',1,'DirectX::Colors::Turquoise()'],['../namespace_direct_x_1_1_colors_linear.html#a8601925e0bf14eb60de322cd5b3537b0',1,'DirectX::ColorsLinear::Turquoise()']]],
+  ['type_8',['type',['../struct_eugene_lib_1_1_sound_format.html#a7cd8ba606c67b6c285c4daf904ce6038',1,'EugeneLib::SoundFormat']]]
 ];

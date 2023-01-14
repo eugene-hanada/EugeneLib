@@ -255,13 +255,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			break;
 		}
-
-		for (int i = 0; i < 14; i++)
-		{
-			auto mask = (0x0001 << (i));
-			DebugLog(i);
-		}
-
 	
 	}
 

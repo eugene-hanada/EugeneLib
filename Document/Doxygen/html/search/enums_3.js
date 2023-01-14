@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['planeintersectiontype_0',['PlaneIntersectionType',['../namespace_direct_x.html#acf3cef73d703c902f562ead19d58c1ca',1,'DirectX']]],
-  ['primitivetype_1',['PrimitiveType',['../namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26',1,'EugeneLib']]]
+  ['keyid_0',['KeyID',['../namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3',1,'EugeneLib']]]
 ];

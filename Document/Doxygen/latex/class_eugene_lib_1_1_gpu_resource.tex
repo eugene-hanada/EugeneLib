@@ -2,11 +2,17 @@
 \label{class_eugene_lib_1_1_gpu_resource}\index{EugeneLib::GpuResource@{EugeneLib::GpuResource}}
 
 
+グラフィックス等で使うリソース   
+
+
+
+
 {\ttfamily \#include $<$Gpu\+Resource.\+h$>$}
 
 
 
-Eugene\+Lib\+::Gpu\+Resource の継承関係図\nopagebreak
+Eugene\+Lib\+::Gpu\+Resource の継承関係図
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -17,11 +23,11 @@ Eugene\+Lib\+::Gpu\+Resource の継承関係図\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_a9d48039716c8c629c53a816c6943d488}{$\sim$\+Gpu\+Resource}} ()
-\item 
+\begin{DoxyCompactList}\small\item\em デストラクタ  \end{DoxyCompactList}\item 
 virtual void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_a9f5d08abd52bf0a0ba0603652e5cbd05}{Map}} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em リソースをマップする  \end{DoxyCompactList}\item 
 virtual void \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_ac43d7749a22b6cc87d8c179ba9139102}{Un\+Map}} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em リソースをアンマップする  \end{DoxyCompactList}\item 
 virtual void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_aa825b35756064bd60e851e0aecd37a67}{Get\+Resource}} (void) const =0
 \end{DoxyCompactItemize}
 \doxysubsection*{限定公開メンバ関数}
@@ -31,12 +37,19 @@ virtual void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_aa825b357
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{詳解}
+グラフィックス等で使うリソース  
+
 \doxysubsection{構築子と解体子}
 \mbox{\Hypertarget{class_eugene_lib_1_1_gpu_resource_a9d48039716c8c629c53a816c6943d488}\label{class_eugene_lib_1_1_gpu_resource_a9d48039716c8c629c53a816c6943d488}} 
 \index{EugeneLib::GpuResource@{EugeneLib::GpuResource}!````~GpuResource@{$\sim$GpuResource}}
 \index{````~GpuResource@{$\sim$GpuResource}!EugeneLib::GpuResource@{EugeneLib::GpuResource}}
 \doxysubsubsection{\texorpdfstring{$\sim$GpuResource()}{~GpuResource()}}
 {\footnotesize\ttfamily Eugene\+Lib\+::\+Gpu\+Resource\+::$\sim$\+Gpu\+Resource (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+デストラクタ  
 
 \mbox{\Hypertarget{class_eugene_lib_1_1_gpu_resource_a00f4480bedb21e2b0f09c2d736e294cf}\label{class_eugene_lib_1_1_gpu_resource_a00f4480bedb21e2b0f09c2d736e294cf}} 
 \index{EugeneLib::GpuResource@{EugeneLib::GpuResource}!GpuResource@{GpuResource}}
@@ -57,7 +70,8 @@ virtual void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_aa825b357
 
 \mbox{\hyperlink{class_eugene_lib_1_1_dx12_gpu_resource_ac36380bff474112f00b713941e6a10b7}{Eugene\+Lib\+::\+Dx12\+Gpu\+Resource}}で実装されています。
 
-被呼び出し関係図\+:\nopagebreak
+被呼び出し関係図\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -70,11 +84,22 @@ virtual void $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource_aa825b357
 \doxysubsubsection{\texorpdfstring{Map()}{Map()}}
 {\footnotesize\ttfamily void $\ast$ Eugene\+Lib\+::\+Gpu\+Resource\+::\+Map (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
 
+
+
+リソースをマップする  
+
+\begin{DoxyReturn}{戻り値}
+ポインタ 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_eugene_lib_1_1_gpu_resource_ac43d7749a22b6cc87d8c179ba9139102}\label{class_eugene_lib_1_1_gpu_resource_ac43d7749a22b6cc87d8c179ba9139102}} 
 \index{EugeneLib::GpuResource@{EugeneLib::GpuResource}!UnMap@{UnMap}}
 \index{UnMap@{UnMap}!EugeneLib::GpuResource@{EugeneLib::GpuResource}}
 \doxysubsubsection{\texorpdfstring{UnMap()}{UnMap()}}
 {\footnotesize\ttfamily void Eugene\+Lib\+::\+Gpu\+Resource\+::\+Un\+Map (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+リソースをアンマップする  
 
 
 

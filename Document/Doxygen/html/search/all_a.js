@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['khaki_0',['Khaki',['../namespace_direct_x_1_1_colors.html#ac0dc71d47e5775b03fbc6e61ae8bbc28',1,'DirectX::Colors::Khaki()'],['../namespace_direct_x_1_1_colors_linear.html#abc4d57066a36f62b68f18ecebba1b1cb',1,'DirectX::ColorsLinear::Khaki()']]]
+  ['j_0',['J',['../namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3aff44570aca8241914870afbc310cdb85',1,'EugeneLib']]]
 ];

@@ -9,7 +9,7 @@
 \DoxyCodeLine{5 }
 \DoxyCodeLine{6 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
 \DoxyCodeLine{7 \{}
-\DoxyCodeLine{8     template<ValueC T, size\_t Num, T MaxValue = static\_cast<T>(1), T MinValue = \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0)>}
+\DoxyCodeLine{8     template<ValueC T, size\_t Num, T MaxValue = static\_cast<T>(1), \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} MinValue = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0)>}
 \DoxyCodeLine{9     \textcolor{keyword}{class} \mbox{\hyperlink{class_eugene_lib_1_1_color}{Color}}}
 \DoxyCodeLine{10     \{}
 \DoxyCodeLine{11     \textcolor{keyword}{public}:}
@@ -18,7 +18,7 @@
 \DoxyCodeLine{14             color\_.fill(MaxValue);}
 \DoxyCodeLine{15         \}}
 \DoxyCodeLine{16 }
-\DoxyCodeLine{17         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_color_a28e32eb12d407b96ea2520ae967e6be6}{SetValue}}(\textcolor{keywordtype}{size\_t} idx, \textcolor{keyword}{const} T\& value)}
+\DoxyCodeLine{17         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_color_a28e32eb12d407b96ea2520ae967e6be6}{SetValue}}(\textcolor{keywordtype}{size\_t} idx, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& value)}
 \DoxyCodeLine{18         \{}
 \DoxyCodeLine{19             color\_[idx] = std::clamp(value, MinValue, MaxValue);}
 \DoxyCodeLine{20         \}}
@@ -42,7 +42,7 @@
 \DoxyCodeLine{38             \textcolor{keywordflow}{return} MinValue;}
 \DoxyCodeLine{39         \}}
 \DoxyCodeLine{40 }
-\DoxyCodeLine{41         \textcolor{keyword}{const} T\& \mbox{\hyperlink{class_eugene_lib_1_1_color_ade24b949aac9f67d61d5ae86d6742c7c}{operator[]}}(\textcolor{keywordtype}{size\_t} idx)}
+\DoxyCodeLine{41         \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& \mbox{\hyperlink{class_eugene_lib_1_1_color_ade24b949aac9f67d61d5ae86d6742c7c}{operator[]}}(\textcolor{keywordtype}{size\_t} idx)}
 \DoxyCodeLine{42         \{}
 \DoxyCodeLine{43             \textcolor{keywordflow}{return} color\_[idx];}
 \DoxyCodeLine{44         \}}

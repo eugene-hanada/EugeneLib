@@ -2,18 +2,26 @@
 \label{class_eugene_lib_1_1_shader}\index{EugeneLib::Shader@{EugeneLib::Shader}}
 
 
+シェーダー   
+
+
+
+
 {\ttfamily \#include $<$Shader.\+h$>$}
 
 \doxysubsection*{公開メンバ関数}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_eugene_lib_1_1_shader_adadab592d958e4cc52a0eec40e3e01b8}{Shader}} (const std\+::filesystem\+::path \&path)
-\item 
+\begin{DoxyCompactList}\small\item\em コンストラクタ(指定したパスのシェーダーファイルを読み込む)  \end{DoxyCompactList}\item 
 const char $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_shader_ab839b09c57c2ff5faa41c6926063cb8f}{Get\+Ptr}} (void) const
-\item 
+\begin{DoxyCompactList}\small\item\em 読み込んだシェーダーの先頭ポインタを取得する  \end{DoxyCompactList}\item 
 size\+\_\+t \mbox{\hyperlink{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a256f3347af8}{Get\+Size}} (void) const
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em シェーダーのサイズを取得する  \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{詳解}
+シェーダー  
 
 \doxysubsection{構築子と解体子}
 \mbox{\Hypertarget{class_eugene_lib_1_1_shader_adadab592d958e4cc52a0eec40e3e01b8}\label{class_eugene_lib_1_1_shader_adadab592d958e4cc52a0eec40e3e01b8}} 
@@ -24,6 +32,15 @@ size\+\_\+t \mbox{\hyperlink{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a2
 
 
 
+コンストラクタ(指定したパスのシェーダーファイルを読み込む)  
+
+
+\begin{DoxyParams}{引数}
+{\em path} & シェーダーファイルのパス \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{関数詳解}
 \mbox{\Hypertarget{class_eugene_lib_1_1_shader_ab839b09c57c2ff5faa41c6926063cb8f}\label{class_eugene_lib_1_1_shader_ab839b09c57c2ff5faa41c6926063cb8f}} 
 \index{EugeneLib::Shader@{EugeneLib::Shader}!GetPtr@{GetPtr}}
@@ -31,12 +48,26 @@ size\+\_\+t \mbox{\hyperlink{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a2
 \doxysubsubsection{\texorpdfstring{GetPtr()}{GetPtr()}}
 {\footnotesize\ttfamily const char $\ast$ Eugene\+Lib\+::\+Shader\+::\+Get\+Ptr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
 
+
+
+読み込んだシェーダーの先頭ポインタを取得する  
+
+\begin{DoxyReturn}{戻り値}
+先頭ポインタ 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a256f3347af8}\label{class_eugene_lib_1_1_shader_a140bd80d2e18e31a71c3a256f3347af8}} 
 \index{EugeneLib::Shader@{EugeneLib::Shader}!GetSize@{GetSize}}
 \index{GetSize@{GetSize}!EugeneLib::Shader@{EugeneLib::Shader}}
 \doxysubsubsection{\texorpdfstring{GetSize()}{GetSize()}}
 {\footnotesize\ttfamily size\+\_\+t Eugene\+Lib\+::\+Shader\+::\+Get\+Size (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
 
+
+
+シェーダーのサイズを取得する  
+
+\begin{DoxyReturn}{戻り値}
+サイズ 
+\end{DoxyReturn}
 
 
 このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}

@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['vector2_0',['Vector2',['../namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8',1,'EugeneLib']]],
-  ['vector2d_1',['Vector2D',['../namespace_eugene_lib.html#a3fc084b043149a8d545bd7aa715e07a0',1,'EugeneLib']]],
-  ['vector2i_2',['Vector2I',['../namespace_eugene_lib.html#ae743a03ccdd138d1dea5accbd56dbaa9',1,'EugeneLib']]],
-  ['vector3_3',['Vector3',['../namespace_eugene_lib.html#aaf0ab6031df29e80b88b856ee6d65334',1,'EugeneLib']]],
-  ['vector3d_4',['Vector3D',['../namespace_eugene_lib.html#a4aa4ee92776ea8efe535fa5962208420',1,'EugeneLib']]],
-  ['vector3i_5',['Vector3I',['../namespace_eugene_lib.html#abb83859768a32a2cb32743c425f31734',1,'EugeneLib']]]
+  ['samplerspan_0',['SamplerSpan',['../namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1',1,'EugeneLib']]],
+  ['shaderinputspan_1',['ShaderInputSpan',['../namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05',1,'EugeneLib']]],
+  ['shaderlayoutspan_2',['ShaderLayoutSpan',['../namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3',1,'EugeneLib']]],
+  ['shadertypepaisrspan_3',['ShaderTypePaisrSpan',['../namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33',1,'EugeneLib']]]
 ];

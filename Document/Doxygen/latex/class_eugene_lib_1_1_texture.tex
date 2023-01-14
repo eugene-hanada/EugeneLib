@@ -2,20 +2,28 @@
 \label{class_eugene_lib_1_1_texture}\index{EugeneLib::Texture@{EugeneLib::Texture}}
 
 
+テクスチャ   
+
+
+
+
 {\ttfamily \#include $<$Texture.\+h$>$}
 
 \doxysubsection*{公開メンバ関数}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{class_eugene_lib_1_1_texture_af83736848c99f09ab3f0fb0e552520b4}{Texture}} (const std\+::filesystem\+::path \&path)
-\item 
+\begin{DoxyCompactList}\small\item\em コンストラクタ(指定したテクスチャファイルを読み込む)  \end{DoxyCompactList}\item 
 const \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Texture\+Info}} \& \mbox{\hyperlink{class_eugene_lib_1_1_texture_a52dbb1eed3ab0fd19ca15c396bf05fd8}{Get\+Info}} (void) const \&
-\item 
+\begin{DoxyCompactList}\small\item\em テクスチャの情報を取得する  \end{DoxyCompactList}\item 
 const std\+::vector$<$ std\+::uint8\+\_\+t $>$ \& \mbox{\hyperlink{class_eugene_lib_1_1_texture_a90206404d7b16fba9857d4281b2d0410}{Get\+Data}} (void) const \&
 \item 
 std\+::uint8\+\_\+t $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_texture_aa3d1f3283174091d133bffd61698a204}{Get\+Data}} (void) \&
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em テクスチャデータを取得する  \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{詳解}
+テクスチャ  
 
 \doxysubsection{構築子と解体子}
 \mbox{\Hypertarget{class_eugene_lib_1_1_texture_af83736848c99f09ab3f0fb0e552520b4}\label{class_eugene_lib_1_1_texture_af83736848c99f09ab3f0fb0e552520b4}} 
@@ -26,6 +34,15 @@ std\+::uint8\+\_\+t $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_texture_aa3d1f3
 
 
 
+コンストラクタ(指定したテクスチャファイルを読み込む)  
+
+
+\begin{DoxyParams}{引数}
+{\em path} & テクスチャファイルのパス \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{関数詳解}
 \mbox{\Hypertarget{class_eugene_lib_1_1_texture_aa3d1f3283174091d133bffd61698a204}\label{class_eugene_lib_1_1_texture_aa3d1f3283174091d133bffd61698a204}} 
 \index{EugeneLib::Texture@{EugeneLib::Texture}!GetData@{GetData}}
@@ -33,6 +50,13 @@ std\+::uint8\+\_\+t $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_texture_aa3d1f3
 \doxysubsubsection{\texorpdfstring{GetData()}{GetData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily std\+::uint8\+\_\+t $\ast$ Eugene\+Lib\+::\+Texture\+::\+Get\+Data (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) \&}
 
+
+
+テクスチャデータを取得する  
+
+\begin{DoxyReturn}{戻り値}
+テクスチャデータ 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_eugene_lib_1_1_texture_a90206404d7b16fba9857d4281b2d0410}\label{class_eugene_lib_1_1_texture_a90206404d7b16fba9857d4281b2d0410}} 
 \index{EugeneLib::Texture@{EugeneLib::Texture}!GetData@{GetData}}
 \index{GetData@{GetData}!EugeneLib::Texture@{EugeneLib::Texture}}
@@ -52,7 +76,15 @@ std\+::uint8\+\_\+t $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_texture_aa3d1f3
 \doxysubsubsection{\texorpdfstring{GetInfo()}{GetInfo()}}
 {\footnotesize\ttfamily const \mbox{\hyperlink{struct_eugene_lib_1_1_texture_info}{Eugene\+Lib\+::\+Texture\+Info}} \& Eugene\+Lib\+::\+Texture\+::\+Get\+Info (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const \&}
 
-被呼び出し関係図\+:\nopagebreak
+
+
+テクスチャの情報を取得する  
+
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+被呼び出し関係図\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

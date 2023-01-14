@@ -108,9 +108,9 @@ EugeneLib::WindowsSystem 連携図</div>
 <tr class="separator:a4de7e31d85c21103e00f80b5c0530630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad53f85df6eefd888201ce3385169c708"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_windows_system.html#ad53f85df6eefd888201ce3385169c708">~WindowsSystem</a> ()</td></tr>
 <tr class="separator:ad53f85df6eefd888201ce3385169c708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e29255ea29d61b93d5adcbd3681dec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_eugene_lib_1_1_graphics.html">Graphics</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_windows_system.html#a37e29255ea29d61b93d5adcbd3681dec">CreateGraphics</a> (<a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&amp;gpuEngine) const &amp;final</td></tr>
-<tr class="memdesc:a37e29255ea29d61b93d5adcbd3681dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphicsをを生成する   <a href="class_eugene_lib_1_1_windows_system.html#a37e29255ea29d61b93d5adcbd3681dec">[詳解]</a><br /></td></tr>
-<tr class="separator:a37e29255ea29d61b93d5adcbd3681dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f0b1ab3896129237bd722874ea222b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_eugene_lib_1_1_graphics.html">Graphics</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_windows_system.html#ad5f0b1ab3896129237bd722874ea222b">CreateGraphics</a> (<a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&amp;gpuEngine, size_t bufferNum) const &amp;final</td></tr>
+<tr class="memdesc:ad5f0b1ab3896129237bd722874ea222b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphicsをを生成する   <a href="class_eugene_lib_1_1_windows_system.html#ad5f0b1ab3896129237bd722874ea222b">[詳解]</a><br /></td></tr>
+<tr class="separator:ad5f0b1ab3896129237bd722874ea222b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_eugene_lib_1_1_system"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_eugene_lib_1_1_system')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="class_eugene_lib_1_1_system.html">EugeneLib::System</a> に属する継承公開メンバ関数</td></tr>
 <tr class="memitem:a632fd990d04adfa7baa3f0f940436f24 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a632fd990d04adfa7baa3f0f940436f24">Update</a> (void)=0</td></tr>
 <tr class="memdesc:a632fd990d04adfa7baa3f0f940436f24 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)   <a href="class_eugene_lib_1_1_system.html#a632fd990d04adfa7baa3f0f940436f24">[詳解]</a><br /></td></tr>
@@ -121,12 +121,34 @@ EugeneLib::WindowsSystem 連携図</div>
 <tr class="memitem:a697612d0d657a26b4d6ac8c8c8a4b32b inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a697612d0d657a26b4d6ac8c8c8a4b32b">GetWindowSize</a> (void) const &amp;</td></tr>
 <tr class="memdesc:a697612d0d657a26b4d6ac8c8c8a4b32b inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウサイズを取得する   <a href="class_eugene_lib_1_1_system.html#a697612d0d657a26b4d6ac8c8c8a4b32b">[詳解]</a><br /></td></tr>
 <tr class="separator:a697612d0d657a26b4d6ac8c8c8a4b32b inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a497a20166d0353b367531057ab675bc0 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_graphics.html">Graphics</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a497a20166d0353b367531057ab675bc0">CreateGraphics</a> (<a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&amp;gpuEngine) const &amp;=0</td></tr>
-<tr class="memdesc:a497a20166d0353b367531057ab675bc0 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphicsをを生成する   <a href="class_eugene_lib_1_1_system.html#a497a20166d0353b367531057ab675bc0">[詳解]</a><br /></td></tr>
-<tr class="separator:a497a20166d0353b367531057ab675bc0 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af72cb9d038835fdb7387174427e41b7a inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_graphics.html">Graphics</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#af72cb9d038835fdb7387174427e41b7a">CreateGraphics</a> (<a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&amp;gpuEngine, size_t bufferNum=2) const &amp;=0</td></tr>
+<tr class="memdesc:af72cb9d038835fdb7387174427e41b7a inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphicsをを生成する   <a href="class_eugene_lib_1_1_system.html#af72cb9d038835fdb7387174427e41b7a">[詳解]</a><br /></td></tr>
+<tr class="separator:af72cb9d038835fdb7387174427e41b7a inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5233f3e60e8122003d99de782685176 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#af5233f3e60e8122003d99de782685176">GetMouse</a> (<a class="el" href="struct_eugene_lib_1_1_system_1_1_mouse.html">Mouse</a> &amp;outMouse) const &amp;</td></tr>
+<tr class="memdesc:af5233f3e60e8122003d99de782685176 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの情報を取得する   <a href="class_eugene_lib_1_1_system.html#af5233f3e60e8122003d99de782685176">[詳解]</a><br /></td></tr>
+<tr class="separator:af5233f3e60e8122003d99de782685176 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab62884a6451ae0a9af5fe075e4cc7d70 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#ab62884a6451ae0a9af5fe075e4cc7d70">IsHitKey</a> (<a class="el" href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3">KeyID</a> keyID) const</td></tr>
+<tr class="memdesc:ab62884a6451ae0a9af5fe075e4cc7d70 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーが押されているか   <a href="class_eugene_lib_1_1_system.html#ab62884a6451ae0a9af5fe075e4cc7d70">[詳解]</a><br /></td></tr>
+<tr class="separator:ab62884a6451ae0a9af5fe075e4cc7d70 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64271ec243e8278f9fd73eef7872c8c7 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a64271ec243e8278f9fd73eef7872c8c7">GetKeyData</a> (<a class="el" href="class_eugene_lib_1_1_system.html#ada291fd61baf9ea7515cb4aabb587dab">KeyDataSpan</a> &amp;keyData) const</td></tr>
+<tr class="memdesc:a64271ec243e8278f9fd73eef7872c8c7 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">キー入力情報を取得する   <a href="class_eugene_lib_1_1_system.html#a64271ec243e8278f9fd73eef7872c8c7">[詳解]</a><br /></td></tr>
+<tr class="separator:a64271ec243e8278f9fd73eef7872c8c7 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41a24885cef5c093df1bd57a3ca2f003 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a41a24885cef5c093df1bd57a3ca2f003">SetKeyCodeTable</a> (<a class="el" href="class_eugene_lib_1_1_system.html#ab936252dfedcae2c2ea12c18b8e722c1">KeyCodeTable</a> &amp;keyCodeTable)</td></tr>
+<tr class="memdesc:a41a24885cef5c093df1bd57a3ca2f003 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーコードのデータテーブル   <a href="class_eugene_lib_1_1_system.html#a41a24885cef5c093df1bd57a3ca2f003">[詳解]</a><br /></td></tr>
+<tr class="separator:a41a24885cef5c093df1bd57a3ca2f003 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c740d391a2c5e47fc85d8df3dd7f245 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#a8c740d391a2c5e47fc85d8df3dd7f245">GetGamePad</a> (<a class="el" href="class_eugene_lib_1_1_game_pad.html">GamePad</a> &amp;pad, std::uint32_t idx) const</td></tr>
+<tr class="memdesc:a8c740d391a2c5e47fc85d8df3dd7f245 inherit pub_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">ゲームパッドを取得する   <a href="class_eugene_lib_1_1_system.html#a8c740d391a2c5e47fc85d8df3dd7f245">[詳解]</a><br /></td></tr>
+<tr class="separator:a8c740d391a2c5e47fc85d8df3dd7f245 inherit pub_methods_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 その他の継承メンバ</h2></td></tr>
+<tr class="inherit_header pub_types_class_eugene_lib_1_1_system"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_eugene_lib_1_1_system')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="class_eugene_lib_1_1_system.html">EugeneLib::System</a> に属する継承公開型</td></tr>
+<tr class="memitem:ada291fd61baf9ea7515cb4aabb587dab inherit pub_types_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#ada291fd61baf9ea7515cb4aabb587dab">KeyDataSpan</a> = std::span&lt; bool, <a class="el" href="namespace_eugene_lib.html#a6b80b505e10af336f7066c96d3590678">KEYID_MAX</a> &gt;</td></tr>
+<tr class="memdesc:ada291fd61baf9ea7515cb4aabb587dab inherit pub_types_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーボードの情報()   <a href="class_eugene_lib_1_1_system.html#ada291fd61baf9ea7515cb4aabb587dab">[詳解]</a><br /></td></tr>
+<tr class="separator:ada291fd61baf9ea7515cb4aabb587dab inherit pub_types_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab936252dfedcae2c2ea12c18b8e722c1 inherit pub_types_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#ab936252dfedcae2c2ea12c18b8e722c1">KeyCodeTable</a> = std::array&lt; int, <a class="el" href="namespace_eugene_lib.html#a6b80b505e10af336f7066c96d3590678">KEYID_MAX</a> &gt;</td></tr>
+<tr class="memdesc:ab936252dfedcae2c2ea12c18b8e722c1 inherit pub_types_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーコードのテーブル   <a href="class_eugene_lib_1_1_system.html#ab936252dfedcae2c2ea12c18b8e722c1">[詳解]</a><br /></td></tr>
+<tr class="separator:ab936252dfedcae2c2ea12c18b8e722c1 inherit pub_types_class_eugene_lib_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_eugene_lib_1_1_system"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_eugene_lib_1_1_system')"><img src="closed.png" alt="-"/>&#160;基底クラス <a class="el" href="class_eugene_lib_1_1_system.html">EugeneLib::System</a> に属する継承限定公開メンバ関数</td></tr>
 <tr class="memitem:af0632c15bbb435485e82b608fe46884d inherit pro_methods_class_eugene_lib_1_1_system"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_system.html#af0632c15bbb435485e82b608fe46884d">System</a> (const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;size, const std::u8string &amp;title)</td></tr>
 <tr class="memdesc:af0632c15bbb435485e82b608fe46884d inherit pro_methods_class_eugene_lib_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ   <a href="class_eugene_lib_1_1_system.html#af0632c15bbb435485e82b608fe46884d">[詳解]</a><br /></td></tr>
@@ -195,8 +217,8 @@ EugeneLib::WindowsSystem 連携図</div>
 </div>
 </div>
 <h2 class="groupheader">関数詳解</h2>
-<a id="a37e29255ea29d61b93d5adcbd3681dec" name="a37e29255ea29d61b93d5adcbd3681dec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e29255ea29d61b93d5adcbd3681dec">&#9670;&#160;</a></span>CreateGraphics()</h2>
+<a id="ad5f0b1ab3896129237bd722874ea222b" name="ad5f0b1ab3896129237bd722874ea222b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5f0b1ab3896129237bd722874ea222b">&#9670;&#160;</a></span>CreateGraphics()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,8 +230,18 @@ EugeneLib::WindowsSystem 連携図</div>
           <td class="memname"><a class="el" href="class_eugene_lib_1_1_graphics.html">EugeneLib::Graphics</a> * EugeneLib::WindowsSystem::CreateGraphics </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&amp;&#160;</td>
-          <td class="paramname"><em>gpuEngine</em></td><td>)</td>
-          <td> const &amp;</td>
+          <td class="paramname"><em>gpuEngine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bufferNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const &amp;</td>
         </tr>
       </table>
   </td>
@@ -228,7 +260,7 @@ EugeneLib::WindowsSystem 連携図</div>
 </dl>
 <dl class="section return"><dt>戻り値</dt><dd>Graphicsのポインタ </dd></dl>
 
-<p><a class="el" href="class_eugene_lib_1_1_system.html#a497a20166d0353b367531057ab675bc0">EugeneLib::System</a>を実装しています。</p>
+<p><a class="el" href="class_eugene_lib_1_1_system.html#af72cb9d038835fdb7387174427e41b7a">EugeneLib::System</a>を実装しています。</p>
 
 </div>
 </div>

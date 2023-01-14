@@ -32,6 +32,8 @@ namespace EugeneLib
 		virtual SoundControl* CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
 	protected:
 		Sound();
+
+		std::uint32_t channelMask_;
 	};
 
 	Sound* CreateSound(void);

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['texture_0',['Texture',['../class_eugene_lib_1_1_texture.html',1,'EugeneLib']]],
-  ['textureinfo_1',['TextureInfo',['../struct_eugene_lib_1_1_texture_info.html',1,'EugeneLib']]]
+  ['rendertargetlayout_0',['RendertargetLayout',['../struct_eugene_lib_1_1_rendertarget_layout.html',1,'EugeneLib']]],
+  ['rendertargetviews_1',['RenderTargetViews',['../class_eugene_lib_1_1_render_target_views.html',1,'EugeneLib']]]
 ];

@@ -2,11 +2,13 @@
 \label{_windows_system_8cpp}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/System/Windows/WindowsSystem.cpp@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/System/Windows/WindowsSystem.cpp}}
 {\ttfamily \#include \char`\"{}Windows\+System.\+h\char`\"{}}\newline
 {\ttfamily \#include $<$Windows.\+h$>$}\newline
+{\ttfamily \#include $<$Xinput.\+h$>$}\newline
 {\ttfamily \#include $<$filesystem$>$}\newline
 {\ttfamily \#include \char`\"{}../../../\+Include/\+Common/\+Debug.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}../../../\+Include/\+Common/\+Eugene\+Lib\+Exception.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}../../\+Graphics/\+Direct\+X12/\+Dx12\+Graphics.\+h\char`\"{}}\newline
-Windows\+System.\+cpp の依存先関係図\+:\nopagebreak
+Windows\+System.\+cpp の依存先関係図\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -26,7 +28,11 @@ MSG \mbox{\hyperlink{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}{msg
 WNDCLASSEX \mbox{\hyperlink{_windows_system_8cpp_a00cd3b8a3700b9da126b82fd17c5ab6d}{window\+Class}}
 \begin{DoxyCompactList}\small\item\em ウィンドウクラス  \end{DoxyCompactList}\item 
 HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hwnd}}
-\begin{DoxyCompactList}\small\item\em ウィンドウハンドル  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em ウィンドウハンドル  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Eugene\+Lib\+::\+System\+::\+Mouse}} \mbox{\hyperlink{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}{mouse}}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Eugene\+Lib\+::\+Graphics}} $\ast$ \mbox{\hyperlink{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}{graphics}} = nullptr
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{関数詳解}
@@ -54,8 +60,7 @@ HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hw
 \begin{DoxyReturn}{戻り値}
 
 \end{DoxyReturn}
-被呼び出し関係図\+:
-\nopagebreak
+被呼び出し関係図\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -65,6 +70,12 @@ HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hw
 
 
 \doxysubsection{変数詳解}
+\mbox{\Hypertarget{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}\label{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!graphics@{graphics}}
+\index{graphics@{graphics}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{graphics}{graphics}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Eugene\+Lib\+::\+Graphics}}$\ast$ graphics = nullptr}
+
 \mbox{\Hypertarget{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}\label{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}} 
 \index{WindowsSystem.cpp@{WindowsSystem.cpp}!hwnd@{hwnd}}
 \index{hwnd@{hwnd}!WindowsSystem.cpp@{WindowsSystem.cpp}}
@@ -74,6 +85,12 @@ HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hw
 
 
 ウィンドウハンドル  
+
+\mbox{\Hypertarget{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}\label{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!mouse@{mouse}}
+\index{mouse@{mouse}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{mouse}{mouse}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Eugene\+Lib\+::\+System\+::\+Mouse}} mouse}
 
 \mbox{\Hypertarget{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}\label{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}} 
 \index{WindowsSystem.cpp@{WindowsSystem.cpp}!msg@{msg}}

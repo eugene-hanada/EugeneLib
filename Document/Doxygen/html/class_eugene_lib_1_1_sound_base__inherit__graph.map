@@ -1,0 +1,9 @@
+<map id="EugeneLib::SoundBase" name="EugeneLib::SoundBase">
+<area shape="rect" id="node1" title=" " alt="" coords="195,5,354,31"/>
+<area shape="rect" id="node2" href="$class_eugene_lib_1_1_sound.html" title="サウンド用のクラス" alt="" coords="27,79,155,104"/>
+<area shape="rect" id="node4" href="$class_eugene_lib_1_1_sound_control.html" title=" " alt="" coords="190,79,359,104"/>
+<area shape="rect" id="node6" href="$class_eugene_lib_1_1_sound_speaker.html" title="サウンドを再生するクラス" alt="" coords="395,79,571,104"/>
+<area shape="rect" id="node3" href="$class_eugene_lib_1_1_xa2_sound.html" title=" " alt="" coords="5,152,155,177"/>
+<area shape="rect" id="node5" href="$class_eugene_lib_1_1_xa2_sound_control.html" title=" " alt="" coords="179,152,370,177"/>
+<area shape="rect" id="node7" href="$class_eugene_lib_1_1_xa2_sound_speaker.html" title=" " alt="" coords="395,152,592,177"/>
+</map>

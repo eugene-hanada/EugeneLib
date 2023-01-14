@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['matrix4x4_0',['Matrix4x4',['../namespace_eugene_lib.html#af7f780f02c67f6d1f9f032c3f813ed72',1,'EugeneLib']]]
+  ['keycodetable_0',['KeyCodeTable',['../class_eugene_lib_1_1_system.html#ab936252dfedcae2c2ea12c18b8e722c1',1,'EugeneLib::System']]],
+  ['keydataspan_1',['KeyDataSpan',['../class_eugene_lib_1_1_system.html#ada291fd61baf9ea7515cb4aabb587dab',1,'EugeneLib::System']]]
 ];

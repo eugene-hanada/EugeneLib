@@ -1,11 +1,14 @@
 #include "Xa2Sound.h"
 #include <xaudio2.h>
+#include <x3daudio.h>
 #include "../../../Include/Common/EugeneLibException.h"
 
 #include "../Xaudio2/Xa2SoundSpeaker.h"
 #include "../Xaudio2/Xa2SoundControl.h"
 
 #pragma comment (lib,"xaudio2.lib")
+
+X3DAUDIO_HANDLE handle;
 
 EugeneLib::Xa2Sound::Xa2Sound()
 {
@@ -28,6 +31,12 @@ EugeneLib::Xa2Sound::Xa2Sound()
 	XAUDIO2_VOICE_DETAILS details;
 	mastering_->GetVoiceDetails(&details);
 	inChannel_ = outChannel_ = details.InputChannels;
+
+	DWORD tmpMask;
+	mastering_->GetChannelMask(&tmpMask);
+	channelMask_ = tmpMask;
+	
+	auto result = X3DAudioInitialize(channelMask_, 340.0f, handle);
 }
 
 EugeneLib::Xa2Sound::~Xa2Sound()

@@ -83,23 +83,29 @@ $(function() {
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_texture.html">    9</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_texture.html">Texture</a></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_class" href="class_eugene_lib_1_1_texture.html">Texture</a>(<span class="keyword">const</span> std::filesystem::path&amp; path);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a52dbb1eed3ab0fd19ca15c396bf05fd8">GetInfo</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keyword">const</span> std::vector&lt;std::uint8_t&gt;&amp; <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">GetData</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        std::uint8_t* <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">GetData</a>(<span class="keywordtype">void</span>)&amp;;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        std::vector&lt;std::vector&lt;std::uint8_t&gt;&gt; data_;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a> info_;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    };</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_texture.html">   11</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_texture.html">Texture</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <a class="code hl_class" href="class_eugene_lib_1_1_texture.html">Texture</a>(<span class="keyword">const</span> std::filesystem::path&amp; path);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a52dbb1eed3ab0fd19ca15c396bf05fd8">GetInfo</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">const</span> std::vector&lt;std::uint8_t&gt;&amp; <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">GetData</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        std::uint8_t* <a class="code hl_function" href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">GetData</a>(<span class="keywordtype">void</span>)&amp;;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::vector&lt;std::vector&lt;std::uint8_t&gt;&gt; data_;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a> info_;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
 <div class="ttc" id="a_graphics_common_8h_html"><div class="ttname"><a href="_graphics_common_8h.html">GraphicsCommon.h</a></div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_texture_html"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html">EugeneLib::Texture</a></div><div class="ttdef"><b>Definition:</b> Texture.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_texture_html_a52dbb1eed3ab0fd19ca15c396bf05fd8"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html#a52dbb1eed3ab0fd19ca15c396bf05fd8">EugeneLib::Texture::GetInfo</a></div><div class="ttdeci">const TextureInfo &amp; GetInfo(void) const &amp;</div><div class="ttdef"><b>Definition:</b> Texture.cpp:79</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_texture_html_a90206404d7b16fba9857d4281b2d0410"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">EugeneLib::Texture::GetData</a></div><div class="ttdeci">const std::vector&lt; std::uint8_t &gt; &amp; GetData(void) const &amp;</div><div class="ttdef"><b>Definition:</b> Texture.cpp:84</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_texture_html"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html">EugeneLib::Texture</a></div><div class="ttdoc">テクスチャ</div><div class="ttdef"><b>Definition:</b> Texture.h:12</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_texture_html_a52dbb1eed3ab0fd19ca15c396bf05fd8"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html#a52dbb1eed3ab0fd19ca15c396bf05fd8">EugeneLib::Texture::GetInfo</a></div><div class="ttdeci">const TextureInfo &amp; GetInfo(void) const &amp;</div><div class="ttdoc">テクスチャの情報を取得する</div><div class="ttdef"><b>Definition:</b> Texture.cpp:76</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_texture_html_a90206404d7b16fba9857d4281b2d0410"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html#a90206404d7b16fba9857d4281b2d0410">EugeneLib::Texture::GetData</a></div><div class="ttdeci">const std::vector&lt; std::uint8_t &gt; &amp; GetData(void) const &amp;</div><div class="ttdef"><b>Definition:</b> Texture.cpp:81</div></div>
 <div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
 <div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html">EugeneLib::TextureInfo</a></div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:52</div></div>
 </div><!-- fragment --></div><!-- contents -->

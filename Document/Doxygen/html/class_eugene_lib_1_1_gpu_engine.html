@@ -81,13 +81,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>CommandListクラスを実行などの処理を行うクラス   
+ <a href="class_eugene_lib_1_1_gpu_engine.html#details">[詳解]</a></p>
+
 <p><code>#include &lt;<a class="el" href="_gpu_engine_8h_source.html">GpuEngine.h</a>&gt;</code></p>
 <div class="dynheader">
 EugeneLib::GpuEngine の継承関係図</div>
 <div class="dyncontent">
 <div class="center"><img src="class_eugene_lib_1_1_gpu_engine__inherit__graph.png" border="0" usemap="#a_eugene_lib_1_1_gpu_engine_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_eugene_lib_1_1_gpu_engine_inherit__map" id="a_eugene_lib_1_1_gpu_engine_inherit__map">
-<area shape="rect" title=" " alt="" coords="21,5,175,31"/>
+<area shape="rect" title="CommandListクラスを実行などの処理を行うクラス" alt="" coords="21,5,175,31"/>
 <area shape="rect" href="class_eugene_lib_1_1_dx12_gpu_engine.html" title=" " alt="" coords="5,79,191,104"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
@@ -95,12 +98,15 @@ EugeneLib::GpuEngine の継承関係図</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 公開メンバ関数</h2></td></tr>
 <tr class="memitem:acec9c7dc0cd86950d8c2b03fd95f9442"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#acec9c7dc0cd86950d8c2b03fd95f9442">~GpuEngine</a> ()</td></tr>
+<tr class="memdesc:acec9c7dc0cd86950d8c2b03fd95f9442"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ   <a href="class_eugene_lib_1_1_gpu_engine.html#acec9c7dc0cd86950d8c2b03fd95f9442">[詳解]</a><br /></td></tr>
 <tr class="separator:acec9c7dc0cd86950d8c2b03fd95f9442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa64a0cb24a0914e1b9eb34cdd08efe0a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#aa64a0cb24a0914e1b9eb34cdd08efe0a">Execute</a> (void)=0</td></tr>
+<tr class="memdesc:aa64a0cb24a0914e1b9eb34cdd08efe0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PushしたCommandListを実行する   <a href="class_eugene_lib_1_1_gpu_engine.html#aa64a0cb24a0914e1b9eb34cdd08efe0a">[詳解]</a><br /></td></tr>
 <tr class="separator:aa64a0cb24a0914e1b9eb34cdd08efe0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aded51128c02ec81caf6b04599b322331"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#aded51128c02ec81caf6b04599b322331">Wait</a> (void)=0</td></tr>
 <tr class="separator:aded51128c02ec81caf6b04599b322331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a268848afc0d06c259035b3ae634a9186"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#a268848afc0d06c259035b3ae634a9186">Push</a> (<a class="el" href="class_eugene_lib_1_1_command_list.html">CommandList</a> &amp;commandList)=0</td></tr>
+<tr class="memdesc:a268848afc0d06c259035b3ae634a9186"><td class="mdescLeft">&#160;</td><td class="mdescRight">実行するコマンドリストを追加する   <a href="class_eugene_lib_1_1_gpu_engine.html#a268848afc0d06c259035b3ae634a9186">[詳解]</a><br /></td></tr>
 <tr class="separator:a268848afc0d06c259035b3ae634a9186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55d5b8db6f07dbad5b60b4a357333758"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#a55d5b8db6f07dbad5b60b4a357333758">GetQueue</a> (void) const =0</td></tr>
 <tr class="separator:a55d5b8db6f07dbad5b60b4a357333758"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,9 +114,12 @@ EugeneLib::GpuEngine の継承関係図</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 限定公開メンバ関数</h2></td></tr>
 <tr class="memitem:a23a3132227082888724bc50bd70c4b9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_gpu_engine.html#a23a3132227082888724bc50bd70c4b9e">GpuEngine</a> ()</td></tr>
+<tr class="memdesc:a23a3132227082888724bc50bd70c4b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">コマンドリスト   <a href="class_eugene_lib_1_1_gpu_engine.html#a23a3132227082888724bc50bd70c4b9e">[詳解]</a><br /></td></tr>
 <tr class="separator:a23a3132227082888724bc50bd70c4b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">構築子と解体子</h2>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >CommandListクラスを実行などの処理を行うクラス  </p>
+</div><h2 class="groupheader">構築子と解体子</h2>
 <a id="acec9c7dc0cd86950d8c2b03fd95f9442" name="acec9c7dc0cd86950d8c2b03fd95f9442"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acec9c7dc0cd86950d8c2b03fd95f9442">&#9670;&#160;</a></span>~GpuEngine()</h2>
 
@@ -133,6 +142,8 @@ EugeneLib::GpuEngine の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>デストラクタ  </p>
 
 </div>
 </div>
@@ -158,6 +169,8 @@ EugeneLib::GpuEngine の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>コマンドリスト  </p>
 
 </div>
 </div>
@@ -185,6 +198,8 @@ EugeneLib::GpuEngine の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>PushしたCommandListを実行する  </p>
 
 </div>
 </div>
@@ -238,6 +253,14 @@ EugeneLib::GpuEngine の継承関係図</div>
 </table>
 </div><div class="memdoc">
 
+<p>実行するコマンドリストを追加する  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">commandList</td><td>コマンドリスト </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aded51128c02ec81caf6b04599b322331" name="aded51128c02ec81caf6b04599b322331"></a>
@@ -263,6 +286,8 @@ EugeneLib::GpuEngine の継承関係図</div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p></p>
 
 </div>
 </div>

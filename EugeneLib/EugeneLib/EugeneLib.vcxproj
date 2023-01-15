@@ -210,6 +210,7 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound3DControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
@@ -253,6 +254,7 @@
     <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundControl.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound3DControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EugeneLib.rc" />

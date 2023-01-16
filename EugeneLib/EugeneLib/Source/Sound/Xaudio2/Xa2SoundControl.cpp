@@ -26,7 +26,7 @@ void* EugeneLib::Xa2SoundControl::Get(void)
 
 void EugeneLib::Xa2SoundControl::SetPan(std::span<float> volumes)
 {
-	if (outChannel_ == volumes.size())
+	if ((inChannel_ * outChannel_) + inChannel_  >= volumes.size())
 	{
 		submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
 	}

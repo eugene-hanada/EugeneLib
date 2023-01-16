@@ -1,11 +1,11 @@
 #pragma once
-#include "SoundBase.h"
+#include "SoundControl.h"
 #include "../Math/Vector3.h"
 
 namespace EugeneLib
 {
 	class Sound3DControl :
-		public SoundBase
+		public SoundControl
 	{
 	public:
 		virtual void Update3DSound(

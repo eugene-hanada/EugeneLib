@@ -56,6 +56,16 @@ set(CommonSource
 # Math系のソースファイルをセット
 set(MathSource
     Source/Math/Geometry.cpp
+    Include/ThirdParty/DirectXMath/DirectXCollision.h
+    Include/ThirdParty/DirectXMath/DirectXCollision.inl
+    Include/ThirdParty/DirectXMath/DirectXColors.h
+    Include/ThirdParty/DirectXMath/DirectXMath.h
+    Include/ThirdParty/DirectXMath/DirectXMathConvert.inl
+    Include/ThirdParty/DirectXMath/DirectXMathMatrix.inl
+    Include/ThirdParty/DirectXMath/DirectXMathMisc.inl
+    Include/ThirdParty/DirectXMath/DirectXMathVector.inl
+    Include/ThirdParty/DirectXMath/DirectXPackedVector.h
+    Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
  )
 
 # サウンド系のクラスのソースファイルをセット
@@ -64,6 +74,7 @@ set(SoundSource
     Source/Sound/SoundBase.cpp
     Source/Sound/SoundSpeaker.cpp
     Source/Sound/SoundControl.cpp
+     Source/Sound/Sound3DControl.cpp
     Source/Sound/Wave.cpp
 )
 
@@ -72,6 +83,7 @@ set(SoundApiSource
     Source/Sound/Xaudio2/Xa2Sound.cpp
     Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
     Source/Sound/Xaudio2/Xa2SoundControl.cpp
+    Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
 )
 
 # DirectXTexをセット

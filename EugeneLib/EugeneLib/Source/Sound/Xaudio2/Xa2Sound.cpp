@@ -2,9 +2,9 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include "../../../Include/Common/EugeneLibException.h"
-
-#include "../Xaudio2/Xa2SoundSpeaker.h"
-#include "../Xaudio2/Xa2SoundControl.h"
+#include "Xa2Sound3DControl.h"
+#include "Xa2SoundSpeaker.h"
+#include "Xa2SoundControl.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
@@ -68,4 +68,9 @@ EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wav
 EugeneLib::SoundControl* EugeneLib::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
 	return new Xa2SoundControl{xaudio2_.Get(), sample, inputChannel, outChannel};
+}
+
+EugeneLib::Sound3DControl* EugeneLib::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+{
+	return new Xa2Sound3DControl{ xaudio2_.Get(), handle, outChannel, inputChannel, sample };
 }

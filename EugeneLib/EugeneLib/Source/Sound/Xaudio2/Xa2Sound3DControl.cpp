@@ -2,6 +2,26 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include <vector>
+#include "../../../Include/Common/EugeneLibException.h"
+
+
+EugeneLib::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample) :
+	handle_{handle}
+{
+	inChannel_ = inChannel;
+	outChannel_ = outChannel;
+	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER)))
+	{
+		throw EugeneLibException("3D用サブミックスボイスの作成");
+	}
+
+
+}
+
+EugeneLib::Xa2Sound3DControl::~Xa2Sound3DControl()
+{
+	submix_->DestroyVoice();
+}
 
 void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity,
@@ -15,7 +35,7 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	emitter.Velocity = X3DAUDIO_VECTOR{ emitterVelocity.x,emitterVelocity.y,emitterVelocity.z };
 	emitter.ChannelCount = 1;
 	emitter.CurveDistanceScaler = emitter.DopplerScaler = 1.0f;
-
+	emitter.pChannelAzimuths = nullptr;
 	listener.OrientFront = X3DAUDIO_VECTOR{ listenerFront.x,listenerFront.y,listenerFront.z };
 	listener.OrientTop = X3DAUDIO_VECTOR{ listenerTop.x,listenerTop.y,listenerTop.z };
 	listener.Position = X3DAUDIO_VECTOR{ listenerPos.x,listenerPos.y,listenerPos.z };
@@ -24,8 +44,9 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	X3DAUDIO_DSP_SETTINGS dsp{};
 	dsp.SrcChannelCount = inChannel_;
 	dsp.DstChannelCount = outChannel_;
-	std::vector<float> matrix(outChannel_);
-	dsp.pMatrixCoefficients = matrix.data();
+	auto  matrix = new float[outChannel_];
+	dsp.pMatrixCoefficients = matrix;
+	
 	X3DAudioCalculate(
 		handle_.data(),
 		&listener,
@@ -33,9 +54,24 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 		X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER | X3DAUDIO_CALCULATE_LPF_DIRECT | X3DAUDIO_CALCULATE_REVERB,
 		&dsp
 	);
-
-	submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, &dsp.ReverbLevel);
-	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient) };
-	submix_->SetFilterParameters(&filter);
 	
+	submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, dsp.pMatrixCoefficients);
+	delete[] matrix;
+	/*XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
+	submix_->SetFilterParameters(&filter);*/
+	
+}
+
+void EugeneLib::Xa2Sound3DControl::SetVolume(float volume)
+{
+	if (volume * volume != volume_)
+	{
+		volume_ = volume * volume;
+		submix_->SetVolume(volume_);
+	}
+}
+
+void* EugeneLib::Xa2Sound3DControl::Get(void)
+{
+	return submix_;
 }

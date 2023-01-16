@@ -38,6 +38,7 @@ std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
 std::unique_ptr<EugeneLib::Wave> wave;
 std::unique_ptr<EugeneLib::Sound> sound;
 std::unique_ptr < EugeneLib::SoundControl> soundCtrl;
+std::unique_ptr<EugeneLib::Sound3DControl> sound3DCtrl;
 std::unique_ptr<EugeneLib::SoundSpeaker> soundSpeaker;
 
 void Init(void)
@@ -159,9 +160,12 @@ void InitConstantBuffer(void)
 void InitSound(void)
 {
 	sound.reset(EugeneLib::CreateSound());
+	//wave = std::make_unique<EugeneLib::Wave>(L"./MusicSurround.wav");
 	wave = std::make_unique<EugeneLib::Wave>(L"./exp.wav");
 	soundSpeaker.reset(sound->CreateSoundSpeaker(*wave));
-	soundCtrl.reset(sound->CreateSoundControl(48000, 2, 2));
+	soundCtrl.reset(sound->CreateSoundControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
+	sound3DCtrl.reset(sound->CreateSound3DControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
+
 }
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -184,12 +188,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngien->Execute();
 	gpuEngien->Wait();
 
-	soundSpeaker->SetOutput(*soundCtrl);
+	soundSpeaker->SetOutput(*sound3DCtrl);
+	sound3DCtrl->Update3DSound(
+		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, EugeneLib::zeroVector3<float>, EugeneLib::zeroVector3<float>,
+		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, {-5.0f,5.0f, 0.0f}, EugeneLib::zeroVector3<float>
+	);
 	soundSpeaker->Play();
-	std::vector<float> volumes{ 1.0f,0.0f };
-	soundCtrl->SetPan(volumes);
+	
 
-	//soundCtrl->SetPan(volumes);
+
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	EugeneLib::GamePad pad;
 	while (libSys->Update())

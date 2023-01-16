@@ -91,7 +91,7 @@ void EugeneLib::Xa2SoundSpeaker::SetVolume(float volume)
 
 void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
 {
-	if (outChannel_ == volumes.size())
+	if ((inChannel_ * outChannel_) + inChannel_ >= volumes.size())
 	{
 		source_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
 	}
@@ -99,6 +99,7 @@ void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
 
 void EugeneLib::Xa2SoundSpeaker::SetOutput(SoundControl& control)
 {
+	outChannel_ = control.GetInChannel();
 	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };

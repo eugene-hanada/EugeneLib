@@ -84,12 +84,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator+(lVec.ToSimdVector(), rVec.ToSimdVector());
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
 		}
-		else
+		else*/
 		{
 			return { lVec.x + rVec.x ,lVec.y + rVec.y, lVec.z + rVec.z };
 		}
@@ -98,12 +98,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const T& val)
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator+(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
 		}
-		else
+		else*/
 		{
 			return { lVec.x + val, lVec.y + val, lVec.z + val };
 		}
@@ -112,12 +112,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator-(lVec.ToSimdVector(), rVec.ToSimdVector());
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
 		}
-		else
+		else*/
 		{
 			return { lVec.x - rVec.x, lVec.y - rVec.y , lVec.z - rVec.z };
 		}
@@ -126,12 +126,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const T& val)
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator-(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
 		}
-		else
+		else*/
 		{
 			return { lVec.x - val, lVec.y - val, lVec.z - val };
 		}
@@ -140,12 +140,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
-		if constexpr (std::is_floating_point<T>())
+	/*	if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator*(lVec.ToSimdVector(), rVec.ToSimdVector());
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
 		}
-		else
+		else*/
 		{
 			return { lVec.x * rVec.x, lVec.y * rVec.y, lVec.z * rVec.z };
 		}
@@ -154,12 +154,12 @@ namespace EugeneLib
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const T& val)
 	{
-		if constexpr (std::is_floating_point<T>())
+	/*	if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator*(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else
+		}*/
+		//else
 		{
 			return { lVec.x * val, lVec.y * val, lVec.z * val };
 		}
@@ -172,12 +172,12 @@ namespace EugeneLib
 		{
 			return lVec;
 		}
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator/(lVec.ToSimdVector(), rVec.ToSimdVector());
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else
+		}*/
+		//else
 		{
 			return { lVec.x / rVec.x, lVec.y / rVec.y , lVec.z / rVec.z };
 		}
@@ -190,12 +190,12 @@ namespace EugeneLib
 		{
 			return lVec;
 		}
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::operator/(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else
+		}*/
+		//else
 		{
 			return { lVec.x / val, lVec.y / val, lVec.z / val };
 		}
@@ -209,12 +209,12 @@ namespace EugeneLib
 			return lVec;
 		}
 
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), rVec.ToSimdVector());
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else
+		}*/
+		//else
 		{
 			return { std::fmod(lVec.x , rVec.x), std::fmod(lVec.y , rVec.y), std::fmod(lVec.z , rVec.z) };
 		}
@@ -227,12 +227,12 @@ namespace EugeneLib
 			return lVec;
 		}
 
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
 			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else
+		}*/
+		//else
 		{
 			return { std::fmod(lVec.x , val), std::fmod(lVec.y , val), std::fmod(lVec.z , val) };
 		}
@@ -248,11 +248,11 @@ namespace EugeneLib
 	template<ValueC T>
 	inline T Vector3Tmp<T>::Magnitude(void) const
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			return DirectX::XMVector3Length(DirectX::XMVectorSet(x, y, z, 0)).m128_f32[0];
-		}
-		else
+		}*/
+		//else
 		{
 			return std::sqrt(x * x + y * y + z * z);
 		}
@@ -262,11 +262,11 @@ namespace EugeneLib
 	template<ValueC T>
 	inline T Vector3Tmp<T>::SqMagnitude(void) const
 	{
-		if constexpr (std::is_floating_point<T>())
+		/*if constexpr (std::is_floating_point<T>())
 		{
 			return DirectX::XMVector3LengthSq(DirectX::XMVectorSet(x, y, z, 0)).m128_f32[0];
-		}
-		else
+		}*/
+		//else
 		{
 			return x * x + y * y + z * z;
 		}

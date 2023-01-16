@@ -22,6 +22,8 @@ namespace EugeneLib
 
 		SoundControl* CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const final;
 
+		Sound3DControl* CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const final;
+
 		Microsoft::WRL::ComPtr<IXAudio2> xaudio2_;
 		IXAudio2MasteringVoice* mastering_;
 	};

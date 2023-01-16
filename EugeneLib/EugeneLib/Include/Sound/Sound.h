@@ -5,6 +5,7 @@ namespace EugeneLib
 {
 	class SoundSpeaker;
 	class SoundControl;
+	class Sound3DControl;
 	class Wave;
 	/// <summary>
 	/// サウンド用のクラス
@@ -30,6 +31,15 @@ namespace EugeneLib
 		/// <param name="outChannel"></param>
 		/// <returns></returns>
 		virtual SoundControl* CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
+
+		/// <summary>
+		/// サウンドを3Dで出力しコントロールするクラスを作成する
+		/// </summary>
+		/// <param name="sample"></param>
+		/// <param name="inputChannel"></param>
+		/// <param name="outChannel"></param>
+		/// <returns></returns>
+		virtual Sound3DControl* CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
 	protected:
 		Sound();
 

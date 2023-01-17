@@ -9,17 +9,14 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
-	if (FAILED(device->CreateCommittedResource(
+	ThrowFalse(FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
 		nullptr,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("デフォルトリソースの作成に失敗");
-	}
+	)), "デフォルトリソースの作成に失敗");
 }
 
 EugeneLib::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
@@ -27,11 +24,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, 
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
-	{
-		throw EugeneLibException("スワップチェイン用バッファの作成に失敗");
-	}
-
+	ThrowFalse(FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))), "スワップチェイン用バッファの作成に失敗");
 }
 
 EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const Vector2& size, Format format, const std::span<float, 4>& clearColor)
@@ -42,17 +35,16 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const 
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 	resourceDesc.MipLevels = 0;
 	auto clear{ CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM,clearColor.data()) };
-	if (FAILED(device->CreateCommittedResource(
+
+	ThrowFalse(FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
 		&clear,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("レンダーターゲット用リソースの作成に失敗");
-	}
+	)),"レンダーターゲット用リソースの作成に失敗");
+
 }
 
 EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const TextureInfo& formatData)
@@ -63,17 +55,14 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const 
 		, static_cast<std::uint32_t>(formatData.width),
 		static_cast<std::uint32_t>(formatData.height)
 	);
-	if (FAILED(device->CreateCommittedResource(
+	ThrowFalse(FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COPY_DEST,
 		nullptr,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("テクスチャリソース作成");
-	}
+	)),"テクスチャリソース作成");
 }
 
 EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, float clearValue)
@@ -82,15 +71,12 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const V
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 	CD3DX12_CLEAR_VALUE clear{ DXGI_FORMAT_D32_FLOAT, clearValue, 0 };
-	if (FAILED(device->CreateCommittedResource(
+	ThrowFalse(FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_DEPTH_WRITE,
 		&clear,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("デプス用リソースの作成に失敗");
-	}
+	)),"デプス用リソースの作成に失敗");
 }

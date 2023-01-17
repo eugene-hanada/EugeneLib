@@ -121,10 +121,7 @@ void EugeneLib::Dx12Graphics::CreateDevice(void)
 	flagsDXGI |= DXGI_CREATE_FACTORY_DEBUG;
 #endif
 
-	if (FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))))
-	{
-		throw LibInitException();
-	}
+	ThrowFalse(FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))), "Factoryの生成に失敗");
 
 	// アダプターの列挙用
 	std::list<IDXGIAdapter*> adapters;
@@ -226,14 +223,9 @@ void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, G
 
 	// スワップチェインの生成
 	IDXGISwapChain1* swapchain = nullptr;
-	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
-	{
-		throw LibInitException();
-	}
-	if (FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))))
-	{
-		throw LibInitException();
-	}
+	ThrowFalse(FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)),"スワップチェインの作成に失敗");
+
+	ThrowFalse(FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))),"");
 	swapchain->Release();
 }
 

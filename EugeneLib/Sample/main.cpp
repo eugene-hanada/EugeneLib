@@ -191,7 +191,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	soundSpeaker->SetOutput(*sound3DCtrl);
 	sound3DCtrl->Update3DSound(
 		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, EugeneLib::zeroVector3<float>, EugeneLib::zeroVector3<float>,
-		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, {-5.0f,5.0f, 0.0f}, EugeneLib::zeroVector3<float>
+		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, {0.5f,-0.5f, 1.0f}, EugeneLib::zeroVector3<float>
 	);
 	soundSpeaker->Play();
 	

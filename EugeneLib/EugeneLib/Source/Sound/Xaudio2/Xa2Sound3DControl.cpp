@@ -44,8 +44,8 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	X3DAUDIO_DSP_SETTINGS dsp{};
 	dsp.SrcChannelCount = inChannel_;
 	dsp.DstChannelCount = outChannel_;
-	auto  matrix = new float[outChannel_];
-	dsp.pMatrixCoefficients = matrix;
+	std::vector<float>  matrix(outChannel_ * inChannel_);
+	dsp.pMatrixCoefficients = matrix.data();
 	
 	X3DAudioCalculate(
 		handle_.data(),
@@ -56,9 +56,9 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	);
 	
 	submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, dsp.pMatrixCoefficients);
-	delete[] matrix;
-	/*XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
-	submix_->SetFilterParameters(&filter);*/
+	
+	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
+	submix_->SetFilterParameters(&filter);
 	
 }
 

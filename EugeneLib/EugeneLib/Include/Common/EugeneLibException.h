@@ -30,9 +30,3 @@ namespace EugeneLib
 		LibReleseException();
 	};
 };
-
-#ifndef NOT_USE_EXCEPTION
-#define ThrowFalse(cd, mess) ( !cd ? throw EugeneLib::EugeneLibException{mess}: )
-#else
-#define ThrowFalse(cd, mess) ()
-#endif

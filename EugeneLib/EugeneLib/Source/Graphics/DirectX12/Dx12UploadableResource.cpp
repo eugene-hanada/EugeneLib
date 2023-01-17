@@ -9,14 +9,17 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,s
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
-	ThrowFalse(FAILED(device->CreateCommittedResource(
+	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)),"アップロードリソースの作成に失敗");
+	)))
+	{
+		throw EugeneLibException("アップロードリソースの作成に失敗");
+	}
 }
 
 EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Texture& texture)
@@ -30,14 +33,17 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, 
 	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(texture.GetInfo().format), texture.GetInfo().width, texture.GetInfo().height);
 	device->GetCopyableFootprints(&footDesc, 0, 1, 0, &footprint, &numRaw, &rowSize, &totalSize);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(totalSize);
-	ThrowFalse(FAILED(device->CreateCommittedResource(
+	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)),"アップロードリソースの作成に失敗");
+	)))
+	{
+		throw EugeneLibException("アップロードリソースの作成に失敗");
+	}
 	
 
 	

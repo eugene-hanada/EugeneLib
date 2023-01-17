@@ -14,12 +14,18 @@
 
 EugeneLib::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 {
-	ThrowFalse(FAILED(device->CreateCommandAllocator(
-		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))), "コマンドを生成できませんでした");
+	if (FAILED(device->CreateCommandAllocator(
+		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("コマンド作成できませんでした");
+	}
 
-	ThrowFalse(FAILED(device->CreateCommandList(
-		0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator_.Get(), nullptr, IID_PPV_ARGS(cmdList_.ReleaseAndGetAddressOf())))
-		,"コマンド作成できませんでした");
+	if (FAILED(device->CreateCommandList(
+		0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator_.Get(), nullptr, IID_PPV_ARGS(cmdList_.ReleaseAndGetAddressOf())
+	)))
+	{
+		throw EugeneLibException("コマンド作成できませんでした");
+	}
 
 	End();
 }

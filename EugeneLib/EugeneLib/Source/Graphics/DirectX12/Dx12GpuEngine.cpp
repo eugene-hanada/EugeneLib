@@ -114,9 +114,15 @@ EugeneLib::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 
 	
 	// キューを生成
-	ThrowFalse(FAILED(device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))),"GpuEngineのコマンドキュー作成失敗");
+	if (FAILED(device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("GpuEngineのコマンドキュー作成失敗");
+	}
 
-	ThrowFalse(FAILED(device->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))),"GpuEngineのフェンス作成失敗");
+	if (FAILED(device->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("GpuEngineのフェンス作成失敗");
+	}
 }
 
 EugeneLib::Dx12GpuEngine::~Dx12GpuEngine()

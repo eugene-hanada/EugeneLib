@@ -72,19 +72,26 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
-	ThrowFalse(FAILED(D3D12SerializeRootSignature(
+	if (FAILED(D3D12SerializeRootSignature(
 		&rootSignatureDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1,
 		&rootSigBlob,
 		&errorBlob)
-	), "ルードシグネチャ生成失敗");
+	))
+	{
+		// throwかく
+		throw EugeneLibException("ルードシグネチャ生成失敗");
+	}
 
-		ThrowFalse(FAILED(device->CreateRootSignature(
+	if (FAILED(device->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf())))
-		,"ルードシグネチャ生成失敗");
+		)
+	{
+		throw EugeneLibException("ルードシグネチャ生成失敗");
+	}
 
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline{};
@@ -189,7 +196,10 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.DepthStencilState.DepthEnable = false;
 	gpipeline.DepthStencilState.StencilEnable = false;
 
-	ThrowFalse(FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))), "グラフィックスパイプラインの生成に失敗");
+	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
+	{
+		return;
+	}
 }
 
 void* EugeneLib::Dx12GraphicsPipeline::GetPipeline(void)

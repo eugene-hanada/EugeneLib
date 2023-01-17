@@ -4,19 +4,13 @@
 #include "../Math/Vector2.h"
 #ifdef _DEBUG
 
-
 #define DebugLog(...) (EugeneLib::Debug::GetInstance().Log(__VA_ARGS__))
-
-
 
 namespace EugeneLib
 {
 	template<class T>
 	concept DebugStr = std::same_as<T, std::u8string>;
 
-	/// <summary>
-	/// デバッグ関連のクラス(シングルトン)
-	/// </summary>
 	class Debug
 	{
 	public:

@@ -11,7 +11,9 @@ add_definitions(-D_UNICODE -DUNICODE)
 set(SystemSource 
     Source/System/System.cpp
     Source/System/Windows/WindowsSystem.cpp
+    Source/System/Windows/Dll.cpp
     Source/System/GamePad.cpp
+    Source/System/DynamicLibrary.cpp
 )
 
 # グラフィック系クラスのソースファイルをセット

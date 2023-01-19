@@ -170,7 +170,7 @@ void InitSound(void)
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-
+	DebugLog(u8"test", 1);
 	Init();
 	InitGraphicsPipeline();
 	InitVertex();

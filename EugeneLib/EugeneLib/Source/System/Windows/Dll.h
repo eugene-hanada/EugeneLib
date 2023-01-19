@@ -1,5 +1,5 @@
 #pragma once
-#include "DynamicLibrary.h"
+#include "../../../Include/System/DynamicLibrary.h"
 #include <Windows.h>
 
 class Dll :
@@ -11,6 +11,9 @@ public:
 private:
 	void* FindFunction(const std::string& functionName) const;
 
+	/// <summary>
+	/// DLL‚Ìƒnƒ“ƒhƒ‹
+	/// </summary>
 	HMODULE handle_;
 };
 

@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\System\DynamicLibrary.h" />
     <ClInclude Include="Include\System\GamePad.h" />
     <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Include\System\KeyID.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Include\ThirdParty\d3dx12.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Include\System\System.h" />
+    <ClInclude Include="Source\System\Windows\Dll.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
     <ClInclude Include="Include\Graphics\Texture.h" />
@@ -214,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
+    <ClCompile Include="Source\System\DynamicLibrary.cpp" />
     <ClCompile Include="Source\System\GamePad.cpp" />
     <ClCompile Include="Source\Sound\SoundControl.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
@@ -248,6 +251,7 @@
     <ClCompile Include="Source\Math\Geometry.cpp" />
     <ClCompile Include="Source\Sound\Wave.cpp" />
     <ClCompile Include="Source\System\System.cpp" />
+    <ClCompile Include="Source\System\Windows\Dll.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
     <ClCompile Include="Source\Graphics\Texture.cpp" />

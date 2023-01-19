@@ -1,4 +1,4 @@
-#include "DynamicLibrary.h"
+#include "../../Include/System/DynamicLibrary.h"
 
 DynamicLibrary::~DynamicLibrary()
 {

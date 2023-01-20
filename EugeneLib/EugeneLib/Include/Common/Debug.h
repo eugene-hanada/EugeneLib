@@ -3,6 +3,7 @@
 #include <string>
 #include <filesystem>
 #include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
 #ifdef _DEBUG
 
 #define DebugLog(...) (EugeneLib::Debug::GetInstance().Log(__VA_ARGS__))
@@ -61,6 +62,18 @@ namespace EugeneLib
 		std::u8string ToString(const V& v)
 		{
 			return std::filesystem::path(std::to_string(v)).u8string();
+		}
+
+		template<ValueC T>
+		std::u8string ToString(const Vector2Tmp<T>& vec)
+		{
+			return std::filesystem::path("x=" + std::to_string(vec.x) + "y=" + std::to_string(vec.y)).u8string();
+		}
+
+		template<ValueC T>
+		std::u8string ToString(const Vector3Tmp<T>& vec)
+		{
+			return std::filesystem::path("x=" + std::to_string(vec.x) + "y=" + std::to_string(vec.y) + std::to_string(vec.z)).u8string();
 		}
 
 		template<class A, class B>

@@ -5,8 +5,7 @@
 Eugene::EugeneLibException::EugeneLibException(const std::string& mess) :
 	mess_{mess}
 {
-	std::filesystem::path tmp{ mess_ };
-	DebugLog(tmp.u8string());
+	DebugLog(mess_);
 }
 
 Eugene::EugeneLibException::~EugeneLibException()

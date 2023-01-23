@@ -6,7 +6,7 @@
 #include <format>
 #include <filesystem>
 #include <cuchar>
-
+#include <chrono>
 #ifdef _WIN64
 #include <Windows.h>
 FILE* fp;
@@ -18,12 +18,12 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 	return instance_;
 }
 
-void Eugene::Debug::Log(const std::u8string& log)
-{
-	std::filesystem::path tmp{ log };
-	std::cout << tmp.string() << std::endl;
-}
 
+void Eugene::Debug::Log(const std::string& str)
+{
+	std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+	std::cout << std::chrono::zoned_time{ std::chrono::current_zone(), now } << str << std::endl;
+}
 
 Eugene::Debug::Debug()
 {

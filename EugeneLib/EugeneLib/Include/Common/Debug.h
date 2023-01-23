@@ -9,16 +9,6 @@
 
 #define DebugLog(...) (Eugene::Debug::GetInstance().Log(__VA_ARGS__))
 
-template<>
-class std::formatter<Eugene::Vector2>
-{
-public:
-	std::string format(const Eugene::Vector2& vec, std::format_context& fmtCntxt)
-	{
-		return std::format(std::format("x={0:f}y{1:f}", vec.x, vec.y), fmtCntxt);
-	}
-};
-
 namespace Eugene
 {
 	template<class T>
@@ -34,10 +24,12 @@ namespace Eugene
 		static Debug& GetInstance(void);
 
 		template<class ...Args>
-		void Log(const std::string& formatStr, const Args&... args)
+		constexpr void Log(const std::string& formatStr, const Args&... args)
 		{
-			
+			Log(std::format(formatStr, args));
 		}
+
+		void Log(const std::string& str);
 
 	private:
 		Debug();

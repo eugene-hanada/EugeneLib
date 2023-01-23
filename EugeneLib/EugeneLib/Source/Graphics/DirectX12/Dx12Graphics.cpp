@@ -30,7 +30,7 @@ Eugene::Dx12Graphics::~Dx12Graphics()
 {
 	swapChain_->Release();
 	swapChain_.Detach();
-	DebugLog(u8"テスト");
+	DebugLog("テスト");
 }
 
 Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const

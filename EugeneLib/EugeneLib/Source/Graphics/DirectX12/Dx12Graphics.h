@@ -9,7 +9,7 @@ struct ID3D12Device;
 struct IDXGIFactory6;
 struct IDXGISwapChain4;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Dx12Graphics :
 		public Graphics

@@ -19,26 +19,26 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-EugeneLib::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
 {
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
 	CreateBackBuffers(bufferNum);
 }
 
-EugeneLib::Dx12Graphics::~Dx12Graphics()
+Eugene::Dx12Graphics::~Dx12Graphics()
 {
 	swapChain_->Release();
 	swapChain_.Detach();
 	DebugLog(u8"テスト");
 }
 
-EugeneLib::CommandList* EugeneLib::Dx12Graphics::CreateCommandList(void) const
+Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 {
 	return new Dx12CommandList{device_.Get()};
 }
 
-EugeneLib::GraphicsPipeline* EugeneLib::Dx12Graphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
+Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
 {
 	return new Dx12GraphicsPipeline{
 		device_.Get(),
@@ -52,68 +52,68 @@ EugeneLib::GraphicsPipeline* EugeneLib::Dx12Graphics::CreateGraphicsPipeline(Sha
 	};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateUploadableResource(size_t size) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(size_t size) const
 {
 	return new Dx12UploadableResource{ device_.Get(),size};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateUploadableTextureResource(Texture& texture) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableTextureResource(Texture& texture) const
 {
 	return new Dx12UploadableResource{ device_.Get(),texture};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateDefaultResource(size_t size) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateDefaultResource(size_t size) const
 {
 	return new Dx12DefaultResource{ device_.Get(),size};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateSwapChainResource(std::uint32_t idx) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateSwapChainResource(std::uint32_t idx) const
 {
 	return new Dx12DefaultResource{ swapChain_.Get(), idx};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateTextureResource(const TextureInfo& formatData) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateTextureResource(const TextureInfo& formatData) const
 {
 	return new Dx12DefaultResource{ device_.Get(), formatData};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const
 {
 	return new Dx12DefaultResource{ device_.Get(), size,format,clearColor};
 }
 
-EugeneLib::GpuResource* EugeneLib::Dx12Graphics::CreateDepthResource(const Vector2& size, Format format, float clearValue) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2& size, Format format, float clearValue) const
 {
 	return new Dx12DefaultResource{device_.Get(),size,format, clearValue};
 }
 
-EugeneLib::ShaderResourceViews* EugeneLib::Dx12Graphics::CreateShaderResourceViews(size_t size) const
+Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(size_t size) const
 {
 	return new Dx12ShaderResourceViews{ device_.Get(), size};
 }
 
-EugeneLib::RenderTargetViews* EugeneLib::Dx12Graphics::CreateRenderTargetViews(size_t size, bool isShaderVisible) const
+Eugene::RenderTargetViews* Eugene::Dx12Graphics::CreateRenderTargetViews(size_t size, bool isShaderVisible) const
 {
 	return new Dx12RenderTargetViews{ device_.Get(), size,isShaderVisible};
 }
 
-EugeneLib::DepthStencilViews* EugeneLib::Dx12Graphics::CreateDepthStencilViews(size_t size) const
+Eugene::DepthStencilViews* Eugene::Dx12Graphics::CreateDepthStencilViews(size_t size) const
 {
 	return new Dx12DepthStencilViews{ device_.Get(), size};
 }
 
-EugeneLib::VertexView* EugeneLib::Dx12Graphics::CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const
+Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const
 {
 	return new Dx12VertexView{size, vertexNum,resource};
 }
 
-EugeneLib::GpuEngine* EugeneLib::Dx12Graphics::CreateGpuEngine(size_t maxSize) const
+Eugene::GpuEngine* Eugene::Dx12Graphics::CreateGpuEngine(size_t maxSize) const
 {
 	return new Dx12GpuEngine{ device_.Get(), maxSize};
 }
 
 
-void EugeneLib::Dx12Graphics::CreateDevice(void)
+void Eugene::Dx12Graphics::CreateDevice(void)
 {
 	UINT flagsDXGI = 0;
 
@@ -182,7 +182,7 @@ void EugeneLib::Dx12Graphics::CreateDevice(void)
 	throw LibInitException();
 }
 
-void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
 {
 	gpuEngine = CreateGpuEngine(10);
 
@@ -237,7 +237,7 @@ void EugeneLib::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, G
 	swapchain->Release();
 }
 
-void EugeneLib::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
+void Eugene::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
 {
 	buffers_.resize(bufferCount);
 	renderTargetViews_.reset(CreateRenderTargetViews(bufferCount, false));
@@ -250,23 +250,23 @@ void EugeneLib::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
 
 }
 
-EugeneLib::GpuResource& EugeneLib::Dx12Graphics::GetBackBufferResource(void)
+Eugene::GpuResource& Eugene::Dx12Graphics::GetBackBufferResource(void)
 {
 	return *buffers_[GetNowBackBufferIndex()];
 }
 
-EugeneLib::RenderTargetViews& EugeneLib::Dx12Graphics::GetViews(void)
+Eugene::RenderTargetViews& Eugene::Dx12Graphics::GetViews(void)
 {
 	return *renderTargetViews_;
 }
 
-size_t EugeneLib::Dx12Graphics::GetNowBackBufferIndex(void)
+size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void)
 {
 	// バックバッファのインデックスを取得
 	return swapChain_->GetCurrentBackBufferIndex();
 }
 
-void EugeneLib::Dx12Graphics::Present(void)
+void Eugene::Dx12Graphics::Present(void)
 {
 	swapChain_->Present(1, 0);
 }

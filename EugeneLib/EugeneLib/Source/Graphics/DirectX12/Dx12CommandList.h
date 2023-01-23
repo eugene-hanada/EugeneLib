@@ -6,7 +6,7 @@ struct ID3D12Device;
 struct ID3D12CommandAllocator;
 struct ID3D12GraphicsCommandList;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class GpuResource;
 	class Dx12CommandList :

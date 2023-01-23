@@ -7,7 +7,7 @@
 #include "KeyID.h"
 #include "GamePad.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Graphics;
 	class GpuEngine;

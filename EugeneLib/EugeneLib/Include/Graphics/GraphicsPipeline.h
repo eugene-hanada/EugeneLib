@@ -4,7 +4,7 @@
 #include <vector>
 #include "GraphicsCommon.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	struct ShaderInputLayout
 	{

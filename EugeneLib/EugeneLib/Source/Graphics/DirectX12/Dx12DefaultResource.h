@@ -8,7 +8,7 @@
 struct ID3D12Device;
 struct IDXGISwapChain4;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Dx12DefaultResource :
 		public Dx12GpuResource

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "Math/MathConcepts.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	template<ValueC T, size_t Num, T MaxValue = static_cast<T>(1), T MinValue = static_cast<T>(0)>
 	class Color

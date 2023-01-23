@@ -2,12 +2,12 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/GpuResource.h"
 
-EugeneLib::Dx12ShaderResourceViews::Dx12ShaderResourceViews(ID3D12Device* device, size_t size) :
+Eugene::Dx12ShaderResourceViews::Dx12ShaderResourceViews(ID3D12Device* device, size_t size) :
 	Dx12Views{device,size,true,D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV}, ShaderResourceViews{size}
 {
 }
 
-void EugeneLib::Dx12ShaderResourceViews::CreateTexture(GpuResource& resource, size_t idx)
+void Eugene::Dx12ShaderResourceViews::CreateTexture(GpuResource& resource, size_t idx)
 {
 	if (size_ <= idx)
 	{
@@ -34,7 +34,7 @@ void EugeneLib::Dx12ShaderResourceViews::CreateTexture(GpuResource& resource, si
 }
 
 
-void EugeneLib::Dx12ShaderResourceViews::CreateConstantBuffer(GpuResource& resource, size_t idx)
+void Eugene::Dx12ShaderResourceViews::CreateConstantBuffer(GpuResource& resource, size_t idx)
 {
 	if (size_ <= idx)
 	{
@@ -55,7 +55,7 @@ void EugeneLib::Dx12ShaderResourceViews::CreateConstantBuffer(GpuResource& resou
 	device->CreateConstantBufferView(&viewDesc, handle);
 }
 
-void* EugeneLib::Dx12ShaderResourceViews::GetViews(void) const
+void* Eugene::Dx12ShaderResourceViews::GetViews(void) const
 {
 	return descriptorHeap_.Get();
 }

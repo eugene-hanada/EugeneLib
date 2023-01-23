@@ -6,7 +6,7 @@ struct ID3D12Device;
 struct ID3D12RootSignature;
 struct ID3D12PipelineState;
 
-namespace EugeneLib
+namespace Eugene
 {
 	
 	class Dx12GraphicsPipeline :

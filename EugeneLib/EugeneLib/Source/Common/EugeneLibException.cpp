@@ -2,27 +2,27 @@
 #include "../../Include/Common/Debug.h"
 #include <filesystem>
 
-EugeneLib::EugeneLibException::EugeneLibException(const std::string& mess) :
+Eugene::EugeneLibException::EugeneLibException(const std::string& mess) :
 	mess_{mess}
 {
 	std::filesystem::path tmp{ mess_ };
 	DebugLog(tmp.u8string());
 }
 
-EugeneLib::EugeneLibException::~EugeneLibException()
+Eugene::EugeneLibException::~EugeneLibException()
 {
 }
-const char* EugeneLib::EugeneLibException::what() const noexcept
+const char* Eugene::EugeneLibException::what() const noexcept
 {
 	return mess_.c_str();
 }
 
-EugeneLib::LibInitException::LibInitException() :
+Eugene::LibInitException::LibInitException() :
 	EugeneLibException{"初期化エラー"}
 {
 }
 
-EugeneLib::LibReleseException::LibReleseException() :
+Eugene::LibReleseException::LibReleseException() :
 	EugeneLibException{"解放処理エラー"}
 {
 }

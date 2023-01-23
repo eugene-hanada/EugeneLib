@@ -8,7 +8,7 @@ struct ID3D12CommandList;
 struct ID3D12CommandQueue;
 struct ID3D12Fence;
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	class Dx12GpuEngine :

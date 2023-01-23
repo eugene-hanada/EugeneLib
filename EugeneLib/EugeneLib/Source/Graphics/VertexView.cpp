@@ -1,9 +1,9 @@
 #include "../../Include/Graphics/VertexView.h"
 
-EugeneLib::VertexView::~VertexView()
+Eugene::VertexView::~VertexView()
 {
 }
 
-EugeneLib::VertexView::VertexView()
+Eugene::VertexView::VertexView()
 {
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <concepts>
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	// コンセプトを使って整数型と浮動小数点数のみテンプレート引数に入れれるように

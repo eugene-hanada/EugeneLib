@@ -26,9 +26,9 @@ WNDCLASSEX windowClass;
 /// </summary>
 HWND hwnd;
 
-EugeneLib::System::Mouse mouse;
+Eugene::System::Mouse mouse;
 
-EugeneLib::Graphics* graphics = nullptr;
+Eugene::Graphics* graphics = nullptr;
 
 /// <summary>
 /// ウィンドウプロシージャ
@@ -72,7 +72,7 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 
 
-EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
+Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {
 	DebugLog(u8"Comの初期化");
@@ -119,13 +119,13 @@ EugeneLib::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-EugeneLib::WindowsSystem::~WindowsSystem()
+Eugene::WindowsSystem::~WindowsSystem()
 {
 	CoUninitialize();
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 }
 
-EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum) const&
+Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum) const&
 {
 	if (graphics != nullptr)
 	{
@@ -134,7 +134,7 @@ EugeneLib::Graphics* EugeneLib::WindowsSystem::CreateGraphics(GpuEngine*& gpuEng
 	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum });
 }
 
-bool EugeneLib::WindowsSystem::Update(void)
+bool Eugene::WindowsSystem::Update(void)
 {
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
@@ -148,17 +148,17 @@ bool EugeneLib::WindowsSystem::Update(void)
 	return true;
 }
 
-void EugeneLib::WindowsSystem::GetMouse(Mouse& outMouse) const&
+void Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
 {
 	outMouse = mouse;
 }
 
-bool EugeneLib::WindowsSystem::IsHitKey(KeyID keyID) const
+bool Eugene::WindowsSystem::IsHitKey(KeyID keyID) const
 {
 	return GetKeyState(codeTable_[std::underlying_type<KeyID>::type(keyID)]) & 0x8000;
 }
 
-bool EugeneLib::WindowsSystem::GetKeyData(KeyDataSpan& keyData) const
+bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan& keyData) const
 {
 	std::uint8_t k[256];
 	if (!GetKeyboardState(k))
@@ -172,13 +172,13 @@ bool EugeneLib::WindowsSystem::GetKeyData(KeyDataSpan& keyData) const
 	return true;
 }
 
-bool EugeneLib::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+bool Eugene::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	codeTable_ = keyCodeTable;
 	return true;
 }
 
-bool EugeneLib::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
+bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
 	XINPUT_STATE state;
 	if (XInputGetState(idx, &state) != ERROR_SUCCESS)

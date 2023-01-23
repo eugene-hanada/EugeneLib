@@ -5,7 +5,7 @@
 
 struct ID3D12Resource;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Dx12GpuResource :
 		public GpuResource

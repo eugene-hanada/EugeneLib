@@ -6,7 +6,7 @@ struct IXAudio2SourceVoice;
 struct IXAudio2;
 struct XAUDIO2_BUFFER;
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	class Xa2SoundSpeaker :

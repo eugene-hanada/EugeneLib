@@ -2,7 +2,7 @@
 #include <exception>
 #include <string>
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	class EugeneLibException :

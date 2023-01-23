@@ -2,7 +2,7 @@
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "Dx12Views.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Dx12ShaderResourceViews :
 		public Dx12Views, public ShaderResourceViews

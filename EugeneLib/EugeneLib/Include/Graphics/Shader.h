@@ -2,7 +2,7 @@
 #include <vector>
 #include <filesystem>
 
-namespace EugeneLib
+namespace Eugene
 {
 	/// <summary>
 	/// シェーダー

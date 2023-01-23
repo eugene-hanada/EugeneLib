@@ -23,7 +23,7 @@ double GetNormalizedAngle(double angle, double valMin, double valMax)
 	return result;
 }
 
-void EugeneLib::Get2DMatrix(Matrix4x4& out, const Vector2& size)
+void Eugene::Get2DMatrix(Matrix4x4& out, const Vector2& size)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixIdentity());
 	out.m[0][0] = 2.0f / size.x;
@@ -32,7 +32,7 @@ void EugeneLib::Get2DMatrix(Matrix4x4& out, const Vector2& size)
 	out.m[3][1] = 1.0f;
 }
 
-void EugeneLib::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& target, const Vector3& up)
+void Eugene::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& target, const Vector3& up)
 {
 	DirectX::XMFLOAT3 tmpEye{ eye.x,eye.y,eye.z };
 	DirectX::XMFLOAT3 tmpTarget{ target.x,target.y, target.z };
@@ -43,13 +43,13 @@ void EugeneLib::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector
 	);
 }
 
-void EugeneLib::GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near, float far)
+void Eugene::GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near, float far)
 {
 	
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixPerspectiveFovLH(fov, aspect, near, far));
 }
 
-void EugeneLib::GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near, float far)
+void Eugene::GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near, float far)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixOrthographicLH(size.x, size.y, near, far));
 }

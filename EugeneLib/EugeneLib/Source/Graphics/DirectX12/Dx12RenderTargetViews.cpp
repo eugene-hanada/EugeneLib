@@ -2,13 +2,13 @@
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Graphics/GpuResource.h"
 
-EugeneLib::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, size_t size, bool isShaderVisible) :
+Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, size_t size, bool isShaderVisible) :
 	Dx12Views{ device, size, isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE_RTV },
 	RenderTargetViews{size}
 {
 }
 
-void EugeneLib::Dx12RenderTargetViews::Create(GpuResource& resource, size_t idx, const Format& format)
+void Eugene::Dx12RenderTargetViews::Create(GpuResource& resource, size_t idx, const Format& format)
 {
 	if (size_ <= idx)
 	{
@@ -30,7 +30,7 @@ void EugeneLib::Dx12RenderTargetViews::Create(GpuResource& resource, size_t idx,
 	device->CreateRenderTargetView(static_cast<ID3D12Resource*>(resource.GetResource()), &rtViewDesc, handle);
 }
 
-void* EugeneLib::Dx12RenderTargetViews::GetViews(void) const
+void* Eugene::Dx12RenderTargetViews::GetViews(void) const
 {
 	return descriptorHeap_.Get();
 }

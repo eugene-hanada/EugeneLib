@@ -4,7 +4,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	// Vector2Tmp‚Ìx=0,y=0‚ğ•\‚·’è”

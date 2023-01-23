@@ -2,7 +2,7 @@
 #include <array>
 #include "../Math/Vector2.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	enum class PadID
 	{

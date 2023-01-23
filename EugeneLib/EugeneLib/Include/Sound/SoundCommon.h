@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace EugeneLib
+namespace Eugene
 {
 #pragma pack(1)
 	struct SoundFormat

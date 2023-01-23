@@ -5,7 +5,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 
 
-EugeneLib::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample) :
+Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample) :
 	handle_{handle}
 {
 	inChannel_ = inChannel;
@@ -18,12 +18,12 @@ EugeneLib::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std
 
 }
 
-EugeneLib::Xa2Sound3DControl::~Xa2Sound3DControl()
+Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
 {
 	submix_->DestroyVoice();
 }
 
-void EugeneLib::Xa2Sound3DControl::Update3DSound(
+void Eugene::Xa2Sound3DControl::Update3DSound(
 	const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity,
 	const Vector3& emitterFront, const Vector3& emitterTop, const Vector3& emitterPos, const Vector3& emitterVelocity)
 {
@@ -62,7 +62,7 @@ void EugeneLib::Xa2Sound3DControl::Update3DSound(
 	
 }
 
-void EugeneLib::Xa2Sound3DControl::SetVolume(float volume)
+void Eugene::Xa2Sound3DControl::SetVolume(float volume)
 {
 	if (volume * volume != volume_)
 	{
@@ -71,7 +71,7 @@ void EugeneLib::Xa2Sound3DControl::SetVolume(float volume)
 	}
 }
 
-void* EugeneLib::Xa2Sound3DControl::Get(void)
+void* Eugene::Xa2Sound3DControl::Get(void)
 {
 	return submix_;
 }

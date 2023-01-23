@@ -92,7 +92,7 @@
 //		}
 //	}
 
-EugeneLib::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
+Eugene::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 	fenceVal_{0}
 {
 	commandLists_.resize(maxSize);
@@ -125,7 +125,7 @@ EugeneLib::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 	}
 }
 
-EugeneLib::Dx12GpuEngine::~Dx12GpuEngine()
+Eugene::Dx12GpuEngine::~Dx12GpuEngine()
 {
 	DebugLog(u8"gpuEngine");
 }
@@ -136,7 +136,7 @@ EugeneLib::Dx12GpuEngine::~Dx12GpuEngine()
 //		std::fill(cmdlists_.begin(), cmdlists_.end(), nullptr);
 //	}
 //}
-void EugeneLib::Dx12GpuEngine::Execute(void)
+void Eugene::Dx12GpuEngine::Execute(void)
 {
 	auto p = commandLists_.data();
 	cmdQueue_->ExecuteCommandLists(static_cast<UINT>(nowCommandNum_), reinterpret_cast<ID3D12CommandList* const*>(p));
@@ -144,7 +144,7 @@ void EugeneLib::Dx12GpuEngine::Execute(void)
 	std::fill(commandLists_.begin(), commandLists_.end(), nullptr);
 }
 
-void EugeneLib::Dx12GpuEngine::Wait(void)
+void Eugene::Dx12GpuEngine::Wait(void)
 {
 	cmdQueue_->Signal(fence_.Get(), ++fenceVal_);
 	if (fence_->GetCompletedValue() < fenceVal_)
@@ -166,7 +166,7 @@ void EugeneLib::Dx12GpuEngine::Wait(void)
 	}
 }
 
-void EugeneLib::Dx12GpuEngine::Push(CommandList& commandList)
+void Eugene::Dx12GpuEngine::Push(CommandList& commandList)
 {
 	if (nowCommandNum_ >= commandLists_.size())
 	{
@@ -176,7 +176,7 @@ void EugeneLib::Dx12GpuEngine::Push(CommandList& commandList)
 	nowCommandNum_++;
 }
 
-void* EugeneLib::Dx12GpuEngine::GetQueue(void) const
+void* Eugene::Dx12GpuEngine::GetQueue(void) const
 {
 	return cmdQueue_.Get();
 }

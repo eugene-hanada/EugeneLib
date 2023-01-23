@@ -2,7 +2,7 @@
 #include "SoundControl.h"
 #include "../Math/Vector3.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Sound3DControl :
 		public SoundControl

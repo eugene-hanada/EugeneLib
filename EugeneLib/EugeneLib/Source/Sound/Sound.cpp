@@ -1,17 +1,17 @@
 #include "../../Include/Sound/Sound.h"
 #include "Xaudio2/Xa2Sound.h"
 
-EugeneLib::Sound* sound = nullptr;
+Eugene::Sound* sound = nullptr;
 
-EugeneLib::Sound::~Sound()
+Eugene::Sound::~Sound()
 {
 }
 
-EugeneLib::Sound::Sound()
+Eugene::Sound::Sound()
 {
 }
 
-EugeneLib::Sound* EugeneLib::CreateSound(void)
+Eugene::Sound* Eugene::CreateSound(void)
 {
 	if (sound != nullptr)
 	{

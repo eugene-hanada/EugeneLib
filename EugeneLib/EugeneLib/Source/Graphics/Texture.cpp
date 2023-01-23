@@ -6,7 +6,7 @@
 
 struct Load
 {
-	bool operator()(const std::filesystem::path& path, EugeneLib::TextureInfo& info, std::vector<std::vector<std::uint8_t>>& data )
+	bool operator()(const std::filesystem::path& path, Eugene::TextureInfo& info, std::vector<std::vector<std::uint8_t>>& data )
 	{
 		DirectX::TexMetadata meta{};
 		DirectX::ScratchImage img{};
@@ -21,7 +21,7 @@ struct Load
 		info = {
 			meta.width,
 			meta.height,
-			static_cast<EugeneLib::Format>(meta.format),
+			static_cast<Eugene::Format>(meta.format),
 			meta.arraySize,
 			static_cast<std::uint16_t>(meta.mipLevels)
 		};
@@ -34,7 +34,7 @@ struct Load
 
 struct LoadDss
 {
-	bool operator()(const std::filesystem::path& path, EugeneLib::TextureInfo& info, std::vector<std::vector<std::uint8_t>>& data)
+	bool operator()(const std::filesystem::path& path, Eugene::TextureInfo& info, std::vector<std::vector<std::uint8_t>>& data)
 	{
 		DirectX::TexMetadata meta{};
 		DirectX::ScratchImage img{};
@@ -42,7 +42,7 @@ struct LoadDss
 		info = {
 			meta.width,
 			meta.height,
-			static_cast<EugeneLib::Format>(meta.format),
+			static_cast<Eugene::Format>(meta.format),
 			meta.arraySize,
 			static_cast<std::uint16_t>(meta.mipLevels)
 		};
@@ -51,13 +51,13 @@ struct LoadDss
 };
 
 
-std::unordered_map<std::string, std::function<bool(const std::filesystem::path&, EugeneLib::TextureInfo&, std::vector<std::vector<std::uint8_t>>&)>> funcTbl
+std::unordered_map<std::string, std::function<bool(const std::filesystem::path&, Eugene::TextureInfo&, std::vector<std::vector<std::uint8_t>>&)>> funcTbl
 {
 	{".png",Load()},
 	{".jpg",Load()},
 };
 
-EugeneLib::Texture::Texture(const std::filesystem::path& path)
+Eugene::Texture::Texture(const std::filesystem::path& path)
 {
 	auto exe = path.extension();
 
@@ -73,17 +73,17 @@ EugeneLib::Texture::Texture(const std::filesystem::path& path)
 	}
 }
 
-const EugeneLib::TextureInfo& EugeneLib::Texture::GetInfo(void) const&
+const Eugene::TextureInfo& Eugene::Texture::GetInfo(void) const&
 {
 	return info_;
 }
 
-const std::vector<std::uint8_t>& EugeneLib::Texture::GetData(void) const&
+const std::vector<std::uint8_t>& Eugene::Texture::GetData(void) const&
 {
 	return data_[0];
 }
 
-std::uint8_t* EugeneLib::Texture::GetData(void)&
+std::uint8_t* Eugene::Texture::GetData(void)&
 {
 	return data_[0].data();
 }

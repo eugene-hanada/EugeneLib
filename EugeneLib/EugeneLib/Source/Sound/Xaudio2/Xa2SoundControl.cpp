@@ -2,7 +2,7 @@
 #include <xaudio2.h>
 #include "../../../Include/Common/EugeneLibException.h"
 
-EugeneLib::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel)
+Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel)
 {
 
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER)))
@@ -14,17 +14,17 @@ EugeneLib::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sam
 	outChannel_ = outChannel;
 }
 
-EugeneLib::Xa2SoundControl::~Xa2SoundControl()
+Eugene::Xa2SoundControl::~Xa2SoundControl()
 {
 	submix_->DestroyVoice();
 }
 
-void* EugeneLib::Xa2SoundControl::Get(void)
+void* Eugene::Xa2SoundControl::Get(void)
 {
 	return submix_;
 }
 
-void EugeneLib::Xa2SoundControl::SetPan(std::span<float> volumes)
+void Eugene::Xa2SoundControl::SetPan(std::span<float> volumes)
 {
 	if ((inChannel_ * outChannel_) + inChannel_  >= volumes.size())
 	{
@@ -32,7 +32,7 @@ void EugeneLib::Xa2SoundControl::SetPan(std::span<float> volumes)
 	}
 }
 
-void EugeneLib::Xa2SoundControl::SetVolume(float volume)
+void Eugene::Xa2SoundControl::SetVolume(float volume)
 {
 	if (volume * volume != volume_)
 	{

@@ -7,7 +7,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 
 
-EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel, const float maxPitchRate) :
+Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel, const float maxPitchRate) :
 	SoundSpeaker{maxPitchRate}
 {
 	WAVEFORMATEXTENSIBLE formatEx;
@@ -51,13 +51,13 @@ EugeneLib::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave,
 	inChannel_ = formatEx.Format.nChannels;
 }
 
-EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker()
+Eugene::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 {
 	source_->Stop();
 	source_->DestroyVoice();
 }
 
-void EugeneLib::Xa2SoundSpeaker::Play(void) const
+void Eugene::Xa2SoundSpeaker::Play(void) const
 {
 	if (FAILED(source_->FlushSourceBuffers())|| 
 		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
@@ -67,29 +67,29 @@ void EugeneLib::Xa2SoundSpeaker::Play(void) const
 	}
 }
 
-void EugeneLib::Xa2SoundSpeaker::Stop(void) const
+void Eugene::Xa2SoundSpeaker::Stop(void) const
 {
 	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
 
-bool EugeneLib::Xa2SoundSpeaker::IsEnd(void) const
+bool Eugene::Xa2SoundSpeaker::IsEnd(void) const
 {
 	XAUDIO2_VOICE_STATE state;
 	source_->GetState(&state);
 	return state.BuffersQueued <= 0;
 }
 
-void EugeneLib::Xa2SoundSpeaker::SetPitchRate(float rate)
+void Eugene::Xa2SoundSpeaker::SetPitchRate(float rate)
 {
 	source_->SetFrequencyRatio(std::clamp(rate, XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MAX_FREQ_RATIO));
 }
 
-void EugeneLib::Xa2SoundSpeaker::SetVolume(float volume)
+void Eugene::Xa2SoundSpeaker::SetVolume(float volume)
 {
 	source_->SetVolume(volume * volume);
 }
 
-void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
+void Eugene::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
 {
 	if ((inChannel_ * outChannel_) + inChannel_ >= volumes.size())
 	{
@@ -97,7 +97,7 @@ void EugeneLib::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
 	}
 }
 
-void EugeneLib::Xa2SoundSpeaker::SetOutput(SoundControl& control)
+void Eugene::Xa2SoundSpeaker::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
 	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());

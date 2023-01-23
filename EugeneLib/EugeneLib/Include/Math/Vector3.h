@@ -2,7 +2,7 @@
 #include <cmath>
 #include "MathConcepts.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	template<ValueC T>

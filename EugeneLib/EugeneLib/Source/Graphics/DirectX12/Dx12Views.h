@@ -4,7 +4,7 @@
 
 struct ID3D12Device;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Graphics;
 	class Dx12Views

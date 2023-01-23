@@ -1,10 +1,10 @@
 ﻿#include "../../Include/Graphics/GpuEngine.h"
 #include "../../Source/Graphics/DirectX12/Dx12GpuEngine.h"
 
-EugeneLib::GpuEngine::~GpuEngine()
+Eugene::GpuEngine::~GpuEngine()
 {
 }
 
-EugeneLib::GpuEngine::GpuEngine()
+Eugene::GpuEngine::GpuEngine()
 {
 }

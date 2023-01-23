@@ -4,7 +4,7 @@
 
 #include "../../Include/Common/Debug.h"
 
-EugeneLib::Wave::Wave(const std::filesystem::path& path) :
+Eugene::Wave::Wave(const std::filesystem::path& path) :
 	fmt_{}
 {
 	std::ifstream file{ path , std::ios::binary };
@@ -47,7 +47,7 @@ EugeneLib::Wave::Wave(const std::filesystem::path& path) :
 
 }
 
-void EugeneLib::Wave::LoadFmt(std::ifstream& file)
+void Eugene::Wave::LoadFmt(std::ifstream& file)
 {
 	file.read(reinterpret_cast<char*>(&fmt_), sizeof(fmt_));
 	if (fmt_.type == 1u)
@@ -61,7 +61,7 @@ void EugeneLib::Wave::LoadFmt(std::ifstream& file)
 	file.read(reinterpret_cast<char*>(&exData_), sizeof(exData_));
 }
 
-void EugeneLib::Wave::LoadData(std::ifstream& file)
+void Eugene::Wave::LoadData(std::ifstream& file)
 {
 	std::uint32_t size{ 0 };
 	file.read(reinterpret_cast<char*>(&size), sizeof(size));

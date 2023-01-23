@@ -5,7 +5,7 @@
 
 struct D3D12_INDEX_BUFFER_VIEW;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class GpuResource;
 	class Dx12IndexView :

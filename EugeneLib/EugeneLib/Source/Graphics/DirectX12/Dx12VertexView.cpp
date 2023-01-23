@@ -2,7 +2,7 @@
 #include <d3d12.h>
 #include "../../../Include/Graphics/GpuResource.h"
 
-EugeneLib::Dx12VertexView::Dx12VertexView(size_t size, size_t vertexNum, GpuResource& resource)
+Eugene::Dx12VertexView::Dx12VertexView(size_t size, size_t vertexNum, GpuResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	bufferView_ = std::make_unique<D3D12_VERTEX_BUFFER_VIEW>();
@@ -12,11 +12,11 @@ EugeneLib::Dx12VertexView::Dx12VertexView(size_t size, size_t vertexNum, GpuReso
 	
 }
 
-EugeneLib::Dx12VertexView::~Dx12VertexView()
+Eugene::Dx12VertexView::~Dx12VertexView()
 {
 }
 
-void* EugeneLib::Dx12VertexView::GetView(void) const
+void* Eugene::Dx12VertexView::GetView(void) const
 {
 	return bufferView_.get();
 }

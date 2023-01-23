@@ -5,7 +5,7 @@
 struct IXAudio2;
 struct IXAudio2MasteringVoice;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Xa2Sound :
 		public Sound

@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "GraphicsCommon.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Graphics;
 	class GpuResource;

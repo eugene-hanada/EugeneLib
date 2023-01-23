@@ -1,25 +1,25 @@
 #include "../../Include/Sound/SoundBase.h"
 
-EugeneLib::SoundBase::~SoundBase()
+Eugene::SoundBase::~SoundBase()
 {
 }
 
-float EugeneLib::SoundBase::GetVolume(void) const
+float Eugene::SoundBase::GetVolume(void) const
 {
 	return volume_;
 }
 
-std::uint16_t EugeneLib::SoundBase::GetOutChannel(void) const
+std::uint16_t Eugene::SoundBase::GetOutChannel(void) const
 {
 	return outChannel_;
 }
 
-std::uint16_t EugeneLib::SoundBase::GetInChannel(void) const
+std::uint16_t Eugene::SoundBase::GetInChannel(void) const
 {
 	return inChannel_;
 }
 
-EugeneLib::SoundBase::SoundBase() :
+Eugene::SoundBase::SoundBase() :
 	volume_{1.0f}, outChannel_{1u}
 {
 }

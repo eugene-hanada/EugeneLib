@@ -5,7 +5,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/Texture.h"
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,size_t size)
+Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,size_t size)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
@@ -22,7 +22,7 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,s
 	}
 }
 
-EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Texture& texture)
+Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Texture& texture)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// アップロード先のdescをそうていする
@@ -60,14 +60,14 @@ EugeneLib::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, 
 	resource_->Unmap(0, nullptr);
 }
 
-void* EugeneLib::Dx12UploadableResource::Map(void)
+void* Eugene::Dx12UploadableResource::Map(void)
 {
 	void* ptr{ nullptr };
 	resource_->Map(0, nullptr, &ptr);
 	return ptr;
 }
 
-void EugeneLib::Dx12UploadableResource::UnMap(void)
+void Eugene::Dx12UploadableResource::UnMap(void)
 {
 	resource_->Unmap(0, nullptr);
 }

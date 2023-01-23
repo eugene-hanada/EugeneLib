@@ -10,7 +10,7 @@
 
 X3DAUDIO_HANDLE handle;
 
-EugeneLib::Xa2Sound::Xa2Sound()
+Eugene::Xa2Sound::Xa2Sound()
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
@@ -42,17 +42,17 @@ EugeneLib::Xa2Sound::Xa2Sound()
 	}
 }
 
-EugeneLib::Xa2Sound::~Xa2Sound()
+Eugene::Xa2Sound::~Xa2Sound()
 {
 	mastering_->DestroyVoice();
 }
 
-void EugeneLib::Xa2Sound::SetVolume(float volume)
+void Eugene::Xa2Sound::SetVolume(float volume)
 {
 	mastering_->SetVolume(volume * volume);
 }
 
-void EugeneLib::Xa2Sound::SetPan(std::span<float> volumes)
+void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
 {
 	if (outChannel_ == volumes.size())
 	{
@@ -60,17 +60,17 @@ void EugeneLib::Xa2Sound::SetPan(std::span<float> volumes)
 	}
 }
 
-EugeneLib::SoundSpeaker* EugeneLib::Xa2Sound::CreateSoundSpeaker(const Wave& wave, const float maxPitchRate ) const
+Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const Wave& wave, const float maxPitchRate ) const
 {
 	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
 }
 
-EugeneLib::SoundControl* EugeneLib::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
 	return new Xa2SoundControl{xaudio2_.Get(), sample, inputChannel, outChannel};
 }
 
-EugeneLib::Sound3DControl* EugeneLib::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
 	return new Xa2Sound3DControl{ xaudio2_.Get(), handle, outChannel, inputChannel, sample };
 }

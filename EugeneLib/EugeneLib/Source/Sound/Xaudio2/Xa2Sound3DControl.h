@@ -5,7 +5,7 @@
 struct IXAudio2;
 struct IXAudio2SubmixVoice;
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Xa2Sound3DControl :
 		public Sound3DControl

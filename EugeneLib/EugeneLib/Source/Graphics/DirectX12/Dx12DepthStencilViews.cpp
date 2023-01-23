@@ -1,12 +1,12 @@
 #include "Dx12DepthStencilViews.h"
 #include "../../../Include/Graphics/GpuResource.h"
 
-EugeneLib::Dx12DepthStencilViews::Dx12DepthStencilViews(ID3D12Device* device, size_t size) :
+Eugene::Dx12DepthStencilViews::Dx12DepthStencilViews(ID3D12Device* device, size_t size) :
 	Dx12Views{device, size, false, D3D12_DESCRIPTOR_HEAP_TYPE_DSV }, DepthStencilViews{size}
 {
 }
 
-void EugeneLib::Dx12DepthStencilViews::Create(GpuResource& resource, size_t idx)
+void Eugene::Dx12DepthStencilViews::Create(GpuResource& resource, size_t idx)
 {
 	if (size_ <= idx)
 	{
@@ -28,7 +28,7 @@ void EugeneLib::Dx12DepthStencilViews::Create(GpuResource& resource, size_t idx)
 	device->CreateDepthStencilView(dx12Resource, &viewDesc, handle);
 }
 
-void* EugeneLib::Dx12DepthStencilViews::GetViews(void) const
+void* Eugene::Dx12DepthStencilViews::GetViews(void) const
 {
 	return descriptorHeap_.Get();
 }

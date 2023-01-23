@@ -6,10 +6,10 @@
 #include "../Math/Vector3.h"
 #ifdef _DEBUG
 
-#define DebugLog(...) (EugeneLib::Debug::GetInstance().Log(__VA_ARGS__))
+#define DebugLog(...) (Eugene::Debug::GetInstance().LogOut(__VA_ARGS__))
 
 
-namespace EugeneLib
+namespace Eugene
 {
 	template<class T>
 	concept DebugStr = std::same_as<T, std::u8string>;

@@ -2,7 +2,7 @@
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12Views.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class Dx12DepthStencilViews :
 		public Dx12Views, public DepthStencilViews

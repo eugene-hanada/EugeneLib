@@ -3,7 +3,7 @@
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class System;
 	class GpuEngine;

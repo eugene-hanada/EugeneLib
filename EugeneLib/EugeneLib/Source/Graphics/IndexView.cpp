@@ -1,10 +1,10 @@
 #include "../../Include/Graphics/IndexView.h"
 
-EugeneLib::IndexView::~IndexView()
+Eugene::IndexView::~IndexView()
 {
 }
 
 
-EugeneLib::IndexView::IndexView()
+Eugene::IndexView::IndexView()
 {
 }

@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <span>
 
-namespace EugeneLib
+namespace Eugene
 {
 	class SoundBase
 	{

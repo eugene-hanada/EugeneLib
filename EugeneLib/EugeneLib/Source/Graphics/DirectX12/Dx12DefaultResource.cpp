@@ -5,7 +5,7 @@
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
-EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t size)
+Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t size)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
@@ -22,7 +22,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t
 	}
 }
 
-EugeneLib::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
+Eugene::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
 {
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -34,7 +34,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, 
 
 }
 
-EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const Vector2& size, Format format, const std::span<float, 4>& clearColor)
+Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const Vector2& size, Format format, const std::span<float, 4>& clearColor)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
@@ -55,7 +55,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const 
 	}
 }
 
-EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const TextureInfo& formatData)
+Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const TextureInfo& formatData)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -76,7 +76,7 @@ EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const 
 	}
 }
 
-EugeneLib::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, float clearValue)
+Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, float clearValue)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));

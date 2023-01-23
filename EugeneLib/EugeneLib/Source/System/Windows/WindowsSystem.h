@@ -3,7 +3,7 @@
 #include "../../../Include/System/System.h"
 
 
-namespace EugeneLib
+namespace Eugene
 {
 	class WindowsSystem :
 		public System

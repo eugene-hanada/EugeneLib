@@ -4,7 +4,7 @@
 #include "SoundCommon.h"
 
 
-namespace EugeneLib
+namespace Eugene
 {
 	// WaveƒNƒ‰ƒX
 	class Wave

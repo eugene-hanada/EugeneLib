@@ -5,50 +5,50 @@
 #include <Common/Debug.h>
 
 // システム系(Windows関連の処理のクラス)
-std::unique_ptr<EugeneLib::System> libSys;
+std::unique_ptr<Eugene::System> libSys;
 
 // グラフィックスのクラス(デバイスとかの処理をする)
-std::unique_ptr <EugeneLib::Graphics> graphics;
+std::unique_ptr <Eugene::Graphics> graphics;
 
 // コマンドリストを実行するクラス
-std::unique_ptr < EugeneLib::GpuEngine> gpuEngien;
+std::unique_ptr < Eugene::GpuEngine> gpuEngien;
 
 // コマンドリスト
-std::unique_ptr<EugeneLib::CommandList> cmdList;
+std::unique_ptr<Eugene::CommandList> cmdList;
 
 // グラフィックパイプライン(処理の流れ)
-std::unique_ptr<EugeneLib::GraphicsPipeline> gpipeLine;
+std::unique_ptr<Eugene::GraphicsPipeline> gpipeLine;
 
 // 頂点データ
-std::unique_ptr <EugeneLib::GpuResource> upVertexBuffer;
-std::unique_ptr <EugeneLib::GpuResource> vertexBuffer;
-std::unique_ptr<EugeneLib::VertexView> vertexView;
+std::unique_ptr <Eugene::GpuResource> upVertexBuffer;
+std::unique_ptr <Eugene::GpuResource> vertexBuffer;
+std::unique_ptr<Eugene::VertexView> vertexView;
 
 // テクスチャデータ
-std::unique_ptr <EugeneLib::GpuResource> upTextureBuffer;
-std::unique_ptr <EugeneLib::GpuResource> textureBuffer;
-std::unique_ptr < EugeneLib::ShaderResourceViews> textureView_;
+std::unique_ptr <Eugene::GpuResource> upTextureBuffer;
+std::unique_ptr <Eugene::GpuResource> textureBuffer;
+std::unique_ptr < Eugene::ShaderResourceViews> textureView_;
 
 // 行列データ
-std::unique_ptr <EugeneLib::GpuResource> upMatrixBuffer;
-std::unique_ptr <EugeneLib::GpuResource> matrixBuffer;
-std::unique_ptr < EugeneLib::ShaderResourceViews> matrixView_;
+std::unique_ptr <Eugene::GpuResource> upMatrixBuffer;
+std::unique_ptr <Eugene::GpuResource> matrixBuffer;
+std::unique_ptr < Eugene::ShaderResourceViews> matrixView_;
 
 // サウンド系
-std::unique_ptr<EugeneLib::Wave> wave;
-std::unique_ptr<EugeneLib::Sound> sound;
-std::unique_ptr < EugeneLib::SoundControl> soundCtrl;
-std::unique_ptr<EugeneLib::Sound3DControl> sound3DCtrl;
-std::unique_ptr<EugeneLib::SoundSpeaker> soundSpeaker;
+std::unique_ptr<Eugene::Wave> wave;
+std::unique_ptr<Eugene::Sound> sound;
+std::unique_ptr < Eugene::SoundControl> soundCtrl;
+std::unique_ptr<Eugene::Sound3DControl> sound3DCtrl;
+std::unique_ptr<Eugene::SoundSpeaker> soundSpeaker;
 
 void Init(void)
 {
 	// Windowsとかの機能をまとめたクラスを作成
-	libSys.reset(EugeneLib::CreateSystem({ 1280.0f, 720.0f }, u8"sample"));
+	libSys.reset(Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"sample"));
 
 	{
 		// グラフィックの機能のクラスを作成しコマンドリストを実行するクラスをセット
-		EugeneLib::GpuEngine* tmp;
+		Eugene::GpuEngine* tmp;
 		graphics.reset(libSys->CreateGraphics(tmp,3));
 		gpuEngien.reset(tmp);
 	}
@@ -60,41 +60,41 @@ void Init(void)
 void InitGraphicsPipeline(void)
 {
 	// 頂点シェーダの入力のレイアウト
-	std::vector<EugeneLib::ShaderInputLayout> layout
+	std::vector<Eugene::ShaderInputLayout> layout
 	{
-		{"POSITION", 0, EugeneLib::Format::R32G32_FLOAT},
-		{"TEXCOORD", 0, EugeneLib::Format::R32G32_FLOAT}
+		{"POSITION", 0, Eugene::Format::R32G32_FLOAT},
+		{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT}
 	};
 
 	// シェーダー
-	std::vector<std::pair<EugeneLib::Shader, EugeneLib::ShaderType>> shaders
+	std::vector<std::pair<Eugene::Shader, Eugene::ShaderType>> shaders
 	{
-		{EugeneLib::Shader{"VertexShader.vso"}, EugeneLib::ShaderType::Vertex},
-		{EugeneLib::Shader{"PixelShader.pso"}, EugeneLib::ShaderType::Pixel}
+		{Eugene::Shader{"VertexShader.vso"}, Eugene::ShaderType::Vertex},
+		{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel}
 	};
 
 	// レンダーターゲット
-	std::vector<EugeneLib::RendertargetLayout> rendertargets
+	std::vector<Eugene::RendertargetLayout> rendertargets
 	{
-		{EugeneLib::Format::R8G8B8A8_UNORM, EugeneLib::BlendType::Non}
+		{Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non}
 	};
 
-	std::vector<std::vector<EugeneLib::ShaderLayout>> shaderLayout
+	std::vector<std::vector<Eugene::ShaderLayout>> shaderLayout
 	{
-		{EugeneLib::ShaderLayout{EugeneLib::ViewType::ConstantBuffer, 1,0}},
-		{EugeneLib::ShaderLayout{EugeneLib::ViewType::Texture, 1,0}}
+		{Eugene::ShaderLayout{Eugene::ViewType::ConstantBuffer, 1,0}},
+		{Eugene::ShaderLayout{Eugene::ViewType::Texture, 1,0}}
 	};
 
-	std::vector< EugeneLib::SamplerLayout> sampler
+	std::vector< Eugene::SamplerLayout> sampler
 	{
-		EugeneLib::SamplerLayout{}
+		Eugene::SamplerLayout{}
 	};
 
 	gpipeLine.reset(graphics->CreateGraphicsPipeline(
 		layout,
 		shaders,
 		rendertargets,
-		EugeneLib::TopologyType::Triangle,
+		Eugene::TopologyType::Triangle,
 		false,
 		shaderLayout,
 		sampler
@@ -104,8 +104,8 @@ void InitGraphicsPipeline(void)
 
 struct Vertex
 {
-	EugeneLib::Vector2 pos;
-	EugeneLib::Vector2 uv;
+	Eugene::Vector2 pos;
+	Eugene::Vector2 uv;
 };
 
 
@@ -136,7 +136,7 @@ void InitVertex(void)
 
 void InitTexture(void)
 {
-	EugeneLib::Texture tex("./Logo.png");
+	Eugene::Texture tex("./Logo.png");
 	upTextureBuffer.reset(graphics->CreateUploadableTextureResource(tex));
 	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
 	textureView_.reset(graphics->CreateShaderResourceViews(1));
@@ -145,10 +145,10 @@ void InitTexture(void)
 
 void InitConstantBuffer(void)
 {
-	EugeneLib::Matrix4x4 matrix;
-	EugeneLib::Get2DMatrix(matrix, { 1280.0f, 720.0f });
+	Eugene::Matrix4x4 matrix;
+	Eugene::Get2DMatrix(matrix, { 1280.0f, 720.0f });
 	upMatrixBuffer.reset(graphics->CreateUploadableResource(256));
-	*static_cast<EugeneLib::Matrix4x4*>(upMatrixBuffer->Map()) = matrix;
+	*static_cast<Eugene::Matrix4x4*>(upMatrixBuffer->Map()) = matrix;
 	upMatrixBuffer->UnMap();
 
 	matrixBuffer.reset(graphics->CreateDefaultResource(256));
@@ -159,9 +159,9 @@ void InitConstantBuffer(void)
 
 void InitSound(void)
 {
-	sound.reset(EugeneLib::CreateSound());
-	//wave = std::make_unique<EugeneLib::Wave>(L"./MusicSurround.wav");
-	wave = std::make_unique<EugeneLib::Wave>(L"./exp.wav");
+	sound.reset(Eugene::CreateSound());
+	//wave = std::make_unique<Eugene::Wave>(L"./MusicSurround.wav");
+	wave = std::make_unique<Eugene::Wave>(L"./exp.wav");
 	soundSpeaker.reset(sound->CreateSoundSpeaker(*wave));
 	soundCtrl.reset(sound->CreateSoundControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
 	sound3DCtrl.reset(sound->CreateSound3DControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
@@ -171,7 +171,7 @@ void InitSound(void)
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	auto c = u8"test";
-	EugeneLib::Debug::GetInstance().LogOut(u8"test", 1);
+	Eugene::Debug::GetInstance().LogOut(u8"test", 1);
 	Init();
 	InitGraphicsPipeline();
 	InitVertex();
@@ -191,18 +191,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	soundSpeaker->SetOutput(*sound3DCtrl);
 	sound3DCtrl->Update3DSound(
-		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, EugeneLib::zeroVector3<float>, EugeneLib::zeroVector3<float>,
-		EugeneLib::forwardVector3<float>, EugeneLib::upVector3<float>, {0.5f,-0.5f, 1.0f}, EugeneLib::zeroVector3<float>
+		Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
+		Eugene::forwardVector3<float>, Eugene::upVector3<float>, {0.5f,-0.5f, 1.0f}, Eugene::zeroVector3<float>
 	);
 	soundSpeaker->Play();
 	
 
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
-	EugeneLib::GamePad pad;
+	Eugene::GamePad pad;
 	while (libSys->Update())
 	{
-		EugeneLib::System::Mouse mouse;
+		Eugene::System::Mouse mouse;
 		libSys->GetMouse(mouse);
 		//DebugLog(mouse.pos);
 		if (soundSpeaker->IsEnd())
@@ -230,7 +230,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->SetViewPort({ 0.0f,0.0f }, { 1280.0f, 720.0f });
 
-		cmdList->SetPrimitiveType(EugeneLib::PrimitiveType::TriangleStrip);
+		cmdList->SetPrimitiveType(Eugene::PrimitiveType::TriangleStrip);
 
 		cmdList->SetVertexView(*vertexView);
 
@@ -255,11 +255,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		graphics->Present();
 
 		auto r = libSys->GetGamePad(pad, 0);
-		if (libSys->IsHitKey(EugeneLib::KeyID::SPACE))
+		if (libSys->IsHitKey(Eugene::KeyID::SPACE))
 		{
 			break;
 		}
-		if (pad.IsHit(EugeneLib::PadID::A))
+		if (pad.IsHit(Eugene::PadID::A))
 		{
 			break;
 		}

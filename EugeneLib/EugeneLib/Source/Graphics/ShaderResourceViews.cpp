@@ -1,15 +1,15 @@
 #include "../../Include/Graphics/ShaderResourceViews.h"
 
-EugeneLib::ShaderResourceViews::~ShaderResourceViews()
+Eugene::ShaderResourceViews::~ShaderResourceViews()
 {
 }
 
-const size_t EugeneLib::ShaderResourceViews::GetSize(void)
+const size_t Eugene::ShaderResourceViews::GetSize(void)
 {
 	return  size_;
 }
 
-EugeneLib::ShaderResourceViews::ShaderResourceViews(size_t size) :
+Eugene::ShaderResourceViews::ShaderResourceViews(size_t size) :
 	size_{size}
 {
 }

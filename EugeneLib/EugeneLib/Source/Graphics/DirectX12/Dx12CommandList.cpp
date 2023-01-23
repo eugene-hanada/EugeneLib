@@ -12,7 +12,7 @@
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
 
-EugeneLib::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
+Eugene::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 {
 	if (FAILED(device->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
@@ -30,59 +30,59 @@ EugeneLib::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 	End();
 }
 
-void* EugeneLib::Dx12CommandList::GetCommandList(void) const
+void* Eugene::Dx12CommandList::GetCommandList(void) const
 {
 	return cmdList_.Get();
 }
 
-void EugeneLib::Dx12CommandList::Begin(void)
+void Eugene::Dx12CommandList::Begin(void)
 {
 	cmdAllocator_->Reset();
 	cmdList_->Reset(cmdAllocator_.Get(), nullptr);
 }
 
-void EugeneLib::Dx12CommandList::End(void)
+void Eugene::Dx12CommandList::End(void)
 {
 	cmdList_->Close();
 }
 
-void EugeneLib::Dx12CommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
+void Eugene::Dx12CommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
 {
 	auto pipeline{ static_cast<Dx12GraphicsPipeline::PipeLine*>(gpipeline.GetPipeline()) };
 	cmdList_->SetPipelineState(pipeline->state_.Get());
 	cmdList_->SetGraphicsRootSignature(pipeline->rootSignature_.Get());
 }
 
-void EugeneLib::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
+void Eugene::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
 {
 	cmdList_->IASetPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(type));
 }
 
-void EugeneLib::Dx12CommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
+void Eugene::Dx12CommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
 {
 	CD3DX12_RECT rect{ leftTop.x,leftTop.y, rightBottom.x,rightBottom.y };
 	cmdList_->RSSetScissorRects(1,&rect);
 }
 
-void EugeneLib::Dx12CommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
+void Eugene::Dx12CommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
 {
 	CD3DX12_VIEWPORT viewport{ leftTop.x, leftTop.y, size.x,size.y,depthMin,depthMax };
 	cmdList_->RSSetViewports(1, &viewport);
 }
 
-void EugeneLib::Dx12CommandList::SetVertexView(VertexView& view)
+void Eugene::Dx12CommandList::SetVertexView(VertexView& view)
 {
 	auto ptr = static_cast<D3D12_VERTEX_BUFFER_VIEW*>(view.GetView());
 	cmdList_->IASetVertexBuffers(0, 1, ptr);
 }
 
-void EugeneLib::Dx12CommandList::SetIndexView(IndexView& view)
+void Eugene::Dx12CommandList::SetIndexView(IndexView& view)
 {
 	auto ptr = static_cast<D3D12_INDEX_BUFFER_VIEW*>(view.GetView());
 	cmdList_->IASetIndexBuffer(ptr);
 }
 
-void EugeneLib::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx)
+void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	ID3D12Device* device{ nullptr };
@@ -96,17 +96,17 @@ void EugeneLib::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& view
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }
 
-void EugeneLib::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
+void Eugene::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
 {
 	cmdList_->DrawInstanced(vertexCount, instanceCount, 0, 0);
 }
 
-void EugeneLib::Dx12CommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
+void Eugene::Dx12CommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
 {
 	cmdList_->DrawIndexedInstanced(indexCount, instanceNum, offset, 0, 0);
 }
 
-void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_t idx)
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -119,7 +119,7 @@ void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_
 	cmdList_->OMSetRenderTargets(1, &handle, false, nullptr);
 }
 
-void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -143,7 +143,7 @@ void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(count), handles.data(), false, nullptr);
 }
 
-void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx, size_t dsViewsIdx)
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx, size_t dsViewsIdx)
 {
 	auto rtDHeap{ static_cast<ID3D12DescriptorHeap*>(renderTargetViews.GetViews()) };
 	auto dsDHeap{ static_cast<ID3D12DescriptorHeap*>(depthViews.GetViews()) };
@@ -162,7 +162,7 @@ void EugeneLib::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTarget
 	cmdList_->OMSetRenderTargets(1, &rtHandle, false, &dsHandle);
 }
 
-void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, size_t idx)
+void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, size_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -175,7 +175,7 @@ void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std
 	cmdList_->ClearRenderTargetView(handle, color.data(), 0, nullptr);
 }
 
-void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color)
+void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -194,21 +194,21 @@ void EugeneLib::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std
 	
 }
 
-void EugeneLib::Dx12CommandList::TransitionRenderTargetBegin(GpuResource& resource)
+void Eugene::Dx12CommandList::TransitionRenderTargetBegin(GpuResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
-void EugeneLib::Dx12CommandList::TransitionRenderTargetEnd(GpuResource& resource)
+void Eugene::Dx12CommandList::TransitionRenderTargetEnd(GpuResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_COMMON);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
-void EugeneLib::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, size_t idx)
+void Eugene::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, size_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -221,14 +221,14 @@ void EugeneLib::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clea
 	cmdList_->ClearDepthStencilView(handle, D3D12_CLEAR_FLAG_DEPTH, clearValue, 0, 0, nullptr);
 }
 
-void EugeneLib::Dx12CommandList::Copy(GpuResource& destination, GpuResource& source)
+void Eugene::Dx12CommandList::Copy(GpuResource& destination, GpuResource& source)
 {
 	ID3D12Resource* src{ static_cast<ID3D12Resource*>(source.GetResource()) };
 	ID3D12Resource* dst{ static_cast<ID3D12Resource*>(destination.GetResource()) };
 	cmdList_->CopyResource(dst, src);
 }
 
-void EugeneLib::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource& source)
+void Eugene::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource& source)
 {
 	auto dx12source{ static_cast<ID3D12Resource*>(source.GetResource()) };
 	auto dx12destination{ static_cast<ID3D12Resource*>(destination.GetResource()) };

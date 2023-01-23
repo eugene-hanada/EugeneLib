@@ -1,7 +1,7 @@
 #pragma once
 #include "SoundBase.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 	class SoundSpeaker;
 	class SoundControl;

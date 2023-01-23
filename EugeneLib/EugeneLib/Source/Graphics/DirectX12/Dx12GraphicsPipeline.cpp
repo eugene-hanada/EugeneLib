@@ -5,7 +5,7 @@
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
-EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
+Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	ID3D12Device* device,
 	ShaderInputSpan layout,
 	ShaderTypePaisrSpan shaders,
@@ -202,7 +202,7 @@ EugeneLib::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	}
 }
 
-void* EugeneLib::Dx12GraphicsPipeline::GetPipeline(void)
+void* Eugene::Dx12GraphicsPipeline::GetPipeline(void)
 {
 	return (&pipeline_);
 }

@@ -2,7 +2,7 @@
 #include "Dx12Views.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
-namespace EugeneLib
+namespace Eugene
 {
 
 	class Dx12RenderTargetViews :

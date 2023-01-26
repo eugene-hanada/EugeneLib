@@ -3,6 +3,7 @@
 #include <string>
 #include <filesystem>
 #include <format>
+#include <semaphore>
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 #ifdef _DEBUG
@@ -105,8 +106,7 @@ namespace Eugene
 		~Debug();
 		Debug(const Debug&) = delete;
 		void operator=(const Debug&) = delete;
-
-
+		std::binary_semaphore binarySemphore_;
 	};
 
 

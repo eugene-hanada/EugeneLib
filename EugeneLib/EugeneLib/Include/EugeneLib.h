@@ -1,29 +1,25 @@
 #pragma once
-#include <Windows.h>
-#include <string>
-#include "Vector2.h"
 
-namespace EugeneLib
-{
-	
-	class System
-	{
-	public:
-		static bool Init(const Vector2& wsize,const std::u8string& title);
-		static bool End();
+// システム系
+#include "System/System.h"
 
-		static System* Ptr(void)
-		{
-			return instance_;
-		}
-		bool Update(void);
-	private:
-		System(const Vector2& wsize, const std::u8string& title);
+// グラフィック系
+#include "Graphics/Graphics.h"
+#include "Graphics/GpuEngine.h"
+#include "Graphics/CommandList.h"
+#include "Graphics/GpuResource.h"
+#include "Graphics/Shader.h"
+#include "Graphics/GraphicsPipeline.h"
+#include "Graphics/RenderTargetViews.h"
+#include "Graphics/VertexView.h"
+#include "Graphics/ShaderResourceViews.h"
+#include "Graphics/DepthStencilViews.h"
+#include "Graphics/Texture.h"
 
-		System(const System&) = delete;
-		System& operator=(const System&) = delete;
+// サウンド系
+#include "Sound/Sound.h"
+#include "Sound/SoundSpeaker.h"
+#include "Sound/Wave.h"
+#include "Sound/SoundControl.h"
+#include "Sound/Sound3DControl.h"
 
-		static System* instance_;
-		Vector2 v;
-	};
-}

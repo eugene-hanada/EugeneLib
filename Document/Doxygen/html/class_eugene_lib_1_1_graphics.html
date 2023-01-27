@@ -1,0 +1,933 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: EugeneLib::Graphics クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_eugene_lib.html">EugeneLib</a></li><li class="navelem"><a class="el" href="class_eugene_lib_1_1_graphics.html">Graphics</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pro-methods">限定公開メンバ関数</a> &#124;
+<a href="class_eugene_lib_1_1_graphics-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">EugeneLib::Graphics クラス<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>グラフィックスの処理を行うクラス   
+ <a href="class_eugene_lib_1_1_graphics.html#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_graphics_8h_source.html">Graphics.h</a>&gt;</code></p>
+<div class="dynheader">
+EugeneLib::Graphics の継承関係図</div>
+<div class="dyncontent">
+<div class="center"><img src="class_eugene_lib_1_1_graphics__inherit__graph.png" border="0" usemap="#a_eugene_lib_1_1_graphics_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_eugene_lib_1_1_graphics_inherit__map" id="a_eugene_lib_1_1_graphics_inherit__map">
+<area shape="rect" title="グラフィックスの処理を行うクラス" alt="" coords="21,5,163,31"/>
+<area shape="rect" href="class_eugene_lib_1_1_dx12_graphics.html" title=" " alt="" coords="5,79,179,104"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:a2feceb8ff9f4e4c0371f187b5323dbb9"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a2feceb8ff9f4e4c0371f187b5323dbb9">~Graphics</a> ()</td></tr>
+<tr class="separator:a2feceb8ff9f4e4c0371f187b5323dbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1af4d9939258be746f6393ee163f8064"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a1af4d9939258be746f6393ee163f8064">CreateGpuEngine</a> (size_t maxSize) const =0</td></tr>
+<tr class="memdesc:a1af4d9939258be746f6393ee163f8064"><td class="mdescLeft">&#160;</td><td class="mdescRight">GpuEngineの生成   <a href="class_eugene_lib_1_1_graphics.html#a1af4d9939258be746f6393ee163f8064">[詳解]</a><br /></td></tr>
+<tr class="separator:a1af4d9939258be746f6393ee163f8064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f605f451fdfdf568465ea7c2dc1d1cc"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_command_list.html">CommandList</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a5f605f451fdfdf568465ea7c2dc1d1cc">CreateCommandList</a> (void) const =0</td></tr>
+<tr class="memdesc:a5f605f451fdfdf568465ea7c2dc1d1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">CommandListの生成   <a href="class_eugene_lib_1_1_graphics.html#a5f605f451fdfdf568465ea7c2dc1d1cc">[詳解]</a><br /></td></tr>
+<tr class="separator:a5f605f451fdfdf568465ea7c2dc1d1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa46bc9e04dfb51272b416ca70d593765"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_graphics_pipeline.html">GraphicsPipeline</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#aa46bc9e04dfb51272b416ca70d593765">CreateGraphicsPipeline</a> (<a class="el" href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">ShaderInputSpan</a> layout, <a class="el" href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">ShaderTypePaisrSpan</a> shaders, <a class="el" href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">RenderTargetSpan</a> rendertarges, <a class="el" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">TopologyType</a> topologyType=<a class="el" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b">TopologyType::Triangle</a>, bool isCulling=false, <a class="el" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a> shaderLayout=<a class="el" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a>{}, <a class="el" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a> samplerLayout=<a class="el" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a>{}) const =0</td></tr>
+<tr class="memdesc:aa46bc9e04dfb51272b416ca70d593765"><td class="mdescLeft">&#160;</td><td class="mdescRight">GraphicsPipelineの生成   <a href="class_eugene_lib_1_1_graphics.html#aa46bc9e04dfb51272b416ca70d593765">[詳解]</a><br /></td></tr>
+<tr class="separator:aa46bc9e04dfb51272b416ca70d593765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21706a654c1fed52d9756d34f92395a1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a21706a654c1fed52d9756d34f92395a1">CreateUploadableResource</a> (size_t size) const =0</td></tr>
+<tr class="memdesc:a21706a654c1fed52d9756d34f92395a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">アップロード用のGpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#a21706a654c1fed52d9756d34f92395a1">[詳解]</a><br /></td></tr>
+<tr class="separator:a21706a654c1fed52d9756d34f92395a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c14b18124f3b6338264aa399de1f364"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a1c14b18124f3b6338264aa399de1f364">CreateUploadableTextureResource</a> (<a class="el" href="class_eugene_lib_1_1_texture.html">Texture</a> &amp;texture) const =0</td></tr>
+<tr class="memdesc:a1c14b18124f3b6338264aa399de1f364"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャのアップロード用GpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#a1c14b18124f3b6338264aa399de1f364">[詳解]</a><br /></td></tr>
+<tr class="separator:a1c14b18124f3b6338264aa399de1f364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df80c372163ae57a57e7ca048ff5f4d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a3df80c372163ae57a57e7ca048ff5f4d">CreateDefaultResource</a> (size_t size) const =0</td></tr>
+<tr class="memdesc:a3df80c372163ae57a57e7ca048ff5f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">GpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#a3df80c372163ae57a57e7ca048ff5f4d">[詳解]</a><br /></td></tr>
+<tr class="separator:a3df80c372163ae57a57e7ca048ff5f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2863e7472fd1887db3c0361e437ad7a3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a2863e7472fd1887db3c0361e437ad7a3">CreateTextureResource</a> (const <a class="el" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a> &amp;formatData) const =0</td></tr>
+<tr class="memdesc:a2863e7472fd1887db3c0361e437ad7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">テクスチャ用GpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#a2863e7472fd1887db3c0361e437ad7a3">[詳解]</a><br /></td></tr>
+<tr class="separator:a2863e7472fd1887db3c0361e437ad7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b4e7c7d6bdeba99812da2a634bcd551"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a9b4e7c7d6bdeba99812da2a634bcd551">CreateRenderTargetResource</a> (const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;size, <a class="el" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a> format, const std::span&lt; float, 4 &gt; &amp;clearColor) const =0</td></tr>
+<tr class="memdesc:a9b4e7c7d6bdeba99812da2a634bcd551"><td class="mdescLeft">&#160;</td><td class="mdescRight">レンダーターゲット用GpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#a9b4e7c7d6bdeba99812da2a634bcd551">[詳解]</a><br /></td></tr>
+<tr class="separator:a9b4e7c7d6bdeba99812da2a634bcd551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8d39c5fc954488ded25187165d0eb97"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#ae8d39c5fc954488ded25187165d0eb97">CreateDepthResource</a> (const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;size, <a class="el" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a> format, float clearValue=1.0f) const =0</td></tr>
+<tr class="memdesc:ae8d39c5fc954488ded25187165d0eb97"><td class="mdescLeft">&#160;</td><td class="mdescRight">深度バッファ用GpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#ae8d39c5fc954488ded25187165d0eb97">[詳解]</a><br /></td></tr>
+<tr class="separator:ae8d39c5fc954488ded25187165d0eb97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fa3a751a04e3b9aa3e521e036b12f8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_shader_resource_views.html">ShaderResourceViews</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a44fa3a751a04e3b9aa3e521e036b12f8">CreateShaderResourceViews</a> (size_t size) const =0</td></tr>
+<tr class="memdesc:a44fa3a751a04e3b9aa3e521e036b12f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">ShaderResourceViewsの生成   <a href="class_eugene_lib_1_1_graphics.html#a44fa3a751a04e3b9aa3e521e036b12f8">[詳解]</a><br /></td></tr>
+<tr class="separator:a44fa3a751a04e3b9aa3e521e036b12f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13248c58e17ccff663787dd3249a0d9f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a13248c58e17ccff663787dd3249a0d9f">CreateRenderTargetViews</a> (size_t size, bool isShaderVisible) const =0</td></tr>
+<tr class="memdesc:a13248c58e17ccff663787dd3249a0d9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">RenderTargetViewsの生成   <a href="class_eugene_lib_1_1_graphics.html#a13248c58e17ccff663787dd3249a0d9f">[詳解]</a><br /></td></tr>
+<tr class="separator:a13248c58e17ccff663787dd3249a0d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f026064cda30161761d430b4eea6ab3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_depth_stencil_views.html">DepthStencilViews</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a3f026064cda30161761d430b4eea6ab3">CreateDepthStencilViews</a> (size_t size) const =0</td></tr>
+<tr class="memdesc:a3f026064cda30161761d430b4eea6ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">DepthStencilViewsの生成   <a href="class_eugene_lib_1_1_graphics.html#a3f026064cda30161761d430b4eea6ab3">[詳解]</a><br /></td></tr>
+<tr class="separator:a3f026064cda30161761d430b4eea6ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae12b8df463c38e967a5762306ed526"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_vertex_view.html">VertexView</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#aaae12b8df463c38e967a5762306ed526">CreateVertexView</a> (size_t size, size_t vertexNum, <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> &amp;resource) const =0</td></tr>
+<tr class="memdesc:aaae12b8df463c38e967a5762306ed526"><td class="mdescLeft">&#160;</td><td class="mdescRight">VertexViewの生成   <a href="class_eugene_lib_1_1_graphics.html#aaae12b8df463c38e967a5762306ed526">[詳解]</a><br /></td></tr>
+<tr class="separator:aaae12b8df463c38e967a5762306ed526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac46e7c0f294c66e8cefce51c03c2185e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#ac46e7c0f294c66e8cefce51c03c2185e">GetBackBufferResource</a> (void)=0</td></tr>
+<tr class="memdesc:ac46e7c0f294c66e8cefce51c03c2185e"><td class="mdescLeft">&#160;</td><td class="mdescRight">バックバッファのレンダーターゲットのGpuResourceを取得する   <a href="class_eugene_lib_1_1_graphics.html#ac46e7c0f294c66e8cefce51c03c2185e">[詳解]</a><br /></td></tr>
+<tr class="separator:ac46e7c0f294c66e8cefce51c03c2185e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806350e24b135fe5b47ea63ed16ca23d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a806350e24b135fe5b47ea63ed16ca23d">GetViews</a> (void)=0</td></tr>
+<tr class="memdesc:a806350e24b135fe5b47ea63ed16ca23d"><td class="mdescLeft">&#160;</td><td class="mdescRight">バックバッファで使用するRenderTargetViewsの取得する   <a href="class_eugene_lib_1_1_graphics.html#a806350e24b135fe5b47ea63ed16ca23d">[詳解]</a><br /></td></tr>
+<tr class="separator:a806350e24b135fe5b47ea63ed16ca23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5353c604cc700151c7ac8f7f08f138"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#aba5353c604cc700151c7ac8f7f08f138">GetNowBackBufferIndex</a> (void)=0</td></tr>
+<tr class="memdesc:aba5353c604cc700151c7ac8f7f08f138"><td class="mdescLeft">&#160;</td><td class="mdescRight">現在のバックバッファのインデックスを取得する   <a href="class_eugene_lib_1_1_graphics.html#aba5353c604cc700151c7ac8f7f08f138">[詳解]</a><br /></td></tr>
+<tr class="separator:aba5353c604cc700151c7ac8f7f08f138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dbe17194af43656acd5563278d210dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a9dbe17194af43656acd5563278d210dd">Present</a> (void)=0</td></tr>
+<tr class="separator:a9dbe17194af43656acd5563278d210dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a1dbef4d783615bd4cd86c3bbbf374c4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#a1dbef4d783615bd4cd86c3bbbf374c4e">Graphics</a> ()</td></tr>
+<tr class="separator:a1dbef4d783615bd4cd86c3bbbf374c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb81b3c5906912e9810e4da71c9484af"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_lib_1_1_graphics.html#acb81b3c5906912e9810e4da71c9484af">CreateSwapChainResource</a> (std::uint32_t idx) const =0</td></tr>
+<tr class="memdesc:acb81b3c5906912e9810e4da71c9484af"><td class="mdescLeft">&#160;</td><td class="mdescRight">スワップチェイン用のGpuResourceの生成   <a href="class_eugene_lib_1_1_graphics.html#acb81b3c5906912e9810e4da71c9484af">[詳解]</a><br /></td></tr>
+<tr class="separator:acb81b3c5906912e9810e4da71c9484af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >グラフィックスの処理を行うクラス  </p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a2feceb8ff9f4e4c0371f187b5323dbb9" name="a2feceb8ff9f4e4c0371f187b5323dbb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2feceb8ff9f4e4c0371f187b5323dbb9">&#9670;&#160;</a></span>~Graphics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">EugeneLib::Graphics::~Graphics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1dbef4d783615bd4cd86c3bbbf374c4e" name="a1dbef4d783615bd4cd86c3bbbf374c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dbef4d783615bd4cd86c3bbbf374c4e">&#9670;&#160;</a></span>Graphics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">EugeneLib::Graphics::Graphics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="a5f605f451fdfdf568465ea7c2dc1d1cc" name="a5f605f451fdfdf568465ea7c2dc1d1cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f605f451fdfdf568465ea7c2dc1d1cc">&#9670;&#160;</a></span>CreateCommandList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_command_list.html">CommandList</a> * EugeneLib::Graphics::CreateCommandList </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CommandListの生成  </p>
+<dl class="section return"><dt>戻り値</dt><dd>CommandListのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a3df80c372163ae57a57e7ca048ff5f4d" name="a3df80c372163ae57a57e7ca048ff5f4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df80c372163ae57a57e7ca048ff5f4d">&#9670;&#160;</a></span>CreateDefaultResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateDefaultResource </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>GpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>リソースのサイズ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="ae8d39c5fc954488ded25187165d0eb97" name="ae8d39c5fc954488ded25187165d0eb97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8d39c5fc954488ded25187165d0eb97">&#9670;&#160;</a></span>CreateDepthResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateDepthResource </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a>&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>clearValue</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>深度バッファ用GpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>サイズ </td></tr>
+    <tr><td class="paramname">format</td><td>フォーマット </td></tr>
+    <tr><td class="paramname">clearValue</td><td>初期化の値 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a3f026064cda30161761d430b4eea6ab3" name="a3f026064cda30161761d430b4eea6ab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f026064cda30161761d430b4eea6ab3">&#9670;&#160;</a></span>CreateDepthStencilViews()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_depth_stencil_views.html">DepthStencilViews</a> * EugeneLib::Graphics::CreateDepthStencilViews </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>DepthStencilViewsの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>Viewの数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>DepthStencilViewsのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a1af4d9939258be746f6393ee163f8064" name="a1af4d9939258be746f6393ee163f8064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1af4d9939258be746f6393ee163f8064">&#9670;&#160;</a></span>CreateGpuEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a> * EugeneLib::Graphics::CreateGpuEngine </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxSize</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>GpuEngineの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxSize</td><td>処理できるコマンドリストの最大数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuEngineのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="aa46bc9e04dfb51272b416ca70d593765" name="aa46bc9e04dfb51272b416ca70d593765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa46bc9e04dfb51272b416ca70d593765">&#9670;&#160;</a></span>CreateGraphicsPipeline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_graphics_pipeline.html">GraphicsPipeline</a> * EugeneLib::Graphics::CreateGraphicsPipeline </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">ShaderInputSpan</a>&#160;</td>
+          <td class="paramname"><em>layout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">ShaderTypePaisrSpan</a>&#160;</td>
+          <td class="paramname"><em>shaders</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">RenderTargetSpan</a>&#160;</td>
+          <td class="paramname"><em>rendertarges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">TopologyType</a>&#160;</td>
+          <td class="paramname"><em>topologyType</em> = <code><a class="el" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b">TopologyType::Triangle</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isCulling</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a>&#160;</td>
+          <td class="paramname"><em>shaderLayout</em> = <code><a class="el" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a>&#160;</td>
+          <td class="paramname"><em>samplerLayout</em> = <code><a class="el" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>GraphicsPipelineの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">layout</td><td>シェーダーの入力レイアウト </td></tr>
+    <tr><td class="paramname">shaders</td><td>シェーダー </td></tr>
+    <tr><td class="paramname">rendertarges</td><td>レンダーターゲットの設定 </td></tr>
+    <tr><td class="paramname">topologyType</td><td>トポロジー設定 </td></tr>
+    <tr><td class="paramname">isCulling</td><td>カリングを行うか(デフォルトでは行わない) </td></tr>
+    <tr><td class="paramname">shaderLayout</td><td>シェーダーで使う定数バッファ等の情報 </td></tr>
+    <tr><td class="paramname">samplerLayout</td><td>サンプラーの情報 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a9b4e7c7d6bdeba99812da2a634bcd551" name="a9b4e7c7d6bdeba99812da2a634bcd551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b4e7c7d6bdeba99812da2a634bcd551">&#9670;&#160;</a></span>CreateRenderTargetResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateRenderTargetResource </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_eugene_lib.html#a36504483055a3c73b16fbb00eac18fb8">Vector2</a> &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a>&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::span&lt; float, 4 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>clearColor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>レンダーターゲット用GpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>レンダーターゲットのサイズ </td></tr>
+    <tr><td class="paramname">format</td><td>フォーマット </td></tr>
+    <tr><td class="paramname">clearColor</td><td>初期化カラー </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a13248c58e17ccff663787dd3249a0d9f" name="a13248c58e17ccff663787dd3249a0d9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13248c58e17ccff663787dd3249a0d9f">&#9670;&#160;</a></span>CreateRenderTargetViews()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a> * EugeneLib::Graphics::CreateRenderTargetViews </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isShaderVisible</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>RenderTargetViewsの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>Viewの数 </td></tr>
+    <tr><td class="paramname">isShaderVisible</td><td>シェーダーに見える状態にするか? </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>RenderTargetViewsのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a44fa3a751a04e3b9aa3e521e036b12f8" name="a44fa3a751a04e3b9aa3e521e036b12f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44fa3a751a04e3b9aa3e521e036b12f8">&#9670;&#160;</a></span>CreateShaderResourceViews()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_shader_resource_views.html">ShaderResourceViews</a> * EugeneLib::Graphics::CreateShaderResourceViews </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ShaderResourceViewsの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>Viewの数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>ShaderResourceViewsのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="acb81b3c5906912e9810e4da71c9484af" name="acb81b3c5906912e9810e4da71c9484af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb81b3c5906912e9810e4da71c9484af">&#9670;&#160;</a></span>CreateSwapChainResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateSwapChainResource </td>
+          <td>(</td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>スワップチェイン用のGpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>バックバッファのインデックス </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a2863e7472fd1887db3c0361e437ad7a3" name="a2863e7472fd1887db3c0361e437ad7a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2863e7472fd1887db3c0361e437ad7a3">&#9670;&#160;</a></span>CreateTextureResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateTextureResource </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>formatData</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>テクスチャ用GpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">formatData</td><td>テクスチャのフォーマット </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a21706a654c1fed52d9756d34f92395a1" name="a21706a654c1fed52d9756d34f92395a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21706a654c1fed52d9756d34f92395a1">&#9670;&#160;</a></span>CreateUploadableResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateUploadableResource </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>アップロード用のGpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>リソースのサイズ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="a1c14b18124f3b6338264aa399de1f364" name="a1c14b18124f3b6338264aa399de1f364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c14b18124f3b6338264aa399de1f364">&#9670;&#160;</a></span>CreateUploadableTextureResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> * EugeneLib::Graphics::CreateUploadableTextureResource </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_eugene_lib_1_1_texture.html">Texture</a> &amp;&#160;</td>
+          <td class="paramname"><em>texture</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>テクスチャのアップロード用GpuResourceの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture</td><td>テクスチャ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="aaae12b8df463c38e967a5762306ed526" name="aaae12b8df463c38e967a5762306ed526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaae12b8df463c38e967a5762306ed526">&#9670;&#160;</a></span>CreateVertexView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_vertex_view.html">VertexView</a> * EugeneLib::Graphics::CreateVertexView </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>vertexNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> &amp;&#160;</td>
+          <td class="paramname"><em>resource</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>VertexViewの生成  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>1頂点当たりのサイズ </td></tr>
+    <tr><td class="paramname">vertexNum</td><td>頂点数 </td></tr>
+    <tr><td class="paramname">resource</td><td>頂点のGpuResource </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>VertexViewのポインタ </dd></dl>
+
+</div>
+</div>
+<a id="ac46e7c0f294c66e8cefce51c03c2185e" name="ac46e7c0f294c66e8cefce51c03c2185e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac46e7c0f294c66e8cefce51c03c2185e">&#9670;&#160;</a></span>GetBackBufferResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a> &amp; EugeneLib::Graphics::GetBackBufferResource </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バックバッファのレンダーターゲットのGpuResourceを取得する  </p>
+<dl class="section return"><dt>戻り値</dt><dd>GpuResourceの参照 </dd></dl>
+
+</div>
+</div>
+<a id="aba5353c604cc700151c7ac8f7f08f138" name="aba5353c604cc700151c7ac8f7f08f138"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba5353c604cc700151c7ac8f7f08f138">&#9670;&#160;</a></span>GetNowBackBufferIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t EugeneLib::Graphics::GetNowBackBufferIndex </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>現在のバックバッファのインデックスを取得する  </p>
+<dl class="section return"><dt>戻り値</dt><dd>インデックス </dd></dl>
+
+</div>
+</div>
+<a id="a806350e24b135fe5b47ea63ed16ca23d" name="a806350e24b135fe5b47ea63ed16ca23d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a806350e24b135fe5b47ea63ed16ca23d">&#9670;&#160;</a></span>GetViews()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a> &amp; EugeneLib::Graphics::GetViews </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>バックバッファで使用するRenderTargetViewsの取得する  </p>
+<dl class="section return"><dt>戻り値</dt><dd><a class="el" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a> </dd></dl>
+
+</div>
+</div>
+<a id="a9dbe17194af43656acd5563278d210dd" name="a9dbe17194af43656acd5563278d210dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dbe17194af43656acd5563278d210dd">&#9670;&#160;</a></span>Present()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void EugeneLib::Graphics::Present </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/<a class="el" href="_graphics_8h_source.html">Graphics.h</a></li>
+<li>C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/<a class="el" href="_graphics_8cpp.html">Graphics.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

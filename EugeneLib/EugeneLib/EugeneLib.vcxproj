@@ -21,19 +21,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{bd72e16e-f062-4dcd-990d-27d26fdfd0c5}</ProjectGuid>
+    <ProjectGuid>{893b1d9c-6ea7-44c2-add9-22c4a9678bbb}</ProjectGuid>
     <RootNamespace>EugeneLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -78,21 +78,26 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <OutDir>$(projectdir)Debug\</OutDir>
+    <LibraryPath>C:\Users\eugen\Desktop\ほぼ個人\VS-project\EugeneLib\EugeneLib\EugeneLib\Source\ThirdParty\DirectXTex\DirectXTex\Bin\Desktop_2022_Win10\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <LibraryPath>$(ProjectDIr)Source\ThirdParty\DirectXTex\Relese;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -102,11 +107,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -116,13 +124,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -132,29 +143,128 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\System\DynamicLibrary.h" />
+    <ClInclude Include="Include\System\GamePad.h" />
+    <ClInclude Include="Include\Sound\SoundControl.h" />
+    <ClInclude Include="Include\System\KeyID.h" />
+    <ClInclude Include="Include\Sound\Sound3DControl.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
+    <ClInclude Include="Include\Sound\Sound.h" />
+    <ClInclude Include="Include\Sound\SoundCommon.h" />
+    <ClInclude Include="Include\Sound\SoundSpeaker.h" />
+    <ClInclude Include="Include\Sound\Wave.h" />
+    <ClInclude Include="Include\Sound\SoundBase.h" />
+    <ClInclude Include="Include\Graphics\IndexView.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
+    <ClInclude Include="Include\Math\Vector3.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
+    <ClInclude Include="Include\Graphics\GraphicsPipeline.h" />
+    <ClInclude Include="Include\Common\Debug.h" />
+    <ClInclude Include="Include\Graphics\Shader.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h" />
+    <ClInclude Include="Include\Graphics\DepthStencilViews.h" />
+    <ClInclude Include="Include\Graphics\RenderTargetViews.h" />
+    <ClInclude Include="Include\Graphics\ShaderResourceViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12UploadableResource.h" />
+    <ClInclude Include="Include\Graphics\CommandList.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h" />
+    <ClInclude Include="Include\Graphics\GpuEngine.h" />
+    <ClInclude Include="Include\Graphics\GpuResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h" />
+    <ClInclude Include="Include\Graphics\Graphics.h" />
+    <ClInclude Include="Include\Color.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Include\Graphics\GraphicsCommon.h" />
     <ClInclude Include="Include\EugeneLib.h" />
-    <ClInclude Include="Include\EugeneLibException.h" />
-    <ClInclude Include="Include\framework.h" />
-    <ClInclude Include="Include\Math.h" />
-    <ClInclude Include="Include\MathConcepts.h" />
-    <ClInclude Include="Include\Vector2.h" />
+    <ClInclude Include="Include\Common\EugeneLibException.h" />
+    <ClInclude Include="Include\Math\Geometry.h" />
+    <ClInclude Include="Include\Math\MathConcepts.h" />
+    <ClInclude Include="Include\Math\Vector2.h" />
+    <ClInclude Include="Include\ThirdParty\d3dx12.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Include\System\System.h" />
+    <ClInclude Include="Source\System\Windows\Dll.h" />
+    <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
+    <ClInclude Include="Include\Graphics\VertexView.h" />
+    <ClInclude Include="Include\Graphics\Texture.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound3DControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
+    <ClCompile Include="Source\System\DynamicLibrary.cpp" />
+    <ClCompile Include="Source\System\GamePad.cpp" />
+    <ClCompile Include="Source\Sound\SoundControl.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
+    <ClCompile Include="Source\Graphics\IndexView.cpp" />
+    <ClCompile Include="Source\Sound\SoundBase.cpp" />
+    <ClCompile Include="Source\Sound\SoundSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Sound.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
+    <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\GraphicsPipeline.cpp" />
+    <ClCompile Include="Source\Common\Debug.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp" />
+    <ClCompile Include="Source\Graphics\DepthStencilViews.cpp" />
+    <ClCompile Include="Source\Graphics\RenderTargetViews.cpp" />
+    <ClCompile Include="Source\Graphics\ShaderResourceViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Views.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DefaultResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12UploadableResource.cpp" />
+    <ClCompile Include="Source\Graphics\CommandList.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp" />
+    <ClCompile Include="Source\Graphics\GpuEngine.cpp" />
+    <ClCompile Include="Source\Graphics\GpuResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp" />
+    <ClCompile Include="Source\Graphics\Graphics.cpp" />
     <ClCompile Include="Source\EugeneLib.cpp" />
-    <ClCompile Include="Source\EugeneLibException.cpp" />
-    <ClCompile Include="Source\Math.cpp" />
+    <ClCompile Include="Source\Common\EugeneLibException.cpp" />
+    <ClCompile Include="Source\Math\Geometry.cpp" />
+    <ClCompile Include="Source\Sound\Wave.cpp" />
+    <ClCompile Include="Source\System\System.cpp" />
+    <ClCompile Include="Source\System\Windows\Dll.cpp" />
+    <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
+    <ClCompile Include="Source\Graphics\VertexView.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundControl.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound3DControl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EugeneLib.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

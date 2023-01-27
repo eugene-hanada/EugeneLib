@@ -1,0 +1,29 @@
+\hypertarget{_sound_8h_source}{}\doxysection{Sound.\+h}
+\label{_sound_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Sound/Sound.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Sound/Sound.h}}
+\mbox{\hyperlink{_sound_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sound_base_8h}{SoundBase.h}}"{}}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{5 \{}
+\DoxyCodeLine{6     \textcolor{keyword}{class }SoundSpeaker;}
+\DoxyCodeLine{7     \textcolor{keyword}{class }SoundControl;}
+\DoxyCodeLine{8     \textcolor{keyword}{class }Wave;}
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_sound}{Sound}} :}
+\DoxyCodeLine{13         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_sound_base}{SoundBase}}}
+\DoxyCodeLine{14     \{}
+\DoxyCodeLine{15     \textcolor{keyword}{public}:}
+\DoxyCodeLine{16         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_lib_1_1_sound_a07982e921867079eebd2959d647df0ee}{\string~Sound}}();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{23         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker}{SoundSpeaker}}* \mbox{\hyperlink{class_eugene_lib_1_1_sound_aa92dbcdd03edd7c731534c7da8db3657}{CreateSoundSpeaker}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_wave}{Wave}}\& wave, \textcolor{keyword}{const} \textcolor{keywordtype}{float} maxPitchRate = 2.0f) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{32         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_lib_1_1_sound_control}{SoundControl}}* \mbox{\hyperlink{class_eugene_lib_1_1_sound_af115b44e2343cd9f1a482d8bdb1806da}{CreateSoundControl}}(std::uint32\_t sample, std::uint16\_t inputChannel, std::uint16\_t outChannel) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{33     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{34         \mbox{\hyperlink{class_eugene_lib_1_1_sound_a8ce1ee6e5ab2e59d889e739c7060b669}{Sound}}();}
+\DoxyCodeLine{35     \};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \mbox{\hyperlink{class_eugene_lib_1_1_sound}{Sound}}* \mbox{\hyperlink{namespace_eugene_lib_a3948b4f4e933beed57e5c59aa4bf57f0}{CreateSound}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{38 \}}
+
+\end{DoxyCode}

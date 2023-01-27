@@ -1,0 +1,3 @@
+[submodule "EugeneLib/EugeneLib/DirectXTex"]
+	path = EugeneLib/EugeneLib/DirectXTex
+	url = https://github.com/microsoft/DirectXTex.git

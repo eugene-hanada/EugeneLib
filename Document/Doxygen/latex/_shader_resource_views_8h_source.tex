@@ -1,0 +1,25 @@
+\hypertarget{_shader_resource_views_8h_source}{}\doxysection{Shader\+Resource\+Views.\+h}
+\label{_shader_resource_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/ShaderResourceViews.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/ShaderResourceViews.h}}
+\mbox{\hyperlink{_shader_resource_views_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{4 \{}
+\DoxyCodeLine{5     \textcolor{keyword}{class }Graphics;}
+\DoxyCodeLine{6     \textcolor{keyword}{class }GpuResource;}
+\DoxyCodeLine{7     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{ShaderResourceViews}}}
+\DoxyCodeLine{8     \{}
+\DoxyCodeLine{9     \textcolor{keyword}{public}:}
+\DoxyCodeLine{10         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_a9fece4318401ab0b11e8754c8ffdfe1a}{\string~ShaderResourceViews}}();}
+\DoxyCodeLine{11         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_ae84a381fb810e87e935c82dc9fbd8d30}{CreateTexture}}(\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource, \textcolor{keywordtype}{size\_t} idx) = 0;}
+\DoxyCodeLine{12         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_ac613c186b47e00616cfef5aff11dc7b4}{CreateConstantBuffer}}(\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource, \textcolor{keywordtype}{size\_t} idx) = 0;}
+\DoxyCodeLine{13         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}* \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_a12dce581a8c763bfe63f42eb4bb24f05}{GetViews}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{14         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_abe25ebd8e73e3219ce56d71cb36fd0d1}{GetSize}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{15     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{16         \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views}{ShaderResourceViews}}(\textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{17         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{class_eugene_lib_1_1_shader_resource_views_a315abe4ee6932b071a51dab777d10158}{size\_}};}
+\DoxyCodeLine{18     \};}
+\DoxyCodeLine{19 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Graphics/Graphics.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_441f5a6782dcabbe74e32fbfbb5693d8.html">Include</a></li><li class="navelem"><a class="el" href="dir_ce250fc331356bffd40833be7102636b.html">Graphics</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Graphics.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_graphics_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="_graphics_pipeline_8h.html">GraphicsPipeline.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_graphics_common_8h.html">GraphicsCommon.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../Math/Vector2.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">class </span>System;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">class </span>GpuEngine;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">class </span>RenderTargetViews;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">class </span>CommandList;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">class </span>GpuResource;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">class </span><a class="code hl_enumvalue" href="namespace_eugene_lib.html#affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b">Texture</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">class </span>ShaderResourceViews;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">class </span>DepthStencilViews;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">class </span>VertexView;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html">   21</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_graphics.html">Graphics</a></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keyword">virtual</span> <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a2feceb8ff9f4e4c0371f187b5323dbb9">~Graphics</a>();</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a1af4d9939258be746f6393ee163f8064">   31</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_engine.html">GpuEngine</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a1af4d9939258be746f6393ee163f8064">CreateGpuEngine</a>(<span class="keywordtype">size_t</span> maxSize) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a5f605f451fdfdf568465ea7c2dc1d1cc">   38</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_command_list.html">CommandList</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a5f605f451fdfdf568465ea7c2dc1d1cc">CreateCommandList</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#aa46bc9e04dfb51272b416ca70d593765">   51</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_graphics_pipeline.html">GraphicsPipeline</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#aa46bc9e04dfb51272b416ca70d593765">CreateGraphicsPipeline</a>(</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">ShaderInputSpan</a> layout,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">ShaderTypePaisrSpan</a>  shaders,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">RenderTargetSpan</a> rendertarges,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_enumeration" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">TopologyType</a> topologyType = <a class="code hl_enumvalue" href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b">TopologyType::Triangle</a>,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordtype">bool</span> isCulling = <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a> shaderLayout = <a class="code hl_typedef" href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">ShaderLayoutSpan</a>{},</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <a class="code hl_typedef" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a> samplerLayout = <a class="code hl_typedef" href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">SamplerSpan</a>{}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        ) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a21706a654c1fed52d9756d34f92395a1">   66</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a21706a654c1fed52d9756d34f92395a1">CreateUploadableResource</a>(<span class="keywordtype">size_t</span> size) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a1c14b18124f3b6338264aa399de1f364">   73</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a1c14b18124f3b6338264aa399de1f364">CreateUploadableTextureResource</a>(<a class="code hl_class" href="class_eugene_lib_1_1_texture.html">Texture</a>&amp; texture) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a3df80c372163ae57a57e7ca048ff5f4d">   80</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a3df80c372163ae57a57e7ca048ff5f4d">CreateDefaultResource</a>(<span class="keywordtype">size_t</span> size) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a2863e7472fd1887db3c0361e437ad7a3">   87</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a2863e7472fd1887db3c0361e437ad7a3">CreateTextureResource</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_eugene_lib_1_1_texture_info.html">TextureInfo</a>&amp; formatData) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a9b4e7c7d6bdeba99812da2a634bcd551">   96</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a9b4e7c7d6bdeba99812da2a634bcd551">CreateRenderTargetResource</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2</a>&amp; size, <a class="code hl_enumeration" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a> format, <span class="keyword">const</span> std::span&lt;float, 4&gt;&amp; clearColor) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#ae8d39c5fc954488ded25187165d0eb97">  105</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#ae8d39c5fc954488ded25187165d0eb97">CreateDepthResource</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2</a>&amp; size, <a class="code hl_enumeration" href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">Format</a> format, <span class="keywordtype">float</span> clearValue = 1.0f) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a44fa3a751a04e3b9aa3e521e036b12f8">  112</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_shader_resource_views.html">ShaderResourceViews</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a44fa3a751a04e3b9aa3e521e036b12f8">CreateShaderResourceViews</a>(<span class="keywordtype">size_t</span> size) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a13248c58e17ccff663787dd3249a0d9f">  120</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a13248c58e17ccff663787dd3249a0d9f">CreateRenderTargetViews</a>(<span class="keywordtype">size_t</span> size, <span class="keywordtype">bool</span> isShaderVisible) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a3f026064cda30161761d430b4eea6ab3">  127</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_depth_stencil_views.html">DepthStencilViews</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a3f026064cda30161761d430b4eea6ab3">CreateDepthStencilViews</a>(<span class="keywordtype">size_t</span> size) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#aaae12b8df463c38e967a5762306ed526">  136</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_vertex_view.html">VertexView</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#aaae12b8df463c38e967a5762306ed526">CreateVertexView</a>(<span class="keywordtype">size_t</span> size, <span class="keywordtype">size_t</span> vertexNum, <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; resource) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#ac46e7c0f294c66e8cefce51c03c2185e">  143</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#ac46e7c0f294c66e8cefce51c03c2185e">GetBackBufferResource</a>(<span class="keywordtype">void</span>) = 0;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a806350e24b135fe5b47ea63ed16ca23d">  150</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a806350e24b135fe5b47ea63ed16ca23d">GetViews</a>(<span class="keywordtype">void</span>) = 0;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#aba5353c604cc700151c7ac8f7f08f138">  157</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#aba5353c604cc700151c7ac8f7f08f138">GetNowBackBufferIndex</a>(<span class="keywordtype">void</span>) = 0;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#a9dbe17194af43656acd5563278d210dd">  158</a></span>        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a9dbe17194af43656acd5563278d210dd">Present</a>(<span class="keywordtype">void</span>) = 0;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#a1dbef4d783615bd4cd86c3bbbf374c4e">Graphics</a>();</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_graphics.html#acb81b3c5906912e9810e4da71c9484af">  167</a></span>        <span class="keyword">virtual</span> <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>* <a class="code hl_function" href="class_eugene_lib_1_1_graphics.html#acb81b3c5906912e9810e4da71c9484af">CreateSwapChainResource</a>(std::uint32_t idx) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    };</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}</div>
+<div class="ttc" id="a_graphics_common_8h_html"><div class="ttname"><a href="_graphics_common_8h.html">GraphicsCommon.h</a></div></div>
+<div class="ttc" id="a_graphics_pipeline_8h_html"><div class="ttname"><a href="_graphics_pipeline_8h.html">GraphicsPipeline.h</a></div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_command_list_html"><div class="ttname"><a href="class_eugene_lib_1_1_command_list.html">EugeneLib::CommandList</a></div><div class="ttdoc">コマンドリストの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> CommandList.h:22</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_depth_stencil_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_depth_stencil_views.html">EugeneLib::DepthStencilViews</a></div><div class="ttdef"><b>Definition:</b> DepthStencilViews.h:10</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_gpu_engine_html"><div class="ttname"><a href="class_eugene_lib_1_1_gpu_engine.html">EugeneLib::GpuEngine</a></div><div class="ttdoc">CommandListクラスを実行などの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> GpuEngine.h:12</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_gpu_resource_html"><div class="ttname"><a href="class_eugene_lib_1_1_gpu_resource.html">EugeneLib::GpuResource</a></div><div class="ttdoc">グラフィックス等で使うリソース</div><div class="ttdef"><b>Definition:</b> GpuResource.h:10</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html">EugeneLib::Graphics</a></div><div class="ttdoc">グラフィックスの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> Graphics.h:22</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a13248c58e17ccff663787dd3249a0d9f"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a13248c58e17ccff663787dd3249a0d9f">EugeneLib::Graphics::CreateRenderTargetViews</a></div><div class="ttdeci">virtual RenderTargetViews * CreateRenderTargetViews(size_t size, bool isShaderVisible) const =0</div><div class="ttdoc">RenderTargetViewsの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a1af4d9939258be746f6393ee163f8064"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a1af4d9939258be746f6393ee163f8064">EugeneLib::Graphics::CreateGpuEngine</a></div><div class="ttdeci">virtual GpuEngine * CreateGpuEngine(size_t maxSize) const =0</div><div class="ttdoc">GpuEngineの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a1c14b18124f3b6338264aa399de1f364"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a1c14b18124f3b6338264aa399de1f364">EugeneLib::Graphics::CreateUploadableTextureResource</a></div><div class="ttdeci">virtual GpuResource * CreateUploadableTextureResource(Texture &amp;texture) const =0</div><div class="ttdoc">テクスチャのアップロード用GpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a1dbef4d783615bd4cd86c3bbbf374c4e"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a1dbef4d783615bd4cd86c3bbbf374c4e">EugeneLib::Graphics::Graphics</a></div><div class="ttdeci">Graphics()</div><div class="ttdef"><b>Definition:</b> Graphics.cpp:8</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a21706a654c1fed52d9756d34f92395a1"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a21706a654c1fed52d9756d34f92395a1">EugeneLib::Graphics::CreateUploadableResource</a></div><div class="ttdeci">virtual GpuResource * CreateUploadableResource(size_t size) const =0</div><div class="ttdoc">アップロード用のGpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a2863e7472fd1887db3c0361e437ad7a3"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a2863e7472fd1887db3c0361e437ad7a3">EugeneLib::Graphics::CreateTextureResource</a></div><div class="ttdeci">virtual GpuResource * CreateTextureResource(const TextureInfo &amp;formatData) const =0</div><div class="ttdoc">テクスチャ用GpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a2feceb8ff9f4e4c0371f187b5323dbb9"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a2feceb8ff9f4e4c0371f187b5323dbb9">EugeneLib::Graphics::~Graphics</a></div><div class="ttdeci">virtual ~Graphics()</div><div class="ttdef"><b>Definition:</b> Graphics.cpp:4</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a3df80c372163ae57a57e7ca048ff5f4d"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a3df80c372163ae57a57e7ca048ff5f4d">EugeneLib::Graphics::CreateDefaultResource</a></div><div class="ttdeci">virtual GpuResource * CreateDefaultResource(size_t size) const =0</div><div class="ttdoc">GpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a3f026064cda30161761d430b4eea6ab3"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a3f026064cda30161761d430b4eea6ab3">EugeneLib::Graphics::CreateDepthStencilViews</a></div><div class="ttdeci">virtual DepthStencilViews * CreateDepthStencilViews(size_t size) const =0</div><div class="ttdoc">DepthStencilViewsの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a44fa3a751a04e3b9aa3e521e036b12f8"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a44fa3a751a04e3b9aa3e521e036b12f8">EugeneLib::Graphics::CreateShaderResourceViews</a></div><div class="ttdeci">virtual ShaderResourceViews * CreateShaderResourceViews(size_t size) const =0</div><div class="ttdoc">ShaderResourceViewsの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a5f605f451fdfdf568465ea7c2dc1d1cc"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a5f605f451fdfdf568465ea7c2dc1d1cc">EugeneLib::Graphics::CreateCommandList</a></div><div class="ttdeci">virtual CommandList * CreateCommandList(void) const =0</div><div class="ttdoc">CommandListの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a806350e24b135fe5b47ea63ed16ca23d"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a806350e24b135fe5b47ea63ed16ca23d">EugeneLib::Graphics::GetViews</a></div><div class="ttdeci">virtual RenderTargetViews &amp; GetViews(void)=0</div><div class="ttdoc">バックバッファで使用するRenderTargetViewsの取得する</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a9b4e7c7d6bdeba99812da2a634bcd551"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a9b4e7c7d6bdeba99812da2a634bcd551">EugeneLib::Graphics::CreateRenderTargetResource</a></div><div class="ttdeci">virtual GpuResource * CreateRenderTargetResource(const Vector2 &amp;size, Format format, const std::span&lt; float, 4 &gt; &amp;clearColor) const =0</div><div class="ttdoc">レンダーターゲット用GpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_a9dbe17194af43656acd5563278d210dd"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#a9dbe17194af43656acd5563278d210dd">EugeneLib::Graphics::Present</a></div><div class="ttdeci">virtual void Present(void)=0</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_aa46bc9e04dfb51272b416ca70d593765"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#aa46bc9e04dfb51272b416ca70d593765">EugeneLib::Graphics::CreateGraphicsPipeline</a></div><div class="ttdeci">virtual GraphicsPipeline * CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType=TopologyType::Triangle, bool isCulling=false, ShaderLayoutSpan shaderLayout=ShaderLayoutSpan{}, SamplerSpan samplerLayout=SamplerSpan{}) const =0</div><div class="ttdoc">GraphicsPipelineの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_aaae12b8df463c38e967a5762306ed526"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#aaae12b8df463c38e967a5762306ed526">EugeneLib::Graphics::CreateVertexView</a></div><div class="ttdeci">virtual VertexView * CreateVertexView(size_t size, size_t vertexNum, GpuResource &amp;resource) const =0</div><div class="ttdoc">VertexViewの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_aba5353c604cc700151c7ac8f7f08f138"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#aba5353c604cc700151c7ac8f7f08f138">EugeneLib::Graphics::GetNowBackBufferIndex</a></div><div class="ttdeci">virtual size_t GetNowBackBufferIndex(void)=0</div><div class="ttdoc">現在のバックバッファのインデックスを取得する</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_ac46e7c0f294c66e8cefce51c03c2185e"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#ac46e7c0f294c66e8cefce51c03c2185e">EugeneLib::Graphics::GetBackBufferResource</a></div><div class="ttdeci">virtual GpuResource &amp; GetBackBufferResource(void)=0</div><div class="ttdoc">バックバッファのレンダーターゲットのGpuResourceを取得する</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_acb81b3c5906912e9810e4da71c9484af"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#acb81b3c5906912e9810e4da71c9484af">EugeneLib::Graphics::CreateSwapChainResource</a></div><div class="ttdeci">virtual GpuResource * CreateSwapChainResource(std::uint32_t idx) const =0</div><div class="ttdoc">スワップチェイン用のGpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_html_ae8d39c5fc954488ded25187165d0eb97"><div class="ttname"><a href="class_eugene_lib_1_1_graphics.html#ae8d39c5fc954488ded25187165d0eb97">EugeneLib::Graphics::CreateDepthResource</a></div><div class="ttdeci">virtual GpuResource * CreateDepthResource(const Vector2 &amp;size, Format format, float clearValue=1.0f) const =0</div><div class="ttdoc">深度バッファ用GpuResourceの生成</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_graphics_pipeline_html"><div class="ttname"><a href="class_eugene_lib_1_1_graphics_pipeline.html">EugeneLib::GraphicsPipeline</a></div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:95</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_render_target_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_render_target_views.html">EugeneLib::RenderTargetViews</a></div><div class="ttdef"><b>Definition:</b> RenderTargetViews.h:10</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_shader_resource_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_shader_resource_views.html">EugeneLib::ShaderResourceViews</a></div><div class="ttdef"><b>Definition:</b> ShaderResourceViews.h:8</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_texture_html"><div class="ttname"><a href="class_eugene_lib_1_1_texture.html">EugeneLib::Texture</a></div><div class="ttdoc">テクスチャ</div><div class="ttdef"><b>Definition:</b> Texture.h:12</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_vector2_tmp_html"><div class="ttname"><a href="class_eugene_lib_1_1_vector2_tmp.html">EugeneLib::Vector2Tmp&lt; float &gt;</a></div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_vertex_view_html"><div class="ttname"><a href="class_eugene_lib_1_1_vertex_view.html">EugeneLib::VertexView</a></div><div class="ttdef"><b>Definition:</b> VertexView.h:6</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a0765cdda58b96e8bed41fc369891ec05"><div class="ttname"><a href="namespace_eugene_lib.html#a0765cdda58b96e8bed41fc369891ec05">EugeneLib::ShaderInputSpan</a></div><div class="ttdeci">std::span&lt; ShaderInputLayout &gt; ShaderInputSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:89</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a1858c7f8938f8ee70626101303307d33"><div class="ttname"><a href="namespace_eugene_lib.html#a1858c7f8938f8ee70626101303307d33">EugeneLib::ShaderTypePaisrSpan</a></div><div class="ttdeci">std::span&lt; std::pair&lt; Shader, ShaderType &gt; &gt; ShaderTypePaisrSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:90</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a8c8580cf57342fa5e6c8420d9c36a78b"><div class="ttname"><a href="namespace_eugene_lib.html#a8c8580cf57342fa5e6c8420d9c36a78b">EugeneLib::Format</a></div><div class="ttdeci">Format</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:7</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_a9bf14c3e1ef931a13bd1c33631720cd3"><div class="ttname"><a href="namespace_eugene_lib.html#a9bf14c3e1ef931a13bd1c33631720cd3">EugeneLib::ShaderLayoutSpan</a></div><div class="ttdeci">std::span&lt; std::vector&lt; ShaderLayout &gt; &gt; ShaderLayoutSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:91</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_ae9eac1fcea6ea0cb1159c46a3473d6cc"><div class="ttname"><a href="namespace_eugene_lib.html#ae9eac1fcea6ea0cb1159c46a3473d6cc">EugeneLib::RenderTargetSpan</a></div><div class="ttdeci">std::span&lt; RendertargetLayout &gt; RenderTargetSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:93</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_af2ab79b03994356102601c6daa1c70d3"><div class="ttname"><a href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3">EugeneLib::TopologyType</a></div><div class="ttdeci">TopologyType</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:80</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b"><div class="ttname"><a href="namespace_eugene_lib.html#af2ab79b03994356102601c6daa1c70d3a5e5500cb2b82eb72d550de644bd1b64b">EugeneLib::TopologyType::Triangle</a></div><div class="ttdeci">@ Triangle</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_afd18882203b29039f5377be96997d5d1"><div class="ttname"><a href="namespace_eugene_lib.html#afd18882203b29039f5377be96997d5d1">EugeneLib::SamplerSpan</a></div><div class="ttdeci">std::span&lt; SamplerLayout &gt; SamplerSpan</div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:92</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html_affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b"><div class="ttname"><a href="namespace_eugene_lib.html#affc713c8fdbe6c629508dd68706cdce4aa3e8ae43188ae76d38f414b2bdb0077b">EugeneLib::ViewType::Texture</a></div><div class="ttdeci">@ Texture</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_texture_info_html"><div class="ttname"><a href="struct_eugene_lib_1_1_texture_info.html">EugeneLib::TextureInfo</a></div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:52</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

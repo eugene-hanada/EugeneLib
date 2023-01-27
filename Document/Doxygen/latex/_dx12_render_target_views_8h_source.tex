@@ -1,0 +1,23 @@
+\hypertarget{_dx12_render_target_views_8h_source}{}\doxysection{Dx12\+Render\+Target\+Views.\+h}
+\label{_dx12_render_target_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12RenderTargetViews.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12RenderTargetViews.h}}
+\mbox{\hyperlink{_dx12_render_target_views_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_dx12_views_8h}{Dx12Views.h}}"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/RenderTargetViews.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_dx12_render_target_views}{Dx12RenderTargetViews}} :}
+\DoxyCodeLine{9         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_dx12_views}{Dx12Views}}, \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_lib_1_1_render_target_views}{RenderTargetViews}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_eugene_lib_1_1_dx12_render_target_views}{Dx12RenderTargetViews}}(ID3D12Device* device, \textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{bool} isShaderVisible);}
+\DoxyCodeLine{13     \textcolor{keyword}{private}:}
+\DoxyCodeLine{14         \textcolor{keywordtype}{void} Create(\mbox{\hyperlink{class_eugene_lib_1_1_gpu_resource}{GpuResource}}\& resource, \textcolor{keywordtype}{size\_t} idx, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_a8c8580cf57342fa5e6c8420d9c36a78b}{Format}}\& format) \textcolor{keyword}{final};}
+\DoxyCodeLine{15         \textcolor{keywordtype}{void}* GetViews(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{16     \};}
+\DoxyCodeLine{17 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,114 @@
+\hypertarget{_windows_system_8cpp}{}\doxysection{C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+System/\+Windows/\+Windows\+System.cpp ファイル}
+\label{_windows_system_8cpp}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/System/Windows/WindowsSystem.cpp@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/System/Windows/WindowsSystem.cpp}}
+{\ttfamily \#include \char`\"{}Windows\+System.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Windows.\+h$>$}\newline
+{\ttfamily \#include $<$Xinput.\+h$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include \char`\"{}../../../\+Include/\+Common/\+Debug.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../../\+Include/\+Common/\+Eugene\+Lib\+Exception.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../\+Graphics/\+Direct\+X12/\+Dx12\+Graphics.\+h\char`\"{}}\newline
+Windows\+System.\+cpp の依存先関係図\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_windows_system_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{関数}
+\begin{DoxyCompactItemize}
+\item 
+LRESULT \mbox{\hyperlink{_windows_system_8cpp_ab41a5745bc23c47844f0bd8be16ab464}{Window\+Procedure}} (HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hwnd}}, UINT \mbox{\hyperlink{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}{msg}}, WPARAM wparam, LPARAM lparam)
+\begin{DoxyCompactList}\small\item\em ウィンドウプロシージャ  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{変数}
+\begin{DoxyCompactItemize}
+\item 
+MSG \mbox{\hyperlink{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}{msg}}
+\begin{DoxyCompactList}\small\item\em メッセージ  \end{DoxyCompactList}\item 
+WNDCLASSEX \mbox{\hyperlink{_windows_system_8cpp_a00cd3b8a3700b9da126b82fd17c5ab6d}{window\+Class}}
+\begin{DoxyCompactList}\small\item\em ウィンドウクラス  \end{DoxyCompactList}\item 
+HWND \mbox{\hyperlink{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}{hwnd}}
+\begin{DoxyCompactList}\small\item\em ウィンドウハンドル  \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Eugene\+Lib\+::\+System\+::\+Mouse}} \mbox{\hyperlink{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}{mouse}}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Eugene\+Lib\+::\+Graphics}} $\ast$ \mbox{\hyperlink{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}{graphics}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{_windows_system_8cpp_ab41a5745bc23c47844f0bd8be16ab464}\label{_windows_system_8cpp_ab41a5745bc23c47844f0bd8be16ab464}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!WindowProcedure@{WindowProcedure}}
+\index{WindowProcedure@{WindowProcedure}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{WindowProcedure()}{WindowProcedure()}}
+{\footnotesize\ttfamily LRESULT Window\+Procedure (\begin{DoxyParamCaption}\item[{HWND}]{hwnd,  }\item[{UINT}]{msg,  }\item[{WPARAM}]{wparam,  }\item[{LPARAM}]{lparam }\end{DoxyParamCaption})}
+
+
+
+ウィンドウプロシージャ  
+
+
+\begin{DoxyParams}{引数}
+{\em hwnd} & \\
+\hline
+{\em msg} & \\
+\hline
+{\em wparam} & \\
+\hline
+{\em lparam} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+被呼び出し関係図\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_windows_system_8cpp_ab41a5745bc23c47844f0bd8be16ab464_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{変数詳解}
+\mbox{\Hypertarget{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}\label{_windows_system_8cpp_a580c7d2f615242db3f34f70afcde764e}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!graphics@{graphics}}
+\index{graphics@{graphics}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{graphics}{graphics}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Eugene\+Lib\+::\+Graphics}}$\ast$ graphics = nullptr}
+
+\mbox{\Hypertarget{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}\label{_windows_system_8cpp_aa72255e7356d612ad72bb45def01fcbb}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!hwnd@{hwnd}}
+\index{hwnd@{hwnd}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{hwnd}{hwnd}}
+{\footnotesize\ttfamily HWND hwnd}
+
+
+
+ウィンドウハンドル  
+
+\mbox{\Hypertarget{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}\label{_windows_system_8cpp_a64037a20d6aee3be64bb0a09469fa342}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!mouse@{mouse}}
+\index{mouse@{mouse}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{mouse}{mouse}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Eugene\+Lib\+::\+System\+::\+Mouse}} mouse}
+
+\mbox{\Hypertarget{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}\label{_windows_system_8cpp_ac13bc459ae800248eabb652b9f6dc8ed}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!msg@{msg}}
+\index{msg@{msg}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{msg}{msg}}
+{\footnotesize\ttfamily MSG msg}
+
+
+
+メッセージ  
+
+\mbox{\Hypertarget{_windows_system_8cpp_a00cd3b8a3700b9da126b82fd17c5ab6d}\label{_windows_system_8cpp_a00cd3b8a3700b9da126b82fd17c5ab6d}} 
+\index{WindowsSystem.cpp@{WindowsSystem.cpp}!windowClass@{windowClass}}
+\index{windowClass@{windowClass}!WindowsSystem.cpp@{WindowsSystem.cpp}}
+\doxysubsubsection{\texorpdfstring{windowClass}{windowClass}}
+{\footnotesize\ttfamily WNDCLASSEX window\+Class}
+
+
+
+ウィンドウクラス  
+

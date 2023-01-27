@@ -1,0 +1,345 @@
+\hypertarget{_vector2_8h_source}{}\doxysection{Vector2.\+h}
+\label{_vector2_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Math/Vector2.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Math/Vector2.h}}
+\mbox{\hyperlink{_vector2_8h}{\mbox{[}詳解\mbox{]}}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_math_concepts_8h}{MathConcepts.h}}"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_eugene_lib}{EugeneLib}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp}}}
+\DoxyCodeLine{11     \{}
+\DoxyCodeLine{12     \textcolor{keyword}{public}:}
+\DoxyCodeLine{13         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{14         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17         \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_afe0c0a0dfb43a5f26212659e4374ea21}{Vector2Tmp}}() :}
+\DoxyCodeLine{18             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}\{ static\_cast<\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>(0) \}, \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}\{ static\_cast<\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>(0) \}}
+\DoxyCodeLine{19         \{}
+\DoxyCodeLine{20         \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4c4d73a6160bce0b170fb5442153c1f7}{Vector2Tmp}}(\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} inX, \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} inY) :}
+\DoxyCodeLine{23             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}\{ inX \}, \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}\{ inY \}}
+\DoxyCodeLine{24         \{}
+\DoxyCodeLine{25         \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_ac8c6102aae80122ac6ece925fc1a1c65}{Vector2Tmp}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec) :}
+\DoxyCodeLine{28             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}\{ vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} \}, \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}\{ vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} \}}
+\DoxyCodeLine{29         \{}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a65d9b6aa4ddad22419823d73e8c49580}{Magnitude}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a6ad5f9ccb3d1083313c8e249c5b23598}{SqMagnitude}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3b749822eaa4351956266307a7d1749d}{Normalize}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_ae639cfbc10609c39578bbfdf67385201}{Normalized}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{43         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aafde84fea5c4547594d0cfc90dbef082}{Refrect}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& n);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{48         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_ac315e9a2ab0f210114ad5498c6a6e54b}{GetAngle}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3e4774c5dc3809f2bc7509ac6a78575f}{Rota}}(\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} angle);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keyword}{template}<ValueC T2>}
+\DoxyCodeLine{56         \textcolor{keyword}{operator} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T2>}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{57 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{58             \textcolor{keywordflow}{return} \{ \textcolor{keyword}{static\_cast<}T2\textcolor{keyword}{>}(\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}), \textcolor{keyword}{static\_cast<}T2\textcolor{keyword}{>}(\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}) \};}
+\DoxyCodeLine{59         \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a6d8bc1288d7625acd7a062f8122b218e}{operator-\/}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a24b6addd1797dedf65b71847ab5f2821}{operator+}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66         \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a8ab6ceac7ff487685d7fdb816d9ccadc}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} vec)}
+\DoxyCodeLine{67         \{}
+\DoxyCodeLine{68             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} = vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{69             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} = vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{70             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{71         \}}
+\DoxyCodeLine{72         \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_af6cb03027abe25321f8c81cf9724863e}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{73         \{}
+\DoxyCodeLine{74             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} = val;}
+\DoxyCodeLine{75             \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} = val;}
+\DoxyCodeLine{76             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{77         \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a1f6066097ca0584914c5b991eb3c77f1}{operator+=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec);}
+\DoxyCodeLine{80         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a33821985a7a38f18fd73afe292233817}{operator+=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a5f1e24106903322b01ed0f0004bf2f1e}{operator-\/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec);}
+\DoxyCodeLine{83         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a94cc831edebff2fa6a477a06d96ae5b8}{operator-\/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val);}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aed887872763346085c16ee9857311deb}{operator*=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec);}
+\DoxyCodeLine{86         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3b6fb68e48080539539acbf3c2de6b30}{operator*=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val);}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3dde5542edebd7f5a67776f9dbf8eac0}{operator/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec);}
+\DoxyCodeLine{89         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3d7518ab4d604fb67d62b9870165b032}{operator/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a74315eab0fa58955ebcdc8e06bcd144f}{operator\%=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec);}
+\DoxyCodeLine{92         \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a85e5b6475772c098eb0d9e6cc07cd338}{operator\%=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val);}
+\DoxyCodeLine{93     \};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{96     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a6283de2b7fccb56838673824afdab52b}{operator+}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{97     \{}
+\DoxyCodeLine{98         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} + rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} ,lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} + rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} \};}
+\DoxyCodeLine{99     \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{102     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a6283de2b7fccb56838673824afdab52b}{operator+}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{103     \{}
+\DoxyCodeLine{104         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} + val, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} + val \};}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{108     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a891cc1f704f9c103650ea0d190eb0811}{operator-\/}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{109     \{}
+\DoxyCodeLine{110         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} -\/ rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} -\/ rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} \};}
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{114     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a891cc1f704f9c103650ea0d190eb0811}{operator-\/}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{115     \{}
+\DoxyCodeLine{116         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} -\/ val, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} -\/ val \};}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{120     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a169c47bf2426eebde633f19b16a3c528}{operator*}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{121     \{}
+\DoxyCodeLine{122         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} * rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} * rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} \};}
+\DoxyCodeLine{123     \}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{126     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a169c47bf2426eebde633f19b16a3c528}{operator*}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{127     \{}
+\DoxyCodeLine{128         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} * val, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} * val \};}
+\DoxyCodeLine{129     \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{132     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a1387498b5d48e893efff8a8601d6866a}{operator/}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{133     \{}
+\DoxyCodeLine{134         \textcolor{keywordflow}{if} (rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0) || rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{135         \{}
+\DoxyCodeLine{136             \textcolor{keywordflow}{return} lVec;}
+\DoxyCodeLine{137         \}}
+\DoxyCodeLine{138         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} / rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} / rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} \};}
+\DoxyCodeLine{139     \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{142     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a1387498b5d48e893efff8a8601d6866a}{operator/}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{143     \{}
+\DoxyCodeLine{144         \textcolor{keywordflow}{if} (val == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{145         \{}
+\DoxyCodeLine{146             \textcolor{keywordflow}{return} lVec;}
+\DoxyCodeLine{147         \}}
+\DoxyCodeLine{148         \textcolor{keywordflow}{return} \{ lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} / val, lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} / val \};}
+\DoxyCodeLine{149     \}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{152     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a00d4e246c82bbf861975e50fe41ff2a9}{operator\%}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{153     \{}
+\DoxyCodeLine{154         \textcolor{keywordflow}{if} (rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0) || rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{155         \{}
+\DoxyCodeLine{156             \textcolor{keywordflow}{return} lVec;}
+\DoxyCodeLine{157         \}}
+\DoxyCodeLine{158         \textcolor{keywordflow}{return} \{ std::fmod(lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} , rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}}), std::fmod(lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} , rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}) \};}
+\DoxyCodeLine{159     \}}
+\DoxyCodeLine{160     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{161     \textcolor{keyword}{constexpr} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{namespace_eugene_lib_a00d4e246c82bbf861975e50fe41ff2a9}{operator\%}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{162     \{}
+\DoxyCodeLine{163         \textcolor{keywordflow}{if} (val == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{164         \{}
+\DoxyCodeLine{165             \textcolor{keywordflow}{return} lVec;}
+\DoxyCodeLine{166         \}}
+\DoxyCodeLine{167         \textcolor{keywordflow}{return} \{ std::fmod(lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} , val), std::fmod(lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} , val) \};}
+\DoxyCodeLine{168     \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{171     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_eugene_lib_a8c8c36b7160186d9c7a2ae8606e8ebf9}{operator==}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{172     \{}
+\DoxyCodeLine{173         \textcolor{keywordflow}{return} lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} == rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} \&\& lVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} == rVec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{174     \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{177     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_eugene_lib_aa7a4cec7587c4377b676532c5fee70b7}{operator!=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& lVec, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& rVec)}
+\DoxyCodeLine{178     \{}
+\DoxyCodeLine{179         \textcolor{keywordflow}{return} !lVec == rVec;}
+\DoxyCodeLine{180     \}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{184     \textcolor{keyword}{inline} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a65d9b6aa4ddad22419823d73e8c49580}{Vector2Tmp<T>::Magnitude}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{185 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{186         \textcolor{keywordflow}{return} std::sqrt(x * x + y * y);}
+\DoxyCodeLine{187     \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{190     \textcolor{keyword}{inline} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a6ad5f9ccb3d1083313c8e249c5b23598}{Vector2Tmp<T>::SqMagnitude}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{191 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{192         \textcolor{keywordflow}{return} x * x + y * y;}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{196     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3b749822eaa4351956266307a7d1749d}{Vector2Tmp<T>::Normalize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{197     \{}
+\DoxyCodeLine{198         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} mag = std::sqrt(x * x + y * y);}
+\DoxyCodeLine{199         \textcolor{keywordflow}{if} (mag == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{200         \{}
+\DoxyCodeLine{201             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{202         \}}
+\DoxyCodeLine{203         x /= mag;}
+\DoxyCodeLine{204         y /= mag;}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{208     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_ae639cfbc10609c39578bbfdf67385201}{Vector2Tmp<T>::Normalized}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{209 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{210         \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} mag = std::sqrt(x * x + y * y);}
+\DoxyCodeLine{211         \textcolor{keywordflow}{return} \{ x / mag, y / mag \};}
+\DoxyCodeLine{212     \}}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{215     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aafde84fea5c4547594d0cfc90dbef082}{Vector2Tmp<T>::Refrect}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& n)}
+\DoxyCodeLine{216     \{}
+\DoxyCodeLine{217         \textcolor{keywordflow}{return} (*\textcolor{keyword}{this}) -\/ (n * (\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(2) * (x * n.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} + y * n.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}})));}
+\DoxyCodeLine{218     \}}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{221     \textcolor{keyword}{inline} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_ac315e9a2ab0f210114ad5498c6a6e54b}{Vector2Tmp<T>::GetAngle}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const}}
+\DoxyCodeLine{222 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{223         \textcolor{keywordflow}{if} (*\textcolor{keyword}{this} == \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\{0, 0\})}
+\DoxyCodeLine{224         \{}
+\DoxyCodeLine{225             \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0);}
+\DoxyCodeLine{226         \}}
+\DoxyCodeLine{227         \textcolor{keywordflow}{return} std::atan2(y, x);}
+\DoxyCodeLine{228     \}}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{231     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3e4774c5dc3809f2bc7509ac6a78575f}{Vector2Tmp<T>::Rota}}(\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} angle)}
+\DoxyCodeLine{232     \{}
+\DoxyCodeLine{233         *\textcolor{keyword}{this} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\{ x * std::cos(angle) -\/ y * std::sin(angle),x * std::sin(angle) + y * std::cos(angle) \};}
+\DoxyCodeLine{234     \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{237     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a6d8bc1288d7625acd7a062f8122b218e}{Vector2Tmp<T>::operator-\/}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{238 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{239         \textcolor{keywordflow}{return} \{ -\/x,-\/y \};}
+\DoxyCodeLine{240     \}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{243     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a24b6addd1797dedf65b71847ab5f2821}{Vector2Tmp<T>::operator+}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{244 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{245         \textcolor{keywordflow}{return} \{ +x,+y \};}
+\DoxyCodeLine{246     \}}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{249     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a1f6066097ca0584914c5b991eb3c77f1}{Vector2Tmp<T>::operator+=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec)}
+\DoxyCodeLine{250     \{}
+\DoxyCodeLine{251         x += vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{252         y += vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{253         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{254     \}}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{257     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a1f6066097ca0584914c5b991eb3c77f1}{Vector2Tmp<T>::operator+=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{258     \{}
+\DoxyCodeLine{259         x += val;}
+\DoxyCodeLine{260         y += val;}
+\DoxyCodeLine{261         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{262     \}}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{265     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a5f1e24106903322b01ed0f0004bf2f1e}{Vector2Tmp<T>::operator-\/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec)}
+\DoxyCodeLine{266     \{}
+\DoxyCodeLine{267         x -\/= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{268         y -\/= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{269         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{270     \}}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{273     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a5f1e24106903322b01ed0f0004bf2f1e}{Vector2Tmp<T>::operator-\/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{274     \{}
+\DoxyCodeLine{275         x -\/= val;}
+\DoxyCodeLine{276         y -\/= val;}
+\DoxyCodeLine{277         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{278     \}}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{281     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aed887872763346085c16ee9857311deb}{Vector2Tmp<T>::operator*=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec)}
+\DoxyCodeLine{282     \{}
+\DoxyCodeLine{283         x *= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{284         y *= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{285         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{289     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aed887872763346085c16ee9857311deb}{Vector2Tmp<T>::operator*=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{290     \{}
+\DoxyCodeLine{291         x *= val;}
+\DoxyCodeLine{292         y *= val;}
+\DoxyCodeLine{293         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{294     \}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{297     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3dde5542edebd7f5a67776f9dbf8eac0}{Vector2Tmp<T>::operator/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec)}
+\DoxyCodeLine{298     \{}
+\DoxyCodeLine{299         \textcolor{keywordflow}{if} (vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0) || vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{300         \{}
+\DoxyCodeLine{301             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{302         \}}
+\DoxyCodeLine{303         x /= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}};}
+\DoxyCodeLine{304         y /= vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}};}
+\DoxyCodeLine{305         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{306     \}}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{309     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a3dde5542edebd7f5a67776f9dbf8eac0}{Vector2Tmp<T>::operator/=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{310     \{}
+\DoxyCodeLine{311         \textcolor{keywordflow}{if} (val == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{312         \{}
+\DoxyCodeLine{313             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{314         \}}
+\DoxyCodeLine{315         x /= val;}
+\DoxyCodeLine{316         y /= val;}
+\DoxyCodeLine{317         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{318     \}}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{321     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a74315eab0fa58955ebcdc8e06bcd144f}{Vector2Tmp<T>::operator\%=}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& vec)}
+\DoxyCodeLine{322     \{}
+\DoxyCodeLine{323         \textcolor{keywordflow}{if} (vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_aae7c365f933481c4bc64f2571b7de6a6}{x}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0) || vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}} == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{324         \{}
+\DoxyCodeLine{325             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{326         \}}
+\DoxyCodeLine{327         x = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(std::fmod(x, vec, x));}
+\DoxyCodeLine{328         y = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(std::fmod(y, vec.\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a4b0f83b6612769a3cd5c0980c719d823}{y}}));}
+\DoxyCodeLine{329         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{330     \}}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{333     \textcolor{keyword}{inline} \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<T>}}\& \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp_a74315eab0fa58955ebcdc8e06bcd144f}{Vector2Tmp<T>::operator\%=}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\& val)}
+\DoxyCodeLine{334     \{}
+\DoxyCodeLine{335         \textcolor{keywordflow}{if} (val == \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(0))}
+\DoxyCodeLine{336         \{}
+\DoxyCodeLine{337             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{338         \}}
+\DoxyCodeLine{339         x = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(std::fmod(x, val));}
+\DoxyCodeLine{340         y = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\textcolor{keyword}{>}(std::fmod(y, val));}
+\DoxyCodeLine{341         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{342     \}}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344     \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<float>}};}
+\DoxyCodeLine{345     \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2D}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<double>}};}
+\DoxyCodeLine{346     \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2I}} = \mbox{\hyperlink{class_eugene_lib_1_1_vector2_tmp}{Vector2Tmp<int>}};}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348 \};}
+
+\end{DoxyCode}

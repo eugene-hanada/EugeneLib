@@ -1,0 +1,46 @@
+<map id="XMVectorSubtract" name="XMVectorSubtract">
+<area shape="rect" id="node1" title=" " alt="" coords="524,1122,651,1147"/>
+<area shape="rect" id="node2" href="$struct_direct_x_1_1_bounding_oriented_box.html#ad96f19209928479ba5bcad5101973ca4" title=" " alt="" coords="15,13,189,53"/>
+<area shape="rect" id="node3" href="$struct_direct_x_1_1_bounding_sphere.html#aca28f4613a3c7f41ab453d133b018c17" title=" " alt="" coords="19,257,185,297"/>
+<area shape="rect" id="node4" href="$struct_direct_x_1_1_bounding_box.html#ace8731b1b48f8ff8961d497c875d49f1" title=" " alt="" coords="287,331,435,371"/>
+<area shape="rect" id="node5" href="$struct_direct_x_1_1_bounding_box.html#a4376c9b1db3e8a89df2db76ad767a070" title=" " alt="" coords="287,395,435,435"/>
+<area shape="rect" id="node6" href="$struct_direct_x_1_1_bounding_sphere.html#a09e7b40559e1d1f4f236cde93cc1a548" title=" " alt="" coords="278,459,445,499"/>
+<area shape="rect" id="node7" href="$namespace_triangle_tests.html#ad571a8a4318152cb6ff2c337dc6cf70b" title=" " alt="" coords="279,523,443,549"/>
+<area shape="rect" id="node8" href="$_direct_x_math_vector_8inl.html#a965257f8afcd03422369e95edf447ee2" title=" " alt="" coords="325,573,398,598"/>
+<area shape="rect" id="node9" href="$_direct_x_math_vector_8inl.html#a4c2f45bc11bcd9dbd0db473d86843998" title=" " alt="" coords="321,622,402,647"/>
+<area shape="rect" id="node10" href="$namespace_internal.html#a35ec671c8e5a5ffe2b2546c5ddc3903b" title=" " alt="" coords="264,672,459,712"/>
+<area shape="rect" id="node11" href="$namespace_internal.html#a4e78692105cdbb4ca98cafc577097105" title=" " alt="" coords="268,736,455,776"/>
+<area shape="rect" id="node12" href="$_direct_x_math_misc_8inl.html#a8c26bfda0e38682fd288d604af5002ae" title=" " alt="" coords="293,801,430,826"/>
+<area shape="rect" id="node13" href="$_direct_x_math_misc_8inl.html#a5d8da0fa316cf4247f75600d219b11b5" title=" " alt="" coords="292,850,431,875"/>
+<area shape="rect" id="node14" href="$namespace_internal.html#a0eea3aa84ef35f4856f36e0eb1006bef" title=" " alt="" coords="278,899,445,925"/>
+<area shape="rect" id="node15" href="$_direct_x_math_misc_8inl.html#a0ab4a908124a4c243b295adf92c86246" title=" " alt="" coords="293,949,430,974"/>
+<area shape="rect" id="node16" href="$_direct_x_math_misc_8inl.html#aa878cf03cb5809f4bee66e555e8b0a32" title=" " alt="" coords="292,998,431,1023"/>
+<area shape="rect" id="node17" href="$_direct_x_math_misc_8inl.html#a64d38335c6a06cbc56b465120ba8e83d" title=" " alt="" coords="287,1047,436,1073"/>
+<area shape="rect" id="node18" href="$_direct_x_math_misc_8inl.html#a9a1ca6638d0d256e372b5fa1b636f146" title=" " alt="" coords="289,1097,433,1122"/>
+<area shape="rect" id="node19" href="$_direct_x_math_misc_8inl.html#ac191c22212a6d6a240b0fac9bc6b18b0" title=" " alt="" coords="305,1146,417,1171"/>
+<area shape="rect" id="node20" href="$_direct_x_math_matrix_8inl.html#a99fe87002e75c1c8380efca62bcdb65e" title=" " alt="" coords="5,78,199,103"/>
+<area shape="rect" id="node21" href="$_direct_x_math_matrix_8inl.html#a57b6d58fc9e71d0ef1fa2ccb9a460738" title=" " alt="" coords="257,1195,466,1221"/>
+<area shape="rect" id="node22" href="$_direct_x_math_matrix_8inl.html#a966f9b427483189da0f2b05e0cd2f842" title=" " alt="" coords="295,1245,428,1270"/>
+<area shape="rect" id="node23" href="$_direct_x_math_matrix_8inl.html#abbf80b2c276a234fcbdb8a79a935a640" title=" " alt="" coords="294,1294,429,1319"/>
+<area shape="rect" id="node24" href="$_direct_x_math_matrix_8inl.html#a0f5943a078c86ffcdf9733081fc9db34" title=" " alt="" coords="268,129,455,154"/>
+<area shape="rect" id="node26" href="$_direct_x_math_matrix_8inl.html#ac6c4a0a5bfc8da5a1966df424ec15398" title=" " alt="" coords="21,193,183,218"/>
+<area shape="rect" id="node27" href="$_direct_x_math_matrix_8inl.html#a744eb5191b4707a69297ac2e5a7edcd7" title=" " alt="" coords="273,1343,450,1369"/>
+<area shape="rect" id="node28" href="$_direct_x_math_misc_8inl.html#a8154195f40b17ffe90fb4c35b7749fe7" title=" " alt="" coords="291,1393,431,1418"/>
+<area shape="rect" id="node29" href="$_direct_x_math_misc_8inl.html#a844e01c32707cb4ab8884f1aff5e8355" title=" " alt="" coords="288,1442,435,1467"/>
+<area shape="rect" id="node30" href="$namespace_internal.html#a2d330c826976451a1984e37fc0f0dba4" title=" " alt="" coords="283,1491,439,1517"/>
+<area shape="rect" id="node31" href="$namespace_internal.html#a437c091ef1636ac552960521ee734ffc" title=" " alt="" coords="271,1541,451,1566"/>
+<area shape="rect" id="node32" href="$namespace_internal.html#a5298f1c1284ae9c07eb6bc25a89a7da2" title=" " alt="" coords="268,1590,455,1615"/>
+<area shape="rect" id="node33" href="$_direct_x_math_misc_8inl.html#a6d301ed5da953b4cde61f0aa2e2b816e" title=" " alt="" coords="274,1639,449,1665"/>
+<area shape="rect" id="node34" href="$_direct_x_math_vector_8inl.html#a0124d44757bf82fcc9fea87f1f57df25" title=" " alt="" coords="282,1689,441,1714"/>
+<area shape="rect" id="node35" href="$_direct_x_math_vector_8inl.html#a75dabd8e33a23b481893b4e5ca7443b2" title=" " alt="" coords="266,1738,457,1763"/>
+<area shape="rect" id="node36" href="$_direct_x_math_vector_8inl.html#a803d0c914b8cc8247853e8a07e422c3a" title=" " alt="" coords="247,1787,476,1813"/>
+<area shape="rect" id="node37" href="$namespace_internal.html#a400105fa3796efac90490baa00d62dc4" title=" " alt="" coords="277,1837,445,1862"/>
+<area shape="rect" id="node38" href="$_direct_x_math_vector_8inl.html#a3a6739ceaf3eeac597105f5716ccab13" title=" " alt="" coords="266,1886,457,1911"/>
+<area shape="rect" id="node39" href="$_direct_x_math_vector_8inl.html#aab70d745980944df616b7ec6c890bedd" title=" " alt="" coords="287,1935,435,1961"/>
+<area shape="rect" id="node40" href="$_direct_x_math_vector_8inl.html#a84af246c25a0fb54db2cad057f591ba0" title=" " alt="" coords="288,1985,435,2010"/>
+<area shape="rect" id="node41" href="$_direct_x_math_vector_8inl.html#a75220fea9bc216c052eb87ffb98a97f1" title=" " alt="" coords="284,2034,439,2059"/>
+<area shape="rect" id="node42" href="$_direct_x_math_vector_8inl.html#a2cf795d592023cf162b9304fce4708ea" title=" " alt="" coords="310,281,413,306"/>
+<area shape="rect" id="node43" href="$_direct_x_math_vector_8inl.html#a432ba5e7275ae9e25bbc36303d12deb7" title=" " alt="" coords="305,2083,417,2109"/>
+<area shape="rect" id="node44" href="$_direct_x_math_vector_8inl.html#a3f44338868618f422c11a2987fc671e4" title=" " alt="" coords="278,2133,445,2158"/>
+<area shape="rect" id="node25" href="$struct_direct_x_1_1_bounding_oriented_box.html#a534fd31201367949fd4019f3bda6b8e4" title=" " alt="" coords="15,128,189,168"/>
+</map>

@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Sound/Wave.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_441f5a6782dcabbe74e32fbfbb5693d8.html">Include</a></li><li class="navelem"><a class="el" href="dir_cd53941c48eb8db7782cf085ca509bf5.html">Sound</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Wave.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_wave_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_sound_common_8h.html">SoundCommon.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="comment">// Waveクラス</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_wave.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_wave.html">Wave</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_class" href="class_eugene_lib_1_1_wave.html">Wave</a>(<span class="keyword">const</span> std::filesystem::path&amp; path);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_wave.html#af1cfac2a9a8f878dfb777de98f270972">   20</a></span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_eugene_lib_1_1_sound_format.html">SoundFormat</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_wave.html#af1cfac2a9a8f878dfb777de98f270972">GetFmt</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <span class="keywordflow">return</span> fmt_;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_wave.html#ab7f47c343aab783de07e8df7ea5c963f">   30</a></span>        <span class="keyword">const</span> std::vector&lt;std::uint8_t&gt;&amp; <a class="code hl_function" href="class_eugene_lib_1_1_wave.html#ab7f47c343aab783de07e8df7ea5c963f">GetData</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keywordflow">return</span> data_;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_wave.html#abd89eddeefdcc284884ea2b4e57122fa">   35</a></span>        <span class="keyword">const</span> <a class="code hl_struct" href="struct_eugene_lib_1_1_sound_format_ex.html">SoundFormatEx</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_wave.html#abd89eddeefdcc284884ea2b4e57122fa">GetEx</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">return</span> exData_;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">void</span> LoadFmt(std::ifstream&amp; file);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">void</span> LoadData(std::ifstream&amp; file);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="comment">// データ</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        std::vector&lt;std::uint8_t&gt; data_;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="comment">// fmt</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <a class="code hl_struct" href="struct_eugene_lib_1_1_sound_format.html">SoundFormat</a> fmt_;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <a class="code hl_struct" href="struct_eugene_lib_1_1_sound_format_ex.html">SoundFormatEx</a> exData_;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="comment">// RiFFチャンク</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keyword">struct </span>RIFF</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordtype">char</span> <span class="keywordtype">id</span>[4];</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> size;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordtype">char</span> type[4];</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        };</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    };</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="ttc" id="a_sound_common_8h_html"><div class="ttname"><a href="_sound_common_8h.html">SoundCommon.h</a></div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_wave_html"><div class="ttname"><a href="class_eugene_lib_1_1_wave.html">EugeneLib::Wave</a></div><div class="ttdef"><b>Definition:</b> Wave.h:11</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_wave_html_ab7f47c343aab783de07e8df7ea5c963f"><div class="ttname"><a href="class_eugene_lib_1_1_wave.html#ab7f47c343aab783de07e8df7ea5c963f">EugeneLib::Wave::GetData</a></div><div class="ttdeci">const std::vector&lt; std::uint8_t &gt; &amp; GetData(void) const &amp;</div><div class="ttdoc">データを取得する</div><div class="ttdef"><b>Definition:</b> Wave.h:30</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_wave_html_abd89eddeefdcc284884ea2b4e57122fa"><div class="ttname"><a href="class_eugene_lib_1_1_wave.html#abd89eddeefdcc284884ea2b4e57122fa">EugeneLib::Wave::GetEx</a></div><div class="ttdeci">const SoundFormatEx &amp; GetEx(void) const &amp;</div><div class="ttdef"><b>Definition:</b> Wave.h:35</div></div>
+<div class="ttc" id="aclass_eugene_lib_1_1_wave_html_af1cfac2a9a8f878dfb777de98f270972"><div class="ttname"><a href="class_eugene_lib_1_1_wave.html#af1cfac2a9a8f878dfb777de98f270972">EugeneLib::Wave::GetFmt</a></div><div class="ttdeci">const SoundFormat &amp; GetFmt(void) const &amp;</div><div class="ttdoc">fmtの部分を取得する</div><div class="ttdef"><b>Definition:</b> Wave.h:20</div></div>
+<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_sound_format_ex_html"><div class="ttname"><a href="struct_eugene_lib_1_1_sound_format_ex.html">EugeneLib::SoundFormatEx</a></div><div class="ttdef"><b>Definition:</b> SoundCommon.h:20</div></div>
+<div class="ttc" id="astruct_eugene_lib_1_1_sound_format_html"><div class="ttname"><a href="struct_eugene_lib_1_1_sound_format.html">EugeneLib::SoundFormat</a></div><div class="ttdef"><b>Definition:</b> SoundCommon.h:8</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

@@ -1,0 +1,122 @@
+\hypertarget{class_eugene_lib_1_1_sound_speaker}{}\doxysection{Eugene\+Lib\+::Sound\+Speaker クラス}
+\label{class_eugene_lib_1_1_sound_speaker}\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+
+
+サウンドを再生するクラス   
+
+
+
+
+{\ttfamily \#include $<$Sound\+Speaker.\+h$>$}
+
+
+
+Eugene\+Lib\+::Sound\+Speaker の継承関係図
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{class_eugene_lib_1_1_sound_speaker__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Eugene\+Lib\+::Sound\+Speaker 連携図
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{class_eugene_lib_1_1_sound_speaker__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a2d5cc0ba43ddaffac984f8196348f0ca}{$\sim$\+Sound\+Speaker}} ()
+\item 
+virtual void \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a6585349a4da2834ab68cb62b6b798828}{Play}} (void) const =0
+\item 
+virtual void \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_ac5617d38b34ef860908a41c8e3442297}{Stop}} (void) const =0
+\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a072bdfd95b45022c9e9c2ea67f38a426}{Is\+End}} (void) const =0
+\item 
+virtual void \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a2484326d426f1742599de835ad4d3fe1}{Set\+Pitch\+Rate}} (float rate)=0
+\item 
+virtual void \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a794d1fa719422a5e60648a6508cbde8f}{Set\+Output}} (\mbox{\hyperlink{class_eugene_lib_1_1_sound_control}{Sound\+Control}} \&control)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_a0efc1c86d25c2051e89797094439302a}{Sound\+Speaker}} (const float max\+Pitch\+Rate)
+\end{DoxyCompactItemize}
+\doxysubsection*{限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+const float \mbox{\hyperlink{class_eugene_lib_1_1_sound_speaker_ae8a4e65d75e0ff9d4a6bba61a21d502b}{max\+Pitch\+Rate\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+サウンドを再生するクラス  
+
+\doxysubsection{構築子と解体子}
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a2d5cc0ba43ddaffac984f8196348f0ca}\label{class_eugene_lib_1_1_sound_speaker_a2d5cc0ba43ddaffac984f8196348f0ca}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!````~SoundSpeaker@{$\sim$SoundSpeaker}}
+\index{````~SoundSpeaker@{$\sim$SoundSpeaker}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{$\sim$SoundSpeaker()}{~SoundSpeaker()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+Sound\+Speaker\+::$\sim$\+Sound\+Speaker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a0efc1c86d25c2051e89797094439302a}\label{class_eugene_lib_1_1_sound_speaker_a0efc1c86d25c2051e89797094439302a}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!SoundSpeaker@{SoundSpeaker}}
+\index{SoundSpeaker@{SoundSpeaker}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{SoundSpeaker()}{SoundSpeaker()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+Sound\+Speaker\+::\+Sound\+Speaker (\begin{DoxyParamCaption}\item[{const float}]{max\+Pitch\+Rate }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a072bdfd95b45022c9e9c2ea67f38a426}\label{class_eugene_lib_1_1_sound_speaker_a072bdfd95b45022c9e9c2ea67f38a426}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!IsEnd@{IsEnd}}
+\index{IsEnd@{IsEnd}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{IsEnd()}{IsEnd()}}
+{\footnotesize\ttfamily virtual bool Eugene\+Lib\+::\+Sound\+Speaker\+::\+Is\+End (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a6585349a4da2834ab68cb62b6b798828}\label{class_eugene_lib_1_1_sound_speaker_a6585349a4da2834ab68cb62b6b798828}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!Play@{Play}}
+\index{Play@{Play}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{Play()}{Play()}}
+{\footnotesize\ttfamily virtual void Eugene\+Lib\+::\+Sound\+Speaker\+::\+Play (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a794d1fa719422a5e60648a6508cbde8f}\label{class_eugene_lib_1_1_sound_speaker_a794d1fa719422a5e60648a6508cbde8f}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!SetOutput@{SetOutput}}
+\index{SetOutput@{SetOutput}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{SetOutput()}{SetOutput()}}
+{\footnotesize\ttfamily virtual void Eugene\+Lib\+::\+Sound\+Speaker\+::\+Set\+Output (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_sound_control}{Sound\+Control}} \&}]{control }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_a2484326d426f1742599de835ad4d3fe1}\label{class_eugene_lib_1_1_sound_speaker_a2484326d426f1742599de835ad4d3fe1}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!SetPitchRate@{SetPitchRate}}
+\index{SetPitchRate@{SetPitchRate}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{SetPitchRate()}{SetPitchRate()}}
+{\footnotesize\ttfamily virtual void Eugene\+Lib\+::\+Sound\+Speaker\+::\+Set\+Pitch\+Rate (\begin{DoxyParamCaption}\item[{float}]{rate }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_ac5617d38b34ef860908a41c8e3442297}\label{class_eugene_lib_1_1_sound_speaker_ac5617d38b34ef860908a41c8e3442297}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!Stop@{Stop}}
+\index{Stop@{Stop}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{Stop()}{Stop()}}
+{\footnotesize\ttfamily virtual void Eugene\+Lib\+::\+Sound\+Speaker\+::\+Stop (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+\doxysubsection{メンバ詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_sound_speaker_ae8a4e65d75e0ff9d4a6bba61a21d502b}\label{class_eugene_lib_1_1_sound_speaker_ae8a4e65d75e0ff9d4a6bba61a21d502b}} 
+\index{EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}!maxPitchRate\_@{maxPitchRate\_}}
+\index{maxPitchRate\_@{maxPitchRate\_}!EugeneLib::SoundSpeaker@{EugeneLib::SoundSpeaker}}
+\doxysubsubsection{\texorpdfstring{maxPitchRate\_}{maxPitchRate\_}}
+{\footnotesize\ttfamily const float Eugene\+Lib\+::\+Sound\+Speaker\+::max\+Pitch\+Rate\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Include/\+Sound/\mbox{\hyperlink{_sound_speaker_8h}{Sound\+Speaker.\+h}}\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+Sound/\mbox{\hyperlink{_sound_speaker_8cpp}{Sound\+Speaker.\+cpp}}\end{DoxyCompactItemize}

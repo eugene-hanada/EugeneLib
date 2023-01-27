@@ -1,0 +1,129 @@
+@startuml ClassDiagram
+
+namespace EugeneLib {
+
+    abstract class System
+    {
+        + {abstract} bool Update(void)
+        +const Vector2& GetWindowSize(void)
+        + {abstract} Graphics* CreateGraphics(GpuEngine*&) 
+        # Vector2 windowSize_
+        # std::u8string title_
+    }
+
+    System <|-- WindowsSystem
+
+    abstract class Graphics
+    {
+        + {abstract} GpuEngine* CreateGpuEngine(size_t )
+        + {abstract} CommandList* CreateCommandList(void) 
+        + {abstract} GraphicsPipeline* CreateGraphicsPipeline(ShaderInputSpan ,ShaderTypePaisrSpan ,RenderTargetSpan ,TopologyType ,bool ,ShaderLayoutSpan ,SamplerSpan
+		)
+        + {abstract} GpuResource* CreateUploadableResource(size_t )
+        + {abstract} GpuResource* CreateUploadableTextureResource(Texture&)
+        + {abstract} GpuResource* CreateDefaultResource(size_t )
+        + {abstract} GpuResource* CreateTextureResource(const TextureInfo& )
+        + {abstract} GpuResource* CreateRenderTargetResource(const Vector2& , Format, const std::span<float, 4>&)   
+        + {abstract} GpuResource* CreateDepthResource(const Vector2& , Format, float) 
+        + {abstract} ShaderResourceViews* CreateShaderResourceViews(size_t )
+        + {abstract} RenderTargetViews* CreateRenderTargetViews(size_t , bool )
+        + {abstract} DepthStencilViews* CreateDepthStencilViews(size_t )
+        + {abstract} VertexView* CreateVertexView(size_t, size_t, GpuResource&)
+        + {abstract} GpuResource& GetBackBufferResource(void)
+        + {abstract} RenderTargetViews& GetViews(void) 
+        + {abstract} size_t GetNowBackBufferIndex(void) 
+        + {abstract} void Present(void) 
+        # {abstract} GpuResource* CreateSwapChainResource(std::uint32_t)
+
+    }
+
+    Graphics <|-- Dx12Graphics
+
+    abstract class CommandList
+    {
+
+    }
+
+    CommandList <|-- Dx12CommandList
+
+    abstract class GpuEngine
+    {
+
+    }
+
+    GpuEngine <|-- Dx12GpuEngine
+
+    abstract class GpuResource
+    {
+
+    }
+
+    GpuResource <|-- Dx12GpuResource
+    Dx12GpuResource <|-- Dx12DefaultResource
+    Dx12GpuResource <|-- Dx12UploadableResource
+
+    abstract class GraphicsPipeline
+    {
+
+    }
+
+    GraphicsPipeline <|-- Dx12GraphicsPipeline
+
+    abstract class VertexView
+    {
+
+    }
+
+    VertexView <|-- Dx12VertexView
+
+    abstract class ShaderResourceViews
+    {
+
+    }
+
+    Dx12Views <|-- Dx12ShaderResourceViews
+    ShaderResourceViews <|-- Dx12ShaderResourceViews
+
+    abstract class RenderTargetViews
+    {
+
+    }
+
+    Dx12Views <|-- Dx12RenderTargetViews
+    RenderTargetViews <|-- Dx12RenderTargetViews
+
+    abstract class DepthStencilViews
+    {
+        
+    }
+
+    Dx12Views <|-- Dx12DepthStencilViews
+    DepthStencilViews <|-- Dx12DepthStencilViews
+
+    abstract class Sound
+    {
+
+    }
+
+
+    abstract class SoundSpeaker
+    {
+
+    }
+
+    abstract class Sound3DSpeaker
+    {
+
+    }
+
+    abstract class SoundController
+    {
+
+    }
+
+    abstract class Sound3DController
+    {
+
+    }
+}
+@enduml

@@ -1,0 +1,302 @@
+\hypertarget{class_eugene_lib_1_1_system}{}\doxysection{Eugene\+Lib\+::System クラス}
+\label{class_eugene_lib_1_1_system}\index{EugeneLib::System@{EugeneLib::System}}
+
+
+OS等の処理をするクラス   
+
+
+
+
+{\ttfamily \#include $<$System.\+h$>$}
+
+
+
+Eugene\+Lib\+::System の継承関係図\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{class_eugene_lib_1_1_system__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Eugene\+Lib\+::System 連携図\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{class_eugene_lib_1_1_system__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{クラス}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Mouse}}
+\begin{DoxyCompactList}\small\item\em マウスの構造体  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{公開型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}{Key\+Data\+Span}} = std\+::span$<$ bool, \mbox{\hyperlink{namespace_eugene_lib_a6b80b505e10af336f7066c96d3590678}{KEYID\+\_\+\+MAX}} $>$
+\begin{DoxyCompactList}\small\item\em キーボードの情報()  \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}{Key\+Code\+Table}} = std\+::array$<$ int, \mbox{\hyperlink{namespace_eugene_lib_a6b80b505e10af336f7066c96d3590678}{KEYID\+\_\+\+MAX}} $>$
+\begin{DoxyCompactList}\small\item\em キーコードのテーブル  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}{Update}} (void)=0
+\begin{DoxyCompactList}\small\item\em 更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}{$\sim$\+System}} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ  \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \& \mbox{\hyperlink{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}{Get\+Window\+Size}} (void) const \&
+\begin{DoxyCompactList}\small\item\em ウィンドウサイズを取得する  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}} $\ast$ \mbox{\hyperlink{class_eugene_lib_1_1_system_af72cb9d038835fdb7387174427e41b7a}{Create\+Graphics}} (\mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{Gpu\+Engine}} $\ast$\&gpu\+Engine, size\+\_\+t buffer\+Num=2) const \&=0
+\begin{DoxyCompactList}\small\item\em Graphicsをを生成する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_lib_1_1_system_af5233f3e60e8122003d99de782685176}{Get\+Mouse}} (\mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Mouse}} \&out\+Mouse) const \&
+\begin{DoxyCompactList}\small\item\em マウスの情報を取得する  \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_ab62884a6451ae0a9af5fe075e4cc7d70}{Is\+Hit\+Key}} (\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3}{Key\+ID}} key\+ID) const
+\begin{DoxyCompactList}\small\item\em キーが押されているか  \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_a64271ec243e8278f9fd73eef7872c8c7}{Get\+Key\+Data}} (\mbox{\hyperlink{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}{Key\+Data\+Span}} \&key\+Data) const
+\begin{DoxyCompactList}\small\item\em キー入力情報を取得する  \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_a41a24885cef5c093df1bd57a3ca2f003}{Set\+Key\+Code\+Table}} (\mbox{\hyperlink{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}{Key\+Code\+Table}} \&key\+Code\+Table)
+\begin{DoxyCompactList}\small\item\em キーコードのデータテーブル  \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_eugene_lib_1_1_system_a8c740d391a2c5e47fc85d8df3dd7f245}{Get\+Game\+Pad}} (\mbox{\hyperlink{class_eugene_lib_1_1_game_pad}{Game\+Pad}} \&pad, std\+::uint32\+\_\+t idx) const
+\begin{DoxyCompactList}\small\item\em ゲームパッドを取得する  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{限定公開メンバ関数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}{System}} (const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&size, const std\+::u8string \&title)
+\begin{DoxyCompactList}\small\item\em コンストラクタ  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{限定公開変数類}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \mbox{\hyperlink{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}{window\+Size\+\_\+}}
+\begin{DoxyCompactList}\small\item\em ウィンドウサイズ  \end{DoxyCompactList}\item 
+std\+::u8string \mbox{\hyperlink{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}{title\+\_\+}}
+\begin{DoxyCompactList}\small\item\em タイトル  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{詳解}
+OS等の処理をするクラス  
+
+\doxysubsection{型定義メンバ詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}\label{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}} 
+\index{EugeneLib::System@{EugeneLib::System}!KeyCodeTable@{KeyCodeTable}}
+\index{KeyCodeTable@{KeyCodeTable}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{KeyCodeTable}{KeyCodeTable}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}{Eugene\+Lib\+::\+System\+::\+Key\+Code\+Table}} =  std\+::array$<$int, \mbox{\hyperlink{namespace_eugene_lib_a6b80b505e10af336f7066c96d3590678}{KEYID\+\_\+\+MAX}}$>$}
+
+
+
+キーコードのテーブル  
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}\label{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}} 
+\index{EugeneLib::System@{EugeneLib::System}!KeyDataSpan@{KeyDataSpan}}
+\index{KeyDataSpan@{KeyDataSpan}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{KeyDataSpan}{KeyDataSpan}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}{Eugene\+Lib\+::\+System\+::\+Key\+Data\+Span}} =  std\+::span$<$bool, \mbox{\hyperlink{namespace_eugene_lib_a6b80b505e10af336f7066c96d3590678}{KEYID\+\_\+\+MAX}}$>$}
+
+
+
+キーボードの情報()  
+
+
+
+\doxysubsection{構築子と解体子}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}\label{class_eugene_lib_1_1_system_ad73ba9667a8b2f73b44a121bbec8dbcc}} 
+\index{EugeneLib::System@{EugeneLib::System}!````~System@{$\sim$System}}
+\index{````~System@{$\sim$System}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{$\sim$System()}{~System()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+System\+::$\sim$\+System (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+デストラクタ  
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}\label{class_eugene_lib_1_1_system_af0632c15bbb435485e82b608fe46884d}} 
+\index{EugeneLib::System@{EugeneLib::System}!System@{System}}
+\index{System@{System}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{System()}{System()}}
+{\footnotesize\ttfamily Eugene\+Lib\+::\+System\+::\+System (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} \&}]{size,  }\item[{const std\+::u8string \&}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+コンストラクタ  
+
+
+\begin{DoxyParams}{引数}
+{\em size} & ウィンドウサイズ \\
+\hline
+{\em title} & ウィンドウタイトル \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{関数詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_af72cb9d038835fdb7387174427e41b7a}\label{class_eugene_lib_1_1_system_af72cb9d038835fdb7387174427e41b7a}} 
+\index{EugeneLib::System@{EugeneLib::System}!CreateGraphics@{CreateGraphics}}
+\index{CreateGraphics@{CreateGraphics}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{CreateGraphics()}{CreateGraphics()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_lib_1_1_graphics}{Graphics}} $\ast$ Eugene\+Lib\+::\+System\+::\+Create\+Graphics (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_gpu_engine}{Gpu\+Engine}} $\ast$\&}]{gpu\+Engine,  }\item[{size\+\_\+t}]{buffer\+Num = {\ttfamily 2} }\end{DoxyParamCaption}) const \&\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Graphicsをを生成する  
+
+
+\begin{DoxyParams}{引数}
+{\em gpu\+Engine} & Gpu\+Engineのポインタの参照 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+Graphicsのポインタ 
+\end{DoxyReturn}
+
+
+\mbox{\hyperlink{class_eugene_lib_1_1_windows_system_ad5f0b1ab3896129237bd722874ea222b}{Eugene\+Lib\+::\+Windows\+System}}で実装されています。
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a8c740d391a2c5e47fc85d8df3dd7f245}\label{class_eugene_lib_1_1_system_a8c740d391a2c5e47fc85d8df3dd7f245}} 
+\index{EugeneLib::System@{EugeneLib::System}!GetGamePad@{GetGamePad}}
+\index{GetGamePad@{GetGamePad}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{GetGamePad()}{GetGamePad()}}
+{\footnotesize\ttfamily bool Eugene\+Lib\+::\+System\+::\+Get\+Game\+Pad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_game_pad}{Game\+Pad}} \&}]{pad,  }\item[{std\+::uint32\+\_\+t}]{idx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+ゲームパッドを取得する  
+
+
+\begin{DoxyParams}{引数}
+{\em pad} & ゲームパッド \\
+\hline
+{\em idx} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a64271ec243e8278f9fd73eef7872c8c7}\label{class_eugene_lib_1_1_system_a64271ec243e8278f9fd73eef7872c8c7}} 
+\index{EugeneLib::System@{EugeneLib::System}!GetKeyData@{GetKeyData}}
+\index{GetKeyData@{GetKeyData}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{GetKeyData()}{GetKeyData()}}
+{\footnotesize\ttfamily bool Eugene\+Lib\+::\+System\+::\+Get\+Key\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_system_ada291fd61baf9ea7515cb4aabb587dab}{Key\+Data\+Span}} \&}]{key\+Data }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+キー入力情報を取得する  
+
+
+\begin{DoxyParams}{引数}
+{\em key\+Span} & キー情報 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+キー情報がある場合はtrue、ない場合はfalse 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_af5233f3e60e8122003d99de782685176}\label{class_eugene_lib_1_1_system_af5233f3e60e8122003d99de782685176}} 
+\index{EugeneLib::System@{EugeneLib::System}!GetMouse@{GetMouse}}
+\index{GetMouse@{GetMouse}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{GetMouse()}{GetMouse()}}
+{\footnotesize\ttfamily void Eugene\+Lib\+::\+System\+::\+Get\+Mouse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_eugene_lib_1_1_system_1_1_mouse}{Mouse}} \&}]{out\+Mouse }\end{DoxyParamCaption}) const \&\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+マウスの情報を取得する  
+
+
+\begin{DoxyParams}{引数}
+{\em out\+Mouse} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}\label{class_eugene_lib_1_1_system_a697612d0d657a26b4d6ac8c8c8a4b32b}} 
+\index{EugeneLib::System@{EugeneLib::System}!GetWindowSize@{GetWindowSize}}
+\index{GetWindowSize@{GetWindowSize}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{GetWindowSize()}{GetWindowSize()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Eugene\+Lib\+::\+Vector2}} \& Eugene\+Lib\+::\+System\+::\+Get\+Window\+Size (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const \&}
+
+
+
+ウィンドウサイズを取得する  
+
+\begin{DoxyReturn}{戻り値}
+ウィンドウサイズ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ab62884a6451ae0a9af5fe075e4cc7d70}\label{class_eugene_lib_1_1_system_ab62884a6451ae0a9af5fe075e4cc7d70}} 
+\index{EugeneLib::System@{EugeneLib::System}!IsHitKey@{IsHitKey}}
+\index{IsHitKey@{IsHitKey}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{IsHitKey()}{IsHitKey()}}
+{\footnotesize\ttfamily bool Eugene\+Lib\+::\+System\+::\+Is\+Hit\+Key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_eugene_lib_aeb33d5971e3f70f9f415e54020ade5c3}{Key\+ID}}}]{key\+ID }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+キーが押されているか  
+
+
+\begin{DoxyParams}{引数}
+{\em key\+ID} & 押されているキーの\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+押されているときtrue、押されていないときfalse 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a41a24885cef5c093df1bd57a3ca2f003}\label{class_eugene_lib_1_1_system_a41a24885cef5c093df1bd57a3ca2f003}} 
+\index{EugeneLib::System@{EugeneLib::System}!SetKeyCodeTable@{SetKeyCodeTable}}
+\index{SetKeyCodeTable@{SetKeyCodeTable}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{SetKeyCodeTable()}{SetKeyCodeTable()}}
+{\footnotesize\ttfamily bool Eugene\+Lib\+::\+System\+::\+Set\+Key\+Code\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_lib_1_1_system_ab936252dfedcae2c2ea12c18b8e722c1}{Key\+Code\+Table}} \&}]{key\+Code\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+キーコードのデータテーブル  
+
+
+\begin{DoxyParams}{引数}
+{\em key\+Code\+Table} & セットするキーコード \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{戻り値}
+成功時true、失敗時false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}\label{class_eugene_lib_1_1_system_a632fd990d04adfa7baa3f0f940436f24}} 
+\index{EugeneLib::System@{EugeneLib::System}!Update@{Update}}
+\index{Update@{Update}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual bool Eugene\+Lib\+::\+System\+::\+Update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)  
+
+\begin{DoxyReturn}{戻り値}
+継続すべき時true、終了すべき時false 
+\end{DoxyReturn}
+
+
+\doxysubsection{メンバ詳解}
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}\label{class_eugene_lib_1_1_system_a689401e530b948aad2579748f3c77372}} 
+\index{EugeneLib::System@{EugeneLib::System}!title\_@{title\_}}
+\index{title\_@{title\_}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{title\_}{title\_}}
+{\footnotesize\ttfamily std\+::u8string Eugene\+Lib\+::\+System\+::title\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+タイトル  
+
+\mbox{\Hypertarget{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}\label{class_eugene_lib_1_1_system_ab1ae7a72ab8f4e88e6e4c7f1a4fe35d6}} 
+\index{EugeneLib::System@{EugeneLib::System}!windowSize\_@{windowSize\_}}
+\index{windowSize\_@{windowSize\_}!EugeneLib::System@{EugeneLib::System}}
+\doxysubsubsection{\texorpdfstring{windowSize\_}{windowSize\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_eugene_lib_a36504483055a3c73b16fbb00eac18fb8}{Vector2}} Eugene\+Lib\+::\+System\+::window\+Size\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ウィンドウサイズ  
+
+
+
+このクラス詳解は次のファイルから抽出されました\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Include/\+System/\mbox{\hyperlink{_system_8h}{System.\+h}}\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Eugene\+Lib/\+Eugene\+Lib/\+Source/\+System/\mbox{\hyperlink{_system_8cpp}{System.\+cpp}}\end{DoxyCompactItemize}

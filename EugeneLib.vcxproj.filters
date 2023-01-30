@@ -421,6 +421,9 @@
     <ClCompile Include="DirectXTex\DirectXTex\DirectXTexWIC.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Math\Vector3.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

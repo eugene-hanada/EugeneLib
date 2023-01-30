@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 23)
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
 
+set(LIBRARY_OUTPUT_PATH ..)
+
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
     Source/System/System.cpp
@@ -58,16 +60,7 @@ set(CommonSource
 # Math系のソースファイルをセット
 set(MathSource
     Source/Math/Geometry.cpp
-    Include/ThirdParty/DirectXMath/DirectXCollision.h
-    Include/ThirdParty/DirectXMath/DirectXCollision.inl
-    Include/ThirdParty/DirectXMath/DirectXColors.h
-    Include/ThirdParty/DirectXMath/DirectXMath.h
-    Include/ThirdParty/DirectXMath/DirectXMathConvert.inl
-    Include/ThirdParty/DirectXMath/DirectXMathMatrix.inl
-    Include/ThirdParty/DirectXMath/DirectXMathMisc.inl
-    Include/ThirdParty/DirectXMath/DirectXMathVector.inl
-    Include/ThirdParty/DirectXMath/DirectXPackedVector.h
-    Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
+    Source/Math/Vector3.cpp
  )
 
 # サウンド系のクラスのソースファイルをセット

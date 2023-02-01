@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 23)
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
 
-set(LIBRARY_OUTPUT_PATH ..)
+set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 

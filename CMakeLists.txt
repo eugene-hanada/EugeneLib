@@ -4,6 +4,9 @@ project(EugeneLib)
 # c++20を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
+option(USE_IMGUI "Imguiを使用するか?" OFF)
+
+
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
 
@@ -132,3 +135,9 @@ add_library(EugeneLib STATIC
 set_property(TARGET EugeneLib PROPERTY
   MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
 )
+
+
+if (USE_IMGUI)
+    target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
+    target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
+endif()

@@ -79,10 +79,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <IncludePath>$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <IncludePath>$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,7 +118,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -238,6 +240,11 @@
     <ClCompile Include="DirectXTex\DirectXTex\DirectXTexTGA.cpp" />
     <ClCompile Include="DirectXTex\DirectXTex\DirectXTexUtil.cpp" />
     <ClCompile Include="DirectXTex\DirectXTex\DirectXTexWIC.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />
     <ClCompile Include="Source\EugeneLib.cpp" />

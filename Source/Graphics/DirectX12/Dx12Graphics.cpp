@@ -14,6 +14,11 @@
 #include "Dx12VertexView.h"
 #include "Dx12DepthStencilViews.h"
 
+#ifdef USE_IMGUI
+#include <imgui.h>
+#include <backends/imgui_impl_dx12.h>
+#endif
+
 #include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib,"d3d12.lib")
@@ -24,6 +29,10 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
 	CreateBackBuffers(bufferNum);
+#ifdef USE_IMGUI
+	renderTargetViews_->GetViews();
+	//ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, )
+#endif
 }
 
 Eugene::Dx12Graphics::~Dx12Graphics()

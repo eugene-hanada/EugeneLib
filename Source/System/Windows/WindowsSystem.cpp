@@ -7,6 +7,11 @@
 
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 
+#ifdef USE_IMGUI
+#include <imgui.h>
+#include <backends/imgui_impl_win32.h>
+#endif
+
 #include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib, "Xinput.lib")
@@ -30,6 +35,10 @@ Eugene::System::Mouse mouse;
 
 Eugene::Graphics* graphics = nullptr;
 
+#ifdef USE_IMGUI
+extern LRESULT ImGui_ImplWin32_WndProHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif
+
 /// <summary>
 /// ウィンドウプロシージャ
 /// </summary>
@@ -41,6 +50,10 @@ Eugene::Graphics* graphics = nullptr;
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	mouse.wheel = 0.0f;
+#ifdef USE_IMGUI
+	ImGui_ImplWin32_WndProHandler(hwnd, msg, wparam, lparam);
+#endif
+	
 	switch (msg)
 	{
 	case WM_DESTROY:
@@ -117,10 +130,22 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	);
 	DebugLog("ウィンドウの表示");
 	ShowWindow(hwnd, SW_SHOW);
+
+#ifdef USE_IMGUI
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+
+	ImGui_ImplWin32_Init(hwnd);
+
+#endif
 }
 
 Eugene::WindowsSystem::~WindowsSystem()
 {
+#ifdef USE_IMGUI
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+#endif
 	CoUninitialize();
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 }

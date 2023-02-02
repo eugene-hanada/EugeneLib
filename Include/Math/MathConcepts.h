@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include <concepts>
 
 namespace Eugene
 {
 
-	// ƒRƒ“ƒZƒvƒg‚ğg‚Á‚Ä®”Œ^‚Æ•‚“®¬”“_”‚Ì‚İƒeƒ“ƒvƒŒ[ƒgˆø”‚É“ü‚ê‚ê‚é‚æ‚¤‚É
+	// ã‚³ãƒ³ã‚»ãƒ—ãƒˆã‚’ä½¿ã£ã¦æ•´æ•°å‹ã¨æµ®å‹•å°æ•°ç‚¹æ•°ã®ã¿ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå¼•æ•°ã«å…¥ã‚Œã‚Œã‚‹ã‚ˆã†ã«
 	template<class T>
 	concept ValueC = std::integral<T> || std::floating_point<T>;
 }

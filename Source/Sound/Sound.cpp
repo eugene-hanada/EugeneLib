@@ -1,4 +1,4 @@
-#include "../../Include/Sound/Sound.h"
+﻿#include "../../Include/Sound/Sound.h"
 #include "Xaudio2/Xa2Sound.h"
 
 Eugene::Sound* sound = nullptr;

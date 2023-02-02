@@ -1,39 +1,39 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <filesystem>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒVƒF[ƒ_[
+	/// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	/// </summary>
 	class Shader
 	{
 	public:
 
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^(w’è‚µ‚½ƒpƒX‚ÌƒVƒF[ƒ_[ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş)
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿(æŒ‡å®šã—ãŸãƒ‘ã‚¹ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€)
 		/// </summary>
-		/// <param name="path"> ƒVƒF[ƒ_[ƒtƒ@ƒCƒ‹‚ÌƒpƒX </param>
+		/// <param name="path"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ </param>
 		Shader(const std::filesystem::path& path);
 
 		/// <summary>
-		/// “Ç‚İ‚ñ‚¾ƒVƒF[ƒ_[‚Ìæ“ªƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚é
+		/// èª­ã¿è¾¼ã‚“ã ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> æ“ªƒ|ƒCƒ“ƒ^ </returns>
+		/// <returns> å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ </returns>
 		const char* GetPtr(void) const;
 
 		/// <summary>
-		/// ƒVƒF[ƒ_[‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
+		/// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒTƒCƒY </returns>
+		/// <returns> ã‚µã‚¤ã‚º </returns>
 		size_t GetSize(void) const;
 	private:
 
 		/// <summary>
-		/// ƒVƒF[ƒ_[ƒR[ƒh
+		/// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚³ãƒ¼ãƒ‰
 		/// </summary>
 		std::vector<char> code_;
 	};

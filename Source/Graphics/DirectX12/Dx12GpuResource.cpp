@@ -1,4 +1,4 @@
-#include "Dx12GpuResource.h"
+﻿#include "Dx12GpuResource.h"
 #include <d3d12.h>
 
 Eugene::Dx12GpuResource::~Dx12GpuResource()

@@ -1,4 +1,4 @@
-#include "../../Include/Graphics/Texture.h"
+ï»¿#include "../../Include/Graphics/Texture.h"
 #include <unordered_map>
 #include <functional>
 #include "../../DirectXTex/DirectXTex/DirectXTex.h"
@@ -69,7 +69,7 @@ Eugene::Texture::Texture(const std::filesystem::path& path)
 	if (!funcTbl[exe.string()](path, info_, data_))
 	{
 		// 
-		throw EugeneLibException("ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹“Ç‚İ‚İ‚É¸”s" + path.string());
+		throw EugeneLibException("ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ã«å¤±æ•—" + path.string());
 	}
 }
 

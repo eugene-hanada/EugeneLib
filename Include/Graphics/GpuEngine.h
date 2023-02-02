@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace Eugene
 {
@@ -6,19 +6,19 @@ namespace Eugene
 	class CommandList;
 
 	/// <summary>
-	/// CommandListƒNƒ‰ƒX‚ğÀs‚È‚Ç‚Ìˆ—‚ğs‚¤ƒNƒ‰ƒX
+	/// CommandListã‚¯ãƒ©ã‚¹ã‚’å®Ÿè¡Œãªã©ã®å‡¦ç†ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class GpuEngine
 	{
 	public:
 
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~GpuEngine();
 
 		/// <summary>
-		/// Push‚µ‚½CommandList‚ğÀs‚·‚é
+		/// Pushã—ãŸCommandListã‚’å®Ÿè¡Œã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		virtual void Execute(void) = 0;
@@ -30,16 +30,16 @@ namespace Eugene
 		virtual void Wait(void) = 0;
 
 		/// <summary>
-		/// Às‚·‚éƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’Ç‰Á‚·‚é
+		/// å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’è¿½åŠ ã™ã‚‹
 		/// </summary>
-		/// <param name="commandList"> ƒRƒ}ƒ“ƒhƒŠƒXƒg </param>
+		/// <param name="commandList"> ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ </param>
 		virtual void Push(CommandList& commandList) = 0;
 
 		virtual void* GetQueue(void) const = 0;
 	protected:
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒŠƒXƒg
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 		/// </summary>
 		GpuEngine();
 	};

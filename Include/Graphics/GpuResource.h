@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒX“™‚Åg‚¤ƒŠƒ\[ƒX
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ç­‰ã§ä½¿ã†ãƒªã‚½ãƒ¼ã‚¹
 	/// </summary>
 	class GpuResource
 	{
 	public:
 
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~GpuResource();
 
 		/// <summary>
-		/// ƒŠƒ\[ƒX‚ğƒ}ƒbƒv‚·‚é
+		/// ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒãƒƒãƒ—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒ|ƒCƒ“ƒ^ </returns>
+		/// <returns> ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual void* Map(void);
 
 		/// <summary>
-		/// ƒŠƒ\[ƒX‚ğƒAƒ“ƒ}ƒbƒv‚·‚é
+		/// ãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚¢ãƒ³ãƒãƒƒãƒ—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		virtual void UnMap(void);

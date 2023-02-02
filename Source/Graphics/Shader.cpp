@@ -1,4 +1,4 @@
-#include "../../Include/Graphics/Shader.h"
+﻿#include "../../Include/Graphics/Shader.h"
 #include <fstream>
 
 Eugene::Shader::Shader(const std::filesystem::path& path)

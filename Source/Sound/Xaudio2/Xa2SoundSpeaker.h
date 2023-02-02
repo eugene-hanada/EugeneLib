@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../../Include/Sound/SoundSpeaker.h"
 #include <memory>
 

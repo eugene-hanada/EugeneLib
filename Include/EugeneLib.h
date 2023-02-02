@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 
-// ƒVƒXƒeƒ€Œn
+// ã‚·ã‚¹ãƒ†ãƒ ç³»
 #include "System/System.h"
 
-// ƒOƒ‰ƒtƒBƒbƒNŒn
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ç³»
 #include "Graphics/Graphics.h"
 #include "Graphics/GpuEngine.h"
 #include "Graphics/CommandList.h"
@@ -16,7 +16,7 @@
 #include "Graphics/DepthStencilViews.h"
 #include "Graphics/Texture.h"
 
-// ƒTƒEƒ“ƒhŒn
+// ã‚µã‚¦ãƒ³ãƒ‰ç³»
 #include "Sound/Sound.h"
 #include "Sound/SoundSpeaker.h"
 #include "Sound/Wave.h"

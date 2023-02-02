@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/GpuEngine.h"
 #include <wrl.h>
 #include <vector>
@@ -24,13 +24,13 @@ namespace Eugene
 		void Push(CommandList& commandList) final;
 		void* GetQueue(void) const final;
 
-		// ƒRƒ}ƒ“ƒhƒLƒ…[
+		// ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue> cmdQueue_{ nullptr };
 
-		// ƒtƒFƒ“ƒX’l
+		// ãƒ•ã‚§ãƒ³ã‚¹å€¤
 		std::uint64_t fenceVal_;
 
-		// ƒtƒFƒ“ƒX
+		// ãƒ•ã‚§ãƒ³ã‚¹
 		Microsoft::WRL::ComPtr<ID3D12Fence> fence_{ nullptr };
 
 		std::vector<ID3D12CommandList*> commandLists_;

@@ -101,6 +101,12 @@ namespace Eugene
 		/// <param name="str"></param>
 		void Log(const std::string& str);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="str"></param>
+		void Log(const char str[]);
+
 	private:
 		Debug();
 		~Debug();

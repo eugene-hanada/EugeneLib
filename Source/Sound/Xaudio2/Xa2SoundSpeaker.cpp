@@ -1,4 +1,4 @@
-#include "Xa2SoundSpeaker.h"
+ï»¿#include "Xa2SoundSpeaker.h"
 #include <xaudio2.h>
 #include <xaudio2fx.h>
 #include <algorithm>
@@ -29,7 +29,7 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, st
 
 	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, maxPitchRate)))
 	{
-		throw EugeneLibException("ƒ\[ƒXƒ{ƒCƒX¶¬¸”s");
+		throw EugeneLibException("ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹ç”Ÿæˆå¤±æ•—");
 	}
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
@@ -44,7 +44,7 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, st
 
 	if(FAILED(source_->SubmitSourceBuffer(buffer_.get())))
 	{
-		throw EugeneLibException("ƒ\[ƒXƒ{ƒCƒX¶¬¸”s");
+		throw EugeneLibException("ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹ç”Ÿæˆå¤±æ•—");
 	}
 
 	outChannel_ = outChannel;

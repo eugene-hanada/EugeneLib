@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <algorithm>
 #include "../ThirdParty/DirectXMath/DirectXMath.h"
 #include "Vector2.h"
@@ -7,23 +7,23 @@
 namespace Eugene
 {
 
-	// Vector2Tmp‚Ìx=0,y=0‚ğ•\‚·’è”
+	// Vector2Tmpã®x=0,y=0ã‚’è¡¨ã™å®šæ•°
 	template<ValueC T>
 	constexpr Vector2Tmp<T> zeroVector2{ static_cast<T>(0),static_cast<T>(0) };
 
-	// Vector2Tmp‚Ìã•ûŒüx=0,y=-1‚ğ•\‚·’è”
+	// Vector2Tmpã®ä¸Šæ–¹å‘x=0,y=-1ã‚’è¡¨ã™å®šæ•°
 	template<ValueC T>
 	constexpr Vector2Tmp<T> upVector2{ static_cast<T>(0),static_cast<T>(-1) };
 
-	// Vector2Tmp‚Ì‰º•ûŒüx=0,y=1‚ğ•\‚·’è”
+	// Vector2Tmpã®ä¸‹æ–¹å‘x=0,y=1ã‚’è¡¨ã™å®šæ•°
 	template<ValueC T>
 	constexpr Vector2Tmp<T> downVector2{ static_cast<T>(0),static_cast<T>(1) };
 
-	// Vector2Tmp‚Ì‰E•ûŒüx=1,y=0‚ğ•\‚·’è”
+	// Vector2Tmpã®å³æ–¹å‘x=1,y=0ã‚’è¡¨ã™å®šæ•°
 	template<ValueC T>
 	constexpr Vector2Tmp<T> rightVector2{ static_cast<T>(1),static_cast<T>(0) };
 
-	// Vector2Tmp‚Ìã•ûŒüx=-1,y=0‚ğ•\‚·’è”
+	// Vector2Tmpã®ä¸Šæ–¹å‘x=-1,y=0ã‚’è¡¨ã™å®šæ•°
 	template<ValueC T>
 	constexpr Vector2Tmp<T> leftVector2{ static_cast<T>(-1),static_cast<T>(0) };
 
@@ -49,10 +49,10 @@ namespace Eugene
 	constexpr Vector3Tmp<T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };
 
 	/// <summary>
-	/// “ñæ‚·‚é
+	/// äºŒä¹—ã™ã‚‹
 	/// </summary>
-	/// <param name="val"> “ñæ‚µ‚½‚¢’l </param>
-	/// <returns> “ñæ‚µ‚½’l </returns>
+	/// <param name="val"> äºŒä¹—ã—ãŸã„å€¤ </param>
+	/// <returns> äºŒä¹—ã—ãŸå€¤ </returns>
 	template<ValueC T>
 	constexpr T Square(T val)
 	{
@@ -60,7 +60,7 @@ namespace Eugene
 	}
 
 	/// <summary>
-	/// “àÏ(Vector2—p)
+	/// å†…ç©(Vector2ç”¨)
 	/// </summary>
 	/// <param name="lVec"></param>
 	/// <param name="rVec"></param>
@@ -73,7 +73,7 @@ namespace Eugene
 
 
 	/// <summary>
-	/// ŠOÏ(Vector2—p)
+	/// å¤–ç©(Vector2ç”¨)
 	/// </summary>
 	/// <param name="lVec"></param>
 	/// <param name="rVec"></param>
@@ -85,18 +85,18 @@ namespace Eugene
 	}
 
 
-	// ‰~ü—¦
+	// å††å‘¨ç‡
 	template<ValueC T>
 	constexpr T pi = static_cast<T>(3.1415926535897932384626433832795);
 
-	// ‰~ü—¦*2
+	// å††å‘¨ç‡*2
 	template<ValueC T>
 	constexpr T pi2 = pi<T> *static_cast<T>(2.0);
 
 	/// <summary>
-	/// “x”–@‚ğŒÊ“x–@‚É‚·‚é
+	/// åº¦æ•°æ³•ã‚’å¼§åº¦æ³•ã«ã™ã‚‹
 	/// </summary>
-	/// <param name="deg"> •ÏŠ·‚µ‚½‚¢“x”–@‚Ì’l </param>
+	/// <param name="deg"> å¤‰æ›ã—ãŸã„åº¦æ•°æ³•ã®å€¤ </param>
 	/// <returns>  </returns>
 	template<ValueC T>
 	constexpr T Deg2Rad(const T& deg)
@@ -105,7 +105,7 @@ namespace Eugene
 	}
 
 	/// <summary>
-	/// ŒÊ“x–@‚ğ“x”–@‚É‚·‚é
+	/// å¼§åº¦æ³•ã‚’åº¦æ•°æ³•ã«ã™ã‚‹
 	/// </summary>
 	/// <param name="rad"></param>
 	/// <returns></returns>
@@ -116,11 +116,11 @@ namespace Eugene
 	}
 
 	/// <summary>
-	/// Šp“x‚ğw’è”ÍˆÍ‚É³‹K‰»‚·‚é
+	/// è§’åº¦ã‚’æŒ‡å®šç¯„å›²ã«æ­£è¦åŒ–ã™ã‚‹
 	/// </summary>
-	/// <param name="angle"> •ÏŠ·‚·‚é’l </param>
-	/// <param name="valMin"> Å¬’l(ƒfƒtƒHƒ‹ƒg=0) </param>
-	/// <param name="valMax"> Å‘å’l(ƒfƒtƒHƒ‹ƒg=pi2) </param>
+	/// <param name="angle"> å¤‰æ›ã™ã‚‹å€¤ </param>
+	/// <param name="valMin"> æœ€å°å€¤(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ=0) </param>
+	/// <param name="valMax"> æœ€å¤§å€¤(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ=pi2) </param>
 	/// <returns></returns>
 	float GetNormalizedAngle(float angle, float valMin = 0.0f, float valMax = pi2<float>);
 
@@ -132,7 +132,7 @@ namespace Eugene
 		return std::clamp(val, minVal, maxVal);
 	}
 
-	/// <summary> Vector2‚ÆVector2‚ÌŠÔ‚ÌŠp“x‚ğ‹‚ß‚é </summary>
+	/// <summary> Vector2ã¨Vector2ã®é–“ã®è§’åº¦ã‚’æ±‚ã‚ã‚‹ </summary>
 	/// <param name="v1"></param>
 	/// <param name="v2"></param>
 	/// <returns></returns>
@@ -153,10 +153,10 @@ namespace Eugene
 
 
 
-	/// <summary> a‚Æb‚ğt‚ÅüŒ`•âŠ®‚·‚éŠÖ” </summary>
+	/// <summary> aã¨bã‚’tã§ç·šå½¢è£œå®Œã™ã‚‹é–¢æ•° </summary>
 	/// <param name="a">  </param>
 	/// <param name="b"></param>
-	/// <param name="t">@1.0f ‚©‚ç0.0f‚Ì’l@</param>
+	/// <param name="t">ã€€1.0f ã‹ã‚‰0.0fã®å€¤ã€€</param>
 	/// <returns></returns>
 	template<ValueC T>
 	constexpr T Learp(const T& a, const T& b, const T& t)
@@ -164,10 +164,10 @@ namespace Eugene
 		return a + ((b - a) * t);
 	}
 
-	/// <summary> ƒxƒNƒgƒ‹a‚ÆƒxƒNƒgƒ‹b‚ğt‚ÅüŒ`•âŠ®‚·‚éŠÖ” </summary>
+	/// <summary> ãƒ™ã‚¯ãƒˆãƒ«aã¨ãƒ™ã‚¯ãƒˆãƒ«bã‚’tã§ç·šå½¢è£œå®Œã™ã‚‹é–¢æ•° </summary>
 	/// <param name="a">  </param>
 	/// <param name="b"></param>
-	/// <param name="t"> 1.0f ‚©‚ç0.0f‚Ì’l </param>
+	/// <param name="t"> 1.0f ã‹ã‚‰0.0fã®å€¤ </param>
 	/// <returns></returns>
 	template<ValueC T>
 	constexpr Vector2Tmp<T> Learp(const Vector2Tmp<T>& a, const Vector2Tmp<T>& b, const T& t)
@@ -175,11 +175,11 @@ namespace Eugene
 		return a + ((b - a) * t);
 	}
 
-	/// <summary> Vector2Tmp‚ğClamp‚·‚é </summary>
-	/// <param name="val"> Clamp‚µ‚½‚¢’l </param>
-	/// <param name="min"> Å¬’l </param>
-	/// <param name="max"> Å‘å’l </param>
-	/// <returns> ClampŒã‚Ì’l </returns>
+	/// <summary> Vector2Tmpã‚’Clampã™ã‚‹ </summary>
+	/// <param name="val"> Clampã—ãŸã„å€¤ </param>
+	/// <param name="min"> æœ€å°å€¤ </param>
+	/// <param name="max"> æœ€å¤§å€¤ </param>
+	/// <returns> Clampå¾Œã®å€¤ </returns>
 	template<ValueC T>
 	constexpr Vector2Tmp<T> Clamp(const Vector2Tmp<T>& val, const Vector2Tmp<T>& min, const Vector2Tmp<T>& max)
 	{

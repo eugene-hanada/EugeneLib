@@ -27,6 +27,11 @@ void Eugene::Debug::Log(const std::string& str)
 	binarySemphore_.release();
 }
 
+void Eugene::Debug::Log(const char str[])
+{
+	Log(std::string{ str });
+}
+
 Eugene::Debug::Debug() :
 	binarySemphore_{1}
 {

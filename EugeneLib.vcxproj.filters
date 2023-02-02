@@ -1,442 +1,153 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="DirectXTex\DirectXTex\BC.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\BC4BC5.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\BC6HBC7.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompress.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompressGPU.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexConvert.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D11.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D12.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexDDS.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexFlipRotate.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexHDR.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexImage.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMipmaps.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMisc.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexNormalMaps.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexPMAlpha.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexResize.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexTGA.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexUtil.cpp" />
+    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexWIC.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Common\Debug.cpp" />
+    <ClCompile Include="Source\Common\EugeneLibException.cpp" />
+    <ClCompile Include="Source\EugeneLib.cpp" />
+    <ClCompile Include="Source\Graphics\CommandList.cpp" />
+    <ClCompile Include="Source\Graphics\DepthStencilViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DefaultResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12UploadableResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Views.cpp" />
+    <ClCompile Include="Source\Graphics\GpuEngine.cpp" />
+    <ClCompile Include="Source\Graphics\GpuResource.cpp" />
+    <ClCompile Include="Source\Graphics\Graphics.cpp" />
+    <ClCompile Include="Source\Graphics\GraphicsPipeline.cpp" />
+    <ClCompile Include="Source\Graphics\IndexView.cpp" />
+    <ClCompile Include="Source\Graphics\RenderTargetViews.cpp" />
+    <ClCompile Include="Source\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\ShaderResourceViews.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Graphics\VertexView.cpp" />
+    <ClCompile Include="Source\Math\Geometry.cpp" />
+    <ClCompile Include="Source\Math\Vector3.cpp" />
+    <ClCompile Include="Source\Sound\Sound.cpp" />
+    <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
+    <ClCompile Include="Source\Sound\SoundBase.cpp" />
+    <ClCompile Include="Source\Sound\SoundControl.cpp" />
+    <ClCompile Include="Source\Sound\SoundSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Wave.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound3DControl.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundControl.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp" />
+    <ClCompile Include="Source\System\DynamicLibrary.cpp" />
+    <ClCompile Include="Source\System\GamePad.cpp" />
+    <ClCompile Include="Source\System\System.cpp" />
+    <ClCompile Include="Source\System\Windows\Dll.cpp" />
+    <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Common\Debug.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Common\EugeneLibException.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\CommandList.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\DepthStencilViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\GpuEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\GpuResource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\Graphics.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\GraphicsCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\GraphicsPipeline.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\IndexView.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\RenderTargetViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\Shader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\ShaderResourceViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\Texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Graphics\VertexView.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Math\Geometry.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Math\MathConcepts.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Math\Vector2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Math\Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\Sound.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\Sound3DControl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\SoundBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\SoundCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\SoundControl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\SoundSpeaker.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Sound\Wave.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\System\DynamicLibrary.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\System\GamePad.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\System\KeyID.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\System\System.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXCollision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXColors.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXMath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ThirdParty\d3dx12.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Color.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EugeneLib.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuResource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12UploadableResource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound3DControl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System\Windows\Dll.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System\Windows\WindowsSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\BC.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\d3dx12.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\DDS.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\DirectXTex.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\DirectXTexP.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\filters.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXTex\DirectXTex\scoped.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="DirectXTex\DirectXTex\BC.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\d3dx12.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\DDS.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\DirectXTex.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\DirectXTexP.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\filters.h" />
+    <ClInclude Include="DirectXTex\DirectXTex\scoped.h" />
+    <ClInclude Include="Include\Color.h" />
+    <ClInclude Include="Include\Common\Debug.h" />
+    <ClInclude Include="Include\Common\EugeneLibException.h" />
+    <ClInclude Include="Include\EugeneLib.h" />
+    <ClInclude Include="Include\Graphics\CommandList.h" />
+    <ClInclude Include="Include\Graphics\DepthStencilViews.h" />
+    <ClInclude Include="Include\Graphics\GpuEngine.h" />
+    <ClInclude Include="Include\Graphics\GpuResource.h" />
+    <ClInclude Include="Include\Graphics\Graphics.h" />
+    <ClInclude Include="Include\Graphics\GraphicsCommon.h" />
+    <ClInclude Include="Include\Graphics\GraphicsPipeline.h" />
+    <ClInclude Include="Include\Graphics\IndexView.h" />
+    <ClInclude Include="Include\Graphics\RenderTargetViews.h" />
+    <ClInclude Include="Include\Graphics\Shader.h" />
+    <ClInclude Include="Include\Graphics\ShaderResourceViews.h" />
+    <ClInclude Include="Include\Graphics\Texture.h" />
+    <ClInclude Include="Include\Graphics\VertexView.h" />
+    <ClInclude Include="Include\Math\Geometry.h" />
+    <ClInclude Include="Include\Math\MathConcepts.h" />
+    <ClInclude Include="Include\Math\Vector2.h" />
+    <ClInclude Include="Include\Math\Vector3.h" />
+    <ClInclude Include="Include\Sound\Sound.h" />
+    <ClInclude Include="Include\Sound\Sound3DControl.h" />
+    <ClInclude Include="Include\Sound\SoundBase.h" />
+    <ClInclude Include="Include\Sound\SoundCommon.h" />
+    <ClInclude Include="Include\Sound\SoundControl.h" />
+    <ClInclude Include="Include\Sound\SoundSpeaker.h" />
+    <ClInclude Include="Include\Sound\Wave.h" />
+    <ClInclude Include="Include\System\DynamicLibrary.h" />
+    <ClInclude Include="Include\System\GamePad.h" />
+    <ClInclude Include="Include\System\KeyID.h" />
+    <ClInclude Include="Include\System\System.h" />
+    <ClInclude Include="Include\ThirdParty\d3dx12.h" />
+    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXCollision.h" />
+    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXColors.h" />
+    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXMath.h" />
+    <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12UploadableResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound3DControl.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
+    <ClInclude Include="Source\System\Windows\Dll.h" />
+    <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXMathConvert.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXMathMatrix.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXMathMisc.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXMathVector.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-    <None Include="DirectXTex\DirectXTex\DirectXTex.inl">
-      <Filter>ヘッダー ファイル</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source\Common\Debug.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Common\EugeneLibException.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12DefaultResource.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuResource.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12UploadableResource.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12Views.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\CommandList.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\DepthStencilViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\GpuEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\GpuResource.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\Graphics.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\GraphicsPipeline.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\IndexView.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderTargetViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\Shader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\ShaderResourceViews.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\Texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\VertexView.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Geometry.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Xaudio2\Xa2Sound3DControl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundControl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Sound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Sound3DControl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\SoundBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\SoundControl.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\SoundSpeaker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sound\Wave.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Windows\Dll.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Windows\WindowsSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\DynamicLibrary.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\GamePad.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\System.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\EugeneLib.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\BC.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\BC4BC5.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\BC6HBC7.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompress.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompressGPU.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexConvert.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D11.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D12.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexDDS.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexFlipRotate.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexHDR.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexImage.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMipmaps.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMisc.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexNormalMaps.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexPMAlpha.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexResize.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexTGA.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexUtil.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexWIC.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp">
-    <ClCompile Include="Source\Math\Vector3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
+    <None Include="DirectXTex\DirectXTex\DirectXTex.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXMathConvert.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXMathMatrix.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXMathMisc.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXMathVector.inl" />
+    <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

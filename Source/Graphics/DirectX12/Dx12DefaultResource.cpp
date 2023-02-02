@@ -1,4 +1,4 @@
-#include "Dx12DefaultResource.h"
+ï»¿#include "Dx12DefaultResource.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
@@ -18,7 +18,7 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t si
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒfƒtƒHƒ‹ƒgƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 }
 
@@ -29,7 +29,7 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, std
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("ƒXƒƒbƒvƒ`ƒFƒCƒ“—pƒoƒbƒtƒ@‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ç”¨ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆã«å¤±æ•—");
 	}
 
 }
@@ -51,7 +51,7 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const Vec
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg—pƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆç”¨ãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 }
 
@@ -72,7 +72,7 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, const Tex
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒXì¬");
+		throw EugeneLibException("ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹ä½œæˆ");
 	}
 }
 
@@ -91,6 +91,6 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const Vect
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒfƒvƒX—pƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ãƒ‡ãƒ—ã‚¹ç”¨ãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 }

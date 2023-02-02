@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <filesystem>
 #include <vector>
 #include "SoundCommon.h"
@@ -6,14 +6,14 @@
 
 namespace Eugene
 {
-	// WaveƒNƒ‰ƒX
+	// Waveã‚¯ãƒ©ã‚¹
 	class Wave
 	{
 	public:
 		Wave(const std::filesystem::path& path);
 
 		/// <summary>
-		/// fmt‚Ì•”•ª‚ğæ“¾‚·‚é
+		/// fmtã®éƒ¨åˆ†ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
@@ -23,7 +23,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ƒf[ƒ^‚ğæ“¾‚·‚é
+		/// ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
@@ -40,19 +40,19 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// Fmtƒ`ƒƒƒ“ƒN‚Ì“Ç‚İ‚İ
+		/// Fmtãƒãƒ£ãƒ³ã‚¯ã®èª­ã¿è¾¼ã¿
 		/// </summary>
 		/// <param name="file"></param>
 		void LoadFmt(std::ifstream& file);
 
 		/// <summary>
-		/// ƒf[ƒ^ƒ`ƒƒƒ“ƒN‚Ì“Ç‚İ‚İ
+		/// ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯ã®èª­ã¿è¾¼ã¿
 		/// </summary>
 		/// <param name="file"></param>
 		void LoadData(std::ifstream& file);
 
 
-		// ƒf[ƒ^
+		// ãƒ‡ãƒ¼ã‚¿
 		std::vector<std::uint8_t> data_;
 
 		// fmt
@@ -60,7 +60,7 @@ namespace Eugene
 
 		SoundFormatEx exData_;
 
-		// RiFFƒ`ƒƒƒ“ƒN
+		// RiFFãƒãƒ£ãƒ³ã‚¯
 		struct RIFF
 		{
 			char id[4];

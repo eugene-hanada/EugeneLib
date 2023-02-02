@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "SoundBase.h"
 
 namespace Eugene
@@ -8,7 +8,7 @@ namespace Eugene
 	class Sound3DControl;
 	class Wave;
 	/// <summary>
-	/// ƒTƒEƒ“ƒh—p‚ÌƒNƒ‰ƒX
+	/// ã‚µã‚¦ãƒ³ãƒ‰ç”¨ã®ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class Sound :
 		public SoundBase
@@ -17,14 +17,14 @@ namespace Eugene
 		virtual ~Sound();
 
 		/// <summary>
-		/// ƒTƒEƒ“ƒhÄ¶‚·‚éƒNƒ‰ƒX‚ğì¬‚·‚é
+		/// ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹
 		/// </summary>
 		/// <param name="wave"></param>
 		/// <returns></returns>
 		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const = 0;
 
 		/// <summary>
-		/// ƒTƒEƒ“ƒh‚ğƒRƒ“ƒgƒ[ƒ‹‚·‚éƒNƒ‰ƒX‚ğì¬‚·‚é
+		/// ã‚µã‚¦ãƒ³ãƒ‰ã‚’ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹
 		/// </summary>
 		/// <param name="sample"></param>
 		/// <param name="inputChannel"></param>
@@ -33,7 +33,7 @@ namespace Eugene
 		virtual SoundControl* CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
 
 		/// <summary>
-		/// ƒTƒEƒ“ƒh‚ğ3D‚Åo—Í‚µƒRƒ“ƒgƒ[ƒ‹‚·‚éƒNƒ‰ƒX‚ğì¬‚·‚é
+		/// ã‚µã‚¦ãƒ³ãƒ‰ã‚’3Dã§å‡ºåŠ›ã—ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹
 		/// </summary>
 		/// <param name="sample"></param>
 		/// <param name="inputChannel"></param>

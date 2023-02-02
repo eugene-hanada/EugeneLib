@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <array>
 #include "../../../Include/System/System.h"
 
@@ -20,16 +20,20 @@ namespace Eugene
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 
+#ifdef USE_IMGUI
+		void ImguiNewFrame(void) const final;
+#endif
+
 		/// <summary>
-		/// ƒL[ƒR[ƒh‚Ìƒe[ƒuƒ‹
+		/// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ãƒ†ãƒ¼ãƒ–ãƒ«
 		/// </summary>
 		KeyCodeTable codeTable_{
-			9,			// ƒ^ƒu
-			240,		// ƒLƒƒƒvƒXƒƒbƒN
-			160,		// ¶ƒVƒtƒg
-			162,		// ¶ƒRƒ“ƒgƒ[ƒ‹
-			27,			// ƒGƒXƒP[ƒv
-			32,			// ƒXƒy[ƒX
+			9,			// ã‚¿ãƒ–
+			240,		// ã‚­ãƒ£ãƒ—ã‚¹ãƒ­ãƒƒã‚¯
+			160,		// å·¦ã‚·ãƒ•ãƒˆ
+			162,		// å·¦ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
+			27,			// ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—
+			32,			// ã‚¹ãƒšãƒ¼ã‚¹
 			164,
 			165,
 			8,

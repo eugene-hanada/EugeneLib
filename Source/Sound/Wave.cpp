@@ -1,4 +1,4 @@
-#include "../../Include/Sound/Wave.h"
+ï»¿#include "../../Include/Sound/Wave.h"
 #include <fstream>
 #include "../../Include/Common/EugeneLibException.h"
 
@@ -11,7 +11,7 @@ Eugene::Wave::Wave(const std::filesystem::path& path) :
 
 	if (!file)
 	{
-		throw EugeneLibException("ƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½");
+		throw EugeneLibException("ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ");
 	}
 
 	RIFF riff;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Dx12Views.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 

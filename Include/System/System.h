@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <string_view>
 #include <array>
@@ -13,24 +13,24 @@ namespace Eugene
 	class GpuEngine;
 
 	/// <summary>
-	/// OS“™‚Ìˆ—‚ğ‚·‚éƒNƒ‰ƒX
+	/// OSç­‰ã®å‡¦ç†ã‚’ã™ã‚‹ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class System
 	{
 	public:
 
 		/// <summary>
-		/// ƒL[ƒ{[ƒh‚Ìî•ñ()
+		/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®æƒ…å ±()
 		/// </summary>
 		using KeyDataSpan = std::span<bool, KEYID_MAX>;
 
 		/// <summary>
-		/// ƒL[ƒR[ƒh‚Ìƒe[ƒuƒ‹
+		/// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ãƒ†ãƒ¼ãƒ–ãƒ«
 		/// </summary>
 		using KeyCodeTable = std::array<int, KEYID_MAX>;
 
 		/// <summary>
-		/// ƒ}ƒEƒX‚Ì\‘¢‘Ì
+		/// ãƒã‚¦ã‚¹ã®æ§‹é€ ä½“
 		/// </summary>
 		struct Mouse
 		{
@@ -43,82 +43,86 @@ namespace Eugene
 
 
 		/// <summary>
-		/// XVˆ—(–ˆƒtƒŒ[ƒ€ŒÄ‚Ô•K—v‚ª‚ ‚è•Ô’l‚ÅI—¹‚·‚×‚«‚©‚ª‹A‚Á‚Ä‚­‚é)
+		/// æ›´æ–°å‡¦ç†(æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã¶å¿…è¦ãŒã‚ã‚Šè¿”å€¤ã§çµ‚äº†ã™ã¹ãã‹ãŒå¸°ã£ã¦ãã‚‹)
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> Œp‘±‚·‚×‚«trueAI—¹‚·‚×‚«false </returns>
+		/// <returns> ç¶™ç¶šã™ã¹ãæ™‚trueã€çµ‚äº†ã™ã¹ãæ™‚false </returns>
 		virtual bool Update(void) = 0;
 
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~System();
 
 		/// <summary>
-		/// ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğæ“¾‚·‚é
+		/// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒEƒBƒ“ƒhƒEƒTƒCƒY </returns>
+		/// <returns> ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º </returns>
 		const Vector2& GetWindowSize(void) const&;
 
 		/// <summary>
-		/// Graphics‚ğ‚ğ¶¬‚·‚é
+		/// Graphicsã‚’ã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
-		/// <param name="gpuEngine"> GpuEngine‚Ìƒ|ƒCƒ“ƒ^‚ÌQÆ </param>
-		/// <returns> Graphics‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="gpuEngine"> GpuEngineã®ãƒã‚¤ãƒ³ã‚¿ã®å‚ç…§ </param>
+		/// <returns> Graphicsã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum = 2) const& = 0;
 
 		/// <summary>
-		/// ƒ}ƒEƒX‚Ìî•ñ‚ğæ“¾‚·‚é
+		/// ãƒã‚¦ã‚¹ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name="outMouse"></param>
 		/// <returns></returns>
 		virtual void GetMouse(Mouse& outMouse) const&;
 
 		/// <summary>
-		/// ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+		/// ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 		/// </summary>
-		/// <param name="keyID"> ‰Ÿ‚³‚ê‚Ä‚¢‚éƒL[‚ÌID </param>
-		/// <returns> ‰Ÿ‚³‚ê‚Ä‚¢‚é‚Æ‚«trueA‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«false </returns>
+		/// <param name="keyID"> æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ¼ã®ID </param>
+		/// <returns> æŠ¼ã•ã‚Œã¦ã„ã‚‹ã¨ãtrueã€æŠ¼ã•ã‚Œã¦ã„ãªã„ã¨ãfalse </returns>
 		virtual bool IsHitKey(KeyID keyID) const;
 
 		/// <summary>
-		/// ƒL[“ü—Íî•ñ‚ğæ“¾‚·‚é
+		/// ã‚­ãƒ¼å…¥åŠ›æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
-		/// <param name="keySpan"> ƒL[î•ñ </param>
-		/// <returns> ƒL[î•ñ‚ª‚ ‚éê‡‚ÍtrueA‚È‚¢ê‡‚Ífalse </returns>
+		/// <param name="keySpan"> ã‚­ãƒ¼æƒ…å ± </param>
+		/// <returns> ã‚­ãƒ¼æƒ…å ±ãŒã‚ã‚‹å ´åˆã¯trueã€ãªã„å ´åˆã¯false </returns>
 		virtual bool GetKeyData(KeyDataSpan& keyData) const;
 
 		/// <summary>
-		/// ƒL[ƒR[ƒh‚Ìƒf[ƒ^ƒe[ƒuƒ‹
+		/// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«
 		/// </summary>
-		/// <param name="keyCodeTable"> ƒZƒbƒg‚·‚éƒL[ƒR[ƒh </param>
-		/// <returns> ¬Œ÷trueA¸”sfalse </returns>
+		/// <param name="keyCodeTable"> ã‚»ãƒƒãƒˆã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ </param>
+		/// <returns> æˆåŠŸæ™‚trueã€å¤±æ•—æ™‚false </returns>
 		virtual bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
 
 		/// <summary>
-		/// ƒQ[ƒ€ƒpƒbƒh‚ğæ“¾‚·‚é
+		/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
-		/// <param name="pad"> ƒQ[ƒ€ƒpƒbƒh </param>
+		/// <param name="pad"> ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ </param>
 		/// <param name="idx"></param>
 		/// <returns></returns>
 		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
+
+#ifdef USE_IMGUI
+		virtual void ImguiNewFrame(void) const = 0;
+#endif
 	protected:
 
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
-		/// <param name="size"> ƒEƒBƒ“ƒhƒEƒTƒCƒY </param>
-		/// <param name="title"> ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹ </param>
+		/// <param name="size"> ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º </param>
+		/// <param name="title"> ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ« </param>
 		System(const Vector2& size, const std::u8string& title);
 		
 		/// <summary>
-		/// ƒEƒBƒ“ƒhƒEƒTƒCƒY
+		/// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
 		/// </summary>
 		Vector2 windowSize_;
 
 		/// <summary>
-		/// ƒ^ƒCƒgƒ‹
+		/// ã‚¿ã‚¤ãƒˆãƒ«
 		/// </summary>
 		std::u8string title_;
 	private:
@@ -128,10 +132,10 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// System‚Ìì¬
+	/// Systemã®ä½œæˆ
 	/// </summary>
-	/// <param name="size"> ƒEƒBƒ“ƒhƒEƒTƒCƒY </param>
-	/// <param name="title"> ƒ^ƒCƒgƒ‹ </param>
+	/// <param name="size"> ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º </param>
+	/// <param name="title"> ã‚¿ã‚¤ãƒˆãƒ« </param>
 	/// <returns></returns>
 	System* CreateSystem(const Vector2& size, const std::u8string& title);
 }

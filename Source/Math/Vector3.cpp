@@ -1,4 +1,4 @@
-#include "../../Include/Math/Vector3.h"
+﻿#include "../../Include/Math/Vector3.h"
 #include "../../Include/ThirdParty/DirectXMath/DirectXMath.h"
 namespace Eugene
 {

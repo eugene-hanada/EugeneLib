@@ -190,6 +190,8 @@
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXColors.h" />
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXMath.h" />
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
@@ -244,6 +246,7 @@
     <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />

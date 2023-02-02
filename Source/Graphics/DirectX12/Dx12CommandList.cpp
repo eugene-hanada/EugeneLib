@@ -1,4 +1,4 @@
-#include "Dx12CommandList.h"
+ï»¿#include "Dx12CommandList.h"
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include <array>
@@ -12,19 +12,24 @@
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
 
+#ifdef USE_IMGUI
+#include "Dx12Graphics.h"
+#include <backends/imgui_impl_dx12.h>
+#endif
+
 Eugene::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 {
 	if (FAILED(device->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("ƒRƒ}ƒ“ƒhì¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+		throw EugeneLibException("ã‚³ãƒãƒ³ãƒ‰ä½œæˆã§ãã¾ã›ã‚“ã§ã—ãŸ");
 	}
 
 	if (FAILED(device->CreateCommandList(
 		0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator_.Get(), nullptr, IID_PPV_ARGS(cmdList_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒRƒ}ƒ“ƒhì¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+		throw EugeneLibException("ã‚³ãƒãƒ³ãƒ‰ä½œæˆã§ãã¾ã›ã‚“ã§ã—ãŸ");
 	}
 
 	End();
@@ -129,12 +134,12 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 		return;
 	}
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌÅ‘å”‚ª8‚È‚Ì‚Å‚»‚Ì•ªŠm•Û
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æœ€å¤§æ•°ãŒ8ãªã®ã§ãã®åˆ†ç¢ºä¿
 	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, 8> handles;
 	size_t count{ 0ull };
 	for (size_t i = 0; i < views.GetSize() || i < handles.size(); i++)
 	{
-		// Å‘å”‚à‚µ‚­‚Íƒrƒ…[‚É‚ ‚éÅ‘å”•ªŠi”[
+		// æœ€å¤§æ•°ã‚‚ã—ãã¯ãƒ“ãƒ¥ãƒ¼ã«ã‚ã‚‹æœ€å¤§æ•°åˆ†æ ¼ç´
 		handles[i] = handle;
 		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 		count++;
@@ -185,7 +190,7 @@ void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::s
 		return;
 	}
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌÅ‘å”‚ª8‚È‚Ì‚Å‚»‚Ì•ªŠm•Û
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æœ€å¤§æ•°ãŒ8ãªã®ã§ãã®åˆ†ç¢ºä¿
 	for (size_t i = 0; i < views.GetSize(); i++)
 	{
 		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
@@ -262,3 +267,15 @@ void Eugene::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource&
 	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
+
+#ifdef USE_IMGUI
+void Eugene::Dx12CommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
+{
+	auto dh = static_cast<ID3D12DescriptorHeap*>(static_cast<Dx12Graphics&>(graphics).srViews_->GetViews());
+	cmdList_->SetDescriptorHeaps(1,&dh);
+	ImGui_ImplDX12_RenderDrawData(
+		data,
+		cmdList_.Get()
+	);
+}
+#endif

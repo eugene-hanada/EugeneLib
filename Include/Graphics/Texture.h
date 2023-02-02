@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <filesystem>
 #include <vector>
 #include "GraphicsCommon.h"
@@ -6,20 +6,20 @@
 namespace Eugene
 {
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	/// </summary>
 	class Texture
 	{
 	public:
 		
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^(w’è‚µ‚½ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş)
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿(æŒ‡å®šã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€)
 		/// </summary>
-		/// <param name="path"> ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹‚ÌƒpƒX </param>
+		/// <param name="path"> ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ </param>
 		Texture(const std::filesystem::path& path);
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒ‚Ìî•ñ‚ğæ“¾‚·‚é
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
@@ -29,20 +29,20 @@ namespace Eugene
 		const std::vector<std::uint8_t>& GetData(void) const&;
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒƒf[ƒ^‚ğæ“¾‚·‚é
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒeƒNƒXƒ`ƒƒƒf[ƒ^ </returns>
+		/// <returns> ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ </returns>
 		std::uint8_t* GetData(void)&;
 	private:
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		std::vector<std::vector<std::uint8_t>> data_;
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒî•ñ
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£æƒ…å ±
 		/// </summary>
 		TextureInfo info_;
 	};

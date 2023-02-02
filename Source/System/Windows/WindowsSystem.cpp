@@ -1,4 +1,4 @@
-#include "WindowsSystem.h"
+﻿#include "WindowsSystem.h"
 #include <Windows.h>
 #include <Xinput.h>
 #include <filesystem>
@@ -38,7 +38,7 @@ Eugene::Graphics* graphics = nullptr;
 
 
 #ifdef USE_IMGUI
-extern LRESULT ImGui_ImplWin32_WndProHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
 /// <summary>
@@ -54,7 +54,7 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	mouse.wheel = 0.0f;
 
 #ifdef USE_IMGUI
-	ImGui_ImplWin32_WndProHandler(hwnd, msg, wparam, lparam);
+	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam);
 #endif
 
 	switch (msg)
@@ -233,3 +233,10 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 
 	return true;
 }
+
+#ifdef USE_IMGUI
+void Eugene::WindowsSystem::ImguiNewFrame(void) const
+{
+	ImGui_ImplWin32_NewFrame();
+}
+#endif

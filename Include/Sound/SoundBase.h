@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 #include <span>
 
@@ -10,33 +10,33 @@ namespace Eugene
 		virtual ~SoundBase();
 
 		/// <summary>
-		/// ‘S‘Ì‚Ìƒ{ƒŠƒ…[ƒ€‚ğƒZƒbƒg‚·‚é
+		/// å…¨ä½“ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="volume"> ƒ{ƒŠƒ…[ƒ€ </param>
+		/// <param name="volume"> ãƒœãƒªãƒ¥ãƒ¼ãƒ  </param>
 		virtual void SetVolume(float volume) = 0;
 
 		/// <summary>
-		/// ƒpƒ“ƒjƒ“ƒO—p‚Éƒ{ƒŠƒ…[ƒ€‚ğƒZƒbƒg‚·‚é
+		/// ãƒ‘ãƒ³ãƒ‹ãƒ³ã‚°ç”¨ã«ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
 		/// <param name="volumes"></param>
 		virtual void SetPan(std::span<float> volumes) = 0;
 
 		/// <summary>
-		/// Œ»İ‚Ìƒ{ƒŠƒ…[ƒ€‚ğæ“¾‚·‚é
+		/// ç¾åœ¨ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		float GetVolume(void) const;
 
 		/// <summary>
-		/// o—Íƒ`ƒƒƒ“ƒlƒ‹‚ğæ“¾‚·‚é
+		/// å‡ºåŠ›ãƒãƒ£ãƒ³ãƒãƒ«ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		std::uint16_t GetOutChannel(void) const;
 
 		/// <summary>
-		/// “ü—Íƒ`ƒƒƒ“ƒlƒ‹‚ğæ“¾‚·‚é
+		/// å…¥åŠ›ãƒãƒ£ãƒ³ãƒãƒ«ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
@@ -45,17 +45,17 @@ namespace Eugene
 		SoundBase();
 
 		/// <summary>
-		/// Œ»İ‚Ìƒ{ƒŠƒ…[ƒ€
+		/// ç¾åœ¨ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ 
 		/// </summary>
 		float volume_;
 
 		/// <summary>
-		/// o—Íƒ`ƒƒƒ“ƒlƒ‹
+		/// å‡ºåŠ›ãƒãƒ£ãƒ³ãƒãƒ«
 		/// </summary>
 		std::uint16_t outChannel_;
 
 		/// <summary>
-		/// “ü—Íƒ`ƒƒƒ“ƒlƒ‹
+		/// å…¥åŠ›ãƒãƒ£ãƒ³ãƒãƒ«
 		/// </summary>
 		std::uint16_t inChannel_;
 	};

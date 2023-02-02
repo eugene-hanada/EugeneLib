@@ -274,6 +274,7 @@
     <ClCompile Include="Source\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
     <ClCompile Include="Source\Math\Geometry.cpp" />
+    <ClCompile Include="Source\Math\Vector3.cpp" />
     <ClCompile Include="Source\Sound\Sound.cpp" />
     <ClCompile Include="Source\Sound\Sound3DControl.cpp" />
     <ClCompile Include="Source\Sound\SoundBase.cpp" />

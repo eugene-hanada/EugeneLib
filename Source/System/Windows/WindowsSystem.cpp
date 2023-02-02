@@ -7,6 +7,7 @@
 
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 
+
 #ifdef USE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
@@ -17,17 +18,17 @@
 #pragma comment(lib, "Xinput.lib")
 
 /// <summary>
-/// ƒƒbƒZ[ƒW
+/// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 /// </summary>
 MSG msg;
 
 /// <summary>
-/// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX
+/// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹
 /// </summary>
 WNDCLASSEX windowClass;
 
 /// <summary>
-/// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+/// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
 /// </summary>
 HWND hwnd;
 
@@ -35,12 +36,13 @@ Eugene::System::Mouse mouse;
 
 Eugene::Graphics* graphics = nullptr;
 
+
 #ifdef USE_IMGUI
 extern LRESULT ImGui_ImplWin32_WndProHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
 /// <summary>
-/// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+/// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 /// </summary>
 /// <param name="hwnd"></param>
 /// <param name="msg"></param>
@@ -50,10 +52,11 @@ extern LRESULT ImGui_ImplWin32_WndProHandler(HWND hWnd, UINT msg, WPARAM wParam,
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	mouse.wheel = 0.0f;
+
 #ifdef USE_IMGUI
 	ImGui_ImplWin32_WndProHandler(hwnd, msg, wparam, lparam);
 #endif
-	
+
 	switch (msg)
 	{
 	case WM_DESTROY:
@@ -88,13 +91,13 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {
-	DebugLog("Com‚Ì‰Šú‰»");
+	DebugLog("Comã®åˆæœŸåŒ–");
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
 		throw LibInitException();
 	}
 
-	DebugLog("ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì“o˜^");
+	DebugLog("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²");
 	std::filesystem::path tmpTitle{ title };
 	windowClass.cbSize = sizeof(WNDCLASSEX);
 	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -105,30 +108,30 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 		throw LibInitException();
 	}
 
-	DebugLog("ƒEƒBƒ“ƒhƒEƒTƒCƒY‚Ìİ’è");
-	// ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒYİ’è
+	DebugLog("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã®è¨­å®š");
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºè¨­å®š
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
 	{
 		throw LibInitException();
 	}
 
-	DebugLog("ƒEƒBƒ“ƒhƒE‚Ì¶¬");
-	// ƒEƒBƒ“ƒhƒE‚Ì¶¬
+	DebugLog("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ");
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ
 	hwnd = CreateWindow(
 		windowClass.lpszClassName,
 		tmpTitle.c_str(),
-		WS_OVERLAPPEDWINDOW,			// ƒ^ƒCƒgƒ‹ƒo[‚Æ‹«ŠEü‚Ì‚ ‚éƒEƒBƒ“ƒhƒE
-		CW_USEDEFAULT,					// OS‚É”C‚¹‚é
+		WS_OVERLAPPEDWINDOW,			// ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã¨å¢ƒç•Œç·šã®ã‚ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+		CW_USEDEFAULT,					// OSã«ä»»ã›ã‚‹
 		CW_USEDEFAULT,
-		wSize.right - wSize.left,		// ƒEƒBƒ“ƒhƒE•‚Æ‚‚³
+		wSize.right - wSize.left,		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…ã¨é«˜ã•
 		wSize.bottom - wSize.top,
 		nullptr,
 		nullptr,
 		windowClass.hInstance,
 		nullptr
 	);
-	DebugLog("ƒEƒBƒ“ƒhƒE‚Ì•\¦");
+	DebugLog("ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º");
 	ShowWindow(hwnd, SW_SHOW);
 
 #ifdef USE_IMGUI
@@ -138,10 +141,12 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	ImGui_ImplWin32_Init(hwnd);
 
 #endif
+
 }
 
 Eugene::WindowsSystem::~WindowsSystem()
 {
+
 #ifdef USE_IMGUI
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();

@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 23)
 
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 
-
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
+
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
@@ -71,6 +71,7 @@ set(MathSource
     Include/ThirdParty/DirectXMath/DirectXMathVector.inl
     Include/ThirdParty/DirectXMath/DirectXPackedVector.h
     Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
+    Source/Math/Vector3.cpp
  )
 
 # サウンド系のクラスのソースファイルをセット
@@ -137,7 +138,9 @@ set_property(TARGET EugeneLib PROPERTY
 )
 
 
+
 if (USE_IMGUI)
     target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
     target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 endif()
+

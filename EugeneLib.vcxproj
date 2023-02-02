@@ -245,6 +245,7 @@
     <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />

@@ -63,6 +63,10 @@ namespace Eugene
 
 		void Present(void) final;
 
+#ifdef USE_IMGUI
+		void ImguiNewFrame(void) const final;
+#endif
+
 		// ファクトリ
 		Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_{ nullptr };
 
@@ -74,5 +78,10 @@ namespace Eugene
 	
 		std::vector<std::unique_ptr<GpuResource>> buffers_;
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
+
+#ifdef USE_IMGUI
+		std::unique_ptr<ShaderResourceViews> srViews_;
+		friend class Dx12CommandList;
+#endif
 	};
 }

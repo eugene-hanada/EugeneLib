@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../../Include/Graphics/IndexView.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
 #include <memory>

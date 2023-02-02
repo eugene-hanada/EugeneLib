@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cmath>
 #include "MathConcepts.h"
 
@@ -37,7 +37,7 @@ namespace Eugene
 		Vector3Tmp<T> Normalized(void) const;
 
 		/// <summary> 法線ベクトルに対しての反射ベクトルを返す </summary>
-		/// <param name="n"> 法線ベクトル(正規化済み) </param>
+		/// <param name="n"> 法線ベクトル(正規化済み)  </param>
 		/// <returns> 反射ベクトル </returns>
 		Vector3Tmp<T> Refrect(const Vector3Tmp<T>& n);
 
@@ -48,7 +48,6 @@ namespace Eugene
 
 
 		Vector3Tmp<T> operator+() const;
-
 		constexpr Vector3Tmp<T>& operator=(const Vector3Tmp<T> vec)
 		{
 			x = vec.x;
@@ -84,12 +83,6 @@ namespace Eugene
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator+(lVec.ToSimdVector(), rVec.ToSimdVector());
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else*/
 		{
 			return { lVec.x + rVec.x ,lVec.y + rVec.y, lVec.z + rVec.z };
 		}
@@ -98,12 +91,6 @@ namespace Eugene
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const T& val)
 	{
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator+(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else*/
 		{
 			return { lVec.x + val, lVec.y + val, lVec.z + val };
 		}
@@ -233,11 +220,6 @@ namespace Eugene
 	{
 		return lVec.x == rVec.x && lVec.y == rVec.y && lVec.z == rVec.z;
 	}
-
-
-	
-
-	
 
 	using Vector3 = Vector3Tmp<float>;
 	using Vector3D = Vector3Tmp<double>;

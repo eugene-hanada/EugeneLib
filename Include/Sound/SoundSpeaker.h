@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "SoundBase.h"
 
 namespace Eugene
@@ -7,7 +7,7 @@ namespace Eugene
 	class SoundControl;
 
 	/// <summary>
-	/// ƒTƒEƒ“ƒh‚ğÄ¶‚·‚éƒNƒ‰ƒX
+	/// ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿã™ã‚‹ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class SoundSpeaker :
 		public SoundBase

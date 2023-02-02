@@ -1,4 +1,4 @@
-#include "Dx12VertexView.h"
+﻿#include "Dx12VertexView.h"
 #include <d3d12.h>
 #include "../../../Include/Graphics/GpuResource.h"
 

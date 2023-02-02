@@ -1,4 +1,4 @@
-#include "Dx12UploadableResource.h"
+ï»¿#include "Dx12UploadableResource.h"
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Graphics.h"
@@ -18,14 +18,14 @@ Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device,size
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒAƒbƒvƒ[ƒhƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 }
 
 Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Texture& texture)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// ƒAƒbƒvƒ[ƒhæ‚Ìdesc‚ğ‚»‚¤‚Ä‚¢‚·‚é
+	// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰å…ˆã®descã‚’ãã†ã¦ã„ã™ã‚‹
 	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint{};
 	std::uint64_t totalSize;
 	std::uint64_t rowSize;
@@ -42,7 +42,7 @@ Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Tex
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒAƒbƒvƒ[ƒhƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒªã‚½ãƒ¼ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 	
 

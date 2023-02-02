@@ -1,4 +1,4 @@
-#include "Dx12IndexView.h"
+﻿#include "Dx12IndexView.h"
 #include <d3d12.h>
 #include "../../../Include/Graphics/GpuResource.h"
 

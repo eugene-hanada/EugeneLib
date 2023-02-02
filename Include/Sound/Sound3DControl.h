@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "SoundControl.h"
 #include "../Math/Vector3.h"
 

@@ -1,4 +1,4 @@
-#include "Dx12GraphicsPipeline.h"
+ï»¿#include "Dx12GraphicsPipeline.h"
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
@@ -79,8 +79,8 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		&errorBlob)
 	))
 	{
-		// throw‚©‚­
-		throw EugeneLibException("ƒ‹[ƒhƒVƒOƒlƒ`ƒƒ¶¬¸”s");
+		// throwã‹ã
+		throw EugeneLibException("ãƒ«ãƒ¼ãƒ‰ã‚·ã‚°ãƒãƒãƒ£ç”Ÿæˆå¤±æ•—");
 	}
 
 	if (FAILED(device->CreateRootSignature(
@@ -90,7 +90,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
-		throw EugeneLibException("ƒ‹[ƒhƒVƒOƒlƒ`ƒƒ¶¬¸”s");
+		throw EugeneLibException("ãƒ«ãƒ¼ãƒ‰ã‚·ã‚°ãƒãƒãƒ£ç”Ÿæˆå¤±æ•—");
 	}
 
 
@@ -131,26 +131,26 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.InputLayout.NumElements = static_cast<std::uint32_t>(inputLayout.size());
 	gpipeline.InputLayout.pInputElementDescs = inputLayout.data();
 
-	// ƒfƒtƒHƒ‹ƒg‚ÌƒTƒ“ƒvƒ‹ƒ}ƒXƒN
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯
 	gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	// ƒuƒŒƒ“ƒhİ’èŒn
+	// ãƒ–ãƒ¬ãƒ³ãƒ‰è¨­å®šç³»
 	gpipeline.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 
-	// ƒgƒ|ƒƒW[İ’è
+	// ãƒˆãƒãƒ­ã‚¸ãƒ¼è¨­å®š
 	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
 	gpipeline.PrimitiveTopologyType = static_cast<D3D12_PRIMITIVE_TOPOLOGY_TYPE>(topologyType);
 	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒUü‚è‚Ìİ’è
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶å‘¨ã‚Šã®è¨­å®š
 	gpipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 
 	if (!isCulling)
 	{
-		gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		// ƒJƒŠƒ“ƒO‚ğ‚µ‚È‚¢
+		gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		// ã‚«ãƒªãƒ³ã‚°ã‚’ã—ãªã„
 	}
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgİ’è
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆè¨­å®š
 	for (size_t i = 0; i < rendertarges.size(); i++)
 	{
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(rendertarges[i].format_);
@@ -189,7 +189,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		}
 	}
 
-	// ƒTƒ“ƒvƒŠƒ“ƒO‚ÉŠÖ‚·‚éİ’è
+	// ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã«é–¢ã™ã‚‹è¨­å®š
 	gpipeline.SampleDesc.Count = 1;
 	gpipeline.SampleDesc.Quality = 0;
 

@@ -1,4 +1,4 @@
-#include "Dx12GpuEngine.h"
+ï»¿#include "Dx12GpuEngine.h"
 #include <cassert>
 #include <d3d12.h>
 #include "../../../Include/Graphics/CommandList.h"
@@ -16,30 +16,30 @@
 //	{
 //
 //		cmdlists_.resize(10);
-//		// İ’è‚ğDESC\‘¢‘Ì‚Ås‚¤
+//		// è¨­å®šã‚’DESCæ§‹é€ ä½“ã§è¡Œã†
 //		D3D12_COMMAND_QUEUE_DESC cmdQueueDesc{};
 //
-//		// ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’è(–³‚µ‚É‚·‚é)
+//		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®š(ç„¡ã—ã«ã™ã‚‹)
 //		cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 //
-//		// ƒAƒ_ƒvƒ^[‚Ìİ’è(ˆê‚Â‚µ‚©g‚í‚È‚¢‚Æ‚«‚Í0‚Å‚¢‚¢)
+//		// ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®è¨­å®š(ä¸€ã¤ã—ã‹ä½¿ã‚ãªã„ã¨ãã¯0ã§ã„ã„)
 //		cmdQueueDesc.NodeMask = 0;
 //
-//		// ƒvƒ‰ƒCƒIƒŠƒeƒB“Á‚Éİ’è‚È‚µ
+//		// ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ç‰¹ã«è¨­å®šãªã—
 //		cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
 //
-//		// ‚±‚±‚ÍƒRƒ}ƒ“ƒhƒŠƒXƒg‚Æ‡‚í‚¹‚é
+//		// ã“ã“ã¯ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã¨åˆã‚ã›ã‚‹
 //		cmdQueueDesc.Type = static_cast<D3D12_COMMAND_LIST_TYPE>(cmdType_);
 //
-//		// ƒLƒ…[‚ğ¶¬
+//		// ã‚­ãƒ¥ãƒ¼ã‚’ç”Ÿæˆ
 //		if (FAILED(EugeneLib::System::Ptr()->GetDevice()->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))))
 //		{
-//			throw EugeneLibException("GpuEngine‚ÌƒRƒ}ƒ“ƒhƒLƒ…[ì¬¸”s");
+//			throw EugeneLibException("GpuEngineã®ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ä½œæˆå¤±æ•—");
 //		}
 //
 //		if (FAILED(EugeneLib::System::Ptr()->GetDevice()->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))))
 //		{
-//			throw EugeneLibException("GpuEngine‚ÌƒtƒFƒ“ƒXì¬¸”s");
+//			throw EugeneLibException("GpuEngineã®ãƒ•ã‚§ãƒ³ã‚¹ä½œæˆå¤±æ•—");
 //		}
 //	}
 //
@@ -78,16 +78,16 @@
 //		auto a = cmdQueue_->Signal(fence_.Get(), ++fenceVal_);
 //		if (fence_->GetCompletedValue() < fenceVal_)
 //		{
-//			// ƒCƒxƒ“ƒg‚ğæ“¾
+//			// ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–å¾—
 //			auto ev = CreateEvent(nullptr, false, false, nullptr);
 //
-//			// ƒCƒxƒ“ƒg‚ğƒZƒbƒg
+//			// ã‚¤ãƒ™ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆ
 //			fence_->SetEventOnCompletion(fenceVal_, ev);
 //
-//			// ƒCƒxƒ“ƒg‚ª”­¶‚·‚é‚Ü‚Å‘Ò‚Â
+//			// ã‚¤ãƒ™ãƒ³ãƒˆãŒç™ºç”Ÿã™ã‚‹ã¾ã§å¾…ã¤
 //			WaitForSingleObject(ev, INFINITE);
 //
-//			// ƒCƒxƒ“ƒg‚ğ•Â‚¶‚é
+//			// ã‚¤ãƒ™ãƒ³ãƒˆã‚’é–‰ã˜ã‚‹
 //			CloseHandle(ev);
 //		}
 //	}
@@ -97,31 +97,31 @@ Eugene::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 {
 	commandLists_.resize(maxSize);
 	nowCommandNum_ = 0ull;
-	// İ’è‚ğDESC\‘¢‘Ì‚Ås‚¤
+	// è¨­å®šã‚’DESCæ§‹é€ ä½“ã§è¡Œã†
 	D3D12_COMMAND_QUEUE_DESC cmdQueueDesc{};
 
-	// ƒ^ƒCƒ€ƒAƒEƒg‚Ìİ’è(–³‚µ‚É‚·‚é)
+	// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®è¨­å®š(ç„¡ã—ã«ã™ã‚‹)
 	cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 
-	// ƒAƒ_ƒvƒ^[‚Ìİ’è(ˆê‚Â‚µ‚©g‚í‚È‚¢‚Æ‚«‚Í0‚Å‚¢‚¢)
+	// ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®è¨­å®š(ä¸€ã¤ã—ã‹ä½¿ã‚ãªã„ã¨ãã¯0ã§ã„ã„)
 	cmdQueueDesc.NodeMask = 0;
 
-	// ƒvƒ‰ƒCƒIƒŠƒeƒB“Á‚Éİ’è‚È‚µ
+	// ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ç‰¹ã«è¨­å®šãªã—
 	cmdQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
 
-	// ‚±‚±‚ÍƒRƒ}ƒ“ƒhƒŠƒXƒg‚Æ‡‚í‚¹‚é
+	// ã“ã“ã¯ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã¨åˆã‚ã›ã‚‹
 	cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
 	
-	// ƒLƒ…[‚ğ¶¬
+	// ã‚­ãƒ¥ãƒ¼ã‚’ç”Ÿæˆ
 	if (FAILED(device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("GpuEngine‚ÌƒRƒ}ƒ“ƒhƒLƒ…[ì¬¸”s");
+		throw EugeneLibException("GpuEngineã®ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ä½œæˆå¤±æ•—");
 	}
 
 	if (FAILED(device->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("GpuEngine‚ÌƒtƒFƒ“ƒXì¬¸”s");
+		throw EugeneLibException("GpuEngineã®ãƒ•ã‚§ãƒ³ã‚¹ä½œæˆå¤±æ•—");
 	}
 }
 
@@ -149,18 +149,18 @@ void Eugene::Dx12GpuEngine::Wait(void)
 	cmdQueue_->Signal(fence_.Get(), ++fenceVal_);
 	if (fence_->GetCompletedValue() < fenceVal_)
 	{
-		// ƒCƒxƒ“ƒg‚ğæ“¾
+		// ã‚¤ãƒ™ãƒ³ãƒˆã‚’å–å¾—
 		auto ev = CreateEvent(nullptr, false, false, nullptr);
 
 		if (ev != 0)
 		{
-			// ƒCƒxƒ“ƒg‚ğƒZƒbƒg
+			// ã‚¤ãƒ™ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆ
 			fence_->SetEventOnCompletion(fenceVal_, ev);
 
-			// ƒCƒxƒ“ƒg‚ª”­¶‚·‚é‚Ü‚Å‘Ò‚Â
+			// ã‚¤ãƒ™ãƒ³ãƒˆãŒç™ºç”Ÿã™ã‚‹ã¾ã§å¾…ã¤
 			WaitForSingleObject(ev, INFINITE);
 
-			// ƒCƒxƒ“ƒg‚ğ•Â‚¶‚é
+			// ã‚¤ãƒ™ãƒ³ãƒˆã‚’é–‰ã˜ã‚‹
 			CloseHandle(ev);
 		}
 	}

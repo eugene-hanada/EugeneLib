@@ -1,19 +1,19 @@
-#include "Dll.h"
+ï»¿#include "Dll.h"
 
 Dll::Dll(const std::filesystem::path& path)
 {
-	// DLL‚ğ“Ç‚İ‚Ş
+	// DLLã‚’èª­ã¿è¾¼ã‚€
 	handle_ = LoadLibrary(TEXT("Dll.dll"));
 }
 
 Dll::~Dll()
 {
-	// DLL‚ğ‰ğ•ú‚·‚é
+	// DLLã‚’è§£æ”¾ã™ã‚‹
 	FreeLibrary(handle_);
 }
 
 void* Dll::FindFunction(const std::string& functionName) const
 {
-	// w’è‚Ì–¼‘O‚ÌŠÖ”‚ğæ“¾‚µ•Ô‚·
+	// æŒ‡å®šã®åå‰ã®é–¢æ•°ã‚’å–å¾—ã—è¿”ã™
 	return GetProcAddress(handle_,functionName.c_str());
 }

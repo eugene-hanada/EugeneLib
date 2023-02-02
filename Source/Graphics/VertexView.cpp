@@ -1,4 +1,4 @@
-#include "../../Include/Graphics/VertexView.h"
+﻿#include "../../Include/Graphics/VertexView.h"
 
 Eugene::VertexView::~VertexView()
 {

@@ -1,4 +1,4 @@
-#include "../../Include/System/System.h"
+﻿#include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
 
 Eugene::System* sys = nullptr;

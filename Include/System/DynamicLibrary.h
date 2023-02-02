@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include <filesystem>
 #include <string>
 
 /// <summary>
-/// DLL�Ƃ��̓��I�����N���郉�C�u�������������߂̃N���X
+/// DLLとかの動的リンクするライブラリを扱うためのクラス
 /// </summary>
 class DynamicLibrary
 {
@@ -11,11 +11,11 @@ public:
 	virtual ~DynamicLibrary();
 
 	/// <summary>
-	/// �w�肳�ꂽ���O�̊֐��̃|�C���^���擾����
+	/// 指定された名前の関数のポインタを取得する
 	/// </summary>
-	/// <typeparam name="func"> �֐��̌^ </typeparam>
-	/// <param name="functionName"> �֐��� </param>
-	/// <returns> �֐��|�C���^ </returns>
+	/// <typeparam name="func"> 関数の型 </typeparam>
+	/// <param name="functionName"> 関数名 </param>
+	/// <returns> 関数ポインタ </returns>
 	template<typename func>
 	func* GetFunction(const std::string& functionName)
 	{
@@ -26,7 +26,7 @@ protected:
 	DynamicLibrary();
 
 	/// <summary>
-	/// �֐����̊֐����擾����
+	/// 関数名の関数を取得する
 	/// </summary>
 	/// <param name="functionName"></param>
 	/// <returns></returns>

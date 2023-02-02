@@ -1,40 +1,42 @@
+ï»¿#define USE_IMGUI
 #include <Windows.h>
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
+#include <ThirdParty/imgui/imgui.h>
 #include <Common/Debug.h>
 
-// ƒVƒXƒeƒ€Œn(WindowsŠÖ˜A‚Ìˆ—‚ÌƒNƒ‰ƒX)
+// ã‚·ã‚¹ãƒ†ãƒ ç³»(Windowsé–¢é€£ã®å‡¦ç†ã®ã‚¯ãƒ©ã‚¹)
 std::unique_ptr<Eugene::System> libSys;
 
-// ƒOƒ‰ƒtƒBƒbƒNƒX‚ÌƒNƒ‰ƒX(ƒfƒoƒCƒX‚Æ‚©‚Ìˆ—‚ğ‚·‚é)
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã®ã‚¯ãƒ©ã‚¹(ãƒ‡ãƒã‚¤ã‚¹ã¨ã‹ã®å‡¦ç†ã‚’ã™ã‚‹)
 std::unique_ptr <Eugene::Graphics> graphics;
 
-// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğÀs‚·‚éƒNƒ‰ƒX
+// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹
 std::unique_ptr < Eugene::GpuEngine> gpuEngien;
 
-// ƒRƒ}ƒ“ƒhƒŠƒXƒg
+// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 std::unique_ptr<Eugene::CommandList> cmdList;
 
-// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“(ˆ—‚Ì—¬‚ê)
+// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³(å‡¦ç†ã®æµã‚Œ)
 std::unique_ptr<Eugene::GraphicsPipeline> gpipeLine;
 
-// ’¸“_ƒf[ƒ^
+// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 std::unique_ptr <Eugene::GpuResource> upVertexBuffer;
 std::unique_ptr <Eugene::GpuResource> vertexBuffer;
 std::unique_ptr<Eugene::VertexView> vertexView;
 
-// ƒeƒNƒXƒ`ƒƒƒf[ƒ^
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿
 std::unique_ptr <Eugene::GpuResource> upTextureBuffer;
 std::unique_ptr <Eugene::GpuResource> textureBuffer;
 std::unique_ptr < Eugene::ShaderResourceViews> textureView_;
 
-// s—ñƒf[ƒ^
+// è¡Œåˆ—ãƒ‡ãƒ¼ã‚¿
 std::unique_ptr <Eugene::GpuResource> upMatrixBuffer;
 std::unique_ptr <Eugene::GpuResource> matrixBuffer;
 std::unique_ptr < Eugene::ShaderResourceViews> matrixView_;
 
-// ƒTƒEƒ“ƒhŒn
+// ã‚µã‚¦ãƒ³ãƒ‰ç³»
 std::unique_ptr<Eugene::Wave> wave;
 std::unique_ptr<Eugene::Sound> sound;
 std::unique_ptr < Eugene::SoundControl> soundCtrl;
@@ -43,37 +45,37 @@ std::unique_ptr<Eugene::SoundSpeaker> soundSpeaker;
 
 void Init(void)
 {
-	// Windows‚Æ‚©‚Ì‹@”\‚ğ‚Ü‚Æ‚ß‚½ƒNƒ‰ƒX‚ğì¬
+	// Windowsã¨ã‹ã®æ©Ÿèƒ½ã‚’ã¾ã¨ã‚ãŸã‚¯ãƒ©ã‚¹ã‚’ä½œæˆ
 	libSys.reset(Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"sample"));
 
 	{
-		// ƒOƒ‰ƒtƒBƒbƒN‚Ì‹@”\‚ÌƒNƒ‰ƒX‚ğì¬‚µƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğÀs‚·‚éƒNƒ‰ƒX‚ğƒZƒbƒg
+		// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã®æ©Ÿèƒ½ã®ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 		Eugene::GpuEngine* tmp;
 		graphics.reset(libSys->CreateGraphics(tmp,3));
 		gpuEngien.reset(tmp);
 	}
 
-	// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğì¬
+	// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ä½œæˆ
 	cmdList.reset(graphics->CreateCommandList());
 }
 
 void InitGraphicsPipeline(void)
 {
-	// ’¸“_ƒVƒF[ƒ_‚Ì“ü—Í‚ÌƒŒƒCƒAƒEƒg
+	// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®å…¥åŠ›ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	std::vector<Eugene::ShaderInputLayout> layout
 	{
 		{"POSITION", 0, Eugene::Format::R32G32_FLOAT},
 		{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT}
 	};
 
-	// ƒVƒF[ƒ_[
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	std::vector<std::pair<Eugene::Shader, Eugene::ShaderType>> shaders
 	{
-		{Eugene::Shader{"VertexShader.vso"}, Eugene::ShaderType::Vertex},
-		{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel}
+		{Eugene::Shader{"vs.vso"}, Eugene::ShaderType::Vertex},
+		{Eugene::Shader{"ps.pso"}, Eugene::ShaderType::Pixel}
 	};
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ
 	std::vector<Eugene::RendertargetLayout> rendertargets
 	{
 		{Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non}
@@ -120,17 +122,17 @@ void InitVertex(void)
 	};
 
 
-	// CPU‚©‚çƒAƒNƒZƒX‚Å‚«‚éƒŠƒ\[ƒX‚ğì¬
+	// CPUã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹ã§ãã‚‹ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆ
 
 	upVertexBuffer.reset(graphics->CreateUploadableResource(sizeof(vertex)));
 	auto ptr = upVertexBuffer->Map();
 	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<Vertex*>(ptr));
 	upVertexBuffer->UnMap();
 
-	// GPU‚¾‚¯‚Å‚µ‚©g‚¦‚È‚¢ƒŠƒ\[ƒX‚ğì¬
+	// GPUã ã‘ã§ã—ã‹ä½¿ãˆãªã„ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½œæˆ
 	vertexBuffer.reset(graphics->CreateDefaultResource(sizeof(vertex)));
 
-	// ’¸“_ƒrƒ…[
+	// é ‚ç‚¹ãƒ“ãƒ¥ãƒ¼
 	vertexView.reset(graphics->CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
 }
 
@@ -170,7 +172,7 @@ void InitSound(void)
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	DebugLog("ƒeƒXƒg");
+	DebugLog("ãƒ†ã‚¹ãƒˆ");
 	Init();
 	InitGraphicsPipeline();
 	InitVertex();
@@ -196,9 +198,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	soundSpeaker->Play();
 	
 
-
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
+	ImGuiIO& io = ImGui::GetIO();
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;
@@ -208,15 +210,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			soundSpeaker->Play();
 		}
+		
+		graphics->ImguiNewFrame();
+		libSys->ImguiNewFrame();
+		ImGui::NewFrame();
 
-		// ƒRƒ}ƒ“ƒh‚ÌŠJn
+		ImGui::Begin("810");
+		ImGui::Text("114514");
+		ImGui::End();
+		ImGui::Render();
+
+		
+
+		// ã‚³ãƒãƒ³ãƒ‰ã®é–‹å§‹
 		cmdList->Begin();
 
-		// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒZƒbƒg
+		
+
+		
+		// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚»ãƒƒãƒˆ
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
 
-		// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒNƒŠƒA
+		// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚¯ãƒªã‚¢
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());
 
 		cmdList->SetGraphicsPipeline(*gpipeLine);
@@ -235,22 +251,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->Draw(4);
 
+		cmdList->SetImguiCommand(ImGui::GetDrawData(),*graphics);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 
-		// ƒRƒ}ƒ“ƒhI—¹
+		// ã‚³ãƒãƒ³ãƒ‰çµ‚äº†
 		cmdList->End();
 
-		// Às‚·‚éƒRƒ}ƒ“ƒh‚ğ’Ç‰Á
+		// å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã‚’è¿½åŠ 
 		gpuEngien->Push(*cmdList);
 
-		// ƒRƒ}ƒ“ƒh‚ğÀs
+		// ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œ
 		gpuEngien->Execute();
 
-		// ƒRƒ}ƒ“ƒhÀs‚ğ‘Ò‚Â
+		// ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œã‚’å¾…ã¤
 		gpuEngien->Wait();
 
-		// ƒXƒNƒŠ[ƒ“‚ğƒoƒbƒNƒoƒbƒtƒ@‚É“ü‚ê‘Ö‚¦‚·‚é
+		// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚’ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œæ›¿ãˆã™ã‚‹
 		graphics->Present();
 
 		auto r = libSys->GetGamePad(pad, 0);

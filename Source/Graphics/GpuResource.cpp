@@ -1,4 +1,4 @@
-#include "../../Include/Graphics/GpuResource.h"
+﻿#include "../../Include/Graphics/GpuResource.h"
 
 
 Eugene::GpuResource::~GpuResource()

@@ -1,4 +1,4 @@
-#include "../../Include/Sound/SoundSpeaker.h"
+﻿#include "../../Include/Sound/SoundSpeaker.h"
 
 
 Eugene::SoundSpeaker::SoundSpeaker(const float maxPitchRate) :

@@ -1,4 +1,4 @@
-#include "Xa2Sound3DControl.h"
+ï»¿#include "Xa2Sound3DControl.h"
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include <vector>
@@ -12,7 +12,7 @@ Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::u
 	outChannel_ = outChannel;
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER)))
 	{
-		throw EugeneLibException("3D—pƒTƒuƒ~ƒbƒNƒXƒ{ƒCƒX‚Ìì¬");
+		throw EugeneLibException("3Dç”¨ã‚µãƒ–ãƒŸãƒƒã‚¯ã‚¹ãƒœã‚¤ã‚¹ã®ä½œæˆ");
 	}
 
 

@@ -1,4 +1,4 @@
-#include "../../Include/Common/EugeneLibException.h"
+ï»¿#include "../../Include/Common/EugeneLibException.h"
 #include "../../Include/Common/Debug.h"
 #include <filesystem>
 
@@ -17,11 +17,11 @@ const char* Eugene::EugeneLibException::what() const noexcept
 }
 
 Eugene::LibInitException::LibInitException() :
-	EugeneLibException{"‰Šú‰»ƒGƒ‰["}
+	EugeneLibException{"åˆæœŸåŒ–ã‚¨ãƒ©ãƒ¼"}
 {
 }
 
 Eugene::LibReleseException::LibReleseException() :
-	EugeneLibException{"‰ğ•úˆ—ƒGƒ‰["}
+	EugeneLibException{"è§£æ”¾å‡¦ç†ã‚¨ãƒ©ãƒ¼"}
 {
 }

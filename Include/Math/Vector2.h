@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cmath>
 #include "MathConcepts.h"
 
@@ -37,18 +37,18 @@ namespace Eugene
 
 		Vector2Tmp<T> Normalized(void) const;
 
-		/// <summary> �@���x�N�g���ɑ΂��Ă̔��˃x�N�g����Ԃ� </summary>
-		/// <param name="n"> �@���x�N�g��(���K���ς�) </param>
-		/// <returns> ���˃x�N�g�� </returns>
+		/// <summary> 法線ベクトルに対しての反射ベクトルを返す </summary>
+		/// <param name="n"> 法線ベクトル(正規化済み) </param>
+		/// <returns> 反射ベクトル </returns>
 		Vector2Tmp<T> Refrect(const Vector2Tmp<T>& n);
 
-		/// <summary> �x�N�g���̊p�x�����߂� </summary>
+		/// <summary> ベクトルの角度を求める </summary>
 		/// <param name=""></param>
-		/// <returns> �p�x(�ʓx�@) </returns>
+		/// <returns> 角度(弧度法) </returns>
 		T GetAngle(void) const;
 
-		/// <summary> �x�N�g������]������ </summary>
-		/// <param name="angle"> ��]������p�x(�ʓx�@) </param>
+		/// <summary> ベクトルを回転させる </summary>
+		/// <param name="angle"> 回転させる角度(弧度法) </param>
 		/// <returns></returns>
 		void Rota(T angle);
 

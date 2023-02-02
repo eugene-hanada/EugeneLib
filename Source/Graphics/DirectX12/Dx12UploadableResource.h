@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../DirectX12/Dx12GpuResource.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
 

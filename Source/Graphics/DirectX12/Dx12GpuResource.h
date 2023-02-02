@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <memory>
 #include <wrl.h>
 #include "../../../Include/Graphics/GpuResource.h"

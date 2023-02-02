@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/System/DynamicLibrary.h"
 #include <Windows.h>
 
@@ -12,7 +12,7 @@ private:
 	void* FindFunction(const std::string& functionName) const;
 
 	/// <summary>
-	/// DLL‚Ìƒnƒ“ƒhƒ‹
+	/// DLLã®ãƒãƒ³ãƒ‰ãƒ«
 	/// </summary>
 	HMODULE handle_;
 };

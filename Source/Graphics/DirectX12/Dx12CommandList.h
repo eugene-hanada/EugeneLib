@@ -1,10 +1,12 @@
-#pragma once
+﻿#pragma once
 #include <wrl.h>
 #include "../../../Include/Graphics/CommandList.h"
 
 struct ID3D12Device;
 struct ID3D12CommandAllocator;
 struct ID3D12GraphicsCommandList;
+
+
 
 namespace Eugene
 {
@@ -42,6 +44,11 @@ namespace Eugene
 
 		void Copy(GpuResource& destination, GpuResource& source) final;
 		void CopyTexture(GpuResource& destination, GpuResource& source) final;
+
+#ifdef USE_IMGUI
+		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
+#endif
+
 		ComPtr< ID3D12CommandAllocator> cmdAllocator_;
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
 

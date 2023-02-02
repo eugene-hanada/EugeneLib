@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
@@ -16,7 +16,7 @@ namespace Eugene
 	class VertexView;
 
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒX‚Ìˆ—‚ğs‚¤ƒNƒ‰ƒX
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã®å‡¦ç†ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class Graphics
 	{
@@ -24,29 +24,29 @@ namespace Eugene
 		virtual ~Graphics();
 
 		/// <summary>
-		/// GpuEngine‚Ì¶¬
+		/// GpuEngineã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="maxSize"> ˆ—‚Å‚«‚éƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÅ‘å” </param>
-		/// <returns> GpuEngine‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="maxSize"> å‡¦ç†ã§ãã‚‹ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®æœ€å¤§æ•° </param>
+		/// <returns> GpuEngineã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuEngine* CreateGpuEngine(size_t maxSize) const = 0;
 
 		/// <summary>
-		/// CommandList‚Ì¶¬
+		/// CommandListã®ç”Ÿæˆ
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> CommandList‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <returns> CommandListã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual CommandList* CreateCommandList(void) const = 0;
 
 		/// <summary>
-		/// GraphicsPipeline‚Ì¶¬
+		/// GraphicsPipelineã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="layout"> ƒVƒF[ƒ_[‚Ì“ü—ÍƒŒƒCƒAƒEƒg </param>
-		/// <param name="shaders"> ƒVƒF[ƒ_[ </param>
-		/// <param name="rendertarges"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìİ’è </param>
-		/// <param name="topologyType"> ƒgƒ|ƒƒW[İ’è </param>
-		/// <param name="isCulling"> ƒJƒŠƒ“ƒO‚ğs‚¤‚©(ƒfƒtƒHƒ‹ƒg‚Å‚Ís‚í‚È‚¢) </param>
-		/// <param name="shaderLayout"> ƒVƒF[ƒ_[‚Åg‚¤’è”ƒoƒbƒtƒ@“™‚Ìî•ñ </param>
-		/// <param name="samplerLayout"> ƒTƒ“ƒvƒ‰[‚Ìî•ñ </param>
+		/// <param name="layout"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®å…¥åŠ›ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ </param>
+		/// <param name="shaders"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ </param>
+		/// <param name="rendertarges"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®è¨­å®š </param>
+		/// <param name="topologyType"> ãƒˆãƒãƒ­ã‚¸ãƒ¼è¨­å®š </param>
+		/// <param name="isCulling"> ã‚«ãƒªãƒ³ã‚°ã‚’è¡Œã†ã‹(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯è¡Œã‚ãªã„) </param>
+		/// <param name="shaderLayout"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã§ä½¿ã†å®šæ•°ãƒãƒƒãƒ•ã‚¡ç­‰ã®æƒ…å ± </param>
+		/// <param name="samplerLayout"> ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®æƒ…å ± </param>
 		/// <returns></returns>
 		virtual GraphicsPipeline* CreateGraphicsPipeline(
 			ShaderInputSpan layout,
@@ -59,111 +59,115 @@ namespace Eugene
 		) const = 0;
 		
 		/// <summary>
-		/// ƒAƒbƒvƒ[ƒh—p‚ÌGpuResource‚Ì¶¬
+		/// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç”¨ã®GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> ƒŠƒ\[ƒX‚ÌƒTƒCƒY </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> ãƒªã‚½ãƒ¼ã‚¹ã®ã‚µã‚¤ã‚º </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateUploadableResource(size_t size) const = 0;
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒ‚ÌƒAƒbƒvƒ[ƒh—pGpuResource‚Ì¶¬
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç”¨GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="texture"> ƒeƒNƒXƒ`ƒƒ </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="texture"> ãƒ†ã‚¯ã‚¹ãƒãƒ£ </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateUploadableTextureResource(Texture& texture) const = 0;
 
 		/// <summary>
-		/// GpuResource‚Ì¶¬
+		/// GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> ƒŠƒ\[ƒX‚ÌƒTƒCƒY </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> ãƒªã‚½ãƒ¼ã‚¹ã®ã‚µã‚¤ã‚º </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateDefaultResource(size_t size) const = 0;
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒ—pGpuResource‚Ì¶¬
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="formatData"> ƒeƒNƒXƒ`ƒƒ‚ÌƒtƒH[ƒ}ƒbƒg </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="formatData"> ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateTextureResource(const TextureInfo& formatData) const = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg—pGpuResource‚Ì¶¬
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆç”¨GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒTƒCƒY </param>
-		/// <param name="format"> ƒtƒH[ƒ}ƒbƒg </param>
-		/// <param name="clearColor"> ‰Šú‰»ƒJƒ‰[ </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ã‚µã‚¤ã‚º </param>
+		/// <param name="format"> ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ </param>
+		/// <param name="clearColor"> åˆæœŸåŒ–ã‚«ãƒ©ãƒ¼ </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const = 0;
 
 		/// <summary>
-		/// [“xƒoƒbƒtƒ@—pGpuResource‚Ì¶¬
+		/// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> ƒTƒCƒY </param>
-		/// <param name="format"> ƒtƒH[ƒ}ƒbƒg </param>
-		/// <param name="clearValue"> ‰Šú‰»‚Ì’l </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> ã‚µã‚¤ã‚º </param>
+		/// <param name="format"> ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ </param>
+		/// <param name="clearValue"> åˆæœŸåŒ–ã®å€¤ </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const = 0;
 
 		/// <summary>
-		/// ShaderResourceViews‚Ì¶¬
+		/// ShaderResourceViewsã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> View‚Ì” </param>
-		/// <returns> ShaderResourceViews‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> Viewã®æ•° </param>
+		/// <returns> ShaderResourceViewsã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual ShaderResourceViews* CreateShaderResourceViews(size_t size) const = 0;
 
 		/// <summary>
-		/// RenderTargetViews‚Ì¶¬
+		/// RenderTargetViewsã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> View‚Ì” </param>
-		/// <param name="isShaderVisible"> ƒVƒF[ƒ_[‚ÉŒ©‚¦‚éó‘Ô‚É‚·‚é‚©? </param>
-		/// <returns> RenderTargetViews‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> Viewã®æ•° </param>
+		/// <param name="isShaderVisible"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«è¦‹ãˆã‚‹çŠ¶æ…‹ã«ã™ã‚‹ã‹? </param>
+		/// <returns> RenderTargetViewsã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual RenderTargetViews* CreateRenderTargetViews(size_t size, bool isShaderVisible) const = 0;
 
 		/// <summary>
-		/// DepthStencilViews‚Ì¶¬
+		/// DepthStencilViewsã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> View‚Ì” </param>
-		/// <returns> DepthStencilViews‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> Viewã®æ•° </param>
+		/// <returns> DepthStencilViewsã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual DepthStencilViews* CreateDepthStencilViews(size_t size) const = 0;
 
 		/// <summary>
-		/// VertexView‚Ì¶¬
+		/// VertexViewã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="size"> 1’¸“_“–‚½‚è‚ÌƒTƒCƒY </param>
-		/// <param name="vertexNum"> ’¸“_” </param>
-		/// <param name="resource"> ’¸“_‚ÌGpuResource </param>
-		/// <returns> VertexView‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="size"> 1é ‚ç‚¹å½“ãŸã‚Šã®ã‚µã‚¤ã‚º </param>
+		/// <param name="vertexNum"> é ‚ç‚¹æ•° </param>
+		/// <param name="resource"> é ‚ç‚¹ã®GpuResource </param>
+		/// <returns> VertexViewã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const = 0;
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@‚ÌƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌGpuResource‚ğæ“¾‚·‚é
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®GpuResourceã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> GpuResource‚ÌQÆ </returns>
+		/// <returns> GpuResourceã®å‚ç…§ </returns>
 		virtual GpuResource& GetBackBufferResource(void) = 0;
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@‚Åg—p‚·‚éRenderTargetViews‚Ìæ“¾‚·‚é
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã§ä½¿ç”¨ã™ã‚‹RenderTargetViewsã®å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> RenderTargetViews </returns>
 		virtual RenderTargetViews& GetViews(void) = 0;
 
 		/// <summary>
-		/// Œ»İ‚ÌƒoƒbƒNƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+		/// ç¾åœ¨ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒCƒ“ƒfƒbƒNƒX </returns>
+		/// <returns> ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </returns>
 		virtual size_t GetNowBackBufferIndex(void) = 0;
 		virtual void Present(void) = 0;
+
+#ifdef USE_IMGUI
+		virtual void ImguiNewFrame(void) const = 0;
+#endif
 	protected:
 		Graphics();
 
 		/// <summary>
-		/// ƒXƒƒbƒvƒ`ƒFƒCƒ“—p‚ÌGpuResource‚Ì¶¬
+		/// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ç”¨ã®GpuResourceã®ç”Ÿæˆ
 		/// </summary>
-		/// <param name="idx"> ƒoƒbƒNƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX </param>
-		/// <returns> GpuResource‚Ìƒ|ƒCƒ“ƒ^ </returns>
+		/// <param name="idx"> ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
+		/// <returns> GpuResourceã®ãƒã‚¤ãƒ³ã‚¿ </returns>
 		virtual GpuResource* CreateSwapChainResource(std::uint32_t idx) const = 0;
 	};
 }

@@ -1,4 +1,4 @@
-#include "Xa2Sound.h"
+ï»¿#include "Xa2Sound.h"
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include "../../../Include/Common/EugeneLibException.h"
@@ -14,10 +14,10 @@ Eugene::Xa2Sound::Xa2Sound()
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
-		throw EugeneLibException("XAudio2¶¬¸”s");
+		throw EugeneLibException("XAudio2ç”Ÿæˆå¤±æ•—");
 	}
 #ifdef _DEBUG
-	// ƒfƒoƒbƒOİ’è
+	// ãƒ‡ãƒãƒƒã‚°è¨­å®š
 	XAUDIO2_DEBUG_CONFIGURATION debug{ 0 };
 	debug.TraceMask = XAUDIO2_LOG_ERRORS | XAUDIO2_LOG_WARNINGS;
 	debug.BreakMask = XAUDIO2_LOG_ERRORS;
@@ -25,7 +25,7 @@ Eugene::Xa2Sound::Xa2Sound()
 #endif
 	if (FAILED(xaudio2_->CreateMasteringVoice(&mastering_)))
 	{
-		throw EugeneLibException("ƒ}ƒXƒ^ƒŠƒ“ƒOƒ{ƒCƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ãƒã‚¹ã‚¿ãƒªãƒ³ã‚°ãƒœã‚¤ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 	
 	XAUDIO2_VOICE_DETAILS details;
@@ -38,7 +38,7 @@ Eugene::Xa2Sound::Xa2Sound()
 	
 	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
 	{
-		throw EugeneLibException("X3DAudio‚Ì‰Šú‰»‚É¸”s");
+		throw EugeneLibException("X3DAudioã®åˆæœŸåŒ–ã«å¤±æ•—");
 	}
 }
 

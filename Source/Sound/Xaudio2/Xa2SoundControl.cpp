@@ -1,4 +1,4 @@
-#include "Xa2SoundControl.h"
+ï»¿#include "Xa2SoundControl.h"
 #include <xaudio2.h>
 #include "../../../Include/Common/EugeneLibException.h"
 
@@ -7,7 +7,7 @@ Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample
 
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER)))
 	{
-		throw EugeneLibException("ƒTƒuƒ~ƒbƒNƒXƒ{ƒCƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ã‚µãƒ–ãƒŸãƒƒã‚¯ã‚¹ãƒœã‚¤ã‚¹ã®ä½œæˆã«å¤±æ•—");
 	}
 
 	inChannel_ = inputChannel;

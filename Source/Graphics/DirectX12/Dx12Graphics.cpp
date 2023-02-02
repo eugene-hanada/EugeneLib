@@ -1,4 +1,4 @@
-#include "Dx12Graphics.h"
+﻿#include "Dx12Graphics.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <list>
@@ -32,16 +32,19 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
-	renderTargetViews_->GetViews();
-	//ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, )
+	srViews_.reset(CreateShaderResourceViews(1));
+	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
+	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
 #endif
 }
 
 Eugene::Dx12Graphics::~Dx12Graphics()
 {
+#ifdef USE_IMGUI
+	ImGui_ImplDX12_Shutdown();
+#endif
 	swapChain_->Release();
 	swapChain_.Detach();
-	DebugLog("テスト");
 }
 
 Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
@@ -137,35 +140,35 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		throw LibInitException();
 	}
 
-	// アダプターの列挙用
+	// アダプター列挙用リスト
 	std::list<IDXGIAdapter*> adapters;
 
-	// 目的の名前のアダプターを入れる
+	// アダプター格納用
 	IDXGIAdapter* tmpAdapter = nullptr;
 
-	// アダプターを格納してく
+	// アダプターを格納する
 	for (int i = 0; dxgiFactory_->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++)
 	{
 		adapters.push_back(tmpAdapter);
 	}
 
-	// 格納したアダプターの中から目的の名前のアダプターを探す
+	// 格納したアダプターから探す
 	std::wstring strDesc;
 	tmpAdapter = *adapters.begin();
 	for (auto& adpt : adapters)
 	{
 		DXGI_ADAPTER_DESC adesc{};
-		adpt->GetDesc(&adesc);			// アダプターの説明オブジェクトを取得する
+		adpt->GetDesc(&adesc);			// アダプターについて取得する
 		strDesc = adesc.Description;
 		if (strDesc.find(L"NVIDIA") != std::string::npos || strDesc.find(L"AMD") != std::string::npos)
 		{
-			// 一致したら抜ける
+			// 見つかったら抜ける
 			tmpAdapter = adpt;
 			break;
 		}
 	}
 
-	// フューチャーレベルの配列
+	// フューチャーレベル
 	D3D_FEATURE_LEVEL levels[]{
 		D3D_FEATURE_LEVEL_12_1,
 		D3D_FEATURE_LEVEL_12_0,
@@ -180,7 +183,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
-			// 見つかったらやめる
+			// 解放しとく
 			for (auto& a : adapters)
 			{
 				a->Release();
@@ -197,7 +200,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 {
 	gpuEngine = CreateGpuEngine(10);
 
-	// 設定用のDESC
+	// スワップチェインDESC
 	DXGI_SWAP_CHAIN_DESC1 swapchainDesc{};
 
 	// 幅
@@ -206,17 +209,17 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	// 高さ
 	swapchainDesc.Height = static_cast<int>(size.y);
 
-	// ピクセルフォーマット
+	// フォーマット�
 	swapchainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-	// ステレオ表示フラグ
+	// ステレオ表示フラグｰ
 	swapchainDesc.Stereo = false;
 
-	// マルチサンプルの指定
+	// マルチサンプリングの設定
 	swapchainDesc.SampleDesc.Count = 1;
 	swapchainDesc.SampleDesc.Quality = 0;
 
-	// DXGI_USAGE_BACK_BUFFERこんままで
+	// DXGI_USAGE_BACK_BUFFERにしとく
 	swapchainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
 	swapchainDesc.BufferCount = bufferNum;
@@ -235,7 +238,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	fullScrDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	fullScrDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 
-	// スワップチェインの生成
+	// スワップチェイン生成
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
@@ -281,3 +284,10 @@ void Eugene::Dx12Graphics::Present(void)
 {
 	swapChain_->Present(1, 0);
 }
+
+#ifdef USE_IMGUI
+void Eugene::Dx12Graphics::ImguiNewFrame(void) const
+{
+	ImGui_ImplDX12_NewFrame();
+}
+#endif

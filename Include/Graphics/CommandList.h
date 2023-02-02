@@ -1,8 +1,12 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 #include <span>
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
+
+#ifdef USE_IMGUI
+struct ImDrawData;
+#endif
 
 namespace Eugene
 {
@@ -16,82 +20,82 @@ namespace Eugene
 	class ShaderResourceViews;
 
 	/// <summary>
-	/// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ìˆ—‚ğs‚¤ƒNƒ‰ƒX
+	/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å‡¦ç†ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class CommandList
 	{
 	public:
 
 		/// <summary>
-		/// ƒfƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		virtual ~CommandList();
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğŠJn‚·‚é
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’é–‹å§‹ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		virtual void Begin(void) = 0;
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğI—¹‚·‚é
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’çµ‚äº†ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		virtual void End(void) = 0;
 
 		/// <summary>
-		/// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚ğƒZƒbƒg‚·‚é
+		/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="gpipeline"> ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“ </param>
+		/// <param name="gpipeline"> ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ </param>
 		virtual void SetGraphicsPipeline(GraphicsPipeline& gpipeline) = 0;
 
 		/// <summary>
-		/// ƒvƒŠƒ~ƒeƒBƒuƒ^ƒCƒv‚ğƒZƒbƒg‚·‚é
+		/// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã‚¿ã‚¤ãƒ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="type"> ƒvƒŠƒ~ƒeƒBƒuƒ^ƒCƒv </param>
+		/// <param name="type"> ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã‚¿ã‚¤ãƒ— </param>
 		virtual void SetPrimitiveType(PrimitiveType type) = 0;
 
 		/// <summary>
-		/// ƒVƒU[ƒŒƒNƒg‚ğƒZƒbƒg‚·‚é
+		/// ã‚·ã‚¶ãƒ¼ãƒ¬ã‚¯ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="leftTop"> ¶ã </param>
-		/// <param name="rightBottom"> ‰Eã </param>
+		/// <param name="leftTop"> å·¦ä¸Š </param>
+		/// <param name="rightBottom"> å³ä¸Š </param>
 		virtual void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) = 0;
 
 		/// <summary>
-		/// ƒrƒ…[ƒ|[ƒg‚ğƒZƒbƒg‚·‚é
+		/// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="leftTop"> ¶ã </param>
-		/// <param name="size"> ƒTƒCƒY </param>
-		/// <param name="depthMin"> [“x‚ÌÅ¬’l(ƒfƒtƒHƒ‹ƒg0.0f) </param>
-		/// <param name="depthMax"> [“x‚ÌÅ‘å’l(ƒfƒtƒHƒ‹ƒg1.0f) </param>
+		/// <param name="leftTop"> å·¦ä¸Š </param>
+		/// <param name="size"> ã‚µã‚¤ã‚º </param>
+		/// <param name="depthMin"> æ·±åº¦ã®æœ€å°å€¤(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ0.0f) </param>
+		/// <param name="depthMax"> æ·±åº¦ã®æœ€å¤§å€¤(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ1.0f) </param>
 		virtual void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f) = 0;
 		
 		/// <summary>
-		/// ’¸“_ƒrƒ…[‚ÌƒZƒbƒg
+		/// é ‚ç‚¹ãƒ“ãƒ¥ãƒ¼ã®ã‚»ãƒƒãƒˆ
 		/// </summary>
-		/// <param name="view"> ’¸“_ƒrƒ…[ </param>
+		/// <param name="view"> é ‚ç‚¹ãƒ“ãƒ¥ãƒ¼ </param>
 		virtual void SetVertexView(VertexView& view) = 0;
 
 		/// <summary>
-		/// ƒCƒ“ƒfƒbƒNƒXƒrƒ…[‚ğƒZƒbƒg‚·‚é
+		/// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="view"> ƒCƒ“ƒfƒbƒNƒXƒrƒ…[ </param>
+		/// <param name="view"> ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ“ãƒ¥ãƒ¼ </param>
 		virtual void SetIndexView(IndexView& view) = 0;
 
 		/// <summary>
-		/// ƒVƒF[ƒ_[ƒŠƒ\[ƒX‚ğƒZƒbƒg‚·‚é
+		/// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="views"> ƒVƒF[ƒ_[ƒŠƒ\[ƒX‚Ìƒrƒ…[ </param>
-		/// <param name="viewsIdx"> ƒrƒ…[‚ÌƒCƒ“ƒfƒbƒNƒX </param>
-		/// <param name="paramIdx"> ƒZƒbƒg‚·‚éƒCƒ“ƒfƒbƒNƒX </param>
+		/// <param name="views"> ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ã®ãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="viewsIdx"> ãƒ“ãƒ¥ãƒ¼ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
+		/// <param name="paramIdx"> ã‚»ãƒƒãƒˆã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
 		virtual void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) = 0;
 
 		/// <summary>
-		/// •`‰æ‚·‚é
+		/// æç”»ã™ã‚‹
 		/// </summary>
-		/// <param name="vertexCount"> ’¸“_” </param>
-		/// <param name="instanceCount"> ƒCƒ“ƒXƒ^ƒ“ƒX” </param>
+		/// <param name="vertexCount"> é ‚ç‚¹æ•° </param>
+		/// <param name="instanceCount"> ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•° </param>
 		virtual void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) = 0;
 
 		/// <summary>
@@ -103,76 +107,80 @@ namespace Eugene
 		virtual void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg‚·‚é
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		/// </summary>
-		/// <param name="views"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìƒrƒ…[ </param>
-		/// <param name="idx"> ƒrƒ…[‚ÌƒCƒ“ƒfƒbƒNƒX </param>
+		/// <param name="views"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="idx"> ãƒ“ãƒ¥ãƒ¼ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
 		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg‚·‚é(RenderTargetViews‚É‚ ‚é‚à‚Ì‚·‚×‚Ä‚ğƒZƒbƒg‚·‚é)
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹(RenderTargetViewsã«ã‚ã‚‹ã‚‚ã®ã™ã¹ã¦ã‚’ã‚»ãƒƒãƒˆã™ã‚‹)
 		/// </summary>
-		/// <param name="views"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ </param>
+		/// <param name="views"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ </param>
 		virtual void SetRenderTarget(RenderTargetViews& views) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg‚·‚é([“xƒoƒbƒtƒ@‚àƒZƒbƒg‚·‚é)
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹(æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚‚ã‚»ãƒƒãƒˆã™ã‚‹)
 		/// </summary>
-		/// <param name="renderTargetViews"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ </param>
-		/// <param name="depthViews"> ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[ </param>
-		/// <param name="rtViewsIdx"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ÌƒCƒ“ƒfƒbƒNƒX </param>
-		/// <param name="dsViewsIdx"> ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[ ‚ÌƒCƒ“ƒfƒbƒNƒX </param>
+		/// <param name="renderTargetViews"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="depthViews"> ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="rtViewsIdx"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
+		/// <param name="dsViewsIdx"> ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
 		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒNƒŠƒA‚·‚é
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 		/// </summary>
-		/// <param name="views"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ </param>
-		/// <param name="color"> ƒNƒŠƒA‚·‚éƒJƒ‰[ </param>
-		/// <param name="idx"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ÌƒCƒ“ƒfƒbƒNƒX </param>
+		/// <param name="views"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="color"> ã‚¯ãƒªã‚¢ã™ã‚‹ã‚«ãƒ©ãƒ¼ </param>
+		/// <param name="idx"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
 		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float,4> color, size_t idx = 0) = 0;
 
 		/// <summary>
-		///  ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒNƒŠƒA‚·‚é(RenderTargetViews‚É‚ ‚é‚à‚Ì‚·‚×‚ÄƒNƒŠƒA‚·‚é)
+		///  ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚¯ãƒªã‚¢ã™ã‚‹(RenderTargetViewsã«ã‚ã‚‹ã‚‚ã®ã™ã¹ã¦ã‚¯ãƒªã‚¢ã™ã‚‹)
 		/// </summary>
-		/// <param name="views"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ </param>
-		/// <param name="color"> ƒNƒŠƒA‚·‚éƒJƒ‰[ </param>
+		/// <param name="views"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="color"> ã‚¯ãƒªã‚¢ã™ã‚‹ã‚«ãƒ©ãƒ¼ </param>
 		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìg—p‚ğŠJn‚Å‚«‚éó‘Ô‚É‚·‚é
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä½¿ç”¨ã‚’é–‹å§‹ã§ãã‚‹çŠ¶æ…‹ã«ã™ã‚‹
 		/// </summary>
-		/// <param name="resource"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg </param>
+		/// <param name="resource"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ </param>
 		virtual void TransitionRenderTargetBegin(GpuResource& resource) = 0;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìg—p‚ğI—¹‚Ìó‘Ô‚É‚·‚é
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä½¿ç”¨ã‚’çµ‚äº†ã®çŠ¶æ…‹ã«ã™ã‚‹
 		/// </summary>
-		/// <param name="resource"> ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg </param>
+		/// <param name="resource"> ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ </param>
 		virtual void TransitionRenderTargetEnd(GpuResource& resource) = 0;
 
 		/// <summary>
-		/// [“xƒoƒbƒtƒ@‚ğƒNƒŠƒA‚·‚é
+		/// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 		/// </summary>
-		/// <param name="views"> ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[ </param>
-		/// <param name="clearValue"> ƒNƒŠƒA‚·‚é’l </param>
-		/// <param name="idx"> ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚ÌƒCƒ“ƒfƒbƒNƒX </param>
+		/// <param name="views"> ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ </param>
+		/// <param name="clearValue"> ã‚¯ãƒªã‚¢ã™ã‚‹å€¤ </param>
+		/// <param name="idx"> ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ </param>
 		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, size_t idx = 0) = 0;
 
 		/// <summary>
-		/// ƒŠƒ\[ƒX‚ğƒRƒs[‚·‚é
+		/// ãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 		/// </summary>
-		/// <param name="destination"> ƒRƒs[æ </param>
-		/// <param name="source"> ƒRƒs[Œ³ </param>
+		/// <param name="destination"> ã‚³ãƒ”ãƒ¼å…ˆ </param>
+		/// <param name="source"> ã‚³ãƒ”ãƒ¼å…ƒ </param>
 		virtual void Copy(GpuResource& destination, GpuResource& source) = 0;
 
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒ‚ÌƒRƒs[‚ğ‚·‚é
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚³ãƒ”ãƒ¼ã‚’ã™ã‚‹
 		/// </summary>
-		/// <param name="destination"> ƒRƒs[æ </param>
-		/// <param name="source"> ƒRƒs[Œ³ </param>
+		/// <param name="destination"> ã‚³ãƒ”ãƒ¼å…ˆ </param>
+		/// <param name="source"> ã‚³ãƒ”ãƒ¼å…ƒ </param>
 		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;
 
 		virtual void* GetCommandList(void) const = 0;
+
+#ifdef USE_IMGUI
+		virtual void SetImguiCommand(ImDrawData* data, Graphics& graphics) const = 0;
+#endif
 	};
 }

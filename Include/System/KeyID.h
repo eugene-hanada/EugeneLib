@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <type_traits>
 
 namespace Eugene
 {
 
 	/// <summary>
-	/// ƒL[ƒ{[ƒh‚ÌID
+	/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ID
 	/// </summary>
 	enum class KeyID
 	{

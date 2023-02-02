@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 
 namespace Eugene
@@ -47,14 +47,14 @@ namespace Eugene
 		R32_SINT = 43,
 	};
 
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@ì¬—pƒf[ƒ^
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ä½œæˆç”¨ãƒ‡ãƒ¼ã‚¿
 	struct TextureInfo
 	{
-		std::uint64_t width;			// ‰¡•
-		std::uint64_t height;			// c•
-		Format format;			// ƒtƒH[ƒ}ƒbƒg
-		std::uint64_t arraySize;		// ”z—ñƒTƒCƒY
-		std::uint16_t mipLevels;			// ƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹
+		std::uint64_t width;			// æ¨ªå¹…
+		std::uint64_t height;			// ç¸¦å¹…
+		Format format;			// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+		std::uint64_t arraySize;		// é…åˆ—ã‚µã‚¤ã‚º
+		std::uint16_t mipLevels;			// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ãƒ¬ãƒ™ãƒ«
 	};
 
 	enum class PrimitiveType

@@ -201,6 +201,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
 	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;

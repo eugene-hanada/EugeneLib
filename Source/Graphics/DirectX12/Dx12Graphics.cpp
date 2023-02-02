@@ -14,6 +14,12 @@
 #include "Dx12VertexView.h"
 #include "Dx12DepthStencilViews.h"
 
+
+#ifdef USE_IMGUI
+#include <imgui.h>
+#include <backends/imgui_impl_dx12.h>
+#endif
+
 #include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib,"d3d12.lib")
@@ -24,13 +30,18 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
 	CreateBackBuffers(bufferNum);
+
+#ifdef USE_IMGUI
+	renderTargetViews_->GetViews();
+	//ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, )
+#endif
 }
 
 Eugene::Dx12Graphics::~Dx12Graphics()
 {
 	swapChain_->Release();
 	swapChain_.Detach();
-	DebugLog("ƒeƒXƒg");
+	DebugLog("ãƒ†ã‚¹ãƒˆ");
 }
 
 Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
@@ -126,35 +137,35 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		throw LibInitException();
 	}
 
-	// ƒAƒ_ƒvƒ^[‚Ì—ñ‹“—p
+	// ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®åˆ—æŒ™ç”¨
 	std::list<IDXGIAdapter*> adapters;
 
-	// –Ú“I‚Ì–¼‘O‚ÌƒAƒ_ƒvƒ^[‚ğ“ü‚ê‚é
+	// ç›®çš„ã®åå‰ã®ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã‚’å…¥ã‚Œã‚‹
 	IDXGIAdapter* tmpAdapter = nullptr;
 
-	// ƒAƒ_ƒvƒ^[‚ğŠi”[‚µ‚Ä‚­
+	// ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã‚’æ ¼ç´ã—ã¦ã
 	for (int i = 0; dxgiFactory_->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++)
 	{
 		adapters.push_back(tmpAdapter);
 	}
 
-	// Ši”[‚µ‚½ƒAƒ_ƒvƒ^[‚Ì’†‚©‚ç–Ú“I‚Ì–¼‘O‚ÌƒAƒ_ƒvƒ^[‚ğ’T‚·
+	// æ ¼ç´ã—ãŸã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®ä¸­ã‹ã‚‰ç›®çš„ã®åå‰ã®ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã‚’æ¢ã™
 	std::wstring strDesc;
 	tmpAdapter = *adapters.begin();
 	for (auto& adpt : adapters)
 	{
 		DXGI_ADAPTER_DESC adesc{};
-		adpt->GetDesc(&adesc);			// ƒAƒ_ƒvƒ^[‚Ìà–¾ƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+		adpt->GetDesc(&adesc);			// ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®èª¬æ˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 		strDesc = adesc.Description;
 		if (strDesc.find(L"NVIDIA") != std::string::npos || strDesc.find(L"AMD") != std::string::npos)
 		{
-			// ˆê’v‚µ‚½‚ç”²‚¯‚é
+			// ä¸€è‡´ã—ãŸã‚‰æŠœã‘ã‚‹
 			tmpAdapter = adpt;
 			break;
 		}
 	}
 
-	// ƒtƒ…[ƒ`ƒƒ[ƒŒƒxƒ‹‚Ì”z—ñ
+	// ãƒ•ãƒ¥ãƒ¼ãƒãƒ£ãƒ¼ãƒ¬ãƒ™ãƒ«ã®é…åˆ—
 	D3D_FEATURE_LEVEL levels[]{
 		D3D_FEATURE_LEVEL_12_1,
 		D3D_FEATURE_LEVEL_12_0,
@@ -169,7 +180,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
-			// Œ©‚Â‚©‚Á‚½‚ç‚â‚ß‚é
+			// è¦‹ã¤ã‹ã£ãŸã‚‰ã‚„ã‚ã‚‹
 			for (auto& a : adapters)
 			{
 				a->Release();
@@ -186,26 +197,26 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 {
 	gpuEngine = CreateGpuEngine(10);
 
-	// İ’è—p‚ÌDESC
+	// è¨­å®šç”¨ã®DESC
 	DXGI_SWAP_CHAIN_DESC1 swapchainDesc{};
 
-	// •
+	// å¹…
 	swapchainDesc.Width = static_cast<int>(size.x);
 
-	// ‚‚³
+	// é«˜ã•
 	swapchainDesc.Height = static_cast<int>(size.y);
 
-	// ƒsƒNƒZƒ‹ƒtƒH[ƒ}ƒbƒg
+	// ãƒ”ã‚¯ã‚»ãƒ«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	swapchainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-	// ƒXƒeƒŒƒI•\¦ƒtƒ‰ƒO
+	// ã‚¹ãƒ†ãƒ¬ã‚ªè¡¨ç¤ºãƒ•ãƒ©ã‚°
 	swapchainDesc.Stereo = false;
 
-	// ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒ‹‚Ìw’è
+	// ãƒãƒ«ãƒã‚µãƒ³ãƒ—ãƒ«ã®æŒ‡å®š
 	swapchainDesc.SampleDesc.Count = 1;
 	swapchainDesc.SampleDesc.Quality = 0;
 
-	// DXGI_USAGE_BACK_BUFFER‚±‚ñ‚Ü‚Ü‚Å
+	// DXGI_USAGE_BACK_BUFFERã“ã‚“ã¾ã¾ã§
 	swapchainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
 	swapchainDesc.BufferCount = bufferNum;
@@ -224,7 +235,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	fullScrDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	fullScrDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 
-	// ƒXƒƒbƒvƒ`ƒFƒCƒ“‚Ì¶¬
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®ç”Ÿæˆ
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
@@ -262,7 +273,7 @@ Eugene::RenderTargetViews& Eugene::Dx12Graphics::GetViews(void)
 
 size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void)
 {
-	// ƒoƒbƒNƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
 	return swapChain_->GetCurrentBackBufferIndex();
 }
 

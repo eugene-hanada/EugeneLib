@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 #include "MathConcepts.h"
-//#include "../../Include/ThirdParty/DirectXMath/DirectXMath.h"
 
 namespace Eugene
 {
@@ -37,9 +36,9 @@ namespace Eugene
 
 		Vector3Tmp<T> Normalized(void) const;
 
-		/// <summary> �@���x�N�g���ɑ΂��Ă̔��˃x�N�g����Ԃ� </summary>
-		/// <param name="n"> �@���x�N�g��(���K���ς�) </param>
-		/// <returns> ���˃x�N�g�� </returns>
+		/// <summary> 法線ベクトルに対しての反射ベクトルを返す </summary>
+		/// <param name="n"> 法線ベクトル(正規化済み) </param>
+		/// <returns> 反射ベクトル </returns>
 		Vector3Tmp<T> Refrect(const Vector3Tmp<T>& n);
 
 
@@ -113,6 +112,7 @@ namespace Eugene
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
+
 		{
 			return { static_cast<T>(lVec.x - rVec.x), static_cast<T>(lVec.y - rVec.y) , static_cast<T>(lVec.z - rVec.z) };
 		}
@@ -149,6 +149,7 @@ namespace Eugene
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const T& val)
 	{
+
 		{
 			return { static_cast<T>(lVec.x * val), static_cast<T>(lVec.y * val), static_cast<T>(lVec.z * val) };
 		}
@@ -233,7 +234,6 @@ namespace Eugene
 		return lVec.x == rVec.x && lVec.y == rVec.y && lVec.z == rVec.z;
 	}
 
-	
 
 	
 

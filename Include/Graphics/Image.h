@@ -19,6 +19,7 @@ namespace Eugene
 		/// <param name="path"> テクスチャファイルのパス </param>
 		Image(const std::filesystem::path& path);
 
+
 		/// <summary>
 		/// テクスチャの情報を取得する
 		/// </summary>

@@ -201,6 +201,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
 
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;
@@ -221,8 +225,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		
 		ImGui::End();
 
+
 		// コマンドの開始
 		cmdList->Begin();
+
 
 		ImGui::Begin("window2");
 		ImGui::Text("text2");
@@ -231,6 +237,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::End();
 
 		ImGui::Render();
+
 
 		
 		// レンダーターゲットのセット
@@ -257,6 +264,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->Draw(4);
 
+		cmdList->SetImguiCommand(ImGui::GetDrawData(),*graphics);
 
 		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 

@@ -2,13 +2,14 @@
 #include <filesystem>
 #include <vector>
 #include "GraphicsCommon.h"
+#include "../Math/Vector2.h"
 
 namespace Eugene
 {
 	/// <summary>
 	/// テクスチャ
 	/// </summary>
-	class Texture
+	class Image
 	{
 	public:
 		
@@ -16,7 +17,8 @@ namespace Eugene
 		/// コンストラクタ(指定したテクスチャファイルを読み込む)
 		/// </summary>
 		/// <param name="path"> テクスチャファイルのパス </param>
-		Texture(const std::filesystem::path& path);
+		Image(const std::filesystem::path& path);
+
 
 		/// <summary>
 		/// テクスチャの情報を取得する
@@ -39,7 +41,7 @@ namespace Eugene
 		/// <summary>
 		/// テクスチャデータ
 		/// </summary>
-		std::vector<std::vector<std::uint8_t>> data_;
+		std::vector<std::uint8_t> data_;
 
 		/// <summary>
 		/// テクスチャ情報

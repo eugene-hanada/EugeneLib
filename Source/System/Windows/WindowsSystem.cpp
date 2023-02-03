@@ -137,7 +137,8 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 #ifdef USE_IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui_ImplWin32_Init(hwnd);
 
 #endif

@@ -9,6 +9,7 @@ option(USE_IMGUI "Imguiを使用するか?" OFF)
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
 
+set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
@@ -18,6 +19,19 @@ set(SystemSource
     Source/System/GamePad.cpp
     Source/System/DynamicLibrary.cpp
 )
+
+if(USE_IMGUI)
+    set(SystemSource 
+        ${SystemSource}
+        Include/ThirdParty/imgui/imgui.cpp
+        Include/ThirdParty/imgui/imgui_demo.cpp
+        Include/ThirdParty/imgui/imgui_draw.cpp
+        Include/ThirdParty/imgui/imgui_tables.cpp
+        Include/ThirdParty/imgui/imgui_widgets.cpp
+        Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
+        Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+    )
+endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
@@ -32,7 +46,7 @@ set(GraphicsSource
     Source/Graphics/VertexView.cpp
     Source/Graphics/IndexView.cpp
     Source/Graphics/Shader.cpp
-    Source/Graphics/Texture.cpp
+    Source/Graphics/Image.cpp
 )
 
 # グラフィック系の実装クラスのソースファイルをセット
@@ -92,34 +106,6 @@ set(SoundApiSource
     Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
 )
 
-# DirectXTexをセット
-set(DirectXTexSource
-    DirectXTex/DirectXTex/DirectXTex.h
-    DirectXTex/DirectXTex/DirectXTex.inl
-    DirectXTex/DirectXTex/BC.h
-    DirectXTex/DirectXTex/DDS.h
-    DirectXTex/DirectXTex/DirectXTexP.h
-    DirectXTex/DirectXTex/filters.h
-    DirectXTex/DirectXTex/scoped.h
-    DirectXTex/DirectXTex/BC.cpp
-    DirectXTex/DirectXTex/BC4BC5.cpp
-    DirectXTex/DirectXTex/BC6HBC7.cpp
-    DirectXTex/DirectXTex/DirectXTexCompress.cpp
-    DirectXTex/DirectXTex/DirectXTexConvert.cpp
-    DirectXTex/DirectXTex/DirectXTexDDS.cpp
-    DirectXTex/DirectXTex/DirectXTexHDR.cpp
-    DirectXTex/DirectXTex/DirectXTexImage.cpp
-    DirectXTex/DirectXTex/DirectXTexMipmaps.cpp
-    DirectXTex/DirectXTex/DirectXTexMisc.cpp
-    DirectXTex/DirectXTex/DirectXTexNormalMaps.cpp
-    DirectXTex/DirectXTex/DirectXTexPMAlpha.cpp
-    DirectXTex/DirectXTex/DirectXTexResize.cpp
-    DirectXTex/DirectXTex/DirectXTexTGA.cpp
-    DirectXTex/DirectXTex/DirectXTexUtil.cpp
-    DirectXTex/DirectXTex/DirectXTexWIC.cpp
-    DirectXTex/DirectXTex/d3dx12.h
-    DirectXTex/DirectXTex/DirectXTexD3D12.cpp
-)
 
 add_library(EugeneLib STATIC 
     ${SystemSource}
@@ -129,7 +115,6 @@ add_library(EugeneLib STATIC
     ${MathSource}
     ${SoundSource}
     ${SoundApiSource}
-    ${DirectXTexSource}
 )
 
 # ランタイムライブラリを静的にリンクするように

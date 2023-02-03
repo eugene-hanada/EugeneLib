@@ -138,7 +138,7 @@ void InitVertex(void)
 
 void InitTexture(void)
 {
-	Eugene::Texture tex("./Logo.png");
+	Eugene::Image tex("./Logo.png");
 	upTextureBuffer.reset(graphics->CreateUploadableTextureResource(tex));
 	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
 	textureView_.reset(graphics->CreateShaderResourceViews(1));
@@ -200,8 +200,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
+
+
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;
@@ -216,17 +219,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		libSys->ImguiNewFrame();
 		ImGui::NewFrame();
 
-		ImGui::Begin("810");
-		ImGui::Text("114514");
-		ImGui::End();
-		ImGui::Render();
+		ImGui::Begin("window1");
+		ImGui::Text("text1");
 
 		
+		ImGui::End();
+
 
 		// コマンドの開始
 		cmdList->Begin();
 
-		
+
+		ImGui::Begin("window2");
+		ImGui::Text("text2");
+
+
+		ImGui::End();
+
+		ImGui::Render();
+
 
 		
 		// レンダーターゲットのセット
@@ -235,6 +246,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		// レンダーターゲットをクリア
 		cmdList->ClearRenderTarget(graphics->GetViews(), color, graphics->GetNowBackBufferIndex());
+
 
 		cmdList->SetGraphicsPipeline(*gpipeLine);
 
@@ -253,6 +265,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Draw(4);
 
 		cmdList->SetImguiCommand(ImGui::GetDrawData(),*graphics);
+
+		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 

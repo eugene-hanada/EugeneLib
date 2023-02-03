@@ -1,26 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="DirectXTex\DirectXTex\BC.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\BC4BC5.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\BC6HBC7.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompress.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexCompressGPU.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexConvert.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D11.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexD3D12.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexDDS.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexFlipRotate.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexHDR.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexImage.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMipmaps.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexMisc.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexNormalMaps.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexPMAlpha.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexResize.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexTGA.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexUtil.cpp" />
-    <ClCompile Include="DirectXTex\DirectXTex\DirectXTexWIC.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
@@ -52,7 +32,7 @@
     <ClCompile Include="Source\Graphics\RenderTargetViews.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\ShaderResourceViews.cpp" />
-    <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Graphics\Image.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
     <ClCompile Include="Source\Math\Geometry.cpp" />
     <ClCompile Include="Source\Math\Vector3.cpp" />
@@ -75,13 +55,6 @@
     <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXTex\DirectXTex\BC.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\d3dx12.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\DDS.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\DirectXTex.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\DirectXTexP.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\filters.h" />
-    <ClInclude Include="DirectXTex\DirectXTex\scoped.h" />
     <ClInclude Include="Include\Color.h" />
     <ClInclude Include="Include\Common\Debug.h" />
     <ClInclude Include="Include\Common\EugeneLibException.h" />
@@ -97,7 +70,7 @@
     <ClInclude Include="Include\Graphics\RenderTargetViews.h" />
     <ClInclude Include="Include\Graphics\Shader.h" />
     <ClInclude Include="Include\Graphics\ShaderResourceViews.h" />
-    <ClInclude Include="Include\Graphics\Texture.h" />
+    <ClInclude Include="Include\Graphics\Image.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
     <ClInclude Include="Include\Math\Geometry.h" />
     <ClInclude Include="Include\Math\MathConcepts.h" />
@@ -142,7 +115,6 @@
     <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DirectXTex\DirectXTex\DirectXTex.inl" />
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />
     <None Include="Include\ThirdParty\DirectXMath\DirectXMathConvert.inl" />
     <None Include="Include\ThirdParty\DirectXMath\DirectXMathMatrix.inl" />

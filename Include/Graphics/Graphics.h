@@ -10,7 +10,7 @@ namespace Eugene
 	class RenderTargetViews;
 	class CommandList;
 	class GpuResource;
-	class Texture;
+	class Image;
 	class ShaderResourceViews;
 	class DepthStencilViews;
 	class VertexView;
@@ -70,7 +70,8 @@ namespace Eugene
 		/// </summary>
 		/// <param name="texture"> テクスチャ </param>
 		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateUploadableTextureResource(Texture& texture) const = 0;
+		virtual GpuResource* CreateUploadableTextureResource(Image& texture) const = 0;
+
 
 		/// <summary>
 		/// GpuResourceの生成

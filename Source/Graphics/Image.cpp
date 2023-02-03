@@ -1,4 +1,4 @@
-﻿#include "../../Include/Graphics/Texture.h"
+﻿#include "../../Include/Graphics/Image.h"
 #include "../../Include/Common/EugeneLibException.h"
 
 #define STB_IMAGE_IMPLEMENTATION

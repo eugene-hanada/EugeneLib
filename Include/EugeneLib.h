@@ -14,7 +14,7 @@
 #include "Graphics/VertexView.h"
 #include "Graphics/ShaderResourceViews.h"
 #include "Graphics/DepthStencilViews.h"
-#include "Graphics/Texture.h"
+#include "Graphics/Image.h"
 
 // サウンド系
 #include "Sound/Sound.h"

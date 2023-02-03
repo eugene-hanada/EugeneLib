@@ -9,6 +9,7 @@ option(USE_IMGUI "Imguiを使用するか?" OFF)
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)
 
+set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
@@ -18,6 +19,19 @@ set(SystemSource
     Source/System/GamePad.cpp
     Source/System/DynamicLibrary.cpp
 )
+
+if(USE_IMGUI)
+    set(SystemSource 
+        ${SystemSource}
+        Include/ThirdParty/imgui/imgui.cpp
+        Include/ThirdParty/imgui/imgui_demo.cpp
+        Include/ThirdParty/imgui/imgui_draw.cpp
+        Include/ThirdParty/imgui/imgui_tables.cpp
+        Include/ThirdParty/imgui/imgui_widgets.cpp
+        Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
+        Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+    )
+endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource

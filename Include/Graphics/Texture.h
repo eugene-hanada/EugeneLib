@@ -39,7 +39,7 @@ namespace Eugene
 		/// <summary>
 		/// テクスチャデータ
 		/// </summary>
-		std::vector<std::vector<std::uint8_t>> data_;
+		std::vector<std::uint8_t> data_;
 
 		/// <summary>
 		/// テクスチャ情報

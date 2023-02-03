@@ -138,7 +138,7 @@ void InitVertex(void)
 
 void InitTexture(void)
 {
-	Eugene::Texture tex("./Logo.png");
+	Eugene::Image tex("./Logo.png");
 	upTextureBuffer.reset(graphics->CreateUploadableTextureResource(tex));
 	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
 	textureView_.reset(graphics->CreateShaderResourceViews(1));

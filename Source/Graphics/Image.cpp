@@ -5,7 +5,7 @@
 #include "../../Include/ThirdParty/stb/stb_image.h"
 
 
-Eugene::Texture::Texture(const std::filesystem::path& path)
+Eugene::Image::Image(const std::filesystem::path& path)
 {
 	int w, h, c;
 	auto img = stbi_load(path.string().c_str(), &w, &h, &c, STBI_default);
@@ -24,13 +24,13 @@ Eugene::Texture::Texture(const std::filesystem::path& path)
 	stbi_image_free(img);
 }
 
-const Eugene::TextureInfo& Eugene::Texture::GetInfo(void) const&
+const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
 {
 	return info_;
 }
 
 
-std::uint8_t* Eugene::Texture::GetData(void)&
+std::uint8_t* Eugene::Image::GetData(void)&
 {
 	return data_.data();
 }

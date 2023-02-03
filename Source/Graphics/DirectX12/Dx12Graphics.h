@@ -33,7 +33,7 @@ namespace Eugene
 			SamplerSpan samplerLayout = SamplerSpan{}) const final;
 
 		GpuResource* CreateUploadableResource(size_t size) const final;
-		GpuResource* CreateUploadableTextureResource(Texture& texture) const final;
+		GpuResource* CreateUploadableTextureResource(Image& texture) const final;
 
 		GpuResource* CreateDefaultResource(size_t size) const final;
 		GpuResource* CreateSwapChainResource(std::uint32_t idx) const final;

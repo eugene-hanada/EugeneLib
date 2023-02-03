@@ -32,7 +32,7 @@
     <ClCompile Include="Source\Graphics\RenderTargetViews.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\ShaderResourceViews.cpp" />
-    <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Graphics\Image.cpp" />
     <ClCompile Include="Source\Graphics\VertexView.cpp" />
     <ClCompile Include="Source\Math\Geometry.cpp" />
     <ClCompile Include="Source\Math\Vector3.cpp" />
@@ -70,7 +70,7 @@
     <ClInclude Include="Include\Graphics\RenderTargetViews.h" />
     <ClInclude Include="Include\Graphics\Shader.h" />
     <ClInclude Include="Include\Graphics\ShaderResourceViews.h" />
-    <ClInclude Include="Include\Graphics\Texture.h" />
+    <ClInclude Include="Include\Graphics\Image.h" />
     <ClInclude Include="Include\Graphics\VertexView.h" />
     <ClInclude Include="Include\Math\Geometry.h" />
     <ClInclude Include="Include\Math\MathConcepts.h" />

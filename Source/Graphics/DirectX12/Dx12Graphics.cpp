@@ -71,7 +71,7 @@ Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(size_t size)
 	return new Dx12UploadableResource{ device_.Get(),size};
 }
 
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableTextureResource(Texture& texture) const
+Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableTextureResource(Image& texture) const
 {
 	return new Dx12UploadableResource{ device_.Get(),texture};
 }

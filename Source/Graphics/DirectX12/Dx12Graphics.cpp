@@ -43,8 +43,11 @@ Eugene::Dx12Graphics::~Dx12Graphics()
 #ifdef USE_IMGUI
 	ImGui_ImplDX12_Shutdown();
 #endif
-	swapChain_->Release();
-	swapChain_.Detach();
+	if (swapChain_ != nullptr)
+	{
+		swapChain_->Release();
+		swapChain_.Detach();
+	}
 }
 
 Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const

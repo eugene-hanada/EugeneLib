@@ -267,9 +267,10 @@ void Eugene::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
 
 }
 
-Eugene::GpuResource& Eugene::Dx12Graphics::GetBackBufferResource(void)
+Eugene::GpuResource& Eugene::Dx12Graphics::GetBackBufferResource(size_t idx)
 {
-	return *buffers_[GetNowBackBufferIndex()];
+	assert(idx >= buffers_.size());
+	return *buffers_[idx];
 }
 
 Eugene::RenderTargetViews& Eugene::Dx12Graphics::GetViews(void)

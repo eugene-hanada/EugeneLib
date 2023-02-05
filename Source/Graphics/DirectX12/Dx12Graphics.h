@@ -55,7 +55,7 @@ namespace Eugene
 
 		void CreateBackBuffers(size_t bufferCount);
 
-		GpuResource& GetBackBufferResource(void) final;
+		GpuResource& GetBackBufferResource(size_t idx) final;
 
 		RenderTargetViews& GetViews(void) final;
 

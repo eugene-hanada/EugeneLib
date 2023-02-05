@@ -141,7 +141,14 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> GpuResourceの参照 </returns>
-		virtual GpuResource& GetBackBufferResource(void) = 0;
+		GpuResource& GetBackBufferResource(void);
+		
+		/// <summary>
+		/// バックバッファのレンダーターゲットをインデックス指定でGpuResourceを取得する
+		/// </summary>
+		/// <param name="idx"> インデックス </param>
+		/// <returns></returns>
+		virtual GpuResource& GetBackBufferResource(size_t idx) = 0;
 
 		/// <summary>
 		/// バックバッファで使用するRenderTargetViewsの取得する

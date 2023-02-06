@@ -8,7 +8,7 @@
 #include "../Math/Vector3.h"
 #ifdef _DEBUG
 
-#define DebugLog(...) (Eugene::Debug::GetInstance().Log(__VA_ARGS__))
+#define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
 
 /// <summary>
 /// Vector2—pstd::formatter
@@ -92,7 +92,7 @@ namespace Eugene
 		template<class ...Args>
 		constexpr void Log(const std::string& formatStr, const Args&... args)
 		{
-			Log(std::format(formatStr, args));
+			Log(std::format(formatStr, args...));
 		}
 
 		/// <summary>

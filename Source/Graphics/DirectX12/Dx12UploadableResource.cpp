@@ -60,6 +60,23 @@ Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, Ima
 	resource_->Unmap(0, nullptr);
 }
 
+Eugene::Dx12UploadableResource::Dx12UploadableResource(ID3D12Device* device, const Vector2& size, Format format)
+{
+	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<size_t>(size.x),static_cast<size_t>(size.y));
+	if (FAILED(device->CreateCommittedResource(
+		&heapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+	)))
+	{
+		throw EugeneLibException("アップロードリソースの作成に失敗");
+	}
+}
+
 void* Eugene::Dx12UploadableResource::Map(void)
 {
 	void* ptr{ nullptr };
@@ -70,4 +87,9 @@ void* Eugene::Dx12UploadableResource::Map(void)
 void Eugene::Dx12UploadableResource::UnMap(void)
 {
 	resource_->Unmap(0, nullptr);
+}
+
+bool Eugene::Dx12UploadableResource::CanMap(void) const
+{
+	return true;
 }

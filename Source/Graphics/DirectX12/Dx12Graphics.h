@@ -4,6 +4,7 @@
 #include <vector>
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Math/Vector2.h"
+#include "../../../Include/Graphics/GraphicsCommon.h"
 
 struct ID3D12Device;
 struct IDXGIFactory6;
@@ -34,7 +35,7 @@ namespace Eugene
 
 		GpuResource* CreateUploadableResource(size_t size) const final;
 		GpuResource* CreateUploadableTextureResource(Image& texture) const final;
-
+		GpuResource* CreateUploadableResource(const Vector2& size, Format format) const final;
 		GpuResource* CreateDefaultResource(size_t size) const final;
 		GpuResource* CreateSwapChainResource(std::uint32_t idx) const final;
 		GpuResource* CreateTextureResource(const TextureInfo& formatData) const final;

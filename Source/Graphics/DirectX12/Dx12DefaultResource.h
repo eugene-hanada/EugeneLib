@@ -20,5 +20,6 @@ namespace Eugene
 		Dx12DefaultResource(ID3D12Device* device, const TextureInfo& formatData);
 		Dx12DefaultResource(ID3D12Device* device,const Vector2& size, Format format, float clearValue = 1.0f);
 	private:
+		bool CanMap(void) const;
 	};
 }

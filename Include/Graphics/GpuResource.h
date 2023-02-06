@@ -27,6 +27,14 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		virtual void UnMap(void);
+
+		/// <summary>
+		/// マップ可能か？
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		virtual bool CanMap(void) const = 0;
+
 		virtual void* GetResource(void) const= 0;
 	protected:
 		GpuResource();

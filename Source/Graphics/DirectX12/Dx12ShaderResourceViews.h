@@ -13,5 +13,7 @@ namespace Eugene
 		void CreateConstantBuffer(GpuResource& resource, size_t idx) final;
 		void* GetViews(void) const final;
 	protected:
+
+		friend class Dx12ViewTable;
 	};
 }

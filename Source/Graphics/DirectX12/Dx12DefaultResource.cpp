@@ -94,3 +94,8 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device,const Vect
 		throw EugeneLibException("デプス用リソースの作成に失敗");
 	}
 }
+
+bool Eugene::Dx12DefaultResource::CanMap(void) const
+{
+	return false;
+}

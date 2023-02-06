@@ -243,8 +243,14 @@ void Eugene::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource&
 		return;
 	}
 
-
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
+	auto defState = D3D12_RESOURCE_STATE_COMMON;
+	if (destination.CanMap())
+	{
+		barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON);
+	}
+
+	
 	cmdList_->ResourceBarrier(1, &barrier);
 
 
@@ -264,7 +270,8 @@ void Eugene::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource&
 
 	cmdList_->CopyTextureRegion(&dest, 0, 0, 0, &src, nullptr);
 
-	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 

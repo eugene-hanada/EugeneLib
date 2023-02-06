@@ -72,6 +72,7 @@ namespace Eugene
 		/// <returns> GpuResourceのポインタ </returns>
 		virtual GpuResource* CreateUploadableTextureResource(Image& texture) const = 0;
 
+		virtual GpuResource* CreateUploadableResource(const Vector2& size, Format format) const = 0;
 
 		/// <summary>
 		/// GpuResourceの生成

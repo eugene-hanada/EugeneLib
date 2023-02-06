@@ -180,6 +180,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	InitConstantBuffer();
 	InitSound();
 
+	std::unique_ptr<Eugene::ShaderResourceViews> srv;
+	srv.reset(graphics->CreateShaderResourceViews(2));
+	srv->CreateTexture(*textureBuffer, 0);
+
 	cmdList->Begin();
 	cmdList->Copy(*matrixBuffer, *upMatrixBuffer);
 	cmdList->Copy(*vertexBuffer, *upVertexBuffer);
@@ -201,7 +205,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
 
-
+	
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -221,7 +225,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		ImGui::Begin("window1");
 		ImGui::Text("text1");
-
 		
 		ImGui::End();
 
@@ -266,7 +269,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->SetImguiCommand(ImGui::GetDrawData(),*graphics);
 
-		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 

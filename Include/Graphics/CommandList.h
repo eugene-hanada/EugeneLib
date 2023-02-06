@@ -18,6 +18,7 @@ namespace Eugene
 	class GpuResource;
 	class GraphicsPipeline;
 	class ShaderResourceViews;
+	class ViewTable;
 
 	/// <summary>
 	/// コマンドリストの処理を行うクラス

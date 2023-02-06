@@ -101,6 +101,8 @@ void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, 
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }
 
+
+
 void Eugene::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
 {
 	cmdList_->DrawInstanced(vertexCount, instanceCount, 0, 0);

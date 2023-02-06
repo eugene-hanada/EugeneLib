@@ -53,6 +53,8 @@
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Source\Graphics\Sampler.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -113,6 +115,8 @@
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
     <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="Include\Graphics\Sampler.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

@@ -18,6 +18,19 @@ namespace Eugene
 		Anisotropic = 0x55
 	};
 
+	enum class SamplerComparison
+	{
+		Non,
+		Never,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
+	};
+
 	struct SamplerLayout
 	{
 		SamplerLayout(
@@ -30,6 +43,10 @@ namespace Eugene
 		TextureAddressMode v_;
 		TextureAddressMode w_;
 		SampleFilter filter_;
+		float maxAnisotropy_;
+		SamplerComparison comparison_;
+		float maxLod_;
+		float minLod_;
 	};
 
 	class Sampler

@@ -18,7 +18,7 @@ namespace Eugene
 	class GpuResource;
 	class GraphicsPipeline;
 	class ShaderResourceViews;
-	class ViewTable;
+	class SamplerViews;
 
 	/// <summary>
 	/// コマンドリストの処理を行うクラス
@@ -91,6 +91,14 @@ namespace Eugene
 		/// <param name="viewsIdx"> ビューのインデックス </param>
 		/// <param name="paramIdx"> セットするインデックス </param>
 		virtual void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) = 0;
+
+		/// <summary>
+		/// サンプラーをセットする
+		/// </summary>
+		/// <param name="views"></param>
+		/// <param name="viewsIdx"></param>
+		/// <param name="paramIdx"></param>
+		virtual void SetSamplerView(SamplerViews& views, size_t viewsIdx, size_t paramIdx) = 0;
 
 		/// <summary>
 		/// 描画する

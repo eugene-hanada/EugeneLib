@@ -64,6 +64,9 @@ namespace Eugene
 
 		void Present(void) final;
 
+		Sampler* CreateSampler(const SamplerLayout& layout) const final;
+
+		SamplerViews* CreateSamplerViews(size_t size) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif

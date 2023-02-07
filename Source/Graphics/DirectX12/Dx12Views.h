@@ -6,7 +6,6 @@ struct ID3D12Device;
 
 namespace Eugene
 {
-	class Graphics;
 	class Dx12Views
 	{
 	public:

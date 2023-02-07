@@ -2,6 +2,7 @@
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
+#include "Sampler.h"
 
 namespace Eugene
 {
@@ -14,6 +15,7 @@ namespace Eugene
 	class ShaderResourceViews;
 	class DepthStencilViews;
 	class VertexView;
+	class SamplerViews;
 
 	/// <summary>
 	/// グラフィックスの処理を行うクラス
@@ -166,6 +168,9 @@ namespace Eugene
 		virtual size_t GetNowBackBufferIndex(void) = 0;
 		virtual void Present(void) = 0;
 
+		virtual Sampler* CreateSampler(const SamplerLayout& layout) const = 0;
+
+		virtual SamplerViews* CreateSamplerViews(size_t size) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
 #endif

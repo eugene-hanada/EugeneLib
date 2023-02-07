@@ -13,6 +13,8 @@
 #include "Dx12RenderTargetViews.h"
 #include "Dx12VertexView.h"
 #include "Dx12DepthStencilViews.h"
+#include "Dx12Sampler.h"
+#include "Dx12SamplerVies.h"
 
 
 #ifdef USE_IMGUI
@@ -293,6 +295,16 @@ size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void)
 void Eugene::Dx12Graphics::Present(void)
 {
 	swapChain_->Present(1, 0);
+}
+
+Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout) const
+{
+	return new Dx12Sampler{ layout };
+}
+
+Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(size_t size) const
+{
+	return new Dx12SamplerViews{device_.Get(), size};
 }
 
 #ifdef USE_IMGUI

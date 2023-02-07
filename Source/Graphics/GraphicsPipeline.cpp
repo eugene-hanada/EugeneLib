@@ -19,8 +19,3 @@ Eugene::ShaderInputLayout::ShaderInputLayout(const char* semanticName, std::uint
 	semanticName_{semanticName}, semanticIdx_{semanticIdx}, format_{format}, slot_{slot}
 {
 }
-
-Eugene::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode v, SampleFilter filter) :
-	u_{u}, v_{v}, filter_{filter}
-{
-}

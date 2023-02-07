@@ -55,6 +55,8 @@
     <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\Graphics\Sampler.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
+    <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerVies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -117,6 +119,8 @@
     <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="Include\Graphics\Sampler.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
+    <ClInclude Include="Include\Graphics\SamplerViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerVies.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

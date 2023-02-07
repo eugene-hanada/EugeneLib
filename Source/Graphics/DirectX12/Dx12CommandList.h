@@ -29,7 +29,7 @@ namespace Eugene
 		void SetVertexView(VertexView& view) final;
 		void SetIndexView(IndexView& view) final;
 		void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) final;
-
+		void SetSamplerView(SamplerViews& views, size_t viewsIdx, size_t paramIdx) final;
 		void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) final;
 		void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) final;
 		void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) final;

@@ -11,6 +11,7 @@
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
+#include "Dx12SamplerVies.h"
 
 #ifdef USE_IMGUI
 #include "Dx12Graphics.h"
@@ -97,6 +98,20 @@ void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, 
 	}
 	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart()};
 	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * viewsIdx;
+	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
+	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
+}
+
+void Eugene::Dx12CommandList::SetSamplerView(SamplerViews& views, size_t viewsIdx, size_t paramIdx)
+{
+	ID3D12Device* device{ nullptr };
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart() };
+	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER) * viewsIdx;
 	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }

@@ -12,6 +12,6 @@ namespace Eugene
         Dx12Sampler(const SamplerLayout& layout);
     private:
         D3D12_SAMPLER_DESC desc_;
-        friend class Dx12ShaderResourceViews;
+        friend class Dx12SamplerViews;
     };
 }

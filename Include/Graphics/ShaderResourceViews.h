@@ -4,6 +4,7 @@ namespace Eugene
 {
 	class Graphics;
 	class GpuResource;
+	class Sampler;
 	class ShaderResourceViews
 	{
 	public:

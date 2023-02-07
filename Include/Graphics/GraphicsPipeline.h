@@ -3,6 +3,7 @@
 #include <span>
 #include <vector>
 #include "GraphicsCommon.h"
+#include "Sampler.h"
 
 namespace Eugene
 {
@@ -52,29 +53,9 @@ namespace Eugene
 		std::uint32_t baseRegister_;
 	};
 
-	enum class TextureAddressMode
-	{
-		Wrap = 1,
-		Mirror = 2,
-		Clamp = 3,
-		Border = 4,
-		MirrorOnce = 5
-	};
 
-	enum class SampleFilter
-	{
-		Point = 0,
-		Linear = 0x15,
-		Anisotropic = 0x55
-	};
 
-	struct SamplerLayout
-	{
-		SamplerLayout(TextureAddressMode u = TextureAddressMode::Wrap, TextureAddressMode v = TextureAddressMode::Wrap, SampleFilter filter = SampleFilter::Point);
-		TextureAddressMode u_;
-		TextureAddressMode v_;
-		SampleFilter filter_;
-	};
+
 
 	enum class TopologyType
 	{

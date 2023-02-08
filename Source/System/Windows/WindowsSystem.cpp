@@ -139,8 +139,8 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplWin32_Init(hwnd);
-
 #endif
 
 }
@@ -172,7 +172,7 @@ bool Eugene::WindowsSystem::Update(void)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	if (msg.message == WM_QUIT)
+	if (msg.message == WM_QUIT || msg.message == WM_DESTROY)
 	{
 		return false;
 	}

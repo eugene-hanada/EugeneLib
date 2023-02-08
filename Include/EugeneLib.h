@@ -15,6 +15,8 @@
 #include "Graphics/ShaderResourceViews.h"
 #include "Graphics/DepthStencilViews.h"
 #include "Graphics/Image.h"
+#include "Graphics/SamplerViews.h"
+#include "Graphics/Sampler.h"
 
 // サウンド系
 #include "Sound/Sound.h"

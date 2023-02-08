@@ -43,6 +43,9 @@ std::unique_ptr < Eugene::SoundControl> soundCtrl;
 std::unique_ptr<Eugene::Sound3DControl> sound3DCtrl;
 std::unique_ptr<Eugene::SoundSpeaker> soundSpeaker;
 
+std::unique_ptr<Eugene::Sampler> sampler;
+std::unique_ptr<Eugene::SamplerViews> smpViews;
+
 void Init(void)
 {
 	// Windowsとかの機能をまとめたクラスを作成
@@ -84,13 +87,10 @@ void InitGraphicsPipeline(void)
 	std::vector<std::vector<Eugene::ShaderLayout>> shaderLayout
 	{
 		{Eugene::ShaderLayout{Eugene::ViewType::ConstantBuffer, 1,0}},
-		{Eugene::ShaderLayout{Eugene::ViewType::Texture, 1,0}}
+		{Eugene::ShaderLayout{Eugene::ViewType::Texture, 1,0}},
+		{Eugene::ShaderLayout{Eugene::ViewType::Sampler, 1,0}}
 	};
 
-	std::vector< Eugene::SamplerLayout> sampler
-	{
-		Eugene::SamplerLayout{}
-	};
 
 	gpipeLine.reset(graphics->CreateGraphicsPipeline(
 		layout,
@@ -98,8 +98,7 @@ void InitGraphicsPipeline(void)
 		rendertargets,
 		Eugene::TopologyType::Triangle,
 		false,
-		shaderLayout,
-		sampler
+		shaderLayout
 	));
 
 }
@@ -143,6 +142,12 @@ void InitTexture(void)
 	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
 	textureView_.reset(graphics->CreateShaderResourceViews(1));
 	textureView_->CreateTexture(*textureBuffer, 0);
+
+	auto samplerLayout = Eugene::SamplerLayout{};
+	samplerLayout.filter_ = Eugene::SampleFilter::Linear;
+	sampler.reset(graphics->CreateSampler(samplerLayout));
+	smpViews.reset(graphics->CreateSamplerViews(1));
+	smpViews->CreateSampler(*sampler, 0);
 }
 
 void InitConstantBuffer(void)
@@ -207,7 +212,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 	while (libSys->Update())
 	{
@@ -240,8 +244,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::End();
 
 		ImGui::Render();
-
-
 		
 		// レンダーターゲットのセット
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
@@ -256,6 +258,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->SetShaderResourceView(*matrixView_, 0, 0);
 
 		cmdList->SetShaderResourceView(*textureView_, 0, 1);
+
+		cmdList->SetSamplerView(*smpViews, 0, 2);
 
 		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
 
@@ -275,6 +279,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// コマンド終了
 		cmdList->End();
 
+
+
 		// 実行するコマンドを追加
 		gpuEngien->Push(*cmdList);
 
@@ -287,6 +293,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// スクリーンをバックバッファに入れ替えする
 		graphics->Present();
 
+
+
 		auto r = libSys->GetGamePad(pad, 0);
 		if (libSys->IsHitKey(Eugene::KeyID::SPACE))
 		{
@@ -296,9 +304,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			break;
 		}
-	
+		
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	}
-
-	
 	return 0;
 }

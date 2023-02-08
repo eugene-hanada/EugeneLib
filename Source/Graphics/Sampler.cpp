@@ -10,3 +10,7 @@ Eugene::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode v,
 	minLod_ = 0.0f;
 	maxLod_ = std::numeric_limits<float>::max();
 }
+
+Eugene::Sampler::Sampler()
+{
+}

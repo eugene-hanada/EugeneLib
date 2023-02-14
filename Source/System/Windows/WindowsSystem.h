@@ -19,7 +19,7 @@ namespace Eugene
 		bool GetKeyData(KeyDataSpan& keyData) const final;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
-
+		bool IsEnd(void) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif

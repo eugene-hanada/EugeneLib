@@ -53,6 +53,16 @@ namespace EugeneLib {
 
     GpuEngine <|-- Dx12GpuEngine
 
+    abstract class ImageResource
+    {
+        
+    }
+
+    abstract class BufferResource
+    {
+        
+    }
+
     abstract class GpuResource
     {
 

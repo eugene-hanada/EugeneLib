@@ -304,11 +304,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			break;
 		}
-		
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		//ImGuiIO& io = ImGui::GetIO();
+		if (!libSys->IsEnd())
 		{
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
 		}
 	}
 	return 0;

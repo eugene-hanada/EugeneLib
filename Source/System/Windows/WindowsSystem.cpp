@@ -41,6 +41,8 @@ Eugene::Graphics* graphics = nullptr;
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
+bool isEnd = false;
+
 /// <summary>
 /// ウィンドウプロシージャ
 /// </summary>
@@ -60,6 +62,7 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	switch (msg)
 	{
 	case WM_DESTROY:
+		isEnd = true;
 		PostQuitMessage(0);
 		return 0;
 	case WM_LBUTTONDOWN:
@@ -167,12 +170,14 @@ Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, s
 
 bool Eugene::WindowsSystem::Update(void)
 {
+
+
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	if (msg.message == WM_QUIT || msg.message == WM_DESTROY)
+	if (msg.message == WM_QUIT)
 	{
 		return false;
 	}
@@ -233,6 +238,11 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 	pad.rightThumb_.y = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
 
 	return true;
+}
+
+bool Eugene::WindowsSystem::IsEnd(void) const
+{
+	return isEnd;
 }
 
 #ifdef USE_IMGUI

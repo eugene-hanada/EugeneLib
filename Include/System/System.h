@@ -104,6 +104,12 @@ namespace Eugene
 		/// <returns></returns>
 		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		virtual bool IsEnd(void) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
 #endif

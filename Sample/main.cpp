@@ -22,13 +22,13 @@ std::unique_ptr<Eugene::CommandList> cmdList;
 std::unique_ptr<Eugene::GraphicsPipeline> gpipeLine;
 
 // 頂点データ
-std::unique_ptr <Eugene::GpuResource> upVertexBuffer;
-std::unique_ptr <Eugene::GpuResource> vertexBuffer;
+std::unique_ptr <Eugene::BufferResource> upVertexBuffer;
+std::unique_ptr <Eugene::BufferResource> vertexBuffer;
 std::unique_ptr<Eugene::VertexView> vertexView;
 
 // テクスチャデータ
-std::unique_ptr <Eugene::GpuResource> upTextureBuffer;
-std::unique_ptr <Eugene::GpuResource> textureBuffer;
+std::unique_ptr <Eugene::BufferResource> upTextureBuffer;
+std::unique_ptr <Eugene::ImageResource> textureBuffer;
 std::unique_ptr < Eugene::ShaderResourceViews> textureView_;
 
 // 行列データ
@@ -122,14 +122,13 @@ void InitVertex(void)
 
 
 	// CPUからアクセスできるリソースを作成
-
-	upVertexBuffer.reset(graphics->CreateUploadableResource(sizeof(vertex)));
+	upVertexBuffer.reset(graphics->CreateUploadableBufferResource(sizeof(vertex)));
 	auto ptr = upVertexBuffer->Map();
 	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<Vertex*>(ptr));
 	upVertexBuffer->UnMap();
 
 	// GPUだけでしか使えないリソースを作成
-	vertexBuffer.reset(graphics->CreateDefaultResource(sizeof(vertex)));
+	vertexBuffer.reset(graphics->CreateBufferResource(sizeof(vertex)));
 
 	// 頂点ビュー
 	vertexView.reset(graphics->CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
@@ -138,8 +137,8 @@ void InitVertex(void)
 void InitTexture(void)
 {
 	Eugene::Image tex("./Logo.png");
-	upTextureBuffer.reset(graphics->CreateUploadableTextureResource(tex));
-	textureBuffer.reset(graphics->CreateTextureResource(tex.GetInfo()));
+	upTextureBuffer.reset(graphics->CreateBufferResource(tex));
+	textureBuffer.reset(graphics->CreateImageResource(tex.GetInfo()));
 	textureView_.reset(graphics->CreateShaderResourceViews(1));
 	textureView_->CreateTexture(*textureBuffer, 0);
 

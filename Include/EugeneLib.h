@@ -7,7 +7,11 @@
 #include "Graphics/Graphics.h"
 #include "Graphics/GpuEngine.h"
 #include "Graphics/CommandList.h"
+
 #include "Graphics/GpuResource.h"
+#include "Graphics/BufferResource.h"
+#include "Graphics/ImageResource.h"
+
 #include "Graphics/Shader.h"
 #include "Graphics/GraphicsPipeline.h"
 #include "Graphics/RenderTargetViews.h"

@@ -5,7 +5,11 @@
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
+
 #include "../../../Include/Graphics/GpuResource.h"
+#include "../../../Include/Graphics/BufferResource.h"
+#include "../../../Include/Graphics/ImageResource.h"
+
 #include "../../../Include/Graphics/VertexView.h"
 #include "../../../Include/Graphics/IndexView.h"
 #include "../../../Include/Graphics/ShaderResourceViews.h"
@@ -286,6 +290,48 @@ void Eugene::Dx12CommandList::CopyTexture(GpuResource& destination, GpuResource&
 	src.PlacedFootprint = footprint;
 
 	cmdList_->CopyTextureRegion(&dest, 0, 0, 0, &src, nullptr);
+
+
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
+{
+	auto dx12source{ static_cast<ID3D12Resource*>(src.GetResource()) };
+	auto dx12destination{ static_cast<ID3D12Resource*>(dest.GetResource()) };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(dx12source->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
+	auto defState = D3D12_RESOURCE_STATE_COMMON;
+	if (dest.CanMap())
+	{
+		barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON);
+	}
+
+
+	cmdList_->ResourceBarrier(1, &barrier);
+
+
+	D3D12_TEXTURE_COPY_LOCATION d{};
+	d.pResource = dx12destination;
+	d.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
+	d.SubresourceIndex = 0;
+
+	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
+	UINT64  totalSize = 0;
+	D3D12_RESOURCE_DESC desc{ dx12destination->GetDesc() };
+	D3D12_TEXTURE_COPY_LOCATION  s{};
+	device->GetCopyableFootprints(&desc, 0, 1, 0, &footprint, nullptr, nullptr, &totalSize);
+	s.pResource = dx12source;
+	s.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
+	s.PlacedFootprint = footprint;
+
+	cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);
 
 
 	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);

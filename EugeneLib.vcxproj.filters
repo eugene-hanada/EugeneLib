@@ -57,6 +57,8 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerVies.cpp" />
+    <ClCompile Include="Source\Graphics\BufferResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -121,6 +123,8 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
     <ClInclude Include="Include\Graphics\SamplerViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerVies.h" />
+    <ClInclude Include="Include\Graphics\BufferResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

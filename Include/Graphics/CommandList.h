@@ -15,7 +15,11 @@ namespace Eugene
 	class DepthStencilViews;
 	class VertexView;
 	class IndexView;
+	
 	class GpuResource;
+	class BufferResource;
+	class ImageResource;
+
 	class GraphicsPipeline;
 	class ShaderResourceViews;
 	class SamplerViews;
@@ -172,6 +176,7 @@ namespace Eugene
 		/// <param name="idx"> デプスステンシルビューのインデックス </param>
 		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, size_t idx = 0) = 0;
 
+
 		/// <summary>
 		/// リソースをコピーする
 		/// </summary>
@@ -179,12 +184,21 @@ namespace Eugene
 		/// <param name="source"> コピー元 </param>
 		virtual void Copy(GpuResource& destination, GpuResource& source) = 0;
 
+
+
 		/// <summary>
 		/// テクスチャのコピーをする
 		/// </summary>
 		/// <param name="destination"> コピー先 </param>
 		/// <param name="source"> コピー元 </param>
 		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="src"></param>
+		virtual void CopyTexture(ImageResource& dest, BufferResource& src) = 0;
 
 		virtual void* GetCommandList(void) const = 0;
 

@@ -32,7 +32,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> テクスチャデータ </returns>
-		std::uint8_t* GetData(void)&;
+		std::uint8_t* GetData(void);
 	private:
 
 		/// <summary>

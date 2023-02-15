@@ -30,7 +30,7 @@ const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
 }
 
 
-std::uint8_t* Eugene::Image::GetData(void)&
+std::uint8_t* Eugene::Image::GetData(void)
 {
 	return data_.data();
 }

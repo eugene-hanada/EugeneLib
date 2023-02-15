@@ -24,9 +24,6 @@ Eugene::Dx12DefaultResource::Dx12DefaultResource(ID3D12Device* device, size_t si
 
 Eugene::Dx12DefaultResource::Dx12DefaultResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
 {
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
 		throw EugeneLibException("スワップチェイン用バッファの作成に失敗");

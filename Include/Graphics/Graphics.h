@@ -10,7 +10,11 @@ namespace Eugene
 	class GpuEngine;
 	class RenderTargetViews;
 	class CommandList;
+
 	class GpuResource;
+	class BufferResource;
+	class ImageResource;
+
 	class Image;
 	class ShaderResourceViews;
 	class DepthStencilViews;
@@ -68,13 +72,45 @@ namespace Eugene
 		virtual GpuResource* CreateUploadableResource(size_t size) const = 0;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		virtual BufferResource* CreateUploadableBufferResource(std::uint64_t size) const = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		virtual BufferResource* CreateBufferResource(std::uint64_t size) const = 0;
+
+		virtual BufferResource* CreateBufferResource(Image& texture) const = 0;
+
+		/// <summary>
 		/// テクスチャのアップロード用GpuResourceの生成
 		/// </summary>
 		/// <param name="texture"> テクスチャ </param>
 		/// <returns> GpuResourceのポインタ </returns>
 		virtual GpuResource* CreateUploadableTextureResource(Image& texture) const = 0;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="format"></param>
+		/// <returns></returns>
 		virtual GpuResource* CreateUploadableResource(const Vector2& size, Format format) const = 0;
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="formatData"></param>
+		/// <returns></returns>
+		virtual ImageResource* CreateImageResource(const TextureInfo& formatData) const = 0;
+
+
 
 		/// <summary>
 		/// GpuResourceの生成
@@ -89,6 +125,8 @@ namespace Eugene
 		/// <param name="formatData"> テクスチャのフォーマット </param>
 		/// <returns> GpuResourceのポインタ </returns>
 		virtual GpuResource* CreateTextureResource(const TextureInfo& formatData) const = 0;
+
+		
 
 		/// <summary>
 		/// レンダーターゲット用GpuResourceの生成
@@ -166,6 +204,11 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns> インデックス </returns>
 		virtual size_t GetNowBackBufferIndex(void) = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name=""></param>
 		virtual void Present(void) = 0;
 
 		virtual Sampler* CreateSampler(const SamplerLayout& layout) const = 0;
@@ -176,12 +219,5 @@ namespace Eugene
 #endif
 	protected:
 		Graphics();
-
-		/// <summary>
-		/// スワップチェイン用のGpuResourceの生成
-		/// </summary>
-		/// <param name="idx"> バックバッファのインデックス </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateSwapChainResource(std::uint32_t idx) const = 0;
 	};
 }

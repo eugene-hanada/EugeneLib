@@ -45,6 +45,8 @@ namespace Eugene
 		void Copy(GpuResource& destination, GpuResource& source) final;
 		void CopyTexture(GpuResource& destination, GpuResource& source) final;
 
+		void CopyTexture(ImageResource& dest, BufferResource& src) final;
+
 #ifdef USE_IMGUI
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
 #endif

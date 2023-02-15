@@ -33,11 +33,20 @@ namespace Eugene
 			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
 			SamplerSpan samplerLayout = SamplerSpan{}) const final;
 
+		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
+
+		BufferResource* CreateBufferResource(std::uint64_t size) const final;
+
+		BufferResource* CreateBufferResource(Image& texture) const final;
+
+		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
+
+
+
 		GpuResource* CreateUploadableResource(size_t size) const final;
 		GpuResource* CreateUploadableTextureResource(Image& texture) const final;
 		GpuResource* CreateUploadableResource(const Vector2& size, Format format) const final;
 		GpuResource* CreateDefaultResource(size_t size) const final;
-		GpuResource* CreateSwapChainResource(std::uint32_t idx) const final;
 		GpuResource* CreateTextureResource(const TextureInfo& formatData) const final;
 		GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const final;
 		GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const final;
@@ -80,7 +89,7 @@ namespace Eugene
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
-		std::vector<std::unique_ptr<GpuResource>> buffers_;
+		std::vector<std::unique_ptr<ImageResource>> buffers_;
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
 
 #ifdef USE_IMGUI

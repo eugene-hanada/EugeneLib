@@ -7,8 +7,12 @@
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
+
 #include "Dx12UploadableResource.h"
 #include "Dx12DefaultResource.h"
+#include "Dx12BufferResource.h"
+#include "Dx12ImageResource.h"
+
 #include "Dx12ShaderResourceViews.h"
 #include "Dx12RenderTargetViews.h"
 #include "Dx12VertexView.h"
@@ -72,6 +76,26 @@ Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ShaderInp
 	};
 }
 
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
+{
+	return new Dx12UploadableBufferResource{device_.Get(), size};
+}
+
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size) const
+{
+	return new Dx12BufferResource{ device_.Get(),size};
+}
+
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const
+{
+	return new Dx12UploadableBufferResource{device_.Get(), texture};
+}
+
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureInfo& formatData) const
+{
+	return new Dx12ImageResource{device_.Get(),formatData};
+}
+
 Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(size_t size) const
 {
 	return new Dx12UploadableResource{ device_.Get(),size};
@@ -90,11 +114,6 @@ Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(const Vector
 Eugene::GpuResource* Eugene::Dx12Graphics::CreateDefaultResource(size_t size) const
 {
 	return new Dx12DefaultResource{ device_.Get(),size};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateSwapChainResource(std::uint32_t idx) const
-{
-	return new Dx12DefaultResource{ swapChain_.Get(), idx};
 }
 
 Eugene::GpuResource* Eugene::Dx12Graphics::CreateTextureResource(const TextureInfo& formatData) const
@@ -268,7 +287,7 @@ void Eugene::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
 	renderTargetViews_.reset(CreateRenderTargetViews(bufferCount, false));
 	for (size_t i = 0; i < bufferCount; i++)
 	{
-		buffers_[i].reset(CreateSwapChainResource(static_cast<std::uint32_t>(i)));
+		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i)});
 
 		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
 	}

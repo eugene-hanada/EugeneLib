@@ -27,9 +27,6 @@ namespace Eugene
 		/// <returns></returns>
 		const TextureInfo& GetInfo(void) const&;
 
-
-		const std::vector<std::uint8_t>& GetData(void) const&;
-
 		/// <summary>
 		/// テクスチャデータを取得する
 		/// </summary>

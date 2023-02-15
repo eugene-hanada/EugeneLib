@@ -206,6 +206,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
+    <ClInclude Include="Include\Graphics\BufferResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerVies.h" />
     <ClInclude Include="Include\Graphics\SamplerViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
@@ -278,6 +280,8 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
+    <ClCompile Include="Source\Graphics\BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerVies.cpp" />
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />

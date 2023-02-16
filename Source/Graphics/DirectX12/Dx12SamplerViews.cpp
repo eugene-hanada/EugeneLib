@@ -1,4 +1,4 @@
-#include "Dx12SamplerVies.h"
+#include "Dx12SamplerViews.h"
 #include <d3d12.h>
 #include "Dx12Sampler.h"
 

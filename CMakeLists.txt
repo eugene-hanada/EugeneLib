@@ -14,8 +14,6 @@ set(LIBRARY_OUTPUT_PATH ../)
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
     Source/System/System.cpp
-    Source/System/Windows/WindowsSystem.cpp
-    Source/System/Windows/Dll.cpp
     Source/System/GamePad.cpp
     Source/System/DynamicLibrary.cpp
 )
@@ -28,8 +26,6 @@ if(USE_IMGUI)
         Include/ThirdParty/imgui/imgui_draw.cpp
         Include/ThirdParty/imgui/imgui_tables.cpp
         Include/ThirdParty/imgui/imgui_widgets.cpp
-        Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
-        Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
     )
 endif()
 
@@ -39,6 +35,8 @@ set(GraphicsSource
     Source/Graphics/GpuEngine.cpp
     Source/Graphics/CommandList.cpp
     Source/Graphics/GpuResource.cpp
+    Source/Graphics/BufferResource.cpp
+    Source/Graphics/ImageResource.cpp
     Source/Graphics/GraphicsPipeline.cpp
     Source/Graphics/RenderTargetViews.cpp
     Source/Graphics/DepthStencilViews.cpp
@@ -47,23 +45,8 @@ set(GraphicsSource
     Source/Graphics/IndexView.cpp
     Source/Graphics/Shader.cpp
     Source/Graphics/Image.cpp
-)
-
-# グラフィック系の実装クラスのソースファイルをセット
-set(GraphicsApiSource
-    Source/Graphics/DirectX12/Dx12CommandList.cpp
-    Source/Graphics/DirectX12/Dx12DefaultResource.cpp
-    Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
-    Source/Graphics/DirectX12/Dx12GpuEngine.cpp
-    Source/Graphics/DirectX12/Dx12GpuResource.cpp
-    Source/Graphics/DirectX12/Dx12Graphics.cpp
-    Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
-    Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
-    Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
-    Source/Graphics/DirectX12/Dx12UploadableResource.cpp
-    Source/Graphics/DirectX12/Dx12VertexView.cpp
-    Source/Graphics/DirectX12/Dx12IndexView.cpp
-    Source/Graphics/DirectX12/Dx12Views.cpp
+    Source/Graphics/Sampler.cpp
+    Source/Graphics/SamplerViews.cpp
 )
 
 # Common系のソースファイルをセット
@@ -98,17 +81,69 @@ set(SoundSource
     Source/Sound/Wave.cpp
 )
 
-# サウンド系の実装クラスのソースファイルをセット
-set(SoundApiSource
-    Source/Sound/Xaudio2/Xa2Sound.cpp
-    Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
-    Source/Sound/Xaudio2/Xa2SoundControl.cpp
-    Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
-)
+
+if (MSVC)
+
+    # システム系の実装クラスのソースファイルをセット
+    set(SystemApiSource 
+        Source/System/Windows/WindowsSystem.cpp
+        Source/System/Windows/Dll.cpp
+        )
+
+    if (USE_IMGUI)
+        set(SystemApiSource 
+            ${SystemApiSource}
+             Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
+        )
+    endif()
+
+    if (USE_VULKAN)
+        # Vulkan使用時
+    else()
+        # グラフィック系の実装クラスのソースファイルをセット
+        set(GraphicsApiSource
+            Source/Graphics/DirectX12/Dx12CommandList.cpp
+            Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
+            Source/Graphics/DirectX12/Dx12GpuEngine.cpp
+            Source/Graphics/DirectX12/Dx12BufferResource.cpp
+            Source/Graphics/DirectX12/Dx12ImageResource.cpp
+            Source/Graphics/DirectX12/Dx12Graphics.cpp
+            Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
+            Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
+            Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
+            Source/Graphics/DirectX12/Dx12VertexView.cpp
+            Source/Graphics/DirectX12/Dx12IndexView.cpp
+            Source/Graphics/DirectX12/Dx12Views.cpp
+            Source/Graphics/DirectX12/Dx12Sampler.cpp
+            Source/Graphics/DirectX12/Dx12SamplerViews.cpp
+            Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+        )
+    endif()
+
+    # サウンド系の実装クラスのソースファイルをセット
+    set(SoundApiSource
+        Source/Sound/Xaudio2/Xa2Sound.cpp
+        Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+        Source/Sound/Xaudio2/Xa2SoundControl.cpp
+        Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
+    )
+
+endif()
+
+
+
+
+
+
+
+
+
+
 
 
 add_library(EugeneLib STATIC 
     ${SystemSource}
+     ${SystemApiSource}
     ${GraphicsSource}
     ${GraphicsApiSource}
     ${CommonSource}

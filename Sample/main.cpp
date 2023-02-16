@@ -32,8 +32,8 @@ std::unique_ptr <Eugene::ImageResource> textureBuffer;
 std::unique_ptr < Eugene::ShaderResourceViews> textureView_;
 
 // 行列データ
-std::unique_ptr <Eugene::GpuResource> upMatrixBuffer;
-std::unique_ptr <Eugene::GpuResource> matrixBuffer;
+std::unique_ptr <Eugene::BufferResource> upMatrixBuffer;
+std::unique_ptr <Eugene::BufferResource> matrixBuffer;
 std::unique_ptr < Eugene::ShaderResourceViews> matrixView_;
 
 // サウンド系
@@ -153,11 +153,11 @@ void InitConstantBuffer(void)
 {
 	Eugene::Matrix4x4 matrix;
 	Eugene::Get2DMatrix(matrix, { 1280.0f, 720.0f });
-	upMatrixBuffer.reset(graphics->CreateUploadableResource(256));
+	upMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
 	*static_cast<Eugene::Matrix4x4*>(upMatrixBuffer->Map()) = matrix;
 	upMatrixBuffer->UnMap();
 
-	matrixBuffer.reset(graphics->CreateDefaultResource(256));
+	matrixBuffer.reset(graphics->CreateBufferResource(256));
 	matrixView_.reset(graphics->CreateShaderResourceViews(1));
 	matrixView_->CreateConstantBuffer(*matrixBuffer, 0);
 	

@@ -92,7 +92,7 @@ void Eugene::Dx12CommandList::SetIndexView(IndexView& view)
 	cmdList_->IASetIndexBuffer(ptr);
 }
 
-void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx)
+void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	ID3D12Device* device{ nullptr };
@@ -106,7 +106,7 @@ void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, 
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }
 
-void Eugene::Dx12CommandList::SetSamplerView(SamplerViews& views, size_t viewsIdx, size_t paramIdx)
+void Eugene::Dx12CommandList::SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
 {
 	ID3D12Device* device{ nullptr };
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
@@ -132,7 +132,7 @@ void Eugene::Dx12CommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_
 	cmdList_->DrawIndexedInstanced(indexCount, instanceNum, offset, 0, 0);
 }
 
-void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, size_t idx)
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uint64_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -157,8 +157,8 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 
 	// レンダーターゲットの最大数が8なのでその分確保
 	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, 8> handles;
-	size_t count{ 0ull };
-	for (size_t i = 0; i < views.GetSize() || i < handles.size(); i++)
+	std::uint64_t count{ 0ull };
+	for (std::uint64_t i = 0; i < views.GetSize() || i < handles.size(); i++)
 	{
 		// 最大数もしくはビューにある最大数分格納
 		handles[i] = handle;
@@ -169,7 +169,7 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(count), handles.data(), false, nullptr);
 }
 
-void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx, size_t dsViewsIdx)
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx, std::uint64_t dsViewsIdx)
 {
 	auto rtDHeap{ static_cast<ID3D12DescriptorHeap*>(renderTargetViews.GetViews()) };
 	auto dsDHeap{ static_cast<ID3D12DescriptorHeap*>(depthViews.GetViews()) };
@@ -188,7 +188,7 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& renderTargetVie
 	cmdList_->OMSetRenderTargets(1, &rtHandle, false, &dsHandle);
 }
 
-void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, size_t idx)
+void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
@@ -212,7 +212,7 @@ void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::s
 	}
 
 	// レンダーターゲットの最大数が8なのでその分確保
-	for (size_t i = 0; i < views.GetSize(); i++)
+	for (std::uint64_t i = 0; i < views.GetSize(); i++)
 	{
 		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 		cmdList_->ClearRenderTargetView(handle, color.data(), 0, nullptr);
@@ -220,21 +220,21 @@ void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::s
 	
 }
 
-void Eugene::Dx12CommandList::TransitionRenderTargetBegin(GpuResource& resource)
+void Eugene::Dx12CommandList::TransitionRenderTargetBegin(ImageResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
-void Eugene::Dx12CommandList::TransitionRenderTargetEnd(GpuResource& resource)
+void Eugene::Dx12CommandList::TransitionRenderTargetEnd(ImageResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_COMMON);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
-void Eugene::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, size_t idx)
+void Eugene::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, std::uint64_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };

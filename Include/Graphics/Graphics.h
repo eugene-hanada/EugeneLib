@@ -11,7 +11,6 @@ namespace Eugene
 	class RenderTargetViews;
 	class CommandList;
 
-	class GpuResource;
 	class BufferResource;
 	class ImageResource;
 
@@ -19,6 +18,7 @@ namespace Eugene
 	class ShaderResourceViews;
 	class DepthStencilViews;
 	class VertexView;
+	class IndexView;
 	class SamplerViews;
 
 	/// <summary>
@@ -34,7 +34,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="maxSize"> 処理できるコマンドリストの最大数 </param>
 		/// <returns> GpuEngineのポインタ </returns>
-		virtual GpuEngine* CreateGpuEngine(size_t maxSize) const = 0;
+		virtual GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const = 0;
 
 		/// <summary>
 		/// CommandListの生成
@@ -64,43 +64,27 @@ namespace Eugene
 			SamplerSpan samplerLayout = SamplerSpan{}
 		) const = 0;
 		
-		/// <summary>
-		/// アップロード用のGpuResourceの生成
-		/// </summary>
-		/// <param name="size"> リソースのサイズ </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateUploadableResource(size_t size) const = 0;
 
 		/// <summary>
-		/// 
+		/// アップロードのためのバッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size"> サイズ </param>
 		/// <returns></returns>
 		virtual BufferResource* CreateUploadableBufferResource(std::uint64_t size) const = 0;
 
 		/// <summary>
-		/// 
+		/// バッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size"> サイズ </param>
 		/// <returns></returns>
 		virtual BufferResource* CreateBufferResource(std::uint64_t size) const = 0;
 
-		virtual BufferResource* CreateBufferResource(Image& texture) const = 0;
-
 		/// <summary>
-		/// テクスチャのアップロード用GpuResourceの生成
+		/// テクスチャアップロード用バッファーリソースを生成する
 		/// </summary>
-		/// <param name="texture"> テクスチャ </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateUploadableTextureResource(Image& texture) const = 0;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="size"></param>
-		/// <param name="format"></param>
+		/// <param name="texture"> Image </param>
 		/// <returns></returns>
-		virtual GpuResource* CreateUploadableResource(const Vector2& size, Format format) const = 0;
+		virtual BufferResource* CreateBufferResource(Image& texture) const = 0;
 
 
 		/// <summary>
@@ -110,48 +94,12 @@ namespace Eugene
 		/// <returns></returns>
 		virtual ImageResource* CreateImageResource(const TextureInfo& formatData) const = 0;
 
-
-
-		/// <summary>
-		/// GpuResourceの生成
-		/// </summary>
-		/// <param name="size"> リソースのサイズ </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateDefaultResource(size_t size) const = 0;
-
-		/// <summary>
-		/// テクスチャ用GpuResourceの生成
-		/// </summary>
-		/// <param name="formatData"> テクスチャのフォーマット </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateTextureResource(const TextureInfo& formatData) const = 0;
-
-		
-
-		/// <summary>
-		/// レンダーターゲット用GpuResourceの生成
-		/// </summary>
-		/// <param name="size"> レンダーターゲットのサイズ </param>
-		/// <param name="format"> フォーマット </param>
-		/// <param name="clearColor"> 初期化カラー </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const = 0;
-
-		/// <summary>
-		/// 深度バッファ用GpuResourceの生成
-		/// </summary>
-		/// <param name="size"> サイズ </param>
-		/// <param name="format"> フォーマット </param>
-		/// <param name="clearValue"> 初期化の値 </param>
-		/// <returns> GpuResourceのポインタ </returns>
-		virtual GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const = 0;
-
 		/// <summary>
 		/// ShaderResourceViewsの生成
 		/// </summary>
 		/// <param name="size"> Viewの数 </param>
 		/// <returns> ShaderResourceViewsのポインタ </returns>
-		virtual ShaderResourceViews* CreateShaderResourceViews(size_t size) const = 0;
+		virtual ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const = 0;
 
 		/// <summary>
 		/// RenderTargetViewsの生成
@@ -159,14 +107,14 @@ namespace Eugene
 		/// <param name="size"> Viewの数 </param>
 		/// <param name="isShaderVisible"> シェーダーに見える状態にするか? </param>
 		/// <returns> RenderTargetViewsのポインタ </returns>
-		virtual RenderTargetViews* CreateRenderTargetViews(size_t size, bool isShaderVisible) const = 0;
+		virtual RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const = 0;
 
 		/// <summary>
 		/// DepthStencilViewsの生成
 		/// </summary>
 		/// <param name="size"> Viewの数 </param>
 		/// <returns> DepthStencilViewsのポインタ </returns>
-		virtual DepthStencilViews* CreateDepthStencilViews(size_t size) const = 0;
+		virtual DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const = 0;
 
 		/// <summary>
 		/// VertexViewの生成
@@ -175,21 +123,29 @@ namespace Eugene
 		/// <param name="vertexNum"> 頂点数 </param>
 		/// <param name="resource"> 頂点のGpuResource </param>
 		/// <returns> VertexViewのポインタ </returns>
-		virtual VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const = 0;
+		virtual VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const = 0;
+
+		/// <summary>
+		/// IndexViewの生成
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="resource"></param>
+		/// <returns></returns>
+		virtual IndexView* CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const = 0;
 
 		/// <summary>
 		/// バックバッファのレンダーターゲットのGpuResourceを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> GpuResourceの参照 </returns>
-		GpuResource& GetBackBufferResource(void);
+		ImageResource& GetBackBufferResource(void);
 		
 		/// <summary>
 		/// バックバッファのレンダーターゲットをインデックス指定でGpuResourceを取得する
 		/// </summary>
 		/// <param name="idx"> インデックス </param>
 		/// <returns></returns>
-		virtual GpuResource& GetBackBufferResource(size_t idx) = 0;
+		virtual ImageResource& GetBackBufferResource(std::uint64_t idx) = 0;
 
 		/// <summary>
 		/// バックバッファで使用するRenderTargetViewsの取得する
@@ -203,7 +159,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> インデックス </returns>
-		virtual size_t GetNowBackBufferIndex(void) = 0;
+		virtual std::uint64_t GetNowBackBufferIndex(void) = 0;
 
 		/// <summary>
 		/// 
@@ -211,9 +167,19 @@ namespace Eugene
 		/// <param name=""></param>
 		virtual void Present(void) = 0;
 
+		/// <summary>
+		/// サンプラーを作成する
+		/// </summary>
+		/// <param name="layout"> サンプラーの設定 </param>
+		/// <returns></returns>
 		virtual Sampler* CreateSampler(const SamplerLayout& layout) const = 0;
 
-		virtual SamplerViews* CreateSamplerViews(size_t size) const = 0;
+		/// <summary>
+		/// サンプラービューを作成する
+		/// </summary>
+		/// <param name="size"> ビューの数 </param>
+		/// <returns></returns>
+		virtual SamplerViews* CreateSamplerViews(std::uint64_t size) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
 #endif

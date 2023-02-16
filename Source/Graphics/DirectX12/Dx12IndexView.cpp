@@ -2,7 +2,7 @@
 #include <d3d12.h>
 #include "../../../Include/Graphics/GpuResource.h"
 
-Eugene::Dx12IndexView::Dx12IndexView(size_t size, Format format, GpuResource& resource)
+Eugene::Dx12IndexView::Dx12IndexView(std::uint64_t size, Format format, GpuResource& resource)
 {
     bufferView_ = std::make_unique< D3D12_INDEX_BUFFER_VIEW>();
     bufferView_->BufferLocation = static_cast<ID3D12Resource*>(resource.GetResource())->GetGPUVirtualAddress();

@@ -29,7 +29,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> サイズ </returns>
-		size_t GetSize(void) const;
+		std::uint64_t GetSize(void) const;
 	private:
 
 		/// <summary>

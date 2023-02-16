@@ -5,17 +5,17 @@
 namespace Eugene
 {
 	class Graphics;
-	class GpuResource;
+	class ImageResource;
 	class RenderTargetViews
 	{
 	public:
 		virtual ~RenderTargetViews();
-		virtual void Create(GpuResource& resource,size_t idx, const Format& format) = 0;
+		virtual void Create(ImageResource& resource,std::uint64_t idx, const Format& format) = 0;
 		virtual void* GetViews(void) const = 0;
-		const size_t GetSize(void);
+		const std::uint64_t GetSize(void);
 	protected:
-		RenderTargetViews(size_t size);
-		size_t size_;
+		RenderTargetViews(std::uint64_t size);
+		std::uint64_t size_;
 	};
 
 }

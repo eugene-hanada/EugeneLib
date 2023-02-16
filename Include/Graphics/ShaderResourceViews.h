@@ -4,7 +4,7 @@
 namespace Eugene
 {
 	class Graphics;
-	class GpuResource;
+	class BufferResource;
 	class ImageResource;
 
 	class Sampler;
@@ -12,13 +12,12 @@ namespace Eugene
 	{
 	public:
 		virtual ~ShaderResourceViews();
-		virtual void CreateTexture(GpuResource& resource, size_t idx) = 0;
 		virtual void CreateTexture(ImageResource& resource, std::uint64_t idx) = 0;
-		virtual void CreateConstantBuffer(GpuResource& resource, size_t idx) = 0;
+		virtual void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) = 0;
 		virtual void* GetViews(void) const = 0;
-		const size_t GetSize(void);
+		const std::uint64_t GetSize(void);
 	protected:
-		ShaderResourceViews(size_t size);
-		size_t size_;
+		ShaderResourceViews(std::uint64_t size);
+		std::uint64_t size_;
 	};
 }

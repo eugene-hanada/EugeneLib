@@ -4,7 +4,7 @@ Eugene::DepthStencilViews::~DepthStencilViews()
 {
 }
 
-Eugene::DepthStencilViews::DepthStencilViews(size_t size) :
+Eugene::DepthStencilViews::DepthStencilViews(std::uint64_t size) :
 	size_{size}
 {
 }

@@ -8,14 +8,14 @@
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
 
-#include "Dx12UploadableResource.h"
-#include "Dx12DefaultResource.h"
+
 #include "Dx12BufferResource.h"
 #include "Dx12ImageResource.h"
 
 #include "Dx12ShaderResourceViews.h"
 #include "Dx12RenderTargetViews.h"
 #include "Dx12VertexView.h"
+#include "Dx12IndexView.h"
 #include "Dx12DepthStencilViews.h"
 #include "Dx12Sampler.h"
 #include "Dx12SamplerVies.h"
@@ -31,7 +31,7 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum)
 {
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
@@ -96,62 +96,32 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{device_.Get(),formatData};
 }
 
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(size_t size) const
-{
-	return new Dx12UploadableResource{ device_.Get(),size};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableTextureResource(Image& texture) const
-{
-	return new Dx12UploadableResource{ device_.Get(),texture};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateUploadableResource(const Vector2& size, Format format) const
-{
-	return new Dx12UploadableResource{device_.Get(), size, format};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateDefaultResource(size_t size) const
-{
-	return new Dx12DefaultResource{ device_.Get(),size};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateTextureResource(const TextureInfo& formatData) const
-{
-	return new Dx12DefaultResource{ device_.Get(), formatData};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const
-{
-	return new Dx12DefaultResource{ device_.Get(), size,format,clearColor};
-}
-
-Eugene::GpuResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2& size, Format format, float clearValue) const
-{
-	return new Dx12DefaultResource{device_.Get(),size,format, clearValue};
-}
-
-Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(size_t size) const
+Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const
 {
 	return new Dx12ShaderResourceViews{ device_.Get(), size};
 }
 
-Eugene::RenderTargetViews* Eugene::Dx12Graphics::CreateRenderTargetViews(size_t size, bool isShaderVisible) const
+Eugene::RenderTargetViews* Eugene::Dx12Graphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
 {
 	return new Dx12RenderTargetViews{ device_.Get(), size,isShaderVisible};
 }
 
-Eugene::DepthStencilViews* Eugene::Dx12Graphics::CreateDepthStencilViews(size_t size) const
+Eugene::DepthStencilViews* Eugene::Dx12Graphics::CreateDepthStencilViews(std::uint64_t size) const
 {
 	return new Dx12DepthStencilViews{ device_.Get(), size};
 }
 
-Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const
+Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
 {
 	return new Dx12VertexView{size, vertexNum,resource};
 }
 
-Eugene::GpuEngine* Eugene::Dx12Graphics::CreateGpuEngine(size_t maxSize) const
+Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const
+{
+	return new Dx12IndexView{size, format,resource};
+}
+
+Eugene::GpuEngine* Eugene::Dx12Graphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
 	return new Dx12GpuEngine{ device_.Get(), maxSize};
 }
@@ -226,7 +196,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	throw LibInitException();
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum)
 {
 	gpuEngine = CreateGpuEngine(10);
 
@@ -281,7 +251,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	swapchain->Release();
 }
 
-void Eugene::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
+void Eugene::Dx12Graphics::CreateBackBuffers(std::uint64_t bufferCount)
 {
 	buffers_.resize(bufferCount);
 	renderTargetViews_.reset(CreateRenderTargetViews(bufferCount, false));
@@ -294,7 +264,7 @@ void Eugene::Dx12Graphics::CreateBackBuffers(size_t bufferCount)
 
 }
 
-Eugene::GpuResource& Eugene::Dx12Graphics::GetBackBufferResource(size_t idx)
+Eugene::ImageResource& Eugene::Dx12Graphics::GetBackBufferResource(std::uint64_t idx)
 {
 	assert(idx < buffers_.size());
 

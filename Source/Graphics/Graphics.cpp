@@ -9,7 +9,7 @@ Eugene::Graphics::Graphics()
 {
 }
 
-Eugene::GpuResource& Eugene::Graphics::GetBackBufferResource(void)
+Eugene::ImageResource& Eugene::Graphics::GetBackBufferResource(void)
 {
     return GetBackBufferResource(GetNowBackBufferIndex());
 }

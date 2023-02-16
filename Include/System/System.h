@@ -66,7 +66,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="gpuEngine"> GpuEngineのポインタの参照 </param>
 		/// <returns> Graphicsのポインタ </returns>
-		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, size_t bufferNum = 2) const& = 0;
+		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint64_t bufferNum = 2) const& = 0;
 
 		/// <summary>
 		/// マウスの情報を取得する

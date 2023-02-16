@@ -17,10 +17,10 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 )
 {
 	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> ranges(shaderLayout.size());
-	for (size_t i = 0ull; i < ranges.size(); i++)
+	for (std::uint64_t i = 0ull; i < ranges.size(); i++)
 	{
 		ranges[i].resize(shaderLayout[i].size());
-		for (size_t j = 0ull; j < ranges[i].size(); j++)
+		for (std::uint64_t j = 0ull; j < ranges[i].size(); j++)
 		{
 			ranges[i][j].Init(
 				static_cast<D3D12_DESCRIPTOR_RANGE_TYPE>(shaderLayout[i][j].viewType_),
@@ -31,7 +31,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	}
 
 	std::vector <CD3DX12_ROOT_PARAMETER> rootparam(ranges.size());
-	for (size_t i = 0ull; i < rootparam.size(); i++)
+	for (std::uint64_t i = 0ull; i < rootparam.size(); i++)
 	{
 		rootparam[i].InitAsDescriptorTable(static_cast<std::uint32_t>(ranges[i].size()), ranges[i].data());
 	}
@@ -39,7 +39,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 
 	std::vector<CD3DX12_STATIC_SAMPLER_DESC> samplers(samplerLayout.size());
-	for (size_t i = 0; i < samplers.size(); i++)
+	for (std::uint64_t i = 0; i < samplers.size(); i++)
 	{
 		samplers[i].Init(
 			static_cast<std::uint32_t>(i),
@@ -116,7 +116,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	}
 
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout(layout.size());
-	for (size_t i = 0ull; i < layout.size(); i++)
+	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
 		inputLayout[i].SemanticName = layout[i].semanticName_;
 		inputLayout[i].SemanticIndex = layout[i].semanticIdx_;
@@ -151,7 +151,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	}
 
 	// レンダーターゲット設定
-	for (size_t i = 0; i < rendertarges.size(); i++)
+	for (std::uint64_t i = 0; i < rendertarges.size(); i++)
 	{
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(rendertarges[i].format_);
 		switch (rendertarges[i].blendType_)

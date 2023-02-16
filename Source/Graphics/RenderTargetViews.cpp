@@ -6,12 +6,12 @@ Eugene::RenderTargetViews::~RenderTargetViews()
 {
 }
 
-const size_t Eugene::RenderTargetViews::GetSize(void)
+const std::uint64_t Eugene::RenderTargetViews::GetSize(void)
 {
 	return size_;
 }
 
-Eugene::RenderTargetViews::RenderTargetViews(size_t size) :
+Eugene::RenderTargetViews::RenderTargetViews(std::uint64_t size) :
 	size_{size}
 {
 }

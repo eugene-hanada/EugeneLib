@@ -206,7 +206,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h" />
     <ClInclude Include="Include\Graphics\ImageResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
@@ -263,7 +262,6 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12UploadableResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
@@ -282,9 +280,7 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12DefaultResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12UploadableResource.cpp" />
     <ClCompile Include="Source\Graphics\ImageResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\BufferResource.cpp" />

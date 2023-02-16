@@ -4,16 +4,16 @@
 namespace Eugene
 {
 	class Graphics;
-	class GpuResource;
+	class ImageResource;
 
 	class DepthStencilViews
 	{
 	public:
 		virtual ~DepthStencilViews();
-		virtual void Create(GpuResource& resource, size_t idx) = 0;
+		virtual void Create(ImageResource& resource, std::uint64_t idx) = 0;
 		virtual void* GetViews(void) const = 0;
 	protected:
-		DepthStencilViews(size_t size);
-		size_t size_;
+		DepthStencilViews(std::uint64_t size);
+		std::uint64_t size_;
 	};
 }

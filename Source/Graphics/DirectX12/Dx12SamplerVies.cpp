@@ -2,12 +2,12 @@
 #include <d3d12.h>
 #include "Dx12Sampler.h"
 
-Eugene::Dx12SamplerViews::Dx12SamplerViews(ID3D12Device* device, size_t size) :
+Eugene::Dx12SamplerViews::Dx12SamplerViews(ID3D12Device* device, std::uint64_t size) :
 	Dx12Views{ device, size,true ,D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER}, SamplerViews{}
 {
 }
 
-void Eugene::Dx12SamplerViews::CreateSampler(Sampler& sampler, size_t idx)
+void Eugene::Dx12SamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
 {
 	ID3D12Device* device{ nullptr };
 	if (FAILED(descriptorHeap_->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))

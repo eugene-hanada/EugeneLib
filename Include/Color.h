@@ -5,7 +5,7 @@
 
 namespace Eugene
 {
-	template<ValueC T, size_t Num, T MaxValue = static_cast<T>(1), T MinValue = static_cast<T>(0)>
+	template<ValueC T, std::uint64_t Num, T MaxValue = static_cast<T>(1), T MinValue = static_cast<T>(0)>
 	class Color
 	{
 	public:
@@ -14,7 +14,7 @@ namespace Eugene
 			color_.fill(MaxValue);
 		}
 
-		void SetValue(size_t idx, const T& value)
+		void SetValue(std::uint64_t idx, const T& value)
 		{
 			color_[idx] = std::clamp(value, MinValue, MaxValue);
 		}
@@ -24,21 +24,21 @@ namespace Eugene
 			return color_;
 		}
 
-		constexpr size_t GetSize(void) const
+		constexpr std::uint64_t GetSize(void) const
 		{
 			return Num;
 		}
 
-		constexpr size_t GetMax(void) const
+		constexpr std::uint64_t GetMax(void) const
 		{
 			return MaxValue;
 		}
-		constexpr size_t GetMin(void) const
+		constexpr std::uint64_t GetMin(void) const
 		{
 			return MinValue;
 		}
 
-		const T& operator[](size_t idx)
+		const T& operator[](std::uint64_t idx)
 		{
 			return color_[idx];
 		}

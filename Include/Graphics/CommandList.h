@@ -94,7 +94,7 @@ namespace Eugene
 		/// <param name="views"> シェーダーリソースのビュー </param>
 		/// <param name="viewsIdx"> ビューのインデックス </param>
 		/// <param name="paramIdx"> セットするインデックス </param>
-		virtual void SetShaderResourceView(ShaderResourceViews& views, size_t viewsIdx, size_t paramIdx) = 0;
+		virtual void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
 		/// サンプラーをセットする
@@ -102,7 +102,7 @@ namespace Eugene
 		/// <param name="views"></param>
 		/// <param name="viewsIdx"></param>
 		/// <param name="paramIdx"></param>
-		virtual void SetSamplerView(SamplerViews& views, size_t viewsIdx, size_t paramIdx) = 0;
+		virtual void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
 		/// 描画する
@@ -124,7 +124,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="views"> レンダーターゲットのビュー </param>
 		/// <param name="idx"> ビューのインデックス </param>
-		virtual void SetRenderTarget(RenderTargetViews& views, size_t idx = 0) = 0;
+		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) = 0;
 
 		/// <summary>
 		/// レンダーターゲットをセットする(RenderTargetViewsにあるものすべてをセットする)
@@ -139,7 +139,7 @@ namespace Eugene
 		/// <param name="depthViews"> デプスステンシルビュー </param>
 		/// <param name="rtViewsIdx"> レンダーターゲットビューのインデックス </param>
 		/// <param name="dsViewsIdx"> デプスステンシルビュー のインデックス </param>
-		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, size_t rtViewsIdx = 0, size_t dsViewsIdx = 0) = 0;
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0) = 0;
 
 		/// <summary>
 		/// レンダーターゲットをクリアする
@@ -147,7 +147,7 @@ namespace Eugene
 		/// <param name="views"> レンダーターゲットビュー </param>
 		/// <param name="color"> クリアするカラー </param>
 		/// <param name="idx"> レンダーターゲットビューのインデックス </param>
-		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float,4> color, size_t idx = 0) = 0;
+		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float,4> color, std::uint64_t idx = 0) = 0;
 
 		/// <summary>
 		///  レンダーターゲットをクリアする(RenderTargetViewsにあるものすべてクリアする)
@@ -160,13 +160,13 @@ namespace Eugene
 		/// レンダーターゲットの使用を開始できる状態にする
 		/// </summary>
 		/// <param name="resource"> レンダーターゲット </param>
-		virtual void TransitionRenderTargetBegin(GpuResource& resource) = 0;
+		virtual void TransitionRenderTargetBegin(ImageResource& resource) = 0;
 
 		/// <summary>
 		/// レンダーターゲットの使用を終了の状態にする
 		/// </summary>
 		/// <param name="resource"> レンダーターゲット </param>
-		virtual void TransitionRenderTargetEnd(GpuResource& resource) = 0;
+		virtual void TransitionRenderTargetEnd(ImageResource& resource) = 0;
 
 		/// <summary>
 		/// 深度バッファをクリアする
@@ -174,7 +174,7 @@ namespace Eugene
 		/// <param name="views"> デプスステンシルビュー </param>
 		/// <param name="clearValue"> クリアする値 </param>
 		/// <param name="idx"> デプスステンシルビューのインデックス </param>
-		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, size_t idx = 0) = 0;
+		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) = 0;
 
 
 		/// <summary>

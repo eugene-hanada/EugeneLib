@@ -59,8 +59,6 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\ImageResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12DefaultResource.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12UploadableResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -127,8 +125,6 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
     <ClInclude Include="Include\Graphics\ImageResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12DefaultResource.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12UploadableResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

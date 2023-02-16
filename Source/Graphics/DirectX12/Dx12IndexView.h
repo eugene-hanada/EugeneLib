@@ -12,7 +12,7 @@ namespace Eugene
 		public IndexView
 	{
 	public:
-		Dx12IndexView(size_t size, Format format, GpuResource& resource);
+		Dx12IndexView(std::uint64_t size, Format format, GpuResource& resource);
 	private:
 		void* GetView(void) const final;
 		std::unique_ptr< D3D12_INDEX_BUFFER_VIEW> bufferView_;

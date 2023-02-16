@@ -16,12 +16,12 @@ namespace Eugene
 		public Graphics
 	{
 	public:
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum);
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
 		~Dx12Graphics();
 	
 		
 	private:
-		GpuEngine* CreateGpuEngine(size_t maxSize) const final;
+		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 
 		CommandList* CreateCommandList(void) const final;
 		GraphicsPipeline* CreateGraphicsPipeline(
@@ -41,41 +41,32 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
+		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
 
+		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 
-		GpuResource* CreateUploadableResource(size_t size) const final;
-		GpuResource* CreateUploadableTextureResource(Image& texture) const final;
-		GpuResource* CreateUploadableResource(const Vector2& size, Format format) const final;
-		GpuResource* CreateDefaultResource(size_t size) const final;
-		GpuResource* CreateTextureResource(const TextureInfo& formatData) const final;
-		GpuResource* CreateRenderTargetResource(const Vector2& size, Format format, const std::span<float, 4>& clearColor) const final;
-		GpuResource* CreateDepthResource(const Vector2& size, Format format, float clearValue = 1.0f) const final;
+		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 
-		ShaderResourceViews* CreateShaderResourceViews(size_t size) const final;
-
-		RenderTargetViews* CreateRenderTargetViews(size_t size, bool isShaderVisible) const final;
-
-		DepthStencilViews* CreateDepthStencilViews(size_t size) const final;
-
-		VertexView* CreateVertexView(size_t size, size_t vertexNum, GpuResource& resource) const final;
+		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const final;
+		IndexView* CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const final;
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, size_t bufferNum);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
 
-		void CreateBackBuffers(size_t bufferCount);
+		void CreateBackBuffers(std::uint64_t bufferCount);
 
-		GpuResource& GetBackBufferResource(size_t idx) final;
+		ImageResource& GetBackBufferResource(std::uint64_t idx) final;
 
 		RenderTargetViews& GetViews(void) final;
 
-		size_t GetNowBackBufferIndex(void) final;
+		std::uint64_t GetNowBackBufferIndex(void) final;
 
 		void Present(void) final;
 
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 
-		SamplerViews* CreateSamplerViews(size_t size) const final;
+		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif

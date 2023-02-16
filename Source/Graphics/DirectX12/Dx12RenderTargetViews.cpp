@@ -1,14 +1,14 @@
 ﻿#include "Dx12RenderTargetViews.h"
 #include "../../../Include/Graphics/Graphics.h"
-#include "../../../Include/Graphics/GpuResource.h"
+#include "../../../Include/Graphics/ImageResource.h"
 
-Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, size_t size, bool isShaderVisible) :
+Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, std::uint64_t size, bool isShaderVisible) :
 	Dx12Views{ device, size, isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE_RTV },
 	RenderTargetViews{size}
 {
 }
 
-void Eugene::Dx12RenderTargetViews::Create(GpuResource& resource, size_t idx, const Format& format)
+void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_t idx, const Format& format)
 {
 	if (size_ <= idx)
 	{

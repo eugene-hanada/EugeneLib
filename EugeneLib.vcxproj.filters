@@ -14,7 +14,6 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
@@ -54,7 +53,7 @@
     <ClCompile Include="Source\Graphics\Sampler.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerVies.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerViews.cpp" />
     <ClCompile Include="Source\Graphics\BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\ImageResource.cpp" />
@@ -101,7 +100,6 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
@@ -120,7 +118,7 @@
     <ClInclude Include="Include\Graphics\Sampler.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
     <ClInclude Include="Include\Graphics\SamplerViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerVies.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerViews.h" />
     <ClInclude Include="Include\Graphics\BufferResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
     <ClInclude Include="Include\Graphics\ImageResource.h" />

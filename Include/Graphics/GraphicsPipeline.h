@@ -17,6 +17,9 @@ namespace Eugene
 		std::uint32_t slot_;
 	};
 
+	/// <summary>
+	/// 
+	/// </summary>
 	enum class ShaderType
 	{
 		Vertex,

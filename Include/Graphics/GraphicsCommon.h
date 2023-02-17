@@ -3,6 +3,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// フォーマット
+	/// </summary>
 	enum class Format
 	{
 		NON = 0,
@@ -47,7 +50,9 @@ namespace Eugene
 		R32_SINT = 43,
 	};
 
-	// テクスチャバッファ作成用データ
+	/// <summary>
+	/// テクスチャ用画像情報
+	/// </summary>
 	struct TextureInfo
 	{
 		std::uint64_t width;			// 横幅
@@ -57,6 +62,9 @@ namespace Eugene
 		std::uint16_t mipLevels;			// ミップマップレベル
 	};
 
+	/// <summary>
+	/// プリミティブタイプ
+	/// </summary>
 	enum class PrimitiveType
 	{
 		Point = 1,

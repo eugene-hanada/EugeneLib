@@ -64,7 +64,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint64_t idx)
+Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{

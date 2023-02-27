@@ -61,3 +61,15 @@ void* Eugene::Dx12ShaderResourceViews::GetViews(void) const
 {
 	return descriptorHeap_.Get();
 }
+
+std::uint64_t Eugene::Dx12ShaderResourceViews::GetImg(void)
+{
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap_->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return 0ull;
+	}
+	auto handle = descriptorHeap_->GetGPUDescriptorHandleForHeapStart();
+	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	return handle.ptr;
+}

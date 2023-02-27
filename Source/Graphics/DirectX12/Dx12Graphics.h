@@ -16,7 +16,7 @@ namespace Eugene
 		public Graphics
 	{
 	public:
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
 		~Dx12Graphics();
 	
 		
@@ -48,11 +48,11 @@ namespace Eugene
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 
 		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const final;
-		IndexView* CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const final;
+		IndexView* CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const final;
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 

@@ -16,6 +16,7 @@ namespace Eugene
 		virtual void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) = 0;
 		virtual void* GetViews(void) const = 0;
 		const std::uint64_t GetSize(void);
+		virtual std::uint64_t GetImg(void) = 0;
 	protected:
 		ShaderResourceViews(std::uint64_t size);
 		std::uint64_t size_;

@@ -1,4 +1,5 @@
 ﻿#include "Xa2Sound3DControl.h"
+#define XAUDIO2_HELPER_FUNCTIONS
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include <vector>
@@ -54,12 +55,15 @@ void Eugene::Xa2Sound3DControl::Update3DSound(
 		X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER | X3DAUDIO_CALCULATE_LPF_DIRECT | X3DAUDIO_CALCULATE_REVERB,
 		&dsp
 	);
-	
-	submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, dsp.pMatrixCoefficients);
+
+	submix_->SetOutputMatrix(nullptr, inChannel_, dsp.DstChannelCount, dsp.pMatrixCoefficients);
 	
 	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
+	XAUDIO2_VOICE_DETAILS details;
+	submix_->GetVoiceDetails(&details);
+	filter.OneOverQ = XAudio2CutoffFrequencyToOnePoleCoefficient(filter.Frequency, details.InputSampleRate);
 	submix_->SetFilterParameters(&filter);
-	
+	//submix_->SetOutputFilterParameters(nullptr, & filter);
 }
 
 void Eugene::Xa2Sound3DControl::SetVolume(float volume)

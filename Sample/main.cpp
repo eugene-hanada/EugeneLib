@@ -1,9 +1,7 @@
-﻿#define USE_IMGUI
-#include <Windows.h>
+﻿#include <Windows.h>
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
-#include <ThirdParty/imgui/imgui.h>
 #include <Common/Debug.h>
 
 // システム系(Windows関連の処理のクラス)
@@ -209,9 +207,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
 
-	
-	ImGuiIO& io = ImGui::GetIO();
-
+	DebugLog("{}テスト", color[0]);
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;
@@ -222,27 +218,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			soundSpeaker->Play();
 		}
 		
-		graphics->ImguiNewFrame();
-		libSys->ImguiNewFrame();
-		ImGui::NewFrame();
-
-		ImGui::Begin("window1");
-		ImGui::Text("text1");
-		
-		ImGui::End();
-
 
 		// コマンドの開始
 		cmdList->Begin();
-
-
-		ImGui::Begin("window2");
-		ImGui::Text("text2");
-
-
-		ImGui::End();
-
-		ImGui::Render();
 		
 		// レンダーターゲットのセット
 		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
@@ -269,9 +247,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->SetVertexView(*vertexView);
 
 		cmdList->Draw(4);
-
-		cmdList->SetImguiCommand(ImGui::GetDrawData(),*graphics);
-
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 
@@ -302,15 +277,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if (pad.IsHit(Eugene::PadID::A))
 		{
 			break;
-		}
-		//ImGuiIO& io = ImGui::GetIO();
-		if (!libSys->IsEnd())
-		{
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-			}
 		}
 	}
 	return 0;

@@ -8,7 +8,7 @@
 #include "../Math/Vector3.h"
 #ifdef _DEBUG
 
-#define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
+#define DebugLog(...) (Eugene::Debug::GetInstance().Log(__VA_ARGS__))
 
 /// <summary>
 /// Vector2—pstd::formatter
@@ -44,10 +44,36 @@ public:
 /// </summary>
 /// <typeparam name="CharT"> •¶š—ñ‚ÌŒ^ </typeparam>
 template<Eugene::ValueC T, class CharT>
-class std::formatter<Eugene::Vector3Tmp<T>, CharT> :
-	public std::formatter<const CharT*>
+class std::formatter<Eugene::Vector3Tmp<T>, CharT>
 {
+
+	constexpr CharT* operator"" _charT(const CharT * str, std::size_t length)
+	{
+		return str;
+	}
+
+	enum class Type
+	{
+		NON,
+		RAD,
+		DEG
+	};
 public:
+
+	constexpr auto parse(std::basic_format_parse_context<CharT>& ctx)
+	{
+		auto it = ctx.begin();
+		if (*it == _charT'‹')
+		{
+			++it;
+			if (*it = _charT'd')
+			{
+
+			}
+		}
+		it++;
+		return it;
+	}
 
 	/// <summary>
 	/// 
@@ -62,17 +88,21 @@ public:
 		if constexpr (std::is_floating_point<T>::value)
 		{
 			// •‚“®¬”“_Œ^‚Ì
-			return std::format_to(ctx.out(), "x={0:f}y={1:f}z={2:f}", vec.x, vec.y, vec.z);
+			return std::format_to(ctx.out(), _charT"x={0:f}y={1:f}z={2:f}", vec.x * , vec.y, vec.z);
 		}
 		else if constexpr (std::is_integral<T>::value)
 		{
 			// ®”Œ^‚Ì
-			return std::format_to(ctx.out(), "x={0:d}y={1:d}z={2:d}", vec.x, vec.y, vec.z);
+			return std::format_to(ctx.out(), _charT"x={0:d}y={1:d}z={2:d}", vec.x, vec.y, vec.z);
 		}
 
 		// ‚»‚êˆÈŠO
-		return std::format_to(ctx.out(), "x={0:}y={1:}z={2:}", vec.x, vec.y, vec.z);
+		return std::format_to(ctx.out(), _charT"x={0:}y={1:}z={2:}", vec.x, vec.y, vec.z);
 	}
+private:
+
+	Type type_;
+	static constexpr CharT nonFmt{ _charT"x={0:f}y={1:f}z={2:f}" };
 };
 
 namespace Eugene

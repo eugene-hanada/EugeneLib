@@ -12,7 +12,7 @@
 
 #include "../../../Include/Graphics/VertexView.h"
 #include "../../../Include/Graphics/IndexView.h"
-#include "../../../Include/Graphics/ShaderResourceViews.h"
+#include "Dx12ShaderResourceViews.h"
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "Dx12GraphicsPipeline.h"
 #include "Dx12SamplerViews.h"
@@ -94,7 +94,7 @@ void Eugene::Dx12CommandList::SetIndexView(IndexView& view)
 
 void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
 {
-	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
+	auto descriptorHeap{ static_cast<Dx12ShaderResourceViews&>(views).descriptorHeap_.Get()};
 	ID3D12Device* device{ nullptr };
 	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
 	{
@@ -341,7 +341,7 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 #ifdef USE_IMGUI
 void Eugene::Dx12CommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
 {
-	auto dh = static_cast<ID3D12DescriptorHeap*>(static_cast<Dx12Graphics&>(graphics).srViews_->GetViews());
+	auto dh = static_cast<Dx12ShaderResourceViews&>(*(static_cast<Dx12Graphics&>(graphics).srViews_)).descriptorHeap_.Get();
 	cmdList_->SetDescriptorHeaps(1,&dh);
 	ImGui_ImplDX12_RenderDrawData(
 		data,

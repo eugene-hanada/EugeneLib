@@ -206,9 +206,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
-	DebugLog("{:0}", 1);
-	DebugLog("{:0}", color[0]);
-	DebugLog("{:0}", color[0]);
+	DebugLog("{}", pad.rightThumb_);
+	DebugLog("↑は{}", Eugene::upVector3<float> * Eugene::pi2<float>);
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;

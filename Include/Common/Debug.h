@@ -44,7 +44,8 @@ public:
 /// </summary>
 /// <typeparam name="CharT"> •¶Žš—ñ‚ÌŒ^ </typeparam>
 template<Eugene::ValueC T>
-class std::formatter<Eugene::Vector3Tmp<T>>
+class std::formatter<Eugene::Vector3Tmp<T>> :
+	public std::formatter<const char*>
 {
 public:
 

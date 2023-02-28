@@ -5,7 +5,7 @@
 Eugene::EugeneLibException::EugeneLibException(const std::string& mess) :
 	mess_{mess}
 {
-	DebugLog(mess_);
+	DebugLog("{}", mess_);
 }
 
 Eugene::EugeneLibException::~EugeneLibException()

@@ -61,9 +61,9 @@ void Eugene::Xa2Sound3DControl::Update3DSound(
 	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
 	XAUDIO2_VOICE_DETAILS details;
 	submix_->GetVoiceDetails(&details);
-	filter.OneOverQ = XAudio2CutoffFrequencyToOnePoleCoefficient(filter.Frequency, details.InputSampleRate);
+	//filter.OneOverQ = XAudio2CutoffFrequencyToOnePoleCoefficient(filter.Frequency, details.InputSampleRate);
 	submix_->SetFilterParameters(&filter);
-	//submix_->SetOutputFilterParameters(nullptr, & filter);
+
 }
 
 void Eugene::Xa2Sound3DControl::SetVolume(float volume)

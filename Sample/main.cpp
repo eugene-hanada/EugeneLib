@@ -199,15 +199,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	soundSpeaker->SetOutput(*sound3DCtrl);
 	sound3DCtrl->Update3DSound(
 		Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
-		Eugene::forwardVector3<float>, Eugene::upVector3<float>, {0.5f,-0.5f, 1.0f}, Eugene::zeroVector3<float>
+		Eugene::forwardVector3<float>, Eugene::upVector3<float>, {3.0f,0.0f, 3.0f}, Eugene::zeroVector3<float>
 	);
 	soundSpeaker->Play();
 	
 
 	float color[4]{ 0.0f,0.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
-
-	DebugLog("{}テスト", color[0]);
+	DebugLog("{:0}", 1);
+	DebugLog("{:0}", color[0]);
+	DebugLog("{:0}", color[0]);
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;
@@ -218,7 +219,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			soundSpeaker->Play();
 		}
 		
-
 		// コマンドの開始
 		cmdList->Begin();
 		

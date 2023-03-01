@@ -1,4 +1,4 @@
-#include "Dx12ImageResource.h"
+﻿#include "Dx12ImageResource.h"
 #include <dxgi1_6.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Common/EugeneLibException.h"
@@ -20,7 +20,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�e�N�X�`�����\�[�X�쐬");
+		throw EugeneLibException("テクスチャ用リソース生成失敗");
 	}
 }
 
@@ -41,7 +41,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�����_�[�^�[�Q�b�g�p���\�[�X�̍쐬�Ɏ��s");
+		throw EugeneLibException("レンダーターゲット用リソース生成失敗");
 	}
 }
 
@@ -60,7 +60,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�f�v�X�p���\�[�X�̍쐬�Ɏ��s");
+		throw EugeneLibException("デプス用リソース生成失敗");
 	}
 }
 
@@ -69,7 +69,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::ui
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("�X���b�v�`�F�C���p�o�b�t�@�̍쐬�Ɏ��s");
+		throw EugeneLibException("スワップチェイン用リソース生成失敗");
 	}
 }
 

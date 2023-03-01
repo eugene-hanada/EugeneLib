@@ -80,7 +80,7 @@ set(SoundSource
     Source/Sound/SoundBase.cpp
     Source/Sound/SoundSpeaker.cpp
     Source/Sound/SoundControl.cpp
-     Source/Sound/Sound3DControl.cpp
+    Source/Sound/Sound3DControl.cpp
     Source/Sound/Wave.cpp
 )
 

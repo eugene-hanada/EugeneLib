@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <wrl.h>
 #include <memory>
 #include <vector>
@@ -72,13 +72,13 @@ namespace Eugene
 		void ImguiNewFrame(void) const final;
 #endif
 
-		// �t�@�N�g��
+		// dxgi
 		Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_{ nullptr };
 
-		// DirectX12�̃f�o�C�X
+		// DirectX12デバイス
 		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
 
-		// �X���b�v�`�F�C��
+		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
 		std::vector<std::unique_ptr<ImageResource>> buffers_;

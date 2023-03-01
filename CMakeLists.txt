@@ -119,8 +119,15 @@ if (MSVC)
             Source/Graphics/DirectX12/Dx12Views.cpp
             Source/Graphics/DirectX12/Dx12Sampler.cpp
             Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-            Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
         )
+
+        if (USE_IMGUI)
+              set(GraphicsApiSource
+              ${GraphicsApiSource}
+              Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+              )
+        endif()
+
     endif()
 
     # サウンド系の実装クラスのソースファイルをセット

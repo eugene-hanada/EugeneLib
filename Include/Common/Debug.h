@@ -8,11 +8,11 @@
 #include "../Math/Vector3.h"
 #ifdef _DEBUG
 
-#define DebugLog(...) (Eugene::Debug::GetInstance().Log(__VA_ARGS__))
+#define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
 
 
 /// <summary>
-/// Vector2—pstd::formatter
+/// Vector2ï¿½pstd::formatter
 /// </summary>
 template<Eugene::ValueC T>
 class std::formatter<Eugene::Vector2Tmp<T>> :
@@ -21,7 +21,7 @@ class std::formatter<Eugene::Vector2Tmp<T>> :
 public:
 
 	/// <summary>
-	/// ƒtƒH[ƒ}ƒbƒg(x=0y=0‚İ‚½‚¢‚É•\¦‚·‚é)
+	/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g(x=0y=0ï¿½İ‚ï¿½ï¿½ï¿½ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	/// </summary>
 	/// <typeparam name="Out"></typeparam>
 	/// <param name="vec"></param>
@@ -32,24 +32,24 @@ public:
 	{
 		if constexpr (std::is_floating_point<T>::value)
 		{
-			// •‚“®¬”“_Œ^‚Ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½^ï¿½Ìï¿½
 			return std::format_to(ctx.out(), "x={0:f}y={1:f}", vec.x, vec.y);
 		}
 		else if constexpr (std::is_integral<T>::value)
 		{
-			// ®”Œ^‚Ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Ìï¿½
 			return std::format_to(ctx.out(), "x={0:d}y={1:d}", vec.x, vec.y);
 		}
 
-		// ‚»‚êˆÈŠO
+		// ï¿½ï¿½ï¿½ï¿½ÈŠO
 		return std::format_to(ctx.out(), "x={0:}y={1:}", vec.x, vec.y);
 	}
 };
 
 /// <summary>
-/// Vector3—pstd::formatter
+/// Vector3ï¿½pstd::formatter
 /// </summary>
-/// <typeparam name="CharT"> •¶š—ñ‚ÌŒ^ </typeparam>
+/// <typeparam name="CharT"> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒ^ </typeparam>
 template<Eugene::ValueC T>
 class std::formatter<Eugene::Vector3Tmp<T>> :
 	public std::formatter<const char*>
@@ -57,7 +57,7 @@ class std::formatter<Eugene::Vector3Tmp<T>> :
 public:
 
 	/// <summary>
-	/// ƒtƒH[ƒ}ƒbƒg(x=0y=0z=0‚İ‚½‚¢‚É•\¦‚·‚é)
+	/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g(x=0y=0z=0ï¿½İ‚ï¿½ï¿½ï¿½ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	/// </summary>
 	/// <typeparam name="Out"></typeparam>
 	/// <param name="vec"></param>
@@ -68,16 +68,16 @@ public:
 	{
 		if constexpr (std::is_floating_point<T>::value)
 		{
-			// •‚“®¬”“_Œ^‚Ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½^ï¿½Ìï¿½
 			return std::format_to(ctx.out(), "x={0:f}y={1:f}z={2:f}", vec.x , vec.y, vec.z);
 		}
 		else if constexpr (std::is_integral<T>::value)
 		{
-			// ®”Œ^‚Ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Ìï¿½
 			return std::format_to(ctx.out(), "x={0:d}y={1:d}z={2:d}", vec.x, vec.y, vec.z);
 		}
 
-		// ‚»‚êˆÈŠO
+		// ï¿½ï¿½ï¿½ï¿½ÈŠO
 		return std::format_to(ctx.out(), "x={0:}y={1:}z={2:}", vec.x, vec.y, vec.z);
 	}
 };
@@ -91,7 +91,7 @@ namespace Eugene
 		static Debug& GetInstance(void);
 
 		/// <summary>
-		/// std::format‚ğg—p‚µ‚Ä•¶š—ñ‚ğƒfƒoƒbƒOo—Í‚·‚é
+		/// std::formatï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ä•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½oï¿½Í‚ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <typeparam name="...Args"></typeparam>
 		/// <param name="fmt"></param>
@@ -103,7 +103,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// •¶š—ñ‚ğƒfƒoƒbƒOo—Í‚·‚é
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½oï¿½Í‚ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="str"></param>
 		void Log(const std::string& str);
@@ -115,12 +115,12 @@ namespace Eugene
 		void operator=(const Debug&) = delete;
 
 		/// <summary>
-		/// ƒAƒNƒZƒX§Œä—pƒoƒCƒiƒŠƒZƒ}ƒtƒH
+		/// ï¿½Aï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½ï¿½pï¿½oï¿½Cï¿½iï¿½ï¿½ï¿½Zï¿½}ï¿½tï¿½H
 		/// </summary>
 		std::binary_semaphore binarySemphore_;
 
 		/// <summary>
-		/// ƒXƒŒƒbƒhIDo—Í—pƒoƒbƒtƒ@
+		/// ï¿½Xï¿½ï¿½ï¿½bï¿½hIDï¿½oï¿½Í—pï¿½oï¿½bï¿½tï¿½@
 		/// </summary>
 		std::vector<char> buff;
 	};

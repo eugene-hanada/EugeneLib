@@ -4,7 +4,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// ƒoƒbƒtƒ@—pƒŠƒ\[ƒX
+	/// ï¿½oï¿½bï¿½tï¿½@ï¿½pï¿½ï¿½ï¿½\ï¿½[ï¿½X
 	/// </summary>
 	class BufferResource :
 		public GpuResource
@@ -13,10 +13,10 @@ namespace Eugene
 		virtual ~BufferResource();
 
 		/// <summary>
-		/// ƒTƒCƒY‚ğæ“¾‚·‚é
+		/// ï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> ƒTƒCƒY(ƒoƒCƒg”) </returns>
+		/// <returns> ï¿½Tï¿½Cï¿½Y(ï¿½oï¿½Cï¿½gï¿½ï¿½) </returns>
 		virtual std::uint64_t GetSize(void) = 0;
 	protected:
 		BufferResource();

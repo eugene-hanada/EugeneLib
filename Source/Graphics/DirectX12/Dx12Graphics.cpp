@@ -35,6 +35,8 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+
+
 Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
 {
 	CreateDevice();
@@ -45,6 +47,7 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	srViews_.reset(CreateShaderResourceViews(2));
 	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
 	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
+	
 #endif
 }
 

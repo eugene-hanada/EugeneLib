@@ -17,7 +17,7 @@ namespace Eugene
 		Dx12ImageResource(ID3D12Device* device,const TextureInfo& info);
 		Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float,4> clearColor);
 		Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue);
-		Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint64_t idx);
+		Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx);
 	private:
 		Format GetFormat(void) const final;
 		Vector2I GetSize(void) final;

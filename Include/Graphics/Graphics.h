@@ -131,7 +131,7 @@ namespace Eugene
 		/// <param name="size"></param>
 		/// <param name="resource"></param>
 		/// <returns></returns>
-		virtual IndexView* CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const = 0;
+		virtual IndexView* CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const = 0;
 
 		/// <summary>
 		/// バックバッファのレンダーターゲットのGpuResourceを取得する

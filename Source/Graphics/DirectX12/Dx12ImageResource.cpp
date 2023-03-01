@@ -20,7 +20,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒXì¬");
+		throw EugeneLibException("ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ì¬");
 	}
 }
 
@@ -41,7 +41,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg—pƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½pï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ìì¬ï¿½Éï¿½ï¿½s");
 	}
 }
 
@@ -60,15 +60,16 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("ƒfƒvƒX—pƒŠƒ\[ƒX‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ï¿½fï¿½vï¿½Xï¿½pï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ìì¬ï¿½Éï¿½ï¿½s");
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint64_t idx)
+
+Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("ƒXƒƒbƒvƒ`ƒFƒCƒ“—pƒoƒbƒtƒ@‚Ìì¬‚É¸”s");
+		throw EugeneLibException("ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½Cï¿½ï¿½ï¿½pï¿½oï¿½bï¿½tï¿½@ï¿½Ìì¬ï¿½Éï¿½ï¿½s");
 	}
 }
 

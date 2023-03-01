@@ -3,6 +3,7 @@
 #include <dxgi1_6.h>
 #include <list>
 #include <string>
+#include <cassert>
 #include "../../../Include/Common/EugeneLibException.h"
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
@@ -24,6 +25,9 @@
 #ifdef USE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_dx12.h>
+
+#include <backends/imgui_impl_vulkan.h>
+
 #endif
 
 #include "../../../Include/Common/Debug.h"
@@ -31,14 +35,16 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum)
+
+
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
 {
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
-	srViews_.reset(CreateShaderResourceViews(1));
+	srViews_.reset(CreateShaderResourceViews(2));
 	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
 	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
 	
@@ -116,7 +122,7 @@ Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(std::uint64_t size, s
 	return new Dx12VertexView{size, vertexNum,resource};
 }
 
-Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const
+Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const
 {
 	return new Dx12IndexView{size, format,resource};
 }
@@ -196,7 +202,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	throw LibInitException();
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
 {
 	gpuEngine = CreateGpuEngine(10);
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 namespace Eugene
 {
@@ -43,7 +44,7 @@ namespace Eugene
 		TextureAddressMode v_;
 		TextureAddressMode w_;
 		SampleFilter filter_;
-		float maxAnisotropy_;
+		std::uint32_t maxAnisotropy_;
 		SamplerComparison comparison_;
 		float maxLod_;
 		float minLod_;

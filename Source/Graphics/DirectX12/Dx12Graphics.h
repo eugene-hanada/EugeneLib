@@ -16,7 +16,7 @@ namespace Eugene
 		public Graphics
 	{
 	public:
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
 		~Dx12Graphics();
 	
 		
@@ -48,11 +48,12 @@ namespace Eugene
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 
 		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const final;
-		IndexView* CreateIndexView(std::uint64_t size, Format format, BufferResource& resource) const final;
+
+		IndexView* CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const final;
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint64_t bufferNum);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 
@@ -71,13 +72,13 @@ namespace Eugene
 		void ImguiNewFrame(void) const final;
 #endif
 
-		// ƒtƒ@ƒNƒgƒŠ
+		// ï¿½tï¿½@ï¿½Nï¿½gï¿½ï¿½
 		Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_{ nullptr };
 
-		// DirectX12‚ÌƒfƒoƒCƒX
+		// DirectX12ï¿½Ìƒfï¿½oï¿½Cï¿½X
 		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
 
-		// ƒXƒƒbƒvƒ`ƒFƒCƒ“
+		// ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½Cï¿½ï¿½
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
 		std::vector<std::unique_ptr<ImageResource>> buffers_;

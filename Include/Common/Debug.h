@@ -10,67 +10,74 @@
 
 #define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
 
-/// <summary>
-/// Vector2—pstd::formatter
-/// </summary>
-/// <typeparam name="CharT"> •¶š—ñ‚ÌŒ^ </typeparam>
-template<Eugene::ValueC T, class CharT>
-class std::formatter<Eugene::Vector2Tmp<T>, CharT> :
-	public std::formatter<const CharT*>
-{
-public:
-
-	template<class Out>
-	auto format(const Eugene::Vector2Tmp<T>& vec, std::basic_format_context<Out, CharT>& ctx)
-	{
-		if constexpr (std::is_floating_point<T>::value)
-		{
-			// •‚“®¬”“_Œ^‚Ì
-			return std::format_to(ctx.out(), "x={0:f}y={1:f}", vec.x, vec.y);
-		}
-		else if constexpr (std::is_integral<T>::value)
-		{
-			// ®”Œ^‚Ì
-			return std::format_to(ctx.out(), "x={0:d}y={1:d}", vec.x, vec.y);
-		}
-
-		// ‚»‚êˆÈŠO
-		return std::format_to(ctx.out(), "x={0:}y={1:}", vec.x, vec.y);
-	}
-};
 
 /// <summary>
-/// Vector3—pstd::formatter
+/// Vector2ï¿½pstd::formatter
 /// </summary>
-/// <typeparam name="CharT"> •¶š—ñ‚ÌŒ^ </typeparam>
-template<Eugene::ValueC T, class CharT>
-class std::formatter<Eugene::Vector3Tmp<T>, CharT> :
-	public std::formatter<const CharT*>
+template<Eugene::ValueC T>
+class std::formatter<Eugene::Vector2Tmp<T>> :
+	public std::formatter<const char*>
 {
 public:
 
 	/// <summary>
-	/// 
+	/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g(x=0y=0ï¿½İ‚ï¿½ï¿½ï¿½ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	/// </summary>
 	/// <typeparam name="Out"></typeparam>
 	/// <param name="vec"></param>
 	/// <param name="ctx"></param>
 	/// <returns></returns>
 	template<class Out>
-	auto format(const Eugene::Vector3Tmp<T>& vec, std::basic_format_context<Out, CharT>& ctx)
+	auto format(const Eugene::Vector2Tmp<T>& vec, std::basic_format_context<Out, char>& ctx)
 	{
 		if constexpr (std::is_floating_point<T>::value)
 		{
-			// •‚“®¬”“_Œ^‚Ì
-			return std::format_to(ctx.out(), "x={0:f}y={1:f}z={2:f}", vec.x, vec.y, vec.z);
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½^ï¿½Ìï¿½
+			return std::format_to(ctx.out(), "x={0:f}y={1:f}", vec.x, vec.y);
 		}
 		else if constexpr (std::is_integral<T>::value)
 		{
-			// ®”Œ^‚Ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Ìï¿½
+			return std::format_to(ctx.out(), "x={0:d}y={1:d}", vec.x, vec.y);
+		}
+
+		// ï¿½ï¿½ï¿½ï¿½ÈŠO
+		return std::format_to(ctx.out(), "x={0:}y={1:}", vec.x, vec.y);
+	}
+};
+
+/// <summary>
+/// Vector3ï¿½pstd::formatter
+/// </summary>
+/// <typeparam name="CharT"> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒ^ </typeparam>
+template<Eugene::ValueC T>
+class std::formatter<Eugene::Vector3Tmp<T>> :
+	public std::formatter<const char*>
+{
+public:
+
+	/// <summary>
+	/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g(x=0y=0z=0ï¿½İ‚ï¿½ï¿½ï¿½ï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+	/// </summary>
+	/// <typeparam name="Out"></typeparam>
+	/// <param name="vec"></param>
+	/// <param name="ctx"></param>
+	/// <returns></returns>
+	template<class Out>
+	auto format(const Eugene::Vector3Tmp<T>& vec, std::basic_format_context<Out, char>& ctx)
+	{
+		if constexpr (std::is_floating_point<T>::value)
+		{
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½^ï¿½Ìï¿½
+			return std::format_to(ctx.out(), "x={0:f}y={1:f}z={2:f}", vec.x , vec.y, vec.z);
+		}
+		else if constexpr (std::is_integral<T>::value)
+		{
+			// ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Ìï¿½
 			return std::format_to(ctx.out(), "x={0:d}y={1:d}z={2:d}", vec.x, vec.y, vec.z);
 		}
 
-		// ‚»‚êˆÈŠO
+		// ï¿½ï¿½ï¿½ï¿½ÈŠO
 		return std::format_to(ctx.out(), "x={0:}y={1:}z={2:}", vec.x, vec.y, vec.z);
 	}
 };
@@ -84,35 +91,38 @@ namespace Eugene
 		static Debug& GetInstance(void);
 
 		/// <summary>
-		/// std::format‚Å‘®w’è‚µ‚½•¶š—ñ‚ğƒfƒoƒbƒOo—Í‚·‚é
+		/// std::formatï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Ä•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½oï¿½Í‚ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <typeparam name="...Args"></typeparam>
-		/// <param name="formatStr"> ƒtƒH[ƒ}ƒbƒg </param>
-		/// <param name="...args"> ˆø” </param>
-		template<class ...Args>
-		constexpr void Log(const std::string& formatStr, const Args&... args)
+		/// <param name="fmt"></param>
+		/// <param name="...args"></param>
+		template<class... Args>
+		constexpr void Log(std::format_string<Args...> fmt, const Args ...args)
 		{
-			Log(std::format(formatStr, args...));
+			Log(std::vformat(fmt.get(), std::make_format_args(args...)));
 		}
 
 		/// <summary>
-		/// •¶š—ñ‚ğƒfƒoƒbƒOo—Í‚·‚é
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½oï¿½Í‚ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="str"></param>
 		void Log(const std::string& str);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="str"></param>
-		void Log(const char str[]);
 
 	private:
 		Debug();
 		~Debug();
 		Debug(const Debug&) = delete;
 		void operator=(const Debug&) = delete;
+
+		/// <summary>
+		/// ï¿½Aï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½ï¿½pï¿½oï¿½Cï¿½iï¿½ï¿½ï¿½Zï¿½}ï¿½tï¿½H
+		/// </summary>
 		std::binary_semaphore binarySemphore_;
+
+		/// <summary>
+		/// ï¿½Xï¿½ï¿½ï¿½bï¿½hIDï¿½oï¿½Í—pï¿½oï¿½bï¿½tï¿½@
+		/// </summary>
+		std::vector<char> buff;
 	};
 
 

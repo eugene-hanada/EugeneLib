@@ -19,6 +19,8 @@ set(SystemSource
 )
 
 if(USE_IMGUI)
+
+    # imgui使用時
     set(SystemSource 
         ${SystemSource}
         Include/ThirdParty/imgui/imgui.cpp
@@ -91,6 +93,7 @@ if (MSVC)
         )
 
     if (USE_IMGUI)
+        # imgui使用時
         set(SystemApiSource 
             ${SystemApiSource}
              Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp

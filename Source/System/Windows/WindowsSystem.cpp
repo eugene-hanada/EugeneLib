@@ -159,7 +159,8 @@ Eugene::WindowsSystem::~WindowsSystem()
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 }
 
-Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, std::uint64_t bufferNum) const&
+
+Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum) const&
 {
 	if (graphics != nullptr)
 	{

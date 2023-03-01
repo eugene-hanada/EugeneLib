@@ -20,6 +20,13 @@ class std::formatter<Eugene::Vector2Tmp<T>> :
 {
 public:
 
+	/// <summary>
+	/// フォーマット(x=0y=0みたいに表示する)
+	/// </summary>
+	/// <typeparam name="Out"></typeparam>
+	/// <param name="vec"></param>
+	/// <param name="ctx"></param>
+	/// <returns></returns>
 	template<class Out>
 	auto format(const Eugene::Vector2Tmp<T>& vec, std::basic_format_context<Out, char>& ctx)
 	{
@@ -50,7 +57,7 @@ class std::formatter<Eugene::Vector3Tmp<T>> :
 public:
 
 	/// <summary>
-	/// 
+	/// フォーマット(x=0y=0z=0みたいに表示する)
 	/// </summary>
 	/// <typeparam name="Out"></typeparam>
 	/// <param name="vec"></param>

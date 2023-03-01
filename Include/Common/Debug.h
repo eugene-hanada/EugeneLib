@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <concepts>
 #include <string>
 #include <filesystem>
@@ -91,7 +91,7 @@ namespace Eugene
 		static Debug& GetInstance(void);
 
 		/// <summary>
-		/// std::format���g�p���ĕ�������f�o�b�O�o�͂���
+		/// std::formatを使用してフォーマットして出力する
 		/// </summary>
 		/// <typeparam name="...Args"></typeparam>
 		/// <param name="fmt"></param>
@@ -103,7 +103,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ��������f�o�b�O�o�͂���
+		/// デバッグ出力する
 		/// </summary>
 		/// <param name="str"></param>
 		void Log(const std::string& str);
@@ -115,12 +115,12 @@ namespace Eugene
 		void operator=(const Debug&) = delete;
 
 		/// <summary>
-		/// �A�N�Z�X����p�o�C�i���Z�}�t�H
+		/// アクセス制御用バイナリセマフォ
 		/// </summary>
 		std::binary_semaphore binarySemphore_;
 
 		/// <summary>
-		/// �X���b�hID�o�͗p�o�b�t�@
+		/// バッファ
 		/// </summary>
 		std::vector<char> buff;
 	};

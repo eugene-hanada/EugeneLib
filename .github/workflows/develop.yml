@@ -21,13 +21,13 @@ jobs:
       
       # msbuildのセットアップ
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
       
       # ビルド
     - name: Build
       # Build your program with the given configuration
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
+        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
         
       # アップロード

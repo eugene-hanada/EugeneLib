@@ -5,6 +5,7 @@ project(EugeneLib)
 set(CMAKE_CXX_STANDARD 23)
 
 option(USE_IMGUI "Imguiを使用するか?" OFF)
+option(USE_VULKAN "Vulkanを使用するか?" OFF)
 
 # visual stdio用にunicodeを使うように
 add_definitions(-D_UNICODE -DUNICODE)

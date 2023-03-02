@@ -91,7 +91,17 @@ namespace Eugene
 		// レンダーターゲットを終了状態にする(Commonとか)
 		void TransitionRenderTargetEnd(ImageResource& resource) final;
 
-		
+		// シェーダー使用状態にする
+		void TransitionShaderResourceBegin(ImageResource& resource) final;
+
+		// シェーダー使用状態から終了する
+		void TransitionShaderResourceEnd(ImageResource& resource) final;
+
+		// デプス使用状態にする
+		void TransitionDepthBegin(ImageResource& resource) final;
+
+		// デプス使用状態から終了する
+		void TransitionDepthEnd(ImageResource& resource) final;
 
 		// コピー系 //
 

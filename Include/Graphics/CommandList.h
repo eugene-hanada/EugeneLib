@@ -176,6 +176,29 @@ namespace Eugene
 		/// <param name="resource"> レンダーターゲット </param>
 		virtual void TransitionRenderTargetEnd(ImageResource& resource) = 0;
 
+		/// <summary>
+		/// レンダーターゲットをシェーダ使用状態にする
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionShaderResourceBegin(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// レンダーターゲットをシェーダー使用状態から終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionShaderResourceEnd(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// デプスを使用状態にする
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionDepthBegin(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// デプス使用状態から終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionDepthEnd(ImageResource& resource) = 0;
 
 		/// <summary>
 		/// 深度バッファをクリアする

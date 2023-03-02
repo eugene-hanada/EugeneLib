@@ -255,6 +255,34 @@ void Eugene::Dx12CommandList::TransitionRenderTargetEnd(ImageResource& resource)
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
+void Eugene::Dx12CommandList::TransitionShaderResourceBegin(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionShaderResourceEnd(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionDepthBegin(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionDepthEnd(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
 void Eugene::Dx12CommandList::ClearDepth(DepthStencilViews& views, float clearValue, std::uint64_t idx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };

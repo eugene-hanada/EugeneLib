@@ -145,6 +145,27 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uin
 	cmdList_->OMSetRenderTargets(1, &handle, false, nullptr);
 }
 
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx)
+{
+	assert((endIdx - startIdx) >= 0 && views.GetSize() > endIdx);
+
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews())};
+	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, 8> handles;
+	for (std::uint64_t i = 0; i < (endIdx - startIdx) || i < handles.size(); i++)
+	{
+		handle.ptr = static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)) * startIdx + i;
+		handles[i] = handle;
+	}
+	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(endIdx - startIdx), handles.data(), false, nullptr);
+}
+
 void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
@@ -211,7 +232,7 @@ void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::s
 		return;
 	}
 
-	// レンダーターゲットの最大数が8なのでその分確保
+	// レンダーターゲット分クリアする
 	for (std::uint64_t i = 0; i < views.GetSize(); i++)
 	{
 		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));

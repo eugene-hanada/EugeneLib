@@ -7,7 +7,7 @@
 #include <filesystem>
 #include <cuchar>
 #include <chrono>
-#include <spanstream>
+#include <thread>
 #ifdef _WIN64
 #include <Windows.h>
 FILE* fp;
@@ -33,11 +33,12 @@ void Eugene::Debug::Log(const std::string& str)
 	auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
 
 	// バッファを利用したストリームからスレッドIDを文字列に変換
-	std::spanstream s{buff};
-	s << std::this_thread::get_id();
+	oss_ << std::this_thread::get_id();
 
 	// 時間とスレッドIDとstrを出力
-	std::cout << std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, std::string_view{ buff.data(),buff.size()},str);
+	std::cout << std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, oss_.str(), str);
+
+	oss_.seekp(0);
 	binarySemphore_.release();
 }
 
@@ -50,9 +51,8 @@ Eugene::Debug::Debug() :
 	freopen_s(&fp, "CONIN$", "r", stdin);
 
 	// スレッドIDを文字列に変換してバッファのサイズにする
-	std::ostringstream oss;
-	oss << std::this_thread::get_id();
-	buff.resize(oss.str().size());
+	oss_ << std::this_thread::get_id();
+	oss_.seekp(0);
 #endif
 }
 

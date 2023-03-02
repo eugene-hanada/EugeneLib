@@ -127,6 +127,14 @@ namespace Eugene
 		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) = 0;
 
 		/// <summary>
+		/// ビューにある指定の範囲のレンダーターゲットをセットする
+		/// </summary>
+		/// <param name="views"> レンダーターゲットのビュー </param>
+		/// <param name="startIdx"> 開始インデックス </param>
+		/// <param name="endIdx"> 終了インデックス </param>
+		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) = 0;
+
+		/// <summary>
 		/// レンダーターゲットをセットする(RenderTargetViewsにあるものすべてをセットする)
 		/// </summary>
 		/// <param name="views"> レンダーターゲットビュー </param>
@@ -167,6 +175,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="resource"> レンダーターゲット </param>
 		virtual void TransitionRenderTargetEnd(ImageResource& resource) = 0;
+
 
 		/// <summary>
 		/// 深度バッファをクリアする

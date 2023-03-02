@@ -127,7 +127,6 @@ Eugene::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :
 
 Eugene::Dx12GpuEngine::~Dx12GpuEngine()
 {
-	DebugLog("gpuEngine");
 }
 
 //	void GpuEngine::ReSize(size_t size)

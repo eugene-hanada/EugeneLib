@@ -16,10 +16,16 @@ cbuffer RenderTargetMat : register(b0)
     matrix rtMat;
 }
 
+cbuffer TextureMat : register(b1)
+{
+	matrix texMat;
+}
+
 VertexOutput main(VertexInput input)
 {
 	VertexOutput output;
-    output.svPos = mul(rtMat, input.pos);
+	float4 pos = mul(texMat, input.pos);
+    output.svPos = mul(rtMat, pos);
 	output.uv = input.uv;
 	return output;
 }

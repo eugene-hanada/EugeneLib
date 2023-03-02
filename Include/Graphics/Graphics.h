@@ -95,6 +95,15 @@ namespace Eugene
 		virtual ImageResource* CreateImageResource(const TextureInfo& formatData) const = 0;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="format"></param>
+		/// <param name="clearColor"></param>
+		/// <returns></returns>
+		virtual ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) = 0;
+
+		/// <summary>
 		/// ShaderResourceViewsの生成
 		/// </summary>
 		/// <param name="size"> Viewの数 </param>

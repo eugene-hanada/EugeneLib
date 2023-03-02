@@ -100,6 +100,11 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{device_.Get(),formatData};
 }
 
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
+{
+	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
+}
+
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const
 {
 	return new Dx12ShaderResourceViews{ device_.Get(), size};

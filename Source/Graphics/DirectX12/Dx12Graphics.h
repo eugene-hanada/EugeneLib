@@ -41,6 +41,8 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
+		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) final;
+
 		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;

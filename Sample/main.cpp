@@ -41,8 +41,13 @@ std::unique_ptr < Eugene::SoundControl> soundCtrl;
 std::unique_ptr<Eugene::Sound3DControl> sound3DCtrl;
 std::unique_ptr<Eugene::SoundSpeaker> soundSpeaker;
 
+// サンプラー
 std::unique_ptr<Eugene::Sampler> sampler;
 std::unique_ptr<Eugene::SamplerViews> smpViews;
+
+std::unique_ptr<Eugene::ImageResource> renderTarget;
+std::unique_ptr<Eugene::RenderTargetViews> rtViews;
+std::unique_ptr<Eugene::RenderTargetViews> rtSrviews;
 
 void Init(void)
 {

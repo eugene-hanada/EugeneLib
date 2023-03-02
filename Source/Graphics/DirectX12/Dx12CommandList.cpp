@@ -2,6 +2,7 @@
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include <array>
+#include <cassert>
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"

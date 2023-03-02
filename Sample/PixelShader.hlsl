@@ -10,6 +10,6 @@ SamplerState sam : register(s0);
 
 float4 main(PixelInput input) : SV_TARGET
 {
-    float color = tex.Sample(sam, input.uv);
+    float4 color = tex.Sample(sam, input.uv);
     return color;
 }

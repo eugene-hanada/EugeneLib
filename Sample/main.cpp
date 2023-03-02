@@ -49,14 +49,25 @@ std::unique_ptr<Eugene::Sampler> sampler;
 std::unique_ptr<Eugene::SamplerViews> smpViews;
 
 std::unique_ptr<Eugene::ImageResource> renderTarget;
+std::unique_ptr<Eugene::ImageResource> renderTarget2;
 std::unique_ptr<Eugene::RenderTargetViews> rtViews;
-std::unique_ptr<Eugene::ShaderResourceViews> rtSrviews;
+
+
+// 
 std::unique_ptr<Eugene::ShaderResourceViews> rtMatviews;
 std::unique_ptr<Eugene::BufferResource> rtMatrix_;
 std::unique_ptr<Eugene::BufferResource> rtVertex_;
-std::unique_ptr<Eugene::BufferResource> rtPosMat_;
 std::unique_ptr<Eugene::VertexView> rtVertexView;
 
+// 一つ目のレンダーターゲットテクスチャと行列
+std::unique_ptr<Eugene::ShaderResourceViews> rtSrviews;
+std::unique_ptr<Eugene::BufferResource> rtPosMat_;
+
+
+// 二つ目のレンダーターゲットテクスチャと行列
+std::unique_ptr<Eugene::ShaderResourceViews> rt2Srviews;
+std::unique_ptr<Eugene::BufferResource> rt2PosMat_;
+std::unique_ptr<Eugene::GraphicsPipeline> gpipeLine2;
 
 void Init(void)
 {
@@ -105,6 +116,25 @@ void InitGraphicsPipeline(void)
 
 
 	gpipeLine.reset(graphics->CreateGraphicsPipeline(
+		layout,
+		shaders,
+		rendertargets,
+		Eugene::TopologyType::Triangle,
+		false,
+		shaderLayout
+	));
+
+	shaders ={
+		{Eugene::Shader{"VertexShader.vso"}, Eugene::ShaderType::Vertex},
+		{Eugene::Shader{"MultiRenderTargetPS.pso"}, Eugene::ShaderType::Pixel}
+	};
+
+	rendertargets = {
+		{Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non},
+		{Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non}
+	};
+
+	gpipeLine2.reset(graphics->CreateGraphicsPipeline(
 		layout,
 		shaders,
 		rendertargets,
@@ -207,10 +237,15 @@ void InitRenderTarget(void)
 
 	float c[]{ 0.0f,0.0f,0.0f,1.0f };
 	renderTarget.reset(graphics->CreateImageResource(Eugene::Vector2I{ 640,360 }, Eugene::Format::R8G8B8A8_UNORM, c));
-	rtViews.reset(graphics->CreateRenderTargetViews(1, false));
+	renderTarget2.reset(graphics->CreateImageResource(Eugene::Vector2I{ 640,360 }, Eugene::Format::R8G8B8A8_UNORM, c));
+	rtViews.reset(graphics->CreateRenderTargetViews(2, false));
 	rtViews->Create(*renderTarget, 0, Eugene::Format::R8G8B8A8_UNORM);
+	rtViews->Create(*renderTarget2, 1, Eugene::Format::R8G8B8A8_UNORM);
+
 	rtSrviews.reset(graphics->CreateShaderResourceViews(2));
 	rtSrviews->CreateTexture(*renderTarget, 0);
+	rt2Srviews.reset(graphics->CreateShaderResourceViews(2));
+	rt2Srviews->CreateTexture(*renderTarget2, 0);
 	
 	rtMatrix_.reset(graphics->CreateUploadableBufferResource(256));
 	Eugene::Matrix4x4 matrix;
@@ -224,8 +259,13 @@ void InitRenderTarget(void)
 	Eugene::Get2DTranslateMatrix(matrix, { 640.0f,0.0f });
 	*static_cast<Eugene::Matrix4x4*>(rtPosMat_->Map()) = matrix;
 	rtPosMat_->UnMap();
-
 	rtSrviews->CreateConstantBuffer(*rtPosMat_, 1);
+
+	rt2PosMat_.reset(graphics->CreateUploadableBufferResource(256));
+	Eugene::Get2DTranslateMatrix(matrix, { 0.0f, 0.0f });
+	*static_cast<Eugene::Matrix4x4*>(rt2PosMat_->Map()) = matrix;
+	rt2PosMat_->UnMap();
+	rt2Srviews->CreateConstantBuffer(*rt2PosMat_, 1);
 
 	rtVertex_.reset(graphics->CreateUploadableBufferResource(sizeof(vertex)));
 	std::copy(std::begin(vertex), std::end(vertex), reinterpret_cast<Vertex*>(rtVertex_->Map()));
@@ -265,9 +305,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	);
 	soundSpeaker->Play();
 	
-	float color2[4]{ 1.0f, 0.0f,0.0f,1.0f };
+	float color2[4]{ 0.0f, 0.0f,1.0f,1.0f };
 	float color[4]{ 1.0f,0.0f,0.0f,1.0f };
-
+	float color3[4]{ 0.0f,1.0f,0.0f,1.0f };
 	Eugene::GamePad pad;
 
 	DebugLog("{}", pad.rightThumb_);
@@ -287,10 +327,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Begin();
 
 		cmdList->TransitionRenderTargetBegin(*renderTarget);
-		cmdList->SetRenderTarget(*rtViews, 0u);
-		cmdList->ClearRenderTarget(*rtViews, color, 0);
+		cmdList->TransitionRenderTargetBegin(*renderTarget2);
+		cmdList->SetGraphicsPipeline(*gpipeLine2);
 
-		cmdList->SetGraphicsPipeline(*gpipeLine);
+		cmdList->SetRenderTarget(*rtViews, 0u,1u);
+		cmdList->ClearRenderTarget(*rtViews, color2, 0);
+		cmdList->ClearRenderTarget(*rtViews, color3, 1);
 
 		cmdList->SetShaderResourceView(*rtMatviews, 0, 0);
 
@@ -309,7 +351,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Draw(4);
 
 		cmdList->TransitionRenderTargetEnd(*renderTarget);
-
+		cmdList->TransitionRenderTargetEnd(*renderTarget2);
 
 		
 		// レンダーターゲットのセット
@@ -323,6 +365,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->SetGraphicsPipeline(*gpipeLine);
 
 		cmdList->TransitionShaderResourceBegin(*renderTarget);
+		cmdList->TransitionShaderResourceBegin(*renderTarget2);
 
 		cmdList->SetShaderResourceView(*matrixView_, 0, 0);
 
@@ -340,8 +383,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		cmdList->Draw(4);
 
-		cmdList->TransitionShaderResourceEnd(*renderTarget);
+		cmdList->SetShaderResourceView(*rt2Srviews, 0, 1);
 
+		cmdList->Draw(4);
+
+		cmdList->TransitionShaderResourceEnd(*renderTarget);
+		cmdList->TransitionShaderResourceEnd(*renderTarget2);
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 
 		// コマンド終了

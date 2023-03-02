@@ -161,10 +161,10 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uin
 	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, 8> handles;
 	for (std::uint64_t i = 0; i < (endIdx - startIdx) || i < handles.size(); i++)
 	{
-		handle.ptr = static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)) * startIdx + i;
+		handle.ptr = descriptorHeap->GetCPUDescriptorHandleForHeapStart().ptr + (static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)) * (startIdx + i));
 		handles[i] = handle;
 	}
-	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(endIdx - startIdx), handles.data(), false, nullptr);
+	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(endIdx - startIdx) + 1, handles.data(), false, nullptr);
 }
 
 void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)

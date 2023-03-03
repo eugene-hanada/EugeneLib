@@ -1,9 +1,11 @@
 ﻿#pragma once
 #include "SoundBase.h"
+#include <filesystem>
 
 namespace Eugene
 {
 	class SoundSpeaker;
+	class SoundStreamSpeaker;
 	class SoundControl;
 	class Sound3DControl;
 	class Wave;
@@ -22,6 +24,13 @@ namespace Eugene
 		/// <param name="wave"></param>
 		/// <returns></returns>
 		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const = 0;
+
+		/// <summary>
+		/// ストリーミング再生するクラスを作成する
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		virtual SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path) const = 0;
 
 		/// <summary>
 		/// サウンドをコントロールするクラスを作成する

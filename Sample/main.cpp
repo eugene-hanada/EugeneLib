@@ -43,6 +43,7 @@ std::unique_ptr<Eugene::Sound> sound;
 std::unique_ptr < Eugene::SoundControl> soundCtrl;
 std::unique_ptr<Eugene::Sound3DControl> sound3DCtrl;
 std::unique_ptr<Eugene::SoundSpeaker> soundSpeaker;
+std::unique_ptr<Eugene::SoundStreamSpeaker> streamSpeaker;
 
 // サンプラー
 std::unique_ptr<Eugene::Sampler> sampler;
@@ -223,6 +224,7 @@ void InitSound(void)
 	soundCtrl.reset(sound->CreateSoundControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
 	sound3DCtrl.reset(sound->CreateSound3DControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
 
+	streamSpeaker.reset(sound->CreateSoundStreamSpeaker("./exp.wav"));
 }
 
 void InitRenderTarget(void)

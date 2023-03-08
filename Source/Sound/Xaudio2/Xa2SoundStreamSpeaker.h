@@ -45,21 +45,74 @@ namespace Eugene
 
 		void Worker(void);
 
+		/// <summary>
+		/// ソースボイス
+		/// </summary>
 		IXAudio2SourceVoice* source_;
 
+		/// <summary>
+		/// コールバック用オブジェクト
+		/// </summary>
 		std::unique_ptr<CollBack> collback_;
+		
+		/// <summary>
+		/// ストリーミングで使用するスレッド
+		/// </summary>
 		std::thread streamThread_;
+
+		/// <summary>
+		/// 実行フラグ
+		/// </summary>
 		std::atomic_bool isRun_;
+
+		/// <summary>
+		/// 再生フラグ
+		/// </summary>
 		std::atomic_bool isPlay_;
+
+		/// <summary>
+		/// セマフォ
+		/// </summary>
 		std::binary_semaphore semaphore_{0};
 
+		/// <summary>
+		/// 
+		/// </summary>
 		std::streampos starPos_;
+
+		/// <summary>
+		/// データサイズ
+		/// </summary>
 		std::uint32_t dataSize_;
+
+		/// <summary>
+		/// 再生したサイズ
+		/// </summary>
 		std::uint32_t nowSize_;
+
+		/// <summary>
+		/// バッファー
+		/// </summary>
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
+
+		/// <summary>
+		/// バッファー用データ
+		/// </summary>
 		std::vector<std::uint8_t> bufferData_;
+
+		/// <summary>
+		/// ストリーミングで読み込んだデータ
+		/// </summary>
 		std::vector<std::uint8_t> streamData_;
+
+		/// <summary>
+		/// ストリーミングで読み込んだデータサイズ
+		/// </summary>
 		std::uint32_t streamSize_;
+
+		/// <summary>
+		/// 1秒当たりのバイト数
+		/// </summary>
 		std::uint32_t bytesPerSec;
 
 		friend class CollBack;

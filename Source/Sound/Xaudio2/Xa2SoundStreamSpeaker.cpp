@@ -61,20 +61,24 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	// ソースボイスの作成
 	device->CreateSourceVoice(&source_, &format.Format, 0, 2.0f, collback_.get());
 	bytesPerSec = format.Format.nAvgBytesPerSec;
-	nowSize_ = bytesPerSec;
-	bufferData_.resize(std::min(bytesPerSec, bytesPerSec));
-	streamData_.resize(std::min(bytesPerSec, bytesPerSec));
+	
+	nowSize_ = 0u;
+	bufferData_.resize(std::min(bytesPerSec, dataSize_));
+	streamData_.resize(std::min(bytesPerSec, dataSize_));
 	
 	// データ読み込み
-	file_.read(reinterpret_cast<char*>(bufferData_.data()), bufferData_.size());
+	file_.read(reinterpret_cast<char*>(bufferData_.data()), std::min(bytesPerSec, dataSize_));
 
 	// バッファーにセットする
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
-	buffer_->AudioBytes = std::min(bytesPerSec, bytesPerSec);
+	buffer_->AudioBytes = std::min(bytesPerSec, dataSize_);
 	buffer_->pAudioData = bufferData_.data();
 	buffer_->LoopCount = 0;
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
 	source_->SubmitSourceBuffer(buffer_.get());
+
+	
+
 	streamThread_ = std::thread{ &Xa2SoundStreamSpeaker::Worker,this };
 }
 
@@ -124,24 +128,33 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 	while (isRun_.load())
 	{
 		source_->GetState(&state);
+
+		// ステートをチェック
 		if (state.BuffersQueued <= 0 && isPlay_.load())
 		{
+			// バッファーの再生が終了かつ再生すべき時
+
 			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
 			if (nextSize <= 0u)
 			{
+				// 再生すべきサイズが0の時ループを抜ける
 				break;
 			}
 
+			// あらかじめ読み込んだデータと入れ替える
 			bufferData_.swap(streamData_);
 
+			// バッファーをセット
 			buffer_->AudioBytes = streamSize_;
 			buffer_->pAudioData = bufferData_.data();
 			buffer_->LoopCount = 0;
 			buffer_->Flags = XAUDIO2_END_OF_STREAM;
 
+			// 再生
 			source_->SubmitSourceBuffer(buffer_.get());
 			source_->Start();
 
+			// 読み込む
 			file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
 			streamSize_ = nextSize;
 			nowSize_ += streamSize_;

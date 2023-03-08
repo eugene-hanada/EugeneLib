@@ -18,6 +18,7 @@ namespace Eugene
 	{
 	public:
 		Xa2SoundStreamSpeaker(IXAudio2* device,const std::filesystem::path& path, std::uint16_t outChannel);
+		~Xa2SoundStreamSpeaker();
 	private:
 		class CollBack : public IXAudio2VoiceCallback
 		{
@@ -34,8 +35,8 @@ namespace Eugene
 			Xa2SoundStreamSpeaker& speaker_;
 		};
 
-		void Play(void) const final;
-		void Stop(void) const;
+		void Play(void) final;
+		void Stop(void);
 		bool IsEnd(void) const final;
 		void SetPitchRate(float rate) final;
 		void SetOutput(SoundControl& control) final;
@@ -49,13 +50,16 @@ namespace Eugene
 		std::unique_ptr<CollBack> collback_;
 		std::thread streamThread_;
 		std::atomic_bool isRun_;
+		std::atomic_bool isPlay_;
 		std::binary_semaphore semaphore_{0};
 
 		std::streampos starPos_;
+		std::uint32_t dataSize_;
+		std::uint32_t nowSize_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
 		std::vector<std::uint8_t> bufferData_;
-		std::unique_ptr<XAUDIO2_BUFFER> streamBuffer_;
 		std::vector<std::uint8_t> streamData_;
+		std::uint32_t streamSize_;
 		std::uint32_t bytesPerSec;
 
 		friend class CollBack;

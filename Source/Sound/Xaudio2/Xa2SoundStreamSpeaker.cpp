@@ -8,12 +8,16 @@
 
 Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std::filesystem::path& path, std::uint16_t outChannel)
 {
+	isPlay_.store(false);
+	isRun_.store(true);
+
 	collback_ = std::make_unique<CollBack>(*this);
 	file_.open(path, std::ios::binary);
 	Wave::RIFF riff;
 	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 	int id = 0;
-	auto pos = file_.tellg();
+
+	// fmtチャンクを見つける
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
@@ -25,14 +29,22 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	}
 
 	WAVEFORMATEXTENSIBLE format;
+	file_.ignore(4);
 	file_.read(reinterpret_cast<char*>(&format.Format), sizeof(format.Format));
-	if (format.Format.wFormatTag == 1)
+	if (format.Format.wFormatTag != 1)
 	{
 		file_.read(reinterpret_cast<char*>(&format.Samples), sizeof(format.Samples));
 		file_.read(reinterpret_cast<char*>(&format.dwChannelMask), sizeof(format.dwChannelMask));
 		file_.read(reinterpret_cast<char*>(&format.SubFormat), sizeof(format.SubFormat));
 	}
-	file_.seekg(pos);
+	else
+	{
+		auto now = file_.tellg();
+		now -= 2ull;
+		file_.seekg(now);
+	}
+	
+	// データチャンクを見つける
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
@@ -43,33 +55,46 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 
 	}
 
+	// データのサイズを読み取る
+	file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
+
+	// ソースボイスの作成
 	device->CreateSourceVoice(&source_, &format.Format, 0, 2.0f, collback_.get());
-
-	bufferData_.resize(format.Format.nAvgBytesPerSec);
-	streamData_.resize(format.Format.nAvgBytesPerSec);
 	bytesPerSec = format.Format.nAvgBytesPerSec;
+	nowSize_ = bytesPerSec;
+	bufferData_.resize(std::min(bytesPerSec, bytesPerSec));
+	streamData_.resize(std::min(bytesPerSec, bytesPerSec));
+	
+	// データ読み込み
 	file_.read(reinterpret_cast<char*>(bufferData_.data()), bufferData_.size());
-	//file_.read(reinterpret_cast<char*>(streamData_.data()), streamData_.size());
 
-	buffer_->AudioBytes = format.Format.nAvgBytesPerSec;
+	// バッファーにセットする
+	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
+	buffer_->AudioBytes = std::min(bytesPerSec, bytesPerSec);
 	buffer_->pAudioData = bufferData_.data();
 	buffer_->LoopCount = 0;
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
-
-	//streamBuffer_->AudioBytes = format.Format.nAvgBytesPerSec;
-	//streamBuffer_->pAudioData = streamData_.data();
-	//streamBuffer_->LoopCount = 0;
-	//streamBuffer_->Flags = XAUDIO2_END_OF_STREAM;
-
-
+	source_->SubmitSourceBuffer(buffer_.get());
+	streamThread_ = std::thread{ &Xa2SoundStreamSpeaker::Worker,this };
 }
 
-void Eugene::Xa2SoundStreamSpeaker::Play(void) const
+Eugene::Xa2SoundStreamSpeaker::~Xa2SoundStreamSpeaker()
 {
+	isRun_.store(false);
+	streamThread_.join();
+	source_->DestroyVoice();
 }
 
-void Eugene::Xa2SoundStreamSpeaker::Stop(void) const
+void Eugene::Xa2SoundStreamSpeaker::Play(void)
 {
+	source_->Start();
+	isPlay_.store(true);
+}
+
+void Eugene::Xa2SoundStreamSpeaker::Stop(void)
+{
+	isPlay_.store(false);
+	source_->Stop();
 }
 
 bool Eugene::Xa2SoundStreamSpeaker::IsEnd(void) const
@@ -95,12 +120,32 @@ void Eugene::Xa2SoundStreamSpeaker::SetPan(std::span<float> volumes)
 
 void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 {
+	XAUDIO2_VOICE_STATE state;
 	while (isRun_.load())
 	{
-		file_.read(reinterpret_cast<char*>(bufferData_.data()), bufferData_.size());
-		buffer_->pAudioData = bufferData_.data();
+		source_->GetState(&state);
+		if (state.BuffersQueued <= 0 && isPlay_.load())
+		{
+			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
+			if (nextSize <= 0u)
+			{
+				break;
+			}
 
-		semaphore_.acquire();
+			bufferData_.swap(streamData_);
+
+			buffer_->AudioBytes = streamSize_;
+			buffer_->pAudioData = bufferData_.data();
+			buffer_->LoopCount = 0;
+			buffer_->Flags = XAUDIO2_END_OF_STREAM;
+
+			source_->SubmitSourceBuffer(buffer_.get());
+			source_->Start();
+
+			file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
+			streamSize_ = nextSize;
+			nowSize_ += streamSize_;
+		}
 	}
 }
 

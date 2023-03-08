@@ -1,0 +1,37 @@
+\hypertarget{_sound_base_8h_source}{}\doxysection{Sound\+Base.\+h}
+\label{_sound_base_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Sound/SoundBase.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Sound/SoundBase.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <span>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_sound_base}{SoundBase}}}
+\DoxyCodeLine{8     \{}
+\DoxyCodeLine{9     \textcolor{keyword}{public}:}
+\DoxyCodeLine{10         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_sound_base}{\string~SoundBase}}();}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{16         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_sound_base_a2f571f3d94a4f547cc884c8f2cd73dba}{SetVolume}}(\textcolor{keywordtype}{float} volume) = 0;}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{22         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_sound_base_aeae67ae8f9d47c5137207eac8b2e3de3}{SetPan}}(std::span<float> volumes) = 0;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{29         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_eugene_1_1_sound_base_a9e5005a042588fcff5c3351209ca2170}{GetVolume}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{36         std::uint16\_t \mbox{\hyperlink{class_eugene_1_1_sound_base_a078f2faf72825ad10cced7dbb7c1b194}{GetOutChannel}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{43         std::uint16\_t \mbox{\hyperlink{class_eugene_1_1_sound_base_a824c4263b71361a4216a91e2b9bab39e}{GetInChannel}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{44     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{45         \mbox{\hyperlink{class_eugene_1_1_sound_base}{SoundBase}}();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{50         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_eugene_1_1_sound_base_a10d229dd5b4d7e96e176271f1969e918}{volume\_}};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{55         std::uint16\_t \mbox{\hyperlink{class_eugene_1_1_sound_base_a31096926c303fcf852b75308b0927aa0}{outChannel\_}};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{60         std::uint16\_t \mbox{\hyperlink{class_eugene_1_1_sound_base_afaf3046965ab7f7e87d635b1821e3c73}{inChannel\_}};}
+\DoxyCodeLine{61     \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \}}
+
+\end{DoxyCode}

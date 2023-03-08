@@ -1,0 +1,111 @@
+\hypertarget{class_eugene_1_1_sound_base}{}\doxysection{Eugene\+::Sound\+Base Class Reference}
+\label{class_eugene_1_1_sound_base}\index{Eugene::SoundBase@{Eugene::SoundBase}}
+Inheritance diagram for Eugene\+::Sound\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.093458cm]{class_eugene_1_1_sound_base}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_sound_base_a2f571f3d94a4f547cc884c8f2cd73dba}{Set\+Volume}} (float volume)=0
+\begin{DoxyCompactList}\small\item\em 全体のボリュームをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_sound_base_aeae67ae8f9d47c5137207eac8b2e3de3}{Set\+Pan}} (std\+::span$<$ float $>$ volumes)=0
+\begin{DoxyCompactList}\small\item\em パンニング用にボリュームをセットする  \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_eugene_1_1_sound_base_a9e5005a042588fcff5c3351209ca2170}{Get\+Volume}} (void) const
+\begin{DoxyCompactList}\small\item\em 現在のボリュームを取得する  \end{DoxyCompactList}\item 
+std\+::uint16\+\_\+t \mbox{\hyperlink{class_eugene_1_1_sound_base_a078f2faf72825ad10cced7dbb7c1b194}{Get\+Out\+Channel}} (void) const
+\begin{DoxyCompactList}\small\item\em 出力チャンネルを取得する  \end{DoxyCompactList}\item 
+std\+::uint16\+\_\+t \mbox{\hyperlink{class_eugene_1_1_sound_base_a824c4263b71361a4216a91e2b9bab39e}{Get\+In\+Channel}} (void) const
+\begin{DoxyCompactList}\small\item\em 入力チャンネルを取得する  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a10d229dd5b4d7e96e176271f1969e918}\label{class_eugene_1_1_sound_base_a10d229dd5b4d7e96e176271f1969e918}} 
+float {\bfseries volume\+\_\+}
+\begin{DoxyCompactList}\small\item\em 現在のボリューム  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a31096926c303fcf852b75308b0927aa0}\label{class_eugene_1_1_sound_base_a31096926c303fcf852b75308b0927aa0}} 
+std\+::uint16\+\_\+t {\bfseries out\+Channel\+\_\+}
+\begin{DoxyCompactList}\small\item\em 出力チャンネル  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_afaf3046965ab7f7e87d635b1821e3c73}\label{class_eugene_1_1_sound_base_afaf3046965ab7f7e87d635b1821e3c73}} 
+std\+::uint16\+\_\+t {\bfseries in\+Channel\+\_\+}
+\begin{DoxyCompactList}\small\item\em 入力チャンネル  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a824c4263b71361a4216a91e2b9bab39e}\label{class_eugene_1_1_sound_base_a824c4263b71361a4216a91e2b9bab39e}} 
+\index{Eugene::SoundBase@{Eugene::SoundBase}!GetInChannel@{GetInChannel}}
+\index{GetInChannel@{GetInChannel}!Eugene::SoundBase@{Eugene::SoundBase}}
+\doxysubsubsection{\texorpdfstring{GetInChannel()}{GetInChannel()}}
+{\footnotesize\ttfamily std\+::uint16\+\_\+t Eugene\+::\+Sound\+Base\+::\+Get\+In\+Channel (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+入力チャンネルを取得する  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a078f2faf72825ad10cced7dbb7c1b194}\label{class_eugene_1_1_sound_base_a078f2faf72825ad10cced7dbb7c1b194}} 
+\index{Eugene::SoundBase@{Eugene::SoundBase}!GetOutChannel@{GetOutChannel}}
+\index{GetOutChannel@{GetOutChannel}!Eugene::SoundBase@{Eugene::SoundBase}}
+\doxysubsubsection{\texorpdfstring{GetOutChannel()}{GetOutChannel()}}
+{\footnotesize\ttfamily std\+::uint16\+\_\+t Eugene\+::\+Sound\+Base\+::\+Get\+Out\+Channel (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+出力チャンネルを取得する  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a9e5005a042588fcff5c3351209ca2170}\label{class_eugene_1_1_sound_base_a9e5005a042588fcff5c3351209ca2170}} 
+\index{Eugene::SoundBase@{Eugene::SoundBase}!GetVolume@{GetVolume}}
+\index{GetVolume@{GetVolume}!Eugene::SoundBase@{Eugene::SoundBase}}
+\doxysubsubsection{\texorpdfstring{GetVolume()}{GetVolume()}}
+{\footnotesize\ttfamily float Eugene\+::\+Sound\+Base\+::\+Get\+Volume (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+現在のボリュームを取得する  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_aeae67ae8f9d47c5137207eac8b2e3de3}\label{class_eugene_1_1_sound_base_aeae67ae8f9d47c5137207eac8b2e3de3}} 
+\index{Eugene::SoundBase@{Eugene::SoundBase}!SetPan@{SetPan}}
+\index{SetPan@{SetPan}!Eugene::SoundBase@{Eugene::SoundBase}}
+\doxysubsubsection{\texorpdfstring{SetPan()}{SetPan()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Sound\+Base\+::\+Set\+Pan (\begin{DoxyParamCaption}\item[{std\+::span$<$ float $>$}]{volumes }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+パンニング用にボリュームをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em volumes} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_sound_base_a2f571f3d94a4f547cc884c8f2cd73dba}\label{class_eugene_1_1_sound_base_a2f571f3d94a4f547cc884c8f2cd73dba}} 
+\index{Eugene::SoundBase@{Eugene::SoundBase}!SetVolume@{SetVolume}}
+\index{SetVolume@{SetVolume}!Eugene::SoundBase@{Eugene::SoundBase}}
+\doxysubsubsection{\texorpdfstring{SetVolume()}{SetVolume()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Sound\+Base\+::\+Set\+Volume (\begin{DoxyParamCaption}\item[{float}]{volume }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+全体のボリュームをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & ボリューム \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Include/\+Sound/Sound\+Base.\+h\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Source/\+Sound/Sound\+Base.\+cpp\end{DoxyCompactItemize}

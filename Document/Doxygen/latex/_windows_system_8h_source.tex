@@ -1,0 +1,129 @@
+\hypertarget{_windows_system_8h_source}{}\doxysection{Windows\+System.\+h}
+\label{_windows_system_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/System/Windows/WindowsSystem.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/System/Windows/WindowsSystem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../../../Include/System/System.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_windows_system}{WindowsSystem}} :}
+\DoxyCodeLine{9         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_1_1_system}{System}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_eugene_1_1_windows_system}{WindowsSystem}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& size, \textcolor{keyword}{const} std::u8string\& title);}
+\DoxyCodeLine{13         \mbox{\hyperlink{class_eugene_1_1_windows_system}{\string~WindowsSystem}}();}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15         \mbox{\hyperlink{class_eugene_1_1_graphics}{Graphics}}* \mbox{\hyperlink{class_eugene_1_1_windows_system_a75b1fda8bde4303517454e2d2887f589}{CreateGraphics}}(\mbox{\hyperlink{class_eugene_1_1_gpu_engine}{GpuEngine}}*\& gpuEngine, std::uint32\_t bufferNum) \textcolor{keyword}{const}\& \textcolor{keyword}{final};}
+\DoxyCodeLine{16     \textcolor{keyword}{private}:}
+\DoxyCodeLine{17         \textcolor{keywordtype}{bool} Update(\textcolor{keywordtype}{void}) \textcolor{keyword}{final};}
+\DoxyCodeLine{18         \textcolor{keywordtype}{void} GetMouse(\mbox{\hyperlink{struct_eugene_1_1_system_1_1_mouse}{Mouse}}\& outMouse) \textcolor{keyword}{const}\& \textcolor{keyword}{final};}
+\DoxyCodeLine{19         \textcolor{keywordtype}{bool} IsHitKey(KeyID keyID) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{20         \textcolor{keywordtype}{bool} GetKeyData(\mbox{\hyperlink{class_eugene_1_1_system_a93ba21d5406030e4f180161b0280d5bd}{KeyDataSpan}}\& keyData) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{21         \textcolor{keywordtype}{bool} SetKeyCodeTable(\mbox{\hyperlink{class_eugene_1_1_system_a5210a7c04b870b98bc56c55b0ab3c5fa}{KeyCodeTable}}\& keyCodeTable) \textcolor{keyword}{final};}
+\DoxyCodeLine{22         \textcolor{keywordtype}{bool} GetGamePad(\mbox{\hyperlink{class_eugene_1_1_game_pad}{GamePad}}\& pad, std::uint32\_t idx) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{23         \textcolor{keywordtype}{bool} IsEnd(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#ifdef USE\_IMGUI}}
+\DoxyCodeLine{25         \textcolor{keywordtype}{void} ImguiNewFrame(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{31         \mbox{\hyperlink{class_eugene_1_1_system_a5210a7c04b870b98bc56c55b0ab3c5fa}{KeyCodeTable}} codeTable\_\{}
+\DoxyCodeLine{32             9,          \textcolor{comment}{// タブ}}
+\DoxyCodeLine{33             240,        \textcolor{comment}{// キャプスロック}}
+\DoxyCodeLine{34             160,        \textcolor{comment}{// 左シフト}}
+\DoxyCodeLine{35             162,        \textcolor{comment}{// 左コントロール}}
+\DoxyCodeLine{36             27,         \textcolor{comment}{// エスケープ}}
+\DoxyCodeLine{37             32,         \textcolor{comment}{// スペース}}
+\DoxyCodeLine{38             164,}
+\DoxyCodeLine{39             165,}
+\DoxyCodeLine{40             8,}
+\DoxyCodeLine{41             13,}
+\DoxyCodeLine{42             161,}
+\DoxyCodeLine{43             163,}
+\DoxyCodeLine{44             38,}
+\DoxyCodeLine{45             40,}
+\DoxyCodeLine{46             37,}
+\DoxyCodeLine{47             39,}
+\DoxyCodeLine{48             112,}
+\DoxyCodeLine{49             113,}
+\DoxyCodeLine{50             114,}
+\DoxyCodeLine{51             115,}
+\DoxyCodeLine{52             116,}
+\DoxyCodeLine{53             117,}
+\DoxyCodeLine{54             118,}
+\DoxyCodeLine{55             119,}
+\DoxyCodeLine{56             120,}
+\DoxyCodeLine{57             121,}
+\DoxyCodeLine{58             122,}
+\DoxyCodeLine{59             123,}
+\DoxyCodeLine{60             144,}
+\DoxyCodeLine{61             96,}
+\DoxyCodeLine{62             97,}
+\DoxyCodeLine{63             98,}
+\DoxyCodeLine{64             99,}
+\DoxyCodeLine{65             100,}
+\DoxyCodeLine{66             101,}
+\DoxyCodeLine{67             102,}
+\DoxyCodeLine{68             103,}
+\DoxyCodeLine{69             104,}
+\DoxyCodeLine{70             105,}
+\DoxyCodeLine{71             106,}
+\DoxyCodeLine{72             107,}
+\DoxyCodeLine{73             109,}
+\DoxyCodeLine{74             110,}
+\DoxyCodeLine{75             111,}
+\DoxyCodeLine{76             48,}
+\DoxyCodeLine{77             49,}
+\DoxyCodeLine{78             50,}
+\DoxyCodeLine{79             51,}
+\DoxyCodeLine{80             52,}
+\DoxyCodeLine{81             53,}
+\DoxyCodeLine{82             54,}
+\DoxyCodeLine{83             55,}
+\DoxyCodeLine{84             56,}
+\DoxyCodeLine{85             57,}
+\DoxyCodeLine{86             189,}
+\DoxyCodeLine{87             222,}
+\DoxyCodeLine{88             220,}
+\DoxyCodeLine{89             192,}
+\DoxyCodeLine{90             219,}
+\DoxyCodeLine{91             187,}
+\DoxyCodeLine{92             186,}
+\DoxyCodeLine{93             221,}
+\DoxyCodeLine{94             188,}
+\DoxyCodeLine{95             190,}
+\DoxyCodeLine{96             191,}
+\DoxyCodeLine{97             226,}
+\DoxyCodeLine{98             \textcolor{charliteral}{'A'},}
+\DoxyCodeLine{99             \textcolor{charliteral}{'B'},}
+\DoxyCodeLine{100             \textcolor{charliteral}{'C'},}
+\DoxyCodeLine{101             \textcolor{charliteral}{'D'},}
+\DoxyCodeLine{102             \textcolor{charliteral}{'E'},}
+\DoxyCodeLine{103             \textcolor{charliteral}{'F'},}
+\DoxyCodeLine{104             \textcolor{charliteral}{'G'},}
+\DoxyCodeLine{105             \textcolor{charliteral}{'H'},}
+\DoxyCodeLine{106             \textcolor{charliteral}{'I'},}
+\DoxyCodeLine{107             \textcolor{charliteral}{'J'},}
+\DoxyCodeLine{108             \textcolor{charliteral}{'K'},}
+\DoxyCodeLine{109             \textcolor{charliteral}{'L'},}
+\DoxyCodeLine{110             \textcolor{charliteral}{'M'},}
+\DoxyCodeLine{111             \textcolor{charliteral}{'N'},}
+\DoxyCodeLine{112             \textcolor{charliteral}{'O'},}
+\DoxyCodeLine{113             \textcolor{charliteral}{'P'},}
+\DoxyCodeLine{114             \textcolor{charliteral}{'Q'},}
+\DoxyCodeLine{115             \textcolor{charliteral}{'R'},}
+\DoxyCodeLine{116             \textcolor{charliteral}{'S'},}
+\DoxyCodeLine{117             \textcolor{charliteral}{'T'},}
+\DoxyCodeLine{118             \textcolor{charliteral}{'U'},}
+\DoxyCodeLine{119             \textcolor{charliteral}{'V'},}
+\DoxyCodeLine{120             \textcolor{charliteral}{'W'},}
+\DoxyCodeLine{121             \textcolor{charliteral}{'X'},}
+\DoxyCodeLine{122             \textcolor{charliteral}{'Y'},}
+\DoxyCodeLine{123             \textcolor{charliteral}{'Z'}}
+\DoxyCodeLine{124         \};}
+\DoxyCodeLine{125     \};}
+\DoxyCodeLine{126 \}}
+
+\end{DoxyCode}

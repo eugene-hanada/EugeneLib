@@ -1,0 +1,27 @@
+\hypertarget{_render_target_views_8h_source}{}\doxysection{Render\+Target\+Views.\+h}
+\label{_render_target_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/RenderTargetViews.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/RenderTargetViews.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}GraphicsCommon.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{class }Graphics;}
+\DoxyCodeLine{8     \textcolor{keyword}{class }ImageResource;}
+\DoxyCodeLine{9     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_render_target_views}{\string~RenderTargetViews}}();}
+\DoxyCodeLine{13         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} Create(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource,std::uint64\_t idx, \textcolor{keyword}{const} Format\& format) = 0;}
+\DoxyCodeLine{14         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}* GetViews(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{15         \textcolor{keyword}{const} std::uint64\_t GetSize(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{16     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{17         \mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}(std::uint64\_t size);}
+\DoxyCodeLine{18         std::uint64\_t size\_;}
+\DoxyCodeLine{19     \};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \}}
+
+\end{DoxyCode}

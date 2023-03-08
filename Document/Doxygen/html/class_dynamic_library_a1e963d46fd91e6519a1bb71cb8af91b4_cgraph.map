@@ -1,0 +1,4 @@
+<map id="DynamicLibrary::GetFunction" name="DynamicLibrary::GetFunction">
+<area shape="rect" id="node1" title="指定された名前の関数のポインタを取得する" alt="" coords="5,5,196,31"/>
+<area shape="rect" id="node2" href="$class_dynamic_library.html#a72252d49b488b9d5e346d6a409a152a5" title="関数名の関数を取得する" alt="" coords="244,5,439,31"/>
+</map>

@@ -1,0 +1,554 @@
+\hypertarget{class_eugene_1_1_command_list}{}\doxysection{Eugene\+::Command\+List Class Reference}
+\label{class_eugene_1_1_command_list}\index{Eugene::CommandList@{Eugene::CommandList}}
+
+
+コマンドリストの処理を行うクラス   
+
+
+
+
+{\ttfamily \#include $<$Command\+List.\+h$>$}
+
+Inheritance diagram for Eugene\+::Command\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_eugene_1_1_command_list}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_command_list_acddfb603938b407f900591cf5bf7844a}\label{class_eugene_1_1_command_list_acddfb603938b407f900591cf5bf7844a}} 
+virtual {\bfseries $\sim$\+Command\+List} ()
+\begin{DoxyCompactList}\small\item\em デストラクタ  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_acc8af820dcefbcaec5c22758ab526140}{Begin}} (void)=0
+\begin{DoxyCompactList}\small\item\em コマンドリストを開始する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_ab7b5b0b3a34d08ea03c3fa37d33f1a86}{End}} (void)=0
+\begin{DoxyCompactList}\small\item\em コマンドリストを終了する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a68767af6972209f555066be85678bb88}{Set\+Graphics\+Pipeline}} (\mbox{\hyperlink{class_eugene_1_1_graphics_pipeline}{Graphics\+Pipeline}} \&gpipeline)=0
+\begin{DoxyCompactList}\small\item\em グラフィックスパイプラインをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_aad091a1d91f11909f894fb8f2b7cd01b}{Set\+Primitive\+Type}} (Primitive\+Type type)=0
+\begin{DoxyCompactList}\small\item\em プリミティブタイプをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a6c144fa56efffa250d79721b8abd5b3e}{Set\+Scissorrect}} (const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}} \&left\+Top, const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}} \&right\+Bottom)=0
+\begin{DoxyCompactList}\small\item\em シザーレクトをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_ad2c74c0044d650d19c67dee0644707de}{Set\+View\+Port}} (const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} \&left\+Top, const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} \&size, float depth\+Min=0.\+0f, float depth\+Max=1.\+0f)=0
+\begin{DoxyCompactList}\small\item\em ビューポートをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a3fec43a8c2153d15cc5aba5678100bb4}{Set\+Vertex\+View}} (\mbox{\hyperlink{class_eugene_1_1_vertex_view}{Vertex\+View}} \&view)=0
+\begin{DoxyCompactList}\small\item\em 頂点ビューのセット  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_ad0970bd064afad7c0b7465f55c28ad8f}{Set\+Index\+View}} (\mbox{\hyperlink{class_eugene_1_1_index_view}{Index\+View}} \&view)=0
+\begin{DoxyCompactList}\small\item\em インデックスビューをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a5b977aa8f31b2e293b463044a0b1ec87}{Set\+Shader\+Resource\+View}} (\mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Shader\+Resource\+Views}} \&views, std\+::uint64\+\_\+t views\+Idx, std\+::uint64\+\_\+t param\+Idx)=0
+\begin{DoxyCompactList}\small\item\em シェーダーリソースをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a1d54cec320be1efd353ed3b596792452}{Set\+Sampler\+View}} (\mbox{\hyperlink{class_eugene_1_1_sampler_views}{Sampler\+Views}} \&views, std\+::uint64\+\_\+t views\+Idx, std\+::uint64\+\_\+t param\+Idx)=0
+\begin{DoxyCompactList}\small\item\em サンプラーをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a1d1f98a8df495fbd0c2ff94c530d9097}{Draw}} (std\+::uint32\+\_\+t vertex\+Count, std\+::uint32\+\_\+t instance\+Count=1)=0
+\begin{DoxyCompactList}\small\item\em 描画する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_ae90288262220c550c8e284625acf2944}{Draw\+Indexed}} (std\+::uint32\+\_\+t index\+Count, std\+::uint32\+\_\+t instance\+Num=1, std\+::uint32\+\_\+t offset=0)=0
+\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a1b7fe8080cec74519ad214e6506a37cf}{Set\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&views, std\+::uint64\+\_\+t idx=0)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a0ca43e3c4eae849765b1768e18d80188}{Set\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&views, std\+::uint64\+\_\+t start\+Idx, std\+::uint64\+\_\+t end\+Idx)=0
+\begin{DoxyCompactList}\small\item\em ビューにある指定の範囲のレンダーターゲットをセットする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_aa94b894b0a83b45bab4e3403fcc0895e}{Set\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&views)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをセットする(Render\+Target\+Viewsにあるものすべてをセットする)  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a9df3f7549aa9d06612769b209bd46414}{Set\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&render\+Target\+Views, \mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{Depth\+Stencil\+Views}} \&depth\+Views, std\+::uint64\+\_\+t rt\+Views\+Idx=0, std\+::uint64\+\_\+t ds\+Views\+Idx=0)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをセットする(深度バッファもセットする)  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_aba593685a822e4a626d2d81102211609}{Clear\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&views, std\+::span$<$ float, 4 $>$ color, std\+::uint64\+\_\+t idx=0)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをクリアする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_acfd2efadeb15d3c5bf343c66d2bf6f4a}{Clear\+Render\+Target}} (\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&views, std\+::span$<$ float, 4 $>$ color)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをクリアする(Render\+Target\+Viewsにあるものすべてクリアする)  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_aaba6f804654061077999f3df5bcd658f}{Transition\+Render\+Target\+Begin}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットの使用を開始できる状態にする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_aa129b214135fbde74a7f40466a91dd7b}{Transition\+Render\+Target\+End}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットの使用を終了の状態にする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a110a63b1776eb9b23e48f41010e5d70e}{Transition\+Shader\+Resource\+Begin}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをシェーダ使用状態にする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a9698403e5c56c3a841246c6adf608c79}{Transition\+Shader\+Resource\+End}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em レンダーターゲットをシェーダー使用状態から終了する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a673e38122084cc3c7bf39ea0093308d4}{Transition\+Depth\+Begin}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em デプスを使用状態にする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a8df835ac66c9d27b84c1c4e668b9ce2c}{Transition\+Depth\+End}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource)=0
+\begin{DoxyCompactList}\small\item\em デプス使用状態から終了する  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_ad7dd0b5cbd4c1d885a2cdc67eac2bd80}{Clear\+Depth}} (\mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{Depth\+Stencil\+Views}} \&views, float clear\+Value=1.\+0f, std\+::uint64\+\_\+t idx=0)=0
+\begin{DoxyCompactList}\small\item\em 深度バッファをクリアする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a213cb8895543c259c161e06c1b1fd17e}{Copy}} (\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&destination, \mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&source)=0
+\begin{DoxyCompactList}\small\item\em リソースをコピーする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a3afb592ff242847240dd7b3cda2dd6ca}{Copy\+Texture}} (\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&destination, \mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&source)=0
+\begin{DoxyCompactList}\small\item\em テクスチャのコピーをする  \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_eugene_1_1_command_list_a13070a58b372991b5ea9def169534949}{Copy\+Texture}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&dest, \mbox{\hyperlink{class_eugene_1_1_buffer_resource}{Buffer\+Resource}} \&src)=0
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a542d4fc0b63e1acbb33bba7041107012}\label{class_eugene_1_1_command_list_a542d4fc0b63e1acbb33bba7041107012}} 
+virtual void $\ast$ {\bfseries Get\+Command\+List} (void) const =0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+コマンドリストの処理を行うクラス  
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_acc8af820dcefbcaec5c22758ab526140}\label{class_eugene_1_1_command_list_acc8af820dcefbcaec5c22758ab526140}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!Begin@{Begin}}
+\index{Begin@{Begin}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{Begin()}{Begin()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+コマンドリストを開始する  
+
+\mbox{\Hypertarget{class_eugene_1_1_command_list_ad7dd0b5cbd4c1d885a2cdc67eac2bd80}\label{class_eugene_1_1_command_list_ad7dd0b5cbd4c1d885a2cdc67eac2bd80}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!ClearDepth@{ClearDepth}}
+\index{ClearDepth@{ClearDepth}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{ClearDepth()}{ClearDepth()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Clear\+Depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{Depth\+Stencil\+Views}} \&}]{views,  }\item[{float}]{clear\+Value = {\ttfamily 1.0f},  }\item[{std\+::uint64\+\_\+t}]{idx = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+深度バッファをクリアする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & デプスステンシルビュー \\
+\hline
+{\em clear\+Value} & クリアする値 \\
+\hline
+{\em idx} & デプスステンシルビューのインデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_acfd2efadeb15d3c5bf343c66d2bf6f4a}\label{class_eugene_1_1_command_list_acfd2efadeb15d3c5bf343c66d2bf6f4a}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!ClearRenderTarget@{ClearRenderTarget}}
+\index{ClearRenderTarget@{ClearRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{ClearRenderTarget()}{ClearRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Clear\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{views,  }\item[{std\+::span$<$ float, 4 $>$}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをクリアする(Render\+Target\+Viewsにあるものすべてクリアする)  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & レンダーターゲットビュー \\
+\hline
+{\em color} & クリアするカラー \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_aba593685a822e4a626d2d81102211609}\label{class_eugene_1_1_command_list_aba593685a822e4a626d2d81102211609}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!ClearRenderTarget@{ClearRenderTarget}}
+\index{ClearRenderTarget@{ClearRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{ClearRenderTarget()}{ClearRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Clear\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{views,  }\item[{std\+::span$<$ float, 4 $>$}]{color,  }\item[{std\+::uint64\+\_\+t}]{idx = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをクリアする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & レンダーターゲットビュー \\
+\hline
+{\em color} & クリアするカラー \\
+\hline
+{\em idx} & レンダーターゲットビューのインデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a213cb8895543c259c161e06c1b1fd17e}\label{class_eugene_1_1_command_list_a213cb8895543c259c161e06c1b1fd17e}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!Copy@{Copy}}
+\index{Copy@{Copy}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{Copy()}{Copy()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&}]{destination,  }\item[{\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+リソースをコピーする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em destination} & コピー先 \\
+\hline
+{\em source} & コピー元 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a3afb592ff242847240dd7b3cda2dd6ca}\label{class_eugene_1_1_command_list_a3afb592ff242847240dd7b3cda2dd6ca}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!CopyTexture@{CopyTexture}}
+\index{CopyTexture@{CopyTexture}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{CopyTexture()}{CopyTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Copy\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&}]{destination,  }\item[{\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{Gpu\+Resource}} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+テクスチャのコピーをする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em destination} & コピー先 \\
+\hline
+{\em source} & コピー元 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a13070a58b372991b5ea9def169534949}\label{class_eugene_1_1_command_list_a13070a58b372991b5ea9def169534949}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!CopyTexture@{CopyTexture}}
+\index{CopyTexture@{CopyTexture}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{CopyTexture()}{CopyTexture()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Copy\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{dest,  }\item[{\mbox{\hyperlink{class_eugene_1_1_buffer_resource}{Buffer\+Resource}} \&}]{src }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & \\
+\hline
+{\em src} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a1d1f98a8df495fbd0c2ff94c530d9097}\label{class_eugene_1_1_command_list_a1d1f98a8df495fbd0c2ff94c530d9097}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!Draw@{Draw}}
+\index{Draw@{Draw}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Draw (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{vertex\+Count,  }\item[{std\+::uint32\+\_\+t}]{instance\+Count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+描画する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+Count} & 頂点数 \\
+\hline
+{\em instance\+Count} & インスタンス数 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_ae90288262220c550c8e284625acf2944}\label{class_eugene_1_1_command_list_ae90288262220c550c8e284625acf2944}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!DrawIndexed@{DrawIndexed}}
+\index{DrawIndexed@{DrawIndexed}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{DrawIndexed()}{DrawIndexed()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Draw\+Indexed (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{index\+Count,  }\item[{std\+::uint32\+\_\+t}]{instance\+Num = {\ttfamily 1},  }\item[{std\+::uint32\+\_\+t}]{offset = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em index\+Count} & \\
+\hline
+{\em instance\+Num} & \\
+\hline
+{\em offset} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_ab7b5b0b3a34d08ea03c3fa37d33f1a86}\label{class_eugene_1_1_command_list_ab7b5b0b3a34d08ea03c3fa37d33f1a86}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!End@{End}}
+\index{End@{End}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{End()}{End()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+End (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+コマンドリストを終了する  
+
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a68767af6972209f555066be85678bb88}\label{class_eugene_1_1_command_list_a68767af6972209f555066be85678bb88}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetGraphicsPipeline@{SetGraphicsPipeline}}
+\index{SetGraphicsPipeline@{SetGraphicsPipeline}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetGraphicsPipeline()}{SetGraphicsPipeline()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Graphics\+Pipeline (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_graphics_pipeline}{Graphics\+Pipeline}} \&}]{gpipeline }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+グラフィックスパイプラインをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpipeline} & グラフィックスパイプライン \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_ad0970bd064afad7c0b7465f55c28ad8f}\label{class_eugene_1_1_command_list_ad0970bd064afad7c0b7465f55c28ad8f}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetIndexView@{SetIndexView}}
+\index{SetIndexView@{SetIndexView}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetIndexView()}{SetIndexView()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Index\+View (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_index_view}{Index\+View}} \&}]{view }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+インデックスビューをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em view} & インデックスビュー \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_aad091a1d91f11909f894fb8f2b7cd01b}\label{class_eugene_1_1_command_list_aad091a1d91f11909f894fb8f2b7cd01b}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetPrimitiveType@{SetPrimitiveType}}
+\index{SetPrimitiveType@{SetPrimitiveType}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetPrimitiveType()}{SetPrimitiveType()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Primitive\+Type (\begin{DoxyParamCaption}\item[{Primitive\+Type}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+プリミティブタイプをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & プリミティブタイプ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a9df3f7549aa9d06612769b209bd46414}\label{class_eugene_1_1_command_list_a9df3f7549aa9d06612769b209bd46414}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetRenderTarget@{SetRenderTarget}}
+\index{SetRenderTarget@{SetRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetRenderTarget()}{SetRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{render\+Target\+Views,  }\item[{\mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{Depth\+Stencil\+Views}} \&}]{depth\+Views,  }\item[{std\+::uint64\+\_\+t}]{rt\+Views\+Idx = {\ttfamily 0},  }\item[{std\+::uint64\+\_\+t}]{ds\+Views\+Idx = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをセットする(深度バッファもセットする)  
+
+
+\begin{DoxyParams}{Parameters}
+{\em render\+Target\+Views} & レンダーターゲットビュー \\
+\hline
+{\em depth\+Views} & デプスステンシルビュー \\
+\hline
+{\em rt\+Views\+Idx} & レンダーターゲットビューのインデックス \\
+\hline
+{\em ds\+Views\+Idx} & デプスステンシルビュー のインデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_aa94b894b0a83b45bab4e3403fcc0895e}\label{class_eugene_1_1_command_list_aa94b894b0a83b45bab4e3403fcc0895e}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetRenderTarget@{SetRenderTarget}}
+\index{SetRenderTarget@{SetRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetRenderTarget()}{SetRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{views }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをセットする(Render\+Target\+Viewsにあるものすべてをセットする)  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & レンダーターゲットビュー \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a1b7fe8080cec74519ad214e6506a37cf}\label{class_eugene_1_1_command_list_a1b7fe8080cec74519ad214e6506a37cf}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetRenderTarget@{SetRenderTarget}}
+\index{SetRenderTarget@{SetRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetRenderTarget()}{SetRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{views,  }\item[{std\+::uint64\+\_\+t}]{idx = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & レンダーターゲットのビュー \\
+\hline
+{\em idx} & ビューのインデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a0ca43e3c4eae849765b1768e18d80188}\label{class_eugene_1_1_command_list_a0ca43e3c4eae849765b1768e18d80188}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetRenderTarget@{SetRenderTarget}}
+\index{SetRenderTarget@{SetRenderTarget}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetRenderTarget()}{SetRenderTarget()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Render\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_render_target_views}{Render\+Target\+Views}} \&}]{views,  }\item[{std\+::uint64\+\_\+t}]{start\+Idx,  }\item[{std\+::uint64\+\_\+t}]{end\+Idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+ビューにある指定の範囲のレンダーターゲットをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & レンダーターゲットのビュー \\
+\hline
+{\em start\+Idx} & 開始インデックス \\
+\hline
+{\em end\+Idx} & 終了インデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a1d54cec320be1efd353ed3b596792452}\label{class_eugene_1_1_command_list_a1d54cec320be1efd353ed3b596792452}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetSamplerView@{SetSamplerView}}
+\index{SetSamplerView@{SetSamplerView}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetSamplerView()}{SetSamplerView()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Sampler\+View (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_sampler_views}{Sampler\+Views}} \&}]{views,  }\item[{std\+::uint64\+\_\+t}]{views\+Idx,  }\item[{std\+::uint64\+\_\+t}]{param\+Idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+サンプラーをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & \\
+\hline
+{\em views\+Idx} & \\
+\hline
+{\em param\+Idx} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a6c144fa56efffa250d79721b8abd5b3e}\label{class_eugene_1_1_command_list_a6c144fa56efffa250d79721b8abd5b3e}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetScissorrect@{SetScissorrect}}
+\index{SetScissorrect@{SetScissorrect}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetScissorrect()}{SetScissorrect()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Scissorrect (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}} \&}]{left\+Top,  }\item[{const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}} \&}]{right\+Bottom }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+シザーレクトをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+Top} & 左上 \\
+\hline
+{\em right\+Bottom} & 右上 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a5b977aa8f31b2e293b463044a0b1ec87}\label{class_eugene_1_1_command_list_a5b977aa8f31b2e293b463044a0b1ec87}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetShaderResourceView@{SetShaderResourceView}}
+\index{SetShaderResourceView@{SetShaderResourceView}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetShaderResourceView()}{SetShaderResourceView()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Shader\+Resource\+View (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Shader\+Resource\+Views}} \&}]{views,  }\item[{std\+::uint64\+\_\+t}]{views\+Idx,  }\item[{std\+::uint64\+\_\+t}]{param\+Idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+シェーダーリソースをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em views} & シェーダーリソースのビュー \\
+\hline
+{\em views\+Idx} & ビューのインデックス \\
+\hline
+{\em param\+Idx} & セットするインデックス \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a3fec43a8c2153d15cc5aba5678100bb4}\label{class_eugene_1_1_command_list_a3fec43a8c2153d15cc5aba5678100bb4}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetVertexView@{SetVertexView}}
+\index{SetVertexView@{SetVertexView}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetVertexView()}{SetVertexView()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+Vertex\+View (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_vertex_view}{Vertex\+View}} \&}]{view }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+頂点ビューのセット  
+
+
+\begin{DoxyParams}{Parameters}
+{\em view} & 頂点ビュー \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_ad2c74c0044d650d19c67dee0644707de}\label{class_eugene_1_1_command_list_ad2c74c0044d650d19c67dee0644707de}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!SetViewPort@{SetViewPort}}
+\index{SetViewPort@{SetViewPort}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{SetViewPort()}{SetViewPort()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Set\+View\+Port (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} \&}]{left\+Top,  }\item[{const \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} \&}]{size,  }\item[{float}]{depth\+Min = {\ttfamily 0.0f},  }\item[{float}]{depth\+Max = {\ttfamily 1.0f} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+ビューポートをセットする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+Top} & 左上 \\
+\hline
+{\em size} & サイズ \\
+\hline
+{\em depth\+Min} & 深度の最小値(デフォルト0.0f) \\
+\hline
+{\em depth\+Max} & 深度の最大値(デフォルト1.0f) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a673e38122084cc3c7bf39ea0093308d4}\label{class_eugene_1_1_command_list_a673e38122084cc3c7bf39ea0093308d4}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionDepthBegin@{TransitionDepthBegin}}
+\index{TransitionDepthBegin@{TransitionDepthBegin}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionDepthBegin()}{TransitionDepthBegin()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Depth\+Begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+デプスを使用状態にする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a8df835ac66c9d27b84c1c4e668b9ce2c}\label{class_eugene_1_1_command_list_a8df835ac66c9d27b84c1c4e668b9ce2c}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionDepthEnd@{TransitionDepthEnd}}
+\index{TransitionDepthEnd@{TransitionDepthEnd}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionDepthEnd()}{TransitionDepthEnd()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Depth\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+デプス使用状態から終了する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_aaba6f804654061077999f3df5bcd658f}\label{class_eugene_1_1_command_list_aaba6f804654061077999f3df5bcd658f}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionRenderTargetBegin@{TransitionRenderTargetBegin}}
+\index{TransitionRenderTargetBegin@{TransitionRenderTargetBegin}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionRenderTargetBegin()}{TransitionRenderTargetBegin()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Render\+Target\+Begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットの使用を開始できる状態にする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & レンダーターゲット \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_aa129b214135fbde74a7f40466a91dd7b}\label{class_eugene_1_1_command_list_aa129b214135fbde74a7f40466a91dd7b}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionRenderTargetEnd@{TransitionRenderTargetEnd}}
+\index{TransitionRenderTargetEnd@{TransitionRenderTargetEnd}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionRenderTargetEnd()}{TransitionRenderTargetEnd()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Render\+Target\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットの使用を終了の状態にする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & レンダーターゲット \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a110a63b1776eb9b23e48f41010e5d70e}\label{class_eugene_1_1_command_list_a110a63b1776eb9b23e48f41010e5d70e}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionShaderResourceBegin@{TransitionShaderResourceBegin}}
+\index{TransitionShaderResourceBegin@{TransitionShaderResourceBegin}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionShaderResourceBegin()}{TransitionShaderResourceBegin()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Shader\+Resource\+Begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをシェーダ使用状態にする  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_eugene_1_1_command_list_a9698403e5c56c3a841246c6adf608c79}\label{class_eugene_1_1_command_list_a9698403e5c56c3a841246c6adf608c79}} 
+\index{Eugene::CommandList@{Eugene::CommandList}!TransitionShaderResourceEnd@{TransitionShaderResourceEnd}}
+\index{TransitionShaderResourceEnd@{TransitionShaderResourceEnd}!Eugene::CommandList@{Eugene::CommandList}}
+\doxysubsubsection{\texorpdfstring{TransitionShaderResourceEnd()}{TransitionShaderResourceEnd()}}
+{\footnotesize\ttfamily virtual void Eugene\+::\+Command\+List\+::\+Transition\+Shader\+Resource\+End (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+レンダーターゲットをシェーダー使用状態から終了する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em resource} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Include/\+Graphics/Command\+List.\+h\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Source/\+Graphics/Command\+List.\+cpp\end{DoxyCompactItemize}

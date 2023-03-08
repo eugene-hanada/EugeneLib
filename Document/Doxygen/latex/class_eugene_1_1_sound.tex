@@ -1,0 +1,126 @@
+\hypertarget{class_eugene_1_1_sound}{}\doxysection{Eugene\+::Sound Class Reference}
+\label{class_eugene_1_1_sound}\index{Eugene::Sound@{Eugene::Sound}}
+
+
+サウンド用のクラス   
+
+
+
+
+{\ttfamily \#include $<$Sound.\+h$>$}
+
+Inheritance diagram for Eugene\+::Sound\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_eugene_1_1_sound}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{class_eugene_1_1_sound_speaker}{Sound\+Speaker}} $\ast$ \mbox{\hyperlink{class_eugene_1_1_sound_ab4b42af93aa0ed7937f5628f6261e3a0}{Create\+Sound\+Speaker}} (const \mbox{\hyperlink{class_eugene_1_1_wave}{Wave}} \&wave, const float max\+Pitch\+Rate=2.\+0f) const =0
+\begin{DoxyCompactList}\small\item\em サウンド再生するクラスを作成する  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_1_1_sound_stream_speaker}{Sound\+Stream\+Speaker}} $\ast$ \mbox{\hyperlink{class_eugene_1_1_sound_adf5613cb366bd2aeb5c8ada5abeb6b1b}{Create\+Sound\+Stream\+Speaker}} (const std\+::filesystem\+::path \&path) const =0
+\begin{DoxyCompactList}\small\item\em ストリーミング再生するクラスを作成する  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_1_1_sound_control}{Sound\+Control}} $\ast$ \mbox{\hyperlink{class_eugene_1_1_sound_ad79895191e86308cacf5255742d26484}{Create\+Sound\+Control}} (std\+::uint32\+\_\+t sample, std\+::uint16\+\_\+t input\+Channel, std\+::uint16\+\_\+t out\+Channel) const =0
+\begin{DoxyCompactList}\small\item\em サウンドをコントロールするクラスを作成する  \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_eugene_1_1_sound3_d_control}{Sound3\+DControl}} $\ast$ \mbox{\hyperlink{class_eugene_1_1_sound_a7b7307674f539a87a8ade9e437c85f1e}{Create\+Sound3\+DControl}} (std\+::uint32\+\_\+t sample, std\+::uint16\+\_\+t input\+Channel, std\+::uint16\+\_\+t out\+Channel) const =0
+\begin{DoxyCompactList}\small\item\em サウンドを3\+Dで出力しコントロールするクラスを作成する  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_sound_a4ef458a478b626698a2ad5d762dd8dc4}\label{class_eugene_1_1_sound_a4ef458a478b626698a2ad5d762dd8dc4}} 
+std\+::uint32\+\_\+t {\bfseries channel\+Mask\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+サウンド用のクラス  
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_eugene_1_1_sound_a7b7307674f539a87a8ade9e437c85f1e}\label{class_eugene_1_1_sound_a7b7307674f539a87a8ade9e437c85f1e}} 
+\index{Eugene::Sound@{Eugene::Sound}!CreateSound3DControl@{CreateSound3DControl}}
+\index{CreateSound3DControl@{CreateSound3DControl}!Eugene::Sound@{Eugene::Sound}}
+\doxysubsubsection{\texorpdfstring{CreateSound3DControl()}{CreateSound3DControl()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_1_1_sound3_d_control}{Sound3\+DControl}} $\ast$ Eugene\+::\+Sound\+::\+Create\+Sound3\+DControl (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{sample,  }\item[{std\+::uint16\+\_\+t}]{input\+Channel,  }\item[{std\+::uint16\+\_\+t}]{out\+Channel }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+サウンドを3\+Dで出力しコントロールするクラスを作成する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & \\
+\hline
+{\em input\+Channel} & \\
+\hline
+{\em out\+Channel} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_ad79895191e86308cacf5255742d26484}\label{class_eugene_1_1_sound_ad79895191e86308cacf5255742d26484}} 
+\index{Eugene::Sound@{Eugene::Sound}!CreateSoundControl@{CreateSoundControl}}
+\index{CreateSoundControl@{CreateSoundControl}!Eugene::Sound@{Eugene::Sound}}
+\doxysubsubsection{\texorpdfstring{CreateSoundControl()}{CreateSoundControl()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_1_1_sound_control}{Sound\+Control}} $\ast$ Eugene\+::\+Sound\+::\+Create\+Sound\+Control (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t}]{sample,  }\item[{std\+::uint16\+\_\+t}]{input\+Channel,  }\item[{std\+::uint16\+\_\+t}]{out\+Channel }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+サウンドをコントロールするクラスを作成する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & \\
+\hline
+{\em input\+Channel} & \\
+\hline
+{\em out\+Channel} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_ab4b42af93aa0ed7937f5628f6261e3a0}\label{class_eugene_1_1_sound_ab4b42af93aa0ed7937f5628f6261e3a0}} 
+\index{Eugene::Sound@{Eugene::Sound}!CreateSoundSpeaker@{CreateSoundSpeaker}}
+\index{CreateSoundSpeaker@{CreateSoundSpeaker}!Eugene::Sound@{Eugene::Sound}}
+\doxysubsubsection{\texorpdfstring{CreateSoundSpeaker()}{CreateSoundSpeaker()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_1_1_sound_speaker}{Sound\+Speaker}} $\ast$ Eugene\+::\+Sound\+::\+Create\+Sound\+Speaker (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_eugene_1_1_wave}{Wave}} \&}]{wave,  }\item[{const float}]{max\+Pitch\+Rate = {\ttfamily 2.0f} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+サウンド再生するクラスを作成する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em wave} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_eugene_1_1_sound_adf5613cb366bd2aeb5c8ada5abeb6b1b}\label{class_eugene_1_1_sound_adf5613cb366bd2aeb5c8ada5abeb6b1b}} 
+\index{Eugene::Sound@{Eugene::Sound}!CreateSoundStreamSpeaker@{CreateSoundStreamSpeaker}}
+\index{CreateSoundStreamSpeaker@{CreateSoundStreamSpeaker}!Eugene::Sound@{Eugene::Sound}}
+\doxysubsubsection{\texorpdfstring{CreateSoundStreamSpeaker()}{CreateSoundStreamSpeaker()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_eugene_1_1_sound_stream_speaker}{Sound\+Stream\+Speaker}} $\ast$ Eugene\+::\+Sound\+::\+Create\+Sound\+Stream\+Speaker (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{path }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+ストリーミング再生するクラスを作成する  
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Include/\+Sound/Sound.\+h\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Source/\+Sound/Sound.\+cpp\end{DoxyCompactItemize}

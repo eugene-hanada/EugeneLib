@@ -1,0 +1,72 @@
+\hypertarget{_graphics_common_8h_source}{}\doxysection{Graphics\+Common.\+h}
+\label{_graphics_common_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/GraphicsCommon.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/GraphicsCommon.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{5 \{}
+\DoxyCodeLine{9     \textcolor{keyword}{enum class} Format}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11         NON = 0,}
+\DoxyCodeLine{12         R32G32B32A32\_TYPELESS = 1,}
+\DoxyCodeLine{13         R32G32B32A32\_FLOAT = 2,}
+\DoxyCodeLine{14         R32G32B32A32\_UINT = 3,}
+\DoxyCodeLine{15         R32G32B32A32\_SINT = 4,}
+\DoxyCodeLine{16         R32G32B32\_TYPELESS = 5,}
+\DoxyCodeLine{17         R32G32B32\_FLOAT = 6,}
+\DoxyCodeLine{18         R32G32B32\_UINT = 7,}
+\DoxyCodeLine{19         R32G32B32\_SINT = 8,}
+\DoxyCodeLine{20         R16G16B16A16\_TYPELESS = 9,}
+\DoxyCodeLine{21         R16G16B16A16\_FLOAT = 10,}
+\DoxyCodeLine{22         R16G16B16A16\_UNORM = 11,}
+\DoxyCodeLine{23         R16G16B16A16\_UINT = 12,}
+\DoxyCodeLine{24         R16G16B16A16\_SNORM = 13,}
+\DoxyCodeLine{25         R16G16B16A16\_SINT = 14,}
+\DoxyCodeLine{26         R32G32\_TYPELESS = 15,}
+\DoxyCodeLine{27         R32G32\_FLOAT = 16,}
+\DoxyCodeLine{28         R32G32\_UINT = 17,}
+\DoxyCodeLine{29         R32G32\_SINT = 18,}
+\DoxyCodeLine{30         R10G10B10A2\_TYPELESS = 23,}
+\DoxyCodeLine{31         R10G10B10A2\_UNORM = 24,}
+\DoxyCodeLine{32         R10G10B10A2\_UINT = 25,}
+\DoxyCodeLine{33         R11G11B10\_FLOAT = 26,}
+\DoxyCodeLine{34         R8G8B8A8\_TYPELESS = 27,}
+\DoxyCodeLine{35         R8G8B8A8\_UNORM = 28,}
+\DoxyCodeLine{36         R8G8B8A8\_UNORM\_SRGB = 29,}
+\DoxyCodeLine{37         R8G8B8A8\_UINT = 30,}
+\DoxyCodeLine{38         R8G8B8A8\_SNORM = 31,}
+\DoxyCodeLine{39         R8G8B8A8\_SINT = 32,}
+\DoxyCodeLine{40         R16G16\_TYPELESS = 33,}
+\DoxyCodeLine{41         R16G16\_FLOAT = 34,}
+\DoxyCodeLine{42         R16G16\_UNORM = 35,}
+\DoxyCodeLine{43         R16G16\_UINT = 36,}
+\DoxyCodeLine{44         R16G16\_SNORM = 37,}
+\DoxyCodeLine{45         R16G16\_SINT = 38,}
+\DoxyCodeLine{46         R32\_TYPELESS = 39,}
+\DoxyCodeLine{47         D32\_FLOAT = 40,}
+\DoxyCodeLine{48         R32\_FLOAT = 41,}
+\DoxyCodeLine{49         R32\_UINT = 42,}
+\DoxyCodeLine{50         R32\_SINT = 43,}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{56     \textcolor{keyword}{struct }\mbox{\hyperlink{struct_eugene_1_1_texture_info}{TextureInfo}}}
+\DoxyCodeLine{57     \{}
+\DoxyCodeLine{58         std::uint64\_t width;            \textcolor{comment}{// 横幅}}
+\DoxyCodeLine{59         std::uint64\_t height;           \textcolor{comment}{// 縦幅}}
+\DoxyCodeLine{60         Format format;          \textcolor{comment}{// フォーマット}}
+\DoxyCodeLine{61         std::uint64\_t arraySize;        \textcolor{comment}{// 配列サイズ}}
+\DoxyCodeLine{62         std::uint16\_t mipLevels;            \textcolor{comment}{// ミップマップレベル}}
+\DoxyCodeLine{63     \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{68     \textcolor{keyword}{enum class} PrimitiveType}
+\DoxyCodeLine{69     \{}
+\DoxyCodeLine{70         Point = 1,}
+\DoxyCodeLine{71         Line = 2,}
+\DoxyCodeLine{72         Triangle = 4,}
+\DoxyCodeLine{73         TriangleStrip = 5}
+\DoxyCodeLine{74     \};}
+\DoxyCodeLine{75 \}}
+
+\end{DoxyCode}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['j_0',['J',['../namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3aff44570aca8241914870afbc310cdb85',1,'EugeneLib']]]
+  ['outchannel_5f_0',['outChannel_',['../class_eugene_1_1_sound_base.html#a31096926c303fcf852b75308b0927aa0',1,'Eugene::SoundBase']]]
 ];

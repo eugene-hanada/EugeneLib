@@ -1,0 +1,104 @@
+\hypertarget{_command_list_8h_source}{}\doxysection{Command\+List.\+h}
+\label{_command_list_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/CommandList.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Graphics/CommandList.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <span>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}GraphicsCommon.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../Math/Vector2.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#ifdef USE\_IMGUI}}
+\DoxyCodeLine{8 \textcolor{keyword}{struct }ImDrawData;}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{12 \{}
+\DoxyCodeLine{13     \textcolor{keyword}{class }Graphics;}
+\DoxyCodeLine{14     \textcolor{keyword}{class }RenderTargetViews;}
+\DoxyCodeLine{15     \textcolor{keyword}{class }DepthStencilViews;}
+\DoxyCodeLine{16     \textcolor{keyword}{class }VertexView;}
+\DoxyCodeLine{17     \textcolor{keyword}{class }IndexView;}
+\DoxyCodeLine{18     }
+\DoxyCodeLine{19     \textcolor{keyword}{class }GpuResource;}
+\DoxyCodeLine{20     \textcolor{keyword}{class }BufferResource;}
+\DoxyCodeLine{21     \textcolor{keyword}{class }ImageResource;}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{class }GraphicsPipeline;}
+\DoxyCodeLine{24     \textcolor{keyword}{class }ShaderResourceViews;}
+\DoxyCodeLine{25     \textcolor{keyword}{class }SamplerViews;}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{30     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_command_list}{CommandList}}}
+\DoxyCodeLine{31     \{}
+\DoxyCodeLine{32     \textcolor{keyword}{public}:}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{37         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_command_list_acddfb603938b407f900591cf5bf7844a}{\string~CommandList}}();}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{43         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_acc8af820dcefbcaec5c22758ab526140}{Begin}}(\textcolor{keywordtype}{void}) = 0;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{49         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_ab7b5b0b3a34d08ea03c3fa37d33f1a86}{End}}(\textcolor{keywordtype}{void}) = 0;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{55         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a68767af6972209f555066be85678bb88}{SetGraphicsPipeline}}(\mbox{\hyperlink{class_eugene_1_1_graphics_pipeline}{GraphicsPipeline}}\& gpipeline) = 0;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{61         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_aad091a1d91f11909f894fb8f2b7cd01b}{SetPrimitiveType}}(PrimitiveType type) = 0;}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{68         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a6c144fa56efffa250d79721b8abd5b3e}{SetScissorrect}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}}\& leftTop, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2I}}\& rightBottom) = 0;}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{77         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_ad2c74c0044d650d19c67dee0644707de}{SetViewPort}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& leftTop, \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& size, \textcolor{keywordtype}{float} depthMin = 0.0f, \textcolor{keywordtype}{float} depthMax = 1.0f) = 0;}
+\DoxyCodeLine{78         }
+\DoxyCodeLine{83         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a3fec43a8c2153d15cc5aba5678100bb4}{SetVertexView}}(\mbox{\hyperlink{class_eugene_1_1_vertex_view}{VertexView}}\& view) = 0;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{89         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_ad0970bd064afad7c0b7465f55c28ad8f}{SetIndexView}}(\mbox{\hyperlink{class_eugene_1_1_index_view}{IndexView}}\& view) = 0;}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{97         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a5b977aa8f31b2e293b463044a0b1ec87}{SetShaderResourceView}}(\mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{ShaderResourceViews}}\& views, std::uint64\_t viewsIdx, std::uint64\_t paramIdx) = 0;}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{105         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a1d54cec320be1efd353ed3b596792452}{SetSamplerView}}(\mbox{\hyperlink{class_eugene_1_1_sampler_views}{SamplerViews}}\& views, std::uint64\_t viewsIdx, std::uint64\_t paramIdx) = 0;}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{112         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a1d1f98a8df495fbd0c2ff94c530d9097}{Draw}}(std::uint32\_t vertexCount, std::uint32\_t instanceCount = 1) = 0;}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{120         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_ae90288262220c550c8e284625acf2944}{DrawIndexed}}(std::uint32\_t indexCount, std::uint32\_t instanceNum = 1, std::uint32\_t offset = 0) = 0;}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{127         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a1b7fe8080cec74519ad214e6506a37cf}{SetRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& views, std::uint64\_t idx = 0) = 0;}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{135         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a0ca43e3c4eae849765b1768e18d80188}{SetRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& views, std::uint64\_t startIdx, std::uint64\_t endIdx) = 0;}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{141         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_aa94b894b0a83b45bab4e3403fcc0895e}{SetRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& views) = 0;}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{150         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a9df3f7549aa9d06612769b209bd46414}{SetRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& renderTargetViews, \mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{DepthStencilViews}}\& depthViews, std::uint64\_t rtViewsIdx = 0, std::uint64\_t dsViewsIdx = 0) = 0;}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{158         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_aba593685a822e4a626d2d81102211609}{ClearRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& views, std::span<float,4> color, std::uint64\_t idx = 0) = 0;}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{165         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_acfd2efadeb15d3c5bf343c66d2bf6f4a}{ClearRenderTarget}}(\mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}\& views, std::span<float, 4> color) = 0;}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{171         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_aaba6f804654061077999f3df5bcd658f}{TransitionRenderTargetBegin}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{177         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_aa129b214135fbde74a7f40466a91dd7b}{TransitionRenderTargetEnd}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{183         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a110a63b1776eb9b23e48f41010e5d70e}{TransitionShaderResourceBegin}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{189         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a9698403e5c56c3a841246c6adf608c79}{TransitionShaderResourceEnd}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{195         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a673e38122084cc3c7bf39ea0093308d4}{TransitionDepthBegin}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{201         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a8df835ac66c9d27b84c1c4e668b9ce2c}{TransitionDepthEnd}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource) = 0;}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{209         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_ad7dd0b5cbd4c1d885a2cdc67eac2bd80}{ClearDepth}}(\mbox{\hyperlink{class_eugene_1_1_depth_stencil_views}{DepthStencilViews}}\& views, \textcolor{keywordtype}{float} clearValue = 1.0f, std::uint64\_t idx = 0) = 0;}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{217         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a213cb8895543c259c161e06c1b1fd17e}{Copy}}(\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{GpuResource}}\& destination, \mbox{\hyperlink{class_eugene_1_1_gpu_resource}{GpuResource}}\& source) = 0;}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220 }
+\DoxyCodeLine{226         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a3afb592ff242847240dd7b3cda2dd6ca}{CopyTexture}}(\mbox{\hyperlink{class_eugene_1_1_gpu_resource}{GpuResource}}\& destination, \mbox{\hyperlink{class_eugene_1_1_gpu_resource}{GpuResource}}\& source) = 0;}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{233         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_command_list_a13070a58b372991b5ea9def169534949}{CopyTexture}}(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& dest, \mbox{\hyperlink{class_eugene_1_1_buffer_resource}{BufferResource}}\& src) = 0;}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}* GetCommandList(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237 \textcolor{preprocessor}{\#ifdef USE\_IMGUI}}
+\DoxyCodeLine{238         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} SetImguiCommand(ImDrawData* data, \mbox{\hyperlink{class_eugene_1_1_graphics}{Graphics}}\& graphics) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{239 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{240     \};}
+\DoxyCodeLine{241 \}}
+
+\end{DoxyCode}

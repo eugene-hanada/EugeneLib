@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EugeneLib: Eugene::System クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">EugeneLib<span id="projectnumber">&#160;version</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','検索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">読み取り中…</div>
+<div class="SRStatus" id="Searching">検索中…</div>
+<div class="SRStatus" id="NoMatches">一致する文字列を見つけられません</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Eugene</b></li><li class="navelem"><a class="el" href="class_eugene_1_1_system.html">System</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#pub-types">公開型</a> &#124;
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="#pro-methods">限定公開メンバ関数</a> &#124;
+<a href="#pro-attribs">限定公開変数類</a> &#124;
+<a href="class_eugene_1_1_system-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle"><div class="title">Eugene::System クラス<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>OS等の処理をするクラス   
+ <a href="class_eugene_1_1_system.html#details">[詳解]</a></p>
+
+<p><code>#include &lt;<a class="el" href="_system_8h_source.html">System.h</a>&gt;</code></p>
+<div class="dynheader">
+Eugene::System の継承関係図</div>
+<div class="dyncontent">
+<div class="center"><img src="class_eugene_1_1_system__inherit__graph.png" border="0" usemap="#a_eugene_1_1_system_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_eugene_1_1_system_inherit__map" id="a_eugene_1_1_system_inherit__map">
+<area shape="rect" title="OS等の処理をするクラス" alt="" coords="32,5,151,31"/>
+<area shape="rect" href="class_eugene_1_1_windows_system.html" title=" " alt="" coords="5,79,177,104"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
+<div class="dynheader">
+Eugene::System 連携図</div>
+<div class="dyncontent">
+<div class="center"><img src="class_eugene_1_1_system__coll__graph.png" border="0" usemap="#a_eugene_1_1_system_coll__map" alt="Collaboration graph"/></div>
+<map name="a_eugene_1_1_system_coll__map" id="a_eugene_1_1_system_coll__map">
+<area shape="rect" title="OS等の処理をするクラス" alt="" coords="18,211,137,236"/>
+<area shape="rect" href="class_eugene_1_1_vector2_tmp.html" title=" " alt="" coords="5,108,149,148"/>
+<area shape="rect" title=" " alt="" coords="58,5,97,31"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">凡例</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_eugene_1_1_system_1_1_mouse.html">Mouse</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの構造体   <a href="struct_eugene_1_1_system_1_1_mouse.html#details">[詳解]</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+公開型</h2></td></tr>
+<tr class="memitem:a93ba21d5406030e4f180161b0280d5bd"><td class="memItemLeft" align="right" valign="top"><a id="a93ba21d5406030e4f180161b0280d5bd" name="a93ba21d5406030e4f180161b0280d5bd"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>KeyDataSpan</b> = std::span&lt; bool, KEYID_MAX &gt;</td></tr>
+<tr class="memdesc:a93ba21d5406030e4f180161b0280d5bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーボードの情報()  <br /></td></tr>
+<tr class="separator:a93ba21d5406030e4f180161b0280d5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5210a7c04b870b98bc56c55b0ab3c5fa"><td class="memItemLeft" align="right" valign="top"><a id="a5210a7c04b870b98bc56c55b0ab3c5fa" name="a5210a7c04b870b98bc56c55b0ab3c5fa"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>KeyCodeTable</b> = std::array&lt; int, KEYID_MAX &gt;</td></tr>
+<tr class="memdesc:a5210a7c04b870b98bc56c55b0ab3c5fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーコードのテーブル  <br /></td></tr>
+<tr class="separator:a5210a7c04b870b98bc56c55b0ab3c5fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aa15c8e7bd379f56faac2df2e42ff93c9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#aa15c8e7bd379f56faac2df2e42ff93c9">Update</a> (void)=0</td></tr>
+<tr class="memdesc:aa15c8e7bd379f56faac2df2e42ff93c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)   <a href="class_eugene_1_1_system.html#aa15c8e7bd379f56faac2df2e42ff93c9">[詳解]</a><br /></td></tr>
+<tr class="separator:aa15c8e7bd379f56faac2df2e42ff93c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a358eeb1c8ac0be784ae986d12c737cb8"><td class="memItemLeft" align="right" valign="top"><a id="a358eeb1c8ac0be784ae986d12c737cb8" name="a358eeb1c8ac0be784ae986d12c737cb8"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~System</b> ()</td></tr>
+<tr class="memdesc:a358eeb1c8ac0be784ae986d12c737cb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">デストラクタ  <br /></td></tr>
+<tr class="separator:a358eeb1c8ac0be784ae986d12c737cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38bef3904b79380136bd506271e842cc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_eugene_1_1_vector2_tmp.html">Vector2</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a38bef3904b79380136bd506271e842cc">GetWindowSize</a> (void) const &amp;</td></tr>
+<tr class="memdesc:a38bef3904b79380136bd506271e842cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウサイズを取得する   <a href="class_eugene_1_1_system.html#a38bef3904b79380136bd506271e842cc">[詳解]</a><br /></td></tr>
+<tr class="separator:a38bef3904b79380136bd506271e842cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f97c8c26de24995e6d93b5042d7602"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_eugene_1_1_graphics.html">Graphics</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#ac5f97c8c26de24995e6d93b5042d7602">CreateGraphics</a> (<a class="el" href="class_eugene_1_1_gpu_engine.html">GpuEngine</a> *&amp;gpuEngine, std::uint32_t bufferNum=2) const &amp;=0</td></tr>
+<tr class="memdesc:ac5f97c8c26de24995e6d93b5042d7602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphicsをを生成する   <a href="class_eugene_1_1_system.html#ac5f97c8c26de24995e6d93b5042d7602">[詳解]</a><br /></td></tr>
+<tr class="separator:ac5f97c8c26de24995e6d93b5042d7602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a887a243a0a19517201fdb445d557bd90"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a887a243a0a19517201fdb445d557bd90">GetMouse</a> (<a class="el" href="struct_eugene_1_1_system_1_1_mouse.html">Mouse</a> &amp;outMouse) const &amp;</td></tr>
+<tr class="memdesc:a887a243a0a19517201fdb445d557bd90"><td class="mdescLeft">&#160;</td><td class="mdescRight">マウスの情報を取得する   <a href="class_eugene_1_1_system.html#a887a243a0a19517201fdb445d557bd90">[詳解]</a><br /></td></tr>
+<tr class="separator:a887a243a0a19517201fdb445d557bd90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ce857a5b7b24374eac6713b0a504e8a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a9ce857a5b7b24374eac6713b0a504e8a">IsHitKey</a> (KeyID keyID) const</td></tr>
+<tr class="memdesc:a9ce857a5b7b24374eac6713b0a504e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーが押されているか   <a href="class_eugene_1_1_system.html#a9ce857a5b7b24374eac6713b0a504e8a">[詳解]</a><br /></td></tr>
+<tr class="separator:a9ce857a5b7b24374eac6713b0a504e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c5fab9182317724edbd72ac0fdefd6a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a2c5fab9182317724edbd72ac0fdefd6a">GetKeyData</a> (<a class="el" href="class_eugene_1_1_system.html#a93ba21d5406030e4f180161b0280d5bd">KeyDataSpan</a> &amp;keyData) const</td></tr>
+<tr class="memdesc:a2c5fab9182317724edbd72ac0fdefd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">キー入力情報を取得する   <a href="class_eugene_1_1_system.html#a2c5fab9182317724edbd72ac0fdefd6a">[詳解]</a><br /></td></tr>
+<tr class="separator:a2c5fab9182317724edbd72ac0fdefd6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26fabc9fd0100e8341616d581c9b4d39"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a26fabc9fd0100e8341616d581c9b4d39">SetKeyCodeTable</a> (<a class="el" href="class_eugene_1_1_system.html#a5210a7c04b870b98bc56c55b0ab3c5fa">KeyCodeTable</a> &amp;keyCodeTable)</td></tr>
+<tr class="memdesc:a26fabc9fd0100e8341616d581c9b4d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">キーコードのデータテーブル   <a href="class_eugene_1_1_system.html#a26fabc9fd0100e8341616d581c9b4d39">[詳解]</a><br /></td></tr>
+<tr class="separator:a26fabc9fd0100e8341616d581c9b4d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9601f5812b2b0f089553a70cf0a36b6b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a9601f5812b2b0f089553a70cf0a36b6b">GetGamePad</a> (<a class="el" href="class_eugene_1_1_game_pad.html">GamePad</a> &amp;pad, std::uint32_t idx) const</td></tr>
+<tr class="memdesc:a9601f5812b2b0f089553a70cf0a36b6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ゲームパッドを取得する   <a href="class_eugene_1_1_system.html#a9601f5812b2b0f089553a70cf0a36b6b">[詳解]</a><br /></td></tr>
+<tr class="separator:a9601f5812b2b0f089553a70cf0a36b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20ba767dea056d24ec7f3a4666164062"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a20ba767dea056d24ec7f3a4666164062">IsEnd</a> (void) const =0</td></tr>
+<tr class="separator:a20ba767dea056d24ec7f3a4666164062"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+限定公開メンバ関数</h2></td></tr>
+<tr class="memitem:a09c3b52fbb6fa8b0233a70791d12a21c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_eugene_1_1_system.html#a09c3b52fbb6fa8b0233a70791d12a21c">System</a> (const <a class="el" href="class_eugene_1_1_vector2_tmp.html">Vector2</a> &amp;size, const std::u8string &amp;title)</td></tr>
+<tr class="memdesc:a09c3b52fbb6fa8b0233a70791d12a21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">コンストラクタ   <a href="class_eugene_1_1_system.html#a09c3b52fbb6fa8b0233a70791d12a21c">[詳解]</a><br /></td></tr>
+<tr class="separator:a09c3b52fbb6fa8b0233a70791d12a21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+限定公開変数類</h2></td></tr>
+<tr class="memitem:ad83eed4267ac0cb02a31975995865130"><td class="memItemLeft" align="right" valign="top"><a id="ad83eed4267ac0cb02a31975995865130" name="ad83eed4267ac0cb02a31975995865130"></a>
+<a class="el" href="class_eugene_1_1_vector2_tmp.html">Vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>windowSize_</b></td></tr>
+<tr class="memdesc:ad83eed4267ac0cb02a31975995865130"><td class="mdescLeft">&#160;</td><td class="mdescRight">ウィンドウサイズ  <br /></td></tr>
+<tr class="separator:ad83eed4267ac0cb02a31975995865130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a7aa84331a5d2c75aec4c2c23d1fa2f"><td class="memItemLeft" align="right" valign="top"><a id="a5a7aa84331a5d2c75aec4c2c23d1fa2f" name="a5a7aa84331a5d2c75aec4c2c23d1fa2f"></a>
+std::u8string&#160;</td><td class="memItemRight" valign="bottom"><b>title_</b></td></tr>
+<tr class="memdesc:a5a7aa84331a5d2c75aec4c2c23d1fa2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">タイトル  <br /></td></tr>
+<tr class="separator:a5a7aa84331a5d2c75aec4c2c23d1fa2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p >OS等の処理をするクラス  </p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a id="a09c3b52fbb6fa8b0233a70791d12a21c" name="a09c3b52fbb6fa8b0233a70791d12a21c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09c3b52fbb6fa8b0233a70791d12a21c">&#9670;&#160;</a></span>System()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eugene::System::System </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_eugene_1_1_vector2_tmp.html">Vector2</a> &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::u8string &amp;&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>コンストラクタ  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>ウィンドウサイズ </td></tr>
+    <tr><td class="paramname">title</td><td>ウィンドウタイトル </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a id="ac5f97c8c26de24995e6d93b5042d7602" name="ac5f97c8c26de24995e6d93b5042d7602"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5f97c8c26de24995e6d93b5042d7602">&#9670;&#160;</a></span>CreateGraphics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_eugene_1_1_graphics.html">Graphics</a> * Eugene::System::CreateGraphics </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_eugene_1_1_gpu_engine.html">GpuEngine</a> *&amp;&#160;</td>
+          <td class="paramname"><em>gpuEngine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>bufferNum</em> = <code>2</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphicsをを生成する  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gpuEngine</td><td>GpuEngineのポインタの参照 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>Graphicsのポインタ </dd></dl>
+
+<p><a class="el" href="class_eugene_1_1_windows_system.html#a75b1fda8bde4303517454e2d2887f589">Eugene::WindowsSystem</a>で実装されています。</p>
+
+</div>
+</div>
+<a id="a9601f5812b2b0f089553a70cf0a36b6b" name="a9601f5812b2b0f089553a70cf0a36b6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9601f5812b2b0f089553a70cf0a36b6b">&#9670;&#160;</a></span>GetGamePad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Eugene::System::GetGamePad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_eugene_1_1_game_pad.html">GamePad</a> &amp;&#160;</td>
+          <td class="paramname"><em>pad</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>idx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ゲームパッドを取得する  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pad</td><td>ゲームパッド </td></tr>
+    <tr><td class="paramname">idx</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a2c5fab9182317724edbd72ac0fdefd6a" name="a2c5fab9182317724edbd72ac0fdefd6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c5fab9182317724edbd72ac0fdefd6a">&#9670;&#160;</a></span>GetKeyData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Eugene::System::GetKeyData </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_eugene_1_1_system.html#a93ba21d5406030e4f180161b0280d5bd">KeyDataSpan</a> &amp;&#160;</td>
+          <td class="paramname"><em>keyData</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キー入力情報を取得する  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">keySpan</td><td>キー情報 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>キー情報がある場合はtrue、ない場合はfalse </dd></dl>
+
+</div>
+</div>
+<a id="a887a243a0a19517201fdb445d557bd90" name="a887a243a0a19517201fdb445d557bd90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a887a243a0a19517201fdb445d557bd90">&#9670;&#160;</a></span>GetMouse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Eugene::System::GetMouse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_eugene_1_1_system_1_1_mouse.html">Mouse</a> &amp;&#160;</td>
+          <td class="paramname"><em>outMouse</em></td><td>)</td>
+          <td> const &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>マウスの情報を取得する  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outMouse</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a38bef3904b79380136bd506271e842cc" name="a38bef3904b79380136bd506271e842cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38bef3904b79380136bd506271e842cc">&#9670;&#160;</a></span>GetWindowSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_eugene_1_1_vector2_tmp.html">Eugene::Vector2</a> &amp; Eugene::System::GetWindowSize </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const &amp;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ウィンドウサイズを取得する  </p>
+<dl class="section return"><dt>戻り値</dt><dd>ウィンドウサイズ </dd></dl>
+
+</div>
+</div>
+<a id="a20ba767dea056d24ec7f3a4666164062" name="a20ba767dea056d24ec7f3a4666164062"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20ba767dea056d24ec7f3a4666164062">&#9670;&#160;</a></span>IsEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Eugene::System::IsEnd </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p></p>
+<dl class="section return"><dt>戻り値</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a9ce857a5b7b24374eac6713b0a504e8a" name="a9ce857a5b7b24374eac6713b0a504e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ce857a5b7b24374eac6713b0a504e8a">&#9670;&#160;</a></span>IsHitKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Eugene::System::IsHitKey </td>
+          <td>(</td>
+          <td class="paramtype">KeyID&#160;</td>
+          <td class="paramname"><em>keyID</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キーが押されているか  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">keyID</td><td>押されているキーのID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>押されているときtrue、押されていないときfalse </dd></dl>
+
+</div>
+</div>
+<a id="a26fabc9fd0100e8341616d581c9b4d39" name="a26fabc9fd0100e8341616d581c9b4d39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26fabc9fd0100e8341616d581c9b4d39">&#9670;&#160;</a></span>SetKeyCodeTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Eugene::System::SetKeyCodeTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_eugene_1_1_system.html#a5210a7c04b870b98bc56c55b0ab3c5fa">KeyCodeTable</a> &amp;&#160;</td>
+          <td class="paramname"><em>keyCodeTable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>キーコードのデータテーブル  </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">keyCodeTable</td><td>セットするキーコード </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功時true、失敗時false </dd></dl>
+
+</div>
+</div>
+<a id="aa15c8e7bd379f56faac2df2e42ff93c9" name="aa15c8e7bd379f56faac2df2e42ff93c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa15c8e7bd379f56faac2df2e42ff93c9">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Eugene::System::Update </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)  </p>
+<dl class="section return"><dt>戻り値</dt><dd>継続すべき時true、終了すべき時false </dd></dl>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/<a class="el" href="_system_8h_source.html">System.h</a></li>
+<li>C:/Users/eugen/Desktop/Programming/EugeneLib/Source/System/System.cpp</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築:&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
+</body>
+</html>

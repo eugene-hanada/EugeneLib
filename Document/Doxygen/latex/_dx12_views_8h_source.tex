@@ -1,0 +1,25 @@
+\hypertarget{_dx12_views_8h_source}{}\doxysection{Dx12\+Views.\+h}
+\label{_dx12_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12Views.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12Views.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <wrl.h>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <d3d12.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{struct }ID3D12Device;}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_dx12_views}{Dx12Views}}}
+\DoxyCodeLine{11     \{}
+\DoxyCodeLine{12     \textcolor{keyword}{public}:}
+\DoxyCodeLine{13         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_dx12_views}{\string~Dx12Views}}();}
+\DoxyCodeLine{14     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{15         \mbox{\hyperlink{class_eugene_1_1_dx12_views}{Dx12Views}}(ID3D12Device* device, std::uint64\_t size, \textcolor{keywordtype}{bool} isShaderVisible, D3D12\_DESCRIPTOR\_HEAP\_TYPE type);}
+\DoxyCodeLine{16         Microsoft::WRL::ComPtr< ID3D12DescriptorHeap> descriptorHeap\_;}
+\DoxyCodeLine{17     \textcolor{keyword}{private}:}
+\DoxyCodeLine{18     \};}
+\DoxyCodeLine{19 \}}
+
+\end{DoxyCode}

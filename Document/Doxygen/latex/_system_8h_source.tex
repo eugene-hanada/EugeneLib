@@ -1,0 +1,75 @@
+\hypertarget{_system_8h_source}{}\doxysection{System.\+h}
+\label{_system_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/System.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/System.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string\_view>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <span>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../Math/Vector2.h"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}KeyID.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}GamePad.h"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }Graphics;}
+\DoxyCodeLine{13     \textcolor{keyword}{class }GpuEngine;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{18     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_system}{System}}}
+\DoxyCodeLine{19     \{}
+\DoxyCodeLine{20     \textcolor{keyword}{public}:}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{25         \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_1_1_system_a93ba21d5406030e4f180161b0280d5bd}{KeyDataSpan}} = std::span<bool, KEYID\_MAX>;}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{30         \textcolor{keyword}{using }\mbox{\hyperlink{class_eugene_1_1_system_a5210a7c04b870b98bc56c55b0ab3c5fa}{KeyCodeTable}} = std::array<int, KEYID\_MAX>;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{35         \textcolor{keyword}{struct }\mbox{\hyperlink{struct_eugene_1_1_system_1_1_mouse}{Mouse}}}
+\DoxyCodeLine{36         \{}
+\DoxyCodeLine{37             \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} pos;}
+\DoxyCodeLine{38             \textcolor{keywordtype}{bool} left = \textcolor{keyword}{false};}
+\DoxyCodeLine{39             \textcolor{keywordtype}{bool} right = \textcolor{keyword}{false};}
+\DoxyCodeLine{40             \textcolor{keywordtype}{float} wheel = 0.0f;}
+\DoxyCodeLine{41         \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{50         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_aa15c8e7bd379f56faac2df2e42ff93c9}{Update}}(\textcolor{keywordtype}{void}) = 0;}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{55         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_system_a358eeb1c8ac0be784ae986d12c737cb8}{\string~System}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{62         \textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& \mbox{\hyperlink{class_eugene_1_1_system_a38bef3904b79380136bd506271e842cc}{GetWindowSize}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{69         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_graphics}{Graphics}}* \mbox{\hyperlink{class_eugene_1_1_system_ac5f97c8c26de24995e6d93b5042d7602}{CreateGraphics}}(\mbox{\hyperlink{class_eugene_1_1_gpu_engine}{GpuEngine}}*\& gpuEngine, std::uint32\_t bufferNum = 2) const\& = 0;}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{76         virtual \textcolor{keywordtype}{void} \mbox{\hyperlink{class_eugene_1_1_system_a887a243a0a19517201fdb445d557bd90}{GetMouse}}(\mbox{\hyperlink{struct_eugene_1_1_system_1_1_mouse}{Mouse}}\& outMouse) const\&;}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{83         virtual \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_a9ce857a5b7b24374eac6713b0a504e8a}{IsHitKey}}(KeyID keyID) const;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{90         virtual \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_a2c5fab9182317724edbd72ac0fdefd6a}{GetKeyData}}(\mbox{\hyperlink{class_eugene_1_1_system_a93ba21d5406030e4f180161b0280d5bd}{KeyDataSpan}}\& keyData) const;}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{97         virtual \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_a26fabc9fd0100e8341616d581c9b4d39}{SetKeyCodeTable}}(\mbox{\hyperlink{class_eugene_1_1_system_a5210a7c04b870b98bc56c55b0ab3c5fa}{KeyCodeTable}}\& keyCodeTable);}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{105         virtual \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_a9601f5812b2b0f089553a70cf0a36b6b}{GetGamePad}}(\mbox{\hyperlink{class_eugene_1_1_game_pad}{GamePad}}\& pad, std::uint32\_t idx) const;}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{112         virtual \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_eugene_1_1_system_a20ba767dea056d24ec7f3a4666164062}{IsEnd}}(\textcolor{keywordtype}{void}) const = 0;}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#ifdef USE\_IMGUI}}
+\DoxyCodeLine{114         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} ImguiNewFrame(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{116     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{123         \mbox{\hyperlink{class_eugene_1_1_system}{System}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& size, \textcolor{keyword}{const} std::u8string\& title);}
+\DoxyCodeLine{124         }
+\DoxyCodeLine{128         \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} \mbox{\hyperlink{class_eugene_1_1_system_ad83eed4267ac0cb02a31975995865130}{windowSize\_}};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{133         std::u8string \mbox{\hyperlink{class_eugene_1_1_system_a5a7aa84331a5d2c75aec4c2c23d1fa2f}{title\_}};}
+\DoxyCodeLine{134     \textcolor{keyword}{private}:}
+\DoxyCodeLine{135         \mbox{\hyperlink{class_eugene_1_1_system}{System}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_system}{System}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{136         \mbox{\hyperlink{class_eugene_1_1_system}{System}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_system}{System}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \};}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{146     \mbox{\hyperlink{class_eugene_1_1_system}{System}}* CreateSystem(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}}\& size, \textcolor{keyword}{const} std::u8string\& title);}
+\DoxyCodeLine{147 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,22 @@
+\hypertarget{_dll_8h_source}{}\doxysection{Dll.\+h}
+\label{_dll_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/System/Windows/Dll.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/System/Windows/Dll.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../../Include/System/DynamicLibrary.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Windows.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{class_dll}{Dll}} :}
+\DoxyCodeLine{6     \textcolor{keyword}{public} \mbox{\hyperlink{class_dynamic_library}{DynamicLibrary}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 \textcolor{keyword}{public}:}
+\DoxyCodeLine{9     \mbox{\hyperlink{class_dll}{Dll}}(\textcolor{keyword}{const} std::filesystem::path\& path);}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_dll}{\string~Dll}}();}
+\DoxyCodeLine{11 \textcolor{keyword}{private}:}
+\DoxyCodeLine{12     \textcolor{keywordtype}{void}* FindFunction(\textcolor{keyword}{const} std::string\& functionName) \textcolor{keyword}{const};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{17     HMODULE handle\_;}
+\DoxyCodeLine{18 \};}
+\DoxyCodeLine{19 }
+
+\end{DoxyCode}

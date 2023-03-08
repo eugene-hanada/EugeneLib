@@ -1,0 +1,119 @@
+\hypertarget{_debug_8h_source}{}\doxysection{Debug.\+h}
+\label{_debug_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Common/Debug.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Common/Debug.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <concepts>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <filesystem>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <format>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <semaphore>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}../Math/Vector2.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../Math/Vector3.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#ifdef \_DEBUG}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,\_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 }
+\DoxyCodeLine{17 \textcolor{keyword}{template}<Eugene::ValueC T>}
+\DoxyCodeLine{18 \textcolor{keyword}{class }std::formatter<Eugene::Vector2Tmp<T>> :}
+\DoxyCodeLine{19     \textcolor{keyword}{public} std::formatter<const char*>}
+\DoxyCodeLine{20 \{}
+\DoxyCodeLine{21 \textcolor{keyword}{public}:}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{30     \textcolor{keyword}{template}<\textcolor{keyword}{class} Out>}
+\DoxyCodeLine{31     \textcolor{keyword}{auto} format(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Eugene::Vector2Tmp<T>}}\& vec, std::basic\_format\_context<Out, char>\& ctx)}
+\DoxyCodeLine{32     \{}
+\DoxyCodeLine{33         \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_floating\_point<T>::value)}
+\DoxyCodeLine{34         \{}
+\DoxyCodeLine{35             \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}\_{\ucr}\string^{\ucr}̎{\ucr}}}
+\DoxyCodeLine{36             \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:f\}y=\{1:f\}"{}}, vec.x, vec.y);}
+\DoxyCodeLine{37         \}}
+\DoxyCodeLine{38         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_integral<T>::value)}
+\DoxyCodeLine{39         \{}
+\DoxyCodeLine{40             \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}{\ucr}\string^{\ucr}̎{\ucr}}}
+\DoxyCodeLine{41             \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:d\}y=\{1:d\}"{}}, vec.x, vec.y);}
+\DoxyCodeLine{42         \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}ȊO}}
+\DoxyCodeLine{45         \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:\}y=\{1:\}"{}}, vec.x, vec.y);}
+\DoxyCodeLine{46     \}}
+\DoxyCodeLine{47 \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{53 \textcolor{keyword}{template}<Eugene::ValueC T>}
+\DoxyCodeLine{54 \textcolor{keyword}{class }std::formatter<Eugene::Vector3Tmp<T>> :}
+\DoxyCodeLine{55     \textcolor{keyword}{public} std::formatter<const char*>}
+\DoxyCodeLine{56 \{}
+\DoxyCodeLine{57 \textcolor{keyword}{public}:}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{66     \textcolor{keyword}{template}<\textcolor{keyword}{class} Out>}
+\DoxyCodeLine{67     \textcolor{keyword}{auto} format(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_vector3_tmp}{Eugene::Vector3Tmp<T>}}\& vec, std::basic\_format\_context<Out, char>\& ctx)}
+\DoxyCodeLine{68     \{}
+\DoxyCodeLine{69         \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_floating\_point<T>::value)}
+\DoxyCodeLine{70         \{}
+\DoxyCodeLine{71             \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}{\ucr}\_{\ucr}\string^{\ucr}̎{\ucr}}}
+\DoxyCodeLine{72             \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:f\}y=\{1:f\}z=\{2:f\}"{}}, vec.x , vec.y, vec.z);}
+\DoxyCodeLine{73         \}}
+\DoxyCodeLine{74         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr} (std::is\_integral<T>::value)}
+\DoxyCodeLine{75         \{}
+\DoxyCodeLine{76             \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}{\ucr}\string^{\ucr}̎{\ucr}}}
+\DoxyCodeLine{77             \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:d\}y=\{1:d\}z=\{2:d\}"{}}, vec.x, vec.y, vec.z);}
+\DoxyCodeLine{78         \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80         \textcolor{comment}{// {\ucr}{\ucr}{\ucr}{\ucr}ȊO}}
+\DoxyCodeLine{81         \textcolor{keywordflow}{return} std::format\_to(ctx.out(), \textcolor{stringliteral}{"{}x=\{0:\}y=\{1:\}z=\{2:\}"{}}, vec.x, vec.y, vec.z);}
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83 \};}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{86 \{}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{keyword}{class }Debug}
+\DoxyCodeLine{89     \{}
+\DoxyCodeLine{90     \textcolor{keyword}{public}:}
+\DoxyCodeLine{91         \textcolor{keyword}{static} Debug\& GetInstance(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{100         \textcolor{keyword}{template}<\textcolor{keyword}{class}... Args>}
+\DoxyCodeLine{101         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{void} Log(std::format\_string<Args...> fmt, \textcolor{keyword}{const} Args ...args)}
+\DoxyCodeLine{102         \{}
+\DoxyCodeLine{103             Log(std::vformat(fmt.get(), std::make\_format\_args(args...)));}
+\DoxyCodeLine{104         \}}
+\DoxyCodeLine{105         \textcolor{comment}{/*template<class... Args>}}
+\DoxyCodeLine{106 \textcolor{comment}{        constexpr void Log(const std::string\& fmt, const Args ...args)}}
+\DoxyCodeLine{107 \textcolor{comment}{        \{}}
+\DoxyCodeLine{108 \textcolor{comment}{            Log(std::format(fmt, args...));}}
+\DoxyCodeLine{109 \textcolor{comment}{        \}*/}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{115         \textcolor{keywordtype}{void} Log(\textcolor{keyword}{const} std::string\& str);}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keyword}{private}:}
+\DoxyCodeLine{118         Debug();}
+\DoxyCodeLine{119         \string~Debug();}
+\DoxyCodeLine{120         Debug(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{121         \textcolor{keywordtype}{void} operator=(\textcolor{keyword}{const} Debug\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{126         std::binary\_semaphore binarySemphore\_;}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{131         std::vector<char> buff;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133         std::ostringstream oss\_;}
+\DoxyCodeLine{134     \};}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     }
+\DoxyCodeLine{142 \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 \textcolor{preprocessor}{\#define DebugLog(...) }}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{150 }
+
+\end{DoxyCode}

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['colorrgb_0',['ColorRGB',['../namespace_eugene_lib.html#a6c300659e2bcb376d0b08ffbb8ce98c3',1,'EugeneLib']]],
-  ['colorrgba_1',['ColorRGBA',['../namespace_eugene_lib.html#a129d4fa1b1b6052493d535b0037706ca',1,'EugeneLib']]],
-  ['cxmmatrix_2',['CXMMATRIX',['../namespace_direct_x.html#a24b723c15b0bdf834bbf1e0be0be31c7',1,'DirectX']]],
-  ['cxmvector_3',['CXMVECTOR',['../namespace_direct_x.html#ac989e15e7f688c588692e01f7650388b',1,'DirectX']]]
+  ['keycodetable_0',['KeyCodeTable',['../class_eugene_1_1_system.html#a5210a7c04b870b98bc56c55b0ab3c5fa',1,'Eugene::System']]],
+  ['keydataspan_1',['KeyDataSpan',['../class_eugene_1_1_system.html#a93ba21d5406030e4f180161b0280d5bd',1,'Eugene::System']]]
 ];

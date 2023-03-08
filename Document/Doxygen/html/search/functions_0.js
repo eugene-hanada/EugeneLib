@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5fsuccess_5f_0',['_Success_',['../namespace_direct_x.html#a1ca9c4cfa299e931e98162a2fd9089e0',1,'DirectX']]]
+  ['begin_0',['Begin',['../class_eugene_1_1_command_list.html#acc8af820dcefbcaec5c22758ab526140',1,'Eugene::CommandList']]]
 ];

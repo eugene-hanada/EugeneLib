@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Sound/SoundStreamSpeaker.h"
 #include <filesystem>
 #include <thread>
@@ -46,32 +46,32 @@ namespace Eugene
 		void Worker(void);
 
 		/// <summary>
-		/// ƒ\[ƒXƒ{ƒCƒX
+		/// ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹
 		/// </summary>
 		IXAudio2SourceVoice* source_;
 
 		/// <summary>
-		/// ƒR[ƒ‹ƒoƒbƒN—pƒIƒuƒWƒFƒNƒg
+		/// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		/// </summary>
 		std::unique_ptr<CollBack> collback_;
 		
 		/// <summary>
-		/// ƒXƒgƒŠ[ƒ~ƒ“ƒO‚Åg—p‚·‚éƒXƒŒƒbƒh
+		/// ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ã§ä½¿ç”¨ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰
 		/// </summary>
 		std::thread streamThread_;
 
 		/// <summary>
-		/// Àsƒtƒ‰ƒO
+		/// å®Ÿè¡Œãƒ•ãƒ©ã‚°
 		/// </summary>
 		std::atomic_bool isRun_;
 
 		/// <summary>
-		/// Ä¶ƒtƒ‰ƒO
+		/// å†ç”Ÿãƒ•ãƒ©ã‚°
 		/// </summary>
 		std::atomic_bool isPlay_;
 
 		/// <summary>
-		/// ƒZƒ}ƒtƒH
+		/// ã‚»ãƒãƒ•ã‚©
 		/// </summary>
 		std::binary_semaphore semaphore_{0};
 
@@ -81,37 +81,37 @@ namespace Eugene
 		std::streampos starPos_;
 
 		/// <summary>
-		/// ƒf[ƒ^ƒTƒCƒY
+		/// ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint32_t dataSize_;
 
 		/// <summary>
-		/// Ä¶‚µ‚½ƒTƒCƒY
+		/// å†ç”Ÿã—ãŸã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint32_t nowSize_;
 
 		/// <summary>
-		/// ƒoƒbƒtƒ@[
+		/// ãƒãƒƒãƒ•ã‚¡ãƒ¼
 		/// </summary>
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
 
 		/// <summary>
-		/// ƒoƒbƒtƒ@[—pƒf[ƒ^
+		/// ãƒãƒƒãƒ•ã‚¡ãƒ¼ç”¨ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		std::vector<std::uint8_t> bufferData_;
 
 		/// <summary>
-		/// ƒXƒgƒŠ[ƒ~ƒ“ƒO‚Å“Ç‚İ‚ñ‚¾ƒf[ƒ^
+		/// ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ã§èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		std::vector<std::uint8_t> streamData_;
 
 		/// <summary>
-		/// ƒXƒgƒŠ[ƒ~ƒ“ƒO‚Å“Ç‚İ‚ñ‚¾ƒf[ƒ^ƒTƒCƒY
+		/// ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ã§èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint32_t streamSize_;
 
 		/// <summary>
-		/// 1•b“–‚½‚è‚ÌƒoƒCƒg”
+		/// 1ç§’å½“ãŸã‚Šã®ãƒã‚¤ãƒˆæ•°
 		/// </summary>
 		std::uint32_t bytesPerSec;
 

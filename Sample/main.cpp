@@ -225,6 +225,7 @@ void InitSound(void)
 	sound3DCtrl.reset(sound->CreateSound3DControl(wave->GetFmt().sample, wave->GetFmt().channel, 2));
 
 	streamSpeaker.reset(sound->CreateSoundStreamSpeaker("./exp.wav"));
+	streamSpeaker->Play();
 }
 
 void InitRenderTarget(void)

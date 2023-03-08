@@ -1,4 +1,4 @@
-#include "Xa2SoundStreamSpeaker.h"
+ï»¿#include "Xa2SoundStreamSpeaker.h"
 #include "../../../Include/Sound/SoundCommon.h"
 #include "../../../Include/Sound/Wave.h"
 
@@ -17,7 +17,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 	int id = 0;
 
-	// fmtƒ`ƒƒƒ“ƒN‚ğŒ©‚Â‚¯‚é
+	// fmtãƒãƒ£ãƒ³ã‚¯ã‚’è¦‹ã¤ã‘ã‚‹
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
@@ -44,7 +44,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 		file_.seekg(now);
 	}
 	
-	// ƒf[ƒ^ƒ`ƒƒƒ“ƒN‚ğŒ©‚Â‚¯‚é
+	// ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯ã‚’è¦‹ã¤ã‘ã‚‹
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
@@ -55,30 +55,43 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 
 	}
 
-	// ƒf[ƒ^‚ÌƒTƒCƒY‚ğ“Ç‚İæ‚é
+	// ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã‚’èª­ã¿å–ã‚‹
 	file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
 
-	// ƒ\[ƒXƒ{ƒCƒX‚Ìì¬
+	// ã‚½ãƒ¼ã‚¹ãƒœã‚¤ã‚¹ã®ä½œæˆ
 	device->CreateSourceVoice(&source_, &format.Format, 0, 2.0f, collback_.get());
 	bytesPerSec = format.Format.nAvgBytesPerSec;
 	
-	nowSize_ = 0u;
-	bufferData_.resize(std::min(bytesPerSec, dataSize_));
-	streamData_.resize(std::min(bytesPerSec, dataSize_));
 	
-	// ƒf[ƒ^“Ç‚İ‚İ
-	file_.read(reinterpret_cast<char*>(bufferData_.data()), std::min(bytesPerSec, dataSize_));
+	bufferData_.resize(bytesPerSec);
+	streamData_.resize(bytesPerSec);
+	
+	// èª­ã¿è¾¼ã‚€ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚º
+	auto size = std::min(bytesPerSec, dataSize_);
 
-	// ƒoƒbƒtƒ@[‚ÉƒZƒbƒg‚·‚é
+	// ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
+	file_.read(reinterpret_cast<char*>(bufferData_.data()), size);
+
+	// ãƒãƒƒãƒ•ã‚¡ãƒ¼ã«ã‚»ãƒƒãƒˆã™ã‚‹
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
-	buffer_->AudioBytes = std::min(bytesPerSec, dataSize_);
+	buffer_->AudioBytes = size;
 	buffer_->pAudioData = bufferData_.data();
 	buffer_->LoopCount = 0;
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
+	nowSize_ = size;
 	source_->SubmitSourceBuffer(buffer_.get());
-
 	
+	streamSize_ = 0u;
+	if ((dataSize_ - nowSize_) > 0u)
+	{
+		// ãƒ‡ãƒ¼ã‚¿ãŒã¾ã ã‚ã‚‹å ´åˆ
 
+		// 1ç§’åˆ†ã‚‚ã—ãã¯æ®‹ã‚Šã®ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹
+		streamSize_ = std::min(bytesPerSec,(dataSize_ - nowSize_));
+
+		// èª­ã¿è¾¼ã‚€
+		file_.read(reinterpret_cast<char*>(bufferData_.data()), streamSize_);
+	}
 	streamThread_ = std::thread{ &Xa2SoundStreamSpeaker::Worker,this };
 }
 
@@ -129,32 +142,32 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 	{
 		source_->GetState(&state);
 
-		// ƒXƒe[ƒg‚ğƒ`ƒFƒbƒN
+		// ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ãƒã‚§ãƒƒã‚¯
 		if (state.BuffersQueued <= 0 && isPlay_.load())
 		{
-			// ƒoƒbƒtƒ@[‚ÌÄ¶‚ªI—¹‚©‚ÂÄ¶‚·‚×‚«
+			// ãƒãƒƒãƒ•ã‚¡ãƒ¼ã®å†ç”ŸãŒçµ‚äº†ã‹ã¤å†ç”Ÿã™ã¹ãæ™‚
 
 			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
 			if (nextSize <= 0u)
 			{
-				// Ä¶‚·‚×‚«ƒTƒCƒY‚ª0‚Ìƒ‹[ƒv‚ğ”²‚¯‚é
+				// å†ç”Ÿã™ã¹ãã‚µã‚¤ã‚ºãŒ0ã®æ™‚ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 				break;
 			}
 
-			// ‚ ‚ç‚©‚¶‚ß“Ç‚İ‚ñ‚¾ƒf[ƒ^‚Æ“ü‚ê‘Ö‚¦‚é
+			// ã‚ã‚‰ã‹ã˜ã‚èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã¨å…¥ã‚Œæ›¿ãˆã‚‹
 			bufferData_.swap(streamData_);
 
-			// ƒoƒbƒtƒ@[‚ğƒZƒbƒg
+			// ãƒãƒƒãƒ•ã‚¡ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 			buffer_->AudioBytes = streamSize_;
 			buffer_->pAudioData = bufferData_.data();
 			buffer_->LoopCount = 0;
 			buffer_->Flags = XAUDIO2_END_OF_STREAM;
 
-			// Ä¶
+			// å†ç”Ÿ
 			source_->SubmitSourceBuffer(buffer_.get());
 			source_->Start();
 
-			// “Ç‚İ‚Ş
+			// èª­ã¿è¾¼ã‚€
 			file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
 			streamSize_ = nextSize;
 			nowSize_ += streamSize_;

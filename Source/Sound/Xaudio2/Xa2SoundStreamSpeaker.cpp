@@ -139,7 +139,11 @@ void Eugene::Xa2SoundStreamSpeaker::SetOutput(SoundControl& control)
 
 void Eugene::Xa2SoundStreamSpeaker::SetVolume(float volume)
 {
-	source_->SetVolume(volume * volume);
+	auto vol = volume * volume;
+	if (vol != volume_)
+	{
+		source_->SetVolume(vol);
+	}
 }
 
 void Eugene::Xa2SoundStreamSpeaker::SetPan(std::span<float> volumes)
@@ -152,9 +156,6 @@ void Eugene::Xa2SoundStreamSpeaker::SetPan(std::span<float> volumes)
 
 void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 {
-	//XAUDIO2_VOICE_STATE state;
-
-
 	while (true)
 	{
 		semaphore_.acquire();
@@ -192,42 +193,6 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 			nowSize_ += streamSize_;
 		}
 	}
-
-	//while (isRun_.load())
-	//{
-	//	source_->GetState(&state);
-
-	//	// ステートをチェック
-	//	if (state.BuffersQueued <= 0 && isPlay_.load())
-	//	{
-	//		// バッファーの再生が終了かつ再生すべき時
-
-	//		auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
-	//		if (nextSize <= 0u)
-	//		{
-	//			// 再生すべきサイズが0の時ループを抜ける
-	//			break;
-	//		}
-
-	//		// あらかじめ読み込んだデータと入れ替える
-	//		bufferData_.swap(streamData_);
-
-	//		// バッファーをセット
-	//		buffer_->AudioBytes = streamSize_;
-	//		buffer_->pAudioData = bufferData_.data();
-	//		buffer_->LoopCount = 0;
-	//		buffer_->Flags = XAUDIO2_END_OF_STREAM;
-
-	//		// 再生
-	//		source_->SubmitSourceBuffer(buffer_.get());
-	//		source_->Start();
-
-	//		// 読み込む
-	//		file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
-	//		streamSize_ = nextSize;
-	//		nowSize_ += streamSize_;
-	//	}
-	//}
 }
 
 Eugene::Xa2SoundStreamSpeaker::CollBack::CollBack(Xa2SoundStreamSpeaker& speaker) :

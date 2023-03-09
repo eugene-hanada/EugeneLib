@@ -48,6 +48,11 @@ namespace Eugene
 		virtual void SetOutput(SoundControl& control) = 0;
 
 	protected:
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="maxPitchRate"> 最大ピッチレート </param>
 		SoundSpeaker(const float maxPitchRate);
 		
 		/// <summary>

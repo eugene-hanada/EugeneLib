@@ -79,6 +79,7 @@ set(SoundSource
     Source/Sound/Sound.cpp
     Source/Sound/SoundBase.cpp
     Source/Sound/SoundSpeaker.cpp
+    Source/Sound/SoundStreamSpeaker.cpp
     Source/Sound/SoundControl.cpp
     Source/Sound/Sound3DControl.cpp
     Source/Sound/Wave.cpp
@@ -135,6 +136,7 @@ if (MSVC)
     set(SoundApiSource
         Source/Sound/Xaudio2/Xa2Sound.cpp
         Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+        Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
         Source/Sound/Xaudio2/Xa2SoundControl.cpp
         Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
     )

@@ -177,3 +177,5 @@ if (USE_IMGUI)
     target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 endif()
 
+ target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
+

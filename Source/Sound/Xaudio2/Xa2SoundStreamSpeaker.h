@@ -17,7 +17,7 @@ namespace Eugene
 		public SoundStreamSpeaker
 	{
 	public:
-		Xa2SoundStreamSpeaker(IXAudio2* device,const std::filesystem::path& path, std::uint16_t outChannel);
+		Xa2SoundStreamSpeaker(IXAudio2* device,const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate);
 		~Xa2SoundStreamSpeaker();
 	private:
 		class CollBack : public IXAudio2VoiceCallback

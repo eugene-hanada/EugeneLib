@@ -226,6 +226,8 @@ void InitSound(void)
 
 	streamSpeaker.reset(sound->CreateSoundStreamSpeaker("./test.wav"));
 	streamSpeaker->SetVolume(0.25f);
+	//float pan[]{ 0.7f,0.0f,1.0f,1.0f };
+	//streamSpeaker->SetPan(pan);
 	streamSpeaker->Play();
 }
 
@@ -419,9 +421,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			break;
 		}
-		if (pad.IsHit(Eugene::PadID::A))
+		if (libSys->IsHitKey(Eugene::KeyID::A))
 		{
-			break;
+			streamSpeaker->Stop();
+		}
+		if (libSys->IsHitKey(Eugene::KeyID::D))
+		{
+			streamSpeaker->Play();
 		}
 	}
 	return 0;

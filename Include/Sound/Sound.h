@@ -30,7 +30,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		virtual SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path) const = 0;
+		virtual SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const = 0;
 
 		/// <summary>
 		/// サウンドをコントロールするクラスを作成する

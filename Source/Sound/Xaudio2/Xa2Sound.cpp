@@ -66,9 +66,9 @@ Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const Wave& wave, con
 	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
 }
 
-Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path) const
+Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {
-	return new Xa2SoundStreamSpeaker{xaudio2_.Get(), path, outChannel_};
+	return new Xa2SoundStreamSpeaker{xaudio2_.Get(), path, outChannel_, maxPitchRate };
 }
 
 Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const

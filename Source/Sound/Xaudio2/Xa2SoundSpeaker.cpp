@@ -57,7 +57,7 @@ Eugene::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 	source_->DestroyVoice();
 }
 
-void Eugene::Xa2SoundSpeaker::Play(void) const
+void Eugene::Xa2SoundSpeaker::Play(void)
 {
 	if (FAILED(source_->FlushSourceBuffers())|| 
 		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
@@ -67,7 +67,7 @@ void Eugene::Xa2SoundSpeaker::Play(void) const
 	}
 }
 
-void Eugene::Xa2SoundSpeaker::Stop(void) const
+void Eugene::Xa2SoundSpeaker::Stop(void)
 {
 	source_->Stop(XAUDIO2_PLAY_TAILS);
 }

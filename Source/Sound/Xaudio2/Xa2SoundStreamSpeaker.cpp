@@ -1,13 +1,15 @@
 ﻿#include "Xa2SoundStreamSpeaker.h"
 #include "../../../Include/Sound/SoundCommon.h"
 #include "../../../Include/Sound/Wave.h"
+#include "../../../Include/Sound/SoundControl.h"
 
 
 
 
-
-Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std::filesystem::path& path, std::uint16_t outChannel)
+Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :
+	SoundStreamSpeaker{ maxPitchRate }
 {
+	outChannel_ = outChannel;
 	isPlay_.store(false);
 	isRun_.store(true);
 
@@ -31,6 +33,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	WAVEFORMATEXTENSIBLE format;
 	file_.ignore(4);
 	file_.read(reinterpret_cast<char*>(&format.Format), sizeof(format.Format));
+	inChannel_ = format.Format.nChannels;
 	if (format.Format.wFormatTag != 1)
 	{
 		file_.read(reinterpret_cast<char*>(&format.Samples), sizeof(format.Samples));
@@ -98,7 +101,9 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 Eugene::Xa2SoundStreamSpeaker::~Xa2SoundStreamSpeaker()
 {
 	isRun_.store(false);
+	semaphore_.release();
 	streamThread_.join();
+	source_->Stop();
 	source_->DestroyVoice();
 }
 
@@ -111,7 +116,7 @@ void Eugene::Xa2SoundStreamSpeaker::Play(void)
 void Eugene::Xa2SoundStreamSpeaker::Stop(void)
 {
 	isPlay_.store(false);
-	source_->Stop();
+	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
 
 bool Eugene::Xa2SoundStreamSpeaker::IsEnd(void) const
@@ -125,6 +130,11 @@ void Eugene::Xa2SoundStreamSpeaker::SetPitchRate(float rate)
 
 void Eugene::Xa2SoundStreamSpeaker::SetOutput(SoundControl& control)
 {
+	outChannel_ = control.GetInChannel();
+	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
+	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
+	source_->SetOutputVoices(&sends);
 }
 
 void Eugene::Xa2SoundStreamSpeaker::SetVolume(float volume)
@@ -134,11 +144,15 @@ void Eugene::Xa2SoundStreamSpeaker::SetVolume(float volume)
 
 void Eugene::Xa2SoundStreamSpeaker::SetPan(std::span<float> volumes)
 {
+	if ((inChannel_ * outChannel_) + inChannel_ >= volumes.size())
+	{
+		source_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
+	}
 }
 
 void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 {
-	XAUDIO2_VOICE_STATE state;
+	//XAUDIO2_VOICE_STATE state;
 
 
 	while (true)

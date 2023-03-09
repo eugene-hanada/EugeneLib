@@ -318,6 +318,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	DebugLog("{}", pad.rightThumb_);
 	DebugLog("↑は{}", Eugene::upVector3<float> * Eugene::pi2<float>);
+
+	Eugene::Image dds{ "./Logo.dds" };
+
 	while (libSys->Update())
 	{
 		Eugene::System::Mouse mouse;

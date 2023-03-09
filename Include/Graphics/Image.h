@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <filesystem>
 #include <vector>
+#include <unordered_map>
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
 
@@ -33,7 +34,16 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns> テクスチャデータ </returns>
 		std::uint8_t* GetData(void);
+
 	private:
+
+		using LoadFunc = bool(Image::*)(const std::filesystem::path&);
+
+		using LoadFuncMap = std::unordered_map<std::string, LoadFunc>;
+
+		bool LoadStb(const std::filesystem::path& path);
+
+		bool LoadDds(const std::filesystem::path& path);
 
 		/// <summary>
 		/// テクスチャデータ
@@ -44,5 +54,7 @@ namespace Eugene
 		/// テクスチャ情報
 		/// </summary>
 		TextureInfo info_;
+
+		static const LoadFuncMap loadFuncMap_;
 	};
 }

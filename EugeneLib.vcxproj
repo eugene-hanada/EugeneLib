@@ -207,6 +207,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Graphics\DdsLoad.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.h" />
     <ClInclude Include="Include\Sound\SoundStreamSpeaker.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h" />

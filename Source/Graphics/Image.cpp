@@ -5,6 +5,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_image.h"
 
+#include "DdsLoad.h"
+
 const Eugene::Image::LoadFuncMap Eugene::Image::loadFuncMap_{
 	{".png",&Image::LoadStb},
 	{".jpeg",&Image::LoadStb},
@@ -18,7 +20,7 @@ const Eugene::Image::LoadFuncMap Eugene::Image::loadFuncMap_{
 	{".dds",&Image::LoadDds}
 };
 
-constexpr int ddsSig = 0x20534444;
+constexpr int ddsSig = std::endian::native == std::endian::little ? 542327876 : 7678324205;
 
 Eugene::Image::Image(const std::filesystem::path& path) :
 	info_{}
@@ -41,9 +43,9 @@ const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
 }
 
 
-std::uint8_t* Eugene::Image::GetData(void)
+std::uint8_t* Eugene::Image::GetData(std::uint16_t mipMapLevel)
 {
-	return data_.data();
+	return data_.at(mipMapLevel).data();
 }
 
 bool Eugene::Image::LoadStb(const std::filesystem::path& path)
@@ -56,8 +58,9 @@ bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 		return false;
 	}
 
-	data_.resize(w * h * c);
-	std::copy_n(img, data_.size(), data_.data());
+	data_.resize(1);
+	data_[0].resize(w * h * c);
+	std::copy_n(img, data_[0].size(), data_[0].data());
 	info_.arraySize = 1;
 	info_.format = Format::R8G8B8A8_UNORM;
 	info_.width = w;
@@ -77,5 +80,35 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 	{
 		return false;
 	}
+
+	DdsHeader h;
+	file.read(reinterpret_cast<char*>(&h), sizeof(h));
+
+	info_.arraySize = 0;
+	info_.mipLevels = h.mipMapCount;
+	info_.height = h.height;
+	info_.width = h.width;
+
+	if (h.fourCC == '01XD')
+	{
+		DdsExtensionHeader ext;
+		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
+		return true;
+	}
+	h.fourCC = 0;
+	
+	auto pixelPerPite = h.rgbBitCount / 8;
+	data_.resize(h.mipMapCount);
+	info_.format = Format::R8G8B8A8_UNORM;
+
+	
+	for (int i = 0; i < h.mipMapCount; i++)
+	{
+		auto divNum = std::max(static_cast<int>(std::pow(2,i)), 1);
+		auto size = colcMap.at(h.fourCC)(h.width / divNum,h.height / divNum, pixelPerPite);
+		data_[i].resize(size);
+		file.read(reinterpret_cast<char*>(data_[i].data()), size);
+	}
+
 	return true;
 }

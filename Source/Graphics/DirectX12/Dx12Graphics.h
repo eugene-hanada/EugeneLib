@@ -2,9 +2,11 @@
 #include <wrl.h>
 #include <memory>
 #include <vector>
+#include <array>
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Math/Vector2.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
+
 
 struct ID3D12Device;
 struct IDXGIFactory6;
@@ -16,6 +18,7 @@ namespace Eugene
 		public Graphics
 	{
 	public:
+		static const std::array<int, FormatMax> FormatToDxgiFormat_;
 		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
 		~Dx12Graphics();
 	
@@ -88,7 +91,7 @@ namespace Eugene
 
 #ifdef USE_IMGUI
 		std::unique_ptr<ShaderResourceViews> srViews_;
-		friend class Dx12CommandList;
 #endif
+		friend class Dx12CommandList;
 	};
 }

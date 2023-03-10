@@ -43,9 +43,9 @@ const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
 }
 
 
-std::uint8_t* Eugene::Image::GetData(std::uint16_t mipMapLevel)
+std::uint8_t* Eugene::Image::GetData(std::uint32_t arrayIndex, std::uint16_t mipMapLevel)
 {
-	return data_.at(mipMapLevel).data();
+	return data_.at((arrayIndex * info_.mipLevels) + mipMapLevel).data();
 }
 
 bool Eugene::Image::LoadStb(const std::filesystem::path& path)
@@ -83,32 +83,56 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 
 	DdsHeader h;
 	file.read(reinterpret_cast<char*>(&h), sizeof(h));
-
-	info_.arraySize = 0;
+	info_.arraySize = 1;
 	info_.mipLevels = h.mipMapCount;
 	info_.height = h.height;
 	info_.width = h.width;
-
+	info_.format = Format::R8G8B8A8_UNORM;
 	if (h.fourCC == '01XD')
 	{
 		DdsExtensionHeader ext;
+		info_.arraySize = ext.arraySize;
+		switch (ext.format)
+		{
+		case 98:
+			info_.format = Format::BC7_UNORM;
+			break;
+		case 70:
+			info_.format = Format::BC1_UNORM;
+		default:
+			info_.format = Format::R8G8B8A8_SNORM;
+			break;
+		}
 		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
 		return true;
 	}
-	h.fourCC = 0;
-	
+
 	auto pixelPerPite = h.rgbBitCount / 8;
-	data_.resize(h.mipMapCount);
-	info_.format = Format::R8G8B8A8_UNORM;
+	data_.resize(info_.arraySize *info_.mipLevels);
 
-	
-	for (int i = 0; i < h.mipMapCount; i++)
+	if (h.fourCC == '1TXD')
 	{
-		auto divNum = std::max(static_cast<int>(std::pow(2,i)), 1);
-		auto size = colcMap.at(h.fourCC)(h.width / divNum,h.height / divNum, pixelPerPite);
-		data_[i].resize(size);
-		file.read(reinterpret_cast<char*>(data_[i].data()), size);
+		info_.format = Format::BC1_UNORM;
 	}
-
+	else if (h.fourCC == '3TXD')
+	{
+		info_.format = Format::BC2_UNORM;
+	}
+	else if (h.fourCC == '5TXD')
+	{
+		info_.format = Format::BC3_UNORM;
+	}
+	
+	for (int j = 0; j < info_.arraySize; j++)
+	{
+		for (int i = 0; i < info_.mipLevels; i++)
+		{
+			auto idx = j * info_.mipLevels + i;
+			//auto divNum = std::max(static_cast<int>(std::pow(2,i)), 1);
+			auto size = colcMap.at(h.fourCC)(std::max(1, h.width >> i), std::max(1, h.height >> i), pixelPerPite);
+			data_[idx].resize(size);
+			file.read(reinterpret_cast<char*>(data_[idx].data()), size);
+		}
+	}
 	return true;
 }

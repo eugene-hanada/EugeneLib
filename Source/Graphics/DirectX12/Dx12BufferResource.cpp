@@ -4,6 +4,7 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/Image.h"
+#include "Dx12Graphics.h"
 
 Eugene::Dx12BufferResource::Dx12BufferResource(ID3D12Device* device, std::uint64_t size) :
 	BufferResource{}
@@ -50,7 +51,8 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device*
 	std::uint64_t totalSize;
 	std::uint64_t rowSize;
 	std::uint32_t numRaw;
-	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(image.GetInfo().format), image.GetInfo().width, image.GetInfo().height);
+	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(image.GetInfo().format)));
+	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, image.GetInfo().width, image.GetInfo().height);
 	device->GetCopyableFootprints(&footDesc, 0, 1, 0, &footprint, &numRaw, &rowSize, &totalSize);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(totalSize);
 	if (FAILED(device->CreateCommittedResource(

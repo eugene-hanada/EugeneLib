@@ -3,7 +3,7 @@
 #include "../../../Include/Sound/Wave.h"
 #include "../../../Include/Sound/SoundControl.h"
 
-
+#include "../../../Include/Common/Debug.h"
 
 
 Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :
@@ -186,7 +186,7 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 			// 再生
 			source_->SubmitSourceBuffer(buffer_.get());
 			source_->Start();
-
+			DebugLog("再生");
 			// 読み込む
 			file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
 			streamSize_ = nextSize;

@@ -115,7 +115,7 @@ namespace Eugene
 		/// <summary>
 		/// 配列サイズ
 		/// </summary>
-		std::uint32_t arraySize;
+		std::uint32_t arraySize = 0u;
 
 		/// <summary>
 		/// 
@@ -134,7 +134,6 @@ namespace Eugene
 		std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize)
 		{
 			return std::max(1, ((x + 3) / 4)) * std::max(1, ((y + 3) / 4)) * 8;
-			//return ((x + 3) / 4) * ((y + 3) / 4) * 8;
 		}
 	};
 
@@ -146,9 +145,19 @@ namespace Eugene
 		}
 	};
 
+	struct ColcDxt3Size
+	{
+		std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize)
+		{
+			return std::max(1, ((x + 3) / 4)) * std::max(1, ((y + 3) / 4)) * 16;
+		}
+	};
+
 	const std::unordered_map<std::int32_t, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> colcMap
 	{
 		{0,ColcSize{}},
-		{'01XD',ColcDxt1Size{}}
+		{'1TXD',ColcDxt1Size{}},
+		{'3TXD',ColcDxt3Size{}},
+		{'5TXD',ColcDxt3Size{}}
 	};
 }

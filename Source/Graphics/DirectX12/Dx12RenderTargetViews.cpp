@@ -1,5 +1,5 @@
 ﻿#include "Dx12RenderTargetViews.h"
-#include "../../../Include/Graphics/Graphics.h"
+#include "Dx12Graphics.h"
 #include "../../../Include/Graphics/ImageResource.h"
 
 Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, std::uint64_t size, bool isShaderVisible) :
@@ -23,7 +23,8 @@ void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_
 
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_RENDER_TARGET_VIEW_DESC rtViewDesc{};
-	rtViewDesc.Format = static_cast<DXGI_FORMAT>(format);
+	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	rtViewDesc.Format = tmp;
 	rtViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 

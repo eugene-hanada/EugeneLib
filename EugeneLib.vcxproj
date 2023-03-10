@@ -164,7 +164,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_IMGUI;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -254,8 +254,6 @@
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXColors.h" />
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXMath.h" />
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.h" />
-    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
-    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="Include\Graphics\Sampler.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
@@ -292,29 +290,6 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerViews.cpp" />
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Source\Graphics\Sampler.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />

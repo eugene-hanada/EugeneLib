@@ -33,7 +33,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> テクスチャデータ </returns>
-		std::uint8_t* GetData(std::uint16_t mipMapLevel = 0);
+		std::uint8_t* GetData(std::uint32_t arrayIndex = 0u,std::uint16_t mipMapLevel = 0u);
 
 	private:
 

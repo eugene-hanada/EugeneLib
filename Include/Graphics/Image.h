@@ -41,8 +41,18 @@ namespace Eugene
 
 		using LoadFuncMap = std::unordered_map<std::string, LoadFunc>;
 
+		/// <summary>
+		/// stbライブラリを使用して読み込む
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		bool LoadStb(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ddsファイルの読み込み
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		bool LoadDds(const std::filesystem::path& path);
 
 		/// <summary>
@@ -55,6 +65,9 @@ namespace Eugene
 		/// </summary>
 		TextureInfo info_;
 
+		/// <summary>
+		/// ロード用関数のmap
+		/// </summary>
 		static const LoadFuncMap loadFuncMap_;
 	};
 }

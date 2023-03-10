@@ -179,7 +179,7 @@ void InitVertex(void)
 
 void InitTexture(void)
 {
-	Eugene::Image tex("./LogoComp.dds");
+	Eugene::Image tex("./sky.dds");
 	upTextureBuffer.reset(graphics->CreateBufferResource(tex));
 	textureBuffer.reset(graphics->CreateImageResource(tex.GetInfo()));
 	textureView.reset(graphics->CreateShaderResourceViews(2));

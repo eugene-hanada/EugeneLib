@@ -75,61 +75,71 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 	std::ifstream file(path, std::ios::binary);
 	int sig;
 	
+	// シグネチャ読み込み
 	file.read(reinterpret_cast<char*>(&sig), 4);
 	if (sig != ddsSig)
 	{
+		// シグネチャがあってなかったら読み込みをやめる
 		return false;
 	}
 
+	// ヘッダー読み込み
 	DdsHeader h;
 	file.read(reinterpret_cast<char*>(&h), sizeof(h));
+
+	// 情報をセット
 	info_.arraySize = 1;
 	info_.mipLevels = h.mipMapCount;
 	info_.height = h.height;
 	info_.width = h.width;
-	info_.format = Format::R8G8B8A8_UNORM;
-	if (h.fourCC == '01XD')
+	
+	// fourCCをチェック
+	switch (h.fourCC)
 	{
-		DdsExtensionHeader ext;
-		info_.arraySize = ext.arraySize;
-		switch (ext.format)
-		{
-		case 98:
-			info_.format = Format::BC7_UNORM;
-			break;
-		case 70:
-			info_.format = Format::BC1_UNORM;
-		default:
-			info_.format = Format::R8G8B8A8_SNORM;
-			break;
-		}
-		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
-		return true;
+	case '01XD':
+		// DX10の時
+		LoadDdsExtension(file, info_);
+		break;
+	case '1TXD':
+		// DXT1の時
+		info_.format = Format::BC1_UNORM;
+		break;
+	case '3TXD':
+		// DXT3の時
+		info_.format = Format::BC2_UNORM;
+		break;
+	case '5TXD':
+		// DXT5の時
+		info_.format = Format::BC3_UNORM;
+		break;
+	default:
+		// それ以外の時とりあえずRGBA8ビットのやつにしとく
+		info_.format = Format::R8G8B8A8_UNORM;
+		break;
+	}
+
+	// キューブマップか調べる
+	constexpr auto cubeMapFlagBit = 0x200 | 0x400 | 0x800 | 0x1000 | 0x2000 | 0x4000 | 0x8000;
+	if ((cubeMapFlagBit & h.caps2) != 0)
+	{
+		info_.arraySize = 6;
 	}
 
 	auto pixelPerPite = h.rgbBitCount / 8;
-	data_.resize(info_.arraySize *info_.mipLevels);
-
-	if (h.fourCC == '1TXD')
-	{
-		info_.format = Format::BC1_UNORM;
-	}
-	else if (h.fourCC == '3TXD')
-	{
-		info_.format = Format::BC2_UNORM;
-	}
-	else if (h.fourCC == '5TXD')
-	{
-		info_.format = Format::BC3_UNORM;
-	}
+	data_.resize(info_.arraySize * info_.mipLevels);
 	
+	// 配列サイズとミップマップの分を読み込む
 	for (int j = 0; j < info_.arraySize; j++)
 	{
 		for (int i = 0; i < info_.mipLevels; i++)
 		{
+			// インデックス
 			auto idx = j * info_.mipLevels + i;
-			//auto divNum = std::max(static_cast<int>(std::pow(2,i)), 1);
+
+			// サイズを計算
 			auto size = colcMap.at(h.fourCC)(std::max(1, h.width >> i), std::max(1, h.height >> i), pixelPerPite);
+			
+			// リサイズして読み込む
 			data_[idx].resize(size);
 			file.read(reinterpret_cast<char*>(data_[idx].data()), size);
 		}

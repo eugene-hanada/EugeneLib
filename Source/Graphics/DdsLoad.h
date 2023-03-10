@@ -160,4 +160,27 @@ namespace Eugene
 		{'3TXD',ColcDxt3Size{}},
 		{'5TXD',ColcDxt3Size{}}
 	};
+
+	void LoadDdsExtension(std::ifstream& file, TextureInfo& info)
+	{
+		// 追加情報を読み込む
+		DdsExtensionHeader ext;
+		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
+		info.arraySize = std::max(1u,ext.arraySize);
+		
+		// フォーマットをセットする
+		switch (ext.format)
+		{
+		case 98:
+			info.format = Format::BC7_UNORM;
+			return;
+		case 70:
+			info.format = Format::BC1_UNORM;
+			return;
+		default:
+			info.format = Format::R8G8B8A8_SNORM;
+			return;
+		}
+		
+	}
 }

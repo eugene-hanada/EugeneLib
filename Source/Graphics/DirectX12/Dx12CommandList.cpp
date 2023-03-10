@@ -356,15 +356,20 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 		return;
 	}
 
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
-	auto defState = D3D12_RESOURCE_STATE_COMMON;
-	if (dest.CanMap())
+	auto subResource = dx12destination->GetDesc().MipLevels * dx12destination->GetDesc().DepthOrArraySize;
+	std::array<CD3DX12_RESOURCE_BARRIER,maxSubResource> barrier ;
+
+	for (int i = 0; i < subResource; i++)
 	{
-		barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON);
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST, i);
 	}
 
+	
+	auto defState = D3D12_RESOURCE_STATE_COMMON;
+	
 
-	cmdList_->ResourceBarrier(1, &barrier);
+	cmdList_->ResourceBarrier(subResource, barrier.data());
 
 
 	D3D12_TEXTURE_COPY_LOCATION d{};
@@ -372,20 +377,32 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 	d.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
 	d.SubresourceIndex = 0;
 
-	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
+	std::array<D3D12_PLACED_SUBRESOURCE_FOOTPRINT, maxSubResource>  footprint;
 	UINT64  totalSize = 0;
 	D3D12_RESOURCE_DESC desc{ dx12destination->GetDesc() };
+	
 	D3D12_TEXTURE_COPY_LOCATION  s{};
-	device->GetCopyableFootprints(&desc, 0, 1, 0, &footprint, nullptr, nullptr, &totalSize);
+	device->GetCopyableFootprints(&desc, 0, subResource, 0, footprint.data(), nullptr, nullptr, &totalSize);
 	s.pResource = dx12source;
 	s.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-	s.PlacedFootprint = footprint;
+	
+	for (int i = 0; i < subResource; i++)
+	{
+		// サブリソースごとのコピー
+		s.SubresourceIndex = i;
+		s.PlacedFootprint = footprint[i];
+		d.SubresourceIndex = i;
+		cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);
+	}
 
-	cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);
+	
 
-
-	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
-	cmdList_->ResourceBarrier(1, &barrier);
+	for (int i = 0; i < subResource; i++)
+	{
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
+	}
+	cmdList_->ResourceBarrier(subResource, barrier.data());
 }
 
 #ifdef USE_IMGUI

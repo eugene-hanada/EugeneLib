@@ -11,6 +11,7 @@ namespace Eugene
 		Dx12ShaderResourceViews(ID3D12Device* device, std::uint64_t size);
 		void CreateTexture(ImageResource& resource, std::uint64_t idx) final;
 		void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) final;
+		void CreateCubeMap(ImageResource& resource, std::uint64_t idx) final;
 		void* GetViews(void) const final;
 		std::uint64_t GetImg(void) final;
 	protected:

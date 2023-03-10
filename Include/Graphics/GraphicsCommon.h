@@ -123,10 +123,10 @@ namespace Eugene
 	/// </summary>
 	struct TextureInfo
 	{
-		std::uint64_t width;			// 横幅
-		std::uint64_t height;			// 縦幅
+		std::uint32_t width;			// 横幅
+		std::uint32_t height;			// 縦幅
 		Format format;			// フォーマット
-		std::uint64_t arraySize;		// 配列サイズ
+		std::uint32_t arraySize;		// 配列サイズ
 		std::uint16_t mipLevels;			// ミップマップレベル
 	};
 
@@ -140,4 +140,6 @@ namespace Eugene
 		Triangle = 4,
 		TriangleStrip = 5
 	};
+
+	constexpr auto maxSubResource = 64u;
 }

@@ -28,7 +28,7 @@ void Eugene::Dx12ShaderResourceViews::CreateTexture(ImageResource& resource, std
 	viewDesc.Format = resourceDesc.Format;
 	viewDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	viewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	viewDesc.Texture2D.MipLevels = 1;
+	viewDesc.Texture2D.MipLevels = resourceDesc.MipLevels;
 
 	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
@@ -55,6 +55,32 @@ void Eugene::Dx12ShaderResourceViews::CreateConstantBuffer(BufferResource& resou
 	viewDesc.BufferLocation = dx12Resource->GetGPUVirtualAddress();
 	viewDesc.SizeInBytes = static_cast<UINT>(resourceDesc.Width);
 	device->CreateConstantBufferView(&viewDesc, handle);
+}
+
+void Eugene::Dx12ShaderResourceViews::CreateCubeMap(ImageResource& resource, std::uint64_t idx)
+{
+	if (size_ <= idx)
+	{
+		return;
+	}
+	ID3D12Device* device{ nullptr };
+	ID3D12Resource* dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	if (FAILED(dx12Resource->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto resourceDesc = dx12Resource->GetDesc();
+
+	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_SHADER_RESOURCE_VIEW_DESC viewDesc{};
+	viewDesc.Format = resourceDesc.Format;
+	viewDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
+	viewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	viewDesc.TextureCube.MipLevels = resourceDesc.MipLevels;
+
+	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	device->CreateShaderResourceView(dx12Resource, &viewDesc, handle);
 }
 
 void* Eugene::Dx12ShaderResourceViews::GetViews(void) const

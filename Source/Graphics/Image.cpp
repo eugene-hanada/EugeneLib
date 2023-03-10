@@ -62,6 +62,7 @@ bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 	data_[0].resize(w * h * c);
 	std::copy_n(img, data_[0].size(), data_[0].data());
 	info_.arraySize = 1;
+	info_.mipLevels = 1;
 	info_.format = Format::R8G8B8A8_UNORM;
 	info_.width = w;
 	info_.height = h;

@@ -100,17 +100,17 @@ namespace Eugene
 		/// <summary>
 		/// フォーマット
 		/// </summary>
-		std::uint32_t format;
+		std::uint32_t format = 0u;
 
 		/// <summary>
 		/// 1Dとか2Dとかの情報
 		/// </summary>
-		std::uint32_t dimension;
+		std::uint32_t dimension = 0u;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		std::uint32_t miscFlag;
+		std::uint32_t miscFlag = 0u;
 
 		/// <summary>
 		/// 配列サイズ
@@ -120,7 +120,7 @@ namespace Eugene
 		/// <summary>
 		/// 
 		/// </summary>
-		std::uint32_t miscFlag2;
+		std::uint32_t miscFlag2 = 0u;
 	};
 
 	struct ColcBase

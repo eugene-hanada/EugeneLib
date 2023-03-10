@@ -10,7 +10,9 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(info.format)))
 		, static_cast<std::uint32_t>(info.width),
-		static_cast<std::uint32_t>(info.height)
+		static_cast<std::uint32_t>(info.height),
+		info.arraySize,
+		info.mipLevels
 	);
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,

@@ -7,9 +7,6 @@ set(CMAKE_CXX_STANDARD 23)
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
 
-# visual stdio用にunicodeを使うように
-add_definitions(-D_UNICODE -DUNICODE)
-
 set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
@@ -151,9 +148,15 @@ endif()
 
 
 
+# ランタイムライブラリを静的にリンクする
+if(MSVC)
+	# visual stdio用にunicodeを使うように
+	add_definitions(-D_UNICODE -DUNICODE)
 
+	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
 
-
+# ライブラリを作る
 add_library(EugeneLib STATIC 
     ${SystemSource}
      ${SystemApiSource}
@@ -165,11 +168,6 @@ add_library(EugeneLib STATIC
     ${SoundApiSource}
 )
 
-# ランタイムライブラリを静的にリンクするように
-set_property(TARGET EugeneLib PROPERTY
-  MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-)
-
 
 
 if (USE_IMGUI)
@@ -178,4 +176,5 @@ if (USE_IMGUI)
 endif()
 
  target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
+  
 

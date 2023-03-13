@@ -91,6 +91,8 @@ namespace Eugene
 		static Debug& GetInstance(void);
 
 
+#if _MSC_FULL_VER < 193532215
+
 		/// <summary>
 		/// std::formatを使用してフォーマットして出力する
 		/// </summary>
@@ -98,15 +100,17 @@ namespace Eugene
 		/// <param name="fmt"></param>
 		/// <param name="...args"></param>
 		template<class... Args>
+		constexpr void Log(const std::string& fmt, const Args ...args)
+		{
+			Log(std::format(fmt, args...));
+		}
+#else
+		template<class... Args>
 		constexpr void Log(std::format_string<Args...> fmt, const Args ...args)
 		{
 			Log(std::vformat(fmt.get(), std::make_format_args(args...)));
 		}
-		/*template<class... Args>
-		constexpr void Log(const std::string& fmt, const Args ...args)
-		{
-			Log(std::format(fmt, args...));
-		}*/
+#endif
 
 		/// <summary>
 		/// デバッグ出力する

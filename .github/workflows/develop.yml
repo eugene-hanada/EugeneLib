@@ -6,7 +6,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  BUILD_TYPE: Debug
 
 jobs:
   build:
@@ -29,12 +29,17 @@ jobs:
       run: |
         cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    - name: Test
+    
+      run: | 
+        cmake -DCMAKE_BUILD_TYPE=Debug -S ${{github.workspace}}/Test -B ${{github.workspace}}/Test/build
+        cmake --build ${{github.workspace}}/Test/build
         
       # アップロード
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: MyArtifact
-        path: ${{github.workspace}}/Release/EugeneLib.lib
+        path: ${{github.workspace}}/${{env.BUILD_TYPE}}/EugeneLib.lib
 
       

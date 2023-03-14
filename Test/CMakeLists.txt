@@ -13,7 +13,7 @@ endif()
 add_subdirectory(./Catch2)
 
 include_directories(../Include)
-link_directories(../Release)
+link_directories(../Debug)
 
 # ƒ\[ƒX‚ğbuild
 add_executable(tests test.cpp)

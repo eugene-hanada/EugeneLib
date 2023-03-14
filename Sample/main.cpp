@@ -150,6 +150,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	samplerView.reset(graphics->CreateSamplerViews(1));
 	samplerView->CreateSampler(*sampler, 0);
 
+	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer;
+	cursorMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
+
+
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 	while (system->Update())

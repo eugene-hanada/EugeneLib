@@ -36,8 +36,14 @@ jobs:
         cmake --build ${{github.workspace}}/Test/build --config ${{env.BUILD_TYPE}}
         
     - name: Run Tests
-      run: ${{github.workspace}}/Test/build/Debug/tests
-        
+      run: ${{github.workspace}}/Test/build/Debug/tests --reporter junit --out ./result.xml
+      
+    - name: Show test results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      with:
+        check_name: Catch2 tests
+        path: ${{github.workspace}}/result.xml
+      
       # アップロード
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

@@ -13,6 +13,7 @@ namespace Eugene
 		~WindowsSystem();
 
 		Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum) const& final;
+		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const final;
 	private:
 		bool Update(void) final;
 		void GetMouse(Mouse& outMouse) const& final;

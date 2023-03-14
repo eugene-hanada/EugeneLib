@@ -103,10 +103,10 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_BC7_UNORM
 };
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	CreateDevice();
-	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
+	CreateSwapChain(hwnd, size,gpuEngine, bufferNum, maxNum);
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
@@ -273,9 +273,9 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	throw LibInitException();
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
-	gpuEngine = CreateGpuEngine(10);
+	gpuEngine = CreateGpuEngine(maxNum);
 
 	// スワップチェインDESC
 	DXGI_SWAP_CHAIN_DESC1 swapchainDesc{};

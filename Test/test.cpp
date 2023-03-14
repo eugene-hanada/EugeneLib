@@ -4,6 +4,7 @@
 
 TEST_CASE("CreateWindow", "[function]")
 {
-	Eugene::System* window = Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"test");
+	constexpr auto size = Eugene::Vector2{ 1280.0f, 720.0f };
+	Eugene::System* window = Eugene::CreateSystem(size, u8"test");
 	delete window;
 }

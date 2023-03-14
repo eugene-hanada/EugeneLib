@@ -35,6 +35,7 @@ HWND hwnd;
 Eugene::System::Mouse mouse;
 
 Eugene::Graphics* graphics = nullptr;
+Eugene::GpuEngine* gpuEngine = nullptr;
 
 
 #ifdef USE_IMGUI
@@ -166,7 +167,16 @@ Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, s
 	{
 		return graphics;
 	}
-	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum });
+	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum, 100ull});
+}
+
+std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
+{
+	if (graphics == nullptr)
+	{
+		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+	}
+	return std::make_pair(graphics, gpuEngine);
 }
 
 bool Eugene::WindowsSystem::Update(void)

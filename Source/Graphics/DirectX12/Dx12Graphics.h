@@ -19,7 +19,7 @@ namespace Eugene
 	{
 	public:
 		static const std::array<int, FormatMax> FormatToDxgiFormat_;
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		~Dx12Graphics();
 	
 		
@@ -58,7 +58,7 @@ namespace Eugene
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 

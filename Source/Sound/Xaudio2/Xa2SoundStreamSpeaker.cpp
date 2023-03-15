@@ -158,6 +158,7 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 {
 	while (true)
 	{
+		// 待機
 		semaphore_.acquire();
 
 		if (!isRun_.load())
@@ -202,6 +203,7 @@ Eugene::Xa2SoundStreamSpeaker::CollBack::CollBack(Xa2SoundStreamSpeaker& speaker
 
 void Eugene::Xa2SoundStreamSpeaker::CollBack::OnBufferEnd(void* pBufferContext) noexcept
 {
+	// 待機を解除
 	speaker_.semaphore_.release();
 }
 

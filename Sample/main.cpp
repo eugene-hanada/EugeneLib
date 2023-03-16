@@ -176,7 +176,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::Wave wave{ "./exp.wav" };
 	speaker.reset(sound->CreateSoundSpeaker(wave));
 	
-	ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, 1,2));
+	ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, 2,2));
 	speaker->SetOutput(*ctrl3D);
 	speaker->Play();
 
@@ -218,7 +218,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				Eugene::zeroVector3<float>,
 				Eugene::forwardVector3<float>,
 				Eugene::upVector3<float>, 
-				{ 5.0f,0.0f, 2.0f },
+				{ pos.x,0.0f, pos.y},
 				Eugene::zeroVector3<float>
 			);
 		}

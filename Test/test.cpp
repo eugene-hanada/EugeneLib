@@ -7,8 +7,14 @@
 
 TEST_CASE("Vector2","[Math]")
 {
-	Eugene::Vector2 pos;
-	REQUIRE(pos == Eugene::Vector2{5.0f,5.0f});
+	Eugene::Vector2 pos{5.0f,5.0f};
+
+	SECTION("EUQL")
+	{
+		REQUIRE(pos.x == 5.0f);
+		REQUIRE(pos.y == 5.0f);
+		REQUIRE(pos == Eugene::Vector2{5.0f,5.0f});
+	}
 
 	SECTION("ADD")
 	{

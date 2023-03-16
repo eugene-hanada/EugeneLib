@@ -43,7 +43,7 @@ TEST_CASE("Vector2","[Math]")
 
 }
 
-TEST_CASE("System", "[System]")
+TEST_CASE("App", "[System][Grahpics]")
 {
 	constexpr auto size = Eugene::Vector2{ 1280.0f, 720.0f };
 	Eugene::System* window = Eugene::CreateSystem(size, u8"test");
@@ -53,6 +53,26 @@ TEST_CASE("System", "[System]")
 	auto [graphics, gpu] = window->CreateGraphics();
 	REQUIRE(graphics != nullptr);
 	REQUIRE(gpu != nullptr);
+
+	auto cmdList = graphics->CreateCommandList();
+	REQUIRE(cmdList != nullptr);
+	delete cmdList;
+
+	auto uploadBuffer = graphics->CreateUploadableBufferResource(256);
+	REQUIRE(uploadBuffer != nullptr);
+	REQUIRE(uploadBuffer->GetSize() == 256);
+	auto mapPtr = uploadBuffer->Map();
+	REQUIRE(mapPtr != nullptr);
+	uploadBuffer->UnMap();
+	delete uploadBuffer;
+
+	auto buffer = graphics->CreateBufferResource(256);
+	REQUIRE(buffer != nullptr);
+	REQUIRE(buffer->GetSize() == 256);
+	REQUIRE(buffer->Map() == nullptr);
+	delete buffer;
+
+
 	delete gpu;
 	delete graphics;
 

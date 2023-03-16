@@ -35,6 +35,7 @@ Eugene::System::System(const Eugene::Vector2& size, const std::u8string& title) 
 
 Eugene::System::~System()
 {
+	sys = nullptr;
 }
 
 const Eugene::Vector2& Eugene::System::GetWindowSize(void) const&

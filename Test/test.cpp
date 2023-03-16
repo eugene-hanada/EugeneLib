@@ -2,6 +2,7 @@
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <Math/Vector2.h>
+#include <Common/Debug.h>
 #pragma comment(lib,"EugeneLib.lib")
 
 
@@ -46,6 +47,14 @@ TEST_CASE("System", "[System]")
 {
 	constexpr auto size = Eugene::Vector2{ 1280.0f, 720.0f };
 	Eugene::System* window = Eugene::CreateSystem(size, u8"test");
+	REQUIRE(window != nullptr);
 	REQUIRE(window->GetWindowSize() == size);
+
+	auto [graphics, gpu] = window->CreateGraphics();
+	REQUIRE(graphics != nullptr);
+	REQUIRE(gpu != nullptr);
+	delete gpu;
+	delete graphics;
+
 	delete window;
 }

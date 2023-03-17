@@ -2,6 +2,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// インデックス用のビュー
+	/// </summary>
 	class IndexView
 	{
 	public:

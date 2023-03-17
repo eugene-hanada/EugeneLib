@@ -189,15 +189,55 @@ namespace Eugene
 
 	using Matrix4x4 = DirectX::XMFLOAT4X4;
 
+	/// <summary>
+	/// 2Dのレンダーターゲット用のスクリーン座標をクリップ座標変換する行列
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="size"> レンダーターゲットのサイズ </param>
 	void Get2DMatrix(Matrix4x4& out, const Vector2& size);
 
+	/// <summary>
+	/// 2Dで平行移動する行列
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="pos"> 移動座標 </param>
 	void Get2DTranslateMatrix(Matrix4x4& out, const Vector2& pos);
 
+	/// <summary>
+	/// 2Dの変換行列(移動、拡縮、回転)
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="pos"> 移動座標 </param>
+	/// <param name="rot"> 回転角度(ラジアン) </param>
+	/// <param name="scale"> 拡縮(スケール) </param>
+	/// <param name="rotPos"> 回転基準座標 </param>
 	void Get2DTransformMatrix(Matrix4x4& out, const Vector2& pos, float rot = 0.0f, const Vector2& scale = zeroVector2<float>, const Vector2& rotPos = zeroVector2<float>);
 
+	/// <summary>
+	/// 特定方向を向く行列
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="eye"> 視点座標 </param>
+	/// <param name="target"> 向きたい座標 </param>
+	/// <param name="up"> 上方向 </param>
 	void GetLookAtMatrix(Matrix4x4& out,const Vector3& eye, const Vector3& target, const Vector3& up);
 
+	/// <summary>
+	/// パースペクティブ行列
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="fov"> 視野角 </param>
+	/// <param name="aspect"> アスペクト比 </param>
+	/// <param name="near"> ニア </param>
+	/// <param name="far"> ファー </param>
 	void GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near = 0.1f, float far = 1000.0f);
 
+	/// <summary>
+	/// 投影行列
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="size"> サイズ </param>
+	/// <param name="near"> ニア </param>
+	/// <param name="far"> ファー </param>
 	void GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near = 0.1f, float far = 1000.0f);
 };

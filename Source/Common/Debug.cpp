@@ -46,14 +46,16 @@ Eugene::Debug::Debug() :
 	binarySemphore_{1}
 {
 #ifdef _WIN64
+
+	// コンソールを開く
 	AllocConsole();
 	freopen_s(&fp, "CONOUT$", "w", stdout);
 	freopen_s(&fp, "CONIN$", "r", stdin);
+#endif
 
 	// スレッドIDを文字列に変換してバッファのサイズにする
 	oss_ << std::this_thread::get_id();
 	oss_.seekp(0);
-#endif
 }
 
 Eugene::Debug::~Debug()

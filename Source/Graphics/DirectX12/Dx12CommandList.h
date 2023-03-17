@@ -113,8 +113,14 @@ namespace Eugene
 #ifdef USE_IMGUI
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
 #endif
-
+		/// <summary>
+		/// コマンドアロケーター
+		/// </summary>
 		ComPtr< ID3D12CommandAllocator> cmdAllocator_;
+
+		/// <summary>
+		/// コマンドリスト
+		/// </summary>
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
 
 	};

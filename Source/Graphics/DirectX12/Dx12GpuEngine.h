@@ -33,8 +33,14 @@ namespace Eugene
 		// フェンス
 		Microsoft::WRL::ComPtr<ID3D12Fence> fence_{ nullptr };
 
+		/// <summary>
+		/// 実行するコマンドリスト
+		/// </summary>
 		std::vector<ID3D12CommandList*> commandLists_;
 
+		/// <summary>
+		/// 現在の実行すべきコマンドリストの数
+		/// </summary>
 		std::uint64_t nowCommandNum_;
 	};
 

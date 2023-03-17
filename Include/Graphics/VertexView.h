@@ -2,6 +2,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// 頂点ビュー
+	/// </summary>
 	class VertexView
 	{
 	public:

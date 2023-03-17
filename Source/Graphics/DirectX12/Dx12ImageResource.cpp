@@ -4,7 +4,8 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "Dx12Graphics.h"
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const TextureInfo& info)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const TextureInfo& info) :
+	ImageResource{info.format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -27,7 +28,8 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float, 4> clearColor)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float, 4> clearColor) :
+	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
@@ -49,7 +51,8 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue) :
+	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
@@ -70,7 +73,8 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 }
 
 
-Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
+Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx) :
+	ImageResource{Format::R8G8B8A8_UNORM}
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
@@ -78,10 +82,6 @@ Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::ui
 	}
 }
 
-Eugene::Format Eugene::Dx12ImageResource::GetFormat(void) const
-{
-	return static_cast<Format>(resource_->GetDesc().Format);
-}
 
 Eugene::Vector2I Eugene::Dx12ImageResource::GetSize(void)
 {

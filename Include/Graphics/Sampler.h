@@ -3,6 +3,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// テクスチャアドレッシングモード
+	/// </summary>
 	enum class TextureAddressMode
 	{
 		Wrap = 1,
@@ -12,6 +15,9 @@ namespace Eugene
 		MirrorOnce = 5
 	};
 
+	/// <summary>
+	/// サンプラーのフィルター
+	/// </summary>
 	enum class SampleFilter
 	{
 		Point = 0,
@@ -19,6 +25,9 @@ namespace Eugene
 		Anisotropic = 0x55
 	};
 
+	/// <summary>
+	/// サンプラーの比較演算用
+	/// </summary>
 	enum class SamplerComparison
 	{
 		Non,
@@ -32,6 +41,9 @@ namespace Eugene
 		Always
 	};
 
+	/// <summary>
+	/// サンプラーのレイアウト用
+	/// </summary>
 	struct SamplerLayout
 	{
 		SamplerLayout(
@@ -50,6 +62,9 @@ namespace Eugene
 		float minLod_;
 	};
 
+	/// <summary>
+	/// サンプラー
+	/// </summary>
 	class Sampler
 	{
 	public:

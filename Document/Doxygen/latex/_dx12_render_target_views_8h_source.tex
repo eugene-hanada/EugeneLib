@@ -1,0 +1,23 @@
+\hypertarget{_dx12_render_target_views_8h_source}{}\doxysection{Dx12\+Render\+Target\+Views.\+h}
+\label{_dx12_render_target_views_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12RenderTargetViews.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12RenderTargetViews.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}Dx12Views.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../../../Include/Graphics/RenderTargetViews.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_dx12_render_target_views}{Dx12RenderTargetViews}} :}
+\DoxyCodeLine{9         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_1_1_dx12_views}{Dx12Views}}, \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_1_1_render_target_views}{RenderTargetViews}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_eugene_1_1_dx12_render_target_views}{Dx12RenderTargetViews}}(ID3D12Device* device, std::uint64\_t size, \textcolor{keywordtype}{bool} isShaderVisible);}
+\DoxyCodeLine{13     \textcolor{keyword}{private}:}
+\DoxyCodeLine{14         \textcolor{keywordtype}{void} Create(\mbox{\hyperlink{class_eugene_1_1_image_resource}{ImageResource}}\& resource, std::uint64\_t idx, \textcolor{keyword}{const} Format\& format) \textcolor{keyword}{final};}
+\DoxyCodeLine{15         \textcolor{keywordtype}{void}* GetViews(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{16     \};}
+\DoxyCodeLine{17 \}}
+
+\end{DoxyCode}

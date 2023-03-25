@@ -1,0 +1,38 @@
+\hypertarget{_xa2_sound_8h_source}{}\doxysection{Xa2\+Sound.\+h}
+\label{_xa2_sound_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Sound/Xaudio2/Xa2Sound.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Sound/Xaudio2/Xa2Sound.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../../Include/Sound/Sound.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <wrl.h>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{struct }IXAudio2;}
+\DoxyCodeLine{6 \textcolor{keyword}{struct }IXAudio2MasteringVoice;}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_xa2_sound}{Xa2Sound}} :}
+\DoxyCodeLine{11         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_1_1_sound}{Sound}}}
+\DoxyCodeLine{12     \{}
+\DoxyCodeLine{13     \textcolor{keyword}{public}:}
+\DoxyCodeLine{14         \mbox{\hyperlink{class_eugene_1_1_xa2_sound}{Xa2Sound}}();}
+\DoxyCodeLine{15         \mbox{\hyperlink{class_eugene_1_1_xa2_sound}{\string~Xa2Sound}}();}
+\DoxyCodeLine{16     \textcolor{keyword}{private}:}
+\DoxyCodeLine{17         \textcolor{keywordtype}{void} SetVolume(\textcolor{keywordtype}{float} volume) \textcolor{keyword}{final};}
+\DoxyCodeLine{18     }
+\DoxyCodeLine{19         \textcolor{keywordtype}{void} SetPan(std::span<float> volumes) \textcolor{keyword}{final};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21         \mbox{\hyperlink{class_eugene_1_1_sound_speaker}{SoundSpeaker}}* CreateSoundSpeaker(\textcolor{keyword}{const} \mbox{\hyperlink{class_eugene_1_1_wave}{Wave}}\& wave, \textcolor{keyword}{const} \textcolor{keywordtype}{float} maxPitchRate = 2.0f) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         \mbox{\hyperlink{class_eugene_1_1_sound_stream_speaker}{SoundStreamSpeaker}}* CreateSoundStreamSpeaker(\textcolor{keyword}{const} std::filesystem::path\& path) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \mbox{\hyperlink{class_eugene_1_1_sound_control}{SoundControl}}* CreateSoundControl(std::uint32\_t sample, std::uint16\_t inputChannel, std::uint16\_t outChannel) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \mbox{\hyperlink{class_eugene_1_1_sound3_d_control}{Sound3DControl}}* CreateSound3DControl(std::uint32\_t sample, std::uint16\_t inputChannel, std::uint16\_t outChannel) \textcolor{keyword}{const} \textcolor{keyword}{final};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         Microsoft::WRL::ComPtr<IXAudio2> xaudio2\_;}
+\DoxyCodeLine{30         IXAudio2MasteringVoice* mastering\_;}
+\DoxyCodeLine{31     \};}
+\DoxyCodeLine{32 \}}
+
+\end{DoxyCode}

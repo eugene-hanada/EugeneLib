@@ -2,6 +2,7 @@
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include <array>
+#include <cassert>
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
@@ -145,6 +146,27 @@ void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uin
 	cmdList_->OMSetRenderTargets(1, &handle, false, nullptr);
 }
 
+void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx)
+{
+	assert((endIdx - startIdx) >= 0 && views.GetSize() > endIdx);
+
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews())};
+	auto handle{ descriptorHeap->GetCPUDescriptorHandleForHeapStart() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, 8> handles;
+	for (std::uint64_t i = 0; i < (endIdx - startIdx) || i < handles.size(); i++)
+	{
+		handle.ptr = descriptorHeap->GetCPUDescriptorHandleForHeapStart().ptr + (static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)) * (startIdx + i));
+		handles[i] = handle;
+	}
+	cmdList_->OMSetRenderTargets(static_cast<std::uint32_t>(endIdx - startIdx) + 1, handles.data(), false, nullptr);
+}
+
 void Eugene::Dx12CommandList::SetRenderTarget(RenderTargetViews& views)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
@@ -211,7 +233,7 @@ void Eugene::Dx12CommandList::ClearRenderTarget(RenderTargetViews& views, std::s
 		return;
 	}
 
-	// レンダーターゲットの最大数が8なのでその分確保
+	// レンダーターゲット分クリアする
 	for (std::uint64_t i = 0; i < views.GetSize(); i++)
 	{
 		handle.ptr += static_cast<ULONG_PTR>(device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
@@ -231,6 +253,34 @@ void Eugene::Dx12CommandList::TransitionRenderTargetEnd(ImageResource& resource)
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionShaderResourceBegin(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionShaderResourceEnd(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionDepthBegin(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionDepthEnd(ImageResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_COMMON);
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
@@ -306,15 +356,20 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 		return;
 	}
 
-	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
-	auto defState = D3D12_RESOURCE_STATE_COMMON;
-	if (dest.CanMap())
+	auto subResource = dx12destination->GetDesc().MipLevels * dx12destination->GetDesc().DepthOrArraySize;
+	std::array<CD3DX12_RESOURCE_BARRIER,maxSubResource> barrier ;
+
+	for (int i = 0; i < subResource; i++)
 	{
-		barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COMMON);
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST, i);
 	}
 
+	
+	auto defState = D3D12_RESOURCE_STATE_COMMON;
+	
 
-	cmdList_->ResourceBarrier(1, &barrier);
+	cmdList_->ResourceBarrier(subResource, barrier.data());
 
 
 	D3D12_TEXTURE_COPY_LOCATION d{};
@@ -322,20 +377,32 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 	d.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
 	d.SubresourceIndex = 0;
 
-	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint;
+	std::array<D3D12_PLACED_SUBRESOURCE_FOOTPRINT, maxSubResource>  footprint;
 	UINT64  totalSize = 0;
 	D3D12_RESOURCE_DESC desc{ dx12destination->GetDesc() };
+	
 	D3D12_TEXTURE_COPY_LOCATION  s{};
-	device->GetCopyableFootprints(&desc, 0, 1, 0, &footprint, nullptr, nullptr, &totalSize);
+	device->GetCopyableFootprints(&desc, 0, subResource, 0, footprint.data(), nullptr, nullptr, &totalSize);
 	s.pResource = dx12source;
 	s.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-	s.PlacedFootprint = footprint;
+	
+	for (int i = 0; i < subResource; i++)
+	{
+		// サブリソースごとのコピー
+		s.SubresourceIndex = i;
+		s.PlacedFootprint = footprint[i];
+		d.SubresourceIndex = i;
+		cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);
+	}
 
-	cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);
+	
 
-
-	barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
-	cmdList_->ResourceBarrier(1, &barrier);
+	for (int i = 0; i < subResource; i++)
+	{
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
+	}
+	cmdList_->ResourceBarrier(subResource, barrier.data());
 }
 
 #ifdef USE_IMGUI

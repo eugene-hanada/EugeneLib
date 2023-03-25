@@ -1,0 +1,81 @@
+\hypertarget{class_eugene_1_1_dx12_shader_resource_views}{}\doxysection{Eugene\+::Dx12\+Shader\+Resource\+Views Class Reference}
+\label{class_eugene_1_1_dx12_shader_resource_views}\index{Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}}
+Inheritance diagram for Eugene\+::Dx12\+Shader\+Resource\+Views\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_eugene_1_1_dx12_shader_resource_views}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_a0b1831b224ed549aa773d87096fd8c13}\label{class_eugene_1_1_dx12_shader_resource_views_a0b1831b224ed549aa773d87096fd8c13}} 
+{\bfseries Dx12\+Shader\+Resource\+Views} (ID3\+D12\+Device $\ast$device, std\+::uint64\+\_\+t size)
+\item 
+void \mbox{\hyperlink{class_eugene_1_1_dx12_shader_resource_views_a73cdc0aadf89a63e69f6916e86c54b08}{Create\+Texture}} (\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&resource, std\+::uint64\+\_\+t idx) final
+\item 
+void \mbox{\hyperlink{class_eugene_1_1_dx12_shader_resource_views_a0d3f43325f70a93dfafe722f91b5ab60}{Create\+Constant\+Buffer}} (\mbox{\hyperlink{class_eugene_1_1_buffer_resource}{Buffer\+Resource}} \&resource, std\+::uint64\+\_\+t idx) final
+\item 
+void $\ast$ \mbox{\hyperlink{class_eugene_1_1_dx12_shader_resource_views_ac5d9eb528ec9efd33bb3c47b37876a61}{Get\+Views}} (void) const final
+\item 
+std\+::uint64\+\_\+t \mbox{\hyperlink{class_eugene_1_1_dx12_shader_resource_views_af8a99a73f68421742f1710aaab015746}{Get\+Img}} (void) final
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_af2d7efdc94a58cec587dbfb2650bb6bb}\label{class_eugene_1_1_dx12_shader_resource_views_af2d7efdc94a58cec587dbfb2650bb6bb}} 
+class {\bfseries Dx12\+View\+Table}
+\item 
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_a42fe1079c090bbd5662dd046d271267d}\label{class_eugene_1_1_dx12_shader_resource_views_a42fe1079c090bbd5662dd046d271267d}} 
+class {\bfseries Dx12\+Command\+List}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_a0d3f43325f70a93dfafe722f91b5ab60}\label{class_eugene_1_1_dx12_shader_resource_views_a0d3f43325f70a93dfafe722f91b5ab60}} 
+\index{Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}!CreateConstantBuffer@{CreateConstantBuffer}}
+\index{CreateConstantBuffer@{CreateConstantBuffer}!Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{CreateConstantBuffer()}{CreateConstantBuffer()}}
+{\footnotesize\ttfamily void Eugene\+::\+Dx12\+Shader\+Resource\+Views\+::\+Create\+Constant\+Buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_buffer_resource}{Buffer\+Resource}} \&}]{resource,  }\item[{std\+::uint64\+\_\+t}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Eugene\+::\+Shader\+Resource\+Views}}.
+
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_a73cdc0aadf89a63e69f6916e86c54b08}\label{class_eugene_1_1_dx12_shader_resource_views_a73cdc0aadf89a63e69f6916e86c54b08}} 
+\index{Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}!CreateTexture@{CreateTexture}}
+\index{CreateTexture@{CreateTexture}!Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{CreateTexture()}{CreateTexture()}}
+{\footnotesize\ttfamily void Eugene\+::\+Dx12\+Shader\+Resource\+Views\+::\+Create\+Texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_eugene_1_1_image_resource}{Image\+Resource}} \&}]{resource,  }\item[{std\+::uint64\+\_\+t}]{idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Eugene\+::\+Shader\+Resource\+Views}}.
+
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_af8a99a73f68421742f1710aaab015746}\label{class_eugene_1_1_dx12_shader_resource_views_af8a99a73f68421742f1710aaab015746}} 
+\index{Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}!GetImg@{GetImg}}
+\index{GetImg@{GetImg}!Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{GetImg()}{GetImg()}}
+{\footnotesize\ttfamily std\+::uint64\+\_\+t Eugene\+::\+Dx12\+Shader\+Resource\+Views\+::\+Get\+Img (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Eugene\+::\+Shader\+Resource\+Views}}.
+
+\mbox{\Hypertarget{class_eugene_1_1_dx12_shader_resource_views_ac5d9eb528ec9efd33bb3c47b37876a61}\label{class_eugene_1_1_dx12_shader_resource_views_ac5d9eb528ec9efd33bb3c47b37876a61}} 
+\index{Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}!GetViews@{GetViews}}
+\index{GetViews@{GetViews}!Eugene::Dx12ShaderResourceViews@{Eugene::Dx12ShaderResourceViews}}
+\doxysubsubsection{\texorpdfstring{GetViews()}{GetViews()}}
+{\footnotesize\ttfamily void $\ast$ Eugene\+::\+Dx12\+Shader\+Resource\+Views\+::\+Get\+Views (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_eugene_1_1_shader_resource_views}{Eugene\+::\+Shader\+Resource\+Views}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Source/\+Graphics/\+Direct\+X12/Dx12\+Shader\+Resource\+Views.\+h\item 
+C\+:/\+Users/eugen/\+Desktop/\+Programming/\+Eugene\+Lib/\+Source/\+Graphics/\+Direct\+X12/Dx12\+Shader\+Resource\+Views.\+cpp\end{DoxyCompactItemize}

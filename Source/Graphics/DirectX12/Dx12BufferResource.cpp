@@ -4,6 +4,7 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Graphics/Image.h"
+#include "Dx12Graphics.h"
 
 Eugene::Dx12BufferResource::Dx12BufferResource(ID3D12Device* device, std::uint64_t size) :
 	BufferResource{}
@@ -45,13 +46,20 @@ std::uint64_t Eugene::Dx12BufferResource::GetSize(void)
 Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device* device, Image& image)
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+	auto subResource = std::min(std::max(static_cast<int>(image.GetInfo().mipLevels) , 1) * static_cast<int>(image.GetInfo().arraySize), static_cast<int>(maxSubResource));
 	// アップロード先のdescをそうていする
-	D3D12_PLACED_SUBRESOURCE_FOOTPRINT  footprint{};
+	std::array<D3D12_PLACED_SUBRESOURCE_FOOTPRINT,maxSubResource>  footprint;
+	
 	std::uint64_t totalSize;
-	std::uint64_t rowSize;
-	std::uint32_t numRaw;
-	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(image.GetInfo().format), image.GetInfo().width, image.GetInfo().height);
-	device->GetCopyableFootprints(&footDesc, 0, 1, 0, &footprint, &numRaw, &rowSize, &totalSize);
+
+	std::array<std::uint64_t,maxSubResource> rowSize;
+	
+	std::array<std::uint32_t,maxSubResource> numRaw;
+	
+
+	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(image.GetInfo().format)));
+	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, image.GetInfo().width, image.GetInfo().height, image.GetInfo().arraySize, image.GetInfo().mipLevels);
+	device->GetCopyableFootprints(&footDesc, 0, subResource, 0, footprint.data(), numRaw.data(), rowSize.data(), &totalSize);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(totalSize);
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
@@ -67,12 +75,29 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device*
 
 	std::uint8_t* ptr{ nullptr };
 	resource_->Map(0, nullptr, reinterpret_cast<void**>(&ptr));
-	auto texPtr = image.GetData();
-	for (std::uint32_t i = 0u; i < numRaw; i++)
+	
+	// array分
+	for (std::uint32_t j = 0ull; j < image.GetInfo().arraySize; j++)
 	{
-		std::copy_n(texPtr, rowSize, ptr);
-		ptr += footprint.Footprint.RowPitch;
-		texPtr += rowSize;
+		// ミップマップ分
+		for (std::uint32_t m = 0; m < image.GetInfo().mipLevels; m++)
+		{
+			// 画像データの先頭ポインタを取得する
+			auto texPtr = image.GetData(j,m);
+
+			// インデックスを計算
+			auto idx = j * image.GetInfo().mipLevels + m;
+
+			// rawを取得
+			auto tmpNumRaw = numRaw[idx];
+			for (std::uint32_t i = 0u; i < tmpNumRaw; i++)
+			{
+				// コピー
+				std::copy_n(texPtr, rowSize[idx], ptr);
+				ptr += footprint[idx].Footprint.RowPitch;
+				texPtr += rowSize[idx];
+			}
+		}
 	}
 	resource_->Unmap(0, nullptr);
 }

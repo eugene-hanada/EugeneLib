@@ -1,15 +1,19 @@
-#include "Dx12ImageResource.h"
+﻿#include "Dx12ImageResource.h"
 #include <dxgi1_6.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Common/EugeneLibException.h"
+#include "Dx12Graphics.h"
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const TextureInfo& info)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const TextureInfo& info) :
+	ImageResource{info.format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-		static_cast<DXGI_FORMAT>(info.format)
+		static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(info.format)))
 		, static_cast<std::uint32_t>(info.width),
-		static_cast<std::uint32_t>(info.height)
+		static_cast<std::uint32_t>(info.height),
+		info.arraySize,
+		info.mipLevels
 	);
 	if (FAILED(device->CreateCommittedResource(
 		&heapProp,
@@ -20,14 +24,16 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�e�N�X�`�����\�[�X�쐬");
+		throw EugeneLibException("テクスチャ用リソース生成失敗");
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float, 4> clearColor)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float, 4> clearColor) :
+	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
+	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
 	resourceDesc.Alignment = 65536;
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
 	resourceDesc.MipLevels = 0;
@@ -41,14 +47,16 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�����_�[�^�[�Q�b�g�p���\�[�X�̍쐬�Ɏ��s");
+		throw EugeneLibException("レンダーターゲット用リソース生成失敗");
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue)
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue) :
+	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(static_cast<DXGI_FORMAT>(format), static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
+	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 	CD3DX12_CLEAR_VALUE clear{ DXGI_FORMAT_D32_FLOAT, clearValue, 0 };
 	if (FAILED(device->CreateCommittedResource(
@@ -60,23 +68,20 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("�f�v�X�p���\�[�X�̍쐬�Ɏ��s");
+		throw EugeneLibException("デプス用リソース生成失敗");
 	}
 }
 
 
-Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx)
+Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx) :
+	ImageResource{Format::R8G8B8A8_UNORM}
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("�X���b�v�`�F�C���p�o�b�t�@�̍쐬�Ɏ��s");
+		throw EugeneLibException("スワップチェイン用リソース生成失敗");
 	}
 }
 
-Eugene::Format Eugene::Dx12ImageResource::GetFormat(void) const
-{
-	return static_cast<Format>(resource_->GetDesc().Format);
-}
 
 Eugene::Vector2I Eugene::Dx12ImageResource::GetSize(void)
 {

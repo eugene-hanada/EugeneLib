@@ -5,9 +5,7 @@ project(EugeneLib)
 set(CMAKE_CXX_STANDARD 23)
 
 option(USE_IMGUI "Imguiを使用するか?" OFF)
-
-# visual stdio用にunicodeを使うように
-add_definitions(-D_UNICODE -DUNICODE)
+option(USE_VULKAN "Vulkanを使用するか?" OFF)
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -78,8 +76,9 @@ set(SoundSource
     Source/Sound/Sound.cpp
     Source/Sound/SoundBase.cpp
     Source/Sound/SoundSpeaker.cpp
+    Source/Sound/SoundStreamSpeaker.cpp
     Source/Sound/SoundControl.cpp
-     Source/Sound/Sound3DControl.cpp
+    Source/Sound/Sound3DControl.cpp
     Source/Sound/Wave.cpp
 )
 
@@ -119,14 +118,22 @@ if (MSVC)
             Source/Graphics/DirectX12/Dx12Views.cpp
             Source/Graphics/DirectX12/Dx12Sampler.cpp
             Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-            Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
         )
+
+        if (USE_IMGUI)
+              set(GraphicsApiSource
+              ${GraphicsApiSource}
+              Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+              )
+        endif()
+
     endif()
 
     # サウンド系の実装クラスのソースファイルをセット
     set(SoundApiSource
         Source/Sound/Xaudio2/Xa2Sound.cpp
         Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+        Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
         Source/Sound/Xaudio2/Xa2SoundControl.cpp
         Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
     )
@@ -141,9 +148,15 @@ endif()
 
 
 
+# ランタイムライブラリを静的にリンクする
+if(MSVC)
+	# visual stdio用にunicodeを使うように
+	add_definitions(-D_UNICODE -DUNICODE)
 
+	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
 
-
+# ライブラリを作る
 add_library(EugeneLib STATIC 
     ${SystemSource}
      ${SystemApiSource}
@@ -155,15 +168,13 @@ add_library(EugeneLib STATIC
     ${SoundApiSource}
 )
 
-# ランタイムライブラリを静的にリンクするように
-set_property(TARGET EugeneLib PROPERTY
-  MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-)
-
 
 
 if (USE_IMGUI)
     target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
     target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 endif()
+
+ target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
+  
 

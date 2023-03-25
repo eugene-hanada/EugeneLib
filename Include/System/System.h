@@ -69,6 +69,14 @@ namespace Eugene
 		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum = 2) const& = 0;
 
 		/// <summary>
+		/// Graphicsを生成する
+		/// </summary>
+		/// <param name="bufferNum"> バックバッファの数 </param>
+		/// <param name="maxSize"> GpuEngineの一度に処理するCommandListの数 </param>
+		/// <returns></returns>
+		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
+
+		/// <summary>
 		/// マウスの情報を取得する
 		/// </summary>
 		/// <param name="outMouse"></param>

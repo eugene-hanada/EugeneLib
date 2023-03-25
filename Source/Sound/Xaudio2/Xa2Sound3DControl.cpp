@@ -24,7 +24,7 @@ Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
 	submix_->DestroyVoice();
 }
 
-void Eugene::Xa2Sound3DControl::Update3DSound(
+void Eugene::Xa2Sound3DControl::Set3DSound(
 	const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity,
 	const Vector3& emitterFront, const Vector3& emitterTop, const Vector3& emitterPos, const Vector3& emitterVelocity)
 {

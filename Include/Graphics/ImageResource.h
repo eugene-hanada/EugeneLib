@@ -10,10 +10,27 @@ namespace Eugene
 	{
 	public:
 		virtual ~ImageResource();
-		virtual Format GetFormat(void) const = 0;
+
+		/// <summary>
+		/// フォーマットの取得
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		Format GetFormat(void) const { return format_; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		virtual Vector2I GetSize(void) = 0;
 	protected:
-		ImageResource();
+		ImageResource(Format format);
+
+		/// <summary>
+		/// フォーマット
+		/// </summary>
+		Format format_;
 	private:
 	};
 }

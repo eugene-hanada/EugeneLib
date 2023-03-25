@@ -1,4 +1,4 @@
-#include "../../Include/Common/Debug.h"
+ï»¿#include "../../Include/Common/Debug.h"
 
 #ifdef _DEBUG
 
@@ -7,7 +7,7 @@
 #include <filesystem>
 #include <cuchar>
 #include <chrono>
-#include <spanstream>
+#include <thread>
 #ifdef _WIN64
 #include <Windows.h>
 FILE* fp;
@@ -26,18 +26,19 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 
 void Eugene::Debug::Log(const std::string& str)
 {
-	// ƒƒbƒN
+	// ãƒ­ãƒƒã‚¯
 	binarySemphore_.acquire();
 
-	// Œ»İ‚ÌŠÔ‚ğƒ~ƒŠ•b‚Åæ“¾
+	// ç¾åœ¨ã®æ™‚é–“ã‚’ãƒŸãƒªç§’ã§å–å¾—
 	auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
 
-	// ƒoƒbƒtƒ@‚ğ—˜—p‚µ‚½ƒXƒgƒŠ[ƒ€‚©‚çƒXƒŒƒbƒhID‚ğ•¶š—ñ‚É•ÏŠ·
-	std::spanstream s{buff};
-	s << std::this_thread::get_id();
+	// ãƒãƒƒãƒ•ã‚¡ã‚’åˆ©ç”¨ã—ãŸã‚¹ãƒˆãƒªãƒ¼ãƒ ã‹ã‚‰ã‚¹ãƒ¬ãƒƒãƒ‰IDã‚’æ–‡å­—åˆ—ã«å¤‰æ›
+	oss_ << std::this_thread::get_id();
 
-	// ŠÔ‚ÆƒXƒŒƒbƒhID‚Æstr‚ğo—Í
-	std::cout << std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, std::string_view{ buff.data(),buff.size()},str);
+	// æ™‚é–“ã¨ã‚¹ãƒ¬ãƒƒãƒ‰IDã¨strã‚’å‡ºåŠ›
+	std::cout << std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, oss_.str(), str);
+
+	oss_.seekp(0);
 	binarySemphore_.release();
 }
 
@@ -45,15 +46,16 @@ Eugene::Debug::Debug() :
 	binarySemphore_{1}
 {
 #ifdef _WIN64
+
+	// ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’é–‹ã
 	AllocConsole();
 	freopen_s(&fp, "CONOUT$", "w", stdout);
 	freopen_s(&fp, "CONIN$", "r", stdin);
-
-	// ƒXƒŒƒbƒhID‚ğ•¶š—ñ‚É•ÏŠ·‚µ‚Äƒoƒbƒtƒ@‚ÌƒTƒCƒY‚É‚·‚é
-	std::ostringstream oss;
-	oss << std::this_thread::get_id();
-	buff.resize(oss.str().size());
 #endif
+
+	// ã‚¹ãƒ¬ãƒƒãƒ‰IDã‚’æ–‡å­—åˆ—ã«å¤‰æ›ã—ã¦ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºã«ã™ã‚‹
+	oss_ << std::this_thread::get_id();
+	oss_.seekp(0);
 }
 
 Eugene::Debug::~Debug()

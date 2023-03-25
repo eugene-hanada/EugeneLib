@@ -1,0 +1,28 @@
+\hypertarget{_sound_stream_speaker_8h_source}{}\doxysection{Sound\+Stream\+Speaker.\+h}
+\label{_sound_stream_speaker_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Sound/SoundStreamSpeaker.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Sound/SoundStreamSpeaker.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}SoundBase.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{class }SoundControl;}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_sound_stream_speaker}{SoundStreamSpeaker}} :}
+\DoxyCodeLine{10         \textcolor{keyword}{public} \mbox{\hyperlink{class_eugene_1_1_sound_base}{SoundBase}}}
+\DoxyCodeLine{11     \{}
+\DoxyCodeLine{12     \textcolor{keyword}{public}:}
+\DoxyCodeLine{13         \textcolor{keyword}{virtual} \mbox{\hyperlink{class_eugene_1_1_sound_stream_speaker}{\string~SoundStreamSpeaker}}();}
+\DoxyCodeLine{14         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} Play(\textcolor{keywordtype}{void}) = 0;}
+\DoxyCodeLine{15         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} Stop(\textcolor{keywordtype}{void}) = 0;}
+\DoxyCodeLine{16         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} IsEnd(\textcolor{keywordtype}{void}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{17         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} SetPitchRate(\textcolor{keywordtype}{float} rate) = 0;}
+\DoxyCodeLine{18         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} SetOutput(\mbox{\hyperlink{class_eugene_1_1_sound_control}{SoundControl}}\& control) = 0;}
+\DoxyCodeLine{19      \textcolor{keyword}{protected}:}
+\DoxyCodeLine{20          std::ifstream file\_;}
+\DoxyCodeLine{21     \};}
+\DoxyCodeLine{22 \}}
+
+\end{DoxyCode}

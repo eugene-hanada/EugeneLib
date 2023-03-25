@@ -2,7 +2,7 @@
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
-#include "../../../Include/Graphics/Graphics.h"
+#include "Dx12Graphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
 Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
@@ -120,7 +120,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	{
 		inputLayout[i].SemanticName = layout[i].semanticName_;
 		inputLayout[i].SemanticIndex = layout[i].semanticIdx_;
-		inputLayout[i].Format = static_cast<DXGI_FORMAT>(layout[i].format_);
+		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(layout[i].format_)));
 		inputLayout[i].InputSlot = layout[i].slot_;
 		inputLayout[i].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 		inputLayout[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
@@ -153,7 +153,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	// レンダーターゲット設定
 	for (std::uint64_t i = 0; i < rendertarges.size(); i++)
 	{
-		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(rendertarges[i].format_);
+		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(rendertarges[i].format_)));
 		switch (rendertarges[i].blendType_)
 		{
 			using enum BlendType;

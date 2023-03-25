@@ -28,4 +28,5 @@
 #include "Sound/Wave.h"
 #include "Sound/SoundControl.h"
 #include "Sound/Sound3DControl.h"
+#include "Sound/SoundStreamSpeaker.h"
 

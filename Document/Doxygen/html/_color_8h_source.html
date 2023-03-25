@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Include/Color.h ソースファイル</title>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Color.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,54 +69,54 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_441f5a6782dcabbe74e32fbfbb5693d8.html">Include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_856524284ebe840938865dc061f982fb.html">Include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Color.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_color_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_math_concepts_8h.html">Math/MathConcepts.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Math/MathConcepts.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="namespace_eugene_lib.html">    6</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>Eugene</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    template&lt;ValueC T, size_t Num, T MaxValue = static_cast&lt;T&gt;(1), <a class="code hl_enumvalue" href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> MinValue = <span class="keyword">static_cast&lt;</span><a class="code hl_enumvalue" href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a><span class="keyword">&gt;</span>(0)&gt;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html">    9</a></span>    <span class="keyword">class</span> <a class="code hl_class" href="class_eugene_lib_1_1_color.html">Color</a></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    template&lt;ValueC T, std::uint64_t Num, T MaxValue = static_cast&lt;T&gt;(1), T MinValue = <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(0)&gt;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_eugene_1_1_color.html">    9</a></span>    <span class="keyword">class</span> <a class="code hl_class" href="class_eugene_1_1_color.html">Color</a></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    {</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#a9f40c3a6d726d01fce3d4a1c309b4806">   12</a></span>        <a class="code hl_function" href="class_eugene_lib_1_1_color.html#a9f40c3a6d726d01fce3d4a1c309b4806">Color</a>()</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_class" href="class_eugene_1_1_color.html">Color</a>()</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            color_.fill(MaxValue);</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        }</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#a28e32eb12d407b96ea2520ae967e6be6">   17</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="class_eugene_lib_1_1_color.html#a28e32eb12d407b96ea2520ae967e6be6">SetValue</a>(<span class="keywordtype">size_t</span> idx, <span class="keyword">const</span> <a class="code hl_enumvalue" href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&amp; value)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">void</span> SetValue(std::uint64_t idx, <span class="keyword">const</span> T&amp; value)</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            color_[idx] = std::clamp(value, MinValue, MaxValue);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#aa0cf4367d40c1c45b414420c66591f08">   22</a></span>        <span class="keyword">const</span> std::array&lt;T, Num&gt;&amp; <a class="code hl_function" href="class_eugene_lib_1_1_color.html#aa0cf4367d40c1c45b414420c66591f08">ToArray</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">const</span> std::array&lt;T, Num&gt;&amp; ToArray(<span class="keywordtype">void</span>) <span class="keyword">const</span>&amp;</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        {</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordflow">return</span> color_;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#aeff7f2e17e10604aa5d3b7af3fd60fd4">   27</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_eugene_lib_1_1_color.html#aeff7f2e17e10604aa5d3b7af3fd60fd4">GetSize</a>(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">constexpr</span> std::uint64_t GetSize(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">        </span>{</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> Num;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#a1bff5de9bd04ba57dcded52d4c4602d6">   32</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_eugene_lib_1_1_color.html#a1bff5de9bd04ba57dcded52d4c4602d6">GetMax</a>(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keyword">constexpr</span> std::uint64_t GetMax(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">        </span>{</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> MaxValue;</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#aacf41b58028e26ae41aa25c64ff56bd9">   36</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="class_eugene_lib_1_1_color.html#aacf41b58028e26ae41aa25c64ff56bd9">GetMin</a>(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keyword">constexpr</span> std::uint64_t GetMin(<span class="keywordtype">void</span>)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">        </span>{</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordflow">return</span> MinValue;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        }</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_color.html#ade24b949aac9f67d61d5ae86d6742c7c">   41</a></span>        <span class="keyword">const</span> <a class="code hl_enumvalue" href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&amp; <a class="code hl_function" href="class_eugene_lib_1_1_color.html#ade24b949aac9f67d61d5ae86d6742c7c">operator[]</a>(<span class="keywordtype">size_t</span> idx)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keyword">const</span> T&amp; operator[](std::uint64_t idx)</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        {</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="keywordflow">return</span> color_[idx];</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        }</div>
@@ -125,22 +125,12 @@ $(function() {
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        std::array&lt;T, Num&gt; color_;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="namespace_eugene_lib.html#a129d4fa1b1b6052493d535b0037706ca">   50</a></span>    <span class="keyword">using </span><a class="code hl_class" href="class_eugene_lib_1_1_color.html">ColorRGBA</a> = <a class="code hl_class" href="class_eugene_lib_1_1_color.html">Color&lt;float, 4&gt;</a>;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="namespace_eugene_lib.html#a6c300659e2bcb376d0b08ffbb8ce98c3">   51</a></span>    <span class="keyword">using </span><a class="code hl_class" href="class_eugene_lib_1_1_color.html">ColorRGB</a> = <a class="code hl_class" href="class_eugene_lib_1_1_color.html">Color&lt;float, 3&gt;</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">using </span><a class="code hl_class" href="class_eugene_1_1_color.html">ColorRGBA</a> = <a class="code hl_class" href="class_eugene_1_1_color.html">Color&lt;float, 4&gt;</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">using </span><a class="code hl_class" href="class_eugene_1_1_color.html">ColorRGB</a> = <a class="code hl_class" href="class_eugene_1_1_color.html">Color&lt;float, 3&gt;</a>;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
-<div class="ttc" id="a_math_concepts_8h_html"><div class="ttname"><a href="_math_concepts_8h.html">MathConcepts.h</a></div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html"><div class="ttname"><a href="class_eugene_lib_1_1_color.html">EugeneLib::Color</a></div><div class="ttdef"><b>Definition:</b> Color.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_a1bff5de9bd04ba57dcded52d4c4602d6"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#a1bff5de9bd04ba57dcded52d4c4602d6">EugeneLib::Color::GetMax</a></div><div class="ttdeci">constexpr size_t GetMax(void) const</div><div class="ttdef"><b>Definition:</b> Color.h:32</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_a28e32eb12d407b96ea2520ae967e6be6"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#a28e32eb12d407b96ea2520ae967e6be6">EugeneLib::Color::SetValue</a></div><div class="ttdeci">void SetValue(size_t idx, const T &amp;value)</div><div class="ttdef"><b>Definition:</b> Color.h:17</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_a9f40c3a6d726d01fce3d4a1c309b4806"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#a9f40c3a6d726d01fce3d4a1c309b4806">EugeneLib::Color::Color</a></div><div class="ttdeci">Color()</div><div class="ttdef"><b>Definition:</b> Color.h:12</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_aa0cf4367d40c1c45b414420c66591f08"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#aa0cf4367d40c1c45b414420c66591f08">EugeneLib::Color::ToArray</a></div><div class="ttdeci">const std::array&lt; T, Num &gt; &amp; ToArray(void) const &amp;</div><div class="ttdef"><b>Definition:</b> Color.h:22</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_aacf41b58028e26ae41aa25c64ff56bd9"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#aacf41b58028e26ae41aa25c64ff56bd9">EugeneLib::Color::GetMin</a></div><div class="ttdeci">constexpr size_t GetMin(void) const</div><div class="ttdef"><b>Definition:</b> Color.h:36</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_ade24b949aac9f67d61d5ae86d6742c7c"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#ade24b949aac9f67d61d5ae86d6742c7c">EugeneLib::Color::operator[]</a></div><div class="ttdeci">const T &amp; operator[](size_t idx)</div><div class="ttdef"><b>Definition:</b> Color.h:41</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_color_html_aeff7f2e17e10604aa5d3b7af3fd60fd4"><div class="ttname"><a href="class_eugene_lib_1_1_color.html#aeff7f2e17e10604aa5d3b7af3fd60fd4">EugeneLib::Color::GetSize</a></div><div class="ttdeci">constexpr size_t GetSize(void) const</div><div class="ttdef"><b>Definition:</b> Color.h:27</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html_aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3"><div class="ttname"><a href="namespace_eugene_lib.html#aeb33d5971e3f70f9f415e54020ade5c3ab9ece18c950afbfa6b0fdbfa4ff731d3">EugeneLib::KeyID::T</a></div><div class="ttdeci">@ T</div></div>
+<div class="ttc" id="aclass_eugene_1_1_color_html"><div class="ttname"><a href="class_eugene_1_1_color.html">Eugene::Color</a></div><div class="ttdef"><b>Definition:</b> Color.h:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

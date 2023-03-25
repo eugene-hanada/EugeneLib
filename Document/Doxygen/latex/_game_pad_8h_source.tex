@@ -1,0 +1,64 @@
+\hypertarget{_game_pad_8h_source}{}\doxysection{Game\+Pad.\+h}
+\label{_game_pad_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/GamePad.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/GamePad.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <array>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../Math/Vector2.h"{}}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7     \textcolor{keyword}{enum class} PadID}
+\DoxyCodeLine{8     \{}
+\DoxyCodeLine{9         UP,}
+\DoxyCodeLine{10         DOWN,}
+\DoxyCodeLine{11         LEFT,}
+\DoxyCodeLine{12         RIGHT,}
+\DoxyCodeLine{13         START,}
+\DoxyCodeLine{14         BACK,}
+\DoxyCodeLine{15         LEFT\_THUMB,}
+\DoxyCodeLine{16         RIGHT\_THUMB,}
+\DoxyCodeLine{17         LEFT\_TRIGGER,}
+\DoxyCodeLine{18         RIGHT\_TRIGGER,}
+\DoxyCodeLine{19         RESERVE\_1,}
+\DoxyCodeLine{20         RESERVE\_2,}
+\DoxyCodeLine{21         A,}
+\DoxyCodeLine{22         B,}
+\DoxyCodeLine{23         X,}
+\DoxyCodeLine{24         Y}
+\DoxyCodeLine{25     \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keyword}{constexpr} PadID begin(PadID \textcolor{keywordtype}{id})}
+\DoxyCodeLine{28     \{}
+\DoxyCodeLine{29         \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}PadID\textcolor{keyword}{>}(0);}
+\DoxyCodeLine{30     \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keyword}{constexpr} PadID end(PadID \textcolor{keywordtype}{id})}
+\DoxyCodeLine{33     \{}
+\DoxyCodeLine{34         \textcolor{keywordflow}{return} PadID::Y;}
+\DoxyCodeLine{35     \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keyword}{constexpr} PadID operator*(PadID \textcolor{keywordtype}{id})}
+\DoxyCodeLine{38     \{}
+\DoxyCodeLine{39         \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{constexpr} PadID operator++(PadID\& \textcolor{keywordtype}{id})}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44         \textcolor{keywordflow}{return} \textcolor{keywordtype}{id} = PadID(std::underlying\_type<PadID>::type(\textcolor{keywordtype}{id}) + 1);}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{class }\mbox{\hyperlink{class_eugene_1_1_game_pad}{GamePad}}}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49     \textcolor{keyword}{public}:}
+\DoxyCodeLine{50         \mbox{\hyperlink{class_eugene_1_1_game_pad}{GamePad}}();}
+\DoxyCodeLine{51         \textcolor{keywordtype}{bool} IsHit(PadID \textcolor{keywordtype}{id}) \textcolor{keyword}{const};}
+\DoxyCodeLine{52         \textcolor{keywordtype}{float} leftTrigger\_;}
+\DoxyCodeLine{53         \textcolor{keywordtype}{float} rightTrigger\_;}
+\DoxyCodeLine{54         \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} leftThumb\_;}
+\DoxyCodeLine{55         \mbox{\hyperlink{class_eugene_1_1_vector2_tmp}{Vector2}} rightThumb\_;}
+\DoxyCodeLine{56         std::array<bool, 16> buttons;}
+\DoxyCodeLine{57     \};}
+\DoxyCodeLine{58 \}}
+
+\end{DoxyCode}

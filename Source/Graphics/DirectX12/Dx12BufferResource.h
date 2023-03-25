@@ -19,6 +19,10 @@ namespace Eugene
 		bool CanMap(void) const final;
 		void* GetResource(void) const final;
 		std::uint64_t GetSize(void) final;
+
+		/// <summary>
+		/// リソース
+		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
 	};
 
@@ -36,6 +40,10 @@ namespace Eugene
 		bool CanMap(void) const final;
 		void* GetResource(void) const final;
 		std::uint64_t GetSize(void) final;
+
+		/// <summary>
+		/// リソース
+		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
 	};
 

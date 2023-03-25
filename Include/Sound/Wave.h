@@ -10,6 +10,10 @@ namespace Eugene
 	class Wave
 	{
 	public:
+		static constexpr int fmt = std::endian::native == std::endian::big ? 'fmt ' : ' tmf';
+		static constexpr int data = std::endian::native == std::endian::big ? 'data' : 'atad';
+
+
 		Wave(const std::filesystem::path& path);
 
 		/// <summary>
@@ -37,6 +41,14 @@ namespace Eugene
 			return exData_;
 		}
 
+		// RiFFチャンク
+		struct RIFF
+		{
+			char id[4];
+			unsigned int size;
+			char type[4];
+		};
+
 	private:
 
 		/// <summary>
@@ -59,14 +71,6 @@ namespace Eugene
 		SoundFormat fmt_;
 
 		SoundFormatEx exData_;
-
-		// RiFFチャンク
-		struct RIFF
-		{
-			char id[4];
-			unsigned int size;
-			char type[4];
-		};
 
 	};
 }

@@ -127,6 +127,14 @@ namespace Eugene
 		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) = 0;
 
 		/// <summary>
+		/// ビューにある指定の範囲のレンダーターゲットをセットする
+		/// </summary>
+		/// <param name="views"> レンダーターゲットのビュー </param>
+		/// <param name="startIdx"> 開始インデックス </param>
+		/// <param name="endIdx"> 終了インデックス </param>
+		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) = 0;
+
+		/// <summary>
 		/// レンダーターゲットをセットする(RenderTargetViewsにあるものすべてをセットする)
 		/// </summary>
 		/// <param name="views"> レンダーターゲットビュー </param>
@@ -167,6 +175,30 @@ namespace Eugene
 		/// </summary>
 		/// <param name="resource"> レンダーターゲット </param>
 		virtual void TransitionRenderTargetEnd(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// レンダーターゲットをシェーダ使用状態にする
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionShaderResourceBegin(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// レンダーターゲットをシェーダー使用状態から終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionShaderResourceEnd(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// デプスを使用状態にする
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionDepthBegin(ImageResource& resource) = 0;
+
+		/// <summary>
+		/// デプス使用状態から終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionDepthEnd(ImageResource& resource) = 0;
 
 		/// <summary>
 		/// 深度バッファをクリアする

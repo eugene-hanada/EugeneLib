@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />
     <ClCompile Include="Source\EugeneLib.cpp" />
@@ -48,8 +43,6 @@
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\Dll.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
-    <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\Graphics\Sampler.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
@@ -58,6 +51,8 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
     <ClCompile Include="Source\Graphics\ImageResource.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />
+    <ClCompile Include="Source\Sound\SoundStreamSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -113,8 +108,6 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
     <ClInclude Include="Source\System\Windows\Dll.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
-    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
-    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="Include\Graphics\Sampler.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
     <ClInclude Include="Include\Graphics\SamplerViews.h" />
@@ -123,6 +116,9 @@
     <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
     <ClInclude Include="Include\Graphics\ImageResource.h" />
     <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h" />
+    <ClInclude Include="Include\Sound\SoundStreamSpeaker.h" />
+    <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.h" />
+    <ClInclude Include="Source\Graphics\DdsLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

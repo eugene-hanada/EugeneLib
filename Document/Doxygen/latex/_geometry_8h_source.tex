@@ -1,0 +1,154 @@
+\hypertarget{_geometry_8h_source}{}\doxysection{Geometry.\+h}
+\label{_geometry_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Math/Geometry.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/Math/Geometry.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}../ThirdParty/DirectXMath/DirectXMath.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}Vector2.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}Vector3.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }Eugene}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10     \textcolor{comment}{// Vector2Tmpのx=0,y=0を表す定数}}
+\DoxyCodeLine{11     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{12     \textcolor{keyword}{constexpr} Vector2Tmp<T> zeroVector2\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{comment}{// Vector2Tmpの上方向x=0,y=-\/1を表す定数}}
+\DoxyCodeLine{15     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{16     \textcolor{keyword}{constexpr} Vector2Tmp<T> upVector2\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(-\/1) \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{comment}{// Vector2Tmpの下方向x=0,y=1を表す定数}}
+\DoxyCodeLine{19     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{20     \textcolor{keyword}{constexpr} Vector2Tmp<T> downVector2\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1) \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{comment}{// Vector2Tmpの右方向x=1,y=0を表す定数}}
+\DoxyCodeLine{23     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{24     \textcolor{keyword}{constexpr} Vector2Tmp<T> rightVector2\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{comment}{// Vector2Tmpの上方向x=-\/1,y=0を表す定数}}
+\DoxyCodeLine{27     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{28     \textcolor{keyword}{constexpr} Vector2Tmp<T> leftVector2\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(-\/1),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{31     \textcolor{keyword}{constexpr} Vector3Tmp<T> zeroVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{34     \textcolor{keyword}{constexpr} Vector3Tmp<T> upVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{37     \textcolor{keyword}{constexpr} Vector3Tmp<T> downVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(-\/1) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{40     \textcolor{keyword}{constexpr} Vector3Tmp<T> forwardVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1) \};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{43     \textcolor{keyword}{constexpr} Vector3Tmp<T> backVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(-\/1) \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{46     \textcolor{keyword}{constexpr} Vector3Tmp<T> leftVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(-\/1),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{49     \textcolor{keyword}{constexpr} Vector3Tmp<T> rightVector3\{ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(1),\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) ,\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(0) \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{56     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{57     \textcolor{keyword}{constexpr} T Square(T val)}
+\DoxyCodeLine{58     \{}
+\DoxyCodeLine{59         \textcolor{keywordflow}{return} val * val;}
+\DoxyCodeLine{60     \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{68     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{69     \textcolor{keyword}{constexpr} T Dot(\textcolor{keyword}{const} Vector2Tmp<T>\& lVec, \textcolor{keyword}{const} Vector2Tmp<T>\& rVec)}
+\DoxyCodeLine{70     \{}
+\DoxyCodeLine{71         \textcolor{keywordflow}{return} lVec.x * rVec.x + lVec.y * rVec.y;}
+\DoxyCodeLine{72     \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{81     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{82     \textcolor{keyword}{constexpr} T Cross(\textcolor{keyword}{const} Vector2Tmp<T>\& lVec, \textcolor{keyword}{const} Vector2Tmp<T>\& rVec)}
+\DoxyCodeLine{83     \{}
+\DoxyCodeLine{84         \textcolor{keywordflow}{return} lVec.x * rVec.y -\/ lVec.y * rVec.x;}
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// 円周率}}
+\DoxyCodeLine{89     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{90     \textcolor{keyword}{constexpr} T pi = \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(3.1415926535897932384626433832795);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{comment}{// 円周率*2}}
+\DoxyCodeLine{93     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{94     \textcolor{keyword}{constexpr} T pi2 = pi<T> *\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(2.0);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{101     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{102     \textcolor{keyword}{constexpr} T Deg2Rad(\textcolor{keyword}{const} T\& deg)}
+\DoxyCodeLine{103     \{}
+\DoxyCodeLine{104         \textcolor{keywordflow}{return} deg * (pi<T> / \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(180));}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{112     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{113     \textcolor{keyword}{constexpr} T Rad2Deg(\textcolor{keyword}{const} T\& rad)}
+\DoxyCodeLine{114     \{}
+\DoxyCodeLine{115         \textcolor{keywordflow}{return} rad * (\textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(180) / pi<T>);}
+\DoxyCodeLine{116     \}}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{125     \textcolor{keywordtype}{float} GetNormalizedAngle(\textcolor{keywordtype}{float} angle, \textcolor{keywordtype}{float} valMin = 0.0f, \textcolor{keywordtype}{float} valMax = pi2<float>);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{keywordtype}{double} GetNormalizedAngle(\textcolor{keywordtype}{double} angle, \textcolor{keywordtype}{double} valMin = 0.0f, \textcolor{keywordtype}{double} valMax = pi2<double>);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{//}}
+\DoxyCodeLine{130     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{float} Clamp(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} minVal, \textcolor{keywordtype}{float} maxVal)}
+\DoxyCodeLine{131     \{}
+\DoxyCodeLine{132         \textcolor{keywordflow}{return} std::clamp(val, minVal, maxVal);}
+\DoxyCodeLine{133     \}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{139     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{140     T GetAngle2Vector(\textcolor{keyword}{const} Vector2Tmp<T>\& v1, \textcolor{keyword}{const} Vector2Tmp<T>\& v2)}
+\DoxyCodeLine{141     \{}
+\DoxyCodeLine{142         \textcolor{keyword}{auto} tmpv1 = v1.Normalized();}
+\DoxyCodeLine{143         \textcolor{keyword}{auto} tmpv2 = v2.Normalized();}
+\DoxyCodeLine{144         \textcolor{keyword}{auto} dot = Dot(tmpv1, tmpv2);}
+\DoxyCodeLine{145         \textcolor{keyword}{auto} cross = Cross(tmpv1, tmpv2);}
+\DoxyCodeLine{146         \textcolor{keyword}{auto} angle = atan2(cross, dot);}
+\DoxyCodeLine{147         \textcolor{keywordflow}{if} (angle < 0)}
+\DoxyCodeLine{148         \{}
+\DoxyCodeLine{149             angle += pi<float> *2.0f;}
+\DoxyCodeLine{150         \}}
+\DoxyCodeLine{151         \textcolor{keywordflow}{return} angle;}
+\DoxyCodeLine{152     \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 }
+\DoxyCodeLine{161     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{162     \textcolor{keyword}{constexpr} T Learp(\textcolor{keyword}{const} T\& a, \textcolor{keyword}{const} T\& b, \textcolor{keyword}{const} T\& t)}
+\DoxyCodeLine{163     \{}
+\DoxyCodeLine{164         \textcolor{keywordflow}{return} a + ((b -\/ a) * t);}
+\DoxyCodeLine{165     \}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{172     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{173     \textcolor{keyword}{constexpr} Vector2Tmp<T> Learp(\textcolor{keyword}{const} Vector2Tmp<T>\& a, \textcolor{keyword}{const} Vector2Tmp<T>\& b, \textcolor{keyword}{const} T\& t)}
+\DoxyCodeLine{174     \{}
+\DoxyCodeLine{175         \textcolor{keywordflow}{return} a + ((b -\/ a) * t);}
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{183     \textcolor{keyword}{template}<ValueC T>}
+\DoxyCodeLine{184     \textcolor{keyword}{constexpr} Vector2Tmp<T> Clamp(\textcolor{keyword}{const} Vector2Tmp<T>\& val, \textcolor{keyword}{const} Vector2Tmp<T>\& min, \textcolor{keyword}{const} Vector2Tmp<T>\& max)}
+\DoxyCodeLine{185     \{}
+\DoxyCodeLine{186         \textcolor{keywordflow}{return} \{ std::clamp(val.x,min.x,max.x),std::clamp(val.y,min.y,max.y) \};}
+\DoxyCodeLine{187     \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     \textcolor{keyword}{using }Matrix4x4 = DirectX::XMFLOAT4X4;}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192     \textcolor{keywordtype}{void} Get2DMatrix(Matrix4x4\& out, \textcolor{keyword}{const} Vector2\& size);}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194     \textcolor{keywordtype}{void} Get2DTranslateMatrix(Matrix4x4\& out, \textcolor{keyword}{const} Vector2\& pos);}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{keywordtype}{void} GetLookAtMatrix(Matrix4x4\& out,\textcolor{keyword}{const} Vector3\& eye, \textcolor{keyword}{const} Vector3\& target, \textcolor{keyword}{const} Vector3\& up);}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     \textcolor{keywordtype}{void} GetPerspectiveFovMatrix(Matrix4x4\& out, \textcolor{keywordtype}{float} fov, \textcolor{keywordtype}{float} aspect, \textcolor{keywordtype}{float} near = 0.1f, \textcolor{keywordtype}{float} far = 1000.0f);}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \textcolor{keywordtype}{void} GetOrthographicMatrix(Matrix4x4\& out, \textcolor{keyword}{const} Vector2\& size, \textcolor{keywordtype}{float} near = 0.1f, \textcolor{keywordtype}{float} far = 1000.0f);}
+\DoxyCodeLine{201 \};}
+
+\end{DoxyCode}

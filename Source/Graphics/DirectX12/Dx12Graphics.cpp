@@ -26,8 +26,6 @@
 #include <imgui.h>
 #include <backends/imgui_impl_dx12.h>
 
-#include <backends/imgui_impl_vulkan.h>
-
 #endif
 
 #include "../../../Include/Common/Debug.h"
@@ -35,12 +33,80 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat_
+{
+	DXGI_FORMAT_UNKNOWN,
 
+	// R32G32B32A32
+	DXGI_FORMAT_R32G32B32A32_TYPELESS,
+	DXGI_FORMAT_R32G32B32A32_FLOAT,
+	DXGI_FORMAT_R32G32B32A32_UINT,
+	DXGI_FORMAT_R32G32B32A32_SINT,
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
+	// R32G32B32
+	DXGI_FORMAT_R32G32B32_TYPELESS,
+	DXGI_FORMAT_R32G32B32_FLOAT,
+	DXGI_FORMAT_R32G32B32_UINT,
+	DXGI_FORMAT_R32G32B32_SINT,
+
+	// R32G32
+	DXGI_FORMAT_R32G32_TYPELESS,
+	DXGI_FORMAT_R32G32_FLOAT,
+	DXGI_FORMAT_R32G32_UINT,
+	DXGI_FORMAT_R32G32_SINT,
+
+	// R32
+	DXGI_FORMAT_R32_TYPELESS,
+	DXGI_FORMAT_D32_FLOAT,
+	DXGI_FORMAT_R32_FLOAT,
+	DXGI_FORMAT_R32_UINT,
+	DXGI_FORMAT_R32_SINT,
+
+	// R16G16B16A16
+	DXGI_FORMAT_R16G16B16A16_TYPELESS,
+	DXGI_FORMAT_R16G16B16A16_FLOAT,
+	DXGI_FORMAT_R16G16B16A16_UNORM,
+	DXGI_FORMAT_R16G16B16A16_UINT,
+	DXGI_FORMAT_R16G16B16A16_SNORM,
+	DXGI_FORMAT_R16G16B16A16_SINT,
+
+	// R16B16
+	DXGI_FORMAT_R16G16_TYPELESS,
+	DXGI_FORMAT_R16G16_FLOAT,
+	DXGI_FORMAT_R16G16_UNORM,
+	DXGI_FORMAT_R16G16_UINT,
+	DXGI_FORMAT_R16G16_SNORM,
+	DXGI_FORMAT_R16G16_SINT,
+
+	// R16
+	DXGI_FORMAT_R16_TYPELESS,
+	DXGI_FORMAT_R16_FLOAT,
+	DXGI_FORMAT_D16_UNORM,
+	DXGI_FORMAT_R16_UNORM,
+	DXGI_FORMAT_R16_UINT,
+	DXGI_FORMAT_R16_SNORM,
+	DXGI_FORMAT_R16_SINT,
+
+	// R8G8B8A8
+	DXGI_FORMAT_R8G8B8A8_TYPELESS,
+	DXGI_FORMAT_R8G8B8A8_UNORM,
+	DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+	DXGI_FORMAT_R8G8B8A8_UINT,
+	DXGI_FORMAT_R8G8B8A8_SNORM,
+	DXGI_FORMAT_R8G8B8A8_SINT,
+
+	//
+	DXGI_FORMAT_BC1_UNORM,
+	DXGI_FORMAT_BC2_UNORM,
+	DXGI_FORMAT_BC3_UNORM,
+	DXGI_FORMAT_BC5_UNORM,
+	DXGI_FORMAT_BC7_UNORM
+};
+
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	CreateDevice();
-	CreateSwapChain(hwnd, size,gpuEngine, bufferNum);
+	CreateSwapChain(hwnd, size,gpuEngine, bufferNum, maxNum);
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
@@ -102,6 +168,11 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{device_.Get(),formatData};
 }
 
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
+{
+	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
+}
+
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const
 {
 	return new Dx12ShaderResourceViews{ device_.Get(), size};
@@ -143,7 +214,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 
 	if (FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))))
 	{
-		throw LibInitException();
+		throw EugeneLibException("DXGIファクトリーの生成に失敗");
 	}
 
 	// アダプター列挙用リスト
@@ -199,12 +270,12 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		}
 	}
 
-	throw LibInitException();
+	throw EugeneLibException("D3D12デバイスの作成に失敗");
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
-	gpuEngine = CreateGpuEngine(10);
+	gpuEngine = CreateGpuEngine(maxNum);
 
 	// スワップチェインDESC
 	DXGI_SWAP_CHAIN_DESC1 swapchainDesc{};
@@ -248,11 +319,11 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
-		throw LibInitException();
+		throw EugeneLibException("スワップチェイン生成失敗");
 	}
 	if (FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))))
 	{
-		throw LibInitException();
+		throw EugeneLibException("スワップチェイン生成失敗");
 	}
 	swapchain->Release();
 }

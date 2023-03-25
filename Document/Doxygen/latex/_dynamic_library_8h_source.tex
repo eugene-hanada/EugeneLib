@@ -1,0 +1,27 @@
+\hypertarget{_dynamic_library_8h_source}{}\doxysection{Dynamic\+Library.\+h}
+\label{_dynamic_library_8h_source}\index{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/DynamicLibrary.h@{C:/Users/eugen/Desktop/Programming/EugeneLib/Include/System/DynamicLibrary.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <filesystem>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_dynamic_library}{DynamicLibrary}}}
+\DoxyCodeLine{9 \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_dynamic_library}{\string~DynamicLibrary}}();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{19     \textcolor{keyword}{template}<\textcolor{keyword}{typename} func>}
+\DoxyCodeLine{20     func* \mbox{\hyperlink{class_dynamic_library_a1e963d46fd91e6519a1bb71cb8af91b4}{GetFunction}}(\textcolor{keyword}{const} std::string\& functionName)}
+\DoxyCodeLine{21     \{}
+\DoxyCodeLine{22         \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}func*\textcolor{keyword}{>}(\mbox{\hyperlink{class_dynamic_library_a72252d49b488b9d5e346d6a409a152a5}{FindFunction}}(functionName));}
+\DoxyCodeLine{23     \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_dynamic_library}{DynamicLibrary}}();}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{33     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}* \mbox{\hyperlink{class_dynamic_library_a72252d49b488b9d5e346d6a409a152a5}{FindFunction}}(\textcolor{keyword}{const} std::string\& functionName) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{34 \};}
+\DoxyCodeLine{35 }
+
+\end{DoxyCode}

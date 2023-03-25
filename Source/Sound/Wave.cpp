@@ -5,10 +5,9 @@
 #include "../../Include/Common/Debug.h"
 
 Eugene::Wave::Wave(const std::filesystem::path& path) :
-	fmt_{}
+	fmt_{}, exData_{}
 {
 	std::ifstream file{ path , std::ios::binary };
-
 	if (!file)
 	{
 		throw EugeneLibException("ファイルが開けませんでした");
@@ -17,23 +16,20 @@ Eugene::Wave::Wave(const std::filesystem::path& path) :
 	RIFF riff;
 	file.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 
-	std::string id;
-	id.resize(4);
-	std::string fmtStr{ 'f','m','t',' ' };
-	std::string dataStr{ 'd','a','t','a' };
+	int id = 0;
 	while (true)
 	{
-		file.read(id.data(), 4);
+		file.read(reinterpret_cast<char*>(&id), sizeof(id));
 		if (file.eof())
 		{
 			return;
 		}
 
-		if (id == fmtStr)
+		if (id == Wave::fmt)
 		{
 			LoadFmt(file);
 		}
-		else if (id == dataStr)
+		else if (id == Wave::data)
 		{
 			LoadData(file);
 		}

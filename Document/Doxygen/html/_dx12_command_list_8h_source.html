@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12CommandList.h ソースファイル</title>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12CommandList.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,14 +69,14 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_926e273c8c7db72a32b290dc6e00b5df.html">Source</a></li><li class="navelem"><a class="el" href="dir_b7e9bc4e65ae6548aa23be9524aab2d3.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_b147292b669f0cfc7303598d1d401471.html">DirectX12</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_f40ad9b8929dc461cf57247ad0f896ed.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_e553bdf794c4412cc083042415a53b31.html">DirectX12</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Dx12CommandList.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_dx12_command_list_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;wrl.h&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;../../../Include/Graphics/CommandList.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
@@ -84,63 +84,136 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span>ID3D12CommandAllocator;</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">struct </span>ID3D12GraphicsCommandList;</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">class </span>GpuResource;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_dx12_command_list.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_dx12_command_list.html">Dx12CommandList</a> :</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_lib_1_1_command_list.html">CommandList</a></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">using </span>ComPtr = Microsoft::WRL::ComPtr&lt;T&gt;;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <a class="code hl_class" href="class_eugene_lib_1_1_dx12_command_list.html">Dx12CommandList</a>(ID3D12Device* device);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">void</span>* <a class="code hl_function" href="class_eugene_lib_1_1_dx12_command_list.html#a878cde8a288d951716277be658b6f888">GetCommandList</a>(<span class="keywordtype">void</span>) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordtype">void</span> Begin(<span class="keywordtype">void</span>) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordtype">void</span> End(<span class="keywordtype">void</span>) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordtype">void</span> SetGraphicsPipeline(<a class="code hl_class" href="class_eugene_lib_1_1_graphics_pipeline.html">GraphicsPipeline</a>&amp; gpipeline) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">void</span> SetPrimitiveType(<a class="code hl_enumeration" href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26">PrimitiveType</a> type) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordtype">void</span> SetScissorrect(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2I</a>&amp; leftTop, <span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2I</a>&amp; rightBottom) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordtype">void</span> SetViewPort(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2</a>&amp; leftTop, <span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_vector2_tmp.html">Vector2</a>&amp; size, <span class="keywordtype">float</span> depthMin = 0.0f, <span class="keywordtype">float</span> depthMax = 1.0f);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">void</span> SetVertexView(<a class="code hl_class" href="class_eugene_lib_1_1_vertex_view.html">VertexView</a>&amp; view) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">void</span> SetIndexView(<a class="code hl_class" href="class_eugene_lib_1_1_index_view.html">IndexView</a>&amp; view) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">void</span> SetShaderResourceView(<a class="code hl_class" href="class_eugene_lib_1_1_shader_resource_views.html">ShaderResourceViews</a>&amp; views, <span class="keywordtype">size_t</span> viewsIdx, <span class="keywordtype">size_t</span> paramIdx) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">void</span> Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordtype">void</span> DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, <span class="keywordtype">size_t</span> idx = 0) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; views) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; renderTargetViews, <a class="code hl_class" href="class_eugene_lib_1_1_depth_stencil_views.html">DepthStencilViews</a>&amp; depthViews, <span class="keywordtype">size_t</span> rtViewsIdx = 0, <span class="keywordtype">size_t</span> dsViewsIdx = 0)<span class="keyword">final</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordtype">void</span> ClearRenderTarget(<a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::span&lt;float, 4&gt; color, <span class="keywordtype">size_t</span> idx = 0) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">void</span> ClearRenderTarget(<a class="code hl_class" href="class_eugene_lib_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::span&lt;float, 4&gt; color) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">void</span> TransitionRenderTargetBegin(<a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; resource) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordtype">void</span> TransitionRenderTargetEnd(<a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; resource) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordtype">void</span> ClearDepth(<a class="code hl_class" href="class_eugene_lib_1_1_depth_stencil_views.html">DepthStencilViews</a>&amp; views, <span class="keywordtype">float</span> clearValue = 1.0f, <span class="keywordtype">size_t</span> idx = 0) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordtype">void</span> Copy(<a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; destination, <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; source) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordtype">void</span> CopyTexture(<a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; destination, <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; source) <span class="keyword">final</span>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        ComPtr&lt; ID3D12CommandAllocator&gt; cmdAllocator_;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        ComPtr&lt; ID3D12GraphicsCommandList&gt; cmdList_;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>Eugene</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">class </span>GpuResource;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_eugene_1_1_dx12_command_list.html">   14</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_1_1_dx12_command_list.html">Dx12CommandList</a> :</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_1_1_command_list.html">CommandList</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">using </span>ComPtr = Microsoft::WRL::ComPtr&lt;T&gt;;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <a class="code hl_class" href="class_eugene_1_1_dx12_command_list.html">Dx12CommandList</a>(ID3D12Device* device);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordtype">void</span>* GetCommandList(<span class="keywordtype">void</span>) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="comment">// 開始処理</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordtype">void</span> Begin(<span class="keywordtype">void</span>) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="comment">// 終了処理</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">void</span> End(<span class="keywordtype">void</span>) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="comment">// グラフィックスパイプラインをセットする</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordtype">void</span> SetGraphicsPipeline(<a class="code hl_class" href="class_eugene_1_1_graphics_pipeline.html">GraphicsPipeline</a>&amp; gpipeline) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="comment">// プリミティブタイプをセットする</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> SetPrimitiveType(PrimitiveType type) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="comment">// シザーレクトをセットする</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">void</span> SetScissorrect(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_1_1_vector2_tmp.html">Vector2I</a>&amp; leftTop, <span class="keyword">const</span> <a class="code hl_class" href="class_eugene_1_1_vector2_tmp.html">Vector2I</a>&amp; rightBottom) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="comment">// ビューポートをセットする</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordtype">void</span> SetViewPort(<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_1_1_vector2_tmp.html">Vector2</a>&amp; leftTop, <span class="keyword">const</span> <a class="code hl_class" href="class_eugene_1_1_vector2_tmp.html">Vector2</a>&amp; size, <span class="keywordtype">float</span> depthMin = 0.0f, <span class="keywordtype">float</span> depthMax = 1.0f);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">// 頂点ビューをセットする</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordtype">void</span> SetVertexView(<a class="code hl_class" href="class_eugene_1_1_vertex_view.html">VertexView</a>&amp; view) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="comment">// インデックスビューをセットする</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">void</span> SetIndexView(<a class="code hl_class" href="class_eugene_1_1_index_view.html">IndexView</a>&amp; view) <span class="keyword">final</span>;</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// シェーダリソースセット系 //</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// 指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordtype">void</span> SetShaderResourceView(<a class="code hl_class" href="class_eugene_1_1_shader_resource_views.html">ShaderResourceViews</a>&amp; views, std::uint64_t viewsIdx, std::uint64_t paramIdx) <span class="keyword">final</span>;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="ttc" id="aclass_eugene_lib_1_1_command_list_html"><div class="ttname"><a href="class_eugene_lib_1_1_command_list.html">EugeneLib::CommandList</a></div><div class="ttdoc">コマンドリストの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> CommandList.h:22</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_depth_stencil_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_depth_stencil_views.html">EugeneLib::DepthStencilViews</a></div><div class="ttdef"><b>Definition:</b> DepthStencilViews.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_dx12_command_list_html"><div class="ttname"><a href="class_eugene_lib_1_1_dx12_command_list.html">EugeneLib::Dx12CommandList</a></div><div class="ttdef"><b>Definition:</b> Dx12CommandList.h:14</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_dx12_command_list_html_a878cde8a288d951716277be658b6f888"><div class="ttname"><a href="class_eugene_lib_1_1_dx12_command_list.html#a878cde8a288d951716277be658b6f888">EugeneLib::Dx12CommandList::GetCommandList</a></div><div class="ttdeci">void * GetCommandList(void) const final</div><div class="ttdef"><b>Definition:</b> Dx12CommandList.cpp:33</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_gpu_resource_html"><div class="ttname"><a href="class_eugene_lib_1_1_gpu_resource.html">EugeneLib::GpuResource</a></div><div class="ttdoc">グラフィックス等で使うリソース</div><div class="ttdef"><b>Definition:</b> GpuResource.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_graphics_pipeline_html"><div class="ttname"><a href="class_eugene_lib_1_1_graphics_pipeline.html">EugeneLib::GraphicsPipeline</a></div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:95</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_index_view_html"><div class="ttname"><a href="class_eugene_lib_1_1_index_view.html">EugeneLib::IndexView</a></div><div class="ttdef"><b>Definition:</b> IndexView.h:6</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_render_target_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_render_target_views.html">EugeneLib::RenderTargetViews</a></div><div class="ttdef"><b>Definition:</b> RenderTargetViews.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_shader_resource_views_html"><div class="ttname"><a href="class_eugene_lib_1_1_shader_resource_views.html">EugeneLib::ShaderResourceViews</a></div><div class="ttdef"><b>Definition:</b> ShaderResourceViews.h:8</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_vector2_tmp_html"><div class="ttname"><a href="class_eugene_lib_1_1_vector2_tmp.html">EugeneLib::Vector2Tmp</a></div><div class="ttdef"><b>Definition:</b> Vector2.h:11</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_vertex_view_html"><div class="ttname"><a href="class_eugene_lib_1_1_vertex_view.html">EugeneLib::VertexView</a></div><div class="ttdef"><b>Definition:</b> VertexView.h:6</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html_a7c8f297b12d5ffe597cf183906fa1f26"><div class="ttname"><a href="namespace_eugene_lib.html#a7c8f297b12d5ffe597cf183906fa1f26">EugeneLib::PrimitiveType</a></div><div class="ttdeci">PrimitiveType</div><div class="ttdef"><b>Definition:</b> GraphicsCommon.h:61</div></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="comment">// 指定のパラメータインデックスに指定のサンプラービューのインデックスを先頭にセットする</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordtype">void</span> SetSamplerView(<a class="code hl_class" href="class_eugene_1_1_sampler_views.html">SamplerViews</a>&amp; views, std::uint64_t viewsIdx, std::uint64_t paramIdx) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="comment">// 描画系 //</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="comment">// 描画</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordtype">void</span> Draw(std::uint32_t vertexCount, std::uint32_t instanceCount = 1) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// インデックス付きで描画</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordtype">void</span> DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="comment">// レンダーターゲットセット系 //</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// 指定のインデックスのビューをセットする</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::uint64_t idx = 0) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment">// 指定の範囲のインデックスのビューをセットする</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::uint64_t startIdx, std::uint64_t endIdx) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">// ビューにあるすべてをセットする</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; views) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="comment">// 指定のインデックスのデプスとレンダーターゲットのビューをセットする</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">void</span> SetRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; renderTargetViews, <a class="code hl_class" href="class_eugene_1_1_depth_stencil_views.html">DepthStencilViews</a>&amp; depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0)<span class="keyword">final</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">// クリア系 //</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="comment">// </span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordtype">void</span> ClearRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::span&lt;float, 4&gt; color, std::uint64_t idx = 0) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordtype">void</span> ClearRenderTarget(<a class="code hl_class" href="class_eugene_1_1_render_target_views.html">RenderTargetViews</a>&amp; views, std::span&lt;float, 4&gt; color) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordtype">void</span> ClearDepth(<a class="code hl_class" href="class_eugene_1_1_depth_stencil_views.html">DepthStencilViews</a>&amp; views, <span class="keywordtype">float</span> clearValue = 1.0f, std::uint64_t idx = 0) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment">// バリア遷移系 //</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="comment">// レンダーターゲットを開始状態にする</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordtype">void</span> TransitionRenderTargetBegin(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="comment">// レンダーターゲットを終了状態にする(Commonとか)</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="keywordtype">void</span> TransitionRenderTargetEnd(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="comment">// シェーダー使用状態にする</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordtype">void</span> TransitionShaderResourceBegin(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="comment">// シェーダー使用状態から終了する</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordtype">void</span> TransitionShaderResourceEnd(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="comment">// デプス使用状態にする</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordtype">void</span> TransitionDepthBegin(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="comment">// デプス使用状態から終了する</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordtype">void</span> TransitionDepthEnd(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; resource) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="comment">// コピー系 //</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordtype">void</span> Copy(<a class="code hl_class" href="class_eugene_1_1_gpu_resource.html">GpuResource</a>&amp; destination, <a class="code hl_class" href="class_eugene_1_1_gpu_resource.html">GpuResource</a>&amp; source) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordtype">void</span> CopyTexture(<a class="code hl_class" href="class_eugene_1_1_gpu_resource.html">GpuResource</a>&amp; destination, <a class="code hl_class" href="class_eugene_1_1_gpu_resource.html">GpuResource</a>&amp; source) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordtype">void</span> CopyTexture(<a class="code hl_class" href="class_eugene_1_1_image_resource.html">ImageResource</a>&amp; dest, <a class="code hl_class" href="class_eugene_1_1_buffer_resource.html">BufferResource</a>&amp; src) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#ifdef USE_IMGUI</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keywordtype">void</span> SetImguiCommand(ImDrawData* data, <a class="code hl_class" href="class_eugene_1_1_graphics.html">Graphics</a>&amp; graphics) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        ComPtr&lt; ID3D12CommandAllocator&gt; cmdAllocator_;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        ComPtr&lt; ID3D12GraphicsCommandList&gt; cmdList_;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    };</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="ttc" id="aclass_eugene_1_1_buffer_resource_html"><div class="ttname"><a href="class_eugene_1_1_buffer_resource.html">Eugene::BufferResource</a></div><div class="ttdoc">バッファ用クラス(頂点、インデックス、定数バッファで使う)</div><div class="ttdef"><b>Definition:</b> BufferResource.h:11</div></div>
+<div class="ttc" id="aclass_eugene_1_1_command_list_html"><div class="ttname"><a href="class_eugene_1_1_command_list.html">Eugene::CommandList</a></div><div class="ttdoc">コマンドリストの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> CommandList.h:31</div></div>
+<div class="ttc" id="aclass_eugene_1_1_depth_stencil_views_html"><div class="ttname"><a href="class_eugene_1_1_depth_stencil_views.html">Eugene::DepthStencilViews</a></div><div class="ttdoc">デブスステンシル用ビュー</div><div class="ttdef"><b>Definition:</b> DepthStencilViews.h:13</div></div>
+<div class="ttc" id="aclass_eugene_1_1_dx12_command_list_html"><div class="ttname"><a href="class_eugene_1_1_dx12_command_list.html">Eugene::Dx12CommandList</a></div><div class="ttdef"><b>Definition:</b> Dx12CommandList.h:16</div></div>
+<div class="ttc" id="aclass_eugene_1_1_gpu_resource_html"><div class="ttname"><a href="class_eugene_1_1_gpu_resource.html">Eugene::GpuResource</a></div><div class="ttdoc">グラフィックス等で使うリソース</div><div class="ttdef"><b>Definition:</b> GpuResource.h:10</div></div>
+<div class="ttc" id="aclass_eugene_1_1_graphics_html"><div class="ttname"><a href="class_eugene_1_1_graphics.html">Eugene::Graphics</a></div><div class="ttdoc">グラフィックスの処理を行うクラス</div><div class="ttdef"><b>Definition:</b> Graphics.h:28</div></div>
+<div class="ttc" id="aclass_eugene_1_1_graphics_pipeline_html"><div class="ttname"><a href="class_eugene_1_1_graphics_pipeline.html">Eugene::GraphicsPipeline</a></div><div class="ttdef"><b>Definition:</b> GraphicsPipeline.h:79</div></div>
+<div class="ttc" id="aclass_eugene_1_1_image_resource_html"><div class="ttname"><a href="class_eugene_1_1_image_resource.html">Eugene::ImageResource</a></div><div class="ttdef"><b>Definition:</b> ImageResource.h:10</div></div>
+<div class="ttc" id="aclass_eugene_1_1_index_view_html"><div class="ttname"><a href="class_eugene_1_1_index_view.html">Eugene::IndexView</a></div><div class="ttdef"><b>Definition:</b> IndexView.h:6</div></div>
+<div class="ttc" id="aclass_eugene_1_1_render_target_views_html"><div class="ttname"><a href="class_eugene_1_1_render_target_views.html">Eugene::RenderTargetViews</a></div><div class="ttdef"><b>Definition:</b> RenderTargetViews.h:10</div></div>
+<div class="ttc" id="aclass_eugene_1_1_sampler_views_html"><div class="ttname"><a href="class_eugene_1_1_sampler_views.html">Eugene::SamplerViews</a></div><div class="ttdef"><b>Definition:</b> SamplerViews.h:9</div></div>
+<div class="ttc" id="aclass_eugene_1_1_shader_resource_views_html"><div class="ttname"><a href="class_eugene_1_1_shader_resource_views.html">Eugene::ShaderResourceViews</a></div><div class="ttdef"><b>Definition:</b> ShaderResourceViews.h:12</div></div>
+<div class="ttc" id="aclass_eugene_1_1_vector2_tmp_html"><div class="ttname"><a href="class_eugene_1_1_vector2_tmp.html">Eugene::Vector2Tmp</a></div><div class="ttdef"><b>Definition:</b> Vector2.h:11</div></div>
+<div class="ttc" id="aclass_eugene_1_1_vertex_view_html"><div class="ttname"><a href="class_eugene_1_1_vertex_view.html">Eugene::VertexView</a></div><div class="ttdef"><b>Definition:</b> VertexView.h:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

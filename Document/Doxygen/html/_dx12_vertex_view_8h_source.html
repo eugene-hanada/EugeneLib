@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Graphics/DirectX12/Dx12VertexView.h ソースファイル</title>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Graphics/DirectX12/Dx12VertexView.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,28 +69,28 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_926e273c8c7db72a32b290dc6e00b5df.html">Source</a></li><li class="navelem"><a class="el" href="dir_b7e9bc4e65ae6548aa23be9524aab2d3.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_b147292b669f0cfc7303598d1d401471.html">DirectX12</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_f40ad9b8929dc461cf57247ad0f896ed.html">Graphics</a></li><li class="navelem"><a class="el" href="dir_e553bdf794c4412cc083042415a53b31.html">DirectX12</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Dx12VertexView.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_dx12_vertex_view_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;../../../Include/Graphics/VertexView.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">struct </span>D3D12_VERTEX_BUFFER_VIEW;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>Eugene</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">class </span>GpuResource;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_dx12_vertex_view.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_dx12_vertex_view.html">Dx12VertexView</a> :</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_lib_1_1_vertex_view.html">VertexView</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">class </span>BufferResource;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="class_eugene_1_1_dx12_vertex_view.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_1_1_dx12_vertex_view.html">Dx12VertexView</a> :</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_1_1_vertex_view.html">VertexView</a></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <a class="code hl_class" href="class_eugene_lib_1_1_dx12_vertex_view.html">Dx12VertexView</a>(<span class="keywordtype">size_t</span> size, <span class="keywordtype">size_t</span> vertexNum, <a class="code hl_class" href="class_eugene_lib_1_1_gpu_resource.html">GpuResource</a>&amp; resource);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_function" href="class_eugene_lib_1_1_dx12_vertex_view.html#afe58db010f87d717a37a914d07949b44">~Dx12VertexView</a>();</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <a class="code hl_class" href="class_eugene_1_1_dx12_vertex_view.html">Dx12VertexView</a>(<span class="keywordtype">size_t</span> size, <span class="keywordtype">size_t</span> vertexNum, <a class="code hl_class" href="class_eugene_1_1_buffer_resource.html">BufferResource</a>&amp; resource);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_class" href="class_eugene_1_1_dx12_vertex_view.html">~Dx12VertexView</a>();</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordtype">void</span>* GetView(<span class="keywordtype">void</span>) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
@@ -98,11 +98,9 @@ $(function() {
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    };</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="ttc" id="aclass_eugene_lib_1_1_dx12_vertex_view_html"><div class="ttname"><a href="class_eugene_lib_1_1_dx12_vertex_view.html">EugeneLib::Dx12VertexView</a></div><div class="ttdef"><b>Definition:</b> Dx12VertexView.h:12</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_dx12_vertex_view_html_afe58db010f87d717a37a914d07949b44"><div class="ttname"><a href="class_eugene_lib_1_1_dx12_vertex_view.html#afe58db010f87d717a37a914d07949b44">EugeneLib::Dx12VertexView::~Dx12VertexView</a></div><div class="ttdeci">~Dx12VertexView()</div><div class="ttdef"><b>Definition:</b> Dx12VertexView.cpp:15</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_gpu_resource_html"><div class="ttname"><a href="class_eugene_lib_1_1_gpu_resource.html">EugeneLib::GpuResource</a></div><div class="ttdoc">グラフィックス等で使うリソース</div><div class="ttdef"><b>Definition:</b> GpuResource.h:10</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_vertex_view_html"><div class="ttname"><a href="class_eugene_lib_1_1_vertex_view.html">EugeneLib::VertexView</a></div><div class="ttdef"><b>Definition:</b> VertexView.h:6</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="aclass_eugene_1_1_buffer_resource_html"><div class="ttname"><a href="class_eugene_1_1_buffer_resource.html">Eugene::BufferResource</a></div><div class="ttdoc">バッファ用クラス(頂点、インデックス、定数バッファで使う)</div><div class="ttdef"><b>Definition:</b> BufferResource.h:11</div></div>
+<div class="ttc" id="aclass_eugene_1_1_dx12_vertex_view_html"><div class="ttname"><a href="class_eugene_1_1_dx12_vertex_view.html">Eugene::Dx12VertexView</a></div><div class="ttdef"><b>Definition:</b> Dx12VertexView.h:12</div></div>
+<div class="ttc" id="aclass_eugene_1_1_vertex_view_html"><div class="ttname"><a href="class_eugene_1_1_vertex_view.html">Eugene::VertexView</a></div><div class="ttdef"><b>Definition:</b> VertexView.h:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

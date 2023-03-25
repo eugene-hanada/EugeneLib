@@ -32,6 +32,20 @@ void Eugene::Get2DMatrix(Matrix4x4& out, const Vector2& size)
 	out.m[3][1] = 1.0f;
 }
 
+void Eugene::Get2DTranslateMatrix(Matrix4x4& out, const Vector2& pos)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixTranslation(pos.x, pos.y, 0.0f));
+}
+
+void Eugene::Get2DTransformMatrix(Matrix4x4& out, const Vector2& pos, float rot, const Vector2& scale,const Vector2& rotPos)
+{
+	DirectX::XMStoreFloat4x4(&out, 
+		DirectX::XMMatrixTranslation(-rotPos.x, -rotPos.y, 0.0f) *
+		DirectX::XMMatrixRotationY(rot) *
+		DirectX::XMMatrixScaling(scale.x, scale.y, 1.0f) *
+		DirectX::XMMatrixTranslation(pos.x, pos.y, 0.0f));
+}
+
 void Eugene::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& target, const Vector3& up)
 {
 	DirectX::XMFLOAT3 tmpEye{ eye.x,eye.y,eye.z };

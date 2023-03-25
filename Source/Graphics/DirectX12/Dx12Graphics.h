@@ -1,10 +1,12 @@
-#pragma once
+﻿#pragma once
 #include <wrl.h>
 #include <memory>
 #include <vector>
+#include <array>
 #include "../../../Include/Graphics/Graphics.h"
 #include "../../../Include/Math/Vector2.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
+
 
 struct ID3D12Device;
 struct IDXGIFactory6;
@@ -16,7 +18,8 @@ namespace Eugene
 		public Graphics
 	{
 	public:
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
+		static const std::array<int, FormatMax> FormatToDxgiFormat_;
+		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		~Dx12Graphics();
 	
 		
@@ -41,6 +44,8 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
+		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) final;
+
 		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
@@ -53,7 +58,7 @@ namespace Eugene
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum);
+		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 
@@ -72,13 +77,13 @@ namespace Eugene
 		void ImguiNewFrame(void) const final;
 #endif
 
-		// �t�@�N�g��
+		// dxgi
 		Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_{ nullptr };
 
-		// DirectX12�̃f�o�C�X
+		// DirectX12デバイス
 		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
 
-		// �X���b�v�`�F�C��
+		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
 		std::vector<std::unique_ptr<ImageResource>> buffers_;
@@ -86,7 +91,7 @@ namespace Eugene
 
 #ifdef USE_IMGUI
 		std::unique_ptr<ShaderResourceViews> srViews_;
-		friend class Dx12CommandList;
 #endif
+		friend class Dx12CommandList;
 	};
 }

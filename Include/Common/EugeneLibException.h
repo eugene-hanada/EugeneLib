@@ -4,7 +4,9 @@
 
 namespace Eugene
 {
-
+	/// <summary>
+	/// extension
+	/// </summary>
 	class EugeneLibException :
 		public std::exception
 	{
@@ -13,20 +15,10 @@ namespace Eugene
 		~EugeneLibException();
 	private:
 		const char* what() const noexcept final;
+
+		/// <summary>
+		/// メッセージ
+		/// </summary>
 		std::string mess_;
-	};
-
-	class LibInitException :
-		EugeneLibException
-	{
-	public:
-		LibInitException();
-	};
-
-	class LibReleseException :
-		EugeneLibException
-	{
-	public:
-		LibReleseException();
 	};
 };

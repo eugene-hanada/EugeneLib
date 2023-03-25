@@ -1,6 +1,0 @@
-<map id="クラス階層図" name="クラス階層図">
-<area shape="rect" id="node1" href="$class_eugene_lib_1_1_gpu_resource.html" title="グラフィックス等で使うリソース" alt="" coords="5,35,176,60"/>
-<area shape="rect" id="node2" href="$class_eugene_lib_1_1_dx12_gpu_resource.html" title=" " alt="" coords="224,35,424,60"/>
-<area shape="rect" id="node3" href="$class_eugene_lib_1_1_dx12_default_resource.html" title=" " alt="" coords="472,5,688,31"/>
-<area shape="rect" id="node4" href="$class_eugene_lib_1_1_dx12_uploadable_resource.html" title=" " alt="" coords="487,55,673,95"/>
-</map>

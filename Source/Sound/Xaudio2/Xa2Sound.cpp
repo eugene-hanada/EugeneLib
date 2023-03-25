@@ -5,6 +5,7 @@
 #include "Xa2Sound3DControl.h"
 #include "Xa2SoundSpeaker.h"
 #include "Xa2SoundControl.h"
+#include "Xa2SoundStreamSpeaker.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
@@ -63,6 +64,11 @@ void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
 Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const Wave& wave, const float maxPitchRate ) const
 {
 	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
+}
+
+Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
+{
+	return new Xa2SoundStreamSpeaker{xaudio2_.Get(), path, outChannel_, maxPitchRate };
 }
 
 Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const

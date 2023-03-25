@@ -35,6 +35,7 @@ HWND hwnd;
 Eugene::System::Mouse mouse;
 
 Eugene::Graphics* graphics = nullptr;
+Eugene::GpuEngine* gpuEngine = nullptr;
 
 
 #ifdef USE_IMGUI
@@ -94,13 +95,11 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {
-	DebugLog("Comの初期化");
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
-		throw LibInitException();
+		throw EugeneLibException("Comの初期化に失敗");
 	}
 
-	DebugLog("ウィンドウクラスの登録");
 	std::filesystem::path tmpTitle{ title };
 	windowClass.cbSize = sizeof(WNDCLASSEX);
 	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -108,18 +107,16 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	windowClass.hInstance = GetModuleHandle(nullptr);
 	if (!RegisterClassEx(&windowClass))
 	{
-		throw LibInitException();
+		throw EugeneLibException("ウィンドウクラスの登録に失敗");
 	}
 
-	DebugLog("ウィンドウサイズの設定");
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
 	{
-		throw LibInitException();
+		throw EugeneLibException("ウィンドウサイズ調整に失敗");
 	}
 
-	DebugLog("ウィンドウの生成");
 	// ウィンドウの生成
 	hwnd = CreateWindow(
 		windowClass.lpszClassName,
@@ -134,7 +131,7 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 		windowClass.hInstance,
 		nullptr
 	);
-	DebugLog("ウィンドウの表示");
+
 	ShowWindow(hwnd, SW_SHOW);
 
 #ifdef USE_IMGUI
@@ -166,7 +163,16 @@ Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, s
 	{
 		return graphics;
 	}
-	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum });
+	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum, 100ull});
+}
+
+std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
+{
+	if (graphics == nullptr)
+	{
+		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+	}
+	return std::make_pair(graphics, gpuEngine);
 }
 
 bool Eugene::WindowsSystem::Update(void)

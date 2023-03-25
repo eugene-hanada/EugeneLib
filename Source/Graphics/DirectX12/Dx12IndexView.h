@@ -15,6 +15,10 @@ namespace Eugene
 		Dx12IndexView(std::uint32_t size, Format format, GpuResource& resource);
 	private:
 		void* GetView(void) const final;
+
+		/// <summary>
+		/// インデックスバッファービュー
+		/// </summary>
 		std::unique_ptr< D3D12_INDEX_BUFFER_VIEW> bufferView_;
 	};
 }

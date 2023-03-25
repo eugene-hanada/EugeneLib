@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/EugeneLib/EugeneLib/Source/Sound/Xaudio2/Xa2SoundSpeaker.h ソースファイル</title>
+<title>EugeneLib: C:/Users/eugen/Desktop/Programming/EugeneLib/Source/Sound/Xaudio2/Xa2SoundSpeaker.h ソースファイル</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,14 +69,14 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_bfe46c3e258e7c016d4b367011d0e28f.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_fbc10e5cea0fc25cfcd2c8f3a231c688.html">EugeneLib</a></li><li class="navelem"><a class="el" href="dir_926e273c8c7db72a32b290dc6e00b5df.html">Source</a></li><li class="navelem"><a class="el" href="dir_ba63bedd67d5114953017387b2690c57.html">Sound</a></li><li class="navelem"><a class="el" href="dir_15b5d62ed1c02e64fb020c14c37a0eae.html">Xaudio2</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_9c1e40b195b8e9f1efd821ea626effff.html">Sound</a></li><li class="navelem"><a class="el" href="dir_6614ab03df2ca52d7ad9f2160478eaba.html">Xaudio2</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Xa2SoundSpeaker.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="_xa2_sound_speaker_8h.html">[詳解]</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;../../../Include/Sound/SoundSpeaker.h&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
@@ -84,15 +84,15 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">struct </span>IXAudio2;</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">struct </span>XAUDIO2_BUFFER;</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_eugene_lib.html">EugeneLib</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Eugene</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_eugene_lib_1_1_xa2_sound_speaker.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_lib_1_1_xa2_sound_speaker.html">Xa2SoundSpeaker</a> :</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_lib_1_1_sound_speaker.html">SoundSpeaker</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_eugene_1_1_xa2_sound_speaker.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_eugene_1_1_xa2_sound_speaker.html">Xa2SoundSpeaker</a> :</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">public</span> <a class="code hl_class" href="class_eugene_1_1_sound_speaker.html">SoundSpeaker</a></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_class" href="class_eugene_lib_1_1_xa2_sound_speaker.html">Xa2SoundSpeaker</a>(IXAudio2* xaudio2,<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_lib_1_1_wave.html">Wave</a>&amp; wave, std::uint16_t outChannel, <span class="keyword">const</span> <span class="keywordtype">float</span> maxPitchRate);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_function" href="class_eugene_lib_1_1_xa2_sound_speaker.html#ab6bfc4afbf92e6614d1b33ef69a4d9a3">~Xa2SoundSpeaker</a>();</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <a class="code hl_class" href="class_eugene_1_1_xa2_sound_speaker.html">Xa2SoundSpeaker</a>(IXAudio2* xaudio2,<span class="keyword">const</span> <a class="code hl_class" href="class_eugene_1_1_wave.html">Wave</a>&amp; wave, std::uint16_t outChannel, <span class="keyword">const</span> <span class="keywordtype">float</span> maxPitchRate);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_class" href="class_eugene_1_1_xa2_sound_speaker.html">~Xa2SoundSpeaker</a>();</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">void</span> Play(<span class="keywordtype">void</span>) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordtype">void</span> Stop(<span class="keywordtype">void</span>) <span class="keyword">const</span> <span class="keyword">final</span>;</div>
@@ -103,18 +103,16 @@ $(function() {
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordtype">void</span> SetPan(std::span&lt;float&gt; volumes) <span class="keyword">final</span>;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">void</span> SetOutput(<a class="code hl_class" href="class_eugene_lib_1_1_sound_control.html">SoundControl</a>&amp; control) <span class="keyword">final</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">void</span> SetOutput(<a class="code hl_class" href="class_eugene_1_1_sound_control.html">SoundControl</a>&amp; control) <span class="keyword">final</span>;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        IXAudio2SourceVoice* source_;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        std::unique_ptr&lt;XAUDIO2_BUFFER&gt; buffer_;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    };</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
-<div class="ttc" id="aclass_eugene_lib_1_1_sound_control_html"><div class="ttname"><a href="class_eugene_lib_1_1_sound_control.html">EugeneLib::SoundControl</a></div><div class="ttdef"><b>Definition:</b> SoundControl.h:8</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_sound_speaker_html"><div class="ttname"><a href="class_eugene_lib_1_1_sound_speaker.html">EugeneLib::SoundSpeaker</a></div><div class="ttdoc">サウンドを再生するクラス</div><div class="ttdef"><b>Definition:</b> SoundSpeaker.h:14</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_wave_html"><div class="ttname"><a href="class_eugene_lib_1_1_wave.html">EugeneLib::Wave</a></div><div class="ttdef"><b>Definition:</b> Wave.h:11</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_xa2_sound_speaker_html"><div class="ttname"><a href="class_eugene_lib_1_1_xa2_sound_speaker.html">EugeneLib::Xa2SoundSpeaker</a></div><div class="ttdef"><b>Definition:</b> Xa2SoundSpeaker.h:14</div></div>
-<div class="ttc" id="aclass_eugene_lib_1_1_xa2_sound_speaker_html_ab6bfc4afbf92e6614d1b33ef69a4d9a3"><div class="ttname"><a href="class_eugene_lib_1_1_xa2_sound_speaker.html#ab6bfc4afbf92e6614d1b33ef69a4d9a3">EugeneLib::Xa2SoundSpeaker::~Xa2SoundSpeaker</a></div><div class="ttdeci">~Xa2SoundSpeaker()</div><div class="ttdef"><b>Definition:</b> Xa2SoundSpeaker.cpp:54</div></div>
-<div class="ttc" id="anamespace_eugene_lib_html"><div class="ttname"><a href="namespace_eugene_lib.html">EugeneLib</a></div><div class="ttdef"><b>Definition:</b> Color.h:7</div></div>
+<div class="ttc" id="aclass_eugene_1_1_sound_control_html"><div class="ttname"><a href="class_eugene_1_1_sound_control.html">Eugene::SoundControl</a></div><div class="ttdef"><b>Definition:</b> SoundControl.h:8</div></div>
+<div class="ttc" id="aclass_eugene_1_1_sound_speaker_html"><div class="ttname"><a href="class_eugene_1_1_sound_speaker.html">Eugene::SoundSpeaker</a></div><div class="ttdoc">サウンドを再生するクラス</div><div class="ttdef"><b>Definition:</b> SoundSpeaker.h:14</div></div>
+<div class="ttc" id="aclass_eugene_1_1_wave_html"><div class="ttname"><a href="class_eugene_1_1_wave.html">Eugene::Wave</a></div><div class="ttdef"><b>Definition:</b> Wave.h:11</div></div>
+<div class="ttc" id="aclass_eugene_1_1_xa2_sound_speaker_html"><div class="ttname"><a href="class_eugene_1_1_xa2_sound_speaker.html">Eugene::Xa2SoundSpeaker</a></div><div class="ttdef"><b>Definition:</b> Xa2SoundSpeaker.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

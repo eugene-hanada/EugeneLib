@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 #include "GpuResource.h"
 
 namespace Eugene
 {
 	/// <summary>
-	/// �o�b�t�@�p���\�[�X
+	/// バッファ用クラス(頂点、インデックス、定数バッファで使う)
 	/// </summary>
 	class BufferResource :
 		public GpuResource
@@ -13,10 +13,10 @@ namespace Eugene
 		virtual ~BufferResource();
 
 		/// <summary>
-		/// �T�C�Y���擾����
+		/// サイズを取得する
 		/// </summary>
 		/// <param name=""></param>
-		/// <returns> �T�C�Y(�o�C�g��) </returns>
+		/// <returns> サイズ </returns>
 		virtual std::uint64_t GetSize(void) = 0;
 	protected:
 		BufferResource();

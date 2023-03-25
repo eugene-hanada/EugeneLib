@@ -16,7 +16,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		virtual Format GetFormat(void) const = 0;
+		Format GetFormat(void) const { return format_; }
 
 		/// <summary>
 		/// 

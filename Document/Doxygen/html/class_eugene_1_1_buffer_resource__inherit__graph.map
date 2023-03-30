@@ -1,6 +1,0 @@
-<map id="Eugene::BufferResource" name="Eugene::BufferResource">
-<area shape="rect" id="node1" title="バッファ用クラス(頂点、インデックス、定数バッファで使う)" alt="" coords="131,79,293,104"/>
-<area shape="rect" id="node3" href="$class_eugene_1_1_dx12_buffer_resource.html" title=" " alt="" coords="5,159,197,185"/>
-<area shape="rect" id="node4" href="$class_eugene_1_1_dx12_uploadable_buffer_resource.html" title=" " alt="" coords="222,152,423,192"/>
-<area shape="rect" id="node2" href="$class_eugene_1_1_gpu_resource.html" title="グラフィックス等で使うリソース" alt="" coords="135,5,289,31"/>
-</map>

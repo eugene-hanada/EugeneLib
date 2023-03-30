@@ -1,9 +1,0 @@
-<map id="クラス階層図" name="クラス階層図">
-<area shape="rect" id="node1" href="$class_eugene_1_1_gpu_resource.html" title="グラフィックス等で使うリソース" alt="" coords="5,92,159,117"/>
-<area shape="rect" id="node2" href="$class_eugene_1_1_buffer_resource.html" title="バッファ用クラス(頂点、インデックス、定数バッファで使う)" alt="" coords="207,63,370,88"/>
-<area shape="rect" id="node5" href="$class_eugene_1_1_image_resource.html" title=" " alt="" coords="207,120,371,145"/>
-<area shape="rect" id="node3" href="$class_eugene_1_1_dx12_buffer_resource.html" title=" " alt="" coords="424,5,616,31"/>
-<area shape="rect" id="node4" href="$class_eugene_1_1_dx12_uploadable_buffer_resource.html" title=" " alt="" coords="419,55,621,95"/>
-<area shape="rect" id="node6" href="$class_eugene_1_1_dx12_image_resource.html" title=" " alt="" coords="423,120,617,145"/>
-<area shape="rect" id="node7" href="$class_eugene_1_1_dx12_uploadable_image_resource.html" title=" " alt="" coords="419,170,621,210"/>
-</map>

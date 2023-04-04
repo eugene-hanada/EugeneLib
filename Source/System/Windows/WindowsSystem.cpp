@@ -5,8 +5,11 @@
 #include "../../../Include/Common/Debug.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
+#ifdef USE_VULKAN
+#include "../../Graphics/Vulkan/VkGraphics.h"
+#else
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
-
+#endif
 
 #ifdef USE_IMGUI
 #include <imgui.h>
@@ -163,14 +166,22 @@ Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, s
 	{
 		return graphics;
 	}
+#ifdef USE_VULKAN
+	return (graphics = new VkGraphics{ GetWindowSize(),gpuEngine, bufferNum, 100ull });
+#else
 	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum, 100ull});
+#endif
 }
 
 std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
 	if (graphics == nullptr)
 	{
+#ifdef USE_VULKAN
+		graphics = new VkGraphics{GetWindowSize(),gpuEngine, bufferNum , maxSize };
+#else
 		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+#endif
 	}
 	return std::make_pair(graphics, gpuEngine);
 }

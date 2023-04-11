@@ -453,6 +453,12 @@
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
     <ClInclude Include="Source\System\Windows\Dll.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkGpuEngine.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />
@@ -560,6 +566,12 @@
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\Dll.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkGpuEngine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

@@ -5,12 +5,16 @@
 
 #include "VkGraphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
+#include "VkGpuEngine.h"
+
+
 #pragma comment(lib,"VkLayer_utils.lib")
 #pragma comment(lib,"vulkan-1.lib")
 
 
-
-Eugene::VkGraphics::VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+#ifdef _WIN64
+Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
+	nextQueueIdx_{ 0 }, backBufferIdx_{0}
 {
 	CreateInstance();
 
@@ -20,7 +24,24 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEn
 	surfaceInfo.setHinstance(GetModuleHandle(nullptr));
 	surfaceInfo.setHwnd(hwnd);
 	surfaceKhr_ = instance_->createWin32SurfaceKHRUnique(surfaceInfo);
+	
+
+
+	vk::FenceCreateInfo fenceInfo{};
+	fenceInfo.setFlags(vk::FenceCreateFlagBits::eSignaled);
+	fence_ = std::make_shared<vk::UniqueFence>();
+	*fence_ = device_->createFenceUnique(fenceInfo);
+
+	vk::SemaphoreCreateInfo semphInfo{};
+	semaphore_ = std::make_shared<vk::UniqueSemaphore>();
+	*semaphore_ = device_->createSemaphoreUnique(semphInfo);
+
+	queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
+	
+	
+	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
 }
+#endif
 
 Eugene::VkGraphics::~VkGraphics()
 {
@@ -28,7 +49,7 @@ Eugene::VkGraphics::~VkGraphics()
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
-    return nullptr;
+	return new VkGpuEngine{};
 }
 
 Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
@@ -108,6 +129,11 @@ std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void)
 
 void Eugene::VkGraphics::Present(void)
 {
+	vk::PresentInfoKHR info{};
+	info.setImageIndices(backBufferIdx_);
+	queue_.presentKHR(info);
+
+	//device_->acquireNextImageKHR();
 }
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const
@@ -155,10 +181,10 @@ void Eugene::VkGraphics::CreateInstance(void)
 
 void Eugene::VkGraphics::CreateDevice(void)
 {
-	auto devices{ instance_->enumeratePhysicalDevices() };
+	//auto devices{  };
 
 
-	for (const auto& d : devices)
+	for (const auto& d : instance_->enumeratePhysicalDevices())
 	{
 		const auto props = d.getProperties2();
 		auto tmp = d.getFeatures();

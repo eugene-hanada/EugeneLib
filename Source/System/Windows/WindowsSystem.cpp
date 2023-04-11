@@ -167,7 +167,7 @@ Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, s
 		return graphics;
 	}
 #ifdef USE_VULKAN
-	return (graphics = new VkGraphics{ GetWindowSize(),gpuEngine, bufferNum, 100ull });
+	return (graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum, 100ull });
 #else
 	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum, 100ull});
 #endif
@@ -178,7 +178,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
-		graphics = new VkGraphics{GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new VkGraphics{hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #else
 		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #endif

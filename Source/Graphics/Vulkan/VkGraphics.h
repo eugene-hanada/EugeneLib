@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
+#include <memory>
 #include "../../../Include/Graphics/ImageResource.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
@@ -11,7 +12,10 @@ namespace Eugene
         public Graphics
     {
     public:
+#ifdef _WIN64
         VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#endif
+
         ~VkGraphics();
     private:
         GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
@@ -48,6 +52,11 @@ namespace Eugene
         void CreateDevice(void);
 
         /// <summary>
+        /// バックバッファのインデックス
+        /// </summary>
+        std::uint32_t backBufferIdx_;
+
+        /// <summary>
         /// vulkanのインスタンス
         /// </summary>
         vk::UniqueInstance instance_;
@@ -72,6 +81,16 @@ namespace Eugene
         /// </summary>
         unsigned int graphicFamilly_;
 
+        /// <summary>
+        /// 次のキューのインデックス
+        /// </summary>
+        std::uint32_t nextQueueIdx_;
+
+        vk::Queue queue_;
+
+        std::shared_ptr<vk::UniqueSemaphore> semaphore_;
+
+        std::shared_ptr<vk::UniqueFence> fence_;
 
         std::vector<std::unique_ptr<ImageResource>> buffers_;
         std::unique_ptr<RenderTargetViews> renderTargetViews_;

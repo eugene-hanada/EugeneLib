@@ -38,8 +38,68 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 	queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
 	
-	
+	CreateSwapChain(size);
+
 	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
+}
+void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
+{
+	vk::Format useFormat;
+	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
+	auto format = physicalDevice_.getSurfaceFormatsKHR(*surfaceKhr_);
+	auto modes = physicalDevice_.getSurfacePresentModesKHR(*surfaceKhr_);
+	if (format.size() <= 0 || modes.size() <= 0)
+	{
+		// フォーマットもPresentも0以下ならスワップチェイン使えないのでやめる
+		throw EugeneLibException{"対応フォーマットがありません"};
+	}
+
+	auto itr = std::find_if(
+		format.begin(), format.end(),
+		[](vk::SurfaceFormatKHR& f) { return f.format == vk::Format::eB8G8R8Srgb || f.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear;  });
+	if (itr != format.end())
+	{
+		useFormat = itr->format;
+	}
+	else
+	{
+		useFormat = format[0].format;
+	}
+
+
+	vk::SwapchainCreateInfoKHR info{};
+
+	// サーフェスを指定
+	info.setSurface(*surfaceKhr_);
+
+	// バッファの数を指定
+	info.setMinImageCount(2);
+
+	// 一つのキューからの操作できる状態にする
+	info.setImageSharingMode(vk::SharingMode::eExclusive);
+
+	info.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
+
+	info.setImageFormat(useFormat);
+
+	info.setImageExtent({ static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y)});
+
+	info.setImageArrayLayers(1);
+
+	info.setImageColorSpace(vk::ColorSpaceKHR::eVkColorspaceSrgbNonlinear);
+
+	info.setImageUsage(vk::ImageUsageFlagBits::eColorAttachment);
+
+	info.setImageSharingMode(vk::SharingMode::eExclusive);
+
+	info.setPreTransform(vk::SurfaceTransformFlagBitsKHR::eIdentity);
+
+	info.setPresentMode(vk::PresentModeKHR::eFifo);
+
+	info.setClipped(true);
+
+	swapchain_ = device_->createSwapchainKHRUnique(info);
+
 }
 #endif
 
@@ -49,7 +109,8 @@ Eugene::VkGraphics::~VkGraphics()
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
-	return new VkGpuEngine{};
+	//return new VkGpuEngine{graphicFamilly_, nextQueueIdx_,*device_,maxSize};
+	return nullptr;
 }
 
 Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const

@@ -14,6 +14,7 @@ namespace Eugene
     public:
 #ifdef _WIN64
         VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+        void CreateSwapChain(const Eugene::Vector2& size);
 #endif
 
         ~VkGraphics();
@@ -79,7 +80,7 @@ namespace Eugene
         /// <summary>
         /// ファミリーキュー
         /// </summary>
-        unsigned int graphicFamilly_;
+        std::uint32_t graphicFamilly_;
 
         /// <summary>
         /// 次のキューのインデックス
@@ -87,6 +88,8 @@ namespace Eugene
         std::uint32_t nextQueueIdx_;
 
         vk::Queue queue_;
+
+        vk::UniqueSwapchainKHR swapchain_;
 
         std::shared_ptr<vk::UniqueSemaphore> semaphore_;
 

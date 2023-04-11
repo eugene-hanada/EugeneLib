@@ -8,7 +8,7 @@ Eugene::VkGpuEngine::VkGpuEngine(vk::Queue& queue, std::shared_ptr<vk::UniqueFen
 	cmdBuffers_.resize(size);
 }
 
-Eugene::VkGpuEngine::VkGpuEngine(std::uint32_t familyIndex, std::uint32_t& queueIndex, vk::Device& device, std::uint64_t size)
+Eugene::VkGpuEngine::VkGpuEngine(std::uint32_t familyIndex, std::uint32_t& queueIndex, const vk::Device& device, std::uint64_t size)
 {
 	queue_ = device.getQueue(familyIndex, queueIndex++);
 

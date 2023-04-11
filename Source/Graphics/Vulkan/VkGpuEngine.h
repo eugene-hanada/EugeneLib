@@ -12,7 +12,7 @@ namespace Eugene
 	{
 	public:
 		VkGpuEngine(vk::Queue& queue, std::shared_ptr<vk::UniqueFence>& fence, std::shared_ptr<vk::UniqueSemaphore>& semaphore, std::uint64_t size);
-		VkGpuEngine(std::uint32_t familyIndex,std::uint32_t& queueIndex, vk::Device& device, std::uint64_t size);
+		VkGpuEngine(std::uint32_t familyIndex,std::uint32_t& queueIndex, const vk::Device& device, std::uint64_t size);
 		~VkGpuEngine();
 		void Execute(void) final;
 		void Wait(void) final;

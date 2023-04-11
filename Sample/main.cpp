@@ -19,10 +19,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngine.reset(gpuPtr);
 	}
 
-	Eugene::GpuEngine* gpu = graphics->CreateGpuEngine(10);
-	delete gpu;
-
-
+	while (system->Update() && !system->IsHitKey(Eugene::KeyID::ESCAPE))
+	{
+		graphics->Present();
+	}
 }
 
 //int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)

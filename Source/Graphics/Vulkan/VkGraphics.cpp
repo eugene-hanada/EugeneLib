@@ -11,10 +11,13 @@
 #pragma comment(lib,"VkLayer_utils.lib")
 #pragma comment(lib,"vulkan-1.lib")
 
-
+namespace
+{
+	std::uint32_t nextQueueIdx_ = 0;
+}
 #ifdef _WIN64
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
-	nextQueueIdx_{ 0 }, backBufferIdx_{0}
+	backBufferIdx_{0}
 {
 	CreateInstance();
 

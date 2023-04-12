@@ -82,10 +82,6 @@ namespace Eugene
         /// </summary>
         std::uint32_t graphicFamilly_;
 
-        /// <summary>
-        /// 次のキューのインデックス
-        /// </summary>
-        std::uint32_t nextQueueIdx_;
 
         vk::Queue queue_;
 

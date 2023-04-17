@@ -9,8 +9,7 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 
-	Eugene::OggVorbis ogg{ "./exp.ogg" };
-
+	
 	// システム(osとかの)処理をするクラス
 	std::unique_ptr<Eugene::System> system;
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
@@ -178,6 +177,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	sound.reset(Eugene::CreateSound());
 	Eugene::Wave wave{ "./exp.wav" };
+
+	Eugene::Wave w{ "./exp.wav" };
+	Eugene::OggVorbis ogg{ "./exp.ogg" };
+
 	speaker.reset(sound->CreateSoundSpeaker(wave));
 	
 	ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
@@ -215,7 +218,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			pos *= 5.0f;
 
 			// 位置更新
-			ctrl3D->Set3DSound(
+			/*ctrl3D->Set3DSound(
 				Eugene::forwardVector3<float>,
 				Eugene::upVector3<float>, 
 				Eugene::zeroVector3<float>, 
@@ -224,7 +227,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				Eugene::upVector3<float>, 
 				{ pos.x,0.0f, -pos.y},
 				Eugene::zeroVector3<float>
-			);
+			);*/
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});

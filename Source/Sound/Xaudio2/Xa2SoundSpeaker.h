@@ -8,12 +8,13 @@ struct XAUDIO2_BUFFER;
 
 namespace Eugene
 {
-
+	struct SoundFormat;
 	class Xa2SoundSpeaker :
 		public SoundSpeaker
 	{
 	public:
 		Xa2SoundSpeaker(IXAudio2* xaudio2,const Wave& wave, std::uint16_t outChannel, const float maxPitchRate);
+		Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFormat& format, std::uint16_t outChannel, const float maxPitchRate);
 		~Xa2SoundSpeaker();
 	private:
 		void Play(void) final;
@@ -26,6 +27,8 @@ namespace Eugene
 		void SetPan(std::span<float> volumes) final;
 
 		void SetOutput(SoundControl& control) final;
+
+		void SetData(const std::uint8_t* ptr, const std::uint64_t size) final;
 
 		IXAudio2SourceVoice* source_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;

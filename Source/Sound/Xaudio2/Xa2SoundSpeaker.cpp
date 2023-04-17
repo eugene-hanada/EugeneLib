@@ -3,8 +3,11 @@
 #include <xaudio2fx.h>
 #include <algorithm>
 #include "../../../Include/Sound/Wave.h"
+#include "../../../Include/Sound/OggVorbis.h"
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Common/EugeneLibException.h"
+
+
 
 
 Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, std::uint16_t outChannel, const float maxPitchRate) :
@@ -50,6 +53,37 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, st
 	outChannel_ = outChannel;
 	inChannel_ = formatEx.Format.nChannels;
 }
+
+Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate) :
+	SoundSpeaker{maxPitchRate}
+{
+	WAVEFORMATEX format;
+
+	if (FAILED(xaudio2->CreateSourceVoice(&source_, &format, 0, maxPitchRate)))
+	{
+		throw EugeneLibException("ソースボイス生成失敗");
+	}
+	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
+	buffer_->Flags = XAUDIO2_END_OF_STREAM;
+	buffer_->pAudioData = ogg.GetDataPtr();
+	buffer_->AudioBytes = static_cast<unsigned int>(ogg.GetDataSize());
+	buffer_->LoopCount = 0;
+
+	if (buffer_->LoopLength > 0)
+	{
+		buffer_->LoopCount = 1;
+	}
+
+	if (FAILED(source_->SubmitSourceBuffer(buffer_.get())))
+	{
+		throw EugeneLibException("ソースボイス生成失敗");
+	}
+
+	outChannel_ = outChannel;
+	inChannel_ = format.nChannels;
+}
+
+
 
 Eugene::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 {
@@ -104,4 +138,12 @@ void Eugene::Xa2SoundSpeaker::SetOutput(SoundControl& control)
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	source_->SetOutputVoices(&sends);
+}
+
+void Eugene::Xa2SoundSpeaker::SetData(const std::uint8_t* ptr, const std::uint64_t size)
+{
+	buffer_->Flags = XAUDIO2_END_OF_STREAM;
+	buffer_->pAudioData = ptr;
+	buffer_->AudioBytes = static_cast<unsigned int>(size);
+	buffer_->LoopCount = 0;
 }

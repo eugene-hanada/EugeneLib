@@ -47,6 +47,12 @@ namespace Eugene
 		/// <param name="control"> サウンドコントロールクラス </param>
 		virtual void SetOutput(SoundControl& control) = 0;
 
+		/// <summary>
+		/// 再生するサウンドデータをセットする
+		/// </summary>
+		/// <param name="ptr"></param>
+		/// <param name="size"></param>
+		virtual void SetData(const std::uint8_t* ptr, const std::uint64_t size) {};
 	protected:
 
 		/// <summary>

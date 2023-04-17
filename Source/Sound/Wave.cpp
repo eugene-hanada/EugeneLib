@@ -1,60 +1,134 @@
-﻿#include "../../Include/Sound/Wave.h"
+﻿#include "Wave.h"
 #include <fstream>
 #include "../../Include/Common/EugeneLibException.h"
 
 #include "../../Include/Common/Debug.h"
+#include "Wave.h"
 
 Eugene::Wave::Wave(const std::filesystem::path& path) :
-	fmt_{}, exData_{}
+	SoundFile{}
 {
-	std::ifstream file{ path , std::ios::binary };
-	if (!file)
+	file_ = std::ifstream{ path , std::ios::binary };
+	if (!file_)
 	{
 		throw EugeneLibException("ファイルが開けませんでした");
 	}
 
+	isFormatLoaded_ = false;
+
 	RIFF riff;
-	file.read(reinterpret_cast<char*>(&riff), sizeof(riff));
+	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 
-	int id = 0;
-	while (true)
+	//int id = 0;
+	//while (true)
+	//{
+	//	file_.read(reinterpret_cast<char*>(&id), sizeof(id));
+	//	if (file_.eof())
+	//	{
+	//		return;
+	//	}
+
+	//	if (id == Wave::fmt)
+	//	{
+	//		LoadFmt(file_);
+	//	}
+	//	else if (id == Wave::data)
+	//	{
+	//		LoadData(file_);
+	//	}
+	//	else
+	//	{
+	//		std::uint32_t size{ 0 };
+	//		file_.read(reinterpret_cast<char*>(&size), sizeof(size));
+	//		file_.ignore(size);
+	//	}
+	//}
+
+}
+
+Eugene::Wave::~Wave()
+{
+
+}
+
+void Eugene::Wave::LoadFormat(void)
+{
+	if (file_.is_open() && !isFormatLoaded_)
 	{
-		file.read(reinterpret_cast<char*>(&id), sizeof(id));
-		if (file.eof())
+		int id = 0;
+		while (true)
 		{
-			return;
-		}
+			file_.read(reinterpret_cast<char*>(&id), sizeof(id));
+			if (file_.eof())
+			{
+				break;
+			}
 
-		if (id == Wave::fmt)
-		{
-			LoadFmt(file);
-		}
-		else if (id == Wave::data)
-		{
-			LoadData(file);
-		}
-		else
-		{
-			std::uint32_t size{ 0 };
-			file.read(reinterpret_cast<char*>(&size), sizeof(size));
-			file.ignore(size);
+			if (id == Wave::fmt)
+			{
+				LoadFmt(file_);
+				file_.seekg(0);
+				file_.ignore(sizeof(RIFF));
+
+				return;
+			}
+			else
+			{
+				std::uint32_t size{ 0 };
+				file_.read(reinterpret_cast<char*>(&size), sizeof(size));
+				file_.ignore(size);
+			}
 		}
 	}
+}
 
+void Eugene::Wave::LoadData(void)
+{
+	if (file_.is_open() && data_.size() <= 0ull)
+	{
+		int id = 0;
+		while (true)
+		{
+			file_.read(reinterpret_cast<char*>(&id), sizeof(id));
+			if (file_.eof())
+			{
+				break;
+			}
+
+			if (id == Wave::data)
+			{
+				LoadData(file_);
+				file_.seekg(0);
+				file_.ignore(sizeof(RIFF));
+				return;
+			}
+			else
+			{
+				std::uint32_t size{ 0 };
+				file_.read(reinterpret_cast<char*>(&size), sizeof(size));
+				file_.ignore(size);
+			}
+		}
+	}
+}
+
+void Eugene::Wave::Close(void)
+{
+	file_.close();
 }
 
 void Eugene::Wave::LoadFmt(std::ifstream& file)
 {
-	file.read(reinterpret_cast<char*>(&fmt_), sizeof(fmt_));
-	if (fmt_.type == 1u)
+	file.read(reinterpret_cast<char*>(&format_), sizeof(format_));
+	if (format_.type == 1u)
 	{
 		auto now = file.tellg();
 		now -= 2ull;
 		file.seekg(now);
-		fmt_.ex = 0u;
+		format_.ex = 0u;
 		return;
 	}
-	file.read(reinterpret_cast<char*>(&exData_), sizeof(exData_));
+	file.read(reinterpret_cast<char*>(&ex_), sizeof(ex_));
 }
 
 void Eugene::Wave::LoadData(std::ifstream& file)

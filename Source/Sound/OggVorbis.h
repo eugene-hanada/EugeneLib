@@ -13,6 +13,6 @@ namespace Eugene
 		const std::uint8_t* GetDataPtr(void) const;
 		const std::uint64_t GetDataSize(void) const;
 		const SoundFormat& GetFormat(void) const;
-		std::vector<std::int16_t> data_;
+		std::vector<std::uint8_t> data_;
 	};
 }

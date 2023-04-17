@@ -23,7 +23,7 @@ const Eugene::Image::LoadFuncMap Eugene::Image::loadFuncMap_{
 constexpr int ddsSig = std::endian::native == std::endian::little ? 542327876 : 7678324205;
 
 Eugene::Image::Image(const std::filesystem::path& path) :
-	info_{}
+	info_{}, br_{path}
 {
 	auto ext = path.extension().string();
 	if (!loadFuncMap_.contains(ext))
@@ -48,11 +48,15 @@ std::uint8_t* Eugene::Image::GetData(std::uint32_t arrayIndex, std::uint16_t mip
 	return data_.at((arrayIndex * info_.mipLevels) + mipMapLevel).data();
 }
 
+void Eugene::Image::LoadData(void)
+{
+}
+
 bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 {
 	int w, h, c;
-	auto img = stbi_load(path.string().c_str(), &w, &h, &c, STBI_default);
-
+	//auto img = stbi_load(path.string().c_str(), &w, &h, &c, STBI_default);
+	auto img = stbi_load_from_file(br_.GetFilePtr(), &w, &h, &c, STBI_default);
 	if (img == nullptr)
 	{
 		return false;
@@ -146,4 +150,35 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 		}
 	}
 	return true;
+}
+
+Eugene::Image::BinaryReader::BinaryReader(const std::filesystem::path& path)
+{
+#if _WIN64
+	fopen_s(&file_,path.string().c_str(), "rb");
+#endif
+	if (file_ == nullptr)
+	{
+		throw EugeneLibException{ "ファイルオープンに失敗" };
+	}
+}
+
+Eugene::Image::BinaryReader::~BinaryReader()
+{
+	std::fclose(file_);
+}
+
+void Eugene::Image::BinaryReader::Read(void* ptr, std::uint64_t size)
+{
+	std::fread(ptr, size, 1, file_);
+}
+
+bool Eugene::Image::BinaryReader::IsOpen(void) const
+{
+	return file_ != nullptr;
+}
+
+ FILE* Eugene::Image::BinaryReader::GetFilePtr(void) 
+{
+	return file_;
 }

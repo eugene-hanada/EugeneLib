@@ -35,11 +35,26 @@ namespace Eugene
 		/// <returns> テクスチャデータ </returns>
 		std::uint8_t* GetData(std::uint32_t arrayIndex = 0u,std::uint16_t mipMapLevel = 0u);
 
+		void LoadData(void);
+
+		class BinaryReader
+		{
+		public:
+			BinaryReader(const std::filesystem::path& path);
+			~BinaryReader();
+			void Read(void* ptr, std::uint64_t size);
+			bool IsOpen(void) const;
+			FILE* GetFilePtr(void);
+		private:
+			FILE* file_;
+		};
 	private:
 
 		using LoadFunc = bool(Image::*)(const std::filesystem::path&);
 
 		using LoadFuncMap = std::unordered_map<std::string, LoadFunc>;
+
+		
 
 		/// <summary>
 		/// stbライブラリを使用して読み込む
@@ -64,6 +79,8 @@ namespace Eugene
 		/// テクスチャ情報
 		/// </summary>
 		TextureInfo info_;
+
+		BinaryReader br_;
 
 		/// <summary>
 		/// ロード用関数のmap

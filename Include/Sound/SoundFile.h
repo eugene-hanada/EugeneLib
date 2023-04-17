@@ -40,6 +40,10 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint64_t& GetDataSize(void) const;
+
+		const SoundFormat& GetFormat(void) const;
+
+		const SoundFormatEx& GetFormatExt(void) const;
 	protected:
 		SoundFile();
 		virtual ~SoundFile();

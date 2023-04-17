@@ -25,7 +25,7 @@
 // サウンド系
 #include "Sound/Sound.h"
 #include "Sound/SoundSpeaker.h"
-#include "Sound/Wave.h"
+#include "Sound/SoundFile.h"
 #include "Sound/SoundControl.h"
 #include "Sound/Sound3DControl.h"
 #include "Sound/SoundStreamSpeaker.h"

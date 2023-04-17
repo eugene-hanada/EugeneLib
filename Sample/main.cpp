@@ -181,10 +181,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::Wave w{ "./exp.wav" };
 	Eugene::OggVorbis ogg{ "./exp.ogg" };
 
-	speaker.reset(sound->CreateSoundSpeaker(wave));
+	speaker.reset(sound->CreateSoundSpeaker(ogg));
 	
-	ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
-	speaker->SetOutput(*ctrl3D);
+	//ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
+	//speaker->SetOutput(*ctrl3D);
 	speaker->Play();
 
 	// マウスの情報を受け取る構造体

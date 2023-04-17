@@ -57,7 +57,16 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const Wave& wave, st
 Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate) :
 	SoundSpeaker{maxPitchRate}
 {
-	WAVEFORMATEX format;
+	WAVEFORMATEX format; 
+	auto oggFormat = ogg.GetFormat();
+
+	format.wFormatTag = WAVE_FORMAT_PCM;
+	format.nChannels = oggFormat.channel;
+	format.cbSize = 0;
+	format.nSamplesPerSec = oggFormat.sample;
+	format.nAvgBytesPerSec = oggFormat.byte;
+	format.nBlockAlign = oggFormat.block;
+	format.wBitsPerSample = oggFormat.bit;
 
 	if (FAILED(xaudio2->CreateSourceVoice(&source_, &format, 0, maxPitchRate)))
 	{

@@ -15,12 +15,11 @@ Eugene::OggVorbis::OggVorbis(const std::filesystem::path& path)
 	data_.resize(ptr->known_loc_for_packet);
 	
 	auto tmp = stb_vorbis_get_samples_short_interleaved(ptr,info.channels, data_.data(), data_.size());
-	
 	format_.type = 1;
 	format_.channel = info.channels;
 	format_.sample = info.sample_rate;
+	format_.block = 2;
 	format_.byte = format_.sample * format_.block;
-	format_.block = ptr->blocksize[0];
 	format_.bit = 16;
 	format_.size = 16;
 	
@@ -37,4 +36,9 @@ const std::uint8_t* Eugene::OggVorbis::GetDataPtr(void) const
 const std::uint64_t Eugene::OggVorbis::GetDataSize(void) const
 {
 	return data_.size() * sizeof(data_[0]);
+}
+
+const Eugene::SoundFormat& Eugene::OggVorbis::GetFormat(void) const
+{
+	return format_;
 }

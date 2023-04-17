@@ -53,6 +53,7 @@
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />
     <ClCompile Include="Source\Sound\SoundStreamSpeaker.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.cpp" />
+    <ClCompile Include="Source\Sound\OggVorbis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Include\Sound\SoundStreamSpeaker.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.h" />
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
+    <ClInclude Include="Include\Sound\OggVorbis.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

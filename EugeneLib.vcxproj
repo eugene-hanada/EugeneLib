@@ -210,6 +210,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Sound\OggVorbis.h" />
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.h" />
     <ClInclude Include="Include\Sound\SoundStreamSpeaker.h" />
@@ -284,6 +285,7 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\OggVorbis.cpp" />
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.cpp" />
     <ClCompile Include="Source\Sound\SoundStreamSpeaker.cpp" />
     <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />

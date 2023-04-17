@@ -4,9 +4,13 @@
 #include <memory>
 #include <vector>
 
+#include <Sound/OggVorbis.h>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
+
+	Eugene::OggVorbis ogg{ "./exp.ogg" };
+
 	// システム(osとかの)処理をするクラス
 	std::unique_ptr<Eugene::System> system;
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));

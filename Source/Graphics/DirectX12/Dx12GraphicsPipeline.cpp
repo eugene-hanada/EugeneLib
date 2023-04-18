@@ -13,7 +13,8 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	TopologyType topologyType,
 	bool isCulling,
 	ShaderLayoutSpan shaderLayout,
-	SamplerSpan samplerLayout
+	SamplerSpan samplerLayout,
+	bool useDepth
 )
 {
 	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> ranges(shaderLayout.size());
@@ -193,8 +194,14 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.SampleDesc.Count = 1;
 	gpipeline.SampleDesc.Quality = 0;
 
-	gpipeline.DepthStencilState.DepthEnable = false;
 	gpipeline.DepthStencilState.StencilEnable = false;
+	gpipeline.DepthStencilState.DepthEnable = useDepth;
+	if (useDepth)
+	{
+		gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+		gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+		gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	}
 
 	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
 	{

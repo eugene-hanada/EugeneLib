@@ -109,6 +109,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngine->Wait();
 	}
 
+
 	// スクリーン座標からクリップ座標に変換する行列を生成
 	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView;
 	rtMatrixView.reset(graphics->CreateShaderResourceViews(1));
@@ -236,12 +237,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
 
-
 		// コマンド開始
 		cmdList->Begin();
 
 		// レンダーターゲットセット
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
+		cmdList->TransitionDepthBegin(*depthBuffer);
 		cmdList->SetRenderTarget(graphics->GetViews(), *depthView,graphics->GetNowBackBufferIndex());
 		cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
 		cmdList->ClearDepth(*depthView);
@@ -276,6 +277,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Draw(4);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
+		cmdList->TransitionDepthEnd(*depthBuffer);
 
 		// コマンド終了
 		cmdList->End();

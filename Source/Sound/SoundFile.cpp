@@ -8,7 +8,7 @@ Eugene::SoundFile* Eugene::OpenSoundFile(const std::filesystem::path& path)
     auto ext = path.extension();
     if (ext == ".ogg")
     {
-        return nullptr;
+        return new OggVorbis{path};
     }
     else
     {

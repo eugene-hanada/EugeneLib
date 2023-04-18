@@ -176,16 +176,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	sound.reset(Eugene::CreateSound());
 
-	std::unique_ptr<Eugene::SoundFile> wave;
-	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
-	wave->LoadFormat();
+	std::unique_ptr<Eugene::SoundFile> soundFile;
+	soundFile.reset(Eugene::OpenSoundFile("./exp.ogg"));
+	soundFile->LoadFormat();
 	//Eugene::Wave w{ "./exp.wav" };
 	//Eugene::OggVorbis ogg{ "./exp.ogg" };
 
-	speaker.reset(sound->CreateSoundSpeaker(*wave));
-	wave->LoadData();
-	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
-	//ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
+	speaker.reset(sound->CreateSoundSpeaker(*soundFile));
+	soundFile->LoadData();
+	speaker->SetData(soundFile->GetDataPtr(), soundFile->GetDataSize());
+	//ctrl3D.reset(sound->CreateSound3DControl(soundFile.GetFmt().sample, speaker->GetInChannel(), 2));
 	//speaker->SetOutput(*ctrl3D);
 	speaker->Play();
 

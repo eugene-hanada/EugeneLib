@@ -5,6 +5,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// サウンドファイルを読み込むためのクラス
+	/// </summary>
 	class SoundFile
 	{
 	public:
@@ -41,13 +44,35 @@ namespace Eugene
 		/// <returns></returns>
 		const std::uint64_t GetDataSize(void) const;
 
+		/// <summary>
+		/// フォーマットの取得
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		const SoundFormat& GetFormat(void) const;
 
+		/// <summary>
+		/// フォーマットの拡張データを取得
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		const SoundFormatEx& GetFormatExt(void) const;
 	protected:
 		SoundFile();
+
+		/// <summary>
+		/// データ部
+		/// </summary>
 		std::vector<std::uint8_t> data_;
+
+		/// <summary>
+		/// フォーマット
+		/// </summary>
 		SoundFormat format_;
+
+		/// <summary>
+		/// 拡張データ部分
+		/// </summary>
 		SoundFormatEx ex_;
 	};
 

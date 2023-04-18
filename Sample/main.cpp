@@ -136,7 +136,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::ImageResource> textureResource;
 	{
 		// 画像読み込み
-		Eugene::Image image{ "./Logo.dds" };
+		Eugene::Image image{ "./LogoComp.dds" };
 		//Eugene::Image image2{ "./Logo.png" };
 
 		image.LoadInfo();

@@ -60,6 +60,7 @@ namespace Eugene
 			RenderTargetSpan rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
+			bool useDepth = false,
 			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
 			SamplerSpan samplerLayout = SamplerSpan{}
 		) const = 0;
@@ -102,6 +103,8 @@ namespace Eugene
 		/// <param name="clearColor"></param>
 		/// <returns></returns>
 		virtual ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) = 0;
+
+		virtual ImageResource* CreateDepthResource(const Vector2I& size, float clear) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成

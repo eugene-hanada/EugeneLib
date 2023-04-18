@@ -35,25 +35,69 @@ namespace Eugene
 		/// <returns> テクスチャデータ </returns>
 		std::uint8_t* GetData(std::uint32_t arrayIndex = 0u,std::uint16_t mipMapLevel = 0u);
 
+		/// <summary>
+		/// データ部分を読み込む
+		/// </summary>
+		/// <param name=""></param>
+		void LoadData(void);
+
+		/// <summary>
+		/// 情報を読み込む
+		/// </summary>
+		/// <param name=""></param>
+		void LoadInfo(void);
+
+		/// <summary>
+		/// すべて読み込む
+		/// </summary>
+		/// <param name=""></param>
+		void Load(void);
+
+		class BinaryReader
+		{
+		public:
+			BinaryReader(const std::filesystem::path& path);
+			~BinaryReader();
+			void Read(void* ptr, std::uint64_t size);
+			bool IsOpen(void) const;
+			void Close(void);
+			FILE* GetFilePtr(void);
+		private:
+			FILE* file_;
+		};
 	private:
 
-		using LoadFunc = bool(Image::*)(const std::filesystem::path&);
+		using LoadFunc = bool(Image::*)(BinaryReader&);
+		using LoadFuncMap = std::unordered_map<std::uint64_t, std::pair<LoadFunc, LoadFunc>>;
 
-		using LoadFuncMap = std::unordered_map<std::string, LoadFunc>;
+		
+		/// <summary>
+		/// stbライブラリを使用して画像の情報を読み込む
+		/// </summary>
+		/// <param name="br"></param>
+		/// <returns></returns>
+		bool LoadStbInfo(BinaryReader& br);
 
 		/// <summary>
-		/// stbライブラリを使用して読み込む
+		/// stbライブラリを使用して画像のデータを読み込む
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="br"></param>
 		/// <returns></returns>
-		bool LoadStb(const std::filesystem::path& path);
+		bool LoadStbData(BinaryReader& br);
 
 		/// <summary>
-		/// ddsファイルの読み込み
+		/// ddsファイルの情報を読み込む
 		/// </summary>
-		/// <param name="path"></param>
+		/// <param name="br"></param>
 		/// <returns></returns>
-		bool LoadDds(const std::filesystem::path& path);
+		bool LoadDdsInfo(BinaryReader& br);
+
+		/// <summary>
+		/// ddsファイルのデータを読み込む
+		/// </summary>
+		/// <param name="br"></param>
+		/// <returns></returns>
+		bool LoadDdsData(BinaryReader& br);
 
 		/// <summary>
 		/// テクスチャデータ
@@ -64,6 +108,21 @@ namespace Eugene
 		/// テクスチャ情報
 		/// </summary>
 		TextureInfo info_;
+
+		/// <summary>
+		/// バイナリリーダー
+		/// </summary>
+		BinaryReader br_;
+
+		/// <summary>
+		/// 拡張しタイプ
+		/// </summary>
+		std::uint64_t ext_;
+
+		/// <summary>
+		/// 情報をロードしたか？
+		/// </summary>
+		bool isInfoLoaded_;
 
 		/// <summary>
 		/// ロード用関数のmap

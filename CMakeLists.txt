@@ -79,7 +79,9 @@ set(SoundSource
     Source/Sound/SoundStreamSpeaker.cpp
     Source/Sound/SoundControl.cpp
     Source/Sound/Sound3DControl.cpp
+    Source/Sound/SoundFile.cpp
     Source/Sound/Wave.cpp
+    Source/Sound/OggVorbis.cpp
 )
 
 

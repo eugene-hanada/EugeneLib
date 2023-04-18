@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <unordered_map>
 #include <functional>
+#include "../../Include/Graphics/Image.h"
 
 namespace Eugene
 {
@@ -153,19 +154,19 @@ namespace Eugene
 		}
 	};
 
-	const std::unordered_map<std::int32_t, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> colcMap
+	const std::unordered_map<Format, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> colcMap
 	{
-		{0,ColcSize{}},
-		{'1TXD',ColcDxt1Size{}},
-		{'3TXD',ColcDxt3Size{}},
-		{'5TXD',ColcDxt3Size{}}
+		{Format::R8G8B8A8_UNORM,ColcSize{}},
+		{Format::BC1_UNORM,ColcDxt1Size{}},
+		{Format::BC2_UNORM,ColcDxt3Size{}},
+		{Format::BC3_UNORM,ColcDxt3Size{}}
 	};
 
-	void LoadDdsExtension(std::ifstream& file, TextureInfo& info)
+	void LoadDdsExtension(Image::BinaryReader& file, TextureInfo& info)
 	{
 		// 追加情報を読み込む
 		DdsExtensionHeader ext;
-		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
+		file.Read(static_cast<void*>(&ext), sizeof(ext));
 		info.arraySize = std::max(1u,ext.arraySize);
 		
 		// フォーマットをセットする

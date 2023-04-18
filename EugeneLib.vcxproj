@@ -25,6 +25,22 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="VulkanDebug|Win32">
+      <Configuration>VulkanDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VulkanDebug|x64">
+      <Configuration>VulkanDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VulkanRelease|Win32">
+      <Configuration>VulkanRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VulkanRelease|x64">
+      <Configuration>VulkanRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -35,6 +51,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -53,7 +75,21 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <VCToolsVersion>14.35.32215</VCToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -75,6 +111,14 @@
     <CharacterSet>Unicode</CharacterSet>
     <VCToolsVersion>14.35.32215</VCToolsVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <VCToolsVersion>14.35.32215</VCToolsVersion>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -83,13 +127,22 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DirectX12Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DirectX12Debug|x64'" Label="PropertySheets">
@@ -98,8 +151,14 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DirectX12Debug|Win32'">
@@ -108,10 +167,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
     <IncludePath>$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <IncludePath>$(VULKAN_SDK)\include;$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VULKAN_SDK)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DirectX12Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -123,7 +191,25 @@
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
     <IncludePath>$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <IncludePath>$(VULKAN_SDK)\include;$(solutiondir)Include\ThirdParty\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VULKAN_SDK)\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
@@ -163,11 +249,41 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX;USE_VULKAN</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -209,17 +325,54 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX;USE_VULKAN</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Sound\OggVorbis.h" />
+    <ClInclude Include="Include\Sound\SoundFile.h" />
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkGraphics.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.h" />
     <ClInclude Include="Include\Sound\SoundStreamSpeaker.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12ImageResource.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Include\Graphics\ImageResource.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12BufferResource.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Include\Graphics\BufferResource.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerViews.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12SamplerViews.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Include\Graphics\SamplerViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Sampler.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Include\Color.h" />
     <ClInclude Include="Include\Common\Debug.h" />
     <ClInclude Include="Include\Common\EugeneLibException.h" />
@@ -247,7 +400,7 @@
     <ClInclude Include="Include\Sound\SoundCommon.h" />
     <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Include\Sound\SoundSpeaker.h" />
-    <ClInclude Include="Include\Sound\Wave.h" />
+    <ClInclude Include="Source\Sound\Wave.h" />
     <ClInclude Include="Include\System\DynamicLibrary.h" />
     <ClInclude Include="Include\System\GamePad.h" />
     <ClInclude Include="Include\System\KeyID.h" />
@@ -258,22 +411,62 @@
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXMath.h" />
     <ClInclude Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.h" />
     <ClInclude Include="Include\Graphics\Sampler.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h" />
-    <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h" />
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12CommandList.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GpuEngine.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Graphics.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12IndexView.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12VertexView.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\DirectX12\Dx12Views.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2Sound3DControl.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundControl.h" />
     <ClInclude Include="Source\Sound\Xaudio2\Xa2SoundSpeaker.h" />
     <ClInclude Include="Source\System\Windows\Dll.h" />
     <ClInclude Include="Source\System\Windows\WindowsSystem.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkGpuEngine.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Vulkan\VkImageResource.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />
@@ -284,31 +477,80 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\SoundFile.cpp" />
+    <ClCompile Include="Source\Sound\OggVorbis.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkGraphics.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.cpp" />
     <ClCompile Include="Source\Sound\SoundStreamSpeaker.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12ImageResource.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Graphics\ImageResource.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12BufferResource.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Graphics\BufferResource.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerViews.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12SamplerViews.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Graphics\SamplerViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Sampler.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Graphics\Sampler.cpp" />
     <ClCompile Include="Source\Common\Debug.cpp" />
     <ClCompile Include="Source\Common\EugeneLibException.cpp" />
     <ClCompile Include="Source\EugeneLib.cpp" />
     <ClCompile Include="Source\Graphics\CommandList.cpp" />
     <ClCompile Include="Source\Graphics\DepthStencilViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp" />
-    <ClCompile Include="Source\Graphics\DirectX12\Dx12Views.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12CommandList.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12DepthStencilViews.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GpuEngine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Graphics.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12GraphicsPipeline.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12IndexView.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12RenderTargetViews.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12ShaderResourceViews.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12VertexView.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\DirectX12\Dx12Views.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Graphics\GpuEngine.cpp" />
     <ClCompile Include="Source\Graphics\GpuResource.cpp" />
     <ClCompile Include="Source\Graphics\Graphics.cpp" />
@@ -336,6 +578,16 @@
     <ClCompile Include="Source\System\System.cpp" />
     <ClCompile Include="Source\System\Windows\Dll.cpp" />
     <ClCompile Include="Source\System\Windows\WindowsSystem.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkGpuEngine.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanRelease|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Vulkan\VkImageResource.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

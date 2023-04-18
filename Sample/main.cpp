@@ -5,6 +5,8 @@
 #include <vector>
 
 
+
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	// システム(osとかの)処理をするクラス
@@ -61,10 +63,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			rendertargets,
 			Eugene::TopologyType::Triangle,
 			false,
+			true,
 			shaderLayout
 		));
 
 	}
+
+	std::unique_ptr<Eugene::ImageResource> depthBuffer;
+	std::unique_ptr<Eugene::DepthStencilViews> depthView;
+	depthBuffer.reset(graphics->CreateDepthResource({ 1280, 720 }, 0.0f));
+	depthView.reset(graphics->CreateDepthStencilViews(1));
+	depthView->Create(*depthBuffer, 0);
 
 	// 頂点情報を生成
 	std::unique_ptr<Eugene::BufferResource> vertexBuffer;
@@ -101,6 +110,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngine->Wait();
 	}
 
+
 	// スクリーン座標からクリップ座標に変換する行列を生成
 	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView;
 	rtMatrixView.reset(graphics->CreateShaderResourceViews(1));
@@ -116,9 +126,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::ImageResource> textureResource;
 	{
 		// 画像読み込み
-		Eugene::Image image{ "./Logo.dds" };
-		Eugene::Image image2{ "./Logo.png" };
+		Eugene::Image image{ "./LogoComp.dds" };
+		//Eugene::Image image2{ "./Logo.png" };
 
+		image.LoadInfo();
+		image.LoadData();
 
 
 		// リソース生成
@@ -170,14 +182,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	std::unique_ptr<Eugene::Sound> sound;
-	std::unique_ptr<Eugene::Sound3DControl> ctrl3D;
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	sound.reset(Eugene::CreateSound());
-	Eugene::Wave wave{ "./exp.wav" };
-	speaker.reset(sound->CreateSoundSpeaker(wave));
+
+	std::unique_ptr<Eugene::SoundFile> wave;;
+	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
+	wave->LoadFormat();
+	wave->LoadData();
+	speaker.reset(sound->CreateSoundSpeaker(*wave));
 	
-	ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
-	speaker->SetOutput(*ctrl3D);
+	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
+
 	speaker->Play();
 
 	// マウスの情報を受け取る構造体
@@ -211,7 +226,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			pos *= 5.0f;
 
 			// 位置更新
-			ctrl3D->Set3DSound(
+			/*ctrl3D->Set3DSound(
 				Eugene::forwardVector3<float>,
 				Eugene::upVector3<float>, 
 				Eugene::zeroVector3<float>, 
@@ -220,19 +235,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				Eugene::upVector3<float>, 
 				{ pos.x,0.0f, -pos.y},
 				Eugene::zeroVector3<float>
-			);
+			);*/
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
-
 
 		// コマンド開始
 		cmdList->Begin();
 
 		// レンダーターゲットセット
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
-		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
+		cmdList->TransitionDepthBegin(*depthBuffer);
+		cmdList->SetRenderTarget(graphics->GetViews(), *depthView,graphics->GetNowBackBufferIndex());
 		cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
+		cmdList->ClearDepth(*depthView);
 
 		// グラフィックパイプラインセット
 		cmdList->SetGraphicsPipeline(*pipeline);
@@ -264,6 +280,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Draw(4);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
+		cmdList->TransitionDepthEnd(*depthBuffer);
 
 		// コマンド終了
 		cmdList->End();

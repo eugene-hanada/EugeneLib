@@ -134,7 +134,11 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 	return new Dx12CommandList{device_.Get()};
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
+Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
+	ShaderInputSpan layout, ShaderTypePaisrSpan shaders,
+	RenderTargetSpan rendertarges, TopologyType topologyType, 
+	bool isCulling, bool useDepth, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout
+	) const
 {
 	return new Dx12GraphicsPipeline{
 		device_.Get(),
@@ -144,7 +148,8 @@ Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ShaderInp
 		topologyType,
 		isCulling,
 		shaderLayout,
-		samplerLayout
+		samplerLayout,
+		useDepth
 	};
 }
 
@@ -171,6 +176,11 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
 {
 	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
+}
+
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2I& size, float clear) const
+{
+	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
 }
 
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const

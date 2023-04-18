@@ -33,8 +33,10 @@ namespace Eugene
 			RenderTargetSpan rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
+			bool useDepth = false,
 			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}) const final;
+			SamplerSpan samplerLayout = SamplerSpan{}
+			) const final;
 
 		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
 
@@ -45,6 +47,8 @@ namespace Eugene
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
 		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) final;
+
+		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
 
 		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
 

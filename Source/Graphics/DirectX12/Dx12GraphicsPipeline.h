@@ -21,8 +21,9 @@ namespace Eugene
 			TopologyType topologyType,
 			bool isCulling,
 			ShaderLayoutSpan shaderLayout,
-			SamplerSpan smplerLayout)
-			;
+			SamplerSpan smplerLayout,
+			bool useDepth
+			);
 
 		struct PipeLine
 		{

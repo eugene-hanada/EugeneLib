@@ -45,6 +45,20 @@ Eugene::SoundFile::SoundFile()
 {
 }
 
+Eugene::SoundFile::SoundFile(SoundFile&& soundFile) :
+    ex_{soundFile.ex_}, format_{soundFile.format_}
+{
+    data_ = std::move(soundFile.data_);
+}
+
+Eugene::SoundFile& Eugene::SoundFile::operator=(SoundFile&& soundFile)
+{
+    data_ = std::move(soundFile.data_);
+   format_ = soundFile.format_;
+   ex_ = soundFile.ex_;
+    return *this;
+}
+
 Eugene::SoundFile::~SoundFile()
 {
 }

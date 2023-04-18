@@ -65,6 +65,15 @@ namespace Eugene
 		private:
 			FILE* file_;
 		};
+
+		Image(Image&& img);
+
+		/// <summary>
+		/// move演算子
+		/// </summary>
+		/// <param name="img"></param>
+		/// <returns></returns>
+		Image& operator=(Image&& img);
 	private:
 
 		using LoadFunc = bool(Image::*)(BinaryReader&);

@@ -17,6 +17,7 @@ namespace Eugene
 
 
 		Wave(const std::filesystem::path& path);
+		
 		~Wave();
 
 		///// <summary>

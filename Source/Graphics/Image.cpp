@@ -56,6 +56,19 @@ void Eugene::Image::Load(void)
 }
 
 
+Eugene::Image::Image(Image&& img) :
+	info_{img.info_}, br_{ img.br_ }, isInfoLoaded_{ img.isInfoLoaded_ }
+{
+	data_ = std::move(img.data_);
+}
+
+Eugene::Image& Eugene::Image::operator=(Image&& img)
+{
+	data_ = std::move(img.data_);
+	info_ = img.info_;
+	return *this;
+}
+
 bool Eugene::Image::LoadStbInfo(BinaryReader& br)
 {
 	if (isInfoLoaded_)

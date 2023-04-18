@@ -11,6 +11,10 @@ namespace Eugene
 	class SoundFile
 	{
 	public:
+		SoundFile(SoundFile&& soundFile);
+
+		SoundFile& operator=(SoundFile&& soundFile);
+
 		virtual ~SoundFile();
 		/// <summary>
 		/// フォーマット部分を読み込みます

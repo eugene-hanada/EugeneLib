@@ -56,8 +56,10 @@ namespace Eugene
 		class BinaryReader
 		{
 		public:
+			BinaryReader(BinaryReader&& br);
 			BinaryReader(const std::filesystem::path& path);
 			~BinaryReader();
+			BinaryReader& operator=(BinaryReader&& br);
 			void Read(void* ptr, std::uint64_t size);
 			bool IsOpen(void) const;
 			void Close(void);

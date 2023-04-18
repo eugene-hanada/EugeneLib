@@ -57,7 +57,7 @@ void Eugene::Image::Load(void)
 
 
 Eugene::Image::Image(Image&& img) :
-	info_{img.info_}, br_{ img.br_ }, isInfoLoaded_{ img.isInfoLoaded_ }
+	info_{img.info_}, br_{ std::move(img.br_) }, isInfoLoaded_{ img.isInfoLoaded_ }, ext_{img.ext_}
 {
 	data_ = std::move(img.data_);
 }
@@ -66,6 +66,8 @@ Eugene::Image& Eugene::Image::operator=(Image&& img)
 {
 	data_ = std::move(img.data_);
 	info_ = img.info_;
+	ext_ = img.ext_;
+	br_ = std::move(img.br_);
 	return *this;
 }
 
@@ -206,6 +208,12 @@ bool Eugene::Image::LoadDdsData(BinaryReader& br)
 	return true;
 }
 
+Eugene::Image::BinaryReader::BinaryReader(BinaryReader&& br)
+{
+	file_ = br.file_;
+	br.file_ = nullptr;
+}
+
 Eugene::Image::BinaryReader::BinaryReader(const std::filesystem::path& path)
 {
 #if _WIN64
@@ -223,6 +231,13 @@ Eugene::Image::BinaryReader::~BinaryReader()
 	{
 		Close();
 	}
+}
+
+Eugene::Image::BinaryReader& Eugene::Image::BinaryReader::operator=(BinaryReader&& br)
+{
+	file_ = br.file_;
+	br.file_ = nullptr;
+	return *this;
 }
 
 void Eugene::Image::BinaryReader::Read(void* ptr, std::uint64_t size)

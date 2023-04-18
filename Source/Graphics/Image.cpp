@@ -56,16 +56,18 @@ void Eugene::Image::Load(void)
 }
 
 
-Eugene::Image::Image(Image&& img) :
-	info_{img.info_}, br_{ img.br_ }, isInfoLoaded_{ img.isInfoLoaded_ }
+Eugene::Image::Image(Image&& img) noexcept:
+	info_{img.info_}, br_{ std::move(img.br_) }, isInfoLoaded_{ img.isInfoLoaded_ }, ext_{img.ext_}
 {
 	data_ = std::move(img.data_);
 }
 
-Eugene::Image& Eugene::Image::operator=(Image&& img)
+Eugene::Image& Eugene::Image::operator=(Image&& img) noexcept
 {
 	data_ = std::move(img.data_);
 	info_ = img.info_;
+	ext_ = img.ext_;
+	br_ = std::move(img.br_);
 	return *this;
 }
 
@@ -183,7 +185,7 @@ bool Eugene::Image::LoadDdsData(BinaryReader& br)
 	data_.resize(info_.arraySize * info_.mipLevels);
 
 	// 配列サイズとミップマップの分を読み込む
-	for (int j = 0; j < info_.arraySize; j++)
+	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
 	{
 		for (int i = 0; i < info_.mipLevels; i++)
 		{
@@ -206,6 +208,12 @@ bool Eugene::Image::LoadDdsData(BinaryReader& br)
 	return true;
 }
 
+Eugene::Image::BinaryReader::BinaryReader(BinaryReader&& br) noexcept
+{
+	file_ = br.file_;
+	br.file_ = nullptr;
+}
+
 Eugene::Image::BinaryReader::BinaryReader(const std::filesystem::path& path)
 {
 #if _WIN64
@@ -223,6 +231,13 @@ Eugene::Image::BinaryReader::~BinaryReader()
 	{
 		Close();
 	}
+}
+
+Eugene::Image::BinaryReader& Eugene::Image::BinaryReader::operator=(BinaryReader&& br) noexcept
+{
+	file_ = br.file_;
+	br.file_ = nullptr;
+	return *this;
 }
 
 void Eugene::Image::BinaryReader::Read(void* ptr, std::uint64_t size)

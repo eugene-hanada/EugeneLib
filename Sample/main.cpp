@@ -132,7 +132,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		
 		image.LoadInfo();
 		image.LoadData();
-		auto tmp = std::move(image);
+		//auto tmp = std::move(image);
 
 		// リソース生成
 		std::unique_ptr<Eugene::BufferResource> uploadBuffer;

@@ -84,5 +84,5 @@ Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample,
 
 Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2Sound3DControl{ xaudio2_.Get(), handle, outChannel, inputChannel, sample };
+	return new Xa2Sound3DControl{ xaudio2_.Get(), handle, inChannel_, inputChannel, sample };
 }

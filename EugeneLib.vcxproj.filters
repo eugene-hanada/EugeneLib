@@ -55,6 +55,9 @@
     <ClCompile Include="Source\Sound\Xaudio2\Xa2SoundStreamSpeaker.cpp" />
     <ClCompile Include="Source\Sound\OggVorbis.cpp" />
     <ClCompile Include="Source\Sound\SoundFile.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkGraphics.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkGpuEngine.cpp" />
+    <ClCompile Include="Source\Graphics\Vulkan\VkImageResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -123,6 +126,9 @@
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
     <ClInclude Include="Source\Sound\OggVorbis.h" />
     <ClInclude Include="Include\Sound\SoundFile.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkGraphics.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkGpuEngine.h" />
+    <ClInclude Include="Source\Graphics\Vulkan\VkImageResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

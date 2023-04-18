@@ -56,10 +56,10 @@ namespace Eugene
 		class BinaryReader
 		{
 		public:
-			BinaryReader(BinaryReader&& br);
+			BinaryReader(BinaryReader&& br) noexcept;
 			BinaryReader(const std::filesystem::path& path);
 			~BinaryReader();
-			BinaryReader& operator=(BinaryReader&& br);
+			BinaryReader& operator=(BinaryReader&& br) noexcept;
 			void Read(void* ptr, std::uint64_t size);
 			bool IsOpen(void) const;
 			void Close(void);
@@ -68,14 +68,14 @@ namespace Eugene
 			FILE* file_;
 		};
 
-		Image(Image&& img);
+		Image(Image&& img) noexcept;
 
 		/// <summary>
 		/// move演算子
 		/// </summary>
 		/// <param name="img"></param>
 		/// <returns></returns>
-		Image& operator=(Image&& img);
+		Image& operator=(Image&& img) noexcept;
 	private:
 
 		using LoadFunc = bool(Image::*)(BinaryReader&);

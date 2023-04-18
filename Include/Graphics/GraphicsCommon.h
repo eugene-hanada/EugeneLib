@@ -88,6 +88,7 @@ namespace Eugene
 		Format format;			// フォーマット
 		std::uint32_t arraySize;		// 配列サイズ
 		std::uint16_t mipLevels;			// ミップマップレベル
+		std::int32_t pixelPerBite;			// ピクセル当たりのバイト数
 	};
 
 	/// <summary>

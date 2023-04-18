@@ -1,6 +1,6 @@
 ﻿#include "Xa2SoundStreamSpeaker.h"
 #include "../../../Include/Sound/SoundCommon.h"
-#include "../../../Include/Sound/Wave.h"
+#include "../Wave.h"
 #include "../../../Include/Sound/SoundControl.h"
 
 #include "../../../Include/Common/Debug.h"

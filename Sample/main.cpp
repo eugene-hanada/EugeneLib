@@ -4,6 +4,158 @@
 #include <memory>
 #include <vector>
 
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
+{
+
+	
+	// システム(osとかの)処理をするクラス
+	std::unique_ptr<Eugene::System> system;
+	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
+
+	// グラフィックの処理をするクラス
+	std::unique_ptr<Eugene::Graphics> graphics;
+	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	{
+		auto [graphicsPtr, gpuPtr] = system->CreateGraphics();
+		graphics.reset(graphicsPtr);
+		gpuEngine.reset(gpuPtr);
+	}
+
+	while (system->Update() && !system->IsHitKey(Eugene::KeyID::ESCAPE))
+	{
+		Eugene::SamplerLayout layout;
+		layout.filter_ = Eugene::SampleFilter::Linear;
+		sampler.reset(graphics->CreateSampler(layout));
+	}
+	std::unique_ptr<Eugene::SamplerViews> samplerView;
+	samplerView.reset(graphics->CreateSamplerViews(1));
+	samplerView->CreateSampler(*sampler, 0);
+
+	// カーソル表示用行列
+	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer;
+	cursorMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
+	Eugene::Matrix4x4* cursorMatrix = static_cast<Eugene::Matrix4x4*>(cursorMatrixBuffer->Map());
+	Eugene::Get2DTransformMatrix(*cursorMatrix, Eugene::zeroVector2<float>, 0.0f, {0.2f,0.2f });
+	std::unique_ptr<Eugene::ShaderResourceViews> cursorView;
+	cursorView.reset(graphics->CreateShaderResourceViews(2));
+	cursorView->CreateTexture(*textureResource, 0);
+	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
+
+	// サウンド
+	std::unique_ptr<Eugene::Sound> sound;
+	std::unique_ptr<Eugene::Sound3DControl> ctrl3D;
+	std::unique_ptr<Eugene::SoundSpeaker> speaker;
+	sound.reset(Eugene::CreateSound());
+
+	std::unique_ptr<Eugene::SoundFile> soundFile;
+	soundFile.reset(Eugene::OpenSoundFile("./exp.ogg"));
+	soundFile->LoadFormat();
+	//Eugene::Wave w{ "./exp.wav" };
+	//Eugene::OggVorbis ogg{ "./exp.ogg" };
+
+	speaker.reset(sound->CreateSoundSpeaker(*soundFile));
+	soundFile->LoadData();
+	speaker->SetData(soundFile->GetDataPtr(), soundFile->GetDataSize());
+	//ctrl3D.reset(sound->CreateSound3DControl(soundFile.GetFmt().sample, speaker->GetInChannel(), 2));
+	//speaker->SetOutput(*ctrl3D);
+	speaker->Play();
+
+	// マウスの情報を受け取る構造体
+	Eugene::System::Mouse mouse;
+
+	// フレーム数
+	std::uint32_t frameCnt = 0;
+
+	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+	while (system->Update())
+	{
+		// マウスの情報を取得
+		system->GetMouse(mouse);
+
+		// 再生チェック
+		if (speaker->IsEnd())
+		{
+			// 再生終了していたら再度再生
+			speaker->Play();
+		}
+
+		if (frameCnt % 3 == 0)
+		{
+			// 3フレームごとに処理する
+
+			// 中心からの座標にする
+			auto pos = mouse.pos - Eugene::Vector2{ 640.0f,360.0f };
+
+			// 正規化して10倍
+			pos.Normalize();
+			pos *= 5.0f;
+
+			// 位置更新
+			/*ctrl3D->Set3DSound(
+				Eugene::forwardVector3<float>,
+				Eugene::upVector3<float>, 
+				Eugene::zeroVector3<float>, 
+				Eugene::zeroVector3<float>,
+				Eugene::forwardVector3<float>,
+				Eugene::upVector3<float>, 
+				{ pos.x,0.0f, -pos.y},
+				Eugene::zeroVector3<float>
+			);*/
+		}
+
+		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
+
+
+		// コマンド開始
+		cmdList->Begin();
+
+		// レンダーターゲットセット
+		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
+		cmdList->SetRenderTarget(graphics->GetViews(), graphics->GetNowBackBufferIndex());
+		cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
+
+		// グラフィックパイプラインセット
+		cmdList->SetGraphicsPipeline(*pipeline);
+
+		// シザーレクトセット
+		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
+
+		// ビューポートセット
+		cmdList->SetViewPort({ 0.0f,0.0f }, { 1280.0f, 720.0f });
+
+		// プリミティブタイプセット
+		cmdList->SetPrimitiveType(Eugene::PrimitiveType::TriangleStrip);
+
+		// 頂点セット
+		cmdList->SetVertexView(*vertexView);
+
+		// テクスチャ、定数バッファ、サンプラーセット
+		cmdList->SetShaderResourceView(*rtMatrixView, 0, 0);
+		cmdList->SetShaderResourceView(*texAndMatrixView, 0, 1);
+		cmdList->SetSamplerView(*samplerView, 0, 2);
+
+		// 描画
+		cmdList->Draw(4);
+
+		// テクスチャ、定数バッファ、サンプラーセット
+		cmdList->SetShaderResourceView(*cursorView, 0, 1);
+
+		// 描画
+		cmdList->Draw(4);
+
+		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
+
+		// コマンド終了
+		cmdList->End();
+
+		// コマンド実行
+		gpuEngine->Push(*cmdList);
+		gpuEngine->Execute();
+		gpuEngine->Wait();
+		graphics->Present();
+	}
+}
+
 //int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 //{
 //	// システム(osとかの)処理をするクラス

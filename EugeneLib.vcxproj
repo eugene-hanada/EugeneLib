@@ -344,6 +344,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Sound\OggVorbis.h" />
+    <ClInclude Include="Include\Sound\SoundFile.h" />
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
     <ClInclude Include="Source\Graphics\Vulkan\VkGraphics.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
@@ -398,7 +400,7 @@
     <ClInclude Include="Include\Sound\SoundCommon.h" />
     <ClInclude Include="Include\Sound\SoundControl.h" />
     <ClInclude Include="Include\Sound\SoundSpeaker.h" />
-    <ClInclude Include="Include\Sound\Wave.h" />
+    <ClInclude Include="Source\Sound\Wave.h" />
     <ClInclude Include="Include\System\DynamicLibrary.h" />
     <ClInclude Include="Include\System\GamePad.h" />
     <ClInclude Include="Include\System\KeyID.h" />
@@ -475,6 +477,8 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sound\SoundFile.cpp" />
+    <ClCompile Include="Source\Sound\OggVorbis.cpp" />
     <ClCompile Include="Source\Graphics\Vulkan\VkGraphics.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

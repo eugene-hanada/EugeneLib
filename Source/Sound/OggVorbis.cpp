@@ -1,4 +1,4 @@
-#include "../../Include/Sound/OggVorbis.h"
+#include "OggVorbis.h"
 #define STB_VORBIS_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_vorbis.c"
 

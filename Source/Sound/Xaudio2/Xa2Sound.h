@@ -18,7 +18,7 @@ namespace Eugene
 	
 		void SetPan(std::span<float> volumes) final;
 
-		SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const final;
+		SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const final;
 
 		SoundSpeaker* CreateSoundSpeaker(const OggVorbis&, const float maxPitchRate = 2.0f) const final;
 

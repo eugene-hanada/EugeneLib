@@ -8,7 +8,7 @@ namespace Eugene
 	class SoundFile
 	{
 	public:
-
+		virtual ~SoundFile();
 		/// <summary>
 		/// フォーマット部分を読み込みます
 		/// </summary>
@@ -39,14 +39,13 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		const std::uint64_t& GetDataSize(void) const;
+		const std::uint64_t GetDataSize(void) const;
 
 		const SoundFormat& GetFormat(void) const;
 
 		const SoundFormatEx& GetFormatExt(void) const;
 	protected:
 		SoundFile();
-		virtual ~SoundFile();
 		std::vector<std::uint8_t> data_;
 		SoundFormat format_;
 		SoundFormatEx ex_;
@@ -57,5 +56,5 @@ namespace Eugene
 	/// </summary>
 	/// <param name="path"></param>
 	/// <returns></returns>
-	SoundFile* OpenFile(const std::filesystem::path& path);
+	SoundFile* OpenSoundFile(const std::filesystem::path& path);
 }

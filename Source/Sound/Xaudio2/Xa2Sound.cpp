@@ -61,14 +61,15 @@ void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
 	}
 }
 
-Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const Wave& wave, const float maxPitchRate ) const
+Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate) const
 {
-	return new Xa2SoundSpeaker{xaudio2_.Get(),wave, inChannel_, maxPitchRate};
+	return new Xa2SoundSpeaker{xaudio2_.Get(),soundFile, inChannel_, maxPitchRate};
 }
 
 Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const OggVorbis& ogg, const float maxPitchRate) const
 {
-	return new Xa2SoundSpeaker{xaudio2_.Get(), ogg, inChannel_, maxPitchRate};
+	return nullptr;
+	//return new Xa2SoundSpeaker{xaudio2_.Get(), ogg, inChannel_, maxPitchRate};
 }
 
 Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const

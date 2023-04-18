@@ -8,8 +8,12 @@ namespace Eugene
 	class SoundStreamSpeaker;
 	class SoundControl;
 	class Sound3DControl;
+	class SoundFile;
+
+
 	class Wave;
 	class OggVorbis;
+	
 
 	/// <summary>
 	/// サウンド用のクラス
@@ -25,7 +29,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="wave"></param>
 		/// <returns></returns>
-		virtual SoundSpeaker* CreateSoundSpeaker(const Wave& wave, const float maxPitchRate = 2.0f) const = 0;
+		virtual SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const = 0;
 
 		/// <summary>
 		/// サウンド再生をするクラスを作成する

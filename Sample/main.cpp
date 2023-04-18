@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 
-#include <Sound/OggVorbis.h>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
@@ -178,13 +177,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	sound.reset(Eugene::CreateSound());
 
 	std::unique_ptr<Eugene::SoundFile> wave;
-	wave.reset(Eugene::OpenFile("./exp.wav"));
+	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
 	wave->LoadFormat();
 	//Eugene::Wave w{ "./exp.wav" };
 	//Eugene::OggVorbis ogg{ "./exp.ogg" };
 
-	// speaker.reset(sound->CreateSoundSpeaker(*wave));
-	
+	speaker.reset(sound->CreateSoundSpeaker(*wave));
+	wave->LoadData();
+	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
 	//ctrl3D.reset(sound->CreateSound3DControl(wave.GetFmt().sample, speaker->GetInChannel(), 2));
 	//speaker->SetOutput(*ctrl3D);
 	speaker->Play();

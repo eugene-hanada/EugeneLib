@@ -44,7 +44,13 @@ namespace Eugene
 		//	return exData_;
 		//}
 
-
+		// RiFFチャンク
+		struct RIFF
+		{
+			char id[4];
+			unsigned int size;
+			char type[4];
+		};
 
 	private:
 		void LoadFormat(void) final;
@@ -73,14 +79,6 @@ namespace Eugene
 		//SoundFormat fmt_;
 
 		//SoundFormatEx exData_;
-
-		// RiFFチャンク
-		struct RIFF
-		{
-			char id[4];
-			unsigned int size;
-			char type[4];
-		};
 
 		std::ifstream file_;
 

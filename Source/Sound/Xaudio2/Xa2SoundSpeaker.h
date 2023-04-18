@@ -8,15 +8,14 @@ struct XAUDIO2_BUFFER;
 
 namespace Eugene
 {
-	struct SoundFormat;
-	class OggVorbis;
-
+	class SoundFile;
 	class Xa2SoundSpeaker :
 		public SoundSpeaker
 	{
 	public:
-		Xa2SoundSpeaker(IXAudio2* xaudio2,const Wave& wave, std::uint16_t outChannel, const float maxPitchRate);
-		Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate);
+	/*	Xa2SoundSpeaker(IXAudio2* xaudio2,const Wave& wave, std::uint16_t outChannel, const float maxPitchRate);
+		Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate);*/
+		Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate);
 		~Xa2SoundSpeaker();
 	private:
 		void Play(void) final;

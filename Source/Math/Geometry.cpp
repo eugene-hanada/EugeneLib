@@ -41,7 +41,7 @@ void Eugene::Get2DTransformMatrix(Matrix4x4& out, const Vector2& pos, float rot,
 {
 	DirectX::XMStoreFloat4x4(&out, 
 		DirectX::XMMatrixTranslation(-rotPos.x, -rotPos.y, 0.0f) *
-		DirectX::XMMatrixRotationY(rot) *
+		DirectX::XMMatrixRotationZ(rot) *
 		DirectX::XMMatrixScaling(scale.x, scale.y, 1.0f) *
 		DirectX::XMMatrixTranslation(pos.x, pos.y, 0.0f));
 }

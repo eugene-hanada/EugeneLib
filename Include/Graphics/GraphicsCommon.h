@@ -98,6 +98,7 @@ namespace Eugene
 	{
 		Point = 1,
 		Line = 2,
+		LineStrip = 3,
 		Triangle = 4,
 		TriangleStrip = 5
 	};

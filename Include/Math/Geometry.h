@@ -211,7 +211,7 @@ namespace Eugene
 	/// <param name="rot"> 回転角度(ラジアン) </param>
 	/// <param name="scale"> 拡縮(スケール) </param>
 	/// <param name="rotPos"> 回転基準座標 </param>
-	void Get2DTransformMatrix(Matrix4x4& out, const Vector2& pos, float rot = 0.0f, const Vector2& scale = zeroVector2<float>, const Vector2& rotPos = zeroVector2<float>);
+	void Get2DTransformMatrix(Matrix4x4 & out, const Vector2 & pos, float rot = 0.0f, const Vector2 & scale = {0.0f,0.0f}, const Vector2& rotPos = zeroVector2<float>);
 
 	/// <summary>
 	/// 特定方向を向く行列

@@ -212,7 +212,7 @@ bool Eugene::WindowsSystem::IsHitKey(KeyID keyID) const
 	return GetKeyState(codeTable_[std::underlying_type<KeyID>::type(keyID)]) & 0x8000;
 }
 
-bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan& keyData) const
+bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan keyData) const
 {
 	std::uint8_t k[256];
 	if (!GetKeyboardState(k))

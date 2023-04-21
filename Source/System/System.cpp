@@ -12,7 +12,7 @@ bool Eugene::System::IsHitKey(KeyID keyID) const
 	return false;
 }
 
-bool Eugene::System::GetKeyData(KeyDataSpan& keyData) const
+bool Eugene::System::GetKeyData(KeyDataSpan keyData) const
 {
 	return false;
 }

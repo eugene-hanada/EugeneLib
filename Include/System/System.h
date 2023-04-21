@@ -95,7 +95,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="keySpan"> キー情報 </param>
 		/// <returns> キー情報がある場合はtrue、ない場合はfalse </returns>
-		virtual bool GetKeyData(KeyDataSpan& keyData) const;
+		virtual bool GetKeyData(KeyDataSpan keyData) const;
 
 		/// <summary>
 		/// キーコードのデータテーブル

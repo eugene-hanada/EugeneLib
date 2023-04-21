@@ -18,7 +18,7 @@ namespace Eugene
 		bool Update(void) final;
 		void GetMouse(Mouse& outMouse) const& final;
 		bool IsHitKey(KeyID keyID) const final;
-		bool GetKeyData(KeyDataSpan& keyData) const final;
+		bool GetKeyData(KeyDataSpan keyData) const final;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 		bool IsEnd(void) const final;

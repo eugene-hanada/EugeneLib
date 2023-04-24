@@ -69,6 +69,7 @@ set(MathSource
     Include/ThirdParty/DirectXMath/DirectXPackedVector.h
     Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
     Source/Math/Vector3.cpp
+    Source/Math/Quaternion.cpp
  )
 
 # サウンド系のクラスのソースファイルをセット

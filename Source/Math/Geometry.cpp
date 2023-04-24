@@ -67,3 +67,9 @@ void Eugene::GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float ne
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixOrthographicLH(size.x, size.y, near, far));
 }
+
+void Eugene::GetQuaternionToMatrix(Matrix4x4& out, const Quaternion& q)
+{
+	DirectX::XMFLOAT4 qf{ q.x,q.y,q.z, q.w };
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&qf)));
+}

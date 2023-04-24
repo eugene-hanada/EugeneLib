@@ -1,7 +1,7 @@
 #include "../../Include/Math/Geometry.h"
 #include <cmath>
 
-float GetNormalizedAngle(float angle, float valMin, float valMax)
+float Eugene::GetNormalizedAngle(float angle, float valMin, float valMax)
 {
 	float cycle = valMax - valMin;
 	float result = std::fmod((angle - valMin), cycle + valMin);
@@ -12,7 +12,7 @@ float GetNormalizedAngle(float angle, float valMin, float valMax)
 	return result;
 }
 
-double GetNormalizedAngle(double angle, double valMin, double valMax)
+double Eugene::GetNormalizedAngle(double angle, double valMin, double valMax)
 {
 	double cycle = valMax - valMin;
 	double result = std::fmod((angle - valMin), cycle + valMin);
@@ -59,7 +59,6 @@ void Eugene::GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& 
 
 void Eugene::GetPerspectiveFovMatrix(Matrix4x4& out, float fov, float aspect, float near, float far)
 {
-	
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixPerspectiveFovLH(fov, aspect, near, far));
 }
 

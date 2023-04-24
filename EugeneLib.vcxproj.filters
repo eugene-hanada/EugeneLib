@@ -58,6 +58,7 @@
     <ClCompile Include="Source\Graphics\Vulkan\VkGraphics.cpp" />
     <ClCompile Include="Source\Graphics\Vulkan\VkGpuEngine.cpp" />
     <ClCompile Include="Source\Graphics\Vulkan\VkImageResource.cpp" />
+    <ClCompile Include="Source\Math\Quaternion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Source\Graphics\Vulkan\VkGraphics.h" />
     <ClInclude Include="Source\Graphics\Vulkan\VkGpuEngine.h" />
     <ClInclude Include="Source\Graphics\Vulkan\VkImageResource.h" />
+    <ClInclude Include="Include\Math\Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

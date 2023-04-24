@@ -3,6 +3,7 @@
 #include "../ThirdParty/DirectXMath/DirectXMath.h"
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Quaternion.h"
 
 namespace Eugene
 {
@@ -240,4 +241,11 @@ namespace Eugene
 	/// <param name="near"> ニア </param>
 	/// <param name="far"> ファー </param>
 	void GetOrthographicMatrix(Matrix4x4& out, const Vector2& size, float near = 0.1f, float far = 1000.0f);
+
+	/// <summary>
+	/// クォータニオンから回転行列を取得する
+	/// </summary>
+	/// <param name="out"> 出力する行列 </param>
+	/// <param name="q"> クォータニオン </param>
+	void GetQuaternionToMatrix(Matrix4x4& out, const Quaternion& q);
 };

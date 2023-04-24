@@ -344,6 +344,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Math\Quaternion.h" />
     <ClInclude Include="Source\Sound\OggVorbis.h" />
     <ClInclude Include="Include\Sound\SoundFile.h" />
     <ClInclude Include="Source\Graphics\DdsLoad.h" />
@@ -477,6 +478,7 @@
     <None Include="Include\ThirdParty\DirectXMath\DirectXPackedVector.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Math\Quaternion.cpp" />
     <ClCompile Include="Source\Sound\SoundFile.cpp" />
     <ClCompile Include="Source\Sound\OggVorbis.cpp" />
     <ClCompile Include="Source\Graphics\Vulkan\VkGraphics.cpp">

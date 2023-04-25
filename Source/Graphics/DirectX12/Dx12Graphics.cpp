@@ -203,9 +203,9 @@ Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(std::uint64_t size, s
 	return new Dx12VertexView{size, vertexNum,resource};
 }
 
-Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const
+Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
-	return new Dx12IndexView{size, format,resource};
+	return new Dx12IndexView{size,num, format,resource};
 }
 
 Eugene::GpuEngine* Eugene::Dx12Graphics::CreateGpuEngine(std::uint64_t maxSize) const

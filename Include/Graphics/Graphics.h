@@ -138,12 +138,14 @@ namespace Eugene
 		virtual VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const = 0;
 
 		/// <summary>
-		/// IndexViewの生成
+		/// インデックスビュー生成
 		/// </summary>
-		/// <param name="size"></param>
-		/// <param name="resource"></param>
-		/// <returns></returns>
-		virtual IndexView* CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const = 0;
+		/// <param name="size"> 一つ当たりのバイト数 </param>
+		/// <param name="num"> 数 </param>
+		/// <param name="format"> フォーマット </param>
+		/// <param name="resource"> リソース </param>
+		/// <returns> IndexViewのポインタ </returns>
+		virtual IndexView* CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const = 0;
 
 		/// <summary>
 		/// バックバッファのレンダーターゲットのGpuResourceを取得する

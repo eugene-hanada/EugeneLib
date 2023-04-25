@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <cstdint>
 
 namespace Eugene
 {
@@ -10,7 +11,9 @@ namespace Eugene
 	public:
 		virtual ~VertexView();
 		virtual void* GetView(void) const = 0;
+		const std::uint32_t GetVertexNum(void) const;
 	protected:
-		VertexView();
+		VertexView(std::uint32_t vertexNum);
+		std::uint32_t vertexNum_;
 	};
 }

@@ -205,7 +205,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
 	{
-		return;
+		throw EugeneLibException{"グラフィックスパイプラインステート生成失敗"};
 	}
 }
 

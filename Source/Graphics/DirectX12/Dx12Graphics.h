@@ -58,7 +58,7 @@ namespace Eugene
 
 		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const final;
 
-		IndexView* CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const final;
+		IndexView* CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const final;
 
 		void CreateDevice(void);
 

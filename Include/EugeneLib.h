@@ -16,6 +16,7 @@
 #include "Graphics/GraphicsPipeline.h"
 #include "Graphics/RenderTargetViews.h"
 #include "Graphics/VertexView.h"
+#include "Graphics/IndexView.h"
 #include "Graphics/ShaderResourceViews.h"
 #include "Graphics/DepthStencilViews.h"
 #include "Graphics/Image.h"
@@ -29,4 +30,6 @@
 #include "Sound/SoundControl.h"
 #include "Sound/Sound3DControl.h"
 #include "Sound/SoundStreamSpeaker.h"
+
+#include "Math/Geometry.h"
 

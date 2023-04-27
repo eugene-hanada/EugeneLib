@@ -248,4 +248,13 @@ namespace Eugene
 	/// <param name="out"> 出力する行列 </param>
 	/// <param name="q"> クォータニオン </param>
 	void GetQuaternionToMatrix(Matrix4x4& out, const Quaternion& q);
+
+	/// <summary>
+	/// 回転、座標、拡縮から行列を取得する
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="q"> 回転(クォータニオン) </param>
+	/// <param name="pos"> 座標 </param>
+	/// <param name="scale"> スケール </param>
+	void GetTransformMatrix(Matrix4x4& out, const Quaternion& q, const Vector3& pos, const Vector3& scale);
 };

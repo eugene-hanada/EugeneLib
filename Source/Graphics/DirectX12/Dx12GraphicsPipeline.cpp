@@ -198,10 +198,10 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.DepthStencilState.DepthEnable = useDepth;
 	if (useDepth)
 	{
-		gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
-		gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-		gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+		CD3DX12_DEPTH_STENCIL_DESC depthDesc(CD3DX12_DEFAULT{});
+		gpipeline.DepthStencilState = depthDesc;
 	}
+	
 
 	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
 	{

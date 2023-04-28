@@ -22,7 +22,7 @@ void Eugene::Dx12DepthStencilViews::Create(ImageResource& resource, std::uint64_
 	D3D12_DEPTH_STENCIL_VIEW_DESC viewDesc{};
 	viewDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	viewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	viewDesc.Flags = D3D12_DSV_FLAG_READ_ONLY_DEPTH;
+	viewDesc.Flags = D3D12_DSV_FLAG_NONE;
 	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	device->CreateDepthStencilView(dx12Resource, &viewDesc, handle);

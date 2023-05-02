@@ -257,4 +257,18 @@ namespace Eugene
 	/// <param name="pos"> 座標 </param>
 	/// <param name="scale"> スケール </param>
 	void GetTransformMatrix(Matrix4x4& out, const Quaternion& q, const Vector3& pos, const Vector3& scale);
+
+	/// <summary>
+	/// 行列の積
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="l"></param>
+	/// <param name="r"></param>
+	void Mul(Matrix4x4& out, const Matrix4x4& l, const Matrix4x4& r);
+
+	/// <summary>
+	/// 単位行列
+	/// </summary>
+	/// <param name="out"></param>
+	void Identity(Matrix4x4& out);
 };

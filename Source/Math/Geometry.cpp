@@ -84,3 +84,13 @@ void Eugene::GetTransformMatrix(Matrix4x4& out, const Quaternion& q, const Vecto
 		DirectX::XMMatrixScaling(scale.x, scale.y, scale.z)
 	);
 }
+
+void Eugene::Mul(Matrix4x4& out, const Matrix4x4& l, const Matrix4x4& r)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMLoadFloat4x4(&l)* DirectX::XMLoadFloat4x4(&r));
+}
+
+void Eugene::Identity(Matrix4x4& out)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixIdentity());
+}

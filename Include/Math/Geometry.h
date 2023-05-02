@@ -212,7 +212,7 @@ namespace Eugene
 	/// <param name="rot"> 回転角度(ラジアン) </param>
 	/// <param name="scale"> 拡縮(スケール) </param>
 	/// <param name="rotPos"> 回転基準座標 </param>
-	void Get2DTransformMatrix(Matrix4x4 & out, const Vector2 & pos, float rot = 0.0f, const Vector2 & scale = {0.0f,0.0f}, const Vector2& rotPos = zeroVector2<float>);
+	void Get2DTransformMatrix(Matrix4x4& out, const Vector2& pos, float rot = 0.0f, const Vector2& scale = { 0.0f,0.0f }, const Vector2& rotPos = zeroVector2<float>);
 
 	/// <summary>
 	/// 特定方向を向く行列
@@ -221,7 +221,7 @@ namespace Eugene
 	/// <param name="eye"> 視点座標 </param>
 	/// <param name="target"> 向きたい座標 </param>
 	/// <param name="up"> 上方向 </param>
-	void GetLookAtMatrix(Matrix4x4& out,const Vector3& eye, const Vector3& target, const Vector3& up);
+	void GetLookAtMatrix(Matrix4x4& out, const Vector3& eye, const Vector3& target, const Vector3& up);
 
 	/// <summary>
 	/// パースペクティブ行列
@@ -271,4 +271,27 @@ namespace Eugene
 	/// </summary>
 	/// <param name="out"></param>
 	void Identity(Matrix4x4& out);
+
+	/// <summary>
+	/// アライメントされた大きさを返す
+	/// </summary>
+	/// <param name="size"> サイズ </param>
+	/// <param name="alignment"> アライメントサイズ </param>
+	/// <returns> アライメントされたサイズ </returns>
+	constexpr size_t AlignmentedSize(const size_t& size, const size_t& alignment)
+	{
+		return size + alignment - size % alignment;
+	}
+
+	/// <summary>
+	/// 上記のテンプレート版(定数時に使える)
+	/// </summary>
+	/// <typeparam name="Size"></typeparam>
+	/// <typeparam name="Alignment"></typeparam>
+	/// <returns></returns>
+	template<size_t Size, size_t Alignment>
+	constexpr size_t AlignmentedSize()
+	{
+		return Size + Alignment - Size % Alignment;
+	}
 };

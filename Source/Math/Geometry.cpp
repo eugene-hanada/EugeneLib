@@ -79,9 +79,10 @@ void Eugene::GetTransformMatrix(Matrix4x4& out, const Quaternion& q, const Vecto
 
 	DirectX::XMStoreFloat4x4(
 		&out,
+		DirectX::XMMatrixTranslation(-pos.x, -pos.y, -pos.z) *
 		DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&qf)) *
-		DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z) *
-		DirectX::XMMatrixScaling(scale.x, scale.y, scale.z)
+		DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) *
+		DirectX::XMMatrixTranslation(pos.x * 2.0f, pos.y * 2.0f, pos.z * 2.0f)
 	);
 }
 

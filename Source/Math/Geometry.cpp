@@ -95,3 +95,8 @@ void Eugene::Identity(Matrix4x4& out)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixIdentity());
 }
+
+void Eugene::Transpose(Matrix4x4& out)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixTranspose(DirectX::XMLoadFloat4x4(&out)));
+}

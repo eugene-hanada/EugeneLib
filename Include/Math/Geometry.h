@@ -272,6 +272,13 @@ namespace Eugene
 	/// <param name="out"></param>
 	void Identity(Matrix4x4& out);
 
+
+	/// <summary>
+	/// 転置行列にする
+	/// </summary>
+	/// <param name="out"></param>
+	void Transpose(Matrix4x4& out);
+
 	/// <summary>
 	/// アライメントされた大きさを返す
 	/// </summary>

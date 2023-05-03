@@ -100,3 +100,19 @@ void Eugene::Transpose(Matrix4x4& out)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixTranspose(DirectX::XMLoadFloat4x4(&out)));
 }
+
+void Eugene::TransposeMul(Matrix4x4& out, Matrix4x4& matrix)
+{
+	//DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixMultiplyTranspose(DirectX::XMLoadFloat4x4(&matrix),));
+}
+
+void Eugene::GetTranslateMatrix(Matrix4x4& out, const Vector3& pos)
+{
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z));
+}
+
+void Eugene::GetRotationMatrix(Matrix4x4& out, const Quaternion& q)
+{
+	DirectX::XMFLOAT4 qf{ q.x,q.y,q.z, q.w };
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&qf)));
+}

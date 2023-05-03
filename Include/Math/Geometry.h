@@ -279,6 +279,12 @@ namespace Eugene
 	/// <param name="out"></param>
 	void Transpose(Matrix4x4& out);
 
+	void TransposeMul(Matrix4x4& out, Matrix4x4& matrix);
+
+	void GetTranslateMatrix(Matrix4x4& out, const Vector3& pos);
+
+	void GetRotationMatrix(Matrix4x4& out, const Quaternion& q);
+
 	/// <summary>
 	/// アライメントされた大きさを返す
 	/// </summary>

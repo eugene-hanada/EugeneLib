@@ -106,6 +106,12 @@ void Eugene::TransposeMul(Matrix4x4& out, Matrix4x4& matrix)
 	//DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixMultiplyTranspose(DirectX::XMLoadFloat4x4(&matrix),));
 }
 
+void Eugene::Inverse(Matrix4x4& out)
+{
+	DirectX::XMVECTOR vec;
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixInverse(&vec, DirectX::XMLoadFloat4x4(&out)));
+}
+
 void Eugene::GetTranslateMatrix(Matrix4x4& out, const Vector3& pos)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z));

@@ -281,6 +281,8 @@ namespace Eugene
 
 	void TransposeMul(Matrix4x4& out, Matrix4x4& matrix);
 
+	void Inverse(Matrix4x4& out);
+
 	void GetTranslateMatrix(Matrix4x4& out, const Vector3& pos);
 
 	void GetRotationMatrix(Matrix4x4& out, const Quaternion& q);

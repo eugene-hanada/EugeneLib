@@ -23,6 +23,12 @@ double Eugene::GetNormalizedAngle(double angle, double valMin, double valMax)
 	return result;
 }
 
+Eugene::Quaternion Eugene::Slearp(const Quaternion& a, const Quaternion& b, float t)
+{
+	auto result = DirectX::XMQuaternionSlerp(DirectX::XMVectorSet(a.x, a.y, a.z, a.w), DirectX::XMVectorSet(b.x, b.y, b.z, b.w), t);
+	return { result.m128_f32[0],result.m128_f32[1],result.m128_f32[2], result.m128_f32[3] };
+}
+
 void Eugene::Get2DMatrix(Matrix4x4& out, const Vector2& size)
 {
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixIdentity());
@@ -103,7 +109,7 @@ void Eugene::Transpose(Matrix4x4& out)
 
 void Eugene::TransposeMul(Matrix4x4& out, Matrix4x4& matrix)
 {
-	//DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixMultiplyTranspose(DirectX::XMLoadFloat4x4(&matrix),));
+	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixMultiplyTranspose(DirectX::XMLoadFloat4x4(&matrix),DirectX::XMLoadFloat4x4(&matrix)));
 }
 
 void Eugene::Inverse(Matrix4x4& out)

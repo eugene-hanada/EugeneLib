@@ -176,6 +176,29 @@ namespace Eugene
 		return a + ((b - a) * t);
 	}
 
+	template<ValueC T>
+	constexpr Vector3Tmp<T> Learp(const Vector3Tmp<T>& a, const Vector3Tmp<T>& b, const T& t)
+	{
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			auto result = DirectX::XMVectorLerp(DirectX::XMVectorSet(a.x, a.y, a.z, 0.0f), DirectX::XMVectorSet(b.x, b.y, b.z, 0.0f), t);
+			return { result.m128_f32[0],result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return a + ((b - a) * t);
+		}
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	Quaternion Slearp(const Quaternion& a, const Quaternion& b, float t);
+
 	/// <summary> Vector2TmpをClampする </summary>
 	/// <param name="val"> Clampしたい値 </param>
 	/// <param name="min"> 最小値 </param>

@@ -93,6 +93,14 @@ namespace Eugene
 
 #if _MSC_FULL_VER < 193532215 
 
+
+#if _MSC_FULL_VER <= 193030709
+		template<class... Args>
+		constexpr void Log(const std::string_view fmt, const Args& ...args)
+		{
+			Log(std::vformat(fmt, std::make_format_args(args...)));
+		}
+#else
 		/// <summary>
 		/// std::formatを使用してフォーマットして出力する
 		/// </summary>
@@ -104,6 +112,7 @@ namespace Eugene
 		{
 			Log(std::vformat(fmt._Str, std::make_format_args(args...)));
 		}
+#endif
 #else
 		template<class... Args>
 		constexpr void Log(std::format_string<Args...> fmt, const Args ...args)

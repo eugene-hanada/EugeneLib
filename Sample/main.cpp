@@ -127,7 +127,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::ImageResource> textureResource;
 	{
 		// 画像読み込み
-		Eugene::Image image{ "./LogoComp.dds" };
+		Eugene::Image image{ "./Logo.png" };
 		//Eugene::Image image2{ "./Logo.png" };
 		
 		
@@ -240,8 +240,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::NewFrame();
 
 		ImGui::Begin("window1");
+		auto img = texAndMatrixView->GetImg();
+		ImGui::Image(ImTextureID(img), { 256,256});
 		ImGui::Text("text1");
-
+		
 		ImGui::End();
 		ImGui::Render();
 

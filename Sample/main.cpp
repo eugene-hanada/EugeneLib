@@ -1,10 +1,11 @@
 ﻿#include <Windows.h>
+#define USE_IMGUI
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
 #include <vector>
 
-
+#include <ThirdParty/imgui/imgui.h>
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -202,6 +203,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// フレーム数
 	std::uint32_t frameCnt = 0;
 
+	
+
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 	while (system->Update())
 	{
@@ -226,20 +229,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			pos.Normalize();
 			pos *= 5.0f;
 
-			// 位置更新
-			/*ctrl3D->Set3DSound(
-				Eugene::forwardVector3<float>,
-				Eugene::upVector3<float>, 
-				Eugene::zeroVector3<float>, 
-				Eugene::zeroVector3<float>,
-				Eugene::forwardVector3<float>,
-				Eugene::upVector3<float>, 
-				{ pos.x,0.0f, -pos.y},
-				Eugene::zeroVector3<float>
-			);*/
+			
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
+
+
+		graphics->ImguiNewFrame();
+		system->ImguiNewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("window1");
+		ImGui::Text("text1");
+
+		ImGui::End();
+		ImGui::Render();
 
 		// コマンド開始
 		cmdList->Begin();
@@ -280,8 +284,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
+		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
+
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
+
 
 		// コマンド終了
 		cmdList->End();
@@ -295,6 +302,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if (system->IsHitKey(Eugene::KeyID::ESCAPE))
 		{
 			break;
+		}
+
+		ImGuiIO& io = ImGui::GetIO();
+		if (!system->IsEnd())
+		{
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
 		}
 
 		frameCnt++;

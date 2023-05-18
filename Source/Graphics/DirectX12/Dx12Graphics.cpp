@@ -110,9 +110,9 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
-	srViews_.reset(CreateShaderResourceViews(2));
+	srViews_.reset(CreateShaderResourceViews(256));
 	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
-	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
+	ImGui_ImplDX12_Init(device_.Get(), 1, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
 	
 #endif
 }
@@ -388,5 +388,16 @@ Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(size_t size) cons
 void Eugene::Dx12Graphics::ImguiNewFrame(void) const
 {
 	ImGui_ImplDX12_NewFrame();
+}
+void* Eugene::Dx12Graphics::GetImguiImageID(std::uint64_t index) const
+{
+	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
+	auto handle = ptr->GetGPUDescriptorHandleForHeapStart();
+	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * index;
+	return reinterpret_cast<void*>(handle.ptr);
+}
+Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(void)&
+{
+	return *srViews_;
 }
 #endif

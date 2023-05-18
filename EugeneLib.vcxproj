@@ -407,6 +407,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Math\Quaternion.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="Include\ThirdParty\imgui\imgui.h" />
     <ClInclude Include="Source\Sound\OggVorbis.h" />
     <ClInclude Include="Include\Sound\SoundFile.h" />

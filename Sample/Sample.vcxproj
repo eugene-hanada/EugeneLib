@@ -202,7 +202,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImguiDebug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(solutionDIr)Include;$(SolutionDir)\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\ImguiDebug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VulkanDebug|x64'">
     <LinkIncremental>true</LinkIncremental>

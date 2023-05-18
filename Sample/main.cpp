@@ -206,6 +206,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+	
+	graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
+	auto img = graphics->GetImguiImageID(1);
+	
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -240,9 +244,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::NewFrame();
 
 		ImGui::Begin("window1");
-		auto img = texAndMatrixView->GetImg();
-		ImGui::Image(ImTextureID(img), { 256,256});
-		ImGui::Text("text1");
+		
+		ImGui::Image((ImTextureID)img, { 256,256});
+		
+		//ImGui::Text("text1");
 		
 		ImGui::End();
 		ImGui::Render();
@@ -286,11 +291,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
-		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
-
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
 
+		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 
 		// コマンド終了
 		cmdList->End();

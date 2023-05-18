@@ -195,7 +195,26 @@ namespace Eugene
 		/// <returns></returns>
 		virtual SamplerViews* CreateSamplerViews(std::uint64_t size) const = 0;
 #ifdef USE_IMGUI
+
+		/// <summary>
+		/// imgui用のフレーム開始の処理をする
+		/// </summary>
+		/// <param name=""></param>
 		virtual void ImguiNewFrame(void) const = 0;
+
+		/// <summary>
+		/// Imgui用のシェーダーリソースからテクスチャ用のIDを取得する
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		virtual void* GetImguiImageID(std::uint64_t index) const = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		virtual ShaderResourceViews& GetImguiShaderResourceView(void) & = 0;
 #endif
 	protected:
 		Graphics();

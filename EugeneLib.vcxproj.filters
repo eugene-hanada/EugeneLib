@@ -59,6 +59,13 @@
     <ClCompile Include="Source\Graphics\Vulkan\VkGpuEngine.cpp" />
     <ClCompile Include="Source\Graphics\Vulkan\VkImageResource.cpp" />
     <ClCompile Include="Source\Math\Quaternion.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Color.h" />
@@ -131,6 +138,7 @@
     <ClInclude Include="Source\Graphics\Vulkan\VkGpuEngine.h" />
     <ClInclude Include="Source\Graphics\Vulkan\VkImageResource.h" />
     <ClInclude Include="Include\Math\Quaternion.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\imgui.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

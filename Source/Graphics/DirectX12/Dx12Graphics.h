@@ -79,6 +79,8 @@ namespace Eugene
 		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
+		void* GetImguiImageID(std::uint64_t index) const final;
+		ShaderResourceViews& GetImguiShaderResourceView(void) & final;
 #endif
 
 		// dxgi

@@ -139,6 +139,8 @@
     <ClInclude Include="Source\Graphics\Vulkan\VkImageResource.h" />
     <ClInclude Include="Include\Math\Quaternion.h" />
     <ClInclude Include="Include\ThirdParty\imgui\imgui.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="Include\ThirdParty\imgui\backends\imgui_impl_win32.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Include\ThirdParty\DirectXMath\DirectXCollision.inl" />

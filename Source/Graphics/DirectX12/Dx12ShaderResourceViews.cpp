@@ -96,6 +96,7 @@ std::uint64_t Eugene::Dx12ShaderResourceViews::GetImg(void)
 		return 0ull;
 	}
 	auto handle = descriptorHeap_->GetGPUDescriptorHandleForHeapStart();
+	
 	handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	return handle.ptr;
 }

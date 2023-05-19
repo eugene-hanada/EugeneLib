@@ -81,13 +81,11 @@ void Eugene::GetQuaternionToMatrix(Matrix4x4& out, const Quaternion& q)
 
 void Eugene::GetTransformMatrix(Matrix4x4& out, const Quaternion& q, const Vector3& pos, const Vector3& scale)
 {
-	DirectX::XMFLOAT4 qf{ q.x,q.y,q.z, q.w };
+	//DirectX::XMFLOAT4 qf{ q.x,q.y,q.z, q.w };
 	DirectX::XMStoreFloat4x4( &out, 
-		DirectX::XMMatrixAffineTransformation(
-		DirectX::XMVectorSet(scale.x, scale.y, scale.z, 0.0f),
-		DirectX::XMVectorSet(pos.x, pos.y, pos.z, 0.0f),
-		DirectX::XMVectorSet(q.x, q.y, q.z, q.w),
-		DirectX::XMVectorSet(pos.x, pos.y, pos.z, 0.0f))
+		DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) *
+		DirectX::XMMatrixRotationQuaternion(DirectX::XMVectorSet(q.x,q.y,q.z, q.w)) *
+		DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z)
 	);
 	/*DirectX::XMStoreFloat4x4(
 		&out,

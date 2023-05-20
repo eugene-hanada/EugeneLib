@@ -105,6 +105,12 @@ namespace Eugene
 		return deg * (pi<T> / static_cast<T>(180));
 	}
 
+	template<ValueC T>
+	constexpr Vector3Tmp<T> Deg2Rad(const Vector3Tmp<T>& deg)
+	{
+		return { Deg2Rad(deg.x),Deg2Rad(deg.y) ,Deg2Rad(deg.z) };
+	}
+
 	/// <summary>
 	/// 弧度法を度数法にする
 	/// </summary>
@@ -116,6 +122,12 @@ namespace Eugene
 		return rad * (static_cast<T>(180) / pi<T>);
 	}
 
+	template<ValueC T>
+	constexpr Vector3Tmp<T> Rad2Deg(const Vector3Tmp<T>& rad)
+	{
+		return { Rad2Deg(rad.x),Rad2Deg(rad.y) ,Rad2Deg(rad.z) };
+	}
+
 	/// <summary>
 	/// 角度を指定範囲に正規化する
 	/// </summary>
@@ -125,13 +137,16 @@ namespace Eugene
 	/// <returns></returns>
 	float GetNormalizedAngle(float angle, float valMin = 0.0f, float valMax = pi2<float>);
 
+	/// <summary>
+	/// 角度の正規化(上のやつのdouble版)
+	/// </summary>
+	/// <param name="angle"></param>
+	/// <param name="valMin"></param>
+	/// <param name="valMax"></param>
+	/// <returns></returns>
 	double GetNormalizedAngle(double angle, double valMin = 0.0f, double valMax = pi2<double>);
 
-	//
-	constexpr float Clamp(float val, float minVal, float maxVal)
-	{
-		return std::clamp(val, minVal, maxVal);
-	}
+
 
 	/// <summary> Vector2とVector2の間の角度を求める </summary>
 	/// <param name="v1"></param>
@@ -302,13 +317,41 @@ namespace Eugene
 	/// <param name="out"></param>
 	void Transpose(Matrix4x4& out);
 
+	/// <summary>
+	/// 転置行列をかける
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="matrix"></param>
 	void TransposeMul(Matrix4x4& out, Matrix4x4& matrix);
 
+	/// <summary>
+	/// 逆行列にする
+	/// </summary>
+	/// <param name="out"></param>
 	void Inverse(Matrix4x4& out);
 
+	/// <summary>
+	/// 移動する行列を取得する
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="pos"></param>
 	void GetTranslateMatrix(Matrix4x4& out, const Vector3& pos);
 
+	/// <summary>
+	/// 回転する行列を取得する
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="q"></param>
 	void GetRotationMatrix(Matrix4x4& out, const Quaternion& q);
+
+	/// <summary>
+	/// 行列から移動、回転、スケール取得する
+	/// </summary>
+	/// <param name="out"></param>
+	/// <param name="outTrans"></param>
+	/// <param name="outQ"></param>
+	/// <param name="outScale"></param>
+	void DeposeTransformMatrix(const Matrix4x4& out, Vector3* outTrans, Quaternion* outQ, Vector3* outScale);
 
 	/// <summary>
 	/// アライメントされた大きさを返す

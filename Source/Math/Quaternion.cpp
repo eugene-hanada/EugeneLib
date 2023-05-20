@@ -64,11 +64,14 @@ Eugene::Vector3 Eugene::Quaternion::ToEuler(void) const
     double  yz = y * z;
     double  zz = z * z;
     return {
-        static_cast<float>(std::asin(GetNormalizedAngle(-2.0 * (yz - wx)))),
+        static_cast<float>(std::asin(std::clamp(-2.0 * (yz - wx), -1.0, 1.0))),
         static_cast<float>(std::atan2((xz + wy) * 2.0, ww - xx - yy + zz)),
         static_cast<float>(std::atan2((xy + wz) * 2.0,ww - xx + yy - zz))
     };
+}
 
+void Eugene::Quaternion::ToMatrix(Matrix4x4& out) const
+{
 }
 
 Eugene::Quaternion& Eugene::Quaternion::operator*=(const Quaternion& q)

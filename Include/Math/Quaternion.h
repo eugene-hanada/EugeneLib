@@ -33,6 +33,7 @@ namespace Eugene
 		void Normalize(void);
 		Quaternion Normalized(void) const;
 		Vector3 ToEuler(void) const;
+		void ToMatrix(Matrix4x4& out) const;
 
 		constexpr Quaternion& operator=(const Quaternion& q)
 		{

@@ -33,6 +33,8 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+
+
 const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat_
 {
 	DXGI_FORMAT_UNKNOWN,
@@ -324,6 +326,8 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	fullScrDesc.RefreshRate.Numerator = 75;
 	fullScrDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	fullScrDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+
+	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
 
 	// スワップチェイン生成
 	IDXGISwapChain1* swapchain = nullptr;

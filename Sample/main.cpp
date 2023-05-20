@@ -10,6 +10,13 @@
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
+	Eugene::Quaternion q;
+	Eugene::Quaternion q2{ Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(150.0f), 0.0f };
+	auto angle = Rad2Deg(q.ToEuler());
+	auto angle2 = Rad2Deg(q2.ToEuler());
+
+	constexpr auto offset = Eugene::upVector3<float> + Eugene::downVector3<float>;
+
 	// システム(osとかの)処理をするクラス
 	std::unique_ptr<Eugene::System> system;
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));

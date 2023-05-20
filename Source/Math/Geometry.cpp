@@ -132,3 +132,21 @@ void Eugene::GetRotationMatrix(Matrix4x4& out, const Quaternion& q)
 	DirectX::XMFLOAT4 qf{ q.x,q.y,q.z, q.w };
 	DirectX::XMStoreFloat4x4(&out, DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&qf)));
 }
+
+void Eugene::DeposeTransformMatrix(const Matrix4x4& out, Vector3* outTrans, Quaternion* outQ, Vector3* outScale)
+{
+	DirectX::XMVECTOR scale, trans, q;
+	DirectX::XMMatrixDecompose(&scale, &trans, &q, DirectX::XMLoadFloat4x4(&out));
+	if (outTrans)
+	{
+		*outTrans = { trans.m128_f32[0], trans.m128_f32[1], trans.m128_f32[2] };
+	}
+	if (outQ)
+	{
+		*outQ = { q.m128_f32[0], q.m128_f32[1], q.m128_f32[2],q.m128_f32[3] };
+	}
+	if (outScale)
+	{
+		*outScale = { scale.m128_f32[0], scale.m128_f32[1], scale.m128_f32[2] };
+	}
+}

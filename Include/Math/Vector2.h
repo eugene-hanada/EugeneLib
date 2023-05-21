@@ -40,7 +40,7 @@ namespace Eugene
 		/// <summary> 法線ベクトルに対しての反射ベクトルを返す </summary>
 		/// <param name="n"> 法線ベクトル(正規化済み) </param>
 		/// <returns> 反射ベクトル </returns>
-		Vector2Tmp<T> Refrect(const Vector2Tmp<T>& n);
+		Vector2Tmp<T> Reflect(const Vector2Tmp<T>& n);
 
 		/// <summary> ベクトルの角度を求める </summary>
 		/// <param name=""></param>
@@ -212,7 +212,7 @@ namespace Eugene
 	}
 
 	template<ValueC T>
-	inline Vector2Tmp<T> Vector2Tmp<T>::Refrect(const Vector2Tmp<T>& n)
+	inline Vector2Tmp<T> Vector2Tmp<T>::Reflect(const Vector2Tmp<T>& n)
 	{
 		return (*this) - (n * (static_cast<T>(2) * (x * n.x + y * n.y)));
 	}

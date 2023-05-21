@@ -28,18 +28,37 @@ namespace Eugene
 		{
 		}
 
+		/// <summary>
+		/// 長さを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		T Magnitude(void) const;
 
+		/// <summary>
+		/// 長さの2乗を取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		T SqMagnitude(void) const;
 
+		/// <summary>
+		/// 正規化する
+		/// </summary>
+		/// <param name=""></param>
 		void Normalize(void);
 
+		/// <summary>
+		/// 正規化したベクトルを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		Vector3Tmp<T> Normalized(void) const;
 
 		/// <summary> 法線ベクトルに対しての反射ベクトルを返す </summary>
 		/// <param name="n"> 法線ベクトル(正規化済み)  </param>
 		/// <returns> 反射ベクトル </returns>
-		Vector3Tmp<T> Refrect(const Vector3Tmp<T>& n);
+		Vector3Tmp<T> Reflect(const Vector3Tmp<T>& n);
 
 
 		template<ValueC T2> operator Vector3Tmp<T2>() const;
@@ -88,6 +107,8 @@ namespace Eugene
 		}
 	}
 
+
+
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator+(const Vector3Tmp<T>& lVec, const T& val)
 	{
@@ -108,38 +129,21 @@ namespace Eugene
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator-(const Vector3Tmp<T>& lVec, const T& val)
 	{
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator-(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else*/
-		{
-			return { lVec.x - val, lVec.y - val, lVec.z - val };
-		}
+		return { lVec.x - val, lVec.y - val, lVec.z - val };
 	}
 
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const Vector3Tmp<T>& rVec)
 	{
-	/*	if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator*(lVec.ToSimdVector(), rVec.ToSimdVector());
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}
-		else*/
-		{
-			return { lVec.x * rVec.x, lVec.y * rVec.y, lVec.z * rVec.z };
-		}
+	
+		return { lVec.x * rVec.x, lVec.y * rVec.y, lVec.z * rVec.z };
+		
 	}
 
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator*(const Vector3Tmp<T>& lVec, const T& val)
 	{
-
-		{
-			return { static_cast<T>(lVec.x * val), static_cast<T>(lVec.y * val), static_cast<T>(lVec.z * val) };
-		}
+		return { static_cast<T>(lVec.x * val), static_cast<T>(lVec.y * val), static_cast<T>(lVec.z * val) };
 	}
 
 	template<ValueC T>
@@ -149,15 +153,7 @@ namespace Eugene
 		{
 			return lVec;
 		}
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator/(lVec.ToSimdVector(), rVec.ToSimdVector());
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}*/
-		//else
-		{
-			return { lVec.x / rVec.x, lVec.y / rVec.y , lVec.z / rVec.z };
-		}
+		return { lVec.x / rVec.x, lVec.y / rVec.y , lVec.z / rVec.z };
 	}
 
 	template<ValueC T>
@@ -167,15 +163,8 @@ namespace Eugene
 		{
 			return lVec;
 		}
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::operator/(lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}*/
-		//else
-		{
-			return { lVec.x / val, lVec.y / val, lVec.z / val };
-		}
+	
+		return { lVec.x / val, lVec.y / val, lVec.z / val };
 	}
 
 	template<ValueC T>
@@ -185,16 +174,7 @@ namespace Eugene
 		{
 			return lVec;
 		}
-
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), rVec.ToSimdVector());
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}*/
-		//else
-		{
-			return { std::fmod(lVec.x , rVec.x), std::fmod(lVec.y , rVec.y), std::fmod(lVec.z , rVec.z) };
-		}
+		return { std::fmod(lVec.x , rVec.x), std::fmod(lVec.y , rVec.y), std::fmod(lVec.z , rVec.z) };
 	}
 	template<ValueC T>
 	constexpr Vector3Tmp<T> operator%(const Vector3Tmp<T>& lVec, const T& val)
@@ -203,16 +183,7 @@ namespace Eugene
 		{
 			return lVec;
 		}
-
-		/*if constexpr (std::is_floating_point<T>())
-		{
-			auto result = DirectX::XMVectorMod / (lVec.ToSimdVector(), DirectX::XMVectorSet(val, val, val, 0));
-			return { result.m128_f32[0], result.m128_f32[1], result.m128_f32[2] };
-		}*/
-		//else
-		{
-			return { std::fmod(lVec.x , val), std::fmod(lVec.y , val), std::fmod(lVec.z , val) };
-		}
+		return { std::fmod(lVec.x , val), std::fmod(lVec.y , val), std::fmod(lVec.z , val) };
 	}
 
 	template<ValueC T>

@@ -1,5 +1,6 @@
 ﻿#include "../../Include/Math/Vector3.h"
 #include "../../Include/ThirdParty/DirectXMath/DirectXMath.h"
+
 namespace Eugene
 {
 
@@ -38,22 +39,52 @@ namespace Eugene
 		{
 			return;
 		}
-		x /= mag;
-		y /= mag;
-		z /= mag;
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorDivide (DirectX::XMVectorSet(x, y, z, 0.0f) ,DirectX::XMVectorSet(mag, mag, mag, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+
+			x /= mag;
+			y /= mag;
+			z /= mag;
+		}
 	}
 
 	template<ValueC T>
 	Vector3Tmp<T> Vector3Tmp<T>::Normalized(void) const
 	{
 		T mag = Magnitude();
-		return { static_cast<T>(x / mag), static_cast<T>(y / mag) , static_cast<T>( z / mag) };
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorDivide(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(mag, mag, mag, 0.0f));
+			return { result.m128_f32[0],result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return { static_cast<T>(x / mag), static_cast<T>(y / mag) , static_cast<T>(z / mag) };
+		}
 	}
 
 	template<ValueC T>
-	Vector3Tmp<T> Vector3Tmp<T>::Refrect(const Vector3Tmp<T>& n)
+	Vector3Tmp<T> Vector3Tmp<T>::Reflect(const Vector3Tmp<T>& n)
 	{
-		return (*this) - (n * static_cast<T>(static_cast<T>(2) * (x * n.x + y * n.y + z * n.z)));
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			auto result = DirectX::XMVector3Reflect(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(n.x, n.y, n.z, 0.0f));
+			return { result.m128_f32[0],result.m128_f32[1], result.m128_f32[2] };
+		}
+		else
+		{
+			return (*this) - (n * static_cast<T>(static_cast<T>(2) * (x * n.x + y * n.y + z * n.z)));
+		}
 	}
 
 	template<ValueC T>
@@ -71,54 +102,114 @@ namespace Eugene
 	template<ValueC T>
 	Vector3Tmp<T>& Vector3Tmp<T>::operator+=(const Vector3Tmp<T>& vec)
 	{
-		x += vec.x;
-		y += vec.y;
-		z += vec.z;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorAdd(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(vec.x, vec.y, vec.z, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x += vec.x;
+			y += vec.y;
+			z += vec.z;
+		}
 		return *this;
 	}
 
 	template<ValueC T>
 	Vector3Tmp<T>& Vector3Tmp<T>::operator+=(const T& val)
 	{
-		x += val;
-		y += val;
-		z += val;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorAdd(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(val, val, val, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x += val;
+			y += val;
+			z += val;
+		}
 		return *this;
 	}
 
 	template<ValueC T>
 	Vector3Tmp<T>& Vector3Tmp<T>::operator-=(const Vector3Tmp<T>& vec)
 	{
-		x -= vec.x;
-		y -= vec.y;
-		z -= vec.z;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorSubtract(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(vec.x, vec.y, vec.z, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x -= vec.x;
+			y -= vec.y;
+			z -= vec.z;
+		}
 		return *this;
 	}
 
 	template<ValueC T>
 	Vector3Tmp<T>& Vector3Tmp<T>::operator-=(const T& val)
 	{
-		x -= val;
-		y -= val;
-		z -= val;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorSubtract(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(val, val, val, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x -= val;
+			y -= val;
+			z -= val;
+		}
 		return *this;
 	}
 
 	template<ValueC T>
 	Vector3Tmp<T>& Vector3Tmp<T>::operator*=(const Vector3Tmp<T>& vec)
 	{
-		x *= vec.x;
-		y *= vec.y;
-		z *= vec.z;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorMultiply(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(vec.x, vec.y, vec.z, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x *= vec.x;
+			y *= vec.y;
+			z *= vec.z;
+		}
 		return *this;
 	}
 
 	template<ValueC T>
 	inline Vector3Tmp<T>& Vector3Tmp<T>::operator*=(const T& val)
 	{
-		x *= val;
-		y *= val;
-		z *= val;
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorMultiply(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(val, val, val, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x *= val;
+			y *= val;
+			z *= val;
+		}
 		return *this;
 	}
 
@@ -129,9 +220,20 @@ namespace Eugene
 		{
 			return *this;
 		}
-		x /= vec.x;
-		y /= vec.y;
-		z /= vec.z;
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorDivide(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(vec.x, vec.y, vec.z, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x /= vec.x;
+			y /= vec.y;
+			z /= vec.z;
+		}
 		return *this;
 	}
 
@@ -142,9 +244,20 @@ namespace Eugene
 		{
 			return *this;
 		}
-		x /= val;
-		y /= val;
-		z /= val;
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorDivide(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(val, val, val, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x /= val;
+			y /= val;
+			z /= val;
+		}
 		return *this;
 	}
 
@@ -155,9 +268,20 @@ namespace Eugene
 		{
 			return *this;
 		}
-		x = static_cast<T>(std::fmod(x, vec.x));
-		y = static_cast<T>(std::fmod(y, vec.y));
-		z = static_cast<T>(std::fmod(z, vec.z));
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorMod(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(vec.x, vec.y, vec.z, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x = static_cast<T>(std::fmod(x, vec.x));
+			y = static_cast<T>(std::fmod(y, vec.y));
+			z = static_cast<T>(std::fmod(z, vec.z));
+		}
 		return *this;
 	}
 
@@ -168,11 +292,23 @@ namespace Eugene
 		{
 			return *this;
 		}
-		x = static_cast<T>(std::fmod(x, val));
-		y = static_cast<T>(std::fmod(y, val));
-		z = static_cast<T>(std::fmod(z, val));
+
+		if constexpr (std::is_floating_point<T>() && sizeof(T) == 4)
+		{
+			DirectX::XMVECTOR result = DirectX::XMVectorMod(DirectX::XMVectorSet(x, y, z, 0.0f), DirectX::XMVectorSet(val, val, val, 0.0f));
+			x = result.m128_f32[0];
+			y = result.m128_f32[1];
+			z = result.m128_f32[2];
+		}
+		else
+		{
+			x = static_cast<T>(std::fmod(x, val));
+			y = static_cast<T>(std::fmod(y, val));
+			z = static_cast<T>(std::fmod(z, val));
+		}
 		return *this;
 	}
+
 
 	// 明示的インスタンス
 	template class Vector3Tmp<std::uint16_t>;
@@ -180,5 +316,6 @@ namespace Eugene
 	template class Vector3Tmp<double>;
 	template class Vector3Tmp<std::int32_t>;
 	template class Vector3Tmp<std::int64_t>;
+
 
 }

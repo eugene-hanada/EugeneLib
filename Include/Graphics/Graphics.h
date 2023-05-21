@@ -194,6 +194,18 @@ namespace Eugene
 		/// <param name="size"> ビューの数 </param>
 		/// <returns></returns>
 		virtual SamplerViews* CreateSamplerViews(std::uint64_t size) const = 0;
+
+		/// <summary>
+		/// バックバッファをリサイズする
+		/// </summary>
+		/// <param name="size"></param>
+		virtual void ResizeBackBuffer(const Vector2& size);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="isFullScreen"></param>
+		virtual void SetFullScreenFlag(bool isFullScreen);
 #ifdef USE_IMGUI
 
 		/// <summary>

@@ -77,6 +77,10 @@ namespace Eugene
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 
 		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
+
+		void ResizeBackBuffer(const Vector2& size) final;
+
+		void SetFullScreenFlag(bool isFullScreen) final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;

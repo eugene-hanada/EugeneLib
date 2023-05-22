@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <Xinput.h>
 #include <filesystem>
+#include <functional>
 #include "../../../Include/Common/Debug.h"
 #include "../../../Include/Common/EugeneLibException.h"
 
@@ -41,6 +42,8 @@ Eugene::Graphics* graphics = nullptr;
 Eugene::GpuEngine* gpuEngine = nullptr;
 
 
+std::function<void(const Eugene::Vector2&)> resizeCall;
+
 #ifdef USE_IMGUI
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
@@ -60,7 +63,10 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	mouse.wheel = 0.0f;
 
 #ifdef USE_IMGUI
-	ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam);
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+	{
+		return true;
+	}
 #endif
 
 	switch (msg)
@@ -88,6 +94,9 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_MOUSEWHEEL:
 		mouse.wheel = GET_WHEEL_DELTA_WPARAM(wparam);
 		return 0;
+	case WM_SIZE:
+		resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
+		return 0;
 	default:
 		return DefWindowProc(hwnd, msg, wparam, lparam);
 	}
@@ -98,6 +107,15 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
 {
+	resizeCall = [this](const Vector2& size) {
+		windowSize_ = size;
+		if (graphics)
+		{
+			graphics->ResizeBackBuffer(size);
+		}
+
+	};
+
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
 		throw EugeneLibException("Comの初期化に失敗");
@@ -134,6 +152,23 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 		windowClass.hInstance,
 		nullptr
 	);
+
+
+	MONITORINFO monitorInfo;
+	monitorInfo.cbSize = sizeof(MONITORINFO);
+	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
+
+	// モニターの座標とサイズを取得
+	int monitorX = monitorInfo.rcWork.left;
+	int monitorY = monitorInfo.rcWork.top;
+	int monitorWidth = monitorInfo.rcWork.right - monitorInfo.rcWork.left;
+	int monitorHeight = monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+
+	// 中心座標を計算
+	int centerX =(monitorWidth - (wSize.right - wSize.left)) / 2;
+	int centerY = (monitorHeight - (wSize.bottom - wSize.top))/ 2;
+
+	SetWindowPos(hwnd, nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
 
 	ShowWindow(hwnd, SW_SHOW);
 
@@ -188,18 +223,19 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 
 bool Eugene::WindowsSystem::Update(void)
 {
+	
 
-
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+		if (msg.message == WM_QUIT)
+		{
+			isEnd = true;
+		}
 	}
-	if (msg.message == WM_QUIT)
-	{
-		return false;
-	}
-	return true;
+	
+	return !isEnd;
 }
 
 void Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
@@ -261,6 +297,43 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 bool Eugene::WindowsSystem::IsEnd(void) const
 {
 	return isEnd;
+}
+
+void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
+{
+	if (windowSize_ == size)
+	{
+		return;
+	}
+
+	windowSize_ = size;
+
+	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
+	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
+	{
+		throw EugeneLibException("ウィンドウサイズ調整に失敗");
+	}
+
+	MONITORINFO monitorInfo;
+	monitorInfo.cbSize = sizeof(MONITORINFO);
+	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
+
+	// モニターの座標とサイズを取得
+	int monitorX = monitorInfo.rcWork.left;
+	int monitorY = monitorInfo.rcWork.top;
+	int monitorWidth = monitorInfo.rcWork.right - monitorInfo.rcWork.left;
+	int monitorHeight = monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
+
+	// 中心座標を計算
+	int centerX = (monitorWidth -  static_cast<int>(wSize.right - wSize.left)) / 2;
+	int centerY = (monitorHeight - static_cast<int>(wSize.bottom - wSize.top)) / 2;
+
+	SetWindowPos(hwnd, nullptr, centerX, centerY, static_cast<int>(wSize.right - wSize.left), static_cast<int>(wSize.bottom - wSize.top), false);
+	
+	if (graphics)
+	{
+		graphics->ResizeBackBuffer(size);
+	}
 }
 
 #ifdef USE_IMGUI

@@ -114,7 +114,7 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 #ifdef USE_IMGUI
 	srViews_.reset(CreateShaderResourceViews(256));
 	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
-	ImGui_ImplDX12_Init(device_.Get(), 1, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
+	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
 	
 #endif
 }
@@ -124,6 +124,8 @@ Eugene::Dx12Graphics::~Dx12Graphics()
 #ifdef USE_IMGUI
 	ImGui_ImplDX12_Shutdown();
 #endif
+
+	swapChain_->SetFullscreenState(false, nullptr);
 	if (swapChain_ != nullptr)
 	{
 		swapChain_->Release();
@@ -327,8 +329,6 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	fullScrDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	fullScrDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 
-	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
-
 	// スワップチェイン生成
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
@@ -339,6 +339,8 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	{
 		throw EugeneLibException("スワップチェイン生成失敗");
 	}
+
+	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
 	swapchain->Release();
 }
 
@@ -388,7 +390,31 @@ Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(size_t size) cons
 	return new Dx12SamplerViews{device_.Get(), size};
 }
 
+void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
+{
+	for (auto& buffer : buffers_)
+	{
+		buffer.reset();
+	}
+	DXGI_SWAP_CHAIN_DESC1 dec;
+	swapChain_->GetDesc1(&dec);
+	swapChain_->ResizeBuffers(dec.BufferCount, static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y), dec.Format, dec.Flags);
+
+
+	for (size_t i = 0; i < buffers_.size(); i++)
+	{
+		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i) });
+		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
+	}
+}
+
+void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
+{
+	swapChain_->SetFullscreenState(isFullScreen, nullptr);
+}
+
 #ifdef USE_IMGUI
+
 void Eugene::Dx12Graphics::ImguiNewFrame(void) const
 {
 	ImGui_ImplDX12_NewFrame();

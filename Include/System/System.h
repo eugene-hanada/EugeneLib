@@ -118,6 +118,8 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns></returns>
 		virtual bool IsEnd(void) const = 0;
+
+		virtual void ResizeWindow(const Vector2& size) = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
 #endif

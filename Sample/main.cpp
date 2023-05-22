@@ -127,7 +127,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	rtMatrixView->CreateConstantBuffer(*rtMatrixBuffer, 0);
 	Eugene::Matrix4x4* rtMatrix = static_cast<Eugene::Matrix4x4*>(rtMatrixBuffer->Map());
 	Eugene::Get2DMatrix(*rtMatrix, { 1280.0f,720.0f });
-	rtMatrixBuffer->UnMap();
+	//rtMatrixBuffer->UnMap();
 
 
 	// テクスチャ用リソース
@@ -213,10 +213,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+
+	//system->ResizeWindow({ 640.0f, 480.0f });
 	
 	graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
 	auto img = graphics->GetImguiImageID(1);
-	
+	//graphics->SetFullScreenFlag(true);
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -244,7 +246,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
-
+		Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
 
 		graphics->ImguiNewFrame();
 		system->ImguiNewFrame();
@@ -259,6 +261,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::End();
 		ImGui::Render();
 
+		ImGuiIO& io = ImGui::GetIO();
+		if (!system->IsEnd())
+		{
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
+		}
+
 		// コマンド開始
 		cmdList->Begin();
 
@@ -272,11 +284,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// グラフィックパイプラインセット
 		cmdList->SetGraphicsPipeline(*pipeline);
 
+		const auto& size = system->GetWindowSize();
+
 		// シザーレクトセット
-		cmdList->SetScissorrect({ 0,0 }, { 1280, 720 });
+		cmdList->SetScissorrect({ 0,0 }, { static_cast<int>(size.x), static_cast<int>(size.y) });
 
 		// ビューポートセット
-		cmdList->SetViewPort({ 0.0f,0.0f }, { 1280.0f, 720.0f });
+		cmdList->SetViewPort({ 0.0f,0.0f }, size);
 
 		// プリミティブタイプセット
 		cmdList->SetPrimitiveType(Eugene::PrimitiveType::TriangleStrip);
@@ -317,15 +331,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 
-		ImGuiIO& io = ImGui::GetIO();
-		if (!system->IsEnd())
-		{
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-			}
-		}
+	
 
 		frameCnt++;
 	}

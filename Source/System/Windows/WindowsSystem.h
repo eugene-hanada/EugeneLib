@@ -22,6 +22,7 @@ namespace Eugene
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 		bool IsEnd(void) const final;
+		void ResizeWindow(const Vector2& size) final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif

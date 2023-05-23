@@ -16,7 +16,11 @@ jobs:
 
     steps:
     - name: Clear git cache
-      run: git gc --prune=all
+      run: |
+        git remote set-head origin -a
+        git remote prune origin
+        git gc --prune=all
+        git fetch --prune
     
     - uses: actions/checkout@v3.5.2
       with:

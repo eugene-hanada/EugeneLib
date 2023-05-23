@@ -16,6 +16,7 @@ jobs:
     steps:
     - name: Clear Git cache
       run: |
+        cd ${{github.workspace}}
         git rm -r --cached .
         git reset --hard
     

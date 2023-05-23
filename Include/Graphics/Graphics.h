@@ -4,6 +4,13 @@
 #include "../Math/Vector2.h"
 #include "Sampler.h"
 
+namespace Effekseer
+{
+	template<class T>
+	class RefPtr;
+
+	class Manager;
+}
 namespace Eugene
 {
 	class System;
@@ -20,6 +27,17 @@ namespace Eugene
 	class VertexView;
 	class IndexView;
 	class SamplerViews;
+
+	class EffekseerWarpper
+	{
+	public:
+		virtual ~EffekseerWarpper();
+		virtual void Update(float delta) = 0;
+		virtual void Draw(CommandList& cmdList) = 0;
+		virtual Effekseer::RefPtr<Effekseer::Manager>& GetManager()& = 0;
+	protected:
+		EffekseerWarpper();
+	};
 
 	/// <summary>
 	/// グラフィックスの処理を行うクラス
@@ -228,6 +246,17 @@ namespace Eugene
 		/// <returns></returns>
 		virtual ShaderResourceViews& GetImguiShaderResourceView(void) & = 0;
 #endif
+
+#ifdef USE_Effekseer
+		virtual EffekseerWarpper* CreateEffekseerWarpper(
+			GpuEngine& gpuEngine,
+			Format rtFormat,
+			std::uint32_t rtNum,
+			bool reverseDepth = false,
+			std::uint64_t maxNumm = 8000
+		) const = 0;
+#endif
+
 	protected:
 		Graphics();
 	};

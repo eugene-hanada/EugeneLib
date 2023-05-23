@@ -1,11 +1,12 @@
 ﻿#include <Windows.h>
-#define USE_IMGUI
+//#define USE_IMGUI
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
 #include <vector>
 
-#include <ThirdParty/imgui/imgui.h>
+//#include <ThirdParty/imgui/imgui.h>
+#include <Effekseer.h>
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -129,6 +130,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::Get2DMatrix(*rtMatrix, { 1280.0f,720.0f });
 	//rtMatrixBuffer->UnMap();
 
+	std::unique_ptr<Eugene::EffekseerWarpper> efkWarrper{ graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 1) };
+	
+	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
+	auto handle = efkWarrper->GetManager()->Play(effect, { 10.0f, 0.0f, 20.0f });
+
 
 	// テクスチャ用リソース
 	std::unique_ptr<Eugene::ImageResource> textureResource;
@@ -136,7 +142,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 画像読み込み
 		Eugene::Image image{ "./Logo.png" };
 		//Eugene::Image image2{ "./Logo.png" };
-		
 		
 		image.LoadInfo();
 		image.LoadData();
@@ -216,8 +221,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
-	graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
-	auto img = graphics->GetImguiImageID(1);
+	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
+	auto img = graphics->GetImguiImageID(1);*/
 	//graphics->SetFullScreenFlag(true);
 	while (system->Update())
 	{
@@ -248,28 +253,30 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
 		Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
 
-		graphics->ImguiNewFrame();
-		system->ImguiNewFrame();
-		ImGui::NewFrame();
+		//graphics->ImguiNewFrame();
+		//system->ImguiNewFrame();
+		//ImGui::NewFrame();
 
-		ImGui::Begin("window1");
-		
-		ImGui::Image((ImTextureID)img, { 256,256});
-		
-		//ImGui::Text("text1");
-		
-		ImGui::End();
-		ImGui::Render();
+		//ImGui::Begin("window1");
+		//
+		//ImGui::Image((ImTextureID)img, { 256,256});
+		//
+		////ImGui::Text("text1");
+		//
+		//ImGui::End();
+		//ImGui::Render();
 
-		ImGuiIO& io = ImGui::GetIO();
-		if (!system->IsEnd())
-		{
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-			{
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-			}
-		}
+		//ImGuiIO& io = ImGui::GetIO();
+		//if (!system->IsEnd())
+		//{
+		//	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		//	{
+		//		ImGui::UpdatePlatformWindows();
+		//		ImGui::RenderPlatformWindowsDefault();
+		//	}
+		//}
+
+		efkWarrper->Update(1.0f / 60.0f);
 
 		// コマンド開始
 		cmdList->Begin();
@@ -312,10 +319,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
+		efkWarrper->Draw(*cmdList);
+
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
 
-		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
+		//cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 
 		// コマンド終了
 		cmdList->End();

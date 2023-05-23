@@ -8,6 +8,3 @@
 [submodule "Test/Catch2"]
 	path = Test/Catch2
 	url = https://github.com/catchorg/Catch2
-[submodule "Effekseer"]
-	path = Effekseer
-	url = https://github.com/effekseer/Effekseer.git

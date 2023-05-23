@@ -15,6 +15,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Clear git cache
+      run: git gc --prune=all
+    
     - uses: actions/checkout@v3.5.2
       with:
        submodules: 'recursive'

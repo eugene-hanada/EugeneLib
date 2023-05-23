@@ -103,7 +103,7 @@ namespace Eugene
 		std::unique_ptr<ShaderResourceViews> srViews_;
 #endif
 
-#ifdef USE_Effekseer
+#ifdef USE_EFFEKSEER
 		EffekseerWarpper* CreateEffekseerWarpper(
 			GpuEngine& gpuEngine,
 			Format rtFormat,

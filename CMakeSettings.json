@@ -16,7 +16,7 @@
           "type": "BOOL"
         },
         {
-          "name": "USE_Effekseer",
+          "name": "USE_EFFEKSEER",
           "value": "True",
           "type": "BOOL"
         }

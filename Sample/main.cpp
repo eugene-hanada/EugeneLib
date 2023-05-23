@@ -133,7 +133,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::EffekseerWarpper> efkWarrper{ graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 1) };
 	
 	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
-	auto handle = efkWarrper->GetManager()->Play(effect, { 10.0f, 0.0f, 20.0f });
+	auto handle = efkWarrper->GetManager()->Play(effect, { 0.0f, 0.0f, 0.0f });
 
 
 	// テクスチャ用リソース

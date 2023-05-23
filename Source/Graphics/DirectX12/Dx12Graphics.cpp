@@ -436,6 +436,7 @@ Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(vo
 
 #endif
 
+#ifdef USE_EFFEKSEER
 class Dx12EffekseerWarpper :
 	public Eugene::EffekseerWarpper
 {
@@ -465,12 +466,12 @@ public:
 		cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
 		renderer_->SetCommandList(cmdList_);
 
-		auto viewerPosition = ::Effekseer::Vector3D(10.0f, 5.0f, 20.0f);
+		auto viewerPosition = ::Effekseer::Vector3D(10.0f, 0.0f, 20.0f);
 		renderer_->SetProjectionMatrix(
 			::Effekseer::Matrix44().PerspectiveFovRH(90.0f / 180.0f * 3.14f, 1280.f / 720.f, 1.0f, 500.0f));
 		renderer_->SetCameraMatrix(
 			Effekseer::Matrix44().LookAtRH(
-				viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
+				viewerPosition, Effekseer::Vector3D(10.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
 			)
 		);
 
@@ -508,7 +509,6 @@ private:
 	Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
 };
 
-#ifdef USE_Effekseer
 Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
 	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, bool reverseDepth, std::uint64_t maxNumm
 ) const

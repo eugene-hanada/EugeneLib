@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
-option(USE_Effekseer "Effekseerを使用するか?" OFF)
+option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -185,11 +185,11 @@ endif()
   
  add_subdirectory("Sample")
 
- if (USE_Effekseer)
+ if (USE_EFFEKSEER)
 	add_subdirectory("Effekseer")
 	target_link_libraries(EugeneLib Effekseer)
 	target_link_libraries(EugeneLib LLGI)
-	target_compile_definitions(EugeneLib PUBLIC USE_Effekseer)
+	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
 	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
 	
 	if (USE_VULKAN)

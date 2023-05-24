@@ -11,19 +11,14 @@ endif()
 
 
 include_directories(../Include)
-include_directories("Cath2/src")
 add_subdirectory(Catch2)
 
 # É\Å[ÉXÇbuild
 add_executable(tests test.cpp)
 
+target_include_directories(tests PRIVATE "Catch2/src")
 target_link_libraries(tests PRIVATE EugeneLib)
 target_link_libraries(tests PUBLIC Catch2::Catch2)
-#target_link_libraries(tests PRIVATE Catch2Maind)
-
-
-
-
 
 
 

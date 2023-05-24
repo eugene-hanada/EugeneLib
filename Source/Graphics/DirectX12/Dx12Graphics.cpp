@@ -532,7 +532,7 @@ public:
 		
 		
 		renderer_->SetProjectionMatrix(
-			::Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));
+			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));
 
 		
 	}

@@ -1,4 +1,5 @@
-#include <catch2/catch_test_macros.hpp>
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <Math/Vector2.h>

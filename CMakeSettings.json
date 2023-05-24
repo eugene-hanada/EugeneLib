@@ -24,6 +24,31 @@
           "name": "BUILD_SAMPLE",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_NO_CPP17_STRING_VIEW",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_CPP17_OPTIONAL",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
         }
       ]
     }

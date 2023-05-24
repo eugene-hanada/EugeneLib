@@ -21,9 +21,10 @@
 #include "Dx12Sampler.h"
 #include "Dx12SamplerViews.h"
 
-
+#ifdef USE_EFFEKSEER
 #include <Effekseer.h>
 #include <EffekseerRendererDX12.h>
+#endif
 
 #ifdef USE_IMGUI
 #include <imgui.h>
@@ -437,6 +438,10 @@ Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(vo
 #endif
 
 #ifdef USE_EFFEKSEER
+
+/// <summary>
+/// Dx12用Effekseerラッパークラス
+/// </summary>
 class Dx12EffekseerWarpper :
 	public Eugene::EffekseerWarpper
 {
@@ -444,43 +449,51 @@ public:
 	Dx12EffekseerWarpper(ID3D12Device* device,ID3D12CommandQueue* cmdQueue, std::uint32_t swapchainCount,DXGI_FORMAT rtFormat, DXGI_FORMAT depthFormtat,bool reverseDepth, std::uint64_t maxNum) :
 		EffekseerWarpper{}
 	{
+		// レンダラー生成
 		DXGI_FORMAT rtF[]{ rtFormat };
 		renderer_ = EffekseerRendererDX12::Create(
 			device, cmdQueue, swapchainCount,
 			rtF, 1, depthFormtat, reverseDepth, maxNum
 		);
 		
+		// マネージャー生成
 		manager_ = Effekseer::Manager::Create(maxNum);
 
+		// レンダラーセット
 		manager_->SetSpriteRenderer(renderer_->CreateSpriteRenderer());
 		manager_->SetRibbonRenderer(renderer_->CreateRibbonRenderer());
 		manager_->SetRingRenderer(renderer_->CreateRingRenderer());
 		manager_->SetTrackRenderer(renderer_->CreateTrackRenderer());
 		manager_->SetModelRenderer(renderer_->CreateModelRenderer());
 
+		// ローダーセット
 		manager_->SetTextureLoader(renderer_->CreateTextureLoader());
 		manager_->SetModelLoader(renderer_->CreateModelLoader());
 		manager_->SetMaterialLoader(renderer_->CreateMaterialLoader());
 
+		// メモリープールとコマンドリストを生成
 		memoryPool_ = EffekseerRenderer::CreateSingleFrameMemoryPool(renderer_->GetGraphicsDevice());
 		cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
 		renderer_->SetCommandList(cmdList_);
 
-		auto viewerPosition = ::Effekseer::Vector3D(10.0f, 0.0f, 20.0f);
-		renderer_->SetProjectionMatrix(
-			::Effekseer::Matrix44().PerspectiveFovRH(90.0f / 180.0f * 3.14f, 1280.f / 720.f, 1.0f, 500.0f));
+		auto viewerPosition = ::Effekseer::Vector3D(0.0f, 0.0f, -20.0f);
 		renderer_->SetCameraMatrix(
 			Effekseer::Matrix44().LookAtRH(
-				viewerPosition, Effekseer::Vector3D(10.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
+				viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
 			)
 		);
-
 	}
 
 	void Update(float delta) final
 	{
+		// 1フレームの経過時間を60フレーム基準での経過フレームに変換用
+		constexpr auto frameParSec = 1.0f / 60.0f;
+
+		// 開始処理
 		memoryPool_->NewFrame();
-		manager_->Update();
+
+		// 更新処理
+		manager_->Update(delta / frameParSec);
 	}
 
 	void Draw(Eugene::CommandList& cmdList) final
@@ -502,10 +515,47 @@ public:
 	{
 		return manager_;
 	}
+
+	void SetCameraPos(const Eugene::Vector3& eye, const Eugene::Vector3& at, const Eugene::Vector3& up) final
+	{
+		renderer_->SetCameraMatrix(
+			Effekseer::Matrix44().LookAtRH(
+				Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{up.x, up.y, up.z}
+			)
+		);
+	}
+
+	void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+	{
+		/*renderer_->SetProjectionMatrix(
+			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));*/
+		
+		
+		renderer_->SetProjectionMatrix(
+			::Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));
+
+		
+	}
 private:
+
+	/// <summary>
+	/// レンダラー
+	/// </summary>
 	EffekseerRenderer::RendererRef renderer_;
+
+	/// <summary>
+	/// マネージャー
+	/// </summary>
 	Effekseer::RefPtr<Effekseer::Manager> manager_;
+
+	/// <summary>
+	/// メモリプール
+	/// </summary>
 	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> memoryPool_;
+
+	/// <summary>
+	/// コマンドリスト
+	/// </summary>
 	Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
 };
 

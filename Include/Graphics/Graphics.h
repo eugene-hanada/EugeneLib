@@ -2,6 +2,7 @@
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
+#include "../Math/Vector3.h"
 #include "Sampler.h"
 
 #ifdef USE_EFFEKSEER
@@ -32,13 +33,36 @@ namespace Eugene
 	class SamplerViews;
 
 #ifdef USE_EFFEKSEER
+
+	/// <summary>
+	/// Effekseer用ラップクラスの基底
+	/// </summary>
 	class EffekseerWarpper
 	{
 	public:
 		virtual ~EffekseerWarpper();
+
+		/// <summary>
+		/// 更新処理
+		/// </summary>
+		/// <param name="delta"></param>
 		virtual void Update(float delta) = 0;
+
+		/// <summary>
+		/// 描画処理
+		/// </summary>
+		/// <param name="cmdList"></param>
 		virtual void Draw(CommandList& cmdList) = 0;
+
+		/// <summary>
+		/// マネージャーの取得
+		/// </summary>
+		/// <returns></returns>
 		virtual Effekseer::RefPtr<Effekseer::Manager>& GetManager()& = 0;
+
+		virtual void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) = 0;
+
+		virtual void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) = 0;
 	protected:
 		EffekseerWarpper();
 	};

@@ -19,6 +19,11 @@
           "name": "USE_EFFEKSEER",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "BUILD_SAMPLE",
+          "value": "True",
+          "type": "BOOL"
         }
       ]
     }

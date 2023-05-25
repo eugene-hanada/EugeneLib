@@ -17,7 +17,7 @@ add_executable(tests test.cpp)
 target_include_directories(tests PRIVATE "Catch2")
 target_include_directories(tests PRIVATE "../Include")
 target_link_libraries(tests PRIVATE EugeneLib)
-target_link_libraries(tests PRIVATE Catch2::Catch2)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 
 
 

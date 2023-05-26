@@ -68,6 +68,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="gpuEngine"> GpuEngineのポインタの参照 </param>
 		/// <returns> Graphicsのポインタ </returns>
+		[[nodiscard]]
 		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum = 2) const& = 0;
 
 		/// <summary>
@@ -76,6 +77,7 @@ namespace Eugene
 		/// <param name="bufferNum"> バックバッファの数 </param>
 		/// <param name="maxSize"> GpuEngineの一度に処理するCommandListの数 </param>
 		/// <returns></returns>
+		[[nodiscard]]
 		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
 
 		/// <summary>
@@ -123,6 +125,12 @@ namespace Eugene
 
 		virtual void ResizeWindow(const Vector2& size) = 0;
 
+		/// <summary>
+		/// 動的リンクライブラリ用のクラスを生成する
+		/// </summary>
+		/// <param name="path"> ライブラリのパス </param>
+		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
+		[[nodiscard]]
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
@@ -157,5 +165,6 @@ namespace Eugene
 	/// <param name="size"> ウィンドウサイズ </param>
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
+	[[nodiscard]]
 	System* CreateSystem(const Vector2& size, const std::u8string& title);
 }

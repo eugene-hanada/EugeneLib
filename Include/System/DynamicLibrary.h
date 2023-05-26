@@ -2,34 +2,38 @@
 #include <filesystem>
 #include <string>
 
-/// <summary>
-/// DLLとかの動的リンクするライブラリを扱うためのクラス
-/// </summary>
-class DynamicLibrary
+namespace Eugene
 {
-public:
-	virtual ~DynamicLibrary();
 
 	/// <summary>
-	/// 指定された名前の関数のポインタを取得する
+	/// DLLとかの動的リンクするライブラリを扱うためのクラス
 	/// </summary>
-	/// <typeparam name="func"> 関数の型 </typeparam>
-	/// <param name="functionName"> 関数名 </param>
-	/// <returns> 関数ポインタ </returns>
-	template<typename func>
-	func* GetFunction(const std::string& functionName)
+	class DynamicLibrary
 	{
-		return static_cast<func*>(FindFunction(functionName));
-	}
+	public:
+		virtual ~DynamicLibrary();
 
-protected:
-	DynamicLibrary();
+		/// <summary>
+		/// 指定された名前の関数のポインタを取得する
+		/// </summary>
+		/// <typeparam name="func"> 関数の型 </typeparam>
+		/// <param name="functionName"> 関数名 </param>
+		/// <returns> 関数ポインタ </returns>
+		template<typename func>
+		func* GetFunction(const std::string& functionName)
+		{
+			return static_cast<func*>(FindFunction(functionName));
+		}
 
-	/// <summary>
-	/// 関数名の関数を取得する
-	/// </summary>
-	/// <param name="functionName"></param>
-	/// <returns></returns>
-	virtual void* FindFunction(const std::string& functionName) const = 0;
-};
+	protected:
+		DynamicLibrary();
 
+		/// <summary>
+		/// 関数名の関数を取得する
+		/// </summary>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
+		virtual void* FindFunction(const std::string& functionName) const = 0;
+	};
+
+}

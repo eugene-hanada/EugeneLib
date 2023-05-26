@@ -1,9 +1,9 @@
 ﻿#include "../../Include/System/DynamicLibrary.h"
 
-DynamicLibrary::~DynamicLibrary()
+Eugene::DynamicLibrary::~DynamicLibrary()
 {
 }
 
-DynamicLibrary::DynamicLibrary()
+Eugene::DynamicLibrary::DynamicLibrary()
 {
 }

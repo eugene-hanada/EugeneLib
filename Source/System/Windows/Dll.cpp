@@ -1,18 +1,25 @@
 ﻿#include "Dll.h"
+#include "../../../Include/Common/EugeneLibException.h"
 
-Dll::Dll(const std::filesystem::path& path)
+Eugene::Dll::Dll(const std::filesystem::path& path)
 {
 	// DLLを読み込む
 	handle_ = LoadLibrary(TEXT("Dll.dll"));
+
+	if (handle_ == nullptr)
+	{
+		throw EugeneLibException{ "Dllロード失敗" + path.string() };
+	}
+
 }
 
-Dll::~Dll()
+Eugene::Dll::~Dll()
 {
 	// DLLを解放する
 	FreeLibrary(handle_);
 }
 
-void* Dll::FindFunction(const std::string& functionName) const
+void* Eugene::Dll::FindFunction(const std::string& functionName) const
 {
 	// 指定の名前の関数を取得し返す
 	return GetProcAddress(handle_,functionName.c_str());

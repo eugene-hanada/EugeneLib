@@ -3,6 +3,7 @@
 #include <string_view>
 #include <array>
 #include <span>
+#include <filesystem>
 #include "../Math/Vector2.h"
 #include "KeyID.h"
 #include "GamePad.h"
@@ -11,6 +12,7 @@ namespace Eugene
 {
 	class Graphics;
 	class GpuEngine;
+	class DynamicLibrary;
 
 	/// <summary>
 	/// OS等の処理をするクラス
@@ -120,6 +122,8 @@ namespace Eugene
 		virtual bool IsEnd(void) const = 0;
 
 		virtual void ResizeWindow(const Vector2& size) = 0;
+
+		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
 #endif

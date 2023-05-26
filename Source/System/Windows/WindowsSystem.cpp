@@ -3,9 +3,9 @@
 #include <Xinput.h>
 #include <filesystem>
 #include <functional>
-#include "../../../Include/Common/Debug.h"
+#include "Dll.h"
 #include "../../../Include/Common/EugeneLibException.h"
-
+#include "../../../Include/Common/Debug.h"
 #ifdef USE_VULKAN
 #include "../../Graphics/Vulkan/VkGraphics.h"
 #else
@@ -334,6 +334,11 @@ void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
 	{
 		graphics->ResizeBackBuffer(size);
 	}
+}
+
+Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const
+{
+	return new Dll{path};
 }
 
 #ifdef USE_IMGUI

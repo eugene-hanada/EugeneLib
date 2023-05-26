@@ -23,6 +23,7 @@ namespace Eugene
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 		bool IsEnd(void) const final;
 		void ResizeWindow(const Vector2& size) final;
+		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif

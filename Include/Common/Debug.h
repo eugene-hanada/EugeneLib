@@ -6,6 +6,7 @@
 #include <semaphore>
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
+#include "../Math/Quaternion.h"
 #ifdef _DEBUG
 
 #define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))

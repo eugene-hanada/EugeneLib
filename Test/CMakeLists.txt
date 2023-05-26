@@ -9,16 +9,16 @@ if(MSVC)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
-# Catch2のディレクトリ追加
-add_subdirectory(./Catch2)
-
-include_directories(../Include)
-link_directories(../Debug)
+add_subdirectory(Catch2)
 
 # ソースをbuild
 add_executable(tests test.cpp)
 
-# Catch2が用意したmainにリンク
+target_include_directories(tests PRIVATE "Catch2")
+target_include_directories(tests PRIVATE "../Include")
+target_link_libraries(tests PRIVATE EugeneLib)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+
 
 

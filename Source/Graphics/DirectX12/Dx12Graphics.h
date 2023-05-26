@@ -102,6 +102,16 @@ namespace Eugene
 #ifdef USE_IMGUI
 		std::unique_ptr<ShaderResourceViews> srViews_;
 #endif
+
+#ifdef USE_EFFEKSEER
+		EffekseerWarpper* CreateEffekseerWarpper(
+			GpuEngine& gpuEngine,
+			Format rtFormat,
+			std::uint32_t rtNum,
+			bool reverseDepth = false,
+			std::uint64_t maxNumm = 8000
+		) const final;
+#endif
 		friend class Dx12CommandList;
 	};
 }

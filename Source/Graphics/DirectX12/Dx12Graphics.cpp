@@ -21,6 +21,10 @@
 #include "Dx12Sampler.h"
 #include "Dx12SamplerViews.h"
 
+#ifdef USE_EFFEKSEER
+#include <Effekseer.h>
+#include <EffekseerRendererDX12.h>
+#endif
 
 #ifdef USE_IMGUI
 #include <imgui.h>
@@ -429,5 +433,142 @@ void* Eugene::Dx12Graphics::GetImguiImageID(std::uint64_t index) const
 Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(void)&
 {
 	return *srViews_;
+}
+
+#endif
+
+#ifdef USE_EFFEKSEER
+
+/// <summary>
+/// Dx12用Effekseerラッパークラス
+/// </summary>
+class Dx12EffekseerWarpper :
+	public Eugene::EffekseerWarpper
+{
+public:
+	Dx12EffekseerWarpper(ID3D12Device* device,ID3D12CommandQueue* cmdQueue, std::uint32_t swapchainCount,DXGI_FORMAT rtFormat, DXGI_FORMAT depthFormtat,bool reverseDepth, std::uint64_t maxNum) :
+		EffekseerWarpper{}
+	{
+		// レンダラー生成
+		DXGI_FORMAT rtF[]{ rtFormat };
+		renderer_ = EffekseerRendererDX12::Create(
+			device, cmdQueue, swapchainCount,
+			rtF, 1, depthFormtat, reverseDepth, maxNum
+		);
+		
+		// マネージャー生成
+		manager_ = Effekseer::Manager::Create(maxNum);
+
+		// レンダラーセット
+		manager_->SetSpriteRenderer(renderer_->CreateSpriteRenderer());
+		manager_->SetRibbonRenderer(renderer_->CreateRibbonRenderer());
+		manager_->SetRingRenderer(renderer_->CreateRingRenderer());
+		manager_->SetTrackRenderer(renderer_->CreateTrackRenderer());
+		manager_->SetModelRenderer(renderer_->CreateModelRenderer());
+
+		// ローダーセット
+		manager_->SetTextureLoader(renderer_->CreateTextureLoader());
+		manager_->SetModelLoader(renderer_->CreateModelLoader());
+		manager_->SetMaterialLoader(renderer_->CreateMaterialLoader());
+
+		// メモリープールとコマンドリストを生成
+		memoryPool_ = EffekseerRenderer::CreateSingleFrameMemoryPool(renderer_->GetGraphicsDevice());
+		cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
+		renderer_->SetCommandList(cmdList_);
+
+		auto viewerPosition = ::Effekseer::Vector3D(0.0f, 0.0f, -20.0f);
+		renderer_->SetCameraMatrix(
+			Effekseer::Matrix44().LookAtRH(
+				viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
+			)
+		);
+	}
+
+	void Update(float delta) final
+	{
+		// 1フレームの経過時間を60フレーム基準での経過フレームに変換用
+		constexpr auto frameParSec = 1.0f / 60.0f;
+
+		// 開始処理
+		memoryPool_->NewFrame();
+
+		// 更新処理
+		manager_->Update(delta / frameParSec);
+	}
+
+	void Draw(Eugene::CommandList& cmdList) final
+	{
+		Effekseer::Manager::DrawParameter drawParameter;
+		drawParameter.ZNear = 0.0f;
+		drawParameter.ZFar = 1.0f;
+		drawParameter.ViewProjectionMatrix = renderer_->GetCameraProjectionMatrix();
+
+		EffekseerRendererDX12::BeginCommandList(cmdList_, static_cast<ID3D12GraphicsCommandList*>(cmdList.GetCommandList()));
+		renderer_->SetCommandList(cmdList_);
+		renderer_->BeginRendering();
+		manager_->Draw(drawParameter);
+		renderer_->EndRendering();
+		renderer_->SetCommandList(nullptr);
+		EffekseerRendererDX12::EndCommandList(cmdList_);
+	}
+	Effekseer::RefPtr<Effekseer::Manager>& GetManager()&
+	{
+		return manager_;
+	}
+
+	void SetCameraPos(const Eugene::Vector3& eye, const Eugene::Vector3& at, const Eugene::Vector3& up) final
+	{
+		renderer_->SetCameraMatrix(
+			Effekseer::Matrix44().LookAtRH(
+				Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{up.x, up.y, up.z}
+			)
+		);
+	}
+
+	void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+	{
+		/*renderer_->SetProjectionMatrix(
+			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));*/
+		
+		
+		renderer_->SetProjectionMatrix(
+			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));
+
+		
+	}
+private:
+
+	/// <summary>
+	/// レンダラー
+	/// </summary>
+	EffekseerRenderer::RendererRef renderer_;
+
+	/// <summary>
+	/// マネージャー
+	/// </summary>
+	Effekseer::RefPtr<Effekseer::Manager> manager_;
+
+	/// <summary>
+	/// メモリプール
+	/// </summary>
+	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> memoryPool_;
+
+	/// <summary>
+	/// コマンドリスト
+	/// </summary>
+	Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
+};
+
+Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
+	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, bool reverseDepth, std::uint64_t maxNumm
+) const
+{
+	auto rtF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(rtFormat)]);
+	DXGI_SWAP_CHAIN_DESC1 desc;
+	swapChain_->GetDesc1(&desc);
+	return new Dx12EffekseerWarpper{
+		device_.Get(), static_cast<ID3D12CommandQueue*>(gpuEngine.GetQueue()),
+		desc.BufferCount, rtF,DXGI_FORMAT_UNKNOWN,reverseDepth,maxNumm
+	};
 }
 #endif

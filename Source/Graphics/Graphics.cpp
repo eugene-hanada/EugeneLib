@@ -1,5 +1,16 @@
 ﻿#include "../../Include/Graphics/Graphics.h"
 
+#ifdef USE_EFFEKSEER
+Eugene::EffekseerWarpper::~EffekseerWarpper()
+{
+}
+
+Eugene::EffekseerWarpper::EffekseerWarpper()
+{
+}
+
+#endif
+
 Eugene::Graphics::~Graphics()
 {
 }

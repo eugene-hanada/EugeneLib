@@ -1,0 +1,56 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Visual Studio 16 2019 Win64",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "BUILD_EXAMPLES",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_EFFEKSEER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_SAMPLE",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_NO_CPP17_STRING_VIEW",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_CPP17_OPTIONAL",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
+        },
+        {
+          "name": "CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER",
+          "value": "false",
+          "type": "BOOL"
+        }
+      ]
+    }
+  ]
+}

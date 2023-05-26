@@ -8,6 +8,7 @@ option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
+option(BUILD_TEST "テストをビルドするか？"　OFF)
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -214,5 +215,6 @@ endif()
 
  endif()
 
-add_subdirectory("Test")
-
+ if (BUILD_TEST)
+	add_subdirectory("Test")
+endif()

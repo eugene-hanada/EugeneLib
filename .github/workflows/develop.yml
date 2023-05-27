@@ -31,7 +31,7 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: |
-        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DBUILD_CATCH2TEST=ON -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
+        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
         cmake --build ${{github.workspace}}/build
         
     #- name: Run Tests

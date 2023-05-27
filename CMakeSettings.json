@@ -49,6 +49,11 @@
           "name": "CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER",
           "value": "false",
           "type": "BOOL"
+        },
+        {
+          "name": "BUILD_CATCH2TEST",
+          "value": "True",
+          "type": "BOOL"
         }
       ]
     }

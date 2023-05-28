@@ -4,7 +4,11 @@
 Eugene::Dll::Dll(const std::filesystem::path& path)
 {
 	// DLLを読み込む
-	handle_ = LoadLibrary(TEXT("Dll.dll"));
+#ifdef UNICODE
+	handle_ = LoadLibrary(path.wstring().c_str());
+#else
+	handle_ = LoadLibrary(path.string().c_str());
+#endif
 
 	if (handle_ == nullptr)
 	{

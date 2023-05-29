@@ -56,3 +56,11 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 	}
 	return (sys = new WindowsSystem{size,title});
 }
+
+
+#ifdef USE_IMGUI
+ImGuiContext* Eugene::System::GetContextFromCreatedLib(void) const
+{
+	return context_;
+}
+#endif

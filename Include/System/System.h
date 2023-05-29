@@ -8,6 +8,8 @@
 #include "KeyID.h"
 #include "GamePad.h"
 
+struct ImGuiContext;
+
 namespace Eugene
 {
 	class Graphics;
@@ -134,6 +136,7 @@ namespace Eugene
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
 #ifdef USE_IMGUI
 		virtual void ImguiNewFrame(void) const = 0;
+		ImGuiContext* GetContextFromCreatedLib(void) const;
 #endif
 	protected:
 
@@ -153,9 +156,14 @@ namespace Eugene
 		/// タイトル
 		/// </summary>
 		std::u8string title_;
+
+#ifdef USE_IMGUI
+		ImGuiContext* context_{ nullptr };
+#endif
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
+
 
 	};
 
@@ -168,9 +176,3 @@ namespace Eugene
 	[[nodiscard]]
 	System* CreateSystem(const Vector2& size, const std::u8string& title);
 }
-
-#ifdef USE_IMGUI
-
-struct ImGuiContext* GetContextFromCreatedLib(void);
-
-#endif

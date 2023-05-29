@@ -47,7 +47,6 @@ std::function<void(const Eugene::Vector2&)> resizeCall;
 
 #ifdef USE_IMGUI
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-ImGuiContext* nowContext{ nullptr };
 #endif
 
 bool isEnd = false;
@@ -184,7 +183,7 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplWin32_Init(hwnd);
 
-	nowContext = ImGui::GetCurrentContext();
+	context_ = ImGui::GetCurrentContext();
 
 #endif
 
@@ -354,8 +353,4 @@ void Eugene::WindowsSystem::ImguiNewFrame(void) const
 	ImGui_ImplWin32_NewFrame();
 }
 
-ImGuiContext* GetContextFromCreatedLib(void)
-{
-	return nowContext;
-}
 #endif

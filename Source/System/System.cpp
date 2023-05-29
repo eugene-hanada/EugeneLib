@@ -1,6 +1,10 @@
 ﻿#include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
 
+#ifdef USE_IMGUI
+#include "../../Include/ThirdParty/imgui/imgui.h"
+#endif
+
 Eugene::System* sys = nullptr;
 
 void Eugene::System::GetMouse(Mouse& outMouse) const&
@@ -52,3 +56,10 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 	}
 	return (sys = new WindowsSystem{size,title});
 }
+
+#ifdef USE_IMGUI
+ImGuiContext* GetContextFromCreatedLib(void)
+{
+	return ImGui::GetCurrentContext();
+}
+#endif

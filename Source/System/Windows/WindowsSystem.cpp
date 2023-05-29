@@ -346,4 +346,6 @@ void Eugene::WindowsSystem::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();
 }
+
+
 #endif

@@ -52,6 +52,11 @@
         },
         {
           "name": "BUILD_CATCH2TEST",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_IMGUI",
           "value": "True",
           "type": "BOOL"
         }

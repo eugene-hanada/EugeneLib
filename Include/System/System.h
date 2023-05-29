@@ -168,3 +168,9 @@ namespace Eugene
 	[[nodiscard]]
 	System* CreateSystem(const Vector2& size, const std::u8string& title);
 }
+
+#ifdef USE_IMGUI
+
+struct ImGuiContext* GetContextFromCreatedLib(void);
+
+#endif

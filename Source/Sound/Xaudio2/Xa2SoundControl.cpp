@@ -40,3 +40,12 @@ void Eugene::Xa2SoundControl::SetVolume(float volume)
 		submix_->SetVolume(volume_);
 	}
 }
+
+void Eugene::Xa2SoundControl::SetOutput(SoundControl& control)
+{
+	outChannel_ = control.GetInChannel();
+	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
+	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
+	submix_->SetOutputVoices(&sends);
+}

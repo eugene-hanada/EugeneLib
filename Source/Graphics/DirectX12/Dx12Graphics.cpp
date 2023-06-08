@@ -519,7 +519,7 @@ public:
 	void SetCameraPos(const Eugene::Vector3& eye, const Eugene::Vector3& at, const Eugene::Vector3& up) final
 	{
 		renderer_->SetCameraMatrix(
-			Effekseer::Matrix44().LookAtRH(
+			Effekseer::Matrix44().LookAtLH(
 				Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{up.x, up.y, up.z}
 			)
 		);
@@ -532,7 +532,7 @@ public:
 		
 		
 		renderer_->SetProjectionMatrix(
-			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));
+			Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
 
 		
 	}

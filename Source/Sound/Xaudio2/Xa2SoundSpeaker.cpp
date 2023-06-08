@@ -136,8 +136,9 @@ Eugene::Xa2SoundSpeaker::~Xa2SoundSpeaker()
 	source_->DestroyVoice();
 }
 
-void Eugene::Xa2SoundSpeaker::Play(void)
+void Eugene::Xa2SoundSpeaker::Play(int loopCount)
 {
+	buffer_->LoopCount = loopCount == -1 ? XAUDIO2_LOOP_INFINITE : static_cast<std::uint32_t>(loopCount);
 	if (FAILED(source_->FlushSourceBuffers())|| 
 		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
 		FAILED(source_->Start()))

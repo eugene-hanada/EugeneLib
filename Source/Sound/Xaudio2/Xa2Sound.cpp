@@ -32,7 +32,7 @@ Eugene::Xa2Sound::Xa2Sound()
 	XAUDIO2_VOICE_DETAILS details;
 	mastering_->GetVoiceDetails(&details);
 	inChannel_ = outChannel_ = details.InputChannels;
-
+	sampleRate_ = details.InputSampleRate;
 	DWORD tmpMask;
 	mastering_->GetChannelMask(&tmpMask);
 	channelMask_ = tmpMask;
@@ -79,10 +79,21 @@ Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std
 
 Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2SoundControl{xaudio2_.Get(), sample, inputChannel, outChannel};
+	return new Xa2SoundControl{
+		xaudio2_.Get(),
+		(sample == 0u ? sampleRate_ : sample), 
+		(inputChannel == 0u ? inChannel_ : inputChannel), 
+		(outChannel == 0u ? inChannel_ : outChannel) 
+	};
 }
 
 Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2Sound3DControl{ xaudio2_.Get(), handle, inChannel_, inputChannel, sample };
+	return new Xa2Sound3DControl{
+		xaudio2_.Get(), 
+		handle,
+		(outChannel == 0u ? inChannel_ : outChannel), 
+		(inputChannel == 0u ? inChannel_ : inputChannel),
+		(sample == 0u ? sampleRate_ : sample) 
+	};
 }

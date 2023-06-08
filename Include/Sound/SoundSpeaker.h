@@ -20,7 +20,7 @@ namespace Eugene
 		/// 再生
 		/// </summary>
 		/// <param name=""></param>
-		virtual void Play(void) = 0;
+		virtual void Play(int loopCount = 0) = 0;
 
 		/// <summary>
 		/// 停止
@@ -40,12 +40,6 @@ namespace Eugene
 		/// </summary>
 		/// <param name="rate"></param>
 		virtual void SetPitchRate(float rate) = 0;
-
-		/// <summary>
-		/// サウンドコントロールクラスに出力する(出力先でコントロールできる)
-		/// </summary>
-		/// <param name="control"> サウンドコントロールクラス </param>
-		virtual void SetOutput(SoundControl& control) = 0;
 
 		/// <summary>
 		/// 再生するサウンドデータをセットする

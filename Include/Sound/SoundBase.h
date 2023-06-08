@@ -4,6 +4,7 @@
 
 namespace Eugene
 {
+	class SoundControl;
 	class SoundBase
 	{
 	public:
@@ -41,6 +42,12 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns></returns>
 		std::uint16_t GetInChannel(void) const;
+
+		/// <summary>
+		/// サウンドコントロールクラスに出力する(出力先でコントロールできる)
+		/// </summary>
+		/// <param name="control"> サウンドコントロールクラス </param>
+		virtual void SetOutput(SoundControl& control);
 	protected:
 		SoundBase();
 

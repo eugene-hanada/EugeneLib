@@ -23,3 +23,8 @@ Eugene::SoundBase::SoundBase() :
 	volume_{1.0f}, outChannel_{1u}
 {
 }
+
+void Eugene::SoundBase::SetOutput(SoundControl& output)
+{
+
+}

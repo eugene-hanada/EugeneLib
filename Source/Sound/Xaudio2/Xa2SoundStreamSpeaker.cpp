@@ -107,7 +107,7 @@ Eugene::Xa2SoundStreamSpeaker::~Xa2SoundStreamSpeaker()
 	source_->DestroyVoice();
 }
 
-void Eugene::Xa2SoundStreamSpeaker::Play(void)
+void Eugene::Xa2SoundStreamSpeaker::Play(int loopCount)
 {
 	source_->Start();
 	isPlay_.store(true);

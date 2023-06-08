@@ -132,7 +132,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	std::unique_ptr<Eugene::EffekseerWarpper> efkWarrper{ graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 1) };
 	efkWarrper->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
-	efkWarrper->SetCameraPos({ 10.0f,0.0f,-20.0f }, {10.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
+	efkWarrper->SetCameraPos({ 0.0f,0.0f,-20.0f }, {0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	
 
 	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
@@ -200,8 +200,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	std::unique_ptr<Eugene::Sound> sound;
-	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	std::unique_ptr<Eugene::Sound3DControl> ctrl;
+	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	sound.reset(Eugene::CreateSound());
 	ctrl.reset(sound->CreateSound3DControl());
 	std::unique_ptr<Eugene::SoundFile> wave;;
@@ -211,8 +211,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	speaker.reset(sound->CreateSoundSpeaker(*wave));
 	
 	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
-
-	speaker->Play();
+	speaker->SetOutput(*ctrl);
+	speaker->Play(-1);
 
 	// マウスの情報を受け取る構造体
 	Eugene::System::Mouse mouse;
@@ -238,7 +238,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if (speaker->IsEnd())
 		{
 			// 再生終了していたら再度再生
-			speaker->Play();
+			//speaker->Play();
 		}
 
 		if (frameCnt % 3 == 0)
@@ -250,10 +250,30 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 			// 正規化して10倍
 			pos.Normalize();
-			pos *= 5.0f;
+			//pos *= 10.0f;
 			
+			ctrl->Set3DSound(
+				Eugene::forwardVector3<float>,Eugene::upVector3<float>,Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
+				Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::Vector3{pos.x, 0.0f, pos.y}, Eugene::zeroVector3<float>
+			);
+			
+		}
 
-			
+		if (system->IsHitKey(Eugene::KeyID::W))
+		{
+			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.0f,0.0f, 0.1f });
+		}
+		if (system->IsHitKey(Eugene::KeyID::A))
+		{
+			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ -0.1f,0.0f, 0.0f });
+		}
+		if (system->IsHitKey(Eugene::KeyID::S))
+		{
+			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.1f,0.0f, -0.1f });
+		}
+		if (system->IsHitKey(Eugene::KeyID::D))
+		{
+			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.1f,0.0f, 0.0f });
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
@@ -282,7 +302,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	}
 		//}
 
-		efkWarrper->Update(1.0f / 60.0f);
+		efkWarrper->Update(1.0f / 240.0f);
 
 		// コマンド開始
 		cmdList->Begin();

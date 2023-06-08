@@ -35,7 +35,7 @@ namespace Eugene
 			Xa2SoundStreamSpeaker& speaker_;
 		};
 
-		void Play(void) final;
+		void Play(int loopCount = 0) final;
 		void Stop(void);
 		bool IsEnd(void) const final;
 		void SetPitchRate(float rate) final;

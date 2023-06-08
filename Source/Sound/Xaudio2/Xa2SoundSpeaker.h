@@ -18,7 +18,7 @@ namespace Eugene
 		Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate);
 		~Xa2SoundSpeaker();
 	private:
-		void Play(void) final;
+		void Play(int loopCount = 0) final;
 		void Stop(void) final;
 		bool IsEnd(void) const final;
 		void SetPitchRate(float rate) final;

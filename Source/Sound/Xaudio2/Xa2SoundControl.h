@@ -17,7 +17,7 @@ namespace Eugene
         void* Get(void) final;
         void SetPan(std::span<float> volumes) final;
         void SetVolume(float volume) final;
-
+        void SetOutput(SoundControl& control) final;
         IXAudio2SubmixVoice* submix_;
     };
 }

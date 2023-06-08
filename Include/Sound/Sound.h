@@ -53,7 +53,7 @@ namespace Eugene
 		/// <param name="inputChannel"></param>
 		/// <param name="outChannel"></param>
 		/// <returns></returns>
-		virtual SoundControl* CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
+		virtual SoundControl* CreateSoundControl(std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
 
 		/// <summary>
 		/// サウンドを3Dで出力しコントロールするクラスを作成する
@@ -62,11 +62,13 @@ namespace Eugene
 		/// <param name="inputChannel"></param>
 		/// <param name="outChannel"></param>
 		/// <returns></returns>
-		virtual Sound3DControl* CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const = 0;
+		virtual Sound3DControl* CreateSound3DControl(std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
 	protected:
 		Sound();
 
 		std::uint32_t channelMask_;
+
+		std::uint32_t sampleRate_;
 	};
 
 	Sound* CreateSound(void);

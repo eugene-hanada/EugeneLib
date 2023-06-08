@@ -201,8 +201,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// サウンド
 	std::unique_ptr<Eugene::Sound> sound;
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
+	std::unique_ptr<Eugene::Sound3DControl> ctrl;
 	sound.reset(Eugene::CreateSound());
-
+	ctrl.reset(sound->CreateSound3DControl());
 	std::unique_ptr<Eugene::SoundFile> wave;;
 	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
 	wave->LoadFormat();
@@ -250,6 +251,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			// 正規化して10倍
 			pos.Normalize();
 			pos *= 5.0f;
+			
 
 			
 		}

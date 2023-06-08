@@ -7,7 +7,8 @@ Eugene::Sound::~Sound()
 {
 }
 
-Eugene::Sound::Sound()
+Eugene::Sound::Sound() :
+	sampleRate_{0u}
 {
 }
 

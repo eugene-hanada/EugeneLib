@@ -20,6 +20,7 @@
 #include "Dx12DepthStencilViews.h"
 #include "Dx12Sampler.h"
 #include "Dx12SamplerViews.h"
+#include "../../../Include/Graphics/Shader.h"
 
 #ifdef USE_EFFEKSEER
 #include <Effekseer.h>

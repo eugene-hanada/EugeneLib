@@ -6,12 +6,12 @@
 #include "../../../Include/Common/EugeneLibException.h"
 
 
-Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample) :
+Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample, std::uint32_t stage) :
 	handle_{handle}
 {
 	inChannel_ = inChannel;
 	outChannel_ = outChannel;
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER)))
+	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
 		throw EugeneLibException("3D用サブミックスボイスの作成");
 	}
@@ -73,6 +73,15 @@ void Eugene::Xa2Sound3DControl::SetVolume(float volume)
 		volume_ = volume * volume;
 		submix_->SetVolume(volume_);
 	}
+}
+
+void Eugene::Xa2Sound3DControl::SetOutput(SoundControl& control)
+{
+	outChannel_ = control.GetInChannel();
+	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
+	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
+	submix_->SetOutputVoices(&sends);
 }
 
 void* Eugene::Xa2Sound3DControl::Get(void)

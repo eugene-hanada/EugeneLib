@@ -77,23 +77,25 @@ Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std
 	return new Xa2SoundStreamSpeaker{xaudio2_.Get(), path, outChannel_, maxPitchRate };
 }
 
-Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
 	return new Xa2SoundControl{
 		xaudio2_.Get(),
 		(sample == 0u ? sampleRate_ : sample), 
 		(inputChannel == 0u ? inChannel_ : inputChannel), 
-		(outChannel == 0u ? inChannel_ : outChannel) 
+		(outChannel == 0u ? inChannel_ : outChannel) ,
+		stage
 	};
 }
 
-Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
 	return new Xa2Sound3DControl{
 		xaudio2_.Get(), 
 		handle,
 		(outChannel == 0u ? inChannel_ : outChannel), 
 		(inputChannel == 0u ? inChannel_ : inputChannel),
-		(sample == 0u ? sampleRate_ : sample) 
+		(sample == 0u ? sampleRate_ : sample),
+		stage
 	};
 }

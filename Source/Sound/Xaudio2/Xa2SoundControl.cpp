@@ -2,10 +2,10 @@
 #include <xaudio2.h>
 #include "../../../Include/Common/EugeneLibException.h"
 
-Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel)
+Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel, std::uint32_t stage)
 {
 
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER)))
+	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
 		throw EugeneLibException("サブミックスボイスの作成に失敗");
 	}

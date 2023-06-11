@@ -211,7 +211,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	speaker.reset(sound->CreateSoundSpeaker(*wave));
 	
 	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
-	//speaker->SetOutput(*ctrl);
+	speaker->SetOutput(*ctrl);
 	speaker->Play(0);
 
 	// マウスの情報を受け取る構造体

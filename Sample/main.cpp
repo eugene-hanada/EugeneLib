@@ -211,8 +211,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	speaker.reset(sound->CreateSoundSpeaker(*wave));
 	
 	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
-	speaker->SetOutput(*ctrl);
-	speaker->Play(-1);
+	//speaker->SetOutput(*ctrl);
+	speaker->Play(0);
 
 	// マウスの情報を受け取る構造体
 	Eugene::System::Mouse mouse;
@@ -229,16 +229,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
 	auto img = graphics->GetImguiImageID(1);*/
 	//graphics->SetFullScreenFlag(true);
+	bool flag = false;
 	while (system->Update())
 	{
 		// マウスの情報を取得
 		system->GetMouse(mouse);
 
 		// 再生チェック
-		if (speaker->IsEnd())
+		if (mouse.left)
 		{
-			// 再生終了していたら再度再生
-			//speaker->Play();
+			if (!flag)
+			{
+				flag = true;
+				speaker->Play();
+			}
+		}
+		else
+		{
+			flag = false;
 		}
 
 		if (frameCnt % 3 == 0)

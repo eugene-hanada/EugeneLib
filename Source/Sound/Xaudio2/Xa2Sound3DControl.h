@@ -11,7 +11,7 @@ namespace Eugene
 		public Sound3DControl
 	{
 	public:
-		Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle,std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample);
+		Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle,std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample, std::uint32_t stage);
 		~Xa2Sound3DControl();
 	private:
 		void Set3DSound(
@@ -22,6 +22,8 @@ namespace Eugene
 
 		void SetPan(std::span<float> volumes) final
 		{}
+
+		void SetOutput(SoundControl& control) final;
 
 		void* Get(void) final;
 

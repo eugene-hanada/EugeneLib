@@ -200,10 +200,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	std::unique_ptr<Eugene::Sound> sound;
+	std::unique_ptr<Eugene::SoundControl> ctrl2;
 	std::unique_ptr<Eugene::Sound3DControl> ctrl;
+	
+	std::unique_ptr<Eugene::SoundControl> ctrl3;
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
 	sound.reset(Eugene::CreateSound());
-	ctrl.reset(sound->CreateSound3DControl());
+	ctrl.reset(sound->CreateSound3DControl(0));
+	ctrl2.reset(sound->CreateSoundControl(1));
+	ctrl3.reset(sound->CreateSoundControl(1));
 	std::unique_ptr<Eugene::SoundFile> wave;;
 	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
 	wave->LoadFormat();
@@ -212,6 +217,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
 	speaker->SetOutput(*ctrl);
+	ctrl->SetOutput(*ctrl2);
+	ctrl2->SetVolume(0.5f);
+	//ctrl2->SetOutput(*ctrl3);
 	speaker->Play(0);
 
 	// マウスの情報を受け取る構造体

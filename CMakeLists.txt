@@ -73,7 +73,7 @@ set(MathSource
 	Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
 	Source/Math/Vector3.cpp
 	Source/Math/Quaternion.cpp
- )
+  "Source/Math/Random.cpp")
 
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource

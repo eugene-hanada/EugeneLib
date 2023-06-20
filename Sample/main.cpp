@@ -8,14 +8,17 @@
 //#include <ThirdParty/imgui/imgui.h>
 #include <Effekseer.h>
 
+
+
 #include "Common/Debug.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	Eugene::Random<Eugene::XorShift64Engine> random;
+	Eugene::RefPtr<Eugene::Random<Eugene::XorShift64Engine>> randomPtr{new Eugene::Random<Eugene::XorShift64Engine>{}};
+	Eugene::RandomXoshiro128pp xshiroRandom;
 	for (int i = 0; i < 10; i++)
 	{
-		auto r = random(100,0.1);
+		auto r = xshiroRandom(100, 0.1);
 		//assert(r > 0.0 && 1.0f >= r);
 		DebugLog("Result={}", r);
 	}
@@ -137,7 +140,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 
 	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
-	
+	auto e2 = effect;
 	auto handle = efkWarrper->GetManager()->Play(effect, { 0.0f, 0.0f, 0.0f });
 	efkWarrper->GetManager()->SetRotation(handle, Effekseer::Vector3D{ 0.0f,0.0f, 1.0f }, Eugene::Deg2Rad(90.0f));
 

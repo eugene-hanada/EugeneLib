@@ -35,6 +35,23 @@ namespace Eugene
 		std::uint64_t state_;
 	};
 
+	class Xoshiro128ppEngine
+	{
+	public:
+		using result_type = std::uint64_t;
+		result_type operator()();
+		static constexpr std::uint64_t max()
+		{
+			return std::numeric_limits<result_type>::max() - 1ull;
+		}
+		static constexpr std::uint64_t min()
+		{
+			return 0ull;
+		}
+		void seed(std::uint64_t seed);
+	private:
+		std::uint64_t state_[2];
+	};
 
 	/// <summary>
 	/// —”‚ğˆµ‚¤ƒNƒ‰ƒX
@@ -107,5 +124,6 @@ namespace Eugene
 	};
 
 	using RandomXorShift64 = Random<XorShift64Engine>;
+	using RandomXoshiro128pp = Random< Xoshiro128ppEngine>;
 	using RandomMt = Random<std::mt19937_64>;
 }

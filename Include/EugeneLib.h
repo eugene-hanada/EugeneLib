@@ -33,3 +33,5 @@
 
 #include "Math/Geometry.h"
 
+#include "Common/RefPtr.h"
+

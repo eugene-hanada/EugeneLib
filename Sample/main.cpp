@@ -8,14 +8,17 @@
 //#include <ThirdParty/imgui/imgui.h>
 #include <Effekseer.h>
 
+
+
 #include "Common/Debug.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	Eugene::Random<Eugene::XorShift64Engine> random;
+	auto randomPtr = Eugene::MakeRefPtr<Eugene::RandomXorShift64>();
+	Eugene::RandomXoshiro128pp xshiroRandom;
 	for (int i = 0; i < 10; i++)
 	{
-		auto r = random(100,0.1);
+		auto r = xshiroRandom(100, 0.1);
 		//assert(r > 0.0 && 1.0f >= r);
 		DebugLog("Result={}", r);
 	}
@@ -24,12 +27,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
 
 	// グラフィックの処理をするクラス
-	std::unique_ptr<Eugene::Graphics> graphics;
-	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	Eugene::RefPtr<Eugene::Graphics> graphics;
+	Eugene::RefPtr<Eugene::GpuEngine> gpuEngine;
 	{
 		auto [graphicsPtr, gpuPtr] = system->CreateGraphics();
-		graphics.reset(graphicsPtr);
-		gpuEngine.reset(gpuPtr);
+		graphics = (graphicsPtr);
+		gpuEngine = (gpuPtr);
 	}
 
 	// コマンドリスト生成
@@ -137,7 +140,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 
 	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
-	
+	auto e2 = effect;
 	auto handle = efkWarrper->GetManager()->Play(effect, { 0.0f, 0.0f, 0.0f });
 	efkWarrper->GetManager()->SetRotation(handle, Effekseer::Vector3D{ 0.0f,0.0f, 1.0f }, Eugene::Deg2Rad(90.0f));
 

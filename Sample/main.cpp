@@ -14,7 +14,7 @@
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	Eugene::RefPtr<Eugene::Random<Eugene::XorShift64Engine>> randomPtr{new Eugene::Random<Eugene::XorShift64Engine>{}};
+	auto randomPtr = Eugene::MakeRefPtr<Eugene::RandomXorShift64>();
 	Eugene::RandomXoshiro128pp xshiroRandom;
 	for (int i = 0; i < 10; i++)
 	{
@@ -27,12 +27,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
 
 	// グラフィックの処理をするクラス
-	std::unique_ptr<Eugene::Graphics> graphics;
-	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	Eugene::RefPtr<Eugene::Graphics> graphics;
+	Eugene::RefPtr<Eugene::GpuEngine> gpuEngine;
 	{
 		auto [graphicsPtr, gpuPtr] = system->CreateGraphics();
-		graphics.reset(graphicsPtr);
-		gpuEngine.reset(gpuPtr);
+		graphics = (graphicsPtr);
+		gpuEngine = (gpuPtr);
 	}
 
 	// コマンドリスト生成

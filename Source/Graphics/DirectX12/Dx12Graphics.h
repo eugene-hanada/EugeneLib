@@ -107,7 +107,8 @@ namespace Eugene
 		EffekseerWarpper* CreateEffekseerWarpper(
 			GpuEngine& gpuEngine,
 			Format rtFormat,
-			std::uint32_t rtNum,
+			std::uint32_t rtNum = 1,
+			Format depthFormat = Format::NON,
 			bool reverseDepth = false,
 			std::uint64_t maxNumm = 8000
 		) const final;

@@ -528,14 +528,8 @@ public:
 
 	void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
 	{
-		/*renderer_->SetProjectionMatrix(
-			Effekseer::Matrix44().PerspectiveFovRH(fov, aspect, nearfar.x, nearfar.y));*/
-		
-		
 		renderer_->SetProjectionMatrix(
 			Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
-
-		
 	}
 private:
 
@@ -561,15 +555,16 @@ private:
 };
 
 Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
-	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, bool reverseDepth, std::uint64_t maxNumm
+	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat,bool reverseDepth, std::uint64_t maxNumm
 ) const
 {
 	auto rtF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(rtFormat)]);
+	auto depthF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(depthFormat)]);
 	DXGI_SWAP_CHAIN_DESC1 desc;
 	swapChain_->GetDesc1(&desc);
 	return new Dx12EffekseerWarpper{
 		device_.Get(), static_cast<ID3D12CommandQueue*>(gpuEngine.GetQueue()),
-		desc.BufferCount, rtF,DXGI_FORMAT_UNKNOWN,reverseDepth,maxNumm
+		desc.BufferCount, rtF, depthF,reverseDepth,maxNumm
 	};
 }
 #endif

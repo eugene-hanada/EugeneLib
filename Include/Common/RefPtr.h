@@ -1,10 +1,11 @@
 #pragma once
 #include <cstdint>
 #include <cassert>
+#include <memory_resource>
 
 namespace Eugene
 {
-	template<class T>
+	template<class T, class Deleter>
 	class RefPtr;
 
 	template<class T>
@@ -37,6 +38,16 @@ namespace Eugene
 	};
 
 	template<class T>
+	class DefaultDeleter
+	{
+	public:
+		void operator()(T* ptr)
+		{
+			delete ptr;
+		}
+	};
+
+	template<class T, class Deleter = DefaultDeleter<T>>
 	class RefPtr
 	{
 	public:
@@ -60,7 +71,7 @@ namespace Eugene
 				if (*count_ <= 0u)
 				{
 					delete count_;
-					delete ptr_;
+					Deleter()(ptr_);
 					count_ = nullptr;
 					ptr_ = nullptr;
 				}
@@ -167,5 +178,9 @@ namespace Eugene
 		friend class WeakRefPtr<T>;
 	};
 
-	
+	template<class T, class Deleter = DefaultDeleter<T> ,class ...Args>
+	RefPtr<T,Deleter> MakeRefPtr(Args ...arg)
+	{
+		return new T{ arg... };
+	}
 }

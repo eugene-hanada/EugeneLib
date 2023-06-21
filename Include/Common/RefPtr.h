@@ -8,34 +8,34 @@ namespace Eugene
 	template<class T, class Deleter>
 	class RefPtr;
 
-	template<class T>
-	class WeakRefPtr
-	{
-	public:
-		WeakRefPtr(const RefPtr<T>& refptr)
-		{
-			ptr_ = refptr.ptr_;
-			count_ = refptr.count_;
-		}
+	///*template<class T>
+	//class WeakRefPtr
+	//{
+	//public:
+	//	WeakRefPtr(const RefPtr<T>& refptr)
+	//	{
+	//		ptr_ = refptr.ptr_;
+	//		count_ = refptr.count_;
+	//	}
 
-		~WeakRefPtr()
-		{
-		}
+	//	~WeakRefPtr()
+	//	{
+	//	}
 
-		T* operator->() const
-		{
-			if (ptr_ != nullptr && count_ != nullptr)
-			{
-				return ptr_;
-			}
-			return nullptr;
-		}
+	//	T* operator->() const
+	//	{
+	//		if (ptr_ != nullptr && count_ != nullptr)
+	//		{
+	//			return ptr_;
+	//		}
+	//		return nullptr;
+	//	}
 
-	private:
-		T* ptr_;
-		std::uint32_t* count_;
-		friend WeakRefPtr;
-	};
+	//private:
+	//	T* ptr_;
+	//	std::uint32_t* count_;
+	//	friend WeakRefPtr;
+	//};*/
 
 	template<class T>
 	class DefaultDeleter
@@ -164,7 +164,7 @@ namespace Eugene
 
 		T* operator->(void) const noexcept
 		{
-			return *ptr_;
+			return ptr_;
 		}
 
 
@@ -175,7 +175,7 @@ namespace Eugene
 
 		friend class RefPtr<T>;
 
-		friend class WeakRefPtr<T>;
+		//friend class WeakRefPtr<T>;
 	};
 
 	template<class T, class Deleter = DefaultDeleter<T> ,class ...Args>

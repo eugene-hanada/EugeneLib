@@ -9,6 +9,10 @@ namespace DirectX
 namespace Eugene
 {
 	using Matrix4x4 = DirectX::XMFLOAT4X4;
+
+	/// <summary>
+	/// クォータニオン
+	/// </summary>
 	class Quaternion
 	{
 	public:
@@ -34,7 +38,7 @@ namespace Eugene
 		Quaternion Normalized(void) const;
 		Vector3 ToEuler(void) const;
 		void ToMatrix(Matrix4x4& out) const;
-
+		void Look(const Vector3& dir, const Vector3& up);
 		constexpr Quaternion& operator=(const Quaternion& q)
 		{
 			x = q.x;

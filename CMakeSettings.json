@@ -22,7 +22,7 @@
         },
         {
           "name": "BUILD_SAMPLE",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {

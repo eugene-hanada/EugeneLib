@@ -1,5 +1,5 @@
 #include "OggVorbis.h"
-#include "../../../Include/Math/Geometry.h"
+#include "../../Include/Math/Geometry.h"
 #define STB_VORBIS_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_vorbis.c"
 

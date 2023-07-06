@@ -214,7 +214,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	ctrl2.reset(sound->CreateSoundControl(1));
 	ctrl3.reset(sound->CreateSoundControl(1));
 	std::unique_ptr<Eugene::SoundFile> wave;;
-	wave.reset(Eugene::OpenSoundFile("./exp.wav"));
+	wave.reset(Eugene::OpenSoundFile("./shot2.ogg"));
 	wave->LoadFormat();
 	wave->LoadData();
 	speaker.reset(sound->CreateSoundSpeaker(*wave));
@@ -222,7 +222,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
 	speaker->SetOutput(*ctrl);
 	ctrl->SetOutput(*ctrl2);
-	ctrl2->SetVolume(0.5f);
+	ctrl2->SetVolume(1.0f);
 	//ctrl2->SetOutput(*ctrl3);
 	speaker->Play(0);
 

@@ -73,7 +73,7 @@ namespace Eugene
 		/// <returns></returns>
 		bool operator()(double p) noexcept
 		{
-			std::bernoulli_distribution d(p);
+			std::bernoulli_distribution d(std::clamp(p, 0.0, 1.0));
 			return d(engine_);
 		}
 		

@@ -3,6 +3,7 @@
 #include <string_view>
 #include <array>
 #include <span>
+#include <bitset>
 #include <filesystem>
 #include "../Math/Vector2.h"
 #include "KeyID.h"
@@ -15,6 +16,34 @@ namespace Eugene
 	class Graphics;
 	class GpuEngine;
 	class DynamicLibrary;
+
+	/// <summary>
+	/// マウスの構造体
+	/// </summary>
+	struct Mouse
+	{
+	public:
+		/// <summary>
+		/// マウス用フラグ
+		/// </summary>
+		enum class Flags
+		{
+			LeftButton,
+			RightButton,
+			CenterButton,
+			Other1Button,
+			Other2Button,
+			ShowCursor,
+			Max
+		};
+
+		Mouse();
+		bool CheckFlags(Flags flag) const;
+		Vector2 pos;
+		float wheel = 0.0f;
+		std::bitset<static_cast<size_t>(Flags::Max)> flags;
+	private:
+	};
 
 	/// <summary>
 	/// OS等の処理をするクラス
@@ -32,19 +61,6 @@ namespace Eugene
 		/// キーコードのテーブル
 		/// </summary>
 		using KeyCodeTable = std::array<int, KEYID_MAX>;
-
-		/// <summary>
-		/// マウスの構造体
-		/// </summary>
-		struct Mouse
-		{
-			Vector2 pos;
-			bool left = false;
-			bool right = false;
-			float wheel = 0.0f;
-		};
-
-
 
 		/// <summary>
 		/// 更新処理(毎フレーム呼ぶ必要があり返値で終了すべきかが帰ってくる)
@@ -87,7 +103,14 @@ namespace Eugene
 		/// </summary>
 		/// <param name="outMouse"></param>
 		/// <returns></returns>
-		virtual void GetMouse(Mouse& outMouse) const&;
+		virtual bool GetMouse(Mouse& outMouse) const&;
+
+		/// <summary>
+		/// マウス情報をセットする
+		/// </summary>
+		/// <param name="inMouse"></param>
+		/// <returns></returns>
+		virtual bool SetMouse(Mouse& inMouse) const;
 
 		/// <summary>
 		/// キーが押されているか

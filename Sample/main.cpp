@@ -247,6 +247,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// マウスの情報を取得
 		system->GetMouse(mouse);
 
+		DebugLog("ホイール={0:f}", mouse.wheel);
+
 		// 再生チェック
 		if (mouse.CheckFlags(Eugene::Mouse::Flags::LeftButton))
 		{

@@ -62,7 +62,6 @@ bool isEnd = false;
 /// <returns></returns>
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	wheel = 0.0f;
 #ifdef USE_IMGUI
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
 	{
@@ -77,7 +76,7 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		PostQuitMessage(0);
 		return 0;
 	case WM_MOUSEWHEEL:
-		wheel = static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
+		wheel += static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
 		return 0;
 	case WM_SIZE:
 		resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });

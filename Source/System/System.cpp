@@ -7,8 +7,25 @@
 
 Eugene::System* sys = nullptr;
 
-void Eugene::System::GetMouse(Mouse& outMouse) const&
+Eugene::Mouse::Mouse()
 {
+	flags.reset();
+	flags.set(static_cast<size_t>(Flags::ShowCursor));
+}
+
+bool Eugene::Mouse::CheckFlags(Flags flag) const
+{
+	return flags.test(static_cast<size_t>(flag));
+}
+
+bool Eugene::System::GetMouse(Mouse& outMouse) const&
+{
+	return false;
+}
+
+bool Eugene::System::SetMouse(Mouse& inMouse) const
+{
+	return false;
 }
 
 bool Eugene::System::IsHitKey(KeyID keyID) const

@@ -16,7 +16,8 @@ namespace Eugene
 		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const final;
 	private:
 		bool Update(void) final;
-		void GetMouse(Mouse& outMouse) const& final;
+		bool GetMouse(Mouse& outMouse) const& final;
+		bool SetMouse(Mouse& outMouse) const final;
 		bool IsHitKey(KeyID keyID) const final;
 		bool GetKeyData(KeyDataSpan keyData) const final;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;

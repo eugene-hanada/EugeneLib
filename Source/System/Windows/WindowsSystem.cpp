@@ -37,11 +37,10 @@ WNDCLASSEX windowClass;
 /// </summary>
 HWND hwnd;
 
-Eugene::System::Mouse mouse;
 
 Eugene::Graphics* graphics = nullptr;
 Eugene::GpuEngine* gpuEngine = nullptr;
-
+float wheel = 0.0f;
 
 std::function<void(const Eugene::Vector2&)> resizeCall;
 
@@ -63,8 +62,7 @@ bool isEnd = false;
 /// <returns></returns>
 LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	mouse.wheel = 0.0f;
-
+	wheel = 0.0f;
 #ifdef USE_IMGUI
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
 	{
@@ -78,24 +76,8 @@ LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		isEnd = true;
 		PostQuitMessage(0);
 		return 0;
-	case WM_LBUTTONDOWN:
-		mouse.left = true;
-		return 0;
-	case WM_LBUTTONUP:
-		mouse.left = false;
-		return 0;
-	case WM_RBUTTONDOWN:
-		mouse.right = true;
-		return 0;
-	case WM_RBUTTONUP:
-		mouse.right = false;
-		return 0;
-	case WM_MOUSEMOVE:
-		mouse.pos.x = LOWORD(lparam);
-		mouse.pos.y = HIWORD(lparam);
-		return 0;
 	case WM_MOUSEWHEEL:
-		mouse.wheel = GET_WHEEL_DELTA_WPARAM(wparam);
+		wheel = static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
 		return 0;
 	case WM_SIZE:
 		resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
@@ -244,9 +226,50 @@ bool Eugene::WindowsSystem::Update(void)
 	return !isEnd;
 }
 
-void Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
+bool Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
 {
-	outMouse = mouse;
+	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::LeftButton), GetKeyState(VK_LBUTTON) & 0x8000);
+	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::RightButton), GetKeyState(VK_RBUTTON) & 0x8000);
+	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::CenterButton), GetKeyState(VK_MBUTTON) & 0x8000);
+	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::Other1Button), GetKeyState(VK_XBUTTON1) & 0x8000);
+	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::Other2Button), GetKeyState(VK_XBUTTON2) & 0x8000);
+	POINT point{};
+	if (!GetCursorPos(&point))
+	{
+		return false;
+	}
+
+	WINDOWINFO windowInfo{};
+	windowInfo.cbSize = sizeof(WINDOWINFO);
+	if (!GetWindowInfo(hwnd, &windowInfo))
+	{
+		return false;
+	}
+
+	outMouse.pos.x = static_cast<float>(point.x - windowInfo.rcClient.left);
+	outMouse.pos.y = static_cast<float>(point.y - windowInfo.rcClient.top);
+	outMouse.wheel = wheel;
+	return true;
+}
+
+bool Eugene::WindowsSystem::SetMouse(Mouse& inMouse) const
+{
+	WINDOWINFO windowInfo{};
+	windowInfo.cbSize = sizeof(WINDOWINFO);
+	if (!GetWindowInfo(hwnd, &windowInfo))
+	{
+		// 取得失敗したのでfalseを返す
+		return false;
+	}
+
+	if (!SetCursorPos(static_cast<int>(inMouse.pos.x) + windowInfo.rcClient.left, static_cast<int>(inMouse.pos.y) + windowInfo.rcClient.top))
+	{
+		// 失敗時falseを返す
+		return false;
+	}
+
+	ShowCursor(inMouse.CheckFlags(Mouse::Flags::ShowCursor));
+	return true;
 }
 
 bool Eugene::WindowsSystem::IsHitKey(KeyID keyID) const

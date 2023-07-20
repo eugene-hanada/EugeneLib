@@ -227,7 +227,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	speaker->Play(0);
 
 	// マウスの情報を受け取る構造体
-	Eugene::System::Mouse mouse;
+	Eugene::Mouse mouse;
 
 	// フレーム数
 	std::uint32_t frameCnt = 0;
@@ -247,8 +247,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// マウスの情報を取得
 		system->GetMouse(mouse);
 
+		DebugLog("ホイール={0:f}", mouse.wheel);
+
 		// 再生チェック
-		if (mouse.left)
+		if (mouse.CheckFlags(Eugene::Mouse::Flags::LeftButton))
 		{
 			if (!flag)
 			{
@@ -260,6 +262,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			flag = false;
 		}
+
+		if (system->IsHitKey(Eugene::KeyID::SPACE))
+		{
+			mouse.flags.set(static_cast<size_t>(Eugene::Mouse::Flags::ShowCursor), !mouse.CheckFlags(Eugene::Mouse::Flags::ShowCursor));
+			system->SetMouse(mouse);
+		}
+
 
 		if (frameCnt % 3 == 0)
 		{

@@ -236,6 +236,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
+	std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
+	stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
+	//stream->Play();
+	//stream->SetVolume(0.7f);
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
 	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);

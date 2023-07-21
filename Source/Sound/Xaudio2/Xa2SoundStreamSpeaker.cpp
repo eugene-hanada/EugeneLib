@@ -12,7 +12,6 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	outChannel_ = outChannel;
 	isPlay_.store(false);
 	isRun_.store(true);
-
 	collback_ = std::make_unique<CollBack>(*this);
 	file_.open(path, std::ios::binary);
 	Wave::RIFF riff;
@@ -75,8 +74,6 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	bufferData_.resize(bytesPerSec);
 	streamData_.resize(bytesPerSec);
 	
-	SetUp();
-
 	streamThread_ = std::thread{ &Xa2SoundStreamSpeaker::Worker,this };
 }
 
@@ -93,6 +90,7 @@ void Eugene::Xa2SoundStreamSpeaker::Play(int loopCount)
 {
 	maxLoop_ = loopCount;
 	nowLoop_ = 0u;
+	SetUp();
 	source_->Start();
 	isPlay_.store(true);
 }
@@ -186,29 +184,54 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
 			if (nextSize <= 0u)
 			{
-				// 再生すべきサイズが0の時ループを抜ける
-				break;
+				nowLoop_++;
+				// 再生すべきサイズが0の時
+				if (nowLoop_ > maxLoop_ && maxLoop_ != -1)
+				{
+					return;
+				}
+				// 最大再生数以下もしくは無限ループ指定時再度先頭から再生する
+				std::fill(bufferData_.begin(), bufferData_.end(), 0);
+				std::fill(streamData_.begin(), streamData_.end(),0);
+				SetUp();
+				source_->Start();
+				if (file_.eof())
+				{
+					DebugLog("ファイル終了");
+					return;
+				}
 			}
+			else
+			{
+				if (file_.eof())
+				{
+					DebugLog("ファイル終了");
+					return;
+				}
+				// あらかじめ読み込んだデータと入れ替える
+				bufferData_.swap(streamData_);
 
-			// あらかじめ読み込んだデータと入れ替える
-			bufferData_.swap(streamData_);
+				// バッファーをセット
+				buffer_->AudioBytes = streamSize_;
+				buffer_->pAudioData = bufferData_.data();
+				buffer_->LoopCount = 0;
+				buffer_->Flags = XAUDIO2_END_OF_STREAM;
 
-			// バッファーをセット
-			buffer_->AudioBytes = streamSize_;
-			buffer_->pAudioData = bufferData_.data();
-			buffer_->LoopCount = 0;
-			buffer_->Flags = XAUDIO2_END_OF_STREAM;
+				// 再生
+				source_->SubmitSourceBuffer(buffer_.get());
+				source_->Start();
 
-			// 再生
-			source_->SubmitSourceBuffer(buffer_.get());
-			source_->Start();
-			//DebugLog("再生");
-			// 読み込む
-			file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
-			streamSize_ = nextSize;
-			nowSize_ += streamSize_;
+				// 読み込む
+				file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
+				streamSize_ = nextSize;
+				nowSize_ += streamSize_;
+			}
 		}
 	}
+}
+
+void Eugene::Xa2SoundStreamSpeaker::Play(void)
+{
 }
 
 Eugene::Xa2SoundStreamSpeaker::CollBack::CollBack(Xa2SoundStreamSpeaker& speaker) :

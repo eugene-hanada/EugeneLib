@@ -55,6 +55,8 @@ namespace Eugene
 		/// <param name=""></param>
 		void Worker(void);
 
+		void Play(void);
+
 		/// <summary>
 		/// ソースボイス
 		/// </summary>

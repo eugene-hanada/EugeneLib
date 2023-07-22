@@ -137,6 +137,8 @@ namespace Eugene
 		/// </summary>
 		std::int32_t maxLoop_;
 
+		std::uint32_t dataPos_;
+
 		friend class CollBack;
 	};
 }

@@ -13,15 +13,17 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	isPlay_.store(false);
 	isRun_.store(true);
 	collback_ = std::make_unique<CollBack>(*this);
-	file_.open(path, std::ios::binary);
+	file_ = std::ifstream{ path, std::ios::binary };
 	Wave::RIFF riff;
 	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
+	dataPos_ = static_cast<std::uint32_t>(sizeof(riff));
 	int id = 0;
 
 	// fmtチャンクを見つける
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
+		dataPos_ += 4u;
 		if (Wave::fmt == id)
 		{
 			break;
@@ -31,25 +33,33 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 
 	WAVEFORMATEXTENSIBLE format;
 	file_.ignore(4);
+	dataPos_ += 4u;
 	file_.read(reinterpret_cast<char*>(&format.Format), sizeof(format.Format));
+	dataPos_ += static_cast<std::uint32_t>(sizeof(format.Format));
+
 	inChannel_ = format.Format.nChannels;
 	if (format.Format.wFormatTag != 1)
 	{
 		file_.read(reinterpret_cast<char*>(&format.Samples), sizeof(format.Samples));
+		dataPos_ += static_cast<std::uint32_t>(sizeof(format.Samples));
 		file_.read(reinterpret_cast<char*>(&format.dwChannelMask), sizeof(format.dwChannelMask));
+		dataPos_ += static_cast<std::uint32_t>(sizeof(format.dwChannelMask));
 		file_.read(reinterpret_cast<char*>(&format.SubFormat), sizeof(format.SubFormat));
+		dataPos_ += static_cast<std::uint32_t>(sizeof(format.SubFormat));
 	}
 	else
 	{
 		auto now = file_.tellg();
 		now -= 2ull;
 		file_.seekg(now);
+		dataPos_ -= 2u;
 	}
 	
 	// データチャンクを見つける
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
+		dataPos_ += 4u;
 		if (Wave::data == id)
 		{
 			break;
@@ -59,6 +69,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 
 	// データのサイズを読み取る
 	file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
+	dataPos_ += static_cast<std::uint32_t>(sizeof(dataSize_));
 	
 	// データの先頭の位置を保持
 	starPos_ = file_.tellg();
@@ -138,7 +149,7 @@ void Eugene::Xa2SoundStreamSpeaker::SetPan(std::span<float> volumes)
 
 void Eugene::Xa2SoundStreamSpeaker::SetUp(void)
 {
-	file_.seekg(starPos_);
+	//file_.seekg(starPos_);
 
 	// 読み込むデータのサイズ
 	auto size = std::min(bytesPerSec, dataSize_);
@@ -182,32 +193,8 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 		if (isPlay_.load())
 		{
 			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
-			if (nextSize <= 0u)
+			if (nextSize > 0)
 			{
-				nowLoop_++;
-				// 再生すべきサイズが0の時
-				if (nowLoop_ > maxLoop_ && maxLoop_ != -1)
-				{
-					return;
-				}
-				// 最大再生数以下もしくは無限ループ指定時再度先頭から再生する
-				std::fill(bufferData_.begin(), bufferData_.end(), 0);
-				std::fill(streamData_.begin(), streamData_.end(),0);
-				SetUp();
-				source_->Start();
-				if (file_.eof())
-				{
-					DebugLog("ファイル終了");
-					return;
-				}
-			}
-			else
-			{
-				if (file_.eof())
-				{
-					DebugLog("ファイル終了");
-					return;
-				}
 				// あらかじめ読み込んだデータと入れ替える
 				bufferData_.swap(streamData_);
 
@@ -221,10 +208,24 @@ void Eugene::Xa2SoundStreamSpeaker::Worker(void)
 				source_->SubmitSourceBuffer(buffer_.get());
 				source_->Start();
 
-				// 読み込む
 				file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
 				streamSize_ = nextSize;
 				nowSize_ += streamSize_;
+
+				if (nowSize_ >= dataSize_ || file_.eof())
+				{
+					if (++nowLoop_ > maxLoop_ && maxLoop_ >= 0)
+					{
+						// 最大ループ回数に達したもしくは無限ループではないとき終了する
+						return;
+					}
+					// データもしくはファイル末端まで読み込んだ時
+					file_.clear();
+					file_.seekg(starPos_);
+					nowSize_ = 0;
+					DebugLog("Seek");
+				}
+
 			}
 		}
 	}

@@ -14,25 +14,20 @@
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	auto randomPtr = Eugene::MakeRefPtr<Eugene::RandomXorShift64>();
-	Eugene::RandomXoshiro128pp xshiroRandom;
-	for (int i = 0; i < 10; i++)
-	{
-		auto r = xshiroRandom(100, 0.1);
-		//assert(r > 0.0 && 1.0f >= r);
-		DebugLog("Result={}", r);
-	}
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF);
+	
+
 	// システム(osとかの)処理をするクラス
 	std::unique_ptr<Eugene::System> system;
 	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
 
 	// グラフィックの処理をするクラス
-	Eugene::RefPtr<Eugene::Graphics> graphics;
-	Eugene::RefPtr<Eugene::GpuEngine> gpuEngine;
+	std::unique_ptr<Eugene::Graphics> graphics;
+	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
 	{
 		auto [graphicsPtr, gpuPtr] = system->CreateGraphics();
-		graphics = (graphicsPtr);
-		gpuEngine = (gpuPtr);
+		graphics .reset(graphicsPtr);
+		gpuEngine.reset(gpuPtr);
 	}
 
 	// コマンドリスト生成
@@ -139,11 +134,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	efkWarrper->SetCameraPos({ 0.0f,0.0f,-20.0f }, {0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	
 
-	auto effect = Effekseer::Effect::Create(efkWarrper->GetManager(), u"./test.efk");
-	auto e2 = effect;
-	auto handle = efkWarrper->GetManager()->Play(effect, { 0.0f, 0.0f, 0.0f });
-	efkWarrper->GetManager()->SetRotation(handle, Effekseer::Vector3D{ 0.0f,0.0f, 1.0f }, Eugene::Deg2Rad(90.0f));
-
 	// テクスチャ用リソース
 	std::unique_ptr<Eugene::ImageResource> textureResource;
 	{
@@ -236,6 +226,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
+	std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
+	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
+	//stream->SetOutput(*ctrl);
+	//stream->Play(1);
+	//stream->SetVolume(0.7f);
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
 	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
@@ -247,15 +242,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// マウスの情報を取得
 		system->GetMouse(mouse);
 
-		DebugLog("ホイール={0:f}", mouse.wheel);
-
 		// 再生チェック
 		if (mouse.CheckFlags(Eugene::Mouse::Flags::LeftButton))
 		{
 			if (!flag)
 			{
+				//stream->Play(0);
 				flag = true;
-				speaker->Play();
 			}
 		}
 		else
@@ -286,23 +279,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::Vector3{pos.x, 0.0f, pos.y}, Eugene::zeroVector3<float>
 			);
 			
-		}
-
-		if (system->IsHitKey(Eugene::KeyID::W))
-		{
-			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.0f,0.0f, 0.1f });
-		}
-		if (system->IsHitKey(Eugene::KeyID::A))
-		{
-			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ -0.1f,0.0f, 0.0f });
-		}
-		if (system->IsHitKey(Eugene::KeyID::S))
-		{
-			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.1f,0.0f, -0.1f });
-		}
-		if (system->IsHitKey(Eugene::KeyID::D))
-		{
-			efkWarrper->GetManager()->AddLocation(handle, Effekseer::Vector3D{ 0.1f,0.0f, 0.0f });
 		}
 
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});

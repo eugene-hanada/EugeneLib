@@ -4,6 +4,7 @@
 #include <thread>
 #include <atomic>
 #include <semaphore>
+#include <mutex>
 #include <memory>
 #include <xaudio2.h>
 #include <vector>
@@ -43,6 +44,16 @@ namespace Eugene
 		void SetVolume(float volume) final;
 		void SetPan(std::span<float> volumes) final;
 
+		/// <summary>
+		/// 再生ようにデータをセットアップする
+		/// </summary>
+		/// <param name=""></param>
+		void SetUp(void);
+
+		/// <summary>
+		/// ストリーミング再生の作業を行う関数(別スレッドで動かす)
+		/// </summary>
+		/// <param name=""></param>
 		void Worker(void);
 
 		/// <summary>
@@ -76,7 +87,7 @@ namespace Eugene
 		std::binary_semaphore semaphore_{0};
 
 		/// <summary>
-		/// 
+		/// ファイルの音声データ部分の開始位置
 		/// </summary>
 		std::streampos starPos_;
 
@@ -114,6 +125,21 @@ namespace Eugene
 		/// 1秒当たりのバイト数
 		/// </summary>
 		std::uint32_t bytesPerSec;
+
+		/// <summary>
+		/// 現在のループ数
+		/// </summary>
+		std::int32_t nowLoop_;
+
+		/// <summary>
+		/// ループの最大数
+		/// </summary>
+		std::int32_t maxLoop_;
+
+		/// <summary>
+		/// ミューテックス
+		/// </summary>
+		std::mutex mutex_;
 
 		friend class CollBack;
 	};

@@ -4,6 +4,7 @@
 #include <thread>
 #include <atomic>
 #include <semaphore>
+#include <mutex>
 #include <memory>
 #include <xaudio2.h>
 #include <vector>
@@ -55,8 +56,6 @@ namespace Eugene
 		/// <param name=""></param>
 		void Worker(void);
 
-		void Play(void);
-
 		/// <summary>
 		/// ソースボイス
 		/// </summary>
@@ -88,7 +87,7 @@ namespace Eugene
 		std::binary_semaphore semaphore_{0};
 
 		/// <summary>
-		/// 
+		/// ファイルの音声データ部分の開始位置
 		/// </summary>
 		std::streampos starPos_;
 
@@ -137,7 +136,10 @@ namespace Eugene
 		/// </summary>
 		std::int32_t maxLoop_;
 
-		std::uint32_t dataPos_;
+		/// <summary>
+		/// ミューテックス
+		/// </summary>
+		std::mutex mutex_;
 
 		friend class CollBack;
 	};

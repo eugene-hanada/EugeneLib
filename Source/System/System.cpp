@@ -1,8 +1,8 @@
 ﻿#include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
 #include "../../Include/Common/EugeneLibException.h"
-#include "../../../Include/Graphics/GpuEngine.h"
-#include "../../../Include/Graphics/Graphics.h"
+#include "../../Include/Graphics/GpuEngine.h"
+#include "../../Include/Graphics/Graphics.h"
 
 #ifdef USE_IMGUI
 #include "../../Include/ThirdParty/imgui/imgui.h"

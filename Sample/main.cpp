@@ -14,21 +14,26 @@
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF);
-	
-
 	// システム(osとかの)処理をするクラス
-	std::unique_ptr<Eugene::System> system;
-	system.reset(Eugene::CreateSystem({ 1280.0f,720.0f }, u8"Sample"));
+	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 
 	// グラフィックの処理をするクラス
-	std::unique_ptr<Eugene::Graphics> graphics;
-	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
+
+	std::list<std::unique_ptr<Eugene::ShaderResourceViews>> viewsList;
+	std::list<std::unique_ptr<Eugene::SamplerViews>> smpViewsList;
+	std::list<std::unique_ptr<Eugene::DepthStencilViews>> rtViewsList;
+	Eugene::SamplerLayout smpLayout;
+	for (int i = 0; i < 4080; i++)
 	{
-		auto [graphicsPtr, gpuPtr] = system->CreateGraphics();
-		graphics .reset(graphicsPtr);
-		gpuEngine.reset(gpuPtr);
+		viewsList.emplace_back(std::unique_ptr<Eugene::ShaderResourceViews>{graphics->CreateShaderResourceViews(1)});
+		//smpViewsList.emplace_back(std::unique_ptr<Eugene::SamplerViews>{graphics->CreateSamplerViews(1)});
+		//rtViewsList.emplace_back(std::unique_ptr<Eugene::DepthStencilViews>{graphics->CreateDepthStencilViews(1)});
 	}
+
+	
+
+	
 
 	// コマンドリスト生成
 	std::unique_ptr<Eugene::CommandList> cmdList;
@@ -237,6 +242,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto img = graphics->GetImguiImageID(1);*/
 	//graphics->SetFullScreenFlag(true);
 	bool flag = false;
+
+
+
+
 	while (system->Update())
 	{
 		// マウスの情報を取得

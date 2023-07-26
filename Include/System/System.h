@@ -51,7 +51,6 @@ namespace Eugene
 	class System
 	{
 	public:
-
 		/// <summary>
 		/// キーボードの情報()
 		/// </summary>
@@ -82,14 +81,6 @@ namespace Eugene
 		const Vector2& GetWindowSize(void) const&;
 
 		/// <summary>
-		/// Graphicsをを生成する
-		/// </summary>
-		/// <param name="gpuEngine"> GpuEngineのポインタの参照 </param>
-		/// <returns> Graphicsのポインタ </returns>
-		[[nodiscard]]
-		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum = 2) const& = 0;
-
-		/// <summary>
 		/// Graphicsを生成する
 		/// </summary>
 		/// <param name="bufferNum"> バックバッファの数 </param>
@@ -97,6 +88,9 @@ namespace Eugene
 		/// <returns></returns>
 		[[nodiscard]]
 		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
+
+		[[nodiscard]]
+		virtual std::pair<std::unique_ptr<Graphics>, std::unique_ptr<GpuEngine>> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		/// <summary>
 		/// マウスの情報を取得する
@@ -186,8 +180,6 @@ namespace Eugene
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
-
-
 	};
 
 	/// <summary>
@@ -198,4 +190,10 @@ namespace Eugene
 	/// <returns></returns>
 	[[nodiscard]]
 	System* CreateSystem(const Vector2& size, const std::u8string& title);
+
+	using UniqueSystem = std::unique_ptr<System>;
+
+	UniqueSystem CreateSystemUnique(const Vector2& size, const std::u8string& title);
+
+	
 }

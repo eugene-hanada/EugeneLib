@@ -1,11 +1,17 @@
 ﻿#include "../../Include/System/System.h"
 #include "../../Source/System/Windows/WindowsSystem.h"
+#include "../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Graphics/GpuEngine.h"
+#include "../../../Include/Graphics/Graphics.h"
 
 #ifdef USE_IMGUI
 #include "../../Include/ThirdParty/imgui/imgui.h"
 #endif
 
-Eugene::System* sys = nullptr;
+namespace
+{
+	bool isCreate = false;
+}
 
 Eugene::Mouse::Mouse()
 {
@@ -56,7 +62,7 @@ Eugene::System::System(const Eugene::Vector2& size, const std::u8string& title) 
 
 Eugene::System::~System()
 {
-	sys = nullptr;
+	isCreate = false;
 }
 
 const Eugene::Vector2& Eugene::System::GetWindowSize(void) const&
@@ -67,13 +73,23 @@ const Eugene::Vector2& Eugene::System::GetWindowSize(void) const&
 
 Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& title)
 {
-	if (sys != nullptr)
+	if (isCreate)
 	{
-		return sys;
+		throw CreateErrorException{"すでに生成しています"};
 	}
-	return (sys = new WindowsSystem{size,title});
+	return new WindowsSystem{size,title};
 }
 
+Eugene::UniqueSystem Eugene::CreateSystemUnique(const Vector2& size, const std::u8string& title)
+{
+	return UniqueSystem{CreateSystem(size, title)};
+}
+
+std::pair<std::unique_ptr<Eugene::Graphics>, std::unique_ptr<Eugene::GpuEngine>> Eugene::System::CreateGraphicsUnique(std::uint32_t bufferNum, std::uint64_t maxSize) const
+{
+	auto [graphics, gpuEngine] = CreateGraphics(bufferNum, maxSize);
+	return std::pair<std::unique_ptr<Graphics>, std::unique_ptr<GpuEngine>>{graphics,gpuEngine};
+}
 
 #ifdef USE_IMGUI
 ImGuiContext* Eugene::System::GetContextFromCreatedLib(void) const

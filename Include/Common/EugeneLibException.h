@@ -5,7 +5,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// extension
+	/// 子のライブラリのエクセプション
 	/// </summary>
 	class EugeneLibException :
 		public std::exception
@@ -20,5 +20,16 @@ namespace Eugene
 		/// メッセージ
 		/// </summary>
 		std::string mess_;
+	};
+
+	/// <summary>
+	/// 生成時のエラーを表すエクセプション
+	/// </summary>
+	class CreateErrorException :
+		public EugeneLibException
+	{
+	public:
+		CreateErrorException(const std::string& mess);
+		~CreateErrorException();
 	};
 };

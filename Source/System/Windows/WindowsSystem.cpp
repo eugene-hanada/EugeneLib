@@ -15,78 +15,76 @@
 #ifdef USE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
 #include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib, "Xinput.lib")
 
+namespace {
 
-/// <summary>
-/// メッセージ
-/// </summary>
-MSG msg;
+	/// <summary>
+	/// メッセージ
+	/// </summary>
+	MSG msg;
 
-/// <summary>
-/// ウィンドウクラス
-/// </summary>
-WNDCLASSEX windowClass;
+	/// <summary>
+	/// ウィンドウクラス
+	/// </summary>
+	WNDCLASSEX windowClass;
 
-/// <summary>
-/// ウィンドウハンドル
-/// </summary>
-HWND hwnd;
+	/// <summary>
+	/// ウィンドウハンドル
+	/// </summary>
+	HWND hwnd;
 
 
-Eugene::Graphics* graphics = nullptr;
-Eugene::GpuEngine* gpuEngine = nullptr;
-float wheel = 0.0f;
+	Eugene::Graphics* graphics = nullptr;
+	Eugene::GpuEngine* gpuEngine = nullptr;
+	float wheel = 0.0f;
 
-std::function<void(const Eugene::Vector2&)> resizeCall;
+	std::function<void(const Eugene::Vector2&)> resizeCall;
 
+	bool isEnd = false;
+
+
+
+	/// <summary>
+	/// ウィンドウプロシージャ
+	/// </summary>
+	/// <param name="hwnd"></param>
+	/// <param name="msg"></param>
+	/// <param name="wparam"></param>
+	/// <param name="lparam"></param>
+	/// <returns></returns>
+	LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+	{
 #ifdef USE_IMGUI
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+		{
+			return true;
+		}
 #endif
 
-bool isEnd = false;
-
-
-
-/// <summary>
-/// ウィンドウプロシージャ
-/// </summary>
-/// <param name="hwnd"></param>
-/// <param name="msg"></param>
-/// <param name="wparam"></param>
-/// <param name="lparam"></param>
-/// <returns></returns>
-LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
-{
-#ifdef USE_IMGUI
-	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
-	{
-		return true;
+		switch (msg)
+		{
+		case WM_DESTROY:
+			isEnd = true;
+			PostQuitMessage(0);
+			return 0;
+		case WM_MOUSEWHEEL:
+			wheel += static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
+			return 0;
+		case WM_SIZE:
+			resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
+			return 0;
+		default:
+			return DefWindowProc(hwnd, msg, wparam, lparam);
+		}
 	}
-#endif
 
-	switch (msg)
-	{
-	case WM_DESTROY:
-		isEnd = true;
-		PostQuitMessage(0);
-		return 0;
-	case WM_MOUSEWHEEL:
-		wheel += static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
-		return 0;
-	case WM_SIZE:
-		resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
-		return 0;
-	default:
-		return DefWindowProc(hwnd, msg, wparam, lparam);
-	}
 }
-
-
 
 Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
     System{size,title}
@@ -102,7 +100,7 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
-		throw EugeneLibException("Comの初期化に失敗");
+		throw CreateErrorException("Comの初期化に失敗");
 	}
 
 	std::filesystem::path tmpTitle{ title };
@@ -112,14 +110,14 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	windowClass.hInstance = GetModuleHandle(nullptr);
 	if (!RegisterClassEx(&windowClass))
 	{
-		throw EugeneLibException("ウィンドウクラスの登録に失敗");
+		throw CreateErrorException("ウィンドウクラスの登録に失敗");
 	}
 
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
 	{
-		throw EugeneLibException("ウィンドウサイズ調整に失敗");
+		throw CreateErrorException("ウィンドウサイズ調整に失敗");
 	}
 
 	// ウィンドウの生成
@@ -182,21 +180,14 @@ Eugene::WindowsSystem::~WindowsSystem()
 }
 
 
-Eugene::Graphics* Eugene::WindowsSystem::CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum) const&
-{
-	if (graphics != nullptr)
-	{
-		return graphics;
-	}
-#ifdef USE_VULKAN
-	return (graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum, 100ull });
-#else
-	return (graphics = new Dx12Graphics{hwnd,GetWindowSize(),gpuEngine, bufferNum, 100ull});
-#endif
-}
 
 std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
+	if (graphics)
+	{
+		throw CreateErrorException{"すでに生成されています"};
+	}
+
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
@@ -210,8 +201,6 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 
 bool Eugene::WindowsSystem::Update(void)
 {
-	
-
 	while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
@@ -221,7 +210,6 @@ bool Eugene::WindowsSystem::Update(void)
 			isEnd = true;
 		}
 	}
-	
 	return !isEnd;
 }
 
@@ -339,7 +327,7 @@ void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
 	{
-		throw EugeneLibException("ウィンドウサイズ調整に失敗");
+		throw CreateErrorException("ウィンドウサイズ調整に失敗");
 	}
 
 	MONITORINFO monitorInfo;

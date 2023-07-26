@@ -260,6 +260,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		{
 			// 見つかったら抜ける
 			tmpAdapter = adpt;
+			
 			break;
 		}
 	}
@@ -272,7 +273,6 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		D3D_FEATURE_LEVEL_11_0
 	};
 	D3D_FEATURE_LEVEL fLavel;
-
 
 
 	for (auto& level : levels)

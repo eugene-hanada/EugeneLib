@@ -11,7 +11,7 @@ Eugene::Wave::Wave(const std::filesystem::path& path) :
 	file_ = std::ifstream{ path , std::ios::binary };
 	if (!file_)
 	{
-		throw EugeneLibException("ファイルが開けませんでした");
+		throw CreateErrorException("ファイルが開けませんでした");
 	}
 
 	isFormatLoaded_ = false;

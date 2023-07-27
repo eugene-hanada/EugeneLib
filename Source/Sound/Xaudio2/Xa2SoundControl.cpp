@@ -7,7 +7,7 @@ Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample
 
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw EugeneLibException("サブミックスボイスの作成に失敗");
+		throw CreateErrorException("サブミックスボイスの作成に失敗");
 	}
 
 	inChannel_ = inputChannel;

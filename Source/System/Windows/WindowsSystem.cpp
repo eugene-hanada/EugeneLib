@@ -39,16 +39,32 @@ namespace {
 	/// </summary>
 	HWND hwnd;
 
-
+	/// <summary>
+	/// リサイズように使用
+	/// </summary>
 	Eugene::Graphics* graphics = nullptr;
+
+	/// <summary>
+	/// 
+	/// </summary>
 	Eugene::GpuEngine* gpuEngine = nullptr;
+	
+	/// <summary>
+	/// ホイール
+	/// </summary>
 	float wheel = 0.0f;
 
+	/// <summary>
+	/// リサイズ時に処理を行う関数オブジェクト
+	/// </summary>
 	std::function<void(const Eugene::Vector2&)> resizeCall;
 
+	/// <summary>
+	/// 終了フラグ
+	/// </summary>
 	bool isEnd = false;
 
-
+	
 
 	/// <summary>
 	/// ウィンドウプロシージャ

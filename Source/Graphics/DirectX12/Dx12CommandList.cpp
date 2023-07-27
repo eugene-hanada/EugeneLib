@@ -28,14 +28,14 @@ Eugene::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 	if (FAILED(device->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("コマンド作成できませんでした");
+		throw CreateErrorException("コマンド(ID3D12CommandAllocator)作成できませんでした");
 	}
 
 	if (FAILED(device->CreateCommandList(
 		0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator_.Get(), nullptr, IID_PPV_ARGS(cmdList_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("コマンド作成できませんでした");
+		throw CreateErrorException("コマンド(ID3D12CommandList)作成できませんでした");
 	}
 
 	End();

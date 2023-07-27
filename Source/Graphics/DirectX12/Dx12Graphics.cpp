@@ -233,7 +233,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 
 	if (FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("DXGIファクトリーの生成に失敗");
+		throw CreateErrorException("DXGIファクトリーの生成に失敗");
 	}
 
 	// アダプター列挙用リスト
@@ -289,7 +289,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		}
 	}
 
-	throw EugeneLibException("D3D12デバイスの作成に失敗");
+	throw CreateErrorException("D3D12デバイスの作成に失敗");
 }
 
 void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
@@ -338,11 +338,11 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
-		throw EugeneLibException("スワップチェイン生成失敗");
+		throw CreateErrorException("スワップチェイン生成失敗");
 	}
 	if (FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("スワップチェイン生成失敗");
+		throw CreateErrorException("スワップチェイン生成失敗");
 	}
 
 	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);

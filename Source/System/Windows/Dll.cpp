@@ -12,7 +12,7 @@ Eugene::Dll::Dll(const std::filesystem::path& path)
 
 	if (handle_ == nullptr)
 	{
-		throw EugeneLibException{ "Dllロード失敗" + path.string() };
+		throw CreateErrorException{ "Dllロード失敗" + path.string() };
 	}
 
 }

@@ -47,6 +47,11 @@ namespace Eugene
 		}
 	};
 
+	/// <summary>
+	/// 非スレッドセーフな共有参照ようスマートポインタ
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="Deleter"></typeparam>
 	template<class T, class Deleter = DefaultDeleter<T>>
 	class RefPtr
 	{

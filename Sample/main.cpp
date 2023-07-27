@@ -16,6 +16,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
+	
+	Eugene::WeakPtr<Eugene::RandomXorShift64> weak;
+	if (weak)
+	{
+		return -1;
+	}
+
+	{
+		Eugene::RefPtr<Eugene::RandomXorShift64> random;
+		random = Eugene::MakeRefPtr<Eugene::RandomXorShift64>();
+		{
+			auto ref = random;
+			weak = random;
+		}
+		if (!weak)
+		{
+			return -1;
+		}
+		
+		//DebugLog("RefRandom={:d}", ref.Ref()(0,10));
+
+		constexpr auto a = sizeof(std::shared_ptr<Eugene::RandomXorShift64>);
+		random.Ref()(0.1);
+	}
+
+	if (weak)
+	{
+		return -1;
+	}
+
+	DebugLog("RefRandom={:d}", weak.Ref()(0, 10));
 
 	// グラフィックの処理をするクラス
 	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
@@ -198,13 +229,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
 
 	// サウンド
-	std::unique_ptr<Eugene::Sound> sound;
+	auto sound = Eugene::CreateSoundUnique();
 	std::unique_ptr<Eugene::SoundControl> ctrl2;
 	std::unique_ptr<Eugene::Sound3DControl> ctrl;
 	
 	std::unique_ptr<Eugene::SoundControl> ctrl3;
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
-	sound.reset(Eugene::CreateSound());
 	ctrl.reset(sound->CreateSound3DControl(0));
 	ctrl2.reset(sound->CreateSoundControl(1));
 	ctrl3.reset(sound->CreateSoundControl(1));

@@ -13,7 +13,7 @@ Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::u
 	outChannel_ = outChannel;
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw EugeneLibException("3D用サブミックスボイスの作成");
+		throw CreateErrorException("3D用サブミックスボイスの作成");
 	}
 
 

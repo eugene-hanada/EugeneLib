@@ -1,7 +1,10 @@
 ﻿#include "../../Include/Sound/Sound.h"
 #include "Xaudio2/Xa2Sound.h"
+#include "../../Include/Common/EugeneLibException.h"
 
-Eugene::Sound* sound = nullptr;
+namespace {
+	bool isCreate = false;
+}
 
 Eugene::Sound::~Sound()
 {
@@ -14,9 +17,15 @@ Eugene::Sound::Sound() :
 
 Eugene::Sound* Eugene::CreateSound(void)
 {
-	if (sound != nullptr)
+	if (isCreate)
 	{
-		return sound;
+		throw CreateErrorException{"すでにSoundは生成されています"};
 	}
-	return (sound = new Xa2Sound{});
+	isCreate = false;
+	return new Xa2Sound{};
+}
+
+Eugene::SoundUnique Eugene::CreateSoundUnique(void)
+{
+	return SoundUnique{ new Xa2Sound{} };
 }

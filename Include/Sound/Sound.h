@@ -71,5 +71,19 @@ namespace Eugene
 		std::uint32_t sampleRate_;
 	};
 
+	/// <summary>
+	/// サウンド用のクラスを生成する
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
 	Sound* CreateSound(void);
+
+	using SoundUnique = std::unique_ptr<Sound>;
+
+	/// <summary>
+	/// CreateSoundのstd::_unique_ptr版
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
+	SoundUnique CreateSoundUnique(void);
 }

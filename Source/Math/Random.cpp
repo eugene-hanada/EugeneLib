@@ -3,8 +3,9 @@
 Eugene::XorShift64Engine::result_type Eugene::XorShift64Engine::operator()()
 {
 	std::uint64_t x = state_;
-	x ^= x << 7ull;
-	x ^= x >> 9ull;
+	x ^= x << 13;
+	x ^= x >> 7;
+	x ^= x << 17;
 	state_ = x;
 	return x;
 }

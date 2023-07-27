@@ -20,7 +20,7 @@ Eugene::Dx12BufferResource::Dx12BufferResource(ID3D12Device* device, std::uint64
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("デフォルトリソースの作成に失敗");
+		throw CreateErrorException("ID3D12Resourceをデフォルトリソースで生成に失敗");
 	}
 }
 
@@ -70,7 +70,7 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device*
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("アップロードリソースの作成に失敗");
+		throw CreateErrorException("ID3D12Resourceをアップロードリソースで作成に失敗");
 	}
 
 	std::uint8_t* ptr{ nullptr };
@@ -116,7 +116,7 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device*
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("アップロードリソースの作成に失敗");
+		throw CreateErrorException("ID3D12Resourceをアップロードリソースで作成に失敗");
 	}
 }
 

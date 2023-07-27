@@ -77,6 +77,7 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 	{
 		throw CreateErrorException{"すでに生成しています"};
 	}
+	isCreate = true;
 	return new WindowsSystem{size,title};
 }
 

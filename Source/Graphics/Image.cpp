@@ -221,7 +221,7 @@ Eugene::Image::BinaryReader::BinaryReader(const std::filesystem::path& path)
 #endif
 	if (file_ == nullptr)
 	{
-		throw EugeneLibException{ "ファイルオープンに失敗" };
+		throw CreateErrorException{ "ファイルオープンに失敗" };
 	}
 }
 

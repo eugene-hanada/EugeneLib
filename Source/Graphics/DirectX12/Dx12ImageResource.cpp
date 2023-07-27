@@ -24,7 +24,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("テクスチャ用リソース生成失敗");
+		throw CreateErrorException("テクスチャ用リソース生成失敗");
 	}
 }
 
@@ -47,7 +47,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("レンダーターゲット用リソース生成失敗");
+		throw CreateErrorException("レンダーターゲット用リソース生成失敗");
 	}
 }
 
@@ -68,7 +68,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw EugeneLibException("デプス用リソース生成失敗");
+		throw CreateErrorException("デプス用リソース生成失敗");
 	}
 }
 
@@ -78,7 +78,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::ui
 {
 	if (FAILED(swapChain->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("スワップチェイン用リソース生成失敗");
+		throw CreateErrorException("スワップチェイン用リソース生成失敗");
 	}
 }
 

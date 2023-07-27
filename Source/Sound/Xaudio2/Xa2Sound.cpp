@@ -15,7 +15,7 @@ Eugene::Xa2Sound::Xa2Sound()
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
-		throw EugeneLibException("XAudio2生成失敗");
+		throw CreateErrorException("XAudio2生成失敗");
 	}
 #ifdef _DEBUG
 	// デバッグ設定
@@ -26,7 +26,7 @@ Eugene::Xa2Sound::Xa2Sound()
 #endif
 	if (FAILED(xaudio2_->CreateMasteringVoice(&mastering_)))
 	{
-		throw EugeneLibException("マスタリングボイスの作成に失敗");
+		throw CreateErrorException("マスタリングボイスの作成に失敗");
 	}
 	
 	XAUDIO2_VOICE_DETAILS details;
@@ -39,7 +39,7 @@ Eugene::Xa2Sound::Xa2Sound()
 	
 	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
 	{
-		throw EugeneLibException("X3DAudioの初期化に失敗");
+		throw CreateErrorException("X3DAudioの初期化に失敗");
 	}
 }
 

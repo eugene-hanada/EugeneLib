@@ -81,7 +81,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	))
 	{
 		// throwかく
-		throw EugeneLibException("ルードシグネチャ生成失敗");
+		throw CreateErrorException("ルードシグネチャ生成失敗");
 	}
 
 	if (FAILED(device->CreateRootSignature(
@@ -91,7 +91,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 		IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
-		throw EugeneLibException("ルードシグネチャ生成失敗");
+		throw CreateErrorException("ルードシグネチャ生成失敗");
 	}
 
 
@@ -205,7 +205,7 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 
 	if (FAILED(device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException{"グラフィックスパイプラインステート生成失敗"};
+		throw CreateErrorException{"グラフィックスパイプラインステート生成失敗"};
 	}
 }
 

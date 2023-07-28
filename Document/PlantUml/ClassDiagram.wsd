@@ -12,7 +12,62 @@ namespace EugeneLib {
             # std::u8string title_
         }
 
+        class WindowsSystem
+        {
+            - KeyCodeTable codeTable_
+        }
+
         System <|-- WindowsSystem
+
+        enum PadID
+        {
+            UP
+            DOWN
+            LEFT
+            RIGHT
+            START
+            BACK
+            LEFT_THUMB
+            RIGHT_THUMB
+            LEFT_TRIGGER
+            RIGHT_TRIGGER
+            RESERVE_1
+            RESERVE_2
+            A
+            B
+            X
+            Y
+        }
+
+        class Mouse
+        {
+            + std::bitset flags_
+            + bool CheckFlag(Flags)
+            + Vector2 pos
+            + float wheel
+        }
+
+        class GamePad
+        {
+            + bool IsHit(PadID)
+            + float rightTrigger_
+            + float leftTrigger_
+            + Vector2 leftThumb_
+            + Vector2 rightThumb_
+            + bitset<16> buttons_            
+        }
+
+        abstract class DynamicLibrary
+        {
+            + func* GetFunction(const string& functionName)
+            # void* FindFunction(const string& functionName) const
+        }
+
+        class Dll
+        {
+            - HWND handle_
+        }
+        Dll --|> DynamicLibrary
     }
 
     namespace Graphics {
@@ -114,37 +169,56 @@ namespace EugeneLib {
         namespace Sound {
         abstract class Sound
         {
-
+            +SoundSpeaker* CreateSoundSpeaker(const SoundFile&, const float) const
+            +SoundStreamSpeaker* CreateSoundStreamSpeaker(const filesystem&, const float) const 
+            +SoundControl* CreateSoundControl(std::uint32_t,std::uint32_t, std::uint16_t, std::uint16_t) const
+            +Sound3DControl* CreateSound3DControl(std::uint32_t, std::uint32_t, std::uint16_t, std::uint16_t) const
+            #std::uint32_t channelMask_;
+		    #std::uint32_t sampleRate_;
         }
+        
 
 
         abstract class SoundBase
         {
-
+            +void SetVolume(float)
+            +void SetPan(std::span<float> )
+            +float GetVolume(void) const
+            +std::uint16_t GetOutChannel(void) const
+            +std::uint16_t GetInChannel(void) const
+            +void SetOutput(SoundControl&) 
+            # float volume_
+            # std::uint16_t outChannel_
+            # std::uint16_t inChannel_;
         }
 
         abstract class SoundSpeaker
         {
-
+            +  void Play(int)
+            + void Stop(void)
+            +  bool IsEnd(void) const
+            + void SetPitchRate(float)
+            + void SetData(const std::uint8_t*, const std::uint64_t)  
+            # const float maxPitchRate_
         }
 
         SoundBase <|-- SoundSpeaker
 
         abstract class SoundStreamSpeaker
         {
-
+            #  std::ifstream file_
         }
 
         SoundBase <|-- SoundStreamSpeaker
 
         abstract class Sound3DController
         {
-
+            + void Set3DSound(const Vector3& , const Vector3& , const Vector3& , const Vector3& ,const Vector3& , const Vector3& , const Vector3& , const Vector3&) 
         }
 
         abstract class SoundController
         {
-
+            #  void* Get(void) 
         }
 
         SoundBase <|-- SoundController

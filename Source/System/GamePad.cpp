@@ -2,12 +2,12 @@
 
 Eugene::GamePad::GamePad()
 {
-	buttons.fill(false);
+	buttons.reset();
 	leftTrigger_ = 0.0f;
 	rightTrigger_ = 0.0f;
 }
 
 bool Eugene::GamePad::IsHit(PadID id) const
 {
-	return buttons[std::underlying_type<PadID>::type(id)];
+	return buttons.test(std::underlying_type<PadID>::type(id));
 }

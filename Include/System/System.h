@@ -28,19 +28,60 @@ namespace Eugene
 		/// </summary>
 		enum class Flags
 		{
+			/// <summary>
+			/// 左クリック
+			/// </summary>
 			LeftButton,
+
+			/// <summary>
+			/// 右クリック
+			/// </summary>
 			RightButton,
+
+			/// <summary>
+			/// ホイール
+			/// </summary>
 			CenterButton,
+
+			/// <summary>
+			/// 追加ボタン1
+			/// </summary>
 			Other1Button,
+
+			/// <summary>
+			/// 追加ボタン2
+			/// </summary>
 			Other2Button,
+
+			/// <summary>
+			/// カーソル表示フラグ
+			/// </summary>
 			ShowCursor,
 			Max
 		};
 
 		Mouse();
+
+		/// <summary>
+		/// 指定のフラグがtrueかチェックする
+		/// </summary>
+		/// <param name="flag"> チェックしたいフラグ </param>
+		/// <returns> 結果 </returns>
 		bool CheckFlags(Flags flag) const;
+
+		/// <summary>
+		/// マウス座標
+		/// </summary>
 		Vector2 pos;
+
+		/// <summary>
+		/// ホイール
+		/// </summary>
 		float wheel = 0.0f;
+
+		/// <summary>
+		/// フラグ
+		/// </summary>
 		std::bitset<static_cast<size_t>(Flags::Max)> flags;
 	private:
 	};
@@ -136,12 +177,16 @@ namespace Eugene
 		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
 		/// <summary>
-		/// 
+		/// 終了するか？
 		/// </summary>
-		/// <param name=""></param>
+		/// <param name=""> trueの時終了する </param>
 		/// <returns></returns>
 		virtual bool IsEnd(void) const = 0;
 
+		/// <summary>
+		/// ウィンドウをリサイズする
+		/// </summary>
+		/// <param name="size"> ウインドウサイズ </param>
 		virtual void ResizeWindow(const Vector2& size) = 0;
 
 		/// <summary>
@@ -152,7 +197,18 @@ namespace Eugene
 		[[nodiscard]]
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
 #ifdef USE_IMGUI
+
+		/// <summary>
+		/// Imguiのフレーム開始処理を行う
+		/// </summary>
+		/// <param name=""></param>
 		virtual void ImguiNewFrame(void) const = 0;
+
+		/// <summary>
+		/// Systemクラスが作成したImguiのコンテキストを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> Imguiのコンテキスト </returns>
 		ImGuiContext* GetContextFromCreatedLib(void) const;
 #endif
 	protected:
@@ -175,6 +231,10 @@ namespace Eugene
 		std::u8string title_;
 
 #ifdef USE_IMGUI
+
+		/// <summary>
+		/// Imgui用コンテキスト
+		/// </summary>
 		ImGuiContext* context_{ nullptr };
 #endif
 	private:
@@ -193,6 +253,12 @@ namespace Eugene
 
 	using UniqueSystem = std::unique_ptr<System>;
 
+	/// <summary>
+	/// CreateSystemのstd::unique_ptrを返す版
+	/// </summary>
+	/// <param name="size"> ウィンドウサイズ </param>
+	/// <param name="title"> タイトル </param>
+	/// <returns> std::unique_ptrを使用したSystem </returns>
 	UniqueSystem CreateSystemUnique(const Vector2& size, const std::u8string& title);
 
 	

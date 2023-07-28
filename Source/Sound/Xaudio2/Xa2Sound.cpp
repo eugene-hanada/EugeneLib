@@ -66,11 +66,6 @@ Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const SoundFile& soun
 	return new Xa2SoundSpeaker{xaudio2_.Get(),soundFile, inChannel_, maxPitchRate};
 }
 
-Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const OggVorbis& ogg, const float maxPitchRate) const
-{
-	return nullptr;
-	//return new Xa2SoundSpeaker{xaudio2_.Get(), ogg, inChannel_, maxPitchRate};
-}
 
 Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {

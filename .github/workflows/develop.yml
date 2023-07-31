@@ -41,7 +41,7 @@ jobs:
         
     - name: Run Tests
       run: | 
-        ${{github.workspace}}/Test/build/Debug/tests --reporter junit --out ./result.xml
+        "${{github.workspace}}/Test/build/Debug/tests" --reporter junit --out ./result.xml
       
     - name: Show test results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2

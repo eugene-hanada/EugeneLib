@@ -8,7 +8,6 @@ option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
-option(BUILD_CATCH2TEST "テストをビルドするか？"　OFF)
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -206,20 +205,3 @@ endif()
   else()
 
  endif()
-
-if (BUILD_CATCH2TEST)
-	Include(FetchContent)
-
-	FetchContent_Declare(
-	  Catch2
-	  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	  GIT_TAG        v3.3.2 # or a later release
-	)
-
-	FetchContent_MakeAvailable(Catch2)
-	
-	add_executable(tests Test/test.cpp)
-	target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-	target_link_libraries(tests PRIVATE EugeneLib)
-	target_include_directories(tests PRIVATE "Include")
-endif()

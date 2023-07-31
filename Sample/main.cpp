@@ -118,10 +118,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::Matrix4x4* rtMatrix = static_cast<Eugene::Matrix4x4*>(rtMatrixBuffer->Map());
 	Eugene::Get2DMatrix(*rtMatrix, { 1280.0f,720.0f });
 	//rtMatrixBuffer->UnMap();
-
-	std::unique_ptr<Eugene::EffekseerWarpper> efkWarrper{ graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 1) };
-	efkWarrper->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
-	efkWarrper->SetCameraPos({ 0.0f,0.0f,-20.0f }, {0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	
 
 	// テクスチャ用リソース
@@ -343,7 +339,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
-		efkWarrper->Draw(*cmdList);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);

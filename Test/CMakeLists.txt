@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.20)
 project(tests)
+Include(FetchContent)
 
 # c++20を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
@@ -9,11 +10,18 @@ if(MSVC)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
-add_subdirectory("./Catch2")
 
-# ソースをbuild
-add_executable(tests "test.cpp")
+
+FetchContent_Declare(
+	Catch2
+	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+	GIT_TAG        v3.3.2 # or a later release
+)
+FetchContent_MakeAvailable(Catch2)
+
+add_executable(tests ./test.cpp)
+target_link_directories(tests PRIVATE "../Debug")
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-target_link_libraries(tests PRIVATE EugeneLib)
 target_include_directories(tests PRIVATE "../Include")
+
 

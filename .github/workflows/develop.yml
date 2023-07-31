@@ -29,19 +29,24 @@ jobs:
       
       # ビルド
     - name: Build
-      # Build your program with the given configuration
       run: |
         cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
         cmake --build ${{github.workspace}}/build
+    
+    # テストをビルド
+    - name: BuildTest
+      run: |
+        cmake -S ${{github.workspace}}/Test -B ${{github.workspace}}/Test/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
+        cmake --build ${{github.workspace}}/Test/build
         
-    #- name: Run Tests
-     # run: ${{github.workspace}}/Test/build/Debug/tests --reporter junit --out ./result.xml
+    - name: Run Tests
+      run: ${{github.workspace}}/Test/build/Debug/tests --reporter junit --out ./result.xml
       
-   # - name: Show test results
-    #  uses: EnricoMi/publish-unit-test-result-action/composite@v2
-     # with:
-      #  check_name: Catch2 tests
-       # path: ${{github.workspace}}/result.xml
+    - name: Show test results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      with:
+        check_name: Catch2 tests
+        path: ${{github.workspace}}/result.xml
       
       # アップロード
     - name: Upload Artifact

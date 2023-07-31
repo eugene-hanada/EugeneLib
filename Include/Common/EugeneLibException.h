@@ -5,7 +5,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// 子のライブラリのエクセプション
+	/// このライブラリのエクセプション
 	/// </summary>
 	class EugeneLibException :
 		public std::exception
@@ -23,7 +23,7 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// 生成時のエラーを表すエクセプション
+	/// 生成時のエラーを表すエクセプション、メッセージが[CreateError]messとなる
 	/// </summary>
 	class CreateErrorException :
 		public EugeneLibException

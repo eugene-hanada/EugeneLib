@@ -5,6 +5,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// テクスチャやレンダーターゲット等に使うリソース
+	/// </summary>
 	class ImageResource :
 		public GpuResource
 	{

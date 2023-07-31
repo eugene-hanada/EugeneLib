@@ -8,7 +8,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// テクスチャ
+	/// 画像データクラス(RAM側にデータがある)、対応フォーマット[jpeg, png, tag, bmp, psd, gif, hdr, pic, pnm, dds]
 	/// </summary>
 	class Image
 	{

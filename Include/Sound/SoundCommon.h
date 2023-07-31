@@ -4,6 +4,10 @@
 namespace Eugene
 {
 #pragma pack(1)
+
+	/// <summary>
+	/// サウンドのフォーマット部分
+	/// </summary>
 	struct SoundFormat
 	{
 		std::uint32_t size = 0u;
@@ -16,6 +20,9 @@ namespace Eugene
 		std::uint16_t ex = 0u;
 	};
 
+	/// <summary>
+	/// フォーマットの拡張データ
+	/// </summary>
 	struct SoundFormatEx
 	{
 		std::uint16_t reserved;

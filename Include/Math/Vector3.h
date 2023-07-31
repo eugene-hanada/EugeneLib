@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <cmath>
 #include "MathConcepts.h"
+#include <format>
 
 namespace Eugene
 {
@@ -195,4 +196,39 @@ namespace Eugene
 	using Vector3 = Vector3Tmp<float>;
 	using Vector3D = Vector3Tmp<double>;
 	using Vector3I = Vector3Tmp<int>;
+};
+
+/// <summary>
+/// Vector3用formatter、Tに合わせて出力される
+/// </summary>
+/// <typeparam name="T"></typeparam>
+template<Eugene::ValueC T>
+class std::formatter<Eugene::Vector3Tmp<T>> :
+	public std::formatter<const char*>
+{
+public:
+	/// <summary>
+	/// Vector3をstd::formatで出力する
+	/// </summary>
+	/// <typeparam name="Out"></typeparam>
+	/// <param name="vec"></param>
+	/// <param name="ctx"></param>
+	/// <returns></returns>
+	template<class Out>
+	constexpr auto format(const Eugene::Vector3Tmp<T>& vec, std::basic_format_context<Out, char>& ctx)
+	{
+		if constexpr (std::is_floating_point<T>::value)
+		{
+			// 浮動小数点数の時
+			return std::format_to(ctx.out(), "x={0:f}y={1:f}z={2:f}", vec.x, vec.y, vec.z);
+		}
+		else if constexpr (std::is_integral<T>::value)
+		{
+			// 整数値の時
+			return std::format_to(ctx.out(), "x={0:d}y={1:d}z={2:d}", vec.x, vec.y, vec.z);
+		}
+
+		// そのほか
+		return std::format_to(ctx.out(), "x={0:}y={1:}z={2:}", vec.x, vec.y, vec.z);
+	}
 };

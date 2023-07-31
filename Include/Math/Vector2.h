@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <cmath>
 #include "MathConcepts.h"
-
+#include <format>
 
 namespace Eugene
 {
@@ -344,5 +344,39 @@ namespace Eugene
 	using Vector2 = Vector2Tmp<float>;
 	using Vector2D = Vector2Tmp<double>;
 	using Vector2I = Vector2Tmp<int>;
+};
 
+/// <summary>
+/// Vector2用std::formatter
+/// </summary>
+template<Eugene::ValueC T>
+class std::formatter<Eugene::Vector2Tmp<T>> :
+	public std::formatter<const char*>
+{
+public:
+
+	/// <summary>
+	/// Vector2をstd::formatで出力する
+	/// </summary>
+	/// <typeparam name="Out"></typeparam>
+	/// <param name="vec"></param>
+	/// <param name="ctx"></param>
+	/// <returns></returns>
+	template<class Out>
+	auto format(const Eugene::Vector2Tmp<T>& vec, std::basic_format_context<Out, char>& ctx)
+	{
+		if constexpr (std::is_floating_point<T>::value)
+		{
+			// 浮動小数点数の時
+			return std::format_to(ctx.out(), "x={0:f}y={1:f}", vec.x, vec.y);
+		}
+		else if constexpr (std::is_integral<T>::value)
+		{
+			// 整数値の時
+			return std::format_to(ctx.out(), "x={0:d}y={1:d}", vec.x, vec.y);
+		}
+
+		// それ以外
+		return std::format_to(ctx.out(), "x={0:}y={1:}", vec.x, vec.y);
+	}
 };

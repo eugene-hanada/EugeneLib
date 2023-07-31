@@ -5,10 +5,7 @@
 #include <memory>
 #include <vector>
 
-//#include <ThirdParty/imgui/imgui.h>
-#include <Effekseer.h>
-
-
+#include <Color.h>
 
 #include "Common/Debug.h"
 
@@ -20,8 +17,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// グラフィックの処理をするクラス
 	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
 
+	Eugene::Quaternion q{Eugene::Deg2Rad(45.0f),0.0f,0.0f};
+	DebugLog("{:e}", q);
 	
-
 	// コマンドリスト生成
 	std::unique_ptr<Eugene::CommandList> cmdList;
 	cmdList.reset(graphics->CreateCommandList());
@@ -302,7 +300,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	}
 		//}
 
-		efkWarrper->Update(1.0f / 240.0f);
+
 
 		// コマンド開始
 		cmdList->Begin();

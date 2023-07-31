@@ -4,6 +4,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// 3Dサウンドをコントロールするクラス
+	/// </summary>
 	class Sound3DControl :
 		public SoundControl
 	{

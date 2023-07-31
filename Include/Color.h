@@ -9,12 +9,25 @@ namespace Eugene
 	class Color
 	{
 	public:
-		Color()
+		constexpr Color()
 		{
 			color_.fill(MaxValue);
 		}
 
-		void SetValue(std::uint64_t idx, const T& value)
+		constexpr Color(T value)
+		{
+			color_.fill(value);
+		}
+
+		constexpr Color(std::span<T, Num> color)
+		{
+			for (std::uint64_t i = 0; i < Num; i++)
+			{
+				color_[i] = color[i];
+			}
+		}
+
+		constexpr void SetValue(std::uint64_t idx, const T& value)
 		{
 			color_[idx] = std::clamp(value, MinValue, MaxValue);
 		}
@@ -38,7 +51,7 @@ namespace Eugene
 			return MinValue;
 		}
 
-		const T& operator[](std::uint64_t idx)
+		const T& operator[](std::uint64_t idx) 
 		{
 			return color_[idx];
 		}

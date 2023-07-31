@@ -76,6 +76,9 @@ namespace Eugene
 		BC7_UNORM
 	};
 
+	/// <summary>
+	/// フォーマットの最大数
+	/// </summary>
 	constexpr auto FormatMax = 48ull;
 
 	/// <summary>
@@ -103,5 +106,8 @@ namespace Eugene
 		TriangleStrip = 5
 	};
 
+	/// <summary>
+	/// サブリソースの最大数
+	/// </summary>
 	constexpr auto maxSubResource = 64u;
 }

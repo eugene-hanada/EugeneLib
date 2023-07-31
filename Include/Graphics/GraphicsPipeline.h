@@ -7,6 +7,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// シェーダの入力レイアウト用構造体
+	/// </summary>
 	struct ShaderInputLayout
 	{
 		ShaderInputLayout();
@@ -18,48 +21,118 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// 
+	/// シェーダタイプ
 	/// </summary>
 	enum class ShaderType
 	{
+		/// <summary>
+		/// 頂点
+		/// </summary>
 		Vertex,
+
+		/// <summary>
+		/// ピクセル
+		/// </summary>
 		Pixel
 	};
 
+	/// <summary>
+	/// ブレンドタイプ
+	/// </summary>
 	enum class BlendType
 	{
+		/// <summary>
+		/// 無し
+		/// </summary>
 		Non,
+
+		/// <summary>
+		/// アルファ
+		/// </summary>
 		Alpha,
+
+		/// <summary>
+		/// 加算
+		/// </summary>
 		Add,
+
+		/// <summary>
+		/// 減算
+		/// </summary>
 		Sub,
+
+		/// <summary>
+		/// 逆
+		/// </summary>
 		Inv
 	};
 
+	/// <summary>
+	/// レンダーターゲットのレイアウト
+	/// </summary>
 	struct RendertargetLayout
 	{
+		/// <summary>
+		/// フォーマット
+		/// </summary>
 		Format format_;
+
+		/// <summary>
+		/// ブレンドタイプ
+		/// </summary>
 		BlendType blendType_;
 	};
 
+	/// <summary>
+	/// ビューのタイプ
+	/// </summary>
 	enum class ViewType
 	{
+		/// <summary>
+		/// テクスチャ
+		/// </summary>
 		Texture,
+
+		/// <summary>
+		/// UA
+		/// </summary>
 		UnoderedAccsec,
+
+		/// <summary>
+		/// 定数バッファ
+		/// </summary>
 		ConstantBuffer,
+
+		/// <summary>
+		/// サンプラー
+		/// </summary>
 		Sampler
 	};
 
+	/// <summary>
+	/// シェーダーレイアウト用構造体
+	/// </summary>
 	struct ShaderLayout
 	{
+		/// <summary>
+		/// ビューのタイプ
+		/// </summary>
 		ViewType viewType_;
+
+		/// <summary>
+		/// ビューの数
+		/// </summary>
 		std::uint32_t numView_;
+
+		/// <summary>
+		/// ベースレジスタ
+		/// </summary>
 		std::uint32_t baseRegister_;
 	};
 
-
-
-
-
+	/// <summary>
+	/// トポロジータイプ
+	/// </summary>
 	enum class TopologyType
 	{
 		Point = 1,
@@ -75,6 +148,10 @@ namespace Eugene
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
 	using SamplerSpan = std::span<SamplerLayout>;
 	using RenderTargetSpan = std::span <RendertargetLayout>;
+
+	/// <summary>
+	/// グラフィックスパイプラインを設定しているクラス
+	/// </summary>
 	class GraphicsPipeline
 	{
 	public:

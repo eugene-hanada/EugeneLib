@@ -86,6 +86,9 @@ namespace Eugene
 	private:
 	};
 
+	using UniqueGraphics = std::unique_ptr<Graphics>;
+	using UniqueGpuEngine = std::unique_ptr<GpuEngine>;
+
 	/// <summary>
 	/// OS等の処理をするクラス
 	/// </summary>
@@ -131,7 +134,7 @@ namespace Eugene
 		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
 
 		[[nodiscard]]
-		virtual std::pair<std::unique_ptr<Graphics>, std::unique_ptr<GpuEngine>> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
+		virtual std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		/// <summary>
 		/// マウスの情報を取得する

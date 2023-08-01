@@ -82,12 +82,12 @@ namespace Eugene
 	[[nodiscard]]
 	Sound* CreateSound(void);
 
-	using SoundUnique = std::unique_ptr<Sound>;
+	using UniqueSound= std::unique_ptr<Sound>;
 
 	/// <summary>
 	/// CreateSoundのstd::_unique_ptr版
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	SoundUnique CreateSoundUnique(void);
+	UniqueSound CreateSoundUnique(void);
 }

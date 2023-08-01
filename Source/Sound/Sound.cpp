@@ -8,6 +8,7 @@ namespace {
 
 Eugene::Sound::~Sound()
 {
+	isCreate = false;
 }
 
 Eugene::Sound::Sound() :
@@ -21,11 +22,11 @@ Eugene::Sound* Eugene::CreateSound(void)
 	{
 		throw CreateErrorException{"すでにSoundは生成されています"};
 	}
-	isCreate = false;
+	isCreate = true;
 	return new Xa2Sound{};
 }
 
-Eugene::SoundUnique Eugene::CreateSoundUnique(void)
+Eugene::UniqueSound Eugene::CreateSoundUnique(void)
 {
-	return SoundUnique{ new Xa2Sound{} };
+	return UniqueSound{ CreateSound()};
 }

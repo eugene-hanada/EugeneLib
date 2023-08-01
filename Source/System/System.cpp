@@ -75,7 +75,7 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 {
 	if (isCreate)
 	{
-		throw CreateErrorException{"すでに生成しています"};
+		throw CreateErrorException{"Systemはすでに生成しています"};
 	}
 	isCreate = true;
 	return new WindowsSystem{size,title};
@@ -86,10 +86,10 @@ Eugene::UniqueSystem Eugene::CreateSystemUnique(const Vector2& size, const std::
 	return UniqueSystem{CreateSystem(size, title)};
 }
 
-std::pair<std::unique_ptr<Eugene::Graphics>, std::unique_ptr<Eugene::GpuEngine>> Eugene::System::CreateGraphicsUnique(std::uint32_t bufferNum, std::uint64_t maxSize) const
+std::pair<Eugene::UniqueGraphics, Eugene::UniqueGpuEngine> Eugene::System::CreateGraphicsUnique(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
 	auto [graphics, gpuEngine] = CreateGraphics(bufferNum, maxSize);
-	return std::pair<std::unique_ptr<Graphics>, std::unique_ptr<GpuEngine>>{graphics,gpuEngine};
+	return std::pair<UniqueGraphics, UniqueGpuEngine>{graphics,gpuEngine};
 }
 
 #ifdef USE_IMGUI

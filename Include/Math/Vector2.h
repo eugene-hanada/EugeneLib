@@ -324,7 +324,7 @@ namespace Eugene
 		{
 			return *this;
 		}
-		x = static_cast<T>(std::fmod(x, vec, x));
+		x = static_cast<T>(std::fmod(x, vec.x));
 		y = static_cast<T>(std::fmod(y, vec.y));
 		return *this;
 	}

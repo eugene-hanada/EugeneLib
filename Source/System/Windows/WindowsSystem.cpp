@@ -201,7 +201,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 {
 	if (graphics)
 	{
-		throw CreateErrorException{"すでに生成されています"};
+		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
 	}
 
 	if (graphics == nullptr)

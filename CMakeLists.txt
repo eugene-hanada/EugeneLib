@@ -49,7 +49,7 @@ set(GraphicsSource
 	Source/Graphics/Image.cpp
 	Source/Graphics/Sampler.cpp
 	Source/Graphics/SamplerViews.cpp
-)
+ "Source/Graphics/ResourceBindLayout.cpp")
 
 # Common系のソースファイルをセット
 set(CommonSource
@@ -123,7 +123,7 @@ if (MSVC)
 			Source/Graphics/DirectX12/Dx12Views.cpp
 			Source/Graphics/DirectX12/Dx12Sampler.cpp
 			Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-		)
+		 "Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp")
 
 		if (USE_IMGUI)
 			  set(GraphicsApiSource

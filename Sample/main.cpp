@@ -4,13 +4,34 @@
 #include <Math/Geometry.h>
 #include <memory>
 #include <vector>
+#include <initializer_list>
 
 #include <Color.h>
+#include <Common/ArgsSpan.h>
 
 #include "Common/Debug.h"
 
+
+
+int Func(const Eugene::ArgsSpan<int> value)
+{
+	auto begin = value.begin();
+	int result = 0;
+	for (std::uint64_t i = 0ull; i < value.size(); i++)
+	{
+		result += *(begin + i);
+	}
+	return result;
+}
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
+	
+	int values[]{ 1, 2, 3, 4, 5 };
+	std::vector<int> vec{ 1, 2, 3, 4, 5 };
+	auto a = Func(std::vector<int>{1,2,3,4,5});
+	
+
 	Eugene::Vector2 v{1.0f, 2.0f};
 	auto result = v.Normalized().Magnitude();
 	// システム(osとかの)処理をするクラス
@@ -19,8 +40,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// グラフィックの処理をするクラス
 	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
 
-	Eugene::Quaternion q{Eugene::Deg2Rad(45.0f),0.0f,0.0f};
-	DebugLog("{:e}", q);
+	std::unique_ptr < Eugene::ResourceBindLayout> resourceBidLayout;
+	resourceBidLayout.reset(graphics->CreateResourceBindLayout({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}, Eugene::Bind{Eugene::ViewType::Texture,1} }));
 	
 	// コマンドリスト生成
 	std::unique_ptr<Eugene::CommandList> cmdList;

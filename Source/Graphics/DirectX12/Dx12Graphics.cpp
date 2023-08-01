@@ -8,7 +8,7 @@
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
-
+#include "Dx12ResourceBindLayout.h"
 
 #include "Dx12BufferResource.h"
 #include "Dx12ImageResource.h"
@@ -418,6 +418,11 @@ void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
 }
 
+Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+{
+	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
+}
+
 #ifdef USE_IMGUI
 
 void Eugene::Dx12Graphics::ImguiNewFrame(void) const
@@ -567,4 +572,5 @@ Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
 		desc.BufferCount, rtF, depthF,reverseDepth,maxNumm
 	};
 }
+
 #endif

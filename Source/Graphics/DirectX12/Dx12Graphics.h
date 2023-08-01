@@ -114,5 +114,8 @@ namespace Eugene
 		) const final;
 #endif
 		friend class Dx12CommandList;
+
+		// Graphics を介して継承されました
+		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const override;
 	};
 }

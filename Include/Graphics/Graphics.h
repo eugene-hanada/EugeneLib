@@ -4,6 +4,7 @@
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 #include "Sampler.h"
+#include "../Common/ArgsSpan.h"
 
 #ifdef USE_EFFEKSEER
 namespace Effekseer
@@ -115,6 +116,8 @@ namespace Eugene
 			SamplerSpan samplerLayout = SamplerSpan{}
 		) const = 0;
 		
+		[[nodiscard]]
+		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const = 0;
 
 		/// <summary>
 		/// アップロードのためのバッファー(頂点、インデックス、定数)用のリソースを生成する

@@ -3,6 +3,7 @@
 #include <span>
 #include <vector>
 #include "GraphicsCommon.h"
+#include "ResourceBindLayout.h"
 #include "Sampler.h"
 
 namespace Eugene
@@ -81,32 +82,6 @@ namespace Eugene
 		/// ブレンドタイプ
 		/// </summary>
 		BlendType blendType_;
-	};
-
-	/// <summary>
-	/// ビューのタイプ
-	/// </summary>
-	enum class ViewType
-	{
-		/// <summary>
-		/// テクスチャ
-		/// </summary>
-		Texture,
-
-		/// <summary>
-		/// UA
-		/// </summary>
-		UnoderedAccsec,
-
-		/// <summary>
-		/// 定数バッファ
-		/// </summary>
-		ConstantBuffer,
-
-		/// <summary>
-		/// サンプラー
-		/// </summary>
-		Sampler
 	};
 
 	/// <summary>

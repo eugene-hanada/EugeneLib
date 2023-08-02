@@ -41,7 +41,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
 
 	std::unique_ptr < Eugene::ResourceBindLayout> resourceBidLayout;
-	resourceBidLayout.reset(graphics->CreateResourceBindLayout({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}, Eugene::Bind{Eugene::ViewType::Texture,1} }));
+	resourceBidLayout.reset(graphics->CreateResourceBindLayout(
+		{ 
+			{Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}},
+			{Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}},
+			{Eugene::Bind{Eugene::ViewType::Sampler,1}}
+		}));
+
 	
 	// コマンドリスト生成
 	std::unique_ptr<Eugene::CommandList> cmdList;
@@ -79,13 +85,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		};
 
 		pipeline.reset(graphics->CreateGraphicsPipeline(
+			*resourceBidLayout,
 			layout,
 			shaders,
 			rendertargets,
 			Eugene::TopologyType::Triangle,
 			false,
-			true,
-			shaderLayout
+			true
+			//,shaderLayout
 		));
 
 	}
@@ -208,21 +215,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	std::unique_ptr<Eugene::SoundControl> ctrl3;
 	std::unique_ptr<Eugene::SoundSpeaker> speaker;
-	ctrl.reset(sound->CreateSound3DControl(0));
-	ctrl2.reset(sound->CreateSoundControl(1));
-	ctrl3.reset(sound->CreateSoundControl(1));
-	std::unique_ptr<Eugene::SoundFile> wave;;
-	wave.reset(Eugene::OpenSoundFile("./shot2.ogg"));
-	wave->LoadFormat();
-	wave->LoadData();
-	speaker.reset(sound->CreateSoundSpeaker(*wave));
-	
-	speaker->SetData(wave->GetDataPtr(), wave->GetDataSize());
-	speaker->SetOutput(*ctrl);
-	ctrl->SetOutput(*ctrl2);
-	ctrl2->SetVolume(1.0f);
-	//ctrl2->SetOutput(*ctrl3);
-	speaker->Play(0);
+
 
 	// マウスの情報を受け取る構造体
 	Eugene::Mouse mouse;
@@ -286,10 +279,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			pos.Normalize();
 			//pos *= 10.0f;
 			
-			ctrl->Set3DSound(
-				Eugene::forwardVector3<float>,Eugene::upVector3<float>,Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
-				Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::Vector3{pos.x, 0.0f, pos.y}, Eugene::zeroVector3<float>
-			);
+			//ctrl->Set3DSound(
+			//	Eugene::forwardVector3<float>,Eugene::upVector3<float>,Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
+			//	Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::Vector3{pos.x, 0.0f, pos.y}, Eugene::zeroVector3<float>
+			//);
 			
 		}
 

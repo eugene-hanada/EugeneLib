@@ -34,7 +34,27 @@ namespace Eugene
 		/// <summary>
 		/// ピクセル
 		/// </summary>
-		Pixel
+		Pixel,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Frag = Pixel,
+
+		/// <summary>
+		/// ジオメトリ
+		/// </summary>
+		Geometry,
+
+		/// <summary>
+		/// ドメイン
+		/// </summary>
+		Domain,
+
+		/// <summary>
+		/// ハル
+		/// </summary>
+		Hull,
 	};
 
 	/// <summary>

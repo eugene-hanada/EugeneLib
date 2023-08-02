@@ -8,7 +8,8 @@ struct ID3D12PipelineState;
 
 namespace Eugene
 {
-	
+	class ResourceBindLayout;
+
 	class Dx12GraphicsPipeline :
 		public GraphicsPipeline
 	{
@@ -24,6 +25,17 @@ namespace Eugene
 			SamplerSpan smplerLayout,
 			bool useDepth
 			);
+
+		Dx12GraphicsPipeline(
+			ID3D12Device* device,
+			ResourceBindLayout& resourceBindLayout,
+			ShaderInputSpan layout,
+			ShaderTypePaisrSpan  shaders,
+			RenderTargetSpan rendertarges,
+			TopologyType topologyType,
+			bool isCulling,
+			bool useDepth
+		);
 
 		struct PipeLine
 		{

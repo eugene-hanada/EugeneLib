@@ -117,6 +117,17 @@ namespace Eugene
 		) const = 0;
 		
 		[[nodiscard]]
+		virtual GraphicsPipeline* CreateGraphicsPipeline(
+			ResourceBindLayout& resourceBindLayout,
+			ShaderInputSpan layout,
+			ShaderTypePaisrSpan  shaders,
+			RenderTargetSpan rendertarges,
+			TopologyType topologyType = TopologyType::Triangle,
+			bool isCulling = false,
+			bool useDepth = false
+		) const = 0;
+
+		[[nodiscard]]
 		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const = 0;
 
 		/// <summary>

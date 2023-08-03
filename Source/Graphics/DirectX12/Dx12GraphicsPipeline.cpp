@@ -213,9 +213,9 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	ID3D12Device* device, 
 	ResourceBindLayout& resourceBindLayout, 
-	ShaderInputSpan layout, 
-	ShaderTypePaisrSpan shaders, 
-	RenderTargetSpan rendertarges, 
+	const ArgsSpan<ShaderInputLayout>& layout,
+	const ArgsSpan<ShaderPair>& shaders,
+	const ArgsSpan<RendertargetLayout>& rendertarges,
 	TopologyType topologyType, 
 	bool isCulling, bool useDepth)
 {
@@ -227,8 +227,9 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	gpipeline.pRootSignature = pipeline_.rootSignature_.Get();
 	
 	// 各シェーダーをセット
-	for (auto& shader : shaders)
+	for (std::uint64_t i = 0ull; i < shaders.size(); i++)
 	{
+		auto& shader = shaders.at(i);
 		switch (shader.second)
 		{
 			using enum ShaderType;
@@ -261,10 +262,10 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout(layout.size());
 	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
-		inputLayout[i].SemanticName = layout[i].semanticName_;
-		inputLayout[i].SemanticIndex = layout[i].semanticIdx_;
-		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(layout[i].format_)));
-		inputLayout[i].InputSlot = layout[i].slot_;
+		inputLayout[i].SemanticName = layout.at(i).semanticName_;
+		inputLayout[i].SemanticIndex = layout.at(i).semanticIdx_;
+		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(layout.at(i).format_)));
+		inputLayout[i].InputSlot = layout.at(i).slot_;
 		inputLayout[i].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 		inputLayout[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
 		inputLayout[i].InstanceDataStepRate = 0;
@@ -294,8 +295,8 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	// レンダーターゲット設定
 	for (std::uint64_t i = 0; i < rendertarges.size(); i++)
 	{
-		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(rendertarges[i].format_)));
-		switch (rendertarges[i].blendType_)
+		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(rendertarges.at(i).format_)));
+		switch (rendertarges.at(i).blendType_)
 		{
 			using enum BlendType;
 		case Non:

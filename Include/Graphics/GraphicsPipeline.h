@@ -139,7 +139,8 @@ namespace Eugene
 	class Shader;
 	class Graphics;
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
-	using ShaderTypePaisrSpan = std::span<std::pair<Shader, ShaderType>>;
+	using ShaderPair = std::pair<Shader, ShaderType>;
+	using ShaderTypePaisrSpan = std::span<ShaderPair>;
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
 	using SamplerSpan = std::span<SamplerLayout>;
 	using RenderTargetSpan = std::span <RendertargetLayout>;

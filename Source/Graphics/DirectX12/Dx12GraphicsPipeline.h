@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 #include <wrl.h>
+#include "../../../Include/Common/ArgsSpan.h"
 
 struct ID3D12Device;
 struct ID3D12RootSignature;
@@ -29,9 +30,9 @@ namespace Eugene
 		Dx12GraphicsPipeline(
 			ID3D12Device* device,
 			ResourceBindLayout& resourceBindLayout,
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
+			const ArgsSpan<ShaderInputLayout>& layout,
+			const ArgsSpan<ShaderPair>& shaders,
+			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
 			bool useDepth

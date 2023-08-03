@@ -2,6 +2,7 @@
 #include <initializer_list>
 #include <cstdint>
 #include <concepts>
+#include "EugeneLibException.h"
 
 namespace Eugene
 {
@@ -51,6 +52,15 @@ namespace Eugene
 		constexpr std::uint64_t size() const
 		{
 			return size_;
+		}
+
+		const T& at(size_t index) const&
+		{
+			if (ptr_ == nullptr || index >= size_)
+			{
+				throw EugeneLibException{"範囲外のインデックスを指定しています"};
+			}
+			return *(ptr_ + index);
 		}
 
 	private:

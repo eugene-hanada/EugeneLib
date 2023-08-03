@@ -116,12 +116,23 @@ namespace Eugene
 			SamplerSpan samplerLayout = SamplerSpan{}
 		) const = 0;
 		
+		/// <summary>
+		/// グラフィックスパイプラインクラスを生成する
+		/// </summary>
+		/// <param name="resourceBindLayout"> シェーダへのリソースバインドを設定への参照 </param>
+		/// <param name="layout"> シェーダ入力のレイアウト </param>
+		/// <param name="shaders"> 各シェーダ(頂点シェーダ、ピクセルシェーダ...など) </param>
+		/// <param name="rendertarges"> レンダーターゲットの設定 </param>
+		/// <param name="topologyType"> トポロジータイプ </param>
+		/// <param name="isCulling"> バックカリングを使用するか? </param>
+		/// <param name="useDepth">　デプスバッファを使用するか?　</param>
+		/// <returns></returns>
 		[[nodiscard]]
 		virtual GraphicsPipeline* CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
+			const ArgsSpan<ShaderInputLayout>& layout,
+			const ArgsSpan<ShaderPair>&  shaders,
+			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
 			bool useDepth = false

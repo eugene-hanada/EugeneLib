@@ -3,6 +3,7 @@
 #include <span>
 #include <vector>
 #include "GraphicsCommon.h"
+#include "ResourceBindLayout.h"
 #include "Sampler.h"
 
 namespace Eugene
@@ -33,7 +34,27 @@ namespace Eugene
 		/// <summary>
 		/// ピクセル
 		/// </summary>
-		Pixel
+		Pixel,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Frag = Pixel,
+
+		/// <summary>
+		/// ジオメトリ
+		/// </summary>
+		Geometry,
+
+		/// <summary>
+		/// ドメイン
+		/// </summary>
+		Domain,
+
+		/// <summary>
+		/// ハル
+		/// </summary>
+		Hull,
 	};
 
 	/// <summary>
@@ -72,6 +93,8 @@ namespace Eugene
 	/// </summary>
 	struct RendertargetLayout
 	{
+		RendertargetLayout();
+		RendertargetLayout(Format format, BlendType blendType = BlendType::Non);
 		/// <summary>
 		/// フォーマット
 		/// </summary>
@@ -81,32 +104,6 @@ namespace Eugene
 		/// ブレンドタイプ
 		/// </summary>
 		BlendType blendType_;
-	};
-
-	/// <summary>
-	/// ビューのタイプ
-	/// </summary>
-	enum class ViewType
-	{
-		/// <summary>
-		/// テクスチャ
-		/// </summary>
-		Texture,
-
-		/// <summary>
-		/// UA
-		/// </summary>
-		UnoderedAccsec,
-
-		/// <summary>
-		/// 定数バッファ
-		/// </summary>
-		ConstantBuffer,
-
-		/// <summary>
-		/// サンプラー
-		/// </summary>
-		Sampler
 	};
 
 	/// <summary>
@@ -144,7 +141,8 @@ namespace Eugene
 	class Shader;
 	class Graphics;
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
-	using ShaderTypePaisrSpan = std::span<std::pair<Shader, ShaderType>>;
+	using ShaderPair = std::pair<Shader, ShaderType>;
+	using ShaderTypePaisrSpan = std::span<ShaderPair>;
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
 	using SamplerSpan = std::span<SamplerLayout>;
 	using RenderTargetSpan = std::span <RendertargetLayout>;

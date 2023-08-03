@@ -19,3 +19,13 @@ Eugene::ShaderInputLayout::ShaderInputLayout(const char* semanticName, std::uint
 	semanticName_{semanticName}, semanticIdx_{semanticIdx}, format_{format}, slot_{slot}
 {
 }
+
+Eugene::RendertargetLayout::RendertargetLayout():
+	format_{Format::NON}, blendType_{BlendType::Non}
+{
+}
+
+Eugene::RendertargetLayout::RendertargetLayout(Format format, BlendType blendType) :
+	format_{format}, blendType_{blendType}
+{
+}

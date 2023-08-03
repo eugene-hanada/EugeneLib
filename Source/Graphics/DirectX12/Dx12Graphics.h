@@ -114,5 +114,11 @@ namespace Eugene
 		) const final;
 #endif
 		friend class Dx12CommandList;
-	};
+
+		// Graphics を介して継承されました
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+
+		// Graphics を介して継承されました
+		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+};
 }

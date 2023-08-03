@@ -126,10 +126,14 @@ namespace EugeneLib {
 
         }
 
+        abstract class ResourceBindLayout
+        {
+
+        }
 
         abstract class GraphicsPipeline
         {
-
+            
         }
 
         GraphicsPipeline <|-- Dx12GraphicsPipeline

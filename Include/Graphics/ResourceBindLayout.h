@@ -32,7 +32,7 @@ namespace Eugene
 	struct Bind
 	{
 		ViewType viewType_;
-		std::uint32_t viewNum_;
+		std::uint32_t viewNum_{1u};
 	};
 
 	/// <summary>

@@ -1,5 +1,6 @@
 ﻿#include "../../Include/Graphics/Shader.h"
 #include <fstream>
+#include "../../Include/Common/EugeneLibException.h"
 
 Eugene::Shader::Shader(const std::filesystem::path& path)
 {
@@ -7,7 +8,7 @@ Eugene::Shader::Shader(const std::filesystem::path& path)
 	
 	if (!file)
 	{
-		return;
+		throw EugeneLibException{"ファイルを開けませんでした"};
 	}
 	code_.resize(file.tellg());
 	file.seekg(0);

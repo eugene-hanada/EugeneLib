@@ -29,7 +29,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	int values[]{ 1, 2, 3, 4, 5 };
 	std::vector<int> vec{ 1, 2, 3, 4, 5 };
-	auto a = Func(std::vector<int>{1,2,3,4,5});
+	auto a = Func({1,2,3,4,5});
 	
 
 	Eugene::Vector2 v{1.0f, 2.0f};
@@ -56,33 +56,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// グラフィックパイプライン生成
 	std::unique_ptr<Eugene::GraphicsPipeline> pipeline;
 	{
-		// 頂点シェーダの入力のレイアウト
-		std::vector<Eugene::ShaderInputLayout> layout
-		{
-			{"POSITION", 0, Eugene::Format::R32G32_FLOAT},
-			{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT}
-		};
-
-		// シェーダー
-		std::vector<std::pair<Eugene::Shader, Eugene::ShaderType>> shaders
-		{
-			{Eugene::Shader{"VertexShader.vso"}, Eugene::ShaderType::Vertex},
-			{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel}
-		};
-
-		// レンダーターゲット
-		std::vector<Eugene::RendertargetLayout> rendertargets
-		{
-			{Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non}
-		};
-
-		// 定数バッファとかの設定
-		std::vector<std::vector<Eugene::ShaderLayout>> shaderLayout
-		{
-			{Eugene::ShaderLayout{Eugene::ViewType::ConstantBuffer, 1,0}},
-			{Eugene::ShaderLayout{Eugene::ViewType::Texture, 1,0},Eugene::ShaderLayout{Eugene::ViewType::ConstantBuffer,1,1}},
-			{Eugene::ShaderLayout{Eugene::ViewType::Sampler, 1,0}}
-		};
 
 		pipeline.reset(graphics->CreateGraphicsPipeline(
 			*resourceBidLayout,

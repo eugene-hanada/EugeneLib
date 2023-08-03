@@ -93,6 +93,8 @@ namespace Eugene
 	/// </summary>
 	struct RendertargetLayout
 	{
+		RendertargetLayout();
+		RendertargetLayout(Format format, BlendType blendType = BlendType::Non);
 		/// <summary>
 		/// フォーマット
 		/// </summary>

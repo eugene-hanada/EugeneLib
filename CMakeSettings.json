@@ -59,6 +59,16 @@
           "name": "USE_IMGUI",
           "value": "False",
           "type": "BOOL"
+        },
+        {
+          "name": "USE_DX12",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_VULKAN",
+          "value": "True",
+          "type": "BOOL"
         }
       ],
       "intelliSenseMode": "windows-msvc-x64"

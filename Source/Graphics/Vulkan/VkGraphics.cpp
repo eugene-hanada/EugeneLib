@@ -1,5 +1,5 @@
 
-#ifdef _WIN64
+#ifdef BUILD_WINDOWS
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
 
@@ -15,7 +15,8 @@ namespace
 {
 	std::uint32_t nextQueueIdx_ = 0;
 }
-#ifdef _WIN64
+
+#ifdef BUILD_WINDOWS
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
 	backBufferIdx_{0}
 {
@@ -224,11 +225,14 @@ void Eugene::VkGraphics::CreateInstance(void)
 	};
 	std::vector<const char*> extens{
 		VK_KHR_SURFACE_EXTENSION_NAME,
-#ifdef _WIN64
+#ifdef BUILD_WINDOWS
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
 #endif
+
+#ifdef _DEBUG
 		VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
 		VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
+#endif
 		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
 	};
 
@@ -253,13 +257,21 @@ void Eugene::VkGraphics::CreateDevice(void)
 		const auto props = d.getProperties2();
 		auto tmp = d.getFeatures();
 		auto nameView{ std::string_view(props.properties.deviceName) };
-		if (props.sType == vk::StructureType::ePhysicalDeviceProperties2 || nameView.find("NVIDIA") || nameView.find("AMD"))
+		if (props.sType == vk::StructureType::ePhysicalDeviceProperties2)
 		{
 			physicalDevice_ = d;
-			break;
+			if (nameView.find("NVIDIA") || nameView.find("AMD"))
+			{
+				break;
+			}
 		}
-		throw EugeneLibException{ "使用できるデバイスがありません" };
 	}
+
+	if (!physicalDevice_)
+	{
+		throw CreateErrorException{"使用できる物理デバイスがありません"};
+	}
+
 
 	auto queueFamilyProp = physicalDevice_.getQueueFamilyProperties();
 	size_t idx = 0ull;

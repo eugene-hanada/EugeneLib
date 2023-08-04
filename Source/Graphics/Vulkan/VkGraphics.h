@@ -12,7 +12,7 @@ namespace Eugene
         public Graphics
     {
     public:
-#ifdef _WIN64
+#ifdef BUILD_WINDOWS
         VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
         void CreateSwapChain(const Eugene::Vector2& size);
 #endif

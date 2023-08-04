@@ -4,10 +4,20 @@ project(EugeneLib)
 # c++20を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
+option(BUILD_WINDOWS "Windowsm向けにビルドするか？" ON)
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
+option(USE_DX12 "DirectX12を使用するか？" ON)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
+
+if(BUILD_WINDOWS)
+	# Windows向けビルド時
+	if (NOT USE_VULKAN)
+		# Vulkanを使用しない時は一応DirectX12のオプションをONに
+		set(USE_DX12 ON)
+	endif()
+endif()
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -88,50 +98,19 @@ set(SoundSource
 )
 
 
-if (MSVC)
+if (BUILD_WINDOWS)
+	# Windows用の時
 
 	# システム系の実装クラスのソースファイルをセット
 	set(SystemApiSource 
 		Source/System/Windows/WindowsSystem.cpp
-		Source/System/Windows/Dll.cpp
-		)
+		Source/System/Windows/Dll.cpp)
 
 	if (USE_IMGUI)
 		# imgui使用時
 		set(SystemApiSource 
 			${SystemApiSource}
-			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
-		)
-	endif()
-
-	if (USE_VULKAN)
-		# Vulkan使用時
-	else()
-		# グラフィック系の実装クラスのソースファイルをセット
-		set(GraphicsApiSource
-			Source/Graphics/DirectX12/Dx12CommandList.cpp
-			Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
-			Source/Graphics/DirectX12/Dx12GpuEngine.cpp
-			Source/Graphics/DirectX12/Dx12BufferResource.cpp
-			Source/Graphics/DirectX12/Dx12ImageResource.cpp
-			Source/Graphics/DirectX12/Dx12Graphics.cpp
-			Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
-			Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
-			Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
-			Source/Graphics/DirectX12/Dx12VertexView.cpp
-			Source/Graphics/DirectX12/Dx12IndexView.cpp
-			Source/Graphics/DirectX12/Dx12Views.cpp
-			Source/Graphics/DirectX12/Dx12Sampler.cpp
-			Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-		 "Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp")
-
-		if (USE_IMGUI)
-			  set(GraphicsApiSource
-			  ${GraphicsApiSource}
-			  Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
-			  )
-		endif()
-
+			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp)
 	endif()
 
 	# サウンド系の実装クラスのソースファイルをセット
@@ -142,14 +121,44 @@ if (MSVC)
 		Source/Sound/Xaudio2/Xa2SoundControl.cpp
 		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
 	)
+endif()
 
+if(USE_DX12 AND NOT USE_VULKAN)
+	# グラフィック系の実装クラスのソースファイルをセット
+	set(GraphicsApiSource
+		Source/Graphics/DirectX12/Dx12CommandList.cpp
+		Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
+		Source/Graphics/DirectX12/Dx12GpuEngine.cpp
+		Source/Graphics/DirectX12/Dx12BufferResource.cpp
+		Source/Graphics/DirectX12/Dx12ImageResource.cpp
+		Source/Graphics/DirectX12/Dx12Graphics.cpp
+		Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
+		Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
+		Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
+		Source/Graphics/DirectX12/Dx12VertexView.cpp
+		Source/Graphics/DirectX12/Dx12IndexView.cpp
+		Source/Graphics/DirectX12/Dx12Views.cpp
+		Source/Graphics/DirectX12/Dx12Sampler.cpp
+		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
+		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp)
+
+	if (USE_IMGUI)
+		set(GraphicsApiSource
+		${GraphicsApiSource}
+		Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+		)
+	endif()
+
+elseif(USE_VULKAN)
+	# Vulkan使用時
+	set(GraphicsApiSource
+		Source/Graphics/Vulkan/VkGraphics.cpp)
 endif()
 
 # ランタイムライブラリを静的にリンクする
 if(MSVC)
 	# visual stdio用にunicodeを使うように
 	add_definitions(-D_UNICODE -DUNICODE)
-
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
@@ -165,7 +174,19 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
+if (BUILD_WINDOWS)
+	target_compile_definitions(EugeneLib PRIVATE BUILD_WINDOWS)
+endif()
 
+if (USE_DX12 AND NOT USE_VULKAN)
+	# DirectX12使用時defineを用意
+	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+elseif(USE_VULKAN)
+	# Vulkan使用時define用意
+	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
+	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
+	target_link_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib)
+endif()
 
 if (USE_IMGUI)
 	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)

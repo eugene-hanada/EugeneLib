@@ -1,8 +1,11 @@
 ﻿#include "../../Include/System/System.h"
-#include "../../Source/System/Windows/WindowsSystem.h"
 #include "../../Include/Common/EugeneLibException.h"
 #include "../../Include/Graphics/GpuEngine.h"
 #include "../../Include/Graphics/Graphics.h"
+
+#ifdef USE_WINDOWS
+#include "../../Source/System/Windows/WindowsSystem.h"
+#endif
 
 #ifdef USE_IMGUI
 #include "../../Include/ThirdParty/imgui/imgui.h"
@@ -78,7 +81,10 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 		throw CreateErrorException{"Systemはすでに生成しています"};
 	}
 	isCreate = true;
+
+#ifdef USE_WINDOWS
 	return new WindowsSystem{size,title};
+#endif
 }
 
 Eugene::UniqueSystem Eugene::CreateSystemUnique(const Vector2& size, const std::u8string& title)

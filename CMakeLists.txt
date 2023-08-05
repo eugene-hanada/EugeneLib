@@ -4,14 +4,15 @@ project(EugeneLib)
 # c++20を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
-option(BUILD_WINDOWS "Windowsm向けにビルドするか？" ON)
+option(USE_WINDOWS "Windowsm向けにビルドするか？" ON)
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
 option(USE_DX12 "DirectX12を使用するか？" ON)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 
-if(BUILD_WINDOWS)
+
+if(USE_WINDOWS)
 	# Windows向けビルド時
 	if (NOT USE_VULKAN)
 		# Vulkanを使用しない時は一応DirectX12のオプションをONに
@@ -98,7 +99,7 @@ set(SoundSource
 )
 
 
-if (BUILD_WINDOWS)
+if (USE_WINDOWS)
 	# Windows用の時
 
 	# システム系の実装クラスのソースファイルをセット
@@ -174,8 +175,8 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
-if (BUILD_WINDOWS)
-	target_compile_definitions(EugeneLib PRIVATE BUILD_WINDOWS)
+if (USE_WINDOWS)
+	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
 endif()
 
 if (USE_DX12 AND NOT USE_VULKAN)
@@ -185,7 +186,8 @@ elseif(USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
 	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
-	target_link_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
 endif()
 
 if (USE_IMGUI)

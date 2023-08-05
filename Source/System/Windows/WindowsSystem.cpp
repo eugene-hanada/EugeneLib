@@ -6,9 +6,10 @@
 #include "Dll.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Common/Debug.h"
+
 #ifdef USE_VULKAN
 #include "../../Graphics/Vulkan/VkGraphics.h"
-#else
+#elif USE_DX12
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 #endif
 
@@ -207,7 +208,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
-		graphics = new VkGraphics{hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #else
 		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #endif

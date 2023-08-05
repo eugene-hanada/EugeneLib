@@ -1,22 +1,22 @@
 
-#ifdef BUILD_WINDOWS
+#ifdef USE_WINDOWS
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
 
 #include "VkGraphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "VkGpuEngine.h"
+#include  "../../../Include/Graphics/Shader.h"
 
-
-#pragma comment(lib,"VkLayer_utils.lib")
-#pragma comment(lib,"vulkan-1.lib")
+//#pragma comment(lib,"VkLayer_utils.lib")
+//#pragma comment(lib,"vulkan-1.lib")
 
 namespace
 {
 	std::uint32_t nextQueueIdx_ = 0;
 }
 
-#ifdef BUILD_WINDOWS
+#ifdef USE_WINDOWS
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
 	backBufferIdx_{0}
 {
@@ -44,7 +44,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	CreateSwapChain(size);
 
-	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
+	//gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
 }
 void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
@@ -122,11 +122,6 @@ Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
     return nullptr;
 }
 
-Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
-{
-    return nullptr;
-}
-
 Eugene::BufferResource* Eugene::VkGraphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
     return nullptr;
@@ -168,11 +163,6 @@ Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint
 }
 
 Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
-{
-    return nullptr;
-}
-
-Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, Format format, BufferResource& resource) const
 {
     return nullptr;
 }
@@ -225,7 +215,7 @@ void Eugene::VkGraphics::CreateInstance(void)
 	};
 	std::vector<const char*> extens{
 		VK_KHR_SURFACE_EXTENSION_NAME,
-#ifdef BUILD_WINDOWS
+#ifdef USE_WINDOWS
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
 #endif
 
@@ -274,17 +264,21 @@ void Eugene::VkGraphics::CreateDevice(void)
 
 
 	auto queueFamilyProp = physicalDevice_.getQueueFamilyProperties();
+	size_t queueMax = 0ull;
 	size_t idx = 0ull;
 	for (size_t i = 0ull; i < queueFamilyProp.size(); i++)
 	{
-		if ((queueFamilyProp[i].queueFlags & vk::QueueFlagBits::eGraphics))
+		if ((queueFamilyProp[i].queueFlags & (vk::QueueFlagBits::eGraphics | vk::QueueFlagBits::eCompute)))
 		{
 			idx = i;
+			queueMax = queueFamilyProp[i].queueCount;
 			break;
 		}
 		throw EugeneLibException{ "グラフィックスを使用できるデバイスがありません" };
 	}
-	const float priority[2] = { 0.0f,0.0f };
+	
+	std::vector<float> priority(queueMax);
+	std::fill(priority.begin(), priority.end(), 0.0f);
 
 	// スワップチェインの機能を有効かするので
 	std::vector<const char*> extension{
@@ -293,9 +287,9 @@ void Eugene::VkGraphics::CreateDevice(void)
 		VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME
 	};
 	vk::DeviceQueueCreateInfo queueInfo{};
-	queueInfo.setQueueCount(2);
+	queueInfo.setQueueCount(queueMax);
 	queueInfo.setQueueFamilyIndex(idx);
-	queueInfo.setPQueuePriorities(priority);
+	queueInfo.setQueuePriorities(priority);
 	std::vector<vk::DeviceQueueCreateInfo> queues{
 		queueInfo
 	};
@@ -310,4 +304,29 @@ void Eugene::VkGraphics::CreateDevice(void)
 	};
 	device_ = physicalDevice_.createDeviceUnique(createInfoChain.get<vk::DeviceCreateInfo>());
 	graphicFamilly_ = idx;
+}
+
+Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, bool useDepth, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
+{
+	return nullptr;
+}
+
+Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+{
+	return nullptr;
+}
+
+Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+{
+	return nullptr;
+}
+
+Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& size, float clear) const
+{
+	return nullptr;
+}
+
+Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
+{
+	return nullptr;
 }

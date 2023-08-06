@@ -153,7 +153,9 @@ if(USE_DX12 AND NOT USE_VULKAN)
 elseif(USE_VULKAN)
 	# Vulkan使用時
 	set(GraphicsApiSource
-		Source/Graphics/Vulkan/VkGraphics.cpp)
+		Source/Graphics/Vulkan/VkGraphics.cpp
+		Source/Graphics/Vulkan/VkGpuEngine.cpp
+	)
 endif()
 
 # ランタイムライブラリを静的にリンクする

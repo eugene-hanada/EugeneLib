@@ -5,6 +5,7 @@ Eugene::VkGpuEngine::VkGpuEngine(vk::Queue& queue, std::shared_ptr<vk::UniqueFen
 	queue_{queue}, fence_{fence}, semaphore_{semaphore}
 {
 	nowSize_ = 0ull;
+
 	cmdBuffers_.resize(size);
 }
 

@@ -44,7 +44,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	CreateSwapChain(size);
 
-	//gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
+	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
 }
 void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
@@ -60,7 +60,7 @@ void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 	auto itr = std::find_if(
 		format.begin(), format.end(),
-		[](vk::SurfaceFormatKHR& f) { return f.format == vk::Format::eB8G8R8Srgb || f.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear;  });
+		[](vk::SurfaceFormatKHR& f) { return f.format == vk::Format::eB8G8R8A8Unorm || f.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear;  });
 	if (itr != format.end())
 	{
 		useFormat = itr->format;

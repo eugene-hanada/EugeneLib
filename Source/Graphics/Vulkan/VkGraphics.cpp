@@ -7,6 +7,7 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "VkGpuEngine.h"
 #include  "../../../Include/Graphics/Shader.h"
+#include "VkResourceBindLayout.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -318,7 +319,7 @@ Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBin
 
 Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
 {
-	return nullptr;
+	return new VkResourceBindLayout{*device_,viewTypes};
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& size, float clear) const

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Include/Graphics/ResourceBindLayout.h"
 #include <vulkan/vulkan.hpp>
+#include <vector>
 #include "../../../Include/Common/ArgsSpan.h"
 
 namespace Eugene
@@ -11,6 +12,7 @@ namespace Eugene
 	public:
 		VkResourceBindLayout(const vk::Device& device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
 	private:
-		vk::UniqueDescriptorSetLayout  descriptorLayout_;
+		std::vector<vk::DescriptorSetLayout> descriptorLayoutArray_;
+		vk::PipelineLayout pipelineLayout_;
 	};
 }

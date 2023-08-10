@@ -8,6 +8,7 @@
 #include "VkGpuEngine.h"
 #include  "../../../Include/Graphics/Shader.h"
 #include "VkResourceBindLayout.h"
+#include "VkCommandList.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -114,13 +115,12 @@ Eugene::VkGraphics::~VkGraphics()
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
-	//return new VkGpuEngine{graphicFamilly_, nextQueueIdx_,*device_,maxSize};
-	return nullptr;
+	return new VkGpuEngine{graphicFamilly_, nextQueueIdx_,*device_,maxSize};
 }
 
 Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
 {
-    return nullptr;
+	return new VkCommandList{*device_, graphicFamilly_ };
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateUploadableBufferResource(std::uint64_t size) const

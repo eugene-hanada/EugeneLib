@@ -34,10 +34,22 @@ void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
 
 void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
 {
+	vk::Rect2D scissor{};
+	scissor.setOffset({ leftTop.x,leftTop.y});
+	scissor.setExtent(vk::Extent2D{rightBottom.x - leftTop.x, rightBottom.y - leftTop.y});
+	commandBuffer_->setScissor(0, scissor);
 }
 
 void Eugene::VkCommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
 {
+	vk::Viewport viewPort{};
+	viewPort.setX(0.0f);
+	viewPort.setY(0.0f);
+	viewPort.setWidth(size.x);
+	viewPort.setHeight(size.y);
+	viewPort.setMaxDepth(depthMax);
+	viewPort.setMinDepth(depthMin);
+	commandBuffer_->setViewport(0, viewPort);
 }
 
 void Eugene::VkCommandList::SetVertexView(VertexView& view)

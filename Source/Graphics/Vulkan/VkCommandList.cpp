@@ -36,7 +36,7 @@ void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector
 {
 	vk::Rect2D scissor{};
 	scissor.setOffset({ leftTop.x,leftTop.y});
-	scissor.setExtent(vk::Extent2D{rightBottom.x - leftTop.x, rightBottom.y - leftTop.y});
+	scissor.setExtent(vk::Extent2D{static_cast<std::uint32_t>(rightBottom.x - leftTop.x), static_cast<std::uint32_t>(rightBottom.y - leftTop.y)});
 	commandBuffer_->setScissor(0, scissor);
 }
 

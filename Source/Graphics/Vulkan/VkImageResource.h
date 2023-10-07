@@ -1,4 +1,5 @@
 #pragma once
+#include <vulkan/vulkan.hpp>
 #include "../../../Include/Graphics/ImageResource.h"
 
 namespace Eugene
@@ -7,6 +8,10 @@ namespace Eugene
 		public ImageResource
 	{
 	public:
+		VkImageResource(const vk::Device& device, const TextureInfo& info);
 	private:
+		vk::UniqueDeviceMemory memory_;
+		vk::UniqueImage image_;
+		vk::UniqueImageView imageView_;
 	};
 }

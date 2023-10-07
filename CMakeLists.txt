@@ -155,6 +155,7 @@ elseif(USE_VULKAN)
 	set(GraphicsApiSource
 		Source/Graphics/Vulkan/VkGraphics.cpp
 		Source/Graphics/Vulkan/VkGpuEngine.cpp
+		Source/Graphics/Vulkan/VkImageResource.cpp
 	 "Source/Graphics/Vulkan/VkResourceBindLayout.cpp" "Source/Graphics/Vulkan/VkCommandList.cpp")
 endif()
 

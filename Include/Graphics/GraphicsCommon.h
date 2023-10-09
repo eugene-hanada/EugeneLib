@@ -43,7 +43,7 @@ namespace Eugene
 		R16G16B16A16_SNORM,
 		R16G16B16A16_SINT ,
 
-		// R16B16
+		// R16G16
 		R16G16_TYPELESS,
 		R16G16_FLOAT,
 		R16G16_UNORM,
@@ -74,6 +74,70 @@ namespace Eugene
 		BC3_UNORM,
 		BC5_UNORM,
 		BC7_UNORM
+	};
+
+	constexpr size_t FormatSize[]
+	{
+		// NON
+		0ull,
+
+		// R32G32B32A32
+		16ull,
+		16ull,
+		16ull,
+		16ull,
+
+		// R32G32B32
+		12ull,
+		12ull,
+		12ull,
+		12ull,
+
+		// R32G32
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+
+		// R32
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+
+		// R16G16B16A16
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+
+		// R16G16
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+
+		// R16
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+
+		// R8G8B8A8
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
 	};
 
 	/// <summary>

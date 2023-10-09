@@ -14,5 +14,7 @@ namespace Eugene
 	private:
 		std::vector<vk::DescriptorSetLayout> descriptorLayoutArray_;
 		vk::PipelineLayout pipelineLayout_;
+
+		friend class VkGraphicsPipeline;
 	};
 }

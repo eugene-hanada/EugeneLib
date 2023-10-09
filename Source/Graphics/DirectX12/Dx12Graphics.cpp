@@ -260,10 +260,11 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		{
 			// 見つかったら抜ける
 			tmpAdapter = adpt;
-			
 			break;
 		}
 	}
+
+	
 
 	// フューチャーレベル
 	D3D_FEATURE_LEVEL levels[]{

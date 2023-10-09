@@ -21,7 +21,7 @@ namespace Eugene
 	private:
 		Vector2I GetSize(void) final;
 		bool CanMap(void) const final;
-		void* GetResource(void) const final;
+		void* GetResource(void) final;
 
 		/// <summary>
 		/// ÉäÉ\Å[ÉX

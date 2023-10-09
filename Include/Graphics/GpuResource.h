@@ -35,7 +35,7 @@ namespace Eugene
 		/// <returns></returns>
 		virtual bool CanMap(void) const = 0;
 
-		virtual void* GetResource(void) const= 0;
+		virtual void* GetResource(void) = 0;
 	protected:
 		GpuResource();
 	};

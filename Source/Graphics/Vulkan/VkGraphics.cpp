@@ -9,6 +9,8 @@
 #include  "../../../Include/Graphics/Shader.h"
 #include "VkResourceBindLayout.h"
 #include "VkCommandList.h"
+#include "VkImageResource.h"
+#include "VkDepthStencilViews.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -113,6 +115,44 @@ Eugene::VkGraphics::~VkGraphics()
 {
 }
 
+vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
+{
+	auto memProps = physicalDevice_.getMemoryProperties();
+	auto memRq = image.getOwner().getImageMemoryRequirements(*image);
+	std::uint32_t heapIdx = 0u;
+	std::uint32_t memIdx = 0u;
+
+	// ÉqÅ[ÉvÇíTÇ∑
+	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
+	{
+		if (memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal)
+		{
+			heapIdx = i;
+			break;
+		}
+	}
+
+	// ÉÅÉÇÉäÅ[É^ÉCÉvÇíTÇ∑
+	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
+	{
+		if (memProps.memoryTypes[i].propertyFlags & vk::MemoryPropertyFlagBits::eDeviceLocal)
+		{
+			if ((memRq.memoryTypeBits >> i) & 0x1)
+			{
+				if (memProps.memoryTypes[i].heapIndex == heapIdx)
+				{
+					memIdx = i;
+					break;
+				}
+			}
+		}
+	}
+	vk::MemoryAllocateInfo allocateInfo{};
+	allocateInfo.setAllocationSize(memRq.size);
+	allocateInfo.setMemoryTypeIndex(memIdx);
+	return image.getOwner().allocateMemoryUnique(allocateInfo);
+}
+
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
 	return new VkGpuEngine{graphicFamilly_, nextQueueIdx_,*device_,maxSize};
@@ -140,7 +180,8 @@ Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture)
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
 {
-    return nullptr;
+	// 
+	return new VkImageResource{*this, *device_,formatData};
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color)
@@ -155,7 +196,7 @@ Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(std::
 
 Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint64_t size) const
 {
-    return nullptr;
+	return new VkDepthStencilView{*device_, size};
 }
 
 Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const

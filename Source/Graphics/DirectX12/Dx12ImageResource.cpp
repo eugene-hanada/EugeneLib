@@ -93,7 +93,7 @@ bool Eugene::Dx12ImageResource::CanMap(void) const
 	return false;
 }
 
-void* Eugene::Dx12ImageResource::GetResource(void) const
+void* Eugene::Dx12ImageResource::GetResource(void) 
 {
 	return resource_.Get();
 }

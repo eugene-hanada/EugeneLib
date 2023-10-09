@@ -33,7 +33,7 @@ bool Eugene::Dx12BufferResource::CanMap(void) const
 	return false;
 }
 
-void* Eugene::Dx12BufferResource::GetResource(void) const
+void* Eugene::Dx12BufferResource::GetResource(void) 
 {
 	return resource_.Get();
 }
@@ -141,7 +141,7 @@ bool Eugene::Dx12UploadableBufferResource::CanMap(void) const
 	return true;
 }
 
-void* Eugene::Dx12UploadableBufferResource::GetResource(void) const
+void* Eugene::Dx12UploadableBufferResource::GetResource(void) 
 {
 	return resource_.Get();
 }

@@ -2,6 +2,8 @@
 #include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
 #include <memory>
+#include <array>
+#include <Windows.h>
 #include "../../../Include/Graphics/ImageResource.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
@@ -12,12 +14,74 @@ namespace Eugene
 		public Graphics
 	{
 	public:
+		static constexpr std::array<vk::Format, FormatMax> FormatToVkFormat{
+			vk::Format::eUndefined,
+
+			vk::Format::eUndefined,
+			vk::Format::eR32G32B32A32Sfloat,
+			vk::Format::eR32G32B32A32Uint,
+			vk::Format::eR32G32B32A32Sint,
+		
+			vk::Format::eUndefined,
+			vk::Format::eR32G32B32Sfloat,
+			vk::Format::eR32G32B32Uint,
+			vk::Format::eR32G32B32Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eR32G32Sfloat,
+			vk::Format::eR32G32Uint,
+			vk::Format::eR32G32Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eD32Sfloat,
+			vk::Format::eR32Sfloat,
+			vk::Format::eR32Uint,
+			vk::Format::eR32Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eR16G16B16A16Sfloat,
+			vk::Format::eR16G16B16A16Unorm,
+			vk::Format::eR16G16B16A16Uint,
+			vk::Format::eR16G16B16A16Snorm,
+			vk::Format::eR16G16B16A16Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eR16G16Sfloat,
+			vk::Format::eR16G16Unorm,
+			vk::Format::eR16G16Uint,
+			vk::Format::eR16G16Snorm,
+			vk::Format::eR16G16Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eR16Sfloat,
+			vk::Format::eR16Unorm,
+			vk::Format::eR16Uint,
+			vk::Format::eR16Snorm,
+			vk::Format::eR16Sint,
+
+			vk::Format::eUndefined,
+			vk::Format::eR8G8B8A8Unorm,
+			vk::Format::eR8G8B8A8Srgb,
+			vk::Format::eR8G8B8A8Uint,
+			vk::Format::eR8G8B8A8Snorm,
+			vk::Format::eR8G8B8A8Sint,
+
+			vk::Format::eBc1RgbaUnormBlock,
+			vk::Format::eBc2UnormBlock,
+			vk::Format::eBc3UnormBlock,
+			vk::Format::eBc5UnormBlock,
+			vk::Format::eBc7UnormBlock
+
+		};
+
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		void CreateSwapChain(const Eugene::Vector2& size);
 #endif
 
 		~VkGraphics();
+
+		vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 		CommandList* CreateCommandList(void) const final;

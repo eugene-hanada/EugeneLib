@@ -11,6 +11,6 @@ namespace Eugene
 		Dx12DepthStencilViews(ID3D12Device* device, std::uint64_t size);
 		void Create(ImageResource& resource, std::uint64_t idx) final;
 	private:
-		void* GetViews(void) const final;
+		void* GetViews(void) final;
 	};
 }

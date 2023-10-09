@@ -4,14 +4,29 @@
 
 namespace Eugene
 {
+	class VkGraphics;
 	class VkImageResource :
 		public ImageResource
 	{
 	public:
-		VkImageResource(const vk::Device& device, const TextureInfo& info);
+		VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info);
+		VkImageResource(const VkGraphics& graphics, const vk::Device& device, Vector2I& size, float clearValue);
+
+		struct Data
+		{
+			vk::UniqueDeviceMemory memory_;
+			vk::UniqueImage image_;
+			std::uint32_t arraySize_;
+			std::uint32_t mipmapLevels_;
+		};
+
 	private:
-		vk::UniqueDeviceMemory memory_;
-		vk::UniqueImage image_;
-		vk::UniqueImageView imageView_;
+		// ImageResource ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
+		bool CanMap(void) const final;
+		void* GetResource(void) final;
+		Vector2I GetSize(void) final;
+
+		Data data_;
+		Vector2I size_;
 	};
 }

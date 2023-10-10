@@ -132,6 +132,7 @@ namespace Eugene
 	/// </summary>
 	enum class TopologyType
 	{
+		Non = 0,
 		Point = 1,
 		Line = 2,
 		Triangle = 3,

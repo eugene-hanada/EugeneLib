@@ -6,7 +6,6 @@
 namespace Eugene
 {
 	class ResourceBindLayout;
-	class Shader;
 	class VkGraphicsPipeline :
 		public GraphicsPipeline
 	{

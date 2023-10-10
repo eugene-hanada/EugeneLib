@@ -119,7 +119,7 @@ Eugene::VkGraphics::~VkGraphics()
 vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
 {
 	auto memProps = physicalDevice_.getMemoryProperties();
-	auto memRq = image.getOwner().getImageMemoryRequirements(*image);
+	auto memRq = device_->getImageMemoryRequirements(*image);
 	std::uint32_t heapIdx = 0u;
 	std::uint32_t memIdx = 0u;
 
@@ -152,6 +152,45 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) 
 	allocateInfo.setAllocationSize(memRq.size);
 	allocateInfo.setMemoryTypeIndex(memIdx);
 	return image.getOwner().allocateMemoryUnique(allocateInfo);
+}
+
+vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueBuffer& buffer, bool isDeviceLoacal, bool isHostVisible) const
+{
+	auto memProps = physicalDevice_.getMemoryProperties();
+	auto memRq = device_->getBufferMemoryRequirements(*buffer);
+	std::uint32_t heapIdx = 0u;
+	std::uint32_t memIdx = 0u;
+
+	// ヒープを探す
+	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
+	{
+		if (((memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal) == vk::MemoryHeapFlagBits::eDeviceLocal) == isDeviceLoacal)
+		{
+			heapIdx = i;
+			break;
+		}
+	}
+
+	// メモリータイプを探す
+	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
+	{
+		auto propFlag = isHostVisible ? (vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent) : vk::MemoryPropertyFlagBits::eDeviceLocal;
+		if (memProps.memoryTypes[i].propertyFlags & propFlag)
+		{
+			if ((memRq.memoryTypeBits >> i) & 0x1)
+			{
+				if (memProps.memoryTypes[i].heapIndex == heapIdx)
+				{
+					memIdx = i;
+					break;
+				}
+			}
+		}
+	}
+	vk::MemoryAllocateInfo allocateInfo{};
+	allocateInfo.setAllocationSize(memRq.size);
+	allocateInfo.setMemoryTypeIndex(memIdx);
+	return buffer.getOwner().allocateMemoryUnique(allocateInfo);
 }
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
@@ -366,7 +405,7 @@ Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const A
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& size, float clear) const
 {
-	return nullptr;
+	return new VkImageResource{*this,*device_, size, clear};
 }
 
 Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const

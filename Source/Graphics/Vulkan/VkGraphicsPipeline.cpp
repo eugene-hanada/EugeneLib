@@ -1,21 +1,10 @@
 #include "VkGraphicsPipeline.h"
 #include "VkResourceBindLayout.h"
-#include "../Shader.cpp"
 #include "VkGraphics.h"
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Math/Geometry.h"
 
 
-std::vector<std::uint32_t> LoadShaderBinary(const std::filesystem::path& path)
-{
-	std::ifstream file{ path, std::ios::ate | std::ios::binary };
-	assert(file);
-	auto size = static_cast<size_t>(file.tellg());
-	file.seekg(0);
-	std::vector<std::uint32_t> buffer(size / 4);
-	file.read(reinterpret_cast<char*>(buffer.data()), size);
-	return buffer;
-}
 
 Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	const vk::Device& device,

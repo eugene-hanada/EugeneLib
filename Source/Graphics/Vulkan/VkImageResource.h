@@ -10,7 +10,7 @@ namespace Eugene
 	{
 	public:
 		VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info);
-		VkImageResource(const VkGraphics& graphics, const vk::Device& device, Vector2I& size, float clearValue);
+		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, float clearValue);
 
 		struct Data
 		{

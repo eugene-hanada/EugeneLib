@@ -10,8 +10,10 @@
 #include "VkResourceBindLayout.h"
 #include "VkCommandList.h"
 #include "VkImageResource.h"
+#include "VkBufferResource.h"
 #include "VkDepthStencilViews.h"
 #include "VkGraphicsPipeline.h"
+#include "VkVertexView.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -154,10 +156,10 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) 
 	return image.getOwner().allocateMemoryUnique(allocateInfo);
 }
 
-vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueBuffer& buffer, bool isDeviceLoacal, bool isHostVisible) const
+vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal, bool isHostVisible) const
 {
 	auto memProps = physicalDevice_.getMemoryProperties();
-	auto memRq = device_->getBufferMemoryRequirements(*buffer);
+	auto memRq = device_->getBufferMemoryRequirements(buffer);
 	std::uint32_t heapIdx = 0u;
 	std::uint32_t memIdx = 0u;
 
@@ -190,7 +192,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueBuffer& buffer
 	vk::MemoryAllocateInfo allocateInfo{};
 	allocateInfo.setAllocationSize(memRq.size);
 	allocateInfo.setMemoryTypeIndex(memIdx);
-	return buffer.getOwner().allocateMemoryUnique(allocateInfo);
+	return device_->allocateMemoryUnique(allocateInfo);
 }
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
@@ -205,12 +207,12 @@ Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
-    return nullptr;
+	return new VkUploadableBufferResource{*device_, *this, size};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size) const
 {
-    return nullptr;
+	return new VkBufferResource{*device_, *this, size};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
@@ -246,7 +248,7 @@ Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint
 
 Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
 {
-    return nullptr;
+	return new VkVertexView{size,vertexNum, *static_cast<VkBufferData*>(resource.GetResource())->buffer_};
 }
 
 Eugene::ImageResource& Eugene::VkGraphics::GetBackBufferResource(std::uint64_t idx)

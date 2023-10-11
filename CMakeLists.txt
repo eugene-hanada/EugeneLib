@@ -156,7 +156,7 @@ elseif(USE_VULKAN)
 		Source/Graphics/Vulkan/VkGraphics.cpp
 		Source/Graphics/Vulkan/VkGpuEngine.cpp
 		Source/Graphics/Vulkan/VkImageResource.cpp
-	 "Source/Graphics/Vulkan/VkResourceBindLayout.cpp" "Source/Graphics/Vulkan/VkCommandList.cpp" "Source/Graphics/Vulkan/VkDepthStencilViews.cpp" "Source/Graphics/Vulkan/VkGraphicsPipeline.cpp" "Source/Graphics/Vulkan/VkBufferResource.cpp")
+	 "Source/Graphics/Vulkan/VkResourceBindLayout.cpp" "Source/Graphics/Vulkan/VkCommandList.cpp" "Source/Graphics/Vulkan/VkDepthStencilViews.cpp" "Source/Graphics/Vulkan/VkGraphicsPipeline.cpp" "Source/Graphics/Vulkan/VkBufferResource.cpp" "Source/Graphics/Vulkan/VkVertexView.cpp")
 endif()
 
 # ランタイムライブラリを静的にリンクする

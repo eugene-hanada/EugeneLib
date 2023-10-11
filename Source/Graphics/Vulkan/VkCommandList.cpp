@@ -1,4 +1,7 @@
 #include "VkCommandList.h"
+#include "../../../Include/Common/EugeneLibException.h"
+#include "VkBufferResource.h"
+#include "VkImageResource.h"
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex)
 {
@@ -130,14 +133,26 @@ void Eugene::VkCommandList::ClearDepth(DepthStencilViews& views, float clearValu
 
 void Eugene::VkCommandList::Copy(GpuResource& destination, GpuResource& source)
 {
+	throw EugeneLibException{"”ñ‘Î‰ž‚Å‚·"};
 }
 
 void Eugene::VkCommandList::CopyTexture(GpuResource& destination, GpuResource& source)
 {
+	throw EugeneLibException{"”ñ‘Î‰ž‚Å‚·"};
 }
 
 void Eugene::VkCommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 {
+}
+
+void Eugene::VkCommandList::CopyBuffer(BufferResource& dest, BufferResource& src)
+{
+	auto destData =  static_cast<VkBufferData*>(dest.GetResource());
+	auto srcData = static_cast<VkBufferData*>(src.GetResource());
+	vk::BufferCopy cpy{};
+	cpy.setDstOffset(0);
+	cpy.setSrcOffset(0);
+	commandBuffer_->copyBuffer(*srcData->buffer_, *destData->buffer_, cpy);
 }
 
 void* Eugene::VkCommandList::GetCommandList(void) const

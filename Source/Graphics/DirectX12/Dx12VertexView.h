@@ -15,7 +15,7 @@ namespace Eugene
 		~Dx12VertexView();
 
 	private:
-		void* GetView(void) const final;
+		void* GetView(void) final;
 		std::unique_ptr<D3D12_VERTEX_BUFFER_VIEW> bufferView_;
 	};
 }

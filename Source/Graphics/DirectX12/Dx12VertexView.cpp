@@ -16,7 +16,7 @@ Eugene::Dx12VertexView::~Dx12VertexView()
 {
 }
 
-void* Eugene::Dx12VertexView::GetView(void) const
+void* Eugene::Dx12VertexView::GetView(void)
 {
 	return bufferView_.get();
 }

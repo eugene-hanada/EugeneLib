@@ -226,11 +226,18 @@ namespace Eugene
 		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;
 
 		/// <summary>
-		/// 
+		/// テクスチャのコピーを行う
 		/// </summary>
 		/// <param name="dest"></param>
 		/// <param name="src"></param>
 		virtual void CopyTexture(ImageResource& dest, BufferResource& src) = 0;
+
+		/// <summary>
+		/// バッファ同氏のコピーを行う
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="src"></param>
+		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) = 0;
 
 		virtual void* GetCommandList(void) const = 0;
 

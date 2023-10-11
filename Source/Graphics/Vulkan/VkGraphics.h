@@ -82,7 +82,7 @@ namespace Eugene
 		~VkGraphics();
 
 		vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
-		vk::UniqueDeviceMemory CreateMemory(vk::UniqueBuffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
+		vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 		CommandList* CreateCommandList(void) const final;

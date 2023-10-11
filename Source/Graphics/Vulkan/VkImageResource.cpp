@@ -57,8 +57,8 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	// ƒoƒCƒ“ƒh
 	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
 
-	data_.arraySize_ = 0;
-	data_.mipmapLevels_ = 0;
+	data_.arraySize_ = 1;
+	data_.mipmapLevels_ = 1;
 }
 
 bool Eugene::VkImageResource::CanMap(void) const

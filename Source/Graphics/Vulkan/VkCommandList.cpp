@@ -152,10 +152,11 @@ void Eugene::VkCommandList::CopyBuffer(BufferResource& dest, BufferResource& src
 	vk::BufferCopy cpy{};
 	cpy.setDstOffset(0);
 	cpy.setSrcOffset(0);
+	cpy.setSize(dest.GetSize());
 	commandBuffer_->copyBuffer(*srcData->buffer_, *destData->buffer_, cpy);
 }
 
-void* Eugene::VkCommandList::GetCommandList(void) const
+void* Eugene::VkCommandList::GetCommandList(void)
 {
-	return nullptr;
+	return &*commandBuffer_;
 }

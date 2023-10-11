@@ -41,7 +41,7 @@ Eugene::Dx12CommandList::Dx12CommandList(ID3D12Device* device)
 	End();
 }
 
-void* Eugene::Dx12CommandList::GetCommandList(void) const
+void* Eugene::Dx12CommandList::GetCommandList(void)
 {
 	return cmdList_.Get();
 }

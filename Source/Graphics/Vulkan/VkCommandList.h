@@ -43,7 +43,7 @@ namespace Eugene
 		void CopyTexture(GpuResource& destination, GpuResource& source) final;
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 		void CopyBuffer(BufferResource& dest, BufferResource& src) final;
-		void* GetCommandList(void) const final;
+		void* GetCommandList(void) final;
 
 
 		/// <summary>

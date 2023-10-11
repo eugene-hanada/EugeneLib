@@ -6,11 +6,13 @@ Eugene::VkBufferResource::VkBufferResource(const vk::Device& device, const VkGra
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(size);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer);
+	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 	
 	data_.buffer_ =  device.createBufferUnique(bufferInfo);
 	data_.memory_ = std::move(graphics.CreateMemory(*data_.buffer_));
+
+	device.bindBufferMemory(*data_.buffer_, *data_.memory_, 0);
 }
 
 bool Eugene::VkBufferResource::CanMap(void) const
@@ -33,11 +35,13 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vk::Device&
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(size);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer);
+	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 
 	data_.buffer_ = device.createBufferUnique(bufferInfo);
 	data_.memory_ = std::move(graphics.CreateMemory(*data_.buffer_, false, true));
+
+	device.bindBufferMemory(*data_.buffer_, *data_.memory_, 0);
 }
 
 bool Eugene::VkUploadableBufferResource::CanMap(void) const

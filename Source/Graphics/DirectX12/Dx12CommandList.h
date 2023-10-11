@@ -18,7 +18,7 @@ namespace Eugene
 		using ComPtr = Microsoft::WRL::ComPtr<T>;
 	public:
 		Dx12CommandList(ID3D12Device* device);
-		void* GetCommandList(void) const final;
+		void* GetCommandList(void) final;
 	private:
 
 		// 開始処理

@@ -239,7 +239,7 @@ namespace Eugene
 		/// <param name="src"></param>
 		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) = 0;
 
-		virtual void* GetCommandList(void) const = 0;
+		virtual void* GetCommandList(void) = 0;
 
 #ifdef USE_IMGUI
 		virtual void SetImguiCommand(ImDrawData* data, Graphics& graphics) const = 0;

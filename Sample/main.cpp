@@ -60,7 +60,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		pipeline.reset(graphics->CreateGraphicsPipeline(
 			*resourceBidLayout,
 			{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
-			{ Eugene::ShaderPair{{"VertexShader.vso"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel} },
+			{ Eugene::ShaderPair{{"VertexShader.spv"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.spv"}, Eugene::ShaderType::Pixel} },
 			Eugene::RendertargetLayout{ Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non },
 			Eugene::TopologyType::Triangle,
 			false,
@@ -95,7 +95,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		
 		// アップロード用バッファ生成
 		std::unique_ptr<Eugene::BufferResource> uploadBuffer;
-		uploadBuffer.reset(graphics->CreateUploadableBufferResource(50));
+		uploadBuffer.reset(graphics->CreateUploadableBufferResource(sizeof(vertex)));
 		auto ptr = static_cast<Vertex*>(uploadBuffer->Map());
 		std::copy(std::begin(vertex), std::end(vertex), ptr);
 		uploadBuffer->UnMap();
@@ -104,7 +104,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		vertexBuffer.reset(graphics->CreateBufferResource(sizeof(Vertex) * 4));
 		vertexView.reset(graphics->CreateVertexView(sizeof(Vertex), 4ull, *vertexBuffer));
 		cmdList->Begin();
-		cmdList->Copy(*vertexBuffer, *uploadBuffer);
+		cmdList->CopyBuffer(*vertexBuffer, *uploadBuffer);
 		cmdList->End();
 		gpuEngine->Push(*cmdList);
 		gpuEngine->Execute();

@@ -36,10 +36,10 @@ void Eugene::VkGpuEngine::Execute(void)
 	vk::SubmitInfo info{};
 	info.setCommandBufferCount(nowSize_);
 	info.setPCommandBuffers(cmdBuffers_.data());
-	vk::Semaphore waitSemaphores[]{ **semaphore_ };
+	/*vk::Semaphore waitSemaphores[]{ **semaphore_ };
 	info.setWaitSemaphores(waitSemaphores);
 	vk::PipelineStageFlags waitStages[]{ vk::PipelineStageFlagBits::eColorAttachmentOutput };
-	info.setWaitDstStageMask(waitStages);
+	info.setWaitDstStageMask(waitStages);*/
 	queue_.submit(info);
 	nowSize_ = 0;
 }

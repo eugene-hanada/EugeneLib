@@ -156,6 +156,7 @@ namespace Eugene
 		std::uint32_t arraySize;		// 配列サイズ
 		std::uint16_t mipLevels;			// ミップマップレベル
 		std::int32_t pixelPerBite;			// ピクセル当たりのバイト数
+		std::uint32_t totalSize_;
 	};
 
 	/// <summary>

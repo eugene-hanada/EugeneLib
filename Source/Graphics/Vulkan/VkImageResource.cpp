@@ -10,6 +10,8 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 	imageInfo.setMipLevels(info.mipLevels);
 	imageInfo.extent.setHeight(info.height);
 	imageInfo.extent.setWidth(info.width);
+	imageInfo.extent.setDepth(1u);
+	imageInfo.setImageType(vk::ImageType::e2D);
 	imageInfo.setTiling(vk::ImageTiling::eOptimal);
 	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled);
@@ -47,6 +49,7 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
+
 
 	// Imageê∂ê¨
 	data_.image_ = device.createImageUnique(imageInfo);

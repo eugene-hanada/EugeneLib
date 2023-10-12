@@ -1,5 +1,6 @@
 #include "VkBufferResource.h"
 #include "VkGraphics.h"
+#include "../../../Include/Graphics/Image.h"
 
 Eugene::VkBufferResource::VkBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size) :
 	BufferResource{}
@@ -42,6 +43,24 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vk::Device&
 	data_.memory_ = std::move(graphics.CreateMemory(*data_.buffer_, false, true));
 
 	device.bindBufferMemory(*data_.buffer_, *data_.memory_, 0);
+}
+
+Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, Image& image):
+	BufferResource{}
+{
+	vk::BufferCreateInfo bufferInfo{};
+	bufferInfo.setSize(image.GetInfo().totalSize_);
+	bufferInfo.setUsage(vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
+	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
+
+	data_.buffer_ = device.createBufferUnique(bufferInfo);
+	data_.memory_ = std::move(graphics.CreateMemory(*data_.buffer_, false, true));
+
+	device.bindBufferMemory(*data_.buffer_, *data_.memory_, 0);
+
+	auto ptr = static_cast<std::uint8_t*>(Map());
+	std::memcpy(ptr, image.GetData(), static_cast<size_t>(image.GetInfo().totalSize_));
+	UnMap();
 }
 
 bool Eugene::VkUploadableBufferResource::CanMap(void) const

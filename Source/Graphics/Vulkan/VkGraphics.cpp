@@ -14,6 +14,7 @@
 #include "VkDepthStencilViews.h"
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
+#include "VkShaderResourceViews.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -217,7 +218,7 @@ Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t s
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
 {
-    return nullptr;
+	return new VkUploadableBufferResource{*device_,*this, texture};
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
@@ -233,7 +234,13 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const Vector2I& s
 
 Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(std::uint64_t size) const
 {
+	throw EugeneLibException{"”ñ‘Î‰ž‚Å‚·"};
     return nullptr;
+}
+
+Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	return new VkShaderResourceViews{*device_, viewTypes};
 }
 
 Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint64_t size) const

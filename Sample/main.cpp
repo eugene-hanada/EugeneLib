@@ -114,7 +114,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// スクリーン座標からクリップ座標に変換する行列を生成
 	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView;
-	rtMatrixView.reset(graphics->CreateShaderResourceViews(1));
+	rtMatrixView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }));
 	std::unique_ptr<Eugene::BufferResource> rtMatrixBuffer;
 	rtMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
 	rtMatrixView->CreateConstantBuffer(*rtMatrixBuffer, 0);

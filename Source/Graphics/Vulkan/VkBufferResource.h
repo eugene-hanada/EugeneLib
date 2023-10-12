@@ -11,6 +11,7 @@ namespace Eugene
 	};
 
 	class VkGraphics;
+	class Image;
 	class VkBufferResource :
 		public BufferResource
 	{
@@ -30,6 +31,7 @@ namespace Eugene
 	{
 	public:
 		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size);
+		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, Image& image);
 	private:
 		// BufferResource ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 		bool CanMap(void) const final;

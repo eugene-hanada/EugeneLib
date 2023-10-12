@@ -196,6 +196,14 @@ namespace Eugene
 		virtual ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const = 0;
 
 		/// <summary>
+		/// ShaderResourceViewsの生成
+		/// </summary>
+		/// <param name="viewTypes"> Viewの情報 </param>
+		/// <returns> ShaderResourceViewsのポインタ </returns>
+		[[nodiscard]]
+		virtual ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const = 0;
+
+		/// <summary>
 		/// RenderTargetViewsの生成
 		/// </summary>
 		/// <param name="size"> Viewの数 </param>

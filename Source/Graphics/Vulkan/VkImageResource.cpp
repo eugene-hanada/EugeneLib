@@ -30,6 +30,8 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 
 	data_.arraySize_ = info.arraySize;
 	data_.mipmapLevels_ = info.mipLevels;
+
+	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
 
 Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, float clearValue) :
@@ -62,6 +64,8 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
+
+	size_ = size;
 }
 
 bool Eugene::VkImageResource::CanMap(void) const
@@ -76,6 +80,5 @@ void* Eugene::VkImageResource::GetResource(void)
 
 Eugene::Vector2I Eugene::VkImageResource::GetSize(void)
 {
-	
 	return size_;
 }

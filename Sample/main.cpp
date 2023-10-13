@@ -156,7 +156,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 画像と定数バッファ用のビュー
 	std::unique_ptr<Eugene::ShaderResourceViews> texAndMatrixView;
-	texAndMatrixView.reset(graphics->CreateShaderResourceViews(2));
+	texAndMatrixView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}}));
 	texAndMatrixView->CreateTexture(*textureResource, 0);
 	texAndMatrixView->CreateConstantBuffer(*texMatrixBuffer, 1);
 

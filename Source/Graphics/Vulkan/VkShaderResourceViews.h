@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Common/ArgsSpan.h"
 #include "../../../Include/Graphics/ResourceBindLayout.h"
+#include <map>
 
 namespace Eugene
 {
@@ -23,5 +24,6 @@ namespace Eugene
 		vk::UniqueDescriptorPool descriptorPool_;
 		vk::UniqueDescriptorSetLayout layout_;
 		std::vector<std::tuple<ViewType, std::uint32_t, std::uint32_t>> typeData_;
+		std::map<std::uint64_t, vk::UniqueImageView> imageViewMap_;
 	};
 }

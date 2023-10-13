@@ -158,12 +158,20 @@ void Eugene::VkCommandList::CopyTexture(ImageResource& dest, BufferResource& src
 	barrier.subresourceRange.setLevelCount(1);
 
 	auto texSize = dest.GetSize();
-	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eNone, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
 	vk::BufferImageCopy region{};
 	region.imageSubresource.layerCount = 1;
 	region.imageExtent = vk::Extent3D{ static_cast<std::uint32_t>(texSize.x),static_cast<std::uint32_t>(texSize.y),1 };
 	region.imageSubresource.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	commandBuffer_->copyBufferToImage(*srcData->buffer_, *destData->image_, vk::ImageLayout::eTransferDstOptimal, region);
+
+	barrier.setOldLayout(vk::ImageLayout::eTransferDstOptimal);
+	barrier.setNewLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eShaderRead);
+
+	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+
+
 
 }
 

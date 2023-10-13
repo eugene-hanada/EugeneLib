@@ -15,6 +15,7 @@
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
 #include "VkShaderResourceViews.h"
+#include "VkSampler.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -284,7 +285,7 @@ void Eugene::VkGraphics::Present(void)
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const
 {
-    return nullptr;
+	return new VkSampler{ *device_, layout };
 }
 
 Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(std::uint64_t size) const

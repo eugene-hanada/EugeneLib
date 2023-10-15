@@ -12,7 +12,6 @@
 #include "Common/Debug.h"
 
 
-
 int Func(const Eugene::ArgsSpan<int> value)
 {
 	auto begin = value.begin();
@@ -168,7 +167,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		sampler.reset(graphics->CreateSampler(layout));
 	}
 	std::unique_ptr<Eugene::SamplerViews> samplerView;
-	samplerView.reset(graphics->CreateSamplerViews(1));
+	samplerView.reset(graphics->CreateSamplerViews({ Eugene::Bind{Eugene::ViewType::Sampler,1} }));
 	samplerView->CreateSampler(*sampler, 0);
 
 	// カーソル表示用行列
@@ -177,7 +176,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::Matrix4x4* cursorMatrix = static_cast<Eugene::Matrix4x4*>(cursorMatrixBuffer->Map());
 	Eugene::Get2DTransformMatrix(*cursorMatrix, Eugene::zeroVector2<float>, 0.0f, {0.2f,0.2f });
 	std::unique_ptr<Eugene::ShaderResourceViews> cursorView;
-	cursorView.reset(graphics->CreateShaderResourceViews(2));
+	cursorView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }));
 	cursorView->CreateTexture(*textureResource, 0);
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
 

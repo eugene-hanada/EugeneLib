@@ -120,5 +120,8 @@ namespace Eugene
 
 		// Graphics を介して継承されました
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+
+		// Graphics を介して継承されました
+		virtual ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const override;
 };
 }

@@ -9,8 +9,41 @@ namespace Eugene
 		public ImageResource
 	{
 	public:
+		/// <summary>
+		/// テクスチャ用のコンストラクタ
+		/// </summary>
+		/// <param name="graphics"> グラフィックスクラス </param>
+		/// <param name="device"> Vulkanのデバイス </param>
+		/// <param name="info"> テクスチャの情報 </param>
 		VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info);
+
+		/// <summary>
+		/// デブスバッファの場合のコンストラクタ
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="device"></param>
+		/// <param name="size"></param>
+		/// <param name="clearValue"></param>
 		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, float clearValue);
+
+
+		/// <summary>
+		/// レンダーターゲットの場合のコンストラクタ
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="device"></param>
+		/// <param name="size"></param>
+		/// <param name="format"></param>
+		/// <param name="clearColor"></param>
+		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, Format format);
+
+		/// <summary>
+		/// バックバッファの場合のコンストラクタ
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="device"></param>
+		/// <param name="size"></param>
+		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, vk::Format format);
 
 		struct Data
 		{

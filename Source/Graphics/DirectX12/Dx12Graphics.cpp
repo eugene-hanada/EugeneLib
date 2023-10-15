@@ -429,6 +429,16 @@ Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ResourceB
 	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
 }
 
+Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	std::uint64_t num{ 0ull };
+	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
+	{
+		num += viewTypes.at(i).viewNum_;
+	}
+	return new Dx12ShaderResourceViews{device_.Get(),num };
+}
+
 #ifdef USE_IMGUI
 
 void Eugene::Dx12Graphics::ImguiNewFrame(void) const

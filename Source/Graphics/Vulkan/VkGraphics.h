@@ -76,7 +76,7 @@ namespace Eugene
 
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-		void CreateSwapChain(const Eugene::Vector2& size);
+		vk::Format CreateSwapChain(const Eugene::Vector2& size);
 #endif
 
 		~VkGraphics();
@@ -112,6 +112,7 @@ namespace Eugene
 		std::uint64_t GetNowBackBufferIndex(void) final;
 		void Present(void) final;
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
+		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
 		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
 
 

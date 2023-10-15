@@ -16,6 +16,7 @@
 #include "VkVertexView.h"
 #include "VkShaderResourceViews.h"
 #include "VkSampler.h"
+#include "VkSamplerViews.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -51,11 +52,20 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 	queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
 	
-	CreateSwapChain(size);
+	auto useFormat = CreateSwapChain(size);
 
 	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
+
+	buffers_.resize(bufferNum);
+
+	for (auto& img : buffers_)
+	{
+		img = std::make_unique<VkImageResource>(*this, *device_, static_cast<Vector2I>(size), useFormat);
+	}
+
+
 }
-void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
+vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
 	vk::Format useFormat;
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
@@ -112,6 +122,8 @@ void Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 	info.setClipped(true);
 
 	swapchain_ = device_->createSwapchainKHRUnique(info);
+
+	return useFormat;
 
 }
 #endif
@@ -278,7 +290,7 @@ void Eugene::VkGraphics::Present(void)
 {
 	vk::PresentInfoKHR info{};
 	info.setImageIndices(backBufferIdx_);
-	queue_.presentKHR(info);
+	auto result = queue_.presentKHR(info);
 
 	//device_->acquireNextImageKHR();
 }
@@ -288,9 +300,15 @@ Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) 
 	return new VkSampler{ *device_, layout };
 }
 
+Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	return new VkSamplerViews{*device_, viewTypes};
+}
+
 Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(std::uint64_t size) const
 {
-    return nullptr;
+	throw EugeneLibException{ "”ñ‘Î‰ž‚Å‚·" };
+	return nullptr;
 }
 
 

@@ -52,7 +52,6 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
 
-
 	// Imageê∂ê¨
 	data_.image_ = device.createImageUnique(imageInfo);
 
@@ -65,6 +64,59 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
 
+	size_ = size;
+}
+
+Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, Format format) :
+	ImageResource{format}
+{
+	vk::ImageCreateInfo imageInfo{};
+	imageInfo.setArrayLayers(1);
+	imageInfo.setMipLevels(1);
+	imageInfo.extent.setHeight(size.y);
+	imageInfo.extent.setWidth(size.x);
+	imageInfo.extent.setDepth(1u);
+	imageInfo.setTiling(vk::ImageTiling::eOptimal);
+	imageInfo.setImageType(vk::ImageType::e2D);
+	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
+	imageInfo.setUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eSampled);
+	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
+	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
+	imageInfo.setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(format)]);
+
+	data_.image_ = device.createImageUnique(imageInfo);
+	data_.memory_ = graphics.CreateMemory(data_.image_);
+	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
+
+	data_.arraySize_ = 1;
+	data_.mipmapLevels_ = 1;
+
+	size_ = size;
+}
+
+Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, vk::Format format) :
+	ImageResource{Format::NON}
+{
+	vk::ImageCreateInfo imageInfo{};
+	imageInfo.setArrayLayers(1);
+	imageInfo.setMipLevels(1);
+	imageInfo.extent.setHeight(size.y);
+	imageInfo.extent.setWidth(size.x);
+	imageInfo.extent.setDepth(1u);
+	imageInfo.setTiling(vk::ImageTiling::eOptimal);
+	imageInfo.setImageType(vk::ImageType::e2D);
+	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
+	imageInfo.setUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferSrc);
+	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
+	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
+	imageInfo.setFormat(format);
+
+	data_.image_ = device.createImageUnique(imageInfo);
+	data_.memory_ = graphics.CreateMemory(data_.image_);
+	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
+
+	data_.arraySize_ = 1;
+	data_.mipmapLevels_ = 1;
 	size_ = size;
 }
 

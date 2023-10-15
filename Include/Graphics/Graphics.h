@@ -192,7 +192,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> Viewの数 </param>
 		/// <returns> ShaderResourceViewsのポインタ </returns>
-		[[nodiscard]]
+		[[nodiscard,deprecated("CreateShaderResourceViews(const ArgsSpan<Bind>& )を使用してください")]]
 		virtual ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const = 0;
 
 		/// <summary>
@@ -288,8 +288,16 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ビューの数 </param>
 		/// <returns></returns>
-		[[nodiscard]]
+		[[nodiscard, deprecated("CreateSamplerViews(const ArgsSpan<Bind>& )を使用してください")]]
 		virtual SamplerViews* CreateSamplerViews(std::uint64_t size) const = 0;
+
+		/// <summary>
+		/// サンプラービューを作成する
+		/// </summary>
+		/// <param name="viewTypes">  </param>
+		/// <returns></returns>
+		[[nodiscard]]
+		virtual SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const = 0;
 
 		/// <summary>
 		/// バックバッファをリサイズする

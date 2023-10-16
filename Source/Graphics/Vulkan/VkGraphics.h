@@ -17,27 +17,32 @@ namespace Eugene
 		static constexpr std::array<vk::Format, FormatMax> FormatToVkFormat{
 			vk::Format::eUndefined,
 
+			// R32G32B32A32
 			vk::Format::eUndefined,
 			vk::Format::eR32G32B32A32Sfloat,
 			vk::Format::eR32G32B32A32Uint,
 			vk::Format::eR32G32B32A32Sint,
 		
+			// R32G32B32
 			vk::Format::eUndefined,
 			vk::Format::eR32G32B32Sfloat,
 			vk::Format::eR32G32B32Uint,
 			vk::Format::eR32G32B32Sint,
 
+			// R32G32
 			vk::Format::eUndefined,
 			vk::Format::eR32G32Sfloat,
 			vk::Format::eR32G32Uint,
 			vk::Format::eR32G32Sint,
 
+			// R32
 			vk::Format::eUndefined,
 			vk::Format::eD32Sfloat,
 			vk::Format::eR32Sfloat,
 			vk::Format::eR32Uint,
 			vk::Format::eR32Sint,
 
+			// R16G16B16A16
 			vk::Format::eUndefined,
 			vk::Format::eR16G16B16A16Sfloat,
 			vk::Format::eR16G16B16A16Unorm,
@@ -45,6 +50,15 @@ namespace Eugene
 			vk::Format::eR16G16B16A16Snorm,
 			vk::Format::eR16G16B16A16Sint,
 
+			// R16G16B16
+			vk::Format::eUndefined,
+			vk::Format::eR16G16B16Sfloat,
+			vk::Format::eR16G16B16Unorm,
+			vk::Format::eR16G16B16Uint,
+			vk::Format::eR16G16B16Snorm,
+			vk::Format::eR16G16B16Sint,
+
+			// R16B16
 			vk::Format::eUndefined,
 			vk::Format::eR16G16Sfloat,
 			vk::Format::eR16G16Unorm,
@@ -52,6 +66,7 @@ namespace Eugene
 			vk::Format::eR16G16Snorm,
 			vk::Format::eR16G16Sint,
 
+			// R16
 			vk::Format::eUndefined,
 			vk::Format::eR16Sfloat,
 			vk::Format::eR16Unorm,

@@ -71,6 +71,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
 	auto format = physicalDevice_.getSurfaceFormatsKHR(*surfaceKhr_);
 	auto modes = physicalDevice_.getSurfacePresentModesKHR(*surfaceKhr_);
+
 	if (format.size() <= 0 || modes.size() <= 0)
 	{
 		// フォーマットもPresentも0以下ならスワップチェイン使えないのでやめる

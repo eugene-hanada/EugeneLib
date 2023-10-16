@@ -43,6 +43,14 @@ namespace Eugene
 		R16G16B16A16_SNORM,
 		R16G16B16A16_SINT ,
 
+		// R16G16B16
+		FORMAT_R16G16B16_TYPELESS,
+		FORMAT_R16G16B16_FLOAT,
+		FORMAT_R16G16B16_UNORM,
+		FORMAT_R16G16B16_UINT,
+		FORMAT_R16G16B16_SNORM,
+		FORMAT_R16G16B16_SINT,
+
 		// R16G16
 		R16G16_TYPELESS,
 		R16G16_FLOAT,
@@ -67,6 +75,14 @@ namespace Eugene
 		R8G8B8A8_UINT,
 		R8G8B8A8_SNORM,
 		R8G8B8A8_SINT,
+
+		// B8G8R8A8
+		B8G8R8A8_TYPELESS,
+		B8G8R8A8_UNORM,
+		B8G8R8A8_UNORM_SRGB,
+		B8G8R8A8_UINT,
+		B8G8R8A8_SNORM,
+		B8G8R8A8_SINT,
 
 		// 圧縮テクスチャ
 		BC1_UNORM,
@@ -143,7 +159,7 @@ namespace Eugene
 	/// <summary>
 	/// フォーマットの最大数
 	/// </summary>
-	constexpr auto FormatMax = 48ull;
+	constexpr auto FormatMax = 60ull;
 
 	/// <summary>
 	/// テクスチャ用画像情報

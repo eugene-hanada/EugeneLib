@@ -123,56 +123,66 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	{
 		constexpr vk::ColorComponentFlags toComponentFlag[]{
 			static_cast<const vk::ColorComponentFlags>(0u),
+			// R32G32B32A32
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 
+			// R32G32B32
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
 
+			// R32G32
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
 
-			vk::ColorComponentFlagBits::eR,
-			vk::ColorComponentFlagBits::eR,
-			vk::ColorComponentFlagBits::eR,
-			vk::ColorComponentFlagBits::eR,
-			vk::ColorComponentFlagBits::eR,
-
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
-
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
-
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
-
-			vk::ColorComponentFlagBits::eR,
-			vk::ColorComponentFlagBits::eR,
+			// R32
 			vk::ColorComponentFlagBits::eR,
 			vk::ColorComponentFlagBits::eR,
 			vk::ColorComponentFlagBits::eR,
 			vk::ColorComponentFlagBits::eR,
 			vk::ColorComponentFlagBits::eR,
 
+			// R16G16B16A16
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+
+
+			// R16G16B16
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB,
+
+			// R16G16
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG,
+
+			// R16
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+			vk::ColorComponentFlagBits::eR,
+
+			// R8G8B8A8
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,

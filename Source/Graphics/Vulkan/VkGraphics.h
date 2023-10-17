@@ -70,6 +70,7 @@ namespace Eugene
 			vk::Format::eUndefined,
 			vk::Format::eR16Sfloat,
 			vk::Format::eR16Unorm,
+			vk::Format::eD16Unorm,
 			vk::Format::eR16Uint,
 			vk::Format::eR16Snorm,
 			vk::Format::eR16Sint,
@@ -95,8 +96,7 @@ namespace Eugene
 			vk::Format::eBc2UnormBlock,
 			vk::Format::eBc3UnormBlock,
 			vk::Format::eBc5UnormBlock,
-			vk::Format::eBc7UnormBlock
-
+			vk::Format::eBc7UnormBlock,
 		};
 
 #ifdef USE_WINDOWS

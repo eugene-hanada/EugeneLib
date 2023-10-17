@@ -66,10 +66,9 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 		if (FormatToVkFormat[i] == useVkformat)
 		{
 			useFormat = static_cast<Format>(i);
+			break;
 		}
 	}
-	
-
 
 	for (auto& img : buffers_)
 	{
@@ -302,7 +301,7 @@ Eugene::RenderTargetViews& Eugene::VkGraphics::GetViews(void)
 
 std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void)
 {
-    return std::uint64_t();
+    return backBufferIdx_;
 }
 
 void Eugene::VkGraphics::Present(void)

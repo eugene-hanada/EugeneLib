@@ -74,6 +74,7 @@ namespace Eugene
 			vk::Format::eR16Snorm,
 			vk::Format::eR16Sint,
 
+			// R8G8B8A8
 			vk::Format::eUndefined,
 			vk::Format::eR8G8B8A8Unorm,
 			vk::Format::eR8G8B8A8Srgb,
@@ -81,6 +82,15 @@ namespace Eugene
 			vk::Format::eR8G8B8A8Snorm,
 			vk::Format::eR8G8B8A8Sint,
 
+			//
+			vk::Format::eUndefined,
+			vk::Format::eB8G8R8A8Unorm,
+			vk::Format::eB8G8R8A8Srgb,
+			vk::Format::eB8G8R8A8Uint,
+			vk::Format::eB8G8R8A8Snorm,
+			vk::Format::eB8G8R8A8Sint,
+
+			// DDS
 			vk::Format::eBc1RgbaUnormBlock,
 			vk::Format::eBc2UnormBlock,
 			vk::Format::eBc3UnormBlock,

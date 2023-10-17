@@ -11,7 +11,7 @@ namespace Eugene
 	public:
 		Dx12RenderTargetViews(ID3D12Device* device, std::uint64_t size, bool isShaderVisible);
 	private:
-		void Create(ImageResource& resource, std::uint64_t idx, const Format& format) final;
-		void* GetViews(void) const;
+		void Create(ImageResource& resource, std::uint64_t idx) final;
+		void* GetViews(void) final;
 	};
 }

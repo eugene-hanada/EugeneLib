@@ -17,6 +17,7 @@
 #include "VkShaderResourceViews.h"
 #include "VkSampler.h"
 #include "VkSamplerViews.h"
+#include "VkRenderTargetViews.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
@@ -52,18 +53,35 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 	queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
 	
-	auto useFormat = CreateSwapChain(size);
+	auto useVkformat = CreateSwapChain(size);
 
 	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
 
 	buffers_.resize(bufferNum);
+
+
+	auto useFormat{ Format::NON };
+	for (std::uint64_t i = 0ull; i < FormatMax; i++)
+	{
+		if (FormatToVkFormat[i] == useVkformat)
+		{
+			useFormat = static_cast<Format>(i);
+		}
+	}
+	
+
 
 	for (auto& img : buffers_)
 	{
 		img = std::make_unique<VkImageResource>(*this, *device_, static_cast<Vector2I>(size), useFormat);
 	}
 
+	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
 
+	for (size_t i = 0ull; i < buffers_.size(); i++)
+	{
+		renderTargetViews_->Create(*buffers_[i], i);
+	}
 }
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
@@ -264,7 +282,7 @@ Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint
 
 Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
 {
-    return nullptr;
+	return new VkRenderTargetViews{size};
 }
 
 Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const

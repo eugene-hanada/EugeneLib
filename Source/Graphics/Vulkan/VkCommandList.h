@@ -66,6 +66,8 @@ namespace Eugene
 		/// </summary>
 		bool isRendering_;
 
+		vk::PipelineLayout* nowLayout_;
+
 	};
 }
 

@@ -85,7 +85,7 @@ void Eugene::Dx12ShaderResourceViews::CreateCubeMap(ImageResource& resource, std
 	device->CreateShaderResourceView(dx12Resource, &viewDesc, handle);
 }
 
-void* Eugene::Dx12ShaderResourceViews::GetViews(void) const
+void* Eugene::Dx12ShaderResourceViews::GetViews(void)
 {
 	return descriptorHeap_.Get();
 }

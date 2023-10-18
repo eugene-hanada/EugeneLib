@@ -12,17 +12,23 @@ namespace Eugene
 	{
 	public:
 		VkShaderResourceViews(const vk::Device& device, const ArgsSpan<Bind>& ViewTypes);
+		
+		struct Data
+		{
+			vk::UniqueDescriptorSet descriptorSet_;
+			vk::UniqueDescriptorSetLayout layout_;
+		};
 	private:
 
 		// ShaderResourceViews ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 		void CreateTexture(ImageResource& resource, std::uint64_t idx) final;
 		void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) final;
 		void CreateCubeMap(ImageResource& resource, std::uint64_t idx) final;
-		void* GetViews(void) const final;
+		void* GetViews(void) final;
 		std::uint64_t GetImg(void) final;
-		vk::UniqueDescriptorSet descriptorSet_;
+		
 		vk::UniqueDescriptorPool descriptorPool_;
-		vk::UniqueDescriptorSetLayout layout_;
+		Data data_;
 		std::vector<std::tuple<ViewType, std::uint32_t, std::uint32_t>> typeData_;
 		std::map<std::uint64_t, vk::UniqueImageView> imageViewMap_;
 	};

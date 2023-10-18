@@ -6,9 +6,10 @@
 #include "VkRenderTargetViews.h"
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
+#include "VkShaderResourceViews.h"
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
-	isRendering_{false}
+	isRendering_{false}, nowLayout_{nullptr}
 {
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(familyIndex);
@@ -41,6 +42,7 @@ void Eugene::VkCommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
 {
 	auto pipeline{ static_cast<VkGraphicsPipeline::PipelineType*>(gpipeline.GetPipeline()) };
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline->pipeline_);
+	nowLayout_ = &pipeline->layout_;
 }
 
 void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
@@ -82,6 +84,21 @@ void Eugene::VkCommandList::SetIndexView(IndexView& view)
 
 void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
 {
+	if (nowLayout_ == nullptr)
+	{
+		return;
+	}
+	auto data = static_cast<VkShaderResourceViews::Data*>(views.GetViews());
+	commandBuffer_->bindDescriptorSets(
+		vk::PipelineBindPoint::eGraphics,
+		*nowLayout_,
+		static_cast<std::uint32_t>(paramIdx),
+		1u, 
+		&*data->descriptorSet_,
+		0u, 
+		nullptr
+	);
+	
 }
 
 void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)

@@ -37,7 +37,7 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	layoutInfo.setBindingCount(1);
 	layoutInfo.setBindings(binding);
-	layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
+	data_.layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
 
 	vk::DescriptorPoolCreateInfo poolInfo{};
 	poolInfo.setPoolSizes(poolSize);
@@ -48,8 +48,8 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 	vk::DescriptorSetAllocateInfo allocateInfo{};
 	allocateInfo.setDescriptorPool(*descriptorPool_);
 	allocateInfo.setDescriptorSetCount(1);
-	allocateInfo.setSetLayouts(*layout_);
-	descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
+	allocateInfo.setSetLayouts(*data_.layout_);
+	data_.descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
 
 	int idx = 0;
 	typeData_.resize(num);
@@ -90,14 +90,14 @@ void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::
 	imageInfo.setImageLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
 
 	vk::WriteDescriptorSet write{};
-	write.setDstSet(*descriptorSet_);
+	write.setDstSet(*data_.descriptorSet_);
 	write.setDstBinding(std::get<1>(type));
 	write.setDstArrayElement(std::get<2>(type));
 	write.setDescriptorType(vk::DescriptorType::eSampledImage);
 	write.setDescriptorCount(1);
 	write.setImageInfo(imageInfo);
 
-	descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
+	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
 void Eugene::VkShaderResourceViews::CreateConstantBuffer(BufferResource& resource, std::uint64_t idx)
@@ -114,23 +114,24 @@ void Eugene::VkShaderResourceViews::CreateConstantBuffer(BufferResource& resourc
 
 	auto& type = typeData_[idx];
 	vk::WriteDescriptorSet write{};
-	write.setDstSet(*descriptorSet_);
+	write.setDstSet(*data_.descriptorSet_);
 	write.setDstBinding(std::get<1>(type));
 	write.setDstArrayElement(std::get<2>(type));
 	write.setDescriptorType(vk::DescriptorType::eUniformBuffer);
 	write.setDescriptorCount(1);
 	write.setBufferInfo(bufferInfo);
 
-	descriptorSet_.getOwner().updateDescriptorSets(1,&write, 0, nullptr);
+	data_.descriptorSet_.getOwner().updateDescriptorSets(1,&write, 0, nullptr);
 }
 
 void Eugene::VkShaderResourceViews::CreateCubeMap(ImageResource& resource, std::uint64_t idx)
 {
+
 }
 
-void* Eugene::VkShaderResourceViews::GetViews(void) const
+void* Eugene::VkShaderResourceViews::GetViews(void)
 {
-	return nullptr;
+	return &data_;
 }
 
 std::uint64_t Eugene::VkShaderResourceViews::GetImg(void)

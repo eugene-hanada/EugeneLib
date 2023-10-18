@@ -27,5 +27,5 @@ void Eugene::VkDepthStencilView::Create(ImageResource& resource, std::uint64_t i
 
 void* Eugene::VkDepthStencilView::GetViews(void)
 {
-	return (imageViews_.data());
+	return (&imageViews_);
 }

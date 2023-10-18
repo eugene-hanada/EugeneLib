@@ -61,6 +61,11 @@ namespace Eugene
 		/// </summary>
 		vk::RenderingInfo renderingInfo_;
 
+		/// <summary>
+		/// レンダリング開始しているか？
+		/// </summary>
+		bool isRendering_;
+
 	};
 }
 

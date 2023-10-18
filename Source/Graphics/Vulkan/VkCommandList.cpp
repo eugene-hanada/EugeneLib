@@ -2,8 +2,11 @@
 #include "../../../Include/Common/EugeneLibException.h"
 #include "VkBufferResource.h"
 #include "VkImageResource.h"
+#include "VkDepthStencilViews.h"
+#include "VkRenderTargetViews.h"
 
-Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex)
+Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
+	isRendering_{false}
 {
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(familyIndex);
@@ -24,11 +27,17 @@ void Eugene::VkCommandList::Begin(void)
 
 void Eugene::VkCommandList::End(void)
 {
+	if (isRendering_)
+	{
+		commandBuffer_->endRendering();
+	}
+	isRendering_ = false;
 	commandBuffer_->end();
 }
 
 void Eugene::VkCommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
 {
+	// DynamicRendring開始する、すでに開始していたら
 }
 
 void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
@@ -93,6 +102,34 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& views)
 
 void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx, std::uint64_t dsViewsIdx)
 {
+	if (isRendering_)
+	{
+		// すでにDynamicRenderingを開始しているので終了しとく
+		commandBuffer_->endRendering();
+	}
+
+	auto& depth{ (*static_cast<std::vector<vk::UniqueImageView>*>(depthViews.GetViews()))[dsViewsIdx]};
+	auto& renderTarget{ (*static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews.GetViews()))[rtViewsIdx] };
+	
+	vk::RenderingInfo rdInfo{};
+	vk::RenderingAttachmentInfo colorAttachment{};
+	colorAttachment.setImageView(*renderTarget.image);
+	colorAttachment.setImageLayout(vk::ImageLayout::eAttachmentOptimal);
+	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
+	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+
+	vk::RenderingAttachmentInfo depthAttachment{};
+	depthAttachment.setImageView(*depth);
+	depthAttachment.setImageLayout(vk::ImageLayout::eDepthAttachmentOptimal);
+	depthAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
+	depthAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+
+	rdInfo.setColorAttachments(colorAttachment);
+	rdInfo.setPDepthAttachment(&depthAttachment);
+	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget.size.x), static_cast<std::uint32_t>(renderTarget.size.y)}});
+	rdInfo.setLayerCount(1);
+	
+	commandBuffer_->beginRendering(rdInfo);
 }
 
 void Eugene::VkCommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx)
@@ -123,8 +160,8 @@ void Eugene::VkCommandList::TransitionRenderTargetBegin(ImageResource& resource)
 	barrier.subresourceRange.setLevelCount(1);
 
 	commandBuffer_->pipelineBarrier(
-		vk::PipelineStageFlagBits::eAllCommands,
-		vk::PipelineStageFlagBits::eColorAttachmentOutput,
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eAllGraphics,
 		static_cast<vk::DependencyFlagBits>(0),
 		0, nullptr, 0, nullptr, 1,
 		&barrier
@@ -145,6 +182,31 @@ void Eugene::VkCommandList::TransitionShaderResourceEnd(ImageResource& resource)
 
 void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)
 {
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+
+	// メモリバリアをレンダーターゲットとして使用できるように変更します
+	vk::ImageMemoryBarrier barrier{};
+
+	// レイアウトを未定義からデプスに
+	barrier.setOldLayout(vk::ImageLayout::eUndefined);
+	barrier.setNewLayout(vk::ImageLayout::eDepthAttachmentOptimal);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eDepthStencilAttachmentWrite);
+	barrier.setImage(*data->image_);
+	barrier.subresourceRange.setLayerCount(1);
+	barrier.subresourceRange.setLevelCount(1);
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eAllGraphics,
+		static_cast<vk::DependencyFlagBits>(0),
+		0, nullptr, 0, nullptr, 1,
+		&barrier
+	);
+
 }
 
 void Eugene::VkCommandList::TransitionDepthEnd(ImageResource& resource)

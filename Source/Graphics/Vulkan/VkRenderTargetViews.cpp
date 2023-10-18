@@ -25,8 +25,8 @@ void Eugene::VkRenderTargetViews::Create(ImageResource& resource, std::uint64_t 
 	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
 	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
 
-	imageViews_[idx] = data->image_.getOwner().createImageViewUnique(viewInfo);
-
+	imageViews_[idx].image = data->image_.getOwner().createImageViewUnique(viewInfo);
+	imageViews_[idx].size = resource.GetSize();
 }
 
 void* Eugene::VkRenderTargetViews::GetViews(void) 

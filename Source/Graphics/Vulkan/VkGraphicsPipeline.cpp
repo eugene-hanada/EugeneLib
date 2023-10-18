@@ -286,5 +286,5 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 void* Eugene::VkGraphicsPipeline::GetPipeline(void)
 {
-	return nullptr;
+	return &data_;
 }

@@ -7,7 +7,7 @@ Eugene::VkBufferResource::VkBufferResource(const vk::Device& device, const VkGra
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(size);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
+	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 	
 	data_.buffer_ =  device.createBufferUnique(bufferInfo);
@@ -36,7 +36,12 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vk::Device&
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(size);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
+	bufferInfo.setUsage(
+		vk::BufferUsageFlagBits::eUniformBuffer | 
+		vk::BufferUsageFlagBits::eTransferSrc | 
+		vk::BufferUsageFlagBits::eTransferDst | 
+		vk::BufferUsageFlagBits::eVertexBuffer
+	);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 
 	data_.buffer_ = device.createBufferUnique(bufferInfo);
@@ -50,7 +55,7 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vk::Device&
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(image.GetInfo().totalSize_);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
+	bufferInfo.setUsage(vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 
 	data_.buffer_ = device.createBufferUnique(bufferInfo);

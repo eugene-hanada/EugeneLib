@@ -24,7 +24,7 @@ namespace Eugene
 			vk::PipelineLayout layout_;
 			vk::UniquePipeline pipeline_;
 		};
-
+		using PipelineType = Data;
 	private:
 
 		// GraphicsPipeline ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½

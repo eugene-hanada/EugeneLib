@@ -4,6 +4,8 @@
 #include "VkImageResource.h"
 #include "VkDepthStencilViews.h"
 #include "VkRenderTargetViews.h"
+#include "VkGraphicsPipeline.h"
+#include "VkVertexView.h"
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
 	isRendering_{false}
@@ -37,11 +39,14 @@ void Eugene::VkCommandList::End(void)
 
 void Eugene::VkCommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
 {
-	// DynamicRendring開始する、すでに開始していたら
+	auto pipeline{ static_cast<VkGraphicsPipeline::PipelineType*>(gpipeline.GetPipeline()) };
+	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline->pipeline_);
 }
 
 void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
 {
+	vk::PrimitiveTopology t = static_cast<vk::PrimitiveTopology>(static_cast<size_t>(type) - 1ull);
+	commandBuffer_->setPrimitiveTopology(t);
 }
 
 void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
@@ -66,6 +71,9 @@ void Eugene::VkCommandList::SetViewPort(const Vector2& leftTop, const Vector2& s
 
 void Eugene::VkCommandList::SetVertexView(VertexView& view)
 {
+	auto buffer = static_cast<vk::Buffer*>(view.GetView());
+	vk::DeviceSize deviceSize{0};
+	commandBuffer_->bindVertexBuffers(0u, *buffer, deviceSize);
 }
 
 void Eugene::VkCommandList::SetIndexView(IndexView& view)

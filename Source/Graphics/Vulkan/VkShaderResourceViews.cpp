@@ -15,6 +15,7 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 		poolSize[i].setDescriptorCount(viewTypes.at(i).viewNum_);
 		binding[i].setDescriptorCount(viewTypes.at(i).viewNum_);
 		num += viewTypes.at(i).viewNum_;
+		binding[i].setStageFlags(vk::ShaderStageFlagBits::eAll);
 		switch (viewTypes.at(i).viewType_)
 		{
 		case ViewType::Texture:

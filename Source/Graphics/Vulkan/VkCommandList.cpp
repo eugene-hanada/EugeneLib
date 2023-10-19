@@ -7,6 +7,7 @@
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
 #include "VkShaderResourceViews.h"
+#include "VkSamplerViews.h"
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
 	isRendering_{false}, nowLayout_{nullptr}
@@ -103,10 +104,26 @@ void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, st
 
 void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
 {
+	if (nowLayout_ == nullptr)
+	{
+		return;
+	}
+	auto data = static_cast<VkSamplerViews::Data*>(views.GetViews());
+	commandBuffer_->bindDescriptorSets(
+		vk::PipelineBindPoint::eGraphics,
+		*nowLayout_,
+		static_cast<std::uint32_t>(paramIdx),
+		1u,
+		&*data->descriptorSet_,
+		0u,
+		nullptr
+	);
+
 }
 
 void Eugene::VkCommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
 {
+	commandBuffer_->draw(vertexCount, instanceCount, 0, 0);
 }
 
 void Eugene::VkCommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
@@ -150,11 +167,12 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews
 	depthAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
 
 	rdInfo.setColorAttachments(colorAttachment);
-	rdInfo.setPDepthAttachment(&depthAttachment);
+	//rdInfo.setPDepthAttachment(&depthAttachment);
 	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget.size.x), static_cast<std::uint32_t>(renderTarget.size.y)}});
 	rdInfo.setLayerCount(1);
 	
 	commandBuffer_->beginRendering(rdInfo);
+	isRendering_ = true;
 }
 
 void Eugene::VkCommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx)

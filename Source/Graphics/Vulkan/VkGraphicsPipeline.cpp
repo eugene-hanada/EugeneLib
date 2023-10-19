@@ -60,6 +60,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	constexpr vk::DynamicState dynamicStates[]{
 	vk::DynamicState::eViewport,
 	vk::DynamicState::eScissor,
+	vk::DynamicState::ePrimitiveTopology
 	};
 	vk::PipelineDynamicStateCreateInfo dynamicState{};
 	dynamicState.setDynamicStates(dynamicStates);

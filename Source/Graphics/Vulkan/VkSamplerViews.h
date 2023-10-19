@@ -11,13 +11,17 @@ namespace Eugene
 	{
 	public:
 		VkSamplerViews(const vk::Device& device, const ArgsSpan<Bind>& viewTypes);
+		struct Data
+		{
+			vk::UniqueDescriptorSet descriptorSet_;
+			vk::UniqueDescriptorSetLayout layout_;
+		};
 	private:
 		// SamplerViews ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 		void CreateSampler(Sampler& sampler, std::uint64_t idx) final;
-		void* GetViews(void) const final;
-		vk::UniqueDescriptorSet descriptorSet_;
+		void* GetViews(void) final;
+		Data data_;
 		vk::UniqueDescriptorPool descriptorPool_;
-		vk::UniqueDescriptorSetLayout layout_;
 		std::vector<std::pair<std::uint32_t, std::uint32_t>> typeData_;
 	};
 }

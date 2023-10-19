@@ -13,6 +13,7 @@ Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<
 		binding[i].setBinding(i);
 		binding[i].setDescriptorCount(viewTypes.at(i).viewNum_);
 		binding[i].setDescriptorType(vk::DescriptorType::eSampler);
+		binding[i].setStageFlags(vk::ShaderStageFlagBits::eAll);
 		poolSize[i].setType(vk::DescriptorType::eSampler);
 		poolSize[i].setDescriptorCount(viewTypes.at(i).viewNum_);
 		num += viewTypes.at(i).viewNum_;
@@ -21,7 +22,7 @@ Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	layoutInfo.setBindingCount(1);
 	layoutInfo.setBindings(binding);
-	layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
+	data_.layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
 
 	vk::DescriptorPoolCreateInfo poolInfo{};
 	poolInfo.setPoolSizes(poolSize);
@@ -32,8 +33,8 @@ Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<
 	vk::DescriptorSetAllocateInfo allocateInfo{};
 	allocateInfo.setDescriptorPool(*descriptorPool_);
 	allocateInfo.setDescriptorSetCount(1);
-	allocateInfo.setSetLayouts(*layout_);
-	descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
+	allocateInfo.setSetLayouts(*data_.layout_);
+	data_.descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
 
 
 	typeData_.resize(num);
@@ -67,12 +68,12 @@ void Eugene::VkSamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
 	write.setDstArrayElement(type.second);
 	write.setImageInfo(info);
 	write.setDescriptorCount(1);
-	write.setDstSet(*descriptorSet_);
+	write.setDstSet(*data_.descriptorSet_);
 
-	descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
+	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
-void* Eugene::VkSamplerViews::GetViews(void) const
+void* Eugene::VkSamplerViews::GetViews(void)
 {
-	return nullptr;
+	return &data_;
 }

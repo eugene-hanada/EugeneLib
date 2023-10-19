@@ -308,9 +308,19 @@ void Eugene::VkGraphics::Present(void)
 {
 	vk::PresentInfoKHR info{};
 	info.setImageIndices(backBufferIdx_);
-	auto result = queue_.presentKHR(info);
+	info.setSwapchains(*swapchain_);
 
-	//device_->acquireNextImageKHR();
+	try
+	{
+		auto result = queue_.presentKHR(info);
+	}
+	catch (const std::exception& e)
+	{
+		throw EugeneLibException{e.what()};
+	}
+
+	device_->acquireNextImageKHR(*swapchain_, UINT64_MAX);
+	device_->waitIdle();
 }
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const

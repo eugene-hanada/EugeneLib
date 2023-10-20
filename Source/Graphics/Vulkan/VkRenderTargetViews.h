@@ -14,7 +14,7 @@ namespace Eugene
 
 		struct Data
 		{
-			vk::UniqueImageView image;
+			vk::UniqueImageView imageView;
 			Vector2I size;
 		};
 		using ViewsType = std::vector<Data>;

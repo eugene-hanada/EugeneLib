@@ -292,9 +292,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// レンダーターゲットセット
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthBegin(*depthBuffer);
-		cmdList->SetRenderTarget(graphics->GetViews(), *depthView,graphics->GetNowBackBufferIndex());
-		cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
-		cmdList->ClearDepth(*depthView);
+		//cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
+		cmdList->SetRenderTarget(graphics->GetViews(), clearColor, { static_cast<std::uint32_t>(*depthView,graphics->GetNowBackBufferIndex()) , 1u});
+		//cmdList->ClearDepth(*depthView);
 
 		// グラフィックパイプラインセット
 		cmdList->SetGraphicsPipeline(*pipeline);

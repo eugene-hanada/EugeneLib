@@ -31,11 +31,6 @@ void Eugene::VkCommandList::Begin(void)
 
 void Eugene::VkCommandList::End(void)
 {
-	if (isRendering_)
-	{
-		commandBuffer_->endRendering();
-	}
-	isRendering_ = false;
 	commandBuffer_->end();
 }
 
@@ -155,7 +150,7 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews
 	
 	vk::RenderingInfo rdInfo{};
 	vk::RenderingAttachmentInfo colorAttachment{};
-	colorAttachment.setImageView(*renderTarget.image);
+	colorAttachment.setImageView(*renderTarget.imageView);
 	colorAttachment.setImageLayout(vk::ImageLayout::eAttachmentOptimal);
 	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
 	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
@@ -175,8 +170,114 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews
 	isRendering_ = true;
 }
 
+void Eugene::VkCommandList::SetRenderTarget(
+	RenderTargetViews& renderTargetViews,
+	DepthStencilViews& depthViews,
+	std::optional<std::span<float, 4>> rtClear,
+	std::pair<std::uint32_t, std::uint32_t> rtRange,
+	std::optional<float> depthClear,
+	std::uint32_t depthIndex
+)
+{
+	if (isRendering_)
+	{
+		// すでにDynamicRenderingを開始しているので終了しとく
+		commandBuffer_->endRendering();
+	}
+
+	
+	auto& renderTarget{ (*static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews.GetViews()))};
+	vk::RenderingInfo rdInfo{};
+	
+	// レンダーターゲットをセットする
+	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
+	for (std::uint32_t i = 0u; i < rtRange.second; i++)
+	{
+		colorAttachments[i].setImageView(*renderTarget[i].imageView);
+		colorAttachments[i].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
+		colorAttachments[i].setStoreOp(vk::AttachmentStoreOp::eStore);
+		if (rtClear.has_value())
+		{
+			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eClear);
+			colorAttachments[i].setClearValue(vk::ClearColorValue{rtClear.value()[0], rtClear.value()[1], rtClear.value()[2], rtClear.value()[3]});
+		}
+		else
+		{
+			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eLoad);
+		}
+	}
+
+	// 深度バッファをセットする
+	vk::RenderingAttachmentInfo depthAttachment{};
+	auto& depth{ (*static_cast<std::vector<vk::UniqueImageView>*>(depthViews.GetViews())) };
+	depthAttachment.setImageView(*depth[depthIndex]);
+	depthAttachment.setImageLayout(vk::ImageLayout::eDepthAttachmentOptimal);
+	depthAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+	if (depthClear.has_value())
+	{
+		depthAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+		depthAttachment.setClearValue(vk::ClearDepthStencilValue{depthClear.value()});
+	}
+	else
+	{
+		depthAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
+	}
+
+	rdInfo.setPDepthAttachment(&depthAttachment);
+	rdInfo.setColorAttachmentCount(rtRange.second);
+	rdInfo.setPColorAttachments(colorAttachments.data());
+	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget[0].size.x), static_cast<std::uint32_t>(renderTarget[0].size.y)}});
+	rdInfo.setLayerCount(1);
+
+	commandBuffer_->beginRendering(rdInfo);
+	isRendering_ = true;
+}
+
+void Eugene::VkCommandList::SetRenderTarget(
+	RenderTargetViews& renderTargetViews,
+	std::optional<std::span<float, 4>> rtClear,
+	std::pair<std::uint32_t, std::uint32_t> rtRange
+)
+{
+	if (isRendering_)
+	{
+		// すでにDynamicRenderingを開始しているので終了しとく
+		commandBuffer_->endRendering();
+	}
+
+
+	auto& renderTarget{ (*static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews.GetViews())) };
+	vk::RenderingInfo rdInfo{};
+
+	// レンダーターゲットをセットする
+	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
+	for (std::uint32_t i = rtRange.first; i < rtRange.second; i++)
+	{
+		colorAttachments[i].setImageView(*renderTarget[i].imageView);
+		colorAttachments[i].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
+		colorAttachments[i].setStoreOp(vk::AttachmentStoreOp::eStore);
+		if (rtClear.has_value())
+		{
+			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eClear);
+			colorAttachments[i].setClearValue(vk::ClearColorValue{rtClear.value()[0], rtClear.value()[1], rtClear.value()[2], rtClear.value()[3]});
+		}
+		else
+		{
+			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eLoad);
+		}
+	}
+
+	rdInfo.setPColorAttachments(colorAttachments.data());
+	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget[0].size.x), static_cast<std::uint32_t>(renderTarget[0].size.y)}});
+	rdInfo.setLayerCount(1);
+
+	commandBuffer_->beginRendering(rdInfo);
+	isRendering_ = true;
+}
+
 void Eugene::VkCommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx)
 {
+	throw EugeneLibException{"対応していません"};
 }
 
 void Eugene::VkCommandList::ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color)
@@ -204,7 +305,7 @@ void Eugene::VkCommandList::TransitionRenderTargetBegin(ImageResource& resource)
 
 	commandBuffer_->pipelineBarrier(
 		vk::PipelineStageFlagBits::eAllGraphics,
-		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eColorAttachmentOutput,
 		static_cast<vk::DependencyFlagBits>(0),
 		0, nullptr, 0, nullptr, 1,
 		&barrier
@@ -213,6 +314,36 @@ void Eugene::VkCommandList::TransitionRenderTargetBegin(ImageResource& resource)
 
 void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 {
+	if (isRendering_)
+	{
+		commandBuffer_->endRendering();
+	}
+	isRendering_ = false;
+
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+
+	// メモリバリアをレンダーターゲットとして使用できるように変更します
+	vk::ImageMemoryBarrier barrier{};
+
+	// レイアウトを未定義からカラーアタッチメント(レンダーターゲット)に
+	barrier.setOldLayout(vk::ImageLayout::eColorAttachmentOptimal);
+	barrier.setNewLayout(vk::ImageLayout::ePresentSrcKHR);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
+	barrier.setImage(*data->image_);
+	barrier.subresourceRange.setLayerCount(1);
+	barrier.subresourceRange.setLevelCount(1);
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eColorAttachmentOutput,
+		static_cast<vk::DependencyFlagBits>(0),
+		0, nullptr, 0, nullptr, 1,
+		&barrier
+	);
 }
 
 void Eugene::VkCommandList::TransitionShaderResourceBegin(ImageResource& resource)
@@ -225,6 +356,7 @@ void Eugene::VkCommandList::TransitionShaderResourceEnd(ImageResource& resource)
 
 void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)
 {
+
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
 	// メモリバリアをレンダーターゲットとして使用できるように変更します

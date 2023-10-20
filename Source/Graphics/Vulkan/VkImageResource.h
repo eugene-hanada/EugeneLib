@@ -45,6 +45,12 @@ namespace Eugene
 		/// <param name="size"></param>
 		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, vk::Format format);
 
+		/// <summary>
+		/// バックバッファ
+		/// </summary>
+		/// <param name="image"></param>
+		VkImageResource(const Vector2I& size, Format format,vk::Image& image, const vk::Device& device);
+
 		struct Data
 		{
 			vk::UniqueDeviceMemory memory_;

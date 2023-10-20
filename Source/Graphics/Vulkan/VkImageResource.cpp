@@ -120,6 +120,15 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	size_ = size;
 }
 
+Eugene::VkImageResource::VkImageResource(const Vector2I& size, Format format, vk::Image& image, const vk::Device& device) :
+	ImageResource{format}
+{
+	size_ = size;
+	data_.arraySize_ = 1;
+	data_.mipmapLevels_ = 1;
+	data_.image_ = vk::UniqueImage{image,vk::ObjectDestroy<vk::Device,vk::DispatchLoaderStatic>(device)};
+}
+
 bool Eugene::VkImageResource::CanMap(void) const
 {
 	return false;

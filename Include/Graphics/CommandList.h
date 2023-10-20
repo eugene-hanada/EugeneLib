@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <cstdint>
 #include <span>
+#include <optional>
 #include "GraphicsCommon.h"
 #include "../Math/Vector2.h"
 
@@ -148,6 +149,21 @@ namespace Eugene
 		/// <param name="rtViewsIdx"> レンダーターゲットビューのインデックス </param>
 		/// <param name="dsViewsIdx"> デプスステンシルビュー のインデックス </param>
 		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0) = 0;
+
+		virtual void SetRenderTarget(
+			RenderTargetViews& renderTargetViews,
+			DepthStencilViews& depthViews,
+			std::optional<std::span<float, 4>> rtClear = {},
+			std::pair<std::uint32_t, std::uint32_t> rtRange = { 0u, 0u },
+			std::optional<float> depthClear = {},
+			std::uint32_t depthIndex = 0u
+		) = 0;
+
+		virtual void SetRenderTarget(
+			RenderTargetViews& renderTargetViews,
+			std::optional<std::span<float, 4>> rtClear = {},
+			std::pair<std::uint32_t, std::uint32_t> rtRange = { 0u, 1u }
+			) = 0;
 
 		/// <summary>
 		/// レンダーターゲットをクリアする

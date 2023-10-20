@@ -70,9 +70,13 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 		}
 	}
 
-	for (auto& img : buffers_)
+	auto images = device_->getSwapchainImagesKHR(*swapchain_);
+	//vk::UniqueImage i{images[0], vk::ObjectDestroy<vk::Device, vk::DispatchLoaderStatic>(*device_) };
+	
+	
+	for (std::uint32_t i = 0u; i < bufferNum; i++)
 	{
-		img = std::make_unique<VkImageResource>(*this, *device_, static_cast<Vector2I>(size), useFormat);
+		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i], *device_);;
 	}
 
 	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
@@ -81,6 +85,13 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	{
 		renderTargetViews_->Create(*buffers_[i], i);
 	}
+	
+	
+	device_->resetFences(**fence_);
+	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, **semaphore_, **fence_, &backBufferIdx_);
+	device_->waitIdle();
+	
+	
 }
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
@@ -129,7 +140,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 	info.setImageColorSpace(vk::ColorSpaceKHR::eVkColorspaceSrgbNonlinear);
 
-	info.setImageUsage(vk::ImageUsageFlagBits::eColorAttachment);
+	info.setImageUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferDst);
 
 	info.setImageSharingMode(vk::SharingMode::eExclusive);
 
@@ -148,6 +159,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 Eugene::VkGraphics::~VkGraphics()
 {
+	device_->waitIdle();
 }
 
 vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
@@ -306,20 +318,25 @@ std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void)
 
 void Eugene::VkGraphics::Present(void)
 {
+	vk::SwapchainKHR sws[]{ *swapchain_ };
 	vk::PresentInfoKHR info{};
 	info.setImageIndices(backBufferIdx_);
-	info.setSwapchains(*swapchain_);
-
+	info.setSwapchains(sws);
+	
 	try
 	{
 		auto result = queue_.presentKHR(info);
+		queue_.waitIdle();
+		if (result != vk::Result::eSuccess)
+		{
+			throw EugeneLibException{std::format("Error={}", static_cast<int>(result))};
+		}
 	}
 	catch (const std::exception& e)
 	{
 		throw EugeneLibException{e.what()};
 	}
-
-	device_->acquireNextImageKHR(*swapchain_, UINT64_MAX);
+	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, **semaphore_, **fence_, &backBufferIdx_);
 	device_->waitIdle();
 }
 

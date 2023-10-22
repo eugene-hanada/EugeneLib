@@ -37,24 +37,20 @@ namespace Eugene
 		/// <param name="clearColor"></param>
 		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, Format format);
 
-		/// <summary>
-		/// バックバッファの場合のコンストラクタ
-		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="device"></param>
-		/// <param name="size"></param>
-		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, vk::Format format);
 
 		/// <summary>
 		/// バックバッファ
 		/// </summary>
 		/// <param name="image"></param>
-		VkImageResource(const Vector2I& size, Format format,vk::Image& image, const vk::Device& device);
+		VkImageResource(const Vector2I& size, Format format,vk::Image& image,const std::shared_ptr<vk::UniqueSemaphore>& semaphore, const vk::Device& device);
+
+		~VkImageResource();
 
 		struct Data
 		{
 			vk::UniqueDeviceMemory memory_;
 			vk::UniqueImage image_;
+			std::shared_ptr<vk::UniqueSemaphore> semaphore_;
 			std::uint32_t arraySize_;
 			std::uint32_t mipmapLevels_;
 		};
@@ -67,5 +63,6 @@ namespace Eugene
 
 		Data data_;
 		Vector2I size_;
+		bool isBackBuffer_{false};
 	};
 }

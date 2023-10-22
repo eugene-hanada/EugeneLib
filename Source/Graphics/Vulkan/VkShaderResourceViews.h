@@ -12,7 +12,7 @@ namespace Eugene
 	{
 	public:
 		VkShaderResourceViews(const vk::Device& device, const ArgsSpan<Bind>& ViewTypes);
-		
+		~VkShaderResourceViews();
 		struct Data
 		{
 			vk::UniqueDescriptorSet descriptorSet_;

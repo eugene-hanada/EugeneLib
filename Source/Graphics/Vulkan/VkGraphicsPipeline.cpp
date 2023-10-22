@@ -18,10 +18,11 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 )
 {
 	auto& bindLayout{ static_cast<VkResourceBindLayout&>(resourceBindLayout) };
-	data_.layout_ = bindLayout.pipelineLayout_;
+	data_.layout_ = *bindLayout.pipelineLayout_;
 	
 	// シェーダーステージの設定
 	std::vector<vk::PipelineShaderStageCreateInfo> shaderStage(shaders.size());
+	std::vector<vk::UniqueShaderModule> modules(shaders.size());
 	int shaderIndex = 0;
 	for (std::uint64_t i = 0ull; i < shaders.size(); i++)
 	{
@@ -29,10 +30,11 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		info.setPCode(reinterpret_cast<const std::uint32_t*>(shaders.at(i).first.GetPtr()));
 		info.setCodeSize(shaders.at(i).first.GetSize());
 		
-		shaderStage[shaderIndex].setModule(device.createShaderModule(info));
+		modules[shaderIndex] = device.createShaderModuleUnique(info);
+		shaderStage[shaderIndex].setModule(*modules[shaderIndex]);
 		shaderStage[shaderIndex].setPName("main");
 		//shaderStage[shaderIndex].setPName("main");
-		std::vector<std::uint32_t> shader;
+		
 		switch (shaders.at(i).second)
 		{
 		case ShaderType::Vertex:

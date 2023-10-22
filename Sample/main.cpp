@@ -26,10 +26,7 @@ int Func(const Eugene::ArgsSpan<int> value)
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	
-	int values[]{ 1, 2, 3, 4, 5 };
-	std::vector<int> vec{ 1, 2, 3, 4, 5 };
-	auto a = Func({1,2,3,4,5});
-	
+	auto a = std::make_shared<int>();
 
 	Eugene::Vector2 v{1.0f, 2.0f};
 	auto result = v.Normalized().Magnitude();
@@ -293,7 +290,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthBegin(*depthBuffer);
 		//cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
-		cmdList->SetRenderTarget(graphics->GetViews(), clearColor, { static_cast<std::uint32_t>(*depthView,graphics->GetNowBackBufferIndex()) , 1u});
+		
+		cmdList->SetRenderTarget(graphics->GetViews(), clearColor, {static_cast<std::uint32_t>(graphics->GetNowBackBufferIndex()),1u});
 		//cmdList->ClearDepth(*depthView);
 
 		// グラフィックパイプラインセット

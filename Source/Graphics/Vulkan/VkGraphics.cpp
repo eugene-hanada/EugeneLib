@@ -76,7 +76,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	for (std::uint32_t i = 0u; i < bufferNum; i++)
 	{
-		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i], *device_);;
+		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i], semaphore_,*device_);
 	}
 
 	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
@@ -89,8 +89,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	device_->resetFences(**fence_);
 	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, **semaphore_, **fence_, &backBufferIdx_);
-	device_->waitIdle();
-	
+	device_->waitForFences(**fence_,true,UINT64_MAX);
+	device_->resetFences(**fence_);
 	
 }
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
@@ -142,8 +142,6 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 	info.setImageUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferDst);
 
-	info.setImageSharingMode(vk::SharingMode::eExclusive);
-
 	info.setPreTransform(vk::SurfaceTransformFlagBitsKHR::eIdentity);
 
 	info.setPresentMode(vk::PresentModeKHR::eFifo);
@@ -159,6 +157,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 Eugene::VkGraphics::~VkGraphics()
 {
+	queue_.waitIdle();
 	device_->waitIdle();
 }
 
@@ -320,13 +319,13 @@ void Eugene::VkGraphics::Present(void)
 {
 	vk::SwapchainKHR sws[]{ *swapchain_ };
 	vk::PresentInfoKHR info{};
+	std::array<std::uint32_t, 2> idc{0u,1u};
 	info.setImageIndices(backBufferIdx_);
-	info.setSwapchains(sws);
+	info.setSwapchains(*swapchain_);
 	
 	try
 	{
 		auto result = queue_.presentKHR(info);
-		queue_.waitIdle();
 		if (result != vk::Result::eSuccess)
 		{
 			throw EugeneLibException{std::format("Error={}", static_cast<int>(result))};
@@ -336,8 +335,12 @@ void Eugene::VkGraphics::Present(void)
 	{
 		throw EugeneLibException{e.what()};
 	}
-	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, **semaphore_, **fence_, &backBufferIdx_);
+	device_->resetFences(**fence_);
+	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, **fence_, &backBufferIdx_);
+	result = device_->waitForFences(**fence_, true, UINT64_MAX);
 	device_->waitIdle();
+	device_->resetFences(**fence_);
+	
 }
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const

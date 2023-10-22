@@ -10,7 +10,7 @@
 #include "VkSamplerViews.h"
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
-	isRendering_{false}, nowLayout_{nullptr}
+	isRendering_{false}, nowLayout_{nullptr}, semaphoreCount_{0ull}
 {
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(familyIndex);
@@ -21,30 +21,31 @@ Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t fam
 	bufferInfo.setCommandPool(*commandPool_);
 	bufferInfo.setLevel(vk::CommandBufferLevel::ePrimary);
 	bufferInfo.setCommandBufferCount(1);
-	commandBuffer_ = std::move(device.allocateCommandBuffersUnique(bufferInfo)[0]);
+	data_.commandBuffer_ = std::move(device.allocateCommandBuffersUnique(bufferInfo)[0]);
 }
 
 void Eugene::VkCommandList::Begin(void)
 {
-	commandBuffer_->begin(vk::CommandBufferBeginInfo{});
+	data_.commandBuffer_->begin(vk::CommandBufferBeginInfo{});
 }
 
 void Eugene::VkCommandList::End(void)
 {
-	commandBuffer_->end();
+	data_.commandBuffer_->end();
+	semaphoreCount_ = 0ull;
 }
 
 void Eugene::VkCommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
 {
 	auto pipeline{ static_cast<VkGraphicsPipeline::PipelineType*>(gpipeline.GetPipeline()) };
-	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline->pipeline_);
+	data_.commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline->pipeline_);
 	nowLayout_ = &pipeline->layout_;
 }
 
 void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
 {
 	vk::PrimitiveTopology t = static_cast<vk::PrimitiveTopology>(static_cast<size_t>(type) - 1ull);
-	commandBuffer_->setPrimitiveTopology(t);
+	data_.commandBuffer_->setPrimitiveTopology(t);
 }
 
 void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
@@ -52,7 +53,7 @@ void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector
 	vk::Rect2D scissor{};
 	scissor.setOffset({ leftTop.x,leftTop.y});
 	scissor.setExtent(vk::Extent2D{static_cast<std::uint32_t>(rightBottom.x - leftTop.x), static_cast<std::uint32_t>(rightBottom.y - leftTop.y)});
-	commandBuffer_->setScissor(0, scissor);
+	data_.commandBuffer_->setScissor(0, scissor);
 }
 
 void Eugene::VkCommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
@@ -64,14 +65,14 @@ void Eugene::VkCommandList::SetViewPort(const Vector2& leftTop, const Vector2& s
 	viewPort.setHeight(size.y);
 	viewPort.setMaxDepth(depthMax);
 	viewPort.setMinDepth(depthMin);
-	commandBuffer_->setViewport(0, viewPort);
+	data_.commandBuffer_->setViewport(0, viewPort);
 }
 
 void Eugene::VkCommandList::SetVertexView(VertexView& view)
 {
 	auto buffer = static_cast<vk::Buffer*>(view.GetView());
 	vk::DeviceSize deviceSize{0};
-	commandBuffer_->bindVertexBuffers(0u, *buffer, deviceSize);
+	data_.commandBuffer_->bindVertexBuffers(0u, *buffer, deviceSize);
 }
 
 void Eugene::VkCommandList::SetIndexView(IndexView& view)
@@ -85,7 +86,7 @@ void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, st
 		return;
 	}
 	auto data = static_cast<VkShaderResourceViews::Data*>(views.GetViews());
-	commandBuffer_->bindDescriptorSets(
+	data_.commandBuffer_->bindDescriptorSets(
 		vk::PipelineBindPoint::eGraphics,
 		*nowLayout_,
 		static_cast<std::uint32_t>(paramIdx),
@@ -104,7 +105,7 @@ void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t vi
 		return;
 	}
 	auto data = static_cast<VkSamplerViews::Data*>(views.GetViews());
-	commandBuffer_->bindDescriptorSets(
+	data_.commandBuffer_->bindDescriptorSets(
 		vk::PipelineBindPoint::eGraphics,
 		*nowLayout_,
 		static_cast<std::uint32_t>(paramIdx),
@@ -118,7 +119,7 @@ void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t vi
 
 void Eugene::VkCommandList::Draw(std::uint32_t vertexCount, std::uint32_t instanceCount)
 {
-	commandBuffer_->draw(vertexCount, instanceCount, 0, 0);
+	data_.commandBuffer_->draw(vertexCount, instanceCount, 0, 0);
 }
 
 void Eugene::VkCommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
@@ -142,7 +143,7 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews
 	if (isRendering_)
 	{
 		// すでにDynamicRenderingを開始しているので終了しとく
-		commandBuffer_->endRendering();
+		data_.commandBuffer_->endRendering();
 	}
 
 	auto& depth{ (*static_cast<std::vector<vk::UniqueImageView>*>(depthViews.GetViews()))[dsViewsIdx]};
@@ -166,7 +167,7 @@ void Eugene::VkCommandList::SetRenderTarget(RenderTargetViews& renderTargetViews
 	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget.size.x), static_cast<std::uint32_t>(renderTarget.size.y)}});
 	rdInfo.setLayerCount(1);
 	
-	commandBuffer_->beginRendering(rdInfo);
+	data_.commandBuffer_->beginRendering(rdInfo);
 	isRendering_ = true;
 }
 
@@ -182,7 +183,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 	if (isRendering_)
 	{
 		// すでにDynamicRenderingを開始しているので終了しとく
-		commandBuffer_->endRendering();
+		data_.commandBuffer_->endRendering();
 	}
 
 	
@@ -191,19 +192,34 @@ void Eugene::VkCommandList::SetRenderTarget(
 	
 	// レンダーターゲットをセットする
 	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
-	for (std::uint32_t i = 0u; i < rtRange.second; i++)
+	auto colorAttachmentIdx{ 0 };
+	for (std::uint32_t i = rtRange.first; i < rtRange.second; i++)
 	{
-		colorAttachments[i].setImageView(*renderTarget[i].imageView);
-		colorAttachments[i].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
-		colorAttachments[i].setStoreOp(vk::AttachmentStoreOp::eStore);
+		colorAttachments[colorAttachmentIdx].setImageView(*renderTarget[i].imageView);
+		colorAttachments[colorAttachmentIdx].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
+		colorAttachments[colorAttachmentIdx].setStoreOp(vk::AttachmentStoreOp::eStore);
 		if (rtClear.has_value())
 		{
-			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eClear);
-			colorAttachments[i].setClearValue(vk::ClearColorValue{rtClear.value()[0], rtClear.value()[1], rtClear.value()[2], rtClear.value()[3]});
+			colorAttachments[colorAttachmentIdx].setLoadOp(vk::AttachmentLoadOp::eClear);
+			colorAttachments[colorAttachmentIdx].setClearValue(vk::ClearColorValue{ std::array{0.0f,0.0f,0.0f,1.0f} });
 		}
 		else
 		{
-			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eLoad);
+			colorAttachments[colorAttachmentIdx].setLoadOp(vk::AttachmentLoadOp::eLoad);
+		}
+
+		if (renderTarget[i].semaphore_.has_value())
+		{
+			// セマフォがある場合
+			if (data_.semaphores_.size() <= semaphoreCount_)
+			{
+				data_.semaphores_.emplace_back(renderTarget[i].semaphore_.value());
+			}
+			else
+			{
+				data_.semaphores_[semaphoreCount_] = renderTarget[i].semaphore_.value();
+			}
+			semaphoreCount_++;
 		}
 	}
 
@@ -229,7 +245,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget[0].size.x), static_cast<std::uint32_t>(renderTarget[0].size.y)}});
 	rdInfo.setLayerCount(1);
 
-	commandBuffer_->beginRendering(rdInfo);
+	data_.commandBuffer_->beginRendering(rdInfo);
 	isRendering_ = true;
 }
 
@@ -242,7 +258,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 	if (isRendering_)
 	{
 		// すでにDynamicRenderingを開始しているので終了しとく
-		commandBuffer_->endRendering();
+		data_.commandBuffer_->endRendering();
 	}
 
 
@@ -251,27 +267,43 @@ void Eugene::VkCommandList::SetRenderTarget(
 
 	// レンダーターゲットをセットする
 	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
-	for (std::uint32_t i = rtRange.first; i < rtRange.second; i++)
+	auto colorAttachmentIdx{ 0 };
+	for (std::uint32_t i = rtRange.first; i < (rtRange.second + rtRange.first); i++)
 	{
-		colorAttachments[i].setImageView(*renderTarget[i].imageView);
-		colorAttachments[i].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
-		colorAttachments[i].setStoreOp(vk::AttachmentStoreOp::eStore);
+		colorAttachments[colorAttachmentIdx].setImageView(*renderTarget[i].imageView);
+		colorAttachments[colorAttachmentIdx].setImageLayout(vk::ImageLayout::eAttachmentOptimal);
+		colorAttachments[colorAttachmentIdx].setStoreOp(vk::AttachmentStoreOp::eStore);
 		if (rtClear.has_value())
 		{
-			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eClear);
-			colorAttachments[i].setClearValue(vk::ClearColorValue{rtClear.value()[0], rtClear.value()[1], rtClear.value()[2], rtClear.value()[3]});
+			colorAttachments[colorAttachmentIdx].setLoadOp(vk::AttachmentLoadOp::eClear);
+			colorAttachments[colorAttachmentIdx].setClearValue(vk::ClearColorValue{ std::array{0.0f,0.0f,0.0f,1.0f} });
 		}
 		else
 		{
-			colorAttachments[i].setLoadOp(vk::AttachmentLoadOp::eLoad);
+			colorAttachments[colorAttachmentIdx].setLoadOp(vk::AttachmentLoadOp::eLoad);
+		}
+
+		if (renderTarget[i].semaphore_.has_value())
+		{
+			// セマフォがある場合
+			if (data_.semaphores_.size() <= semaphoreCount_)
+			{
+				data_.semaphores_.emplace_back(renderTarget[i].semaphore_.value());
+			}
+			else
+			{
+				data_.semaphores_[semaphoreCount_] = renderTarget[i].semaphore_.value();
+			}
+			semaphoreCount_++;
 		}
 	}
 
 	rdInfo.setPColorAttachments(colorAttachments.data());
+	rdInfo.setColorAttachmentCount(rtRange.second);
 	rdInfo.setRenderArea(vk::Rect2D{vk::Offset2D{}, vk::Extent2D{static_cast<std::uint32_t>(renderTarget[0].size.x), static_cast<std::uint32_t>(renderTarget[0].size.y)}});
 	rdInfo.setLayerCount(1);
-
-	commandBuffer_->beginRendering(rdInfo);
+	rdInfo.setLayerCount(1);
+	data_.commandBuffer_->beginRendering(rdInfo);
 	isRendering_ = true;
 }
 
@@ -303,7 +335,7 @@ void Eugene::VkCommandList::TransitionRenderTargetBegin(ImageResource& resource)
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
-	commandBuffer_->pipelineBarrier(
+	data_.commandBuffer_->pipelineBarrier(
 		vk::PipelineStageFlagBits::eAllGraphics,
 		vk::PipelineStageFlagBits::eColorAttachmentOutput,
 		static_cast<vk::DependencyFlagBits>(0),
@@ -316,7 +348,7 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 {
 	if (isRendering_)
 	{
-		commandBuffer_->endRendering();
+		data_.commandBuffer_->endRendering();
 	}
 	isRendering_ = false;
 
@@ -337,7 +369,7 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
-	commandBuffer_->pipelineBarrier(
+	data_.commandBuffer_->pipelineBarrier(
 		vk::PipelineStageFlagBits::eAllGraphics,
 		vk::PipelineStageFlagBits::eColorAttachmentOutput,
 		static_cast<vk::DependencyFlagBits>(0),
@@ -374,7 +406,7 @@ void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
-	commandBuffer_->pipelineBarrier(
+	data_.commandBuffer_->pipelineBarrier(
 		vk::PipelineStageFlagBits::eAllGraphics,
 		vk::PipelineStageFlagBits::eAllGraphics,
 		static_cast<vk::DependencyFlagBits>(0),
@@ -419,18 +451,18 @@ void Eugene::VkCommandList::CopyTexture(ImageResource& dest, BufferResource& src
 	barrier.subresourceRange.setLevelCount(1);
 
 	auto texSize = dest.GetSize();
-	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+	data_.commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
 	vk::BufferImageCopy region{};
 	region.imageSubresource.layerCount = 1;
 	region.imageExtent = vk::Extent3D{ static_cast<std::uint32_t>(texSize.x),static_cast<std::uint32_t>(texSize.y),1 };
 	region.imageSubresource.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	commandBuffer_->copyBufferToImage(*srcData->buffer_, *destData->image_, vk::ImageLayout::eTransferDstOptimal, region);
+	data_.commandBuffer_->copyBufferToImage(*srcData->buffer_, *destData->image_, vk::ImageLayout::eTransferDstOptimal, region);
 
 	barrier.setOldLayout(vk::ImageLayout::eTransferDstOptimal);
 	barrier.setNewLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eShaderRead);
 
-	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+	data_.commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
 
 
 
@@ -444,10 +476,10 @@ void Eugene::VkCommandList::CopyBuffer(BufferResource& dest, BufferResource& src
 	cpy.setDstOffset(0);
 	cpy.setSrcOffset(0);
 	cpy.setSize(dest.GetSize());
-	commandBuffer_->copyBuffer(*srcData->buffer_, *destData->buffer_, cpy);
+	data_.commandBuffer_->copyBuffer(*srcData->buffer_, *destData->buffer_, cpy);
 }
 
 void* Eugene::VkCommandList::GetCommandList(void)
 {
-	return &*commandBuffer_;
+	return &data_;
 }

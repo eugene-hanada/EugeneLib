@@ -1,5 +1,5 @@
 #include "VkGpuEngine.h"
-#include "../../../Include/Graphics/CommandList.h"
+#include "VkCommandList.h"
 
 Eugene::VkGpuEngine::VkGpuEngine(vk::Queue& queue, std::shared_ptr<vk::UniqueFence>& fence, std::shared_ptr<vk::UniqueSemaphore>& semaphore, std::uint64_t size) :
 	queue_{queue}, fence_{fence}, semaphore_{semaphore}
@@ -24,7 +24,6 @@ Eugene::VkGpuEngine::VkGpuEngine(std::uint32_t familyIndex, std::uint32_t& queue
 	semaphore_ = std::make_shared<vk::UniqueSemaphore>();
 	vk::SemaphoreCreateInfo sempInfo{};
 	*semaphore_ = device.createSemaphoreUnique(sempInfo);
-
 }
 
 Eugene::VkGpuEngine::~VkGpuEngine()
@@ -36,10 +35,16 @@ void Eugene::VkGpuEngine::Execute(void)
 	vk::SubmitInfo info{};
 	info.setCommandBufferCount(nowSize_);
 	info.setPCommandBuffers(cmdBuffers_.data());
-	/*vk::Semaphore waitSemaphores[]{ **semaphore_ };
-	info.setWaitSemaphores(waitSemaphores);
-	vk::PipelineStageFlags waitStages[]{ vk::PipelineStageFlagBits::eColorAttachmentOutput };
+
+	/*if (semaphores_.size() > 0ull)
+	{
+		info.setWaitSemaphores(semaphores_);
+	}*/
+	/*vk::PipelineStageFlags waitStages[]{ vk::PipelineStageFlagBits::eColorAttachmentOutput };
 	info.setWaitDstStageMask(waitStages);*/
+	/*vk::Semaphore waitSemaphores[]{ **semaphore_ };
+	info.setSignalSemaphores(waitSemaphores);*/
+	//fence_->getOwner().resetFences(**fence_);
 	queue_.submit(info);
 	nowSize_ = 0;
 }
@@ -47,11 +52,13 @@ void Eugene::VkGpuEngine::Execute(void)
 void Eugene::VkGpuEngine::Wait(void)
 {
 	queue_.waitIdle();
+	//fence_->getOwner().resetFences(**fence_);
 }
 
 void Eugene::VkGpuEngine::Push(CommandList& commandList)
 {
-	cmdBuffers_[nowSize_] = *reinterpret_cast<vk::CommandBuffer*>(commandList.GetCommandList());
+	auto data = static_cast<VkCommandList::Data*>(commandList.GetCommandList());
+	cmdBuffers_[nowSize_] = *data->commandBuffer_;
 	nowSize_++;
 }
 

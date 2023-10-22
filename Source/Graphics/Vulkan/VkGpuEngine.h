@@ -24,5 +24,6 @@ namespace Eugene
 		std::shared_ptr<vk::UniqueSemaphore> semaphore_;
 		std::vector<vk::CommandBuffer> cmdBuffers_;
 		std::uint64_t nowSize_;
+		std::span<vk::Semaphore> semaphores_;
 	};
 }

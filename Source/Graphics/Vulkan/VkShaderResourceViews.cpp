@@ -67,6 +67,11 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 	}
 }
 
+Eugene::VkShaderResourceViews::~VkShaderResourceViews()
+{
+	size_;
+}
+
 void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::uint64_t idx)
 {
 	if (idx >= size_)

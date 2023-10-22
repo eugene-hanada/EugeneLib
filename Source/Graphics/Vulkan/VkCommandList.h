@@ -12,6 +12,17 @@ namespace Eugene
 	{
 	public:
 		VkCommandList(const vk::Device& device, std::uint32_t familyIndex);
+
+		struct Data
+		{
+			/// <summary>
+			/// コマンドバッファ
+			/// </summary>
+			vk::UniqueCommandBuffer commandBuffer_;
+
+			std::vector<vk::Semaphore> semaphores_;
+		};
+
 	private:
 		// CommandList を介して継承されました
 		void Begin(void) final;
@@ -72,10 +83,9 @@ namespace Eugene
 		/// </summary>
 		vk::UniqueCommandPool commandPool_;
 
-		/// <summary>
-		/// コマンドバッファ
-		/// </summary>
-		vk::UniqueCommandBuffer commandBuffer_;
+
+
+		Data data_;
 
 		/// <summary>
 		/// DynamicRendering用の設定
@@ -89,6 +99,9 @@ namespace Eugene
 
 		vk::PipelineLayout* nowLayout_;
 
+
+
+		std::uint64_t semaphoreCount_;
 	};
 }
 

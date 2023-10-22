@@ -20,8 +20,8 @@ namespace Eugene
 		// SamplerViews ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
 		void CreateSampler(Sampler& sampler, std::uint64_t idx) final;
 		void* GetViews(void) final;
-		Data data_;
 		vk::UniqueDescriptorPool descriptorPool_;
+		Data data_;
 		std::vector<std::pair<std::uint32_t, std::uint32_t>> typeData_;
 	};
 }

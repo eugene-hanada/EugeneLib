@@ -2,6 +2,7 @@
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Math/Geometry.h"
+#include <optional>
 
 namespace Eugene
 {
@@ -15,6 +16,7 @@ namespace Eugene
 		struct Data
 		{
 			vk::UniqueImageView imageView;
+			std::optional<vk::Semaphore> semaphore_;
 			Vector2I size;
 		};
 		using ViewsType = std::vector<Data>;

@@ -17,6 +17,8 @@ layout(set=1, binding=1) uniform TexMatrix
 
 void main()
 {
-	gl_Position = rt.matrix * tex.matrix * vec4(inPos, 0.0,1.0);
+	vec4 tmp = rt.matrix * tex.matrix * vec4(inPos, 0.0,1.0);
+	tmp.y = -tmp.y;
+	gl_Position = tmp;
 	outputUV = inUV;
 }

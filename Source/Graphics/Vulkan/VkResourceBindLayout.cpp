@@ -39,5 +39,13 @@ Eugene::VkResourceBindLayout::VkResourceBindLayout(const vk::Device& device, con
 	}
 	vk::PipelineLayoutCreateInfo pipelineLayoutInfo{};
 	pipelineLayoutInfo.setSetLayouts(descriptorLayoutArray_);
-	pipelineLayout_ = device.createPipelineLayout(pipelineLayoutInfo);
+	pipelineLayout_ = device.createPipelineLayoutUnique(pipelineLayoutInfo);
+}
+
+Eugene::VkResourceBindLayout::~VkResourceBindLayout()
+{
+	for (auto descriptorLayout : descriptorLayoutArray_)
+	{
+		pipelineLayout_.getOwner().destroy(descriptorLayout);
+	}
 }

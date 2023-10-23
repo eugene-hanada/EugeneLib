@@ -42,16 +42,33 @@ namespace Eugene
 		/// バックバッファ
 		/// </summary>
 		/// <param name="image"></param>
-		VkImageResource(const Vector2I& size, Format format,vk::Image& image,const std::shared_ptr<vk::UniqueSemaphore>& semaphore, const vk::Device& device);
+		VkImageResource(const Vector2I& size, Format format,vk::Image& image, const vk::Device& device);
 
 		~VkImageResource();
 
+		/// <summary>
+		/// データ
+		/// </summary>
 		struct Data
 		{
+			/// <summary>
+			/// デバイスメモリ
+			/// </summary>
 			vk::UniqueDeviceMemory memory_;
+
+			/// <summary>
+			/// Image
+			/// </summary>
 			vk::UniqueImage image_;
-			std::shared_ptr<vk::UniqueSemaphore> semaphore_;
+
+			/// <summary>
+			/// 画像配列サイズ
+			/// </summary>
 			std::uint32_t arraySize_;
+
+			/// <summary>
+			/// ミップマップレベル
+			/// </summary>
 			std::uint32_t mipmapLevels_;
 		};
 
@@ -61,8 +78,19 @@ namespace Eugene
 		void* GetResource(void) final;
 		Vector2I GetSize(void) final;
 
+		/// <summary>
+		/// データ
+		/// </summary>
 		Data data_;
+
+		/// <summary>
+		/// 画像サイズ
+		/// </summary>
 		Vector2I size_;
+
+		/// <summary>
+		/// バックバッファか？
+		/// </summary>
 		bool isBackBuffer_{false};
 	};
 }

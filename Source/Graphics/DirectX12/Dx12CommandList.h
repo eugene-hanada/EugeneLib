@@ -63,25 +63,25 @@ namespace Eugene
 
 		// レンダーターゲットセット系 //
 
-		// 指定のインデックスのビューをセットする
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) final;
+		//// 指定のインデックスのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) final;
 
-		// 指定の範囲のインデックスのビューをセットする
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) final;
+		//// 指定の範囲のインデックスのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) final;
 
-		// ビューにあるすべてをセットする
-		void SetRenderTarget(RenderTargetViews& views) final;
+		//// ビューにあるすべてをセットする
+		//void SetRenderTarget(RenderTargetViews& views) final;
 
-		// 指定のインデックスのデプスとレンダーターゲットのビューをセットする
-		void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0)final;
+		//// 指定のインデックスのデプスとレンダーターゲットのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0)final;
 
-		// クリア系 //
+		//// クリア系 //
 
-		// 
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx = 0) final;
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
+		//// 
+		//void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx = 0) final;
+		//void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
 
-		void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) final;
+		//void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) final;
 
 		// バリア遷移系 //
 
@@ -105,8 +105,8 @@ namespace Eugene
 
 		// コピー系 //
 
-		void Copy(GpuResource& destination, GpuResource& source) final;
-		void CopyTexture(GpuResource& destination, GpuResource& source) final;
+	/*	void Copy(GpuResource& destination, GpuResource& source) final;
+		void CopyTexture(GpuResource& destination, GpuResource& source) final;*/
 
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 
@@ -123,7 +123,15 @@ namespace Eugene
 		/// </summary>
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
 
-	};
+
+		// CommandList を介して継承されました
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange, std::optional<float> depthClear, std::uint32_t depthIndex) override;
+
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange) override;
+
+		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) override;
+
+};
 }
 
 

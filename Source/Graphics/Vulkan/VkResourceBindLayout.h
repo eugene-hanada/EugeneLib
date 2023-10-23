@@ -13,7 +13,15 @@ namespace Eugene
 		VkResourceBindLayout(const vk::Device& device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
 		~VkResourceBindLayout();
 	private:
+
+		/// <summary>
+		/// ディスクリプタセットのレイアウト
+		/// </summary>
 		std::vector<vk::DescriptorSetLayout> descriptorLayoutArray_;
+
+		/// <summary>
+		/// パイプラインのレイアウト
+		/// </summary>
 		vk::UniquePipelineLayout pipelineLayout_;
 
 		friend class VkGraphicsPipeline;

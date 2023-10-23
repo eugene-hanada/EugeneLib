@@ -50,14 +50,6 @@ namespace Eugene
 			vk::Format::eR16G16B16A16Snorm,
 			vk::Format::eR16G16B16A16Sint,
 
-			// R16G16B16
-			vk::Format::eUndefined,
-			vk::Format::eR16G16B16Sfloat,
-			vk::Format::eR16G16B16Unorm,
-			vk::Format::eR16G16B16Uint,
-			vk::Format::eR16G16B16Snorm,
-			vk::Format::eR16G16B16Sint,
-
 			// R16B16
 			vk::Format::eUndefined,
 			vk::Format::eR16G16Sfloat,
@@ -180,9 +172,7 @@ namespace Eugene
 
 		vk::UniqueSwapchainKHR swapchain_;
 
-		std::shared_ptr<vk::UniqueSemaphore> semaphore_;
-
-		std::shared_ptr<vk::UniqueFence> fence_;
+		vk::UniqueFence fence_;
 
 		std::vector<std::unique_ptr<ImageResource>> buffers_;
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;

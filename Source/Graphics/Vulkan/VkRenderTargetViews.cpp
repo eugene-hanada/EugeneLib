@@ -27,13 +27,6 @@ void Eugene::VkRenderTargetViews::Create(ImageResource& resource, std::uint64_t 
 
 	imageViews_[idx].imageView = data->image_.getOwner().createImageViewUnique(viewInfo);
 	imageViews_[idx].size = resource.GetSize();
-	
-	if (data->semaphore_)
-	{
-		imageViews_[idx].semaphore_ = **data->semaphore_;
-	}
-
-	
 }
 
 void* Eugene::VkRenderTargetViews::GetViews(void) 

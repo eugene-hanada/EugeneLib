@@ -10,6 +10,10 @@ namespace Eugene
 	public:
 		VkSampler(const vk::Device& device, const SamplerLayout& layout);
 	private:
+
+		/// <summary>
+		/// ƒTƒ“ƒvƒ‰[
+		/// </summary>
 		vk::UniqueSampler sampler_;
 		friend class VkSamplerViews;
 	};

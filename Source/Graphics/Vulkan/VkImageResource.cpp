@@ -95,13 +95,12 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 }
 
 
-Eugene::VkImageResource::VkImageResource(const Vector2I& size, Format format, vk::Image& image, const std::shared_ptr<vk::UniqueSemaphore>& semaphore, const vk::Device& device) :
+Eugene::VkImageResource::VkImageResource(const Vector2I& size, Format format, vk::Image& image, const vk::Device& device) :
 	ImageResource{format}
 {
 	size_ = size;
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
-	data_.semaphore_ = semaphore;
 	data_.image_ = vk::UniqueImage{image,vk::ObjectDestroy<vk::Device,vk::DispatchLoaderStatic>(device)};
 	isBackBuffer_ = true;
 }
@@ -121,7 +120,7 @@ bool Eugene::VkImageResource::CanMap(void) const
 
 void* Eugene::VkImageResource::GetResource(void)
 {
-	return static_cast<void*>(&data_);
+	return &data_;
 }
 
 Eugene::Vector2I Eugene::VkImageResource::GetSize(void)

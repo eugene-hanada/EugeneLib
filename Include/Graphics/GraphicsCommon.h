@@ -43,14 +43,6 @@ namespace Eugene
 		R16G16B16A16_SNORM,
 		R16G16B16A16_SINT ,
 
-		// R16G16B16
-		FORMAT_R16G16B16_TYPELESS,
-		FORMAT_R16G16B16_FLOAT,
-		FORMAT_R16G16B16_UNORM,
-		FORMAT_R16G16B16_UINT,
-		FORMAT_R16G16B16_SNORM,
-		FORMAT_R16G16B16_SINT,
-
 		// R16G16
 		R16G16_TYPELESS,
 		R16G16_FLOAT,
@@ -159,7 +151,7 @@ namespace Eugene
 	/// <summary>
 	/// フォーマットの最大数
 	/// </summary>
-	constexpr auto FormatMax = 60ull;
+	constexpr auto FormatMax = 54ull;
 
 	/// <summary>
 	/// テクスチャ用画像情報

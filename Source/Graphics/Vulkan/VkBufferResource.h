@@ -4,14 +4,28 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// バッファに必要なデータ
+	/// </summary>
 	struct VkBufferData
 	{
+		/// <summary>
+		/// デバイスメモリ
+		/// </summary>
 		vk::UniqueDeviceMemory memory_;
+
+		/// <summary>
+		/// バッファ
+		/// </summary>
 		vk::UniqueBuffer buffer_;
 	};
 
 	class VkGraphics;
 	class Image;
+
+	/// <summary>
+	/// バッファ用(定数、頂点、インデックスなど用)
+	/// </summary>
 	class VkBufferResource :
 		public BufferResource
 	{
@@ -23,9 +37,16 @@ namespace Eugene
 		bool CanMap(void) const final;
 		void* GetResource(void) final;
 		std::uint64_t GetSize(void) final;
+
+		/// <summary>
+		/// データ
+		/// </summary>
 		VkBufferData data_;
 	};
 
+	/// <summary>
+	/// アップロード用
+	/// </summary>
 	class VkUploadableBufferResource :
 		public BufferResource
 	{
@@ -39,6 +60,10 @@ namespace Eugene
 		std::uint64_t GetSize(void) final;
 		void* Map(void) final;
 		virtual void UnMap(void) final;
+
+		/// <summary>
+		/// データ
+		/// </summary>
 		VkBufferData data_;
 	};
 }

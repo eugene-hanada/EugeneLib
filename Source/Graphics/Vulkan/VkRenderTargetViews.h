@@ -13,10 +13,19 @@ namespace Eugene
 		
 		VkRenderTargetViews(std::uint64_t size);
 
+		/// <summary>
+		/// データ
+		/// </summary>
 		struct Data
 		{
+			/// <summary>
+			/// ImageView
+			/// </summary>
 			vk::UniqueImageView imageView;
-			std::optional<vk::Semaphore> semaphore_;
+
+			/// <summary>
+			/// 画像サイズ
+			/// </summary>
 			Vector2I size;
 		};
 		using ViewsType = std::vector<Data>;
@@ -24,6 +33,10 @@ namespace Eugene
 		// RenderTargetViews を介して継承されました
 		void Create(ImageResource& resource, std::uint64_t idx) final;
 		void* GetViews(void) final;
+
+		/// <summary>
+		/// ビューのデータ
+		/// </summary>
 		ViewsType imageViews_;
 	};
 }

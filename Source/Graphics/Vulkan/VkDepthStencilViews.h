@@ -4,6 +4,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// 深度バッファ用ビュー
+	/// </summary>
 	class  VkDepthStencilView :
 		public DepthStencilViews
 	{
@@ -14,6 +17,9 @@ namespace Eugene
 		void Create(ImageResource& resource, std::uint64_t idx) final;
 		void* GetViews(void) final;
 
+		/// <summary>
+		/// ImageViewsのstd::vector
+		/// </summary>
 		std::vector<vk::UniqueImageView> imageViews_;
 	};
 }

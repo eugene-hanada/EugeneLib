@@ -13,6 +13,9 @@ namespace Eugene
 		// VertexView を介して継承されました
 		void* GetView(void);
 
+		/// <summary>
+		/// バッファ
+		/// </summary>
 		vk::Buffer buffer_;
 	};
 }

@@ -19,6 +19,8 @@
 #include "VkSamplerViews.h"
 #include "VkRenderTargetViews.h"
 
+#include "../../../Include/Common/Debug.h"
+
 //#pragma comment(lib,"VkLayer_utils.lib")
 //#pragma comment(lib,"vulkan-1.lib")
 
@@ -44,18 +46,14 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 	vk::FenceCreateInfo fenceInfo{};
 	fenceInfo.setFlags(vk::FenceCreateFlagBits::eSignaled);
-	fence_ = std::make_shared<vk::UniqueFence>();
-	*fence_ = device_->createFenceUnique(fenceInfo);
-
-	vk::SemaphoreCreateInfo semphInfo{};
-	semaphore_ = std::make_shared<vk::UniqueSemaphore>();
-	*semaphore_ = device_->createSemaphoreUnique(semphInfo);
+	
+	fence_ = device_->createFenceUnique(fenceInfo);
 
 	queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
 	
 	auto useVkformat = CreateSwapChain(size);
 
-	gpuEngine = new VkGpuEngine{ queue_, fence_,semaphore_,maxNum };
+	gpuEngine = new VkGpuEngine{ queue_,maxNum };
 
 	buffers_.resize(bufferNum);
 
@@ -76,7 +74,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	for (std::uint32_t i = 0u; i < bufferNum; i++)
 	{
-		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i], semaphore_,*device_);
+		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i],*device_);
 	}
 
 	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
@@ -87,10 +85,10 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	}
 	
 	
-	device_->resetFences(**fence_);
-	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, **semaphore_, **fence_, &backBufferIdx_);
-	device_->waitForFences(**fence_,true,UINT64_MAX);
-	device_->resetFences(**fence_);
+	device_->resetFences(*fence_);
+	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
+	result = device_->waitForFences(*fence_,true,UINT64_MAX);
+	device_->resetFences(*fence_);
 	
 }
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
@@ -323,23 +321,25 @@ void Eugene::VkGraphics::Present(void)
 	info.setImageIndices(backBufferIdx_);
 	info.setSwapchains(*swapchain_);
 	
-	try
+	if (queue_.presentKHR(info) != vk::Result::eSuccess)
 	{
-		auto result = queue_.presentKHR(info);
-		if (result != vk::Result::eSuccess)
-		{
-			throw EugeneLibException{std::format("Error={}", static_cast<int>(result))};
-		}
+		DebugLog("PresentError");
 	}
-	catch (const std::exception& e)
+	device_->resetFences(*fence_);
+	
+	
+	if (device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
 	{
-		throw EugeneLibException{e.what()};
+		DebugLog("acquireNextImageKHR Error");
 	}
-	device_->resetFences(**fence_);
-	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, **fence_, &backBufferIdx_);
-	result = device_->waitForFences(**fence_, true, UINT64_MAX);
+
+	if (device_->waitForFences(*fence_, true, UINT64_MAX) != vk::Result::eSuccess)
+	{
+		DebugLog("WaitFence Error");
+	}
+
 	device_->waitIdle();
-	device_->resetFences(**fence_);
+	device_->resetFences(*fence_);
 	
 }
 
@@ -486,5 +486,6 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& s
 
 Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
+	throw EugeneLibException{"‚Ü‚¾ŽÀ‘•‚µ‚Ä‚¢‚Ü‚¹‚ñ"};
 	return nullptr;
 }

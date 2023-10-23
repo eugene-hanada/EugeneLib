@@ -77,14 +77,6 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_R16G16B16A16_SNORM,
 	DXGI_FORMAT_R16G16B16A16_SINT,
 
-	// R16G16B16
-	DXGI_FORMAT_R16G16B16_TYPELESS,
-	DXGI_FORMAT_R16G16B16_FLOAT,
-	DXGI_FORMAT_R16G16B16_UNORM,
-	DXGI_FORMAT_R16G16B16_UINT,
-	DXGI_FORMAT_R16G16B16_SNORM,
-	DXGI_FORMAT_R16G16B16_SINT,
-
 	// R16B16
 	DXGI_FORMAT_R16G16_TYPELESS,
 	DXGI_FORMAT_R16G16_FLOAT,
@@ -114,9 +106,9 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_B8G8R8A8_TYPELESS,
 	DXGI_FORMAT_B8G8R8A8_UNORM,
 	DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
-	DXGI_FORMAT_B8G8R8A8_UINT,
-	DXGI_FORMAT_B8G8R8A8_SNORM,
-	DXGI_FORMAT_B8G8R8A8_SINT,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
 
 	//
 	DXGI_FORMAT_BC1_UNORM,
@@ -374,7 +366,7 @@ void Eugene::Dx12Graphics::CreateBackBuffers(std::uint64_t bufferCount)
 	{
 		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i)});
 
-		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
+		renderTargetViews_->Create(*buffers_[i], i);
 	}
 
 }
@@ -426,7 +418,7 @@ void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
 	for (size_t i = 0; i < buffers_.size(); i++)
 	{
 		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i) });
-		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
+		renderTargetViews_->Create(*buffers_[i], i);
 	}
 }
 
@@ -453,6 +445,16 @@ Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(con
 		num += viewTypes.at(i).viewNum_;
 	}
 	return new Dx12ShaderResourceViews{device_.Get(),num };
+}
+
+Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	std::uint64_t num{ 0ull };
+	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
+	{
+		num += viewTypes.at(i).viewNum_;
+	}
+	return new Dx12SamplerViews{device_.Get(),num};
 }
 
 #ifdef USE_IMGUI

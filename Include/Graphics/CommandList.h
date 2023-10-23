@@ -121,35 +121,14 @@ namespace Eugene
 		virtual void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) = 0;
 
 		/// <summary>
-		/// レンダーターゲットをセットする
-		/// </summary>
-		/// <param name="views"> レンダーターゲットのビュー </param>
-		/// <param name="idx"> ビューのインデックス </param>
-		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) = 0;
-
-		/// <summary>
-		/// ビューにある指定の範囲のレンダーターゲットをセットする
-		/// </summary>
-		/// <param name="views"> レンダーターゲットのビュー </param>
-		/// <param name="startIdx"> 開始インデックス </param>
-		/// <param name="endIdx"> 終了インデックス </param>
-		virtual void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) = 0;
-
-		/// <summary>
-		/// レンダーターゲットをセットする(RenderTargetViewsにあるものすべてをセットする)
-		/// </summary>
-		/// <param name="views"> レンダーターゲットビュー </param>
-		virtual void SetRenderTarget(RenderTargetViews& views) = 0;
-
-		/// <summary>
-		/// レンダーターゲットをセットする(深度バッファもセットする)
+		/// レンダーターゲットのセット(深度バッファあり)
 		/// </summary>
 		/// <param name="renderTargetViews"> レンダーターゲットビュー </param>
-		/// <param name="depthViews"> デプスステンシルビュー </param>
-		/// <param name="rtViewsIdx"> レンダーターゲットビューのインデックス </param>
-		/// <param name="dsViewsIdx"> デプスステンシルビュー のインデックス </param>
-		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0) = 0;
-
+		/// <param name="depthViews"> デプスビュー(深度バッファ) </param>
+		/// <param name="rtClear"> クリアカラー(ない場合はクリアしない) </param>
+		/// <param name="rtRange"> レンダーターゲットビューの範囲(インデックスと数) </param>
+		/// <param name="depthClear"> デプスのクリア値(ない場合クリアしない) </param>
+		/// <param name="depthIndex"></param>
 		virtual void SetRenderTarget(
 			RenderTargetViews& renderTargetViews,
 			DepthStencilViews& depthViews,
@@ -159,26 +138,17 @@ namespace Eugene
 			std::uint32_t depthIndex = 0u
 		) = 0;
 
+		/// <summary>
+		/// レンダーターゲットをセット
+		/// </summary>
+		/// <param name="renderTargetViews"> レンダーターゲットビュー </param>
+		/// <param name="rtClear"> クリアカラー(ない場合はクリアしない) </param>
+		/// <param name="rtRange"> レンダーターゲットビューの範囲(インデックスと数) </param>
 		virtual void SetRenderTarget(
 			RenderTargetViews& renderTargetViews,
 			std::optional<std::span<float, 4>> rtClear = {},
 			std::pair<std::uint32_t, std::uint32_t> rtRange = { 0u, 1u }
 			) = 0;
-
-		/// <summary>
-		/// レンダーターゲットをクリアする
-		/// </summary>
-		/// <param name="views"> レンダーターゲットビュー </param>
-		/// <param name="color"> クリアするカラー </param>
-		/// <param name="idx"> レンダーターゲットビューのインデックス </param>
-		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float,4> color, std::uint64_t idx = 0) = 0;
-
-		/// <summary>
-		///  レンダーターゲットをクリアする(RenderTargetViewsにあるものすべてクリアする)
-		/// </summary>
-		/// <param name="views"> レンダーターゲットビュー </param>
-		/// <param name="color"> クリアするカラー </param>
-		virtual void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) = 0;
 
 		/// <summary>
 		/// レンダーターゲットの使用を開始できる状態にする
@@ -216,30 +186,6 @@ namespace Eugene
 		/// <param name="resource"></param>
 		virtual void TransitionDepthEnd(ImageResource& resource) = 0;
 
-		/// <summary>
-		/// 深度バッファをクリアする
-		/// </summary>
-		/// <param name="views"> デプスステンシルビュー </param>
-		/// <param name="clearValue"> クリアする値 </param>
-		/// <param name="idx"> デプスステンシルビューのインデックス </param>
-		virtual void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) = 0;
-
-
-		/// <summary>
-		/// リソースをコピーする
-		/// </summary>
-		/// <param name="destination"> コピー先 </param>
-		/// <param name="source"> コピー元 </param>
-		virtual void Copy(GpuResource& destination, GpuResource& source) = 0;
-
-
-
-		/// <summary>
-		/// テクスチャのコピーをする
-		/// </summary>
-		/// <param name="destination"> コピー先 </param>
-		/// <param name="source"> コピー元 </param>
-		virtual void CopyTexture(GpuResource& destination, GpuResource& source) = 0;
 
 		/// <summary>
 		/// テクスチャのコピーを行う
@@ -249,7 +195,7 @@ namespace Eugene
 		virtual void CopyTexture(ImageResource& dest, BufferResource& src) = 0;
 
 		/// <summary>
-		/// バッファ同氏のコピーを行う
+		/// バッファ同士のコピーを行う
 		/// </summary>
 		/// <param name="dest"></param>
 		/// <param name="src"></param>

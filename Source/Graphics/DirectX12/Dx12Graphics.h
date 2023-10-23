@@ -81,6 +81,18 @@ namespace Eugene
 		void ResizeBackBuffer(const Vector2& size) final;
 
 		void SetFullScreenFlag(bool isFullScreen) final;
+
+		// Graphics を介して継承されました
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+
+		// Graphics を介して継承されました
+		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+
+		// Graphics を介して継承されました
+		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
+
+		// Graphics を介して継承されました
+		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;
@@ -114,14 +126,5 @@ namespace Eugene
 		) const final;
 #endif
 		friend class Dx12CommandList;
-
-		// Graphics を介して継承されました
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
-
-		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
-
-		// Graphics を介して継承されました
-		virtual ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const override;
 };
 }

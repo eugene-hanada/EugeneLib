@@ -12,17 +12,6 @@ namespace Eugene
 	{
 	public:
 		VkCommandList(const vk::Device& device, std::uint32_t familyIndex);
-
-		struct Data
-		{
-			/// <summary>
-			/// コマンドバッファ
-			/// </summary>
-			vk::UniqueCommandBuffer commandBuffer_;
-
-			std::vector<vk::Semaphore> semaphores_;
-		};
-
 	private:
 		// CommandList を介して継承されました
 		void Begin(void) final;
@@ -37,11 +26,6 @@ namespace Eugene
 		void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
 		void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount) final;
 		void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset) final;
-		
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx) final;
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) final;
-		void SetRenderTarget(RenderTargetViews& views) final;
-		void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx, std::uint64_t dsViewsIdx) final;
 		
 		void SetRenderTarget(
 			RenderTargetViews& renderTargetViews,
@@ -59,20 +43,12 @@ namespace Eugene
 			std::pair<std::uint32_t, std::uint32_t> rtRange = { 0u, 1u }
 		) final;
 
-
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx) final;
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
-		
 		void TransitionRenderTargetBegin(ImageResource& resource) final;
 		void TransitionRenderTargetEnd(ImageResource& resource) final;
 		void TransitionShaderResourceBegin(ImageResource& resource) final;
 		void TransitionShaderResourceEnd(ImageResource& resource) final;
 		void TransitionDepthBegin(ImageResource& resource) final;
 		void TransitionDepthEnd(ImageResource& resource) final;
-
-		void ClearDepth(DepthStencilViews& views, float clearValue, std::uint64_t idx) final;
-		void Copy(GpuResource& destination, GpuResource& source) final;
-		void CopyTexture(GpuResource& destination, GpuResource& source) final;
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 		void CopyBuffer(BufferResource& dest, BufferResource& src) final;
 		void* GetCommandList(void) final;
@@ -85,23 +61,20 @@ namespace Eugene
 
 
 
-		Data data_;
-
 		/// <summary>
-		/// DynamicRendering用の設定
+		/// コマンドバッファ
 		/// </summary>
-		vk::RenderingInfo renderingInfo_;
+		vk::UniqueCommandBuffer commandBuffer_;
 
 		/// <summary>
 		/// レンダリング開始しているか？
 		/// </summary>
 		bool isRendering_;
 
+		/// <summary>
+		/// 現在のパイプラインのレイアウト
+		/// </summary>
 		vk::PipelineLayout* nowLayout_;
-
-
-
-		std::uint64_t semaphoreCount_;
 	};
 }
 

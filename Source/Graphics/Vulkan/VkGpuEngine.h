@@ -11,7 +11,7 @@ namespace Eugene
 		public GpuEngine
 	{
 	public:
-		VkGpuEngine(vk::Queue& queue, std::shared_ptr<vk::UniqueFence>& fence, std::shared_ptr<vk::UniqueSemaphore>& semaphore, std::uint64_t size);
+		VkGpuEngine(vk::Queue& queue, std::uint64_t size);
 		VkGpuEngine(std::uint32_t familyIndex,std::uint32_t& queueIndex, const vk::Device& device, std::uint64_t size);
 		~VkGpuEngine();
 		void Execute(void) final;
@@ -19,11 +19,20 @@ namespace Eugene
 		void Push(CommandList& commandList) final;
 		void* GetQueue(void) const final;
 	private:
+
+		/// <summary>
+		/// キュー
+		/// </summary>
 		vk::Queue queue_;
-		std::shared_ptr<vk::UniqueFence> fence_;
-		std::shared_ptr<vk::UniqueSemaphore> semaphore_;
+		
+		/// <summary>
+		/// 実行するコマンドバッファ
+		/// </summary>
 		std::vector<vk::CommandBuffer> cmdBuffers_;
-		std::uint64_t nowSize_;
-		std::span<vk::Semaphore> semaphores_;
+
+		/// <summary>
+		/// 現在の実行するコマンドバッファの数
+		/// </summary>
+		std::uint64_t nowNum_;
 	};
 }

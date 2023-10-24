@@ -31,7 +31,7 @@ namespace Eugene
 
 	struct Bind
 	{
-		ViewType viewType_;
+		ViewType viewType_{ViewType::ConstantBuffer};
 		std::uint32_t viewNum_{1u};
 	};
 

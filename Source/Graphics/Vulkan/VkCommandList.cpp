@@ -395,7 +395,30 @@ void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)
 
 void Eugene::VkCommandList::TransitionDepthEnd(ImageResource& resource)
 {
-	throw EugeneLibException{"まだ作ってないです"};
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+
+	// メモリバリアをレンダーターゲットとして使用できるように変更します
+	vk::ImageMemoryBarrier barrier{};
+
+	// レイアウトを未定義からデプスに
+	barrier.setOldLayout(vk::ImageLayout::eDepthAttachmentOptimal);
+	barrier.setNewLayout(vk::ImageLayout::eUndefined);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setImage(*data->image_);
+	barrier.subresourceRange.setLayerCount(1);
+	barrier.subresourceRange.setLevelCount(1);
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eAllGraphics,
+		static_cast<vk::DependencyFlagBits>(0),
+		0, nullptr, 0, nullptr, 1,
+		&barrier
+	);
 }
 
 

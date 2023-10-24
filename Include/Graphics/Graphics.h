@@ -92,29 +92,6 @@ namespace Eugene
 		/// <returns> CommandListのポインタ </returns>
 		[[nodiscard]]
 		virtual CommandList* CreateCommandList(void) const = 0;
-
-		/// <summary>
-		/// GraphicsPipelineの生成
-		/// </summary>
-		/// <param name="layout"> シェーダーの入力レイアウト </param>
-		/// <param name="shaders"> シェーダー </param>
-		/// <param name="rendertarges"> レンダーターゲットの設定 </param>
-		/// <param name="topologyType"> トポロジー設定 </param>
-		/// <param name="isCulling"> カリングを行うか(デフォルトでは行わない) </param>
-		/// <param name="shaderLayout"> シェーダーで使う定数バッファ等の情報 </param>
-		/// <param name="samplerLayout"> サンプラーの情報 </param>
-		/// <returns></returns>
-		[[nodiscard]]
-		virtual GraphicsPipeline* CreateGraphicsPipeline(
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
-			TopologyType topologyType = TopologyType::Triangle,
-			bool isCulling = false,
-			bool useDepth = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}
-		) const = 0;
 		
 		/// <summary>
 		/// グラフィックスパイプラインクラスを生成する
@@ -184,6 +161,12 @@ namespace Eugene
 		[[nodiscard]]
 		virtual ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) = 0;
 
+		/// <summary>
+		/// 深度バッファ用リソースの生成
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="clear"></param>
+		/// <returns></returns>
 		[[nodiscard]]
 		virtual ImageResource* CreateDepthResource(const Vector2I& size, float clear) const = 0;
 

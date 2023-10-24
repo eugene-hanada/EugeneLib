@@ -13,8 +13,16 @@ namespace Eugene
 	/// </summary>
 	struct ShaderInputLayout
 	{
-		ShaderInputLayout();
-		ShaderInputLayout(const char* semanticName, std::uint32_t semanticIdx, Format format, std::uint32_t slot = 0);
+		constexpr ShaderInputLayout() :
+			format_{Format::NON}, semanticIdx_{0u}, semanticName_{nullptr}, slot_{0u}
+		{
+
+		}
+		constexpr ShaderInputLayout(const char* semanticName, std::uint32_t semanticIdx, Format format, std::uint32_t slot = 0):
+			semanticName_{ semanticName }, semanticIdx_{ semanticIdx }, format_{ format }, slot_{ slot }
+		{
+
+		}
 		const char* semanticName_;
 		std::uint32_t semanticIdx_;
 		Format format_;
@@ -93,8 +101,16 @@ namespace Eugene
 	/// </summary>
 	struct RendertargetLayout
 	{
-		RendertargetLayout();
-		RendertargetLayout(Format format, BlendType blendType = BlendType::Non);
+		constexpr RendertargetLayout() :
+			format_{Format::NON}, blendType_{ BlendType::Non }
+		{
+
+		}
+		constexpr RendertargetLayout(Format format, BlendType blendType = BlendType::Non) :
+			format_{format}, blendType_{blendType}
+		{
+
+		}
 		/// <summary>
 		/// フォーマット
 		/// </summary>

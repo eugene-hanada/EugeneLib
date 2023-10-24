@@ -92,6 +92,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	device_->resetFences(*fence_);
 	
 }
+#endif
+
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 {
 	vk::Format useFormat;
@@ -102,7 +104,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 	if (format.size() <= 0 || modes.size() <= 0)
 	{
 		// フォーマットもPresentも0以下ならスワップチェイン使えないのでやめる
-		throw EugeneLibException{"対応フォーマットがありません"};
+		throw EugeneLibException{ "対応フォーマットがありません" };
 	}
 
 	auto itr = std::find_if(
@@ -133,7 +135,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 
 	info.setImageFormat(useFormat);
 
-	info.setImageExtent({ static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y)});
+	info.setImageExtent({ static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y) });
 
 	info.setImageArrayLayers(1);
 
@@ -152,7 +154,6 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
 	return useFormat;
 
 }
-#endif
 
 Eugene::VkGraphics::~VkGraphics()
 {
@@ -313,7 +314,6 @@ void Eugene::VkGraphics::Present(void)
 {
 	vk::SwapchainKHR sws[]{ *swapchain_ };
 	vk::PresentInfoKHR info{};
-	std::array<std::uint32_t, 2> idc{0u,1u};
 	info.setImageIndices(backBufferIdx_);
 	info.setSwapchains(*swapchain_);
 	
@@ -390,9 +390,6 @@ void Eugene::VkGraphics::CreateInstance(void)
 
 void Eugene::VkGraphics::CreateDevice(void)
 {
-	//auto devices{  };
-
-
 	for (const auto& d : instance_->enumeratePhysicalDevices())
 	{
 		const auto props = d.getProperties2();
@@ -455,11 +452,6 @@ void Eugene::VkGraphics::CreateDevice(void)
 	};
 	device_ = physicalDevice_.createDeviceUnique(createInfoChain.get<vk::DeviceCreateInfo>());
 	graphicFamilly_ = idx;
-}
-
-Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ShaderInputSpan layout, ShaderTypePaisrSpan shaders, RenderTargetSpan rendertarges, TopologyType topologyType, bool isCulling, bool useDepth, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout) const
-{
-	return nullptr;
 }
 
 Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const

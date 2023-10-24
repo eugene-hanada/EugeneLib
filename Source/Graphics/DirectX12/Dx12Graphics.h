@@ -27,16 +27,6 @@ namespace Eugene
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 
 		CommandList* CreateCommandList(void) const final;
-		GraphicsPipeline* CreateGraphicsPipeline(
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
-			TopologyType topologyType = TopologyType::Triangle,
-			bool isCulling = false,
-			bool useDepth = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}
-			) const final;
 
 		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
 

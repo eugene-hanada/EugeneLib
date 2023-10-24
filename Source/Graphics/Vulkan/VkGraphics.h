@@ -93,9 +93,8 @@ namespace Eugene
 
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-		vk::Format CreateSwapChain(const Eugene::Vector2& size);
 #endif
-
+		vk::Format CreateSwapChain(const Eugene::Vector2& size);
 		~VkGraphics();
 
 		/// <summary>
@@ -116,16 +115,6 @@ namespace Eugene
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 		CommandList* CreateCommandList(void) const final;
-		GraphicsPipeline* CreateGraphicsPipeline(
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
-			TopologyType topologyType = TopologyType::Triangle,
-			bool isCulling = false,
-			bool useDepth = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}
-		) const final;
 		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
 		BufferResource* CreateBufferResource(std::uint64_t size) const final;
 		BufferResource* CreateBufferResource(Image& texture) const final;

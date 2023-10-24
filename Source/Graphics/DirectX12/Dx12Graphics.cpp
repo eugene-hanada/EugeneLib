@@ -151,24 +151,6 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 	return new Dx12CommandList{device_.Get()};
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
-	ShaderInputSpan layout, ShaderTypePaisrSpan shaders,
-	RenderTargetSpan rendertarges, TopologyType topologyType, 
-	bool isCulling, bool useDepth, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout
-	) const
-{
-	return new Dx12GraphicsPipeline{
-		device_.Get(),
-		layout,
-		shaders,
-		rendertarges,
-		topologyType,
-		isCulling,
-		shaderLayout,
-		samplerLayout,
-		useDepth
-	};
-}
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
@@ -200,10 +182,6 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2I&
 	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
 }
 
-Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const
-{
-	return new Dx12ShaderResourceViews{ device_.Get(), size};
-}
 
 Eugene::RenderTargetViews* Eugene::Dx12Graphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
 {
@@ -399,10 +377,7 @@ Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout
 	return new Dx12Sampler{ layout };
 }
 
-Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(size_t size) const
-{
-	return new Dx12SamplerViews{device_.Get(), size};
-}
+
 
 void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
 {

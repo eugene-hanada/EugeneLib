@@ -111,8 +111,11 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	rasterizer.setDepthBiasEnable(useDepth);
 	rasterizer.setPolygonMode(vk::PolygonMode::eFill);
 	rasterizer.setLineWidth(1.0f);
-
-	// 時計周りにする(DirectXと同じ)
+	if (isCulling)
+	{
+		rasterizer.setCullMode(vk::CullModeFlagBits::eBack);
+	}
+		// 時計周りにする(DirectXと同じ)
 	rasterizer.setFrontFace(vk::FrontFace::eClockwise);
 
 	vk::PipelineMultisampleStateCreateInfo multiSampleInfo{};
@@ -224,6 +227,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 			attachments[i].setDstColorBlendFactor(vk::BlendFactor::eDstColor);
 			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eSrcAlpha);
 			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
+			break;
 		default:
 			// 実装しない
 			break;
@@ -234,6 +238,13 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vk::PipelineColorBlendStateCreateInfo blendInfo{};
 	blendInfo.setAttachments(attachments);
 	blendInfo.setLogicOpEnable(VK_FALSE);
+
+	vk::PipelineDepthStencilStateCreateInfo depthInfo{};
+	depthInfo.setDepthTestEnable(useDepth);
+	depthInfo.setDepthWriteEnable(useDepth);
+	depthInfo.setDepthCompareOp(vk::CompareOp::eLess);
+	depthInfo.setMaxDepthBounds(1.0f);
+	depthInfo.setMinDepthBounds(0.0f);
 
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
@@ -259,8 +270,11 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPViewportState(&viewportState);
 
 	// デプス周りとりあえずなしで実装
-	pipelineInfo.setPDepthStencilState(nullptr);
-	
+	if (useDepth)
+	{
+		pipelineInfo.setPDepthStencilState(nullptr);
+	}
+
 	pipelineInfo.setPColorBlendState(&blendInfo);
 	pipelineInfo.setLayout(data_.layout_);
 

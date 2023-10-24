@@ -6,6 +6,7 @@
 #include "VkRenderTargetViews.h"
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
+#include "VkIndexView.h"
 #include "VkShaderResourceViews.h"
 #include "VkSamplerViews.h"
 
@@ -81,9 +82,12 @@ void Eugene::VkCommandList::SetVertexView(VertexView& view)
 
 void Eugene::VkCommandList::SetIndexView(IndexView& view)
 {
+	auto buffer = static_cast<vk::Buffer*>(view.GetView());
+	vk::DeviceSize deviceSize{0};
+	commandBuffer_->bindIndexBuffer(*buffer, deviceSize, vk::IndexType::eUint16);
 }
 
-void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
+void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
 	if (nowLayout_ == nullptr)
 	{
@@ -102,7 +106,7 @@ void Eugene::VkCommandList::SetShaderResourceView(ShaderResourceViews& views, st
 	
 }
 
-void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx)
+void Eugene::VkCommandList::SetSamplerView(SamplerViews& views, std::uint64_t paramIdx)
 {
 	if (nowLayout_ == nullptr)
 	{
@@ -128,6 +132,7 @@ void Eugene::VkCommandList::Draw(std::uint32_t vertexCount, std::uint32_t instan
 
 void Eugene::VkCommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
 {
+	commandBuffer_->drawIndexed(indexCount, instanceNum, offset, 0u, 0u);
 }
 
 
@@ -306,10 +311,56 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 
 void Eugene::VkCommandList::TransitionShaderResourceBegin(ImageResource& resource)
 {
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+
+	// メモリバリアをレンダーターゲットとして使用できるように変更します
+	vk::ImageMemoryBarrier barrier{};
+
+	barrier.setOldLayout(vk::ImageLayout::eUndefined);
+	barrier.setNewLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eShaderRead);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setImage(*data->image_);
+	barrier.subresourceRange.setLayerCount(1);
+	barrier.subresourceRange.setLevelCount(1);
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eAllGraphics,
+		static_cast<vk::DependencyFlagBits>(0),
+		0, nullptr, 0, nullptr, 1,
+		&barrier
+	);
 }
 
 void Eugene::VkCommandList::TransitionShaderResourceEnd(ImageResource& resource)
 {
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+
+	// メモリバリアをレンダーターゲットとして使用できるように変更します
+	vk::ImageMemoryBarrier barrier{};
+
+	barrier.setOldLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
+	barrier.setNewLayout(vk::ImageLayout::eUndefined);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setImage(*data->image_);
+	barrier.subresourceRange.setLayerCount(1);
+	barrier.subresourceRange.setLevelCount(1);
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllGraphics,
+		vk::PipelineStageFlagBits::eAllGraphics,
+		static_cast<vk::DependencyFlagBits>(0),
+		0, nullptr, 0, nullptr, 1,
+		&barrier
+	);
 }
 
 void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)

@@ -98,7 +98,20 @@ namespace Eugene
 
 		~VkGraphics();
 
+		/// <summary>
+		/// Image用デバイスメモリを生成する
+		/// </summary>
+		/// <param name="image"></param>
+		/// <returns></returns>
 		vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
+
+		/// <summary>
+		/// buffer用デバイスメモリを生成する
+		/// </summary>
+		/// <param name="buffer"></param>
+		/// <param name="isDeviceLoacal"></param>
+		/// <param name="isHostVisible"></param>
+		/// <returns></returns>
 		vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
@@ -118,7 +131,6 @@ namespace Eugene
 		BufferResource* CreateBufferResource(Image& texture) const final;
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color) final;
-		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
 		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
@@ -130,7 +142,6 @@ namespace Eugene
 		void Present(void) final;
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
-		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
 
 
 		void CreateInstance(void);

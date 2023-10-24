@@ -14,6 +14,7 @@
 #include "VkDepthStencilViews.h"
 #include "VkGraphicsPipeline.h"
 #include "VkVertexView.h"
+#include "VkIndexView.h"
 #include "VkShaderResourceViews.h"
 #include "VkSampler.h"
 #include "VkSamplerViews.h"
@@ -269,14 +270,9 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color)
 {
-    return nullptr;
+	return new VkImageResource{ *this, *device_, size,format, };
 }
 
-Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(std::uint64_t size) const
-{
-	throw EugeneLibException{"”ñ‘Î‰ž‚Å‚·"};
-    return nullptr;
-}
 
 Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
 {
@@ -324,6 +320,7 @@ void Eugene::VkGraphics::Present(void)
 	if (queue_.presentKHR(info) != vk::Result::eSuccess)
 	{
 		DebugLog("PresentError");
+		return;
 	}
 	device_->resetFences(*fence_);
 	
@@ -331,11 +328,13 @@ void Eugene::VkGraphics::Present(void)
 	if (device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
 	{
 		DebugLog("acquireNextImageKHR Error");
+		return;
 	}
 
 	if (device_->waitForFences(*fence_, true, UINT64_MAX) != vk::Result::eSuccess)
 	{
 		DebugLog("WaitFence Error");
+		return;
 	}
 
 	device_->waitIdle();
@@ -351,12 +350,6 @@ Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) 
 Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
 {
 	return new VkSamplerViews{*device_, viewTypes};
-}
-
-Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(std::uint64_t size) const
-{
-	throw EugeneLibException{ "”ñ‘Î‰ž‚Å‚·" };
-	return nullptr;
 }
 
 
@@ -486,6 +479,5 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& s
 
 Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
-	throw EugeneLibException{"‚Ü‚¾ŽÀ‘•‚µ‚Ä‚¢‚Ü‚¹‚ñ"};
-	return nullptr;
+	return new VkIndexView{ size, num, *static_cast<VkBufferData*>(resource.GetResource())->buffer_ };
 }

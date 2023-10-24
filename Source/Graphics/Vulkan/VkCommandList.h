@@ -22,8 +22,8 @@ namespace Eugene
 		void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax) final;
 		void SetVertexView(VertexView& view) final;
 		void SetIndexView(IndexView& view) final;
-		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
-		void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
+		void SetShaderResourceView(ShaderResourceViews& viewsviewsIdx, std::uint64_t paramIdx) final;
+		void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) final;
 		void Draw(std::uint32_t vertexCount, std::uint32_t instanceCount) final;
 		void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset) final;
 		

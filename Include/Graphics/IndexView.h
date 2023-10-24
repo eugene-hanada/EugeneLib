@@ -10,7 +10,7 @@ namespace Eugene
 	{
 	public:
 		virtual ~IndexView();
-		virtual void* GetView(void) const = 0;
+		virtual void* GetView(void) = 0;
 
 		/// <summary>
 		/// インデックス数を取得する

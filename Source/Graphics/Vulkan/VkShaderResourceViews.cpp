@@ -86,8 +86,8 @@ void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::
 	viewInfo.setViewType(vk::ImageViewType::e2D);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(1);
-	viewInfo.subresourceRange.setLayerCount(1);
+	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
 	imageViewMap_.emplace(idx,data->image_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
@@ -132,7 +132,36 @@ void Eugene::VkShaderResourceViews::CreateConstantBuffer(BufferResource& resourc
 
 void Eugene::VkShaderResourceViews::CreateCubeMap(ImageResource& resource, std::uint64_t idx)
 {
+	if (idx >= size_)
+	{
+		return;
+	}
 
+	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+	auto format = VkGraphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
+	vk::ImageViewCreateInfo viewInfo{};
+	viewInfo.setImage(*data->image_);
+	viewInfo.setViewType(vk::ImageViewType::eCube);
+	viewInfo.setFormat(format);
+	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
+	imageViewMap_.emplace(idx, data->image_.getOwner().createImageViewUnique(viewInfo));
+	auto& type = typeData_[idx];
+
+	vk::DescriptorImageInfo imageInfo{};
+	imageInfo.setImageView(*imageViewMap_[idx]);
+	imageInfo.setImageLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
+
+	vk::WriteDescriptorSet write{};
+	write.setDstSet(*data_.descriptorSet_);
+	write.setDstBinding(std::get<1>(type));
+	write.setDstArrayElement(std::get<2>(type));
+	write.setDescriptorType(vk::DescriptorType::eSampledImage);
+	write.setDescriptorCount(1);
+	write.setImageInfo(imageInfo);
+
+	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
 void* Eugene::VkShaderResourceViews::GetViews(void)

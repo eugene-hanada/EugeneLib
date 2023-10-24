@@ -165,7 +165,7 @@ elseif(USE_VULKAN)
 		Source/Graphics/Vulkan/VkShaderResourceViews.cpp
 		Source/Graphics/Vulkan/VkSampler.cpp
 		Source/Graphics/Vulkan/VkSamplerViews.cpp
-	 "Source/Graphics/Vulkan/VkRenderTargetViews.cpp")
+	 "Source/Graphics/Vulkan/VkRenderTargetViews.cpp" "Source/Graphics/Vulkan/VkIndexView.cpp")
 endif()
 
 # ランタイムライブラリを静的にリンクする

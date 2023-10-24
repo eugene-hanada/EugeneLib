@@ -12,24 +12,11 @@
 #include "Common/Debug.h"
 
 
-int Func(const Eugene::ArgsSpan<int> value)
-{
-	auto begin = value.begin();
-	int result = 0;
-	for (std::uint64_t i = 0ull; i < value.size(); i++)
-	{
-		result += *(begin + i);
-	}
-	return result;
-}
-
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	
-	auto a = std::make_shared<int>();
-
 	Eugene::Vector2 v{1.0f, 2.0f};
 	auto result = v.Normalized().Magnitude();
+
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 
@@ -177,13 +164,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	cursorView->CreateTexture(*textureResource, 0);
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
 
-	// サウンド
-	auto sound = Eugene::CreateSoundUnique();
-	std::unique_ptr<Eugene::SoundControl> ctrl2;
-	std::unique_ptr<Eugene::Sound3DControl> ctrl;
-	
-	std::unique_ptr<Eugene::SoundControl> ctrl3;
-	std::unique_ptr<Eugene::SoundSpeaker> speaker;
+	std::unique_ptr<Eugene::BufferResource> index;
+	index.reset(graphics->CreateBufferResource(256));
+
+	std::unique_ptr<Eugene::IndexView> indexView_;
+	indexView_.reset(graphics->CreateIndexView( 4u, 4u,Eugene::Format::R16_FLOAT,*index));
+	//// サウンド
+	//auto sound = Eugene::CreateSoundUnique();
+	//std::unique_ptr<Eugene::SoundControl> ctrl2;
+	//std::unique_ptr<Eugene::Sound3DControl> ctrl;
+	//
+	//std::unique_ptr<Eugene::SoundControl> ctrl3;
+	//std::unique_ptr<Eugene::SoundSpeaker> speaker;
 
 
 	// マウスの情報を受け取る構造体
@@ -196,7 +188,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
-	std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
+	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
 	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
 	//stream->SetOutput(*ctrl);
 	//stream->Play(1);
@@ -312,15 +304,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->SetVertexView(*vertexView);
 
 		// テクスチャ、定数バッファ、サンプラーセット
-		cmdList->SetShaderResourceView(*rtMatrixView, 0, 0);
-		cmdList->SetShaderResourceView(*texAndMatrixView, 0, 1);
-		cmdList->SetSamplerView(*samplerView, 0, 2);
+		cmdList->SetShaderResourceView(*rtMatrixView, 0);
+		cmdList->SetShaderResourceView(*texAndMatrixView, 1);
+		cmdList->SetSamplerView(*samplerView, 2);
 
 		// 描画
 		cmdList->Draw(4);
 
 		// テクスチャ、定数バッファ、サンプラーセット
-		cmdList->SetShaderResourceView(*cursorView, 0, 1);
+		cmdList->SetShaderResourceView(*cursorView, 1);
 
 		// 描画
 		cmdList->Draw(4);

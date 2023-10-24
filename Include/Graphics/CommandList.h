@@ -95,7 +95,7 @@ namespace Eugene
 		/// <param name="views"> シェーダーリソースのビュー </param>
 		/// <param name="viewsIdx"> ビューのインデックス </param>
 		/// <param name="paramIdx"> セットするインデックス </param>
-		virtual void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) = 0;
+		virtual void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
 		/// サンプラーをセットする
@@ -103,7 +103,7 @@ namespace Eugene
 		/// <param name="views"></param>
 		/// <param name="viewsIdx"></param>
 		/// <param name="paramIdx"></param>
-		virtual void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) = 0;
+		virtual void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
 		/// 描画する

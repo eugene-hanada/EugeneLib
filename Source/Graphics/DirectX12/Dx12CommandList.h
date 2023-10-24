@@ -48,10 +48,10 @@ namespace Eugene
 		// シェーダリソースセット系 //
 
 		// 指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする
-		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
+		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) final;
 
 		// 指定のパラメータインデックスに指定のサンプラービューのインデックスを先頭にセットする
-		void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
+		void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) final;
 
 		// 描画系 //
 

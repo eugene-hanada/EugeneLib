@@ -50,8 +50,6 @@ namespace Eugene
 
 		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
 
-		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
-
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
@@ -75,8 +73,6 @@ namespace Eugene
 		void Present(void) final;
 
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
-
-		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
 
 		void ResizeBackBuffer(const Vector2& size) final;
 

@@ -228,7 +228,7 @@ endif()
 	#target_link_libraries(EugeneLib LLGI)
 	#target_link_libraries(EugeneLib Effekseer)
 	
-	#target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
+	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
 	#target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
 	
 	# Vulkan使用するか？

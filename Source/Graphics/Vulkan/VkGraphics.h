@@ -181,6 +181,11 @@ namespace Eugene
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
 		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
-	};
+
+#ifdef USE_EFFEKSEER
+		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
+		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const final;
+#endif
+};
 
 }

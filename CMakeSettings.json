@@ -98,6 +98,36 @@
           "name": "BUILD_SAMPLE",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "BUILD_GL",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_EXAMPLE",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_EXTERNAL",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "GLFW_BUILD_DOCS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_EXAMPLES",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "ENABLE_SPVREMAPPER",
+          "value": "True",
+          "type": "BOOL"
         }
       ]
     }

@@ -479,6 +479,42 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& s
 	return new VkImageResource{*this,*device_, size, clear};
 }
 
+
+#ifdef USE_EFFEKSEER
+
+namespace Eugene
+{
+	class VkEffekseerWarpper :
+		public EffekseerWarpper
+	{
+		// EffekseerWarpper を介して継承されました
+		void Update(float delta) override
+		{
+		}
+		void Draw(CommandList& cmdList) override
+		{
+		}
+		Effekseer::RefPtr<Effekseer::Manager>& GetManager() & final
+		{
+			// TODO: return ステートメントをここに挿入します
+		}
+		void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) final
+		{
+
+		}
+		void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+		{
+
+		}
+	};
+}
+
+Eugene::EffekseerWarpper* Eugene::VkGraphics::CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const
+{
+	return new VkEffekseerWarpper{};
+}
+#endif
+
 Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
 	return new VkIndexView{ size, num, *static_cast<VkBufferData*>(resource.GetResource())->buffer_ };

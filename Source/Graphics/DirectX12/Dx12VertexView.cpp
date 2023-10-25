@@ -3,7 +3,7 @@
 #include "../../../Include/Graphics/BufferResource.h"
 
 Eugene::Dx12VertexView::Dx12VertexView(size_t size, size_t vertexNum, BufferResource& resource) :
-	VertexView{vertexNum}
+	VertexView{static_cast<std::uint32_t>(vertexNum)}
 {
 	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
 	bufferView_ = std::make_unique<D3D12_VERTEX_BUFFER_VIEW>();

@@ -20,6 +20,11 @@
 #include "VkSamplerViews.h"
 #include "VkRenderTargetViews.h"
 
+#ifdef USE_IMGUI
+#include "../../../Include/ThirdParty/imgui/imgui.h"
+#include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
+#endif
+
 #include "../../../Include/Common/Debug.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
@@ -90,7 +95,13 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
 	result = device_->waitForFences(*fence_,true,UINT64_MAX);
 	device_->resetFences(*fence_);
-	
+
+
+#ifdef USE_IMGUI
+	ImGui_ImplVulkan_InitInfo info{};
+	info.
+	ImGui_ImplVulkan_Init()
+#endif
 }
 #endif
 
@@ -339,7 +350,6 @@ void Eugene::VkGraphics::Present(void)
 
 	device_->waitIdle();
 	device_->resetFences(*fence_);
-	
 }
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const

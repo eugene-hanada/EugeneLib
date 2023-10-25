@@ -1,5 +1,4 @@
 ﻿#include <Windows.h>
-//#define USE_IMGUI
 #include <EugeneLib.h>
 #include <Math/Geometry.h>
 #include <memory>
@@ -8,6 +7,10 @@
 
 #include <Color.h>
 #include <Common/ArgsSpan.h>
+
+#ifdef USE_IMGUI
+#include <ThirdParty/imgui/imgui.h>
+#endif
 
 #include "Common/Debug.h"
 
@@ -194,8 +197,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//stream->SetVolume(0.7f);
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
-	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
-	auto img = graphics->GetImguiImageID(1);*/
+	//graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
+	//auto img = graphics->GetImguiImageID(1);
 	//graphics->SetFullScreenFlag(true);
 	bool flag = false;
 
@@ -254,8 +257,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//ImGui::NewFrame();
 
 		//ImGui::Begin("window1");
-		//
-		//ImGui::Image((ImTextureID)img, { 256,256});
+	
 		//
 		////ImGui::Text("text1");
 		//

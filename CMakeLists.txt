@@ -198,8 +198,11 @@ elseif(USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
 	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
+
+	if (NOT USE_EFFEKSEER)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+	endif()
 endif()
 
 if (USE_IMGUI)
@@ -222,15 +225,16 @@ endif()
 
 	# 使用時
 	add_subdirectory("Effekseer")
-	target_link_libraries(EugeneLib Effekseer)
-	target_link_libraries(EugeneLib LLGI)
-	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
+	#target_link_libraries(EugeneLib LLGI)
+	#target_link_libraries(EugeneLib Effekseer)
+	
+	#target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
+	#target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
 	
 	# Vulkan使用するか？
 	if (USE_VULKAN)
 		# VULKAN使用時
-		target_link_libraries(EugeneLib EffekseerRendererVULKAN)
+		#target_link_libraries(EugeneLib EffekseerRendererVulkan)
 	else()
 		# 
 		target_link_libraries(EugeneLib EffekseerRendererDX12)

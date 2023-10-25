@@ -153,7 +153,7 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	);
 
 
-	MONITORINFO monitorInfo;
+	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
 
@@ -347,7 +347,7 @@ void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
 		throw CreateErrorException("ウィンドウサイズ調整に失敗");
 	}
 
-	MONITORINFO monitorInfo;
+	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
 

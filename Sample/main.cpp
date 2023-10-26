@@ -8,6 +8,11 @@
 #include <Color.h>
 #include <Common/ArgsSpan.h>
 
+#ifdef USE_EFFEKSEER
+#include <Graphics/Graphics.h>
+#include <Effekseer.h>
+#endif
+
 #ifdef USE_IMGUI
 #include <ThirdParty/imgui/imgui.h>
 #endif
@@ -188,7 +193,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	
 
-	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+	float clearColor[]{ 0.0f,0.0f,0.0f,1.0f };
 
 	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
 	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
@@ -203,7 +208,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	bool flag = false;
 
 
-
+	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
+	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 2u));
+	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
+	effekseer->SetCameraPos({ 0.0f,0.0f,-20.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
+	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
+	auto h = effekseer->GetManager()->Play(effect, 0,0,0);
 
 	while (system->Update())
 	{
@@ -274,7 +284,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	}
 		//}
 
+		
 
+		effekseer->Update(1.0f / 60.0f);
 
 		// コマンド開始
 		cmdList->Begin();
@@ -309,6 +321,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->SetShaderResourceView(*texAndMatrixView, 1);
 		cmdList->SetSamplerView(*samplerView, 2);
 
+		
+
 		// 描画
 		cmdList->Draw(4);
 
@@ -318,19 +332,31 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
+		//effekseer->Draw(*cmdList);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
+
+		effekseer->Draw(*cmdList);
 		//cmdList->TransitionDepthEnd(*depthBuffer);
-
+		
 		//cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
-
 		// コマンド終了
 		cmdList->End();
 
 		// コマンド実行
+		
 		gpuEngine->Push(*cmdList);
+		//gpuEngine->Push(effekseer->GetCmdList());
 		gpuEngine->Execute();
 		gpuEngine->Wait();
+
+	
+		
+		
+	/*	gpuEngine->Execute();
+		gpuEngine->Wait();*/
+
+
 		graphics->Present();
 
 		if (system->IsHitKey(Eugene::KeyID::ESCAPE))

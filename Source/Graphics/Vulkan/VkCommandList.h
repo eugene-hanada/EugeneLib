@@ -75,6 +75,8 @@ namespace Eugene
 		/// 現在のパイプラインのレイアウト
 		/// </summary>
 		vk::PipelineLayout* nowLayout_;
+
+		friend class VkEffekseerWarpper;
 	};
 }
 

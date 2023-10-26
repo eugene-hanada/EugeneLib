@@ -9,6 +9,9 @@
 
 namespace Eugene
 {
+#ifdef USE_EFFEKSEER
+	class EffekseerWarpper;
+#endif
 
 	class VkGraphics :
 		public Graphics
@@ -127,7 +130,7 @@ namespace Eugene
 		IndexView* CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const final;
 		ImageResource& GetBackBufferResource(std::uint64_t idx) final;
 		RenderTargetViews& GetViews(void) final;
-		std::uint64_t GetNowBackBufferIndex(void) final;
+		std::uint64_t GetNowBackBufferIndex(void) const final;
 		void Present(void) final;
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
@@ -184,7 +187,12 @@ namespace Eugene
 
 #ifdef USE_EFFEKSEER
 		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
-		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const final;
+		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,
+			bool reverseDepth = false,
+			std::uint64_t maxNumm = 8000) const final;
+
+		vk::UniqueCommandPool effekseerPool_;
+		std::vector<vk::UniqueFramebuffer> frameBuffer_;
 #endif
 };
 

@@ -25,6 +25,11 @@
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
 #endif
 
+#ifdef USE_EFFEKSEER
+#include <Effekseer.h>
+#include <EffekseerRendererVulkan.h>
+#endif
+
 #include "../../../Include/Common/Debug.h"
 
 //#pragma comment(lib,"VkLayer_utils.lib")
@@ -102,6 +107,58 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	info.
 	ImGui_ImplVulkan_Init()
 #endif
+
+
+	vk::CommandPoolCreateInfo poolInfo{};
+	poolInfo.setQueueFamilyIndex(graphicFamilly_);
+	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
+
+	vk::AttachmentDescription colorAttachment{};
+	colorAttachment.setFormat(useVkformat);
+	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+	vk::AttachmentReference colorAttachmentRef{};
+	colorAttachmentRef.attachment = 0;
+	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+	
+	vk::SubpassDescription subpass;
+	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+	subpass.setColorAttachmentCount(1);
+	subpass.setPColorAttachments(&colorAttachmentRef);
+
+	vk::RenderPassCreateInfo renderPassInfo{};
+	renderPassInfo.setAttachmentCount(1);
+	renderPassInfo.setPAttachments(&colorAttachment);
+	renderPassInfo.setSubpassCount(1);
+	renderPassInfo.setPSubpasses(&subpass);
+
+	auto tmp = device_->createRenderPassUnique(renderPassInfo);
+	frameBuffer_.resize(buffers_.size());
+	auto& tmpRtViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
+	for (auto i = 0ull; i < buffers_.size(); i++)
+	{
+		
+		vk::ImageView attachments[] = {
+			*tmpRtViews[i].imageView
+		};
+		vk::FramebufferCreateInfo info{};
+		info.setRenderPass(*tmp);
+		info.setAttachmentCount(1);
+		info.setAttachments(attachments);
+		info.setWidth(static_cast<std::uint32_t>(size.x));
+		info.setHeight(static_cast<std::uint32_t>(size.y));
+		info.setLayers(1);
+
+		frameBuffer_[i] = device_->createFramebufferUnique(info);
+
+	}
+
 }
 #endif
 
@@ -316,7 +373,7 @@ Eugene::RenderTargetViews& Eugene::VkGraphics::GetViews(void)
 	return *renderTargetViews_;
 }
 
-std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void)
+std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void) const
 {
     return backBufferIdx_;
 }
@@ -487,31 +544,204 @@ namespace Eugene
 	class VkEffekseerWarpper :
 		public EffekseerWarpper
 	{
+	public:
+		VkEffekseerWarpper(
+			std::span<vk::UniqueFramebuffer> frameBuffer,
+			const Graphics& graphics,
+			const vk::PhysicalDevice& physicalDevice,
+			const vk::Device& device,
+			const vk::Queue& queue, 
+			const vk::CommandPool& pool,
+			std::uint32_t swapchainCount, vk::Format rtFormat, vk::Format depthFormtat, bool reverseDepth, std::uint64_t maxNum) :
+			graphics_{graphics}, frameBuffer_{ frameBuffer }
+		{
+			
+			eugeneCmdList_.reset(static_cast<const Graphics&>(graphics).CreateCommandList());
+			VkDevice vkDevice{ device };
+
+			auto graphicsDevice = EffekseerRendererVulkan::CreateGraphicsDevice
+			(
+				VkPhysicalDevice{ physicalDevice },
+				vkDevice,
+				queue,
+				pool,
+				swapchainCount
+			);
+
+		
+			EffekseerRendererVulkan::RenderPassInformation renderPassInfo;
+			renderPassInfo.DoesPresentToScreen = false;
+			renderPassInfo.RenderTextureCount = 1;
+			renderPassInfo.RenderTextureFormats[0] = VK_FORMAT_B8G8R8A8_UNORM;
+			//enderPassInfo.DepthFormat = VK_FORMAT_D32_SFLOAT;
+			
+			renderer_ = EffekseerRendererVulkan::Create(graphicsDevice, renderPassInfo, maxNum);
+			manager_ = Effekseer::Manager::Create(maxNum);
+
+			// レンダラーセット
+			manager_->SetSpriteRenderer(renderer_->CreateSpriteRenderer());
+			manager_->SetRibbonRenderer(renderer_->CreateRibbonRenderer());
+			manager_->SetRingRenderer(renderer_->CreateRingRenderer());
+			manager_->SetTrackRenderer(renderer_->CreateTrackRenderer());
+			manager_->SetModelRenderer(renderer_->CreateModelRenderer());
+
+			// ローダーセット
+			manager_->SetTextureLoader(renderer_->CreateTextureLoader());
+			manager_->SetModelLoader(renderer_->CreateModelLoader());
+			manager_->SetMaterialLoader(renderer_->CreateMaterialLoader());
+
+			// メモリープールとコマンドリストを生成
+			memoryPool_ = EffekseerRenderer::CreateSingleFrameMemoryPool(renderer_->GetGraphicsDevice());
+			cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
+			renderer_->SetCommandList(cmdList_);
+
+			auto viewerPosition = ::Effekseer::Vector3D(0.0f, 0.0f, -20.0f);
+			renderer_->SetCameraMatrix(
+				Effekseer::Matrix44().LookAtRH(
+					viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
+				)
+			);
+
+			vk::AttachmentDescription colorAttachment{};
+			colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
+			colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+			colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
+			colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+			colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+			colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+			colorAttachment.setInitialLayout(vk::ImageLayout::eColorAttachmentOptimal);
+			colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+			vk::AttachmentReference colorAttachmentRef{};
+			colorAttachmentRef.attachment = 0;
+			colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+
+			vk::SubpassDescription subpass;
+			subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+			subpass.setColorAttachmentCount(1);
+			subpass.setPColorAttachments(&colorAttachmentRef);
+
+			vk::RenderPassCreateInfo rdPasInfo{};
+			rdPasInfo.setAttachmentCount(1);
+			rdPasInfo.setPAttachments(&colorAttachment);
+			rdPasInfo.setSubpassCount(1);
+			rdPasInfo.setPSubpasses(&subpass);
+
+			renderPass_ = device.createRenderPassUnique(rdPasInfo);
+
+		}
+
 		// EffekseerWarpper を介して継承されました
 		void Update(float delta) override
 		{
+			// 1フレームの経過時間を60フレーム基準での経過フレームに変換用
+			constexpr auto frameParSec = 1.0f / 60.0f;
+
+			// 開始処理
+			memoryPool_->NewFrame();
+
+			// 更新処理
+			manager_->Update(delta / frameParSec);
 		}
+
 		void Draw(CommandList& cmdList) override
 		{
+			auto vkCmdList{ static_cast<vk::UniqueCommandBuffer*>(cmdList.GetCommandList()) };
+			eugeneCmdList_->Begin();
+
+			/*vk::RenderPassBeginInfo renderPassInfo{};
+			renderPassInfo.setFramebuffer(*frameBuffer_[graphics_.GetNowBackBufferIndex()]);
+			renderPassInfo.setRenderPass(*renderPass_);
+			(*vkCmdList)->beginRenderPass(renderPassInfo, vk::SubpassContents::eInline);
+			*/
+
+			Effekseer::Manager::DrawParameter drawParameter;
+			drawParameter.ZNear = 0.0f;
+			drawParameter.ZFar = 1.0f;
+			drawParameter.ViewProjectionMatrix = renderer_->GetCameraProjectionMatrix();
+			
+			EffekseerRendererVulkan::BeginCommandList(cmdList_, **vkCmdList);
+			renderer_->SetCommandList(cmdList_);
+			renderer_->BeginRendering();
+			manager_->Draw(drawParameter);
+			renderer_->EndRendering();
+			renderer_->SetCommandList(nullptr);
+			EffekseerRendererVulkan::EndCommandList(cmdList_);
+
+			//(*vkCmdList)->endRenderPass();
+			eugeneCmdList_->End();
+
 		}
 		Effekseer::RefPtr<Effekseer::Manager>& GetManager() & final
 		{
-			// TODO: return ステートメントをここに挿入します
+			return manager_;
+
 		}
 		void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) final
 		{
-
+			renderer_->SetCameraMatrix(
+				Effekseer::Matrix44().LookAtLH(
+					Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{ up.x, up.y, up.z }
+				)
+			);
 		}
 		void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
 		{
-
+			renderer_->SetProjectionMatrix(
+				Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
 		}
+
+		CommandList& GetCmdList() final
+		{
+			return *eugeneCmdList_;
+		}
+	private:
+
+		/// <summary>
+		/// レンダラー
+		/// </summary>
+		EffekseerRenderer::RendererRef renderer_;
+
+		/// <summary>
+		/// マネージャー
+		/// </summary>
+		Effekseer::RefPtr<Effekseer::Manager> manager_;
+
+		/// <summary>
+		/// メモリプール
+		/// </summary>
+		Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> memoryPool_;
+
+		/// <summary>
+		/// コマンドリスト
+		/// </summary>
+		Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
+
+		std::unique_ptr<CommandList> eugeneCmdList_;
+
+		const Graphics& graphics_;
+
+		const std::span<vk::UniqueFramebuffer> frameBuffer_;
+
+		vk::UniqueRenderPass renderPass_;
 	};
 }
 
 Eugene::EffekseerWarpper* Eugene::VkGraphics::CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const
 {
-	return new VkEffekseerWarpper{};
+
+	return new VkEffekseerWarpper{
+		std::span<vk::UniqueFramebuffer>(const_cast<vk::UniqueFramebuffer*>(frameBuffer_.data()),frameBuffer_.size()),
+		*this,
+		physicalDevice_,
+		*device_,
+		queue_,
+		*effekseerPool_,
+		rtNum,
+		FormatToVkFormat[static_cast<size_t>(rtFormat)],
+		FormatToVkFormat[static_cast<size_t>(depthFormat)],
+		reverseDepth,
+		maxNumm
+	};
 }
 #endif
 

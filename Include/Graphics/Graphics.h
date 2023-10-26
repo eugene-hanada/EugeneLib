@@ -64,6 +64,8 @@ namespace Eugene
 		virtual void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) = 0;
 
 		virtual void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) = 0;
+
+		virtual CommandList& GetCmdList() = 0;
 	protected:
 		EffekseerWarpper();
 	};
@@ -242,7 +244,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> インデックス </returns>
-		virtual std::uint64_t GetNowBackBufferIndex(void) = 0;
+		virtual std::uint64_t GetNowBackBufferIndex(void) const = 0 ;
 
 		/// <summary>
 		/// 

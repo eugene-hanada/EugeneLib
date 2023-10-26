@@ -258,6 +258,33 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	viewportState.setViewportCount(1);
 	viewportState.setScissorCount(1);
 
+	vk::AttachmentDescription colorAttachment{};
+	colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
+	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+	vk::AttachmentReference colorAttachmentRef{};
+	colorAttachmentRef.attachment = 0;
+	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+
+	vk::SubpassDescription subpass;
+	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+	subpass.setColorAttachmentCount(1);
+	subpass.setPColorAttachments(&colorAttachmentRef);
+
+	vk::RenderPassCreateInfo renderPassInfo{};
+	renderPassInfo.setAttachmentCount(1);
+	renderPassInfo.setPAttachments(&colorAttachment);
+	renderPassInfo.setSubpassCount(1);
+	renderPassInfo.setPSubpasses(&subpass);
+
+	auto tmp = device.createRenderPassUnique(renderPassInfo);
+
+
 	// グラフィックパイプラインの設定
 	vk::GraphicsPipelineCreateInfo pipelineInfo{};
 	
@@ -268,6 +295,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPDynamicState(&dynamicState);
 	pipelineInfo.setPMultisampleState(&multiSampleInfo);
 	pipelineInfo.setPViewportState(&viewportState);
+	pipelineInfo.setRenderPass(*tmp);
 
 	// デプス周りとりあえずなしで実装
 	if (useDepth)

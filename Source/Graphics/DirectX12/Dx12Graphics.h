@@ -58,7 +58,7 @@ namespace Eugene
 
 		RenderTargetViews& GetViews(void) final;
 
-		std::uint64_t GetNowBackBufferIndex(void) final;
+		std::uint64_t GetNowBackBufferIndex(void) const final;
 
 		void Present(void) final;
 

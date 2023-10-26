@@ -75,7 +75,7 @@
     },
     {
       "name": "x64-Debug-Vulkan",
-      "generator": "Visual Studio 17 2022 Win64",
+      "generator": "Ninja",
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
@@ -111,7 +111,7 @@
         },
         {
           "name": "BUILD_EXTERNAL",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         },
         {
@@ -127,6 +127,36 @@
         {
           "name": "ENABLE_SPVREMAPPER",
           "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_EFFEKSEER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_VULKAN",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_VULKAN_COMPILER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "SKIP_GLSLANG_INSTALL",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_XAUDIO2",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "GLSLANG_WITHOUT_INSTALL",
+          "value": "False",
           "type": "BOOL"
         }
       ]

@@ -361,7 +361,7 @@ Eugene::RenderTargetViews& Eugene::Dx12Graphics::GetViews(void)
 	return *renderTargetViews_;
 }
 
-size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void)
+size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void) const
 {
 	// バックバッファのインデックスを取得
 	return swapChain_->GetCurrentBackBufferIndex();

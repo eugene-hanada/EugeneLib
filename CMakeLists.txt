@@ -225,16 +225,16 @@ endif()
 
 	# 使用時
 	add_subdirectory("Effekseer")
-	#target_link_libraries(EugeneLib LLGI)
-	#target_link_libraries(EugeneLib Effekseer)
-	
+	target_link_libraries(EugeneLib LLGI Effekseer)
 	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	#target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
+	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
+
 	
 	# Vulkan使用するか？
 	if (USE_VULKAN)
 		# VULKAN使用時
-		#target_link_libraries(EugeneLib EffekseerRendererVulkan)
+		target_link_libraries(EugeneLib EffekseerRendererVulkan glslang SPIRV)
+		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererVulkan")
 	else()
 		# 
 		target_link_libraries(EugeneLib EffekseerRendererDX12)

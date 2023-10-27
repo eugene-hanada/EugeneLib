@@ -52,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			*resourceBidLayout,
 			{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
 			{ Eugene::ShaderPair{{"VertexShader.vso"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel} },
-			Eugene::RendertargetLayout{ Eugene::Format::R8G8B8A8_UNORM, Eugene::BlendType::Non },
+			Eugene::RendertargetLayout{ Eugene::Format::B8G8R8A8_UNORM, Eugene::BlendType::Alpha },
 			Eugene::TopologyType::Triangle,
 			true,
 			false
@@ -213,7 +213,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
 	effekseer->SetCameraPos({ 0.0f,0.0f,-20.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
-	auto h = effekseer->GetManager()->Play(effect, 0,0,0);
+	auto h = effekseer->GetManager()->Play(effect, 0,0,-10.0f);
 
 	while (system->Update())
 	{
@@ -286,15 +286,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		
 
-		effekseer->Update(1.0f / 60.0f);
+		effekseer->Update(1.0f / 240.0f);
 
 		// コマンド開始
 		cmdList->Begin();
 
 		// レンダーターゲットセット
 		cmdList->TransitionRenderTargetBegin(graphics->GetBackBufferResource());
-		//cmdList->TransitionDepthBegin(*depthBuffer);
-		//cmdList->ClearRenderTarget(graphics->GetViews(), clearColor, graphics->GetNowBackBufferIndex());
+		cmdList->TransitionDepthBegin(*depthBuffer);
 		
 		cmdList->SetRenderTarget(graphics->GetViews(), clearColor, {static_cast<std::uint32_t>(graphics->GetNowBackBufferIndex()),1u});
 		//cmdList->ClearDepth(*depthView);
@@ -333,11 +332,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->Draw(4);
 
 		//effekseer->Draw(*cmdList);
+		effekseer->Draw(*cmdList);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
-
-		effekseer->Draw(*cmdList);
-		//cmdList->TransitionDepthEnd(*depthBuffer);
+		cmdList->TransitionDepthEnd(*depthBuffer);
 		
 		//cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 		// コマンド終了

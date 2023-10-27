@@ -141,7 +141,7 @@
         },
         {
           "name": "BUILD_VULKAN_COMPILER",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {

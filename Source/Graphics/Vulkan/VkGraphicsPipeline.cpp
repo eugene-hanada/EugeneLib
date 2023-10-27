@@ -124,9 +124,11 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 
 	std::vector<vk::PipelineColorBlendAttachmentState> attachments{rendertarges.size()};
-	
+	std::vector<vk::Format> attachmentsFormat(rendertarges.size());
+
 	for (size_t i = 0ull; i < rendertarges.size(); i++)
 	{
+		attachmentsFormat[i] = VkGraphics::FormatToVkFormat[static_cast<size_t>(rendertarges.at(i).format_)];
 		constexpr vk::ColorComponentFlags toComponentFlag[]{
 			static_cast<const vk::ColorComponentFlags>(0u),
 			// R32G32B32A32
@@ -186,11 +188,17 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+
+			// B8G8R8A8
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
+			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 		};
 
-		
 		attachments[i].setColorWriteMask(toComponentFlag[static_cast<size_t>(rendertarges.at(i).format_)]);
-
 		switch (rendertarges.at(i).blendType_)
 		{
 		case BlendType::Non:
@@ -242,9 +250,14 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vk::PipelineDepthStencilStateCreateInfo depthInfo{};
 	depthInfo.setDepthTestEnable(useDepth);
 	depthInfo.setDepthWriteEnable(useDepth);
-	depthInfo.setDepthCompareOp(vk::CompareOp::eLess);
+	depthInfo.setDepthCompareOp(vk::CompareOp::eLessOrEqual);
 	depthInfo.setMaxDepthBounds(1.0f);
 	depthInfo.setMinDepthBounds(0.0f);
+
+	vk::PipelineRenderingCreateInfo renderingInfo{};
+	renderingInfo.setColorAttachmentCount(static_cast<std::uint32_t>(attachmentsFormat.size()));
+	renderingInfo.setColorAttachmentFormats(attachmentsFormat);
+	renderingInfo.setDepthAttachmentFormat(vk::Format::eD32Sfloat);
 
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
@@ -258,31 +271,32 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	viewportState.setViewportCount(1);
 	viewportState.setScissorCount(1);
 
-	vk::AttachmentDescription colorAttachment{};
-	colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
-	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
-	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
-	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
-	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
-	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
-	vk::AttachmentReference colorAttachmentRef{};
-	colorAttachmentRef.attachment = 0;
-	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+	//vk::AttachmentDescription colorAttachment{};
+	//colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
+	//colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+	//colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	//colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+	//colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+	//colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+	//colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+	//colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
 
-	vk::SubpassDescription subpass;
-	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
-	subpass.setColorAttachmentCount(1);
-	subpass.setPColorAttachments(&colorAttachmentRef);
+	//vk::AttachmentReference colorAttachmentRef{};
+	//colorAttachmentRef.attachment = 0;
+	//colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
 
-	vk::RenderPassCreateInfo renderPassInfo{};
-	renderPassInfo.setAttachmentCount(1);
-	renderPassInfo.setPAttachments(&colorAttachment);
-	renderPassInfo.setSubpassCount(1);
-	renderPassInfo.setPSubpasses(&subpass);
+	//vk::SubpassDescription subpass;
+	//subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+	//subpass.setColorAttachmentCount(1);
+	//subpass.setPColorAttachments(&colorAttachmentRef);
 
-	auto tmp = device.createRenderPassUnique(renderPassInfo);
+	//vk::RenderPassCreateInfo renderPassInfo{};
+	//renderPassInfo.setAttachmentCount(1);
+	//renderPassInfo.setPAttachments(&colorAttachment);
+	//renderPassInfo.setSubpassCount(1);
+	//renderPassInfo.setPSubpasses(&subpass);
+
+	//auto tmp = device.createRenderPassUnique(renderPassInfo);
 
 
 	// グラフィックパイプラインの設定
@@ -295,18 +309,17 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPDynamicState(&dynamicState);
 	pipelineInfo.setPMultisampleState(&multiSampleInfo);
 	pipelineInfo.setPViewportState(&viewportState);
-	pipelineInfo.setRenderPass(*tmp);
-
+	pipelineInfo.setPNext(&renderingInfo);
+	//pipelineInfo.setRenderPass(*tmp);
 	// デプス周りとりあえずなしで実装
 	if (useDepth)
 	{
-		pipelineInfo.setPDepthStencilState(nullptr);
+		pipelineInfo.setPDepthStencilState(&depthInfo);
 	}
-
 	pipelineInfo.setPColorBlendState(&blendInfo);
 	pipelineInfo.setLayout(data_.layout_);
 
-	pipelineInfo.setRenderPass(nullptr);
+	//pipelineInfo.setRenderPass(nullptr);
 	
 	auto [result, pipeline] = device.createGraphicsPipelineUnique(nullptr, pipelineInfo);
 
@@ -316,8 +329,6 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	}
 
 	data_.pipeline_ = std::move(pipeline);
-
-
 }
 
 void* Eugene::VkGraphicsPipeline::GetPipeline(void)

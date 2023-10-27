@@ -63,7 +63,6 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
-
 	size_ = size;
 }
 

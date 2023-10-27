@@ -573,7 +573,7 @@ namespace Eugene
 			renderPassInfo.DoesPresentToScreen = false;
 			renderPassInfo.RenderTextureCount = 1;
 			renderPassInfo.RenderTextureFormats[0] = VK_FORMAT_B8G8R8A8_UNORM;
-			//enderPassInfo.DepthFormat = VK_FORMAT_D32_SFLOAT;
+			//renderPassInfo.DepthFormat = VK_FORMAT_D32_SFLOAT;
 			
 			renderer_ = EffekseerRendererVulkan::Create(graphicsDevice, renderPassInfo, maxNum);
 			manager_ = Effekseer::Manager::Create(maxNum);
@@ -647,12 +647,6 @@ namespace Eugene
 		{
 			auto vkCmdList{ static_cast<vk::UniqueCommandBuffer*>(cmdList.GetCommandList()) };
 			eugeneCmdList_->Begin();
-
-			/*vk::RenderPassBeginInfo renderPassInfo{};
-			renderPassInfo.setFramebuffer(*frameBuffer_[graphics_.GetNowBackBufferIndex()]);
-			renderPassInfo.setRenderPass(*renderPass_);
-			(*vkCmdList)->beginRenderPass(renderPassInfo, vk::SubpassContents::eInline);
-			*/
 
 			Effekseer::Manager::DrawParameter drawParameter;
 			drawParameter.ZNear = 0.0f;

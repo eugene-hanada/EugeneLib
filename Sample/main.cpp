@@ -31,24 +31,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// グラフィックの処理をするクラス
 	auto [graphics, gpuEngine] = system->CreateGraphicsUnique();
 
-	std::unique_ptr < Eugene::ResourceBindLayout> resourceBidLayout;
-	resourceBidLayout.reset(graphics->CreateResourceBindLayout(
-		{ 
+	std::unique_ptr < Eugene::ResourceBindLayout> resourceBidLayout{ graphics->CreateResourceBindLayout(
+		{
 			{Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}},
 			{Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}},
 			{Eugene::Bind{Eugene::ViewType::Sampler,1}}
-		}));
+		}) };
 
 	
 	// コマンドリスト生成
-	std::unique_ptr<Eugene::CommandList> cmdList;
-	cmdList.reset(graphics->CreateCommandList());
-
+	std::unique_ptr<Eugene::CommandList> cmdList{ graphics->CreateCommandList() };
+	
 	// グラフィックパイプライン生成
-	std::unique_ptr<Eugene::GraphicsPipeline> pipeline;
-	{
-
-		pipeline.reset(graphics->CreateGraphicsPipeline(
+	std::unique_ptr<Eugene::GraphicsPipeline> pipeline{ graphics->CreateGraphicsPipeline(
 			*resourceBidLayout,
 			{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
 			{ Eugene::ShaderPair{{"VertexShader.vso"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel} },
@@ -56,14 +51,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			Eugene::TopologyType::Triangle,
 			true,
 			false
-		));
+		) };
 
-	}
-
-	std::unique_ptr<Eugene::ImageResource> depthBuffer;
-	std::unique_ptr<Eugene::DepthStencilViews> depthView;
-	depthBuffer.reset(graphics->CreateDepthResource({ 1280, 720 }, 0.0f));
-	depthView.reset(graphics->CreateDepthStencilViews(1));
+	std::unique_ptr<Eugene::ImageResource> depthBuffer{ graphics->CreateDepthResource({ 1280, 720 }, 0.0f) };
+	std::unique_ptr<Eugene::DepthStencilViews> depthView{ graphics->CreateDepthStencilViews(1) };
 	depthView->Create(*depthBuffer, 0);
 
 	// 頂点情報を生成
@@ -103,14 +94,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// スクリーン座標からクリップ座標に変換する行列を生成
-	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView;
-	rtMatrixView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }));
-	std::unique_ptr<Eugene::BufferResource> rtMatrixBuffer;
-	rtMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
+	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }) };
+	std::unique_ptr<Eugene::BufferResource> rtMatrixBuffer{ graphics->CreateUploadableBufferResource(256) };
 	rtMatrixView->CreateConstantBuffer(*rtMatrixBuffer, 0);
 	Eugene::Matrix4x4* rtMatrix = static_cast<Eugene::Matrix4x4*>(rtMatrixBuffer->Map());
-	Eugene::Get2DMatrix(*rtMatrix, { 1280.0f,720.0f });
-	//rtMatrixBuffer->UnMap();
 	
 
 	// テクスチャ用リソース
@@ -145,8 +132,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	texMatrixBuffer->UnMap();
 
 	// 画像と定数バッファ用のビュー
-	std::unique_ptr<Eugene::ShaderResourceViews> texAndMatrixView;
-	texAndMatrixView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}}));
+	std::unique_ptr<Eugene::ShaderResourceViews> texAndMatrixView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}}) };
 	texAndMatrixView->CreateTexture(*textureResource, 0);
 	texAndMatrixView->CreateConstantBuffer(*texMatrixBuffer, 1);
 
@@ -157,25 +143,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		layout.filter_ = Eugene::SampleFilter::Linear;
 		sampler.reset(graphics->CreateSampler(layout));
 	}
-	std::unique_ptr<Eugene::SamplerViews> samplerView;
-	samplerView.reset(graphics->CreateSamplerViews({ Eugene::Bind{Eugene::ViewType::Sampler,1} }));
-	samplerView->CreateSampler(*sampler, 0);
+	std::unique_ptr<Eugene::SamplerViews> samplerView{ graphics->CreateSamplerViews({ Eugene::Bind{Eugene::ViewType::Sampler,1} }) };
 
 	// カーソル表示用行列
-	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer;
-	cursorMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
+	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer{ graphics->CreateUploadableBufferResource(256) };
 	Eugene::Matrix4x4* cursorMatrix = static_cast<Eugene::Matrix4x4*>(cursorMatrixBuffer->Map());
 	Eugene::Get2DTransformMatrix(*cursorMatrix, Eugene::zeroVector2<float>, 0.0f, {0.2f,0.2f });
-	std::unique_ptr<Eugene::ShaderResourceViews> cursorView;
-	cursorView.reset(graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }));
+	std::unique_ptr<Eugene::ShaderResourceViews> cursorView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }) };
 	cursorView->CreateTexture(*textureResource, 0);
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
 
-	std::unique_ptr<Eugene::BufferResource> index;
-	index.reset(graphics->CreateBufferResource(256));
+	std::unique_ptr<Eugene::BufferResource> index{ graphics->CreateBufferResource(256) };
 
-	std::unique_ptr<Eugene::IndexView> indexView_;
-	indexView_.reset(graphics->CreateIndexView( 4u, 4u,Eugene::Format::R16_FLOAT,*index));
+	std::unique_ptr<Eugene::IndexView> indexView_{ graphics->CreateIndexView(4u, 4u,Eugene::Format::R16_FLOAT,*index) };
+
 	//// サウンド
 	//auto sound = Eugene::CreateSoundUnique();
 	//std::unique_ptr<Eugene::SoundControl> ctrl2;
@@ -193,7 +174,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	
 
-	float clearColor[]{ 0.0f,0.0f,0.0f,1.0f };
+	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
 	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
 	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
@@ -214,7 +195,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	effekseer->SetCameraPos({ 0.0f,0.0f,-30.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
 	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
-
+	effekseer->GetManager()->SetRotation(h, Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(90.0f), 0.0f);
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -286,7 +267,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		
 
-		effekseer->Update(1.0f / 240.0f);
+		effekseer->Update(1.0f / 75.0f);
 
 		// コマンド開始
 		cmdList->Begin();
@@ -331,13 +312,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
-		//effekseer->Draw(*cmdList);
+		
 		effekseer->Draw(*cmdList);
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
 		
-		//cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
 		// コマンド終了
 		cmdList->End();
 

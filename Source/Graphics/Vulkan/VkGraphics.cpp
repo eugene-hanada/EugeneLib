@@ -546,23 +546,17 @@ namespace Eugene
 	{
 	public:
 		VkEffekseerWarpper(
-			std::span<vk::UniqueFramebuffer> frameBuffer,
-			const Graphics& graphics,
 			const vk::PhysicalDevice& physicalDevice,
 			const vk::Device& device,
 			const vk::Queue& queue, 
 			const vk::CommandPool& pool,
-			std::uint32_t swapchainCount, vk::Format rtFormat, vk::Format depthFormtat, bool reverseDepth, std::uint64_t maxNum) :
-			graphics_{graphics}, frameBuffer_{ frameBuffer }
+			std::uint32_t swapchainCount, vk::Format rtFormat, vk::Format depthFormtat, bool reverseDepth, std::uint64_t maxNum)
 		{
 			
-			eugeneCmdList_.reset(static_cast<const Graphics&>(graphics).CreateCommandList());
-			VkDevice vkDevice{ device };
-
 			auto graphicsDevice = EffekseerRendererVulkan::CreateGraphicsDevice
 			(
 				VkPhysicalDevice{ physicalDevice },
-				vkDevice,
+				device,
 				queue,
 				pool,
 				swapchainCount
@@ -601,33 +595,6 @@ namespace Eugene
 					viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
 				)
 			);
-
-			vk::AttachmentDescription colorAttachment{};
-			colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
-			colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-			colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
-			colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
-			colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
-			colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-			colorAttachment.setInitialLayout(vk::ImageLayout::eColorAttachmentOptimal);
-			colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
-			vk::AttachmentReference colorAttachmentRef{};
-			colorAttachmentRef.attachment = 0;
-			colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
-
-			vk::SubpassDescription subpass;
-			subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
-			subpass.setColorAttachmentCount(1);
-			subpass.setPColorAttachments(&colorAttachmentRef);
-
-			vk::RenderPassCreateInfo rdPasInfo{};
-			rdPasInfo.setAttachmentCount(1);
-			rdPasInfo.setPAttachments(&colorAttachment);
-			rdPasInfo.setSubpassCount(1);
-			rdPasInfo.setPSubpasses(&subpass);
-
-			renderPass_ = device.createRenderPassUnique(rdPasInfo);
-
 		}
 
 		// EffekseerWarpper を介して継承されました
@@ -646,8 +613,7 @@ namespace Eugene
 		void Draw(CommandList& cmdList) override
 		{
 			auto vkCmdList{ static_cast<vk::UniqueCommandBuffer*>(cmdList.GetCommandList()) };
-			eugeneCmdList_->Begin();
-
+			
 			Effekseer::Manager::DrawParameter drawParameter;
 			drawParameter.ZNear = 0.0f;
 			drawParameter.ZFar = 1.0f;
@@ -660,10 +626,6 @@ namespace Eugene
 			renderer_->EndRendering();
 			renderer_->SetCommandList(nullptr);
 			EffekseerRendererVulkan::EndCommandList(cmdList_);
-
-			//(*vkCmdList)->endRenderPass();
-			eugeneCmdList_->End();
-
 		}
 		Effekseer::RefPtr<Effekseer::Manager>& GetManager() & final
 		{
@@ -684,10 +646,6 @@ namespace Eugene
 				Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
 		}
 
-		CommandList& GetCmdList() final
-		{
-			return *eugeneCmdList_;
-		}
 	private:
 
 		/// <summary>
@@ -709,14 +667,6 @@ namespace Eugene
 		/// コマンドリスト
 		/// </summary>
 		Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
-
-		std::unique_ptr<CommandList> eugeneCmdList_;
-
-		const Graphics& graphics_;
-
-		const std::span<vk::UniqueFramebuffer> frameBuffer_;
-
-		vk::UniqueRenderPass renderPass_;
 	};
 }
 
@@ -724,8 +674,6 @@ Eugene::EffekseerWarpper* Eugene::VkGraphics::CreateEffekseerWarpper(GpuEngine& 
 {
 
 	return new VkEffekseerWarpper{
-		std::span<vk::UniqueFramebuffer>(const_cast<vk::UniqueFramebuffer*>(frameBuffer_.data()),frameBuffer_.size()),
-		*this,
 		physicalDevice_,
 		*device_,
 		queue_,

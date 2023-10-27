@@ -211,9 +211,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
 	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 2u));
 	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
-	effekseer->SetCameraPos({ 0.0f,0.0f,-20.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
+	effekseer->SetCameraPos({ 0.0f,0.0f,-30.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
-	auto h = effekseer->GetManager()->Play(effect, 0,0,-10.0f);
+	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
 
 	while (system->Update())
 	{

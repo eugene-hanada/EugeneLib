@@ -274,7 +274,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	//vk::AttachmentDescription colorAttachment{};
 	//colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
 	//colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	//colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	//colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
 	//colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
 	//colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
 	//colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);

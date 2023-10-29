@@ -69,12 +69,11 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	buffers_.resize(bufferNum);
 
 
-	auto useFormat{ Format::NON };
 	for (std::uint64_t i = 0ull; i < FormatMax; i++)
 	{
 		if (FormatToVkFormat[i] == useVkformat)
 		{
-			useFormat = static_cast<Format>(i);
+			backBufferFormat_ = static_cast<Format>(i);
 			break;
 		}
 	}
@@ -85,7 +84,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	
 	for (std::uint32_t i = 0u; i < bufferNum; i++)
 	{
-		buffers_[i] = std::make_unique<VkImageResource>(size, useFormat, images[i],*device_);
+		buffers_[i] = std::make_unique<VkImageResource>(size, backBufferFormat_, images[i],*device_);
 	}
 
 	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
@@ -113,52 +112,6 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	poolInfo.setQueueFamilyIndex(graphicFamilly_);
 	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
 	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
-
-	vk::AttachmentDescription colorAttachment{};
-	colorAttachment.setFormat(useVkformat);
-	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
-	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
-	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
-	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
-	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
-	vk::AttachmentReference colorAttachmentRef{};
-	colorAttachmentRef.attachment = 0;
-	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
-	
-	vk::SubpassDescription subpass;
-	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
-	subpass.setColorAttachmentCount(1);
-	subpass.setPColorAttachments(&colorAttachmentRef);
-
-	vk::RenderPassCreateInfo renderPassInfo{};
-	renderPassInfo.setAttachmentCount(1);
-	renderPassInfo.setPAttachments(&colorAttachment);
-	renderPassInfo.setSubpassCount(1);
-	renderPassInfo.setPSubpasses(&subpass);
-
-	auto tmp = device_->createRenderPassUnique(renderPassInfo);
-	frameBuffer_.resize(buffers_.size());
-	auto& tmpRtViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
-	for (auto i = 0ull; i < buffers_.size(); i++)
-	{
-		
-		vk::ImageView attachments[] = {
-			*tmpRtViews[i].imageView
-		};
-		vk::FramebufferCreateInfo info{};
-		info.setRenderPass(*tmp);
-		info.setAttachmentCount(1);
-		info.setAttachments(attachments);
-		info.setWidth(static_cast<std::uint32_t>(size.x));
-		info.setHeight(static_cast<std::uint32_t>(size.y));
-		info.setLayers(1);
-
-		frameBuffer_[i] = device_->createFramebufferUnique(info);
-
-	}
-
 }
 #endif
 
@@ -339,6 +292,10 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color)
 {
+	if (format == Format::AUTO_BACKBUFFER)
+	{
+		format = backBufferFormat_;
+	}
 	return new VkImageResource{ *this, *device_, size,format, };
 }
 
@@ -566,7 +523,7 @@ namespace Eugene
 			EffekseerRendererVulkan::RenderPassInformation renderPassInfo;
 			renderPassInfo.DoesPresentToScreen = false;
 			renderPassInfo.RenderTextureCount = 1;
-			renderPassInfo.RenderTextureFormats[0] = VK_FORMAT_B8G8R8A8_UNORM;
+			renderPassInfo.RenderTextureFormats[0] = static_cast<VkFormat>(VkGraphics::FormatToVkFormat[static_cast<size_t>(rtFormat)]);
 			//renderPassInfo.DepthFormat = VK_FORMAT_D32_SFLOAT;
 			
 			renderer_ = EffekseerRendererVulkan::Create(graphicsDevice, renderPassInfo, maxNum);
@@ -672,7 +629,10 @@ namespace Eugene
 
 Eugene::EffekseerWarpper* Eugene::VkGraphics::CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const
 {
-
+	if (rtFormat == Format::AUTO_BACKBUFFER)
+	{
+		rtFormat = backBufferFormat_;
+	}
 	return new VkEffekseerWarpper{
 		physicalDevice_,
 		*device_,

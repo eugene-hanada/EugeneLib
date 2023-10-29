@@ -155,6 +155,10 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	// レンダーターゲット設定
 	for (std::uint64_t i = 0; i < rendertarges.size(); i++)
 	{
+		if (rendertarges[i].format_ == Format::AUTO_BACKBUFFER)
+		{
+			rendertarges[i].format_ = Dx12Graphics::BackBufferFormat();
+		}
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(rendertarges[i].format_)));
 		switch (rendertarges[i].blendType_)
 		{
@@ -262,9 +266,14 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout(layout.size());
 	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
+		auto tmpFormat = layout.at(i).format_;
+		if (tmpFormat == Format::AUTO_BACKBUFFER)
+		{
+			tmpFormat = Dx12Graphics::BackBufferFormat();
+		}
 		inputLayout[i].SemanticName = layout.at(i).semanticName_;
 		inputLayout[i].SemanticIndex = layout.at(i).semanticIdx_;
-		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(layout.at(i).format_)));
+		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<size_t>(tmpFormat)));
 		inputLayout[i].InputSlot = layout.at(i).slot_;
 		inputLayout[i].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 		inputLayout[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
@@ -295,7 +304,12 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	// レンダーターゲット設定
 	for (std::uint64_t i = 0; i < rendertarges.size(); i++)
 	{
-		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(rendertarges.at(i).format_)));
+		auto tmpFormat = rendertarges.at(i).format_;
+		if (tmpFormat == Format::AUTO_BACKBUFFER)
+		{
+			tmpFormat = Dx12Graphics::BackBufferFormat();
+		}
+		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(tmpFormat)));
 		switch (rendertarges.at(i).blendType_)
 		{
 			using enum BlendType;

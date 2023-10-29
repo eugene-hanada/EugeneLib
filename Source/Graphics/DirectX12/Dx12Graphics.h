@@ -22,7 +22,10 @@ namespace Eugene
 		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		~Dx12Graphics();
 	
-		
+		static const Format& BackBufferFormat()
+		{
+			return Graphics::backBufferFormat_;
+		}
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 

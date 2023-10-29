@@ -76,9 +76,14 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	size_t layoutByte{ 0ull };
 	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
+		auto tmpFormat = layout.at(i).format_;
+		if (tmpFormat == Format::AUTO_BACKBUFFER)
+		{
+			tmpFormat = VkGraphics::BackBufferFormat();
+		}
 		vertexInputAtr[i].setBinding(0);
 		vertexInputAtr[i].setLocation(i);
-		vertexInputAtr[i].setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(layout.at(i).format_)]);
+		vertexInputAtr[i].setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)]);
 		vertexInputAtr[i].setOffset(layoutByte);
 		layoutByte += FormatSize[static_cast<size_t>(layout.at(i).format_)];
 		
@@ -128,7 +133,12 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 	for (size_t i = 0ull; i < rendertarges.size(); i++)
 	{
-		attachmentsFormat[i] = VkGraphics::FormatToVkFormat[static_cast<size_t>(rendertarges.at(i).format_)];
+		auto tmpFormat = rendertarges.at(i).format_;
+		if (tmpFormat == Format::AUTO_BACKBUFFER)
+		{
+			tmpFormat = VkGraphics::BackBufferFormat();
+		}
+		attachmentsFormat[i] = VkGraphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)];
 		constexpr vk::ColorComponentFlags toComponentFlag[]{
 			static_cast<const vk::ColorComponentFlags>(0u),
 			// R32G32B32A32
@@ -198,7 +208,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 		};
 
-		attachments[i].setColorWriteMask(toComponentFlag[static_cast<size_t>(rendertarges.at(i).format_)]);
+		attachments[i].setColorWriteMask(toComponentFlag[static_cast<size_t>(tmpFormat)]);
 		switch (rendertarges.at(i).blendType_)
 		{
 		case BlendType::Non:
@@ -270,34 +280,6 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	// それぞれ数を指定
 	viewportState.setViewportCount(1);
 	viewportState.setScissorCount(1);
-
-	//vk::AttachmentDescription colorAttachment{};
-	//colorAttachment.setFormat(vk::Format::eB8G8R8A8Unorm);
-	//colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	//colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
-	//colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
-	//colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
-	//colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-	//colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
-	//colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
-
-	//vk::AttachmentReference colorAttachmentRef{};
-	//colorAttachmentRef.attachment = 0;
-	//colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
-
-	//vk::SubpassDescription subpass;
-	//subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
-	//subpass.setColorAttachmentCount(1);
-	//subpass.setPColorAttachments(&colorAttachmentRef);
-
-	//vk::RenderPassCreateInfo renderPassInfo{};
-	//renderPassInfo.setAttachmentCount(1);
-	//renderPassInfo.setPAttachments(&colorAttachment);
-	//renderPassInfo.setSubpassCount(1);
-	//renderPassInfo.setPSubpasses(&subpass);
-
-	//auto tmp = device.createRenderPassUnique(renderPassInfo);
-
 
 	// グラフィックパイプラインの設定
 	vk::GraphicsPipelineCreateInfo pipelineInfo{};

@@ -47,7 +47,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			*resourceBidLayout,
 			{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
 			{ Eugene::ShaderPair{{"VertexShader.vso"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel} },
-			Eugene::RendertargetLayout{ Eugene::Format::B8G8R8A8_UNORM, Eugene::BlendType::Alpha },
+			Eugene::RendertargetLayout{ Eugene::Format::AUTO_BACKBUFFER, Eugene::BlendType::Alpha },
 			Eugene::TopologyType::Triangle,
 			true,
 			false
@@ -144,6 +144,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		sampler.reset(graphics->CreateSampler(layout));
 	}
 	std::unique_ptr<Eugene::SamplerViews> samplerView{ graphics->CreateSamplerViews({ Eugene::Bind{Eugene::ViewType::Sampler,1} }) };
+	samplerView->CreateSampler(*sampler, 0);
 
 	// カーソル表示用行列
 	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer{ graphics->CreateUploadableBufferResource(256) };
@@ -174,7 +175,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	
 
-	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+	float clearColor[]{ 0.0f,0.0f,0.0f,1.0f };
 
 	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
 	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
@@ -190,7 +191,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
-	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::R8G8B8A8_UNORM, 2u));
+	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::AUTO_BACKBUFFER, 2u));
 	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
 	effekseer->SetCameraPos({ 0.0f,0.0f,-30.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");

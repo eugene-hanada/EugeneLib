@@ -94,6 +94,11 @@ namespace Eugene
 			vk::Format::eBc7UnormBlock,
 		};
 
+		static const Format& BackBufferFormat()
+		{
+			return Graphics::backBufferFormat_;
+		}
+
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 #endif
@@ -192,7 +197,6 @@ namespace Eugene
 			std::uint64_t maxNumm = 8000) const final;
 
 		vk::UniqueCommandPool effekseerPool_;
-		std::vector<vk::UniqueFramebuffer> frameBuffer_;
 #endif
 };
 

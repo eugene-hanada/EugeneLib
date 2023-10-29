@@ -315,5 +315,10 @@ namespace Eugene
 
 	protected:
 		Graphics();
+
+		/// <summary>
+		/// バックバッファのフォーマット
+		/// </summary>
+		static Format backBufferFormat_;
 	};
 }

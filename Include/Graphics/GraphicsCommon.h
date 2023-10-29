@@ -81,7 +81,12 @@ namespace Eugene
 		BC2_UNORM,
 		BC3_UNORM,
 		BC5_UNORM,
-		BC7_UNORM
+		BC7_UNORM,
+
+		/// <summary>
+		/// バックバッファと同じフォーマットにする
+		/// </summary>
+		AUTO_BACKBUFFER
 	};
 
 	constexpr size_t FormatSize[]
@@ -152,6 +157,13 @@ namespace Eugene
 	/// フォーマットの最大数
 	/// </summary>
 	constexpr auto FormatMax = 54ull;
+
+	enum class IndexType
+	{
+		UINT32,
+		UINT16,
+		UINT8
+	};
 
 	/// <summary>
 	/// テクスチャ用画像情報

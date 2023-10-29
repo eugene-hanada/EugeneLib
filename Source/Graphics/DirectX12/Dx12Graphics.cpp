@@ -174,6 +174,10 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
 {
+	if (format == Format::AUTO_BACKBUFFER)
+	{
+		format = backBufferFormat_;
+	}
 	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
 }
 
@@ -200,6 +204,11 @@ Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(std::uint64_t size, s
 
 Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
+	if (format == Format::AUTO_BACKBUFFER)
+	{
+		format = backBufferFormat_;
+	}
+
 	return new Dx12IndexView{size,num, format,resource};
 }
 
@@ -222,36 +231,15 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		throw CreateErrorException("DXGIファクトリーの生成に失敗");
 	}
 
-	// アダプター列挙用リスト
-	std::list<IDXGIAdapter*> adapters;
+
 
 	// アダプター格納用
 	IDXGIAdapter* tmpAdapter = nullptr;
 
-	// アダプターを格納する
-	for (int i = 0; dxgiFactory_->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++)
-	{
-		adapters.push_back(tmpAdapter);
-	}
-
-	// 格納したアダプターから探す
-	std::wstring strDesc;
-	tmpAdapter = *adapters.begin();
-	for (auto& adpt : adapters)
-	{
-		DXGI_ADAPTER_DESC adesc{};
-		adpt->GetDesc(&adesc);			// アダプターについて取得する
-		strDesc = adesc.Description;
-		if (strDesc.find(L"NVIDIA") != std::string::npos || strDesc.find(L"AMD") != std::string::npos)
-		{
-			// 見つかったら抜ける
-			tmpAdapter = adpt;
-			break;
-		}
-	}
+	// 最もパフォーマンスの高いGPUを選択
+	dxgiFactory_->EnumAdapterByGpuPreference(0, DXGI_GPU_PREFERENCE::DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter));
 
 	
-
 	// フューチャーレベル
 	D3D_FEATURE_LEVEL levels[]{
 		D3D_FEATURE_LEVEL_12_1,
@@ -259,19 +247,11 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		D3D_FEATURE_LEVEL_11_1,
 		D3D_FEATURE_LEVEL_11_0
 	};
-	D3D_FEATURE_LEVEL fLavel;
-
-
+	
 	for (auto& level : levels)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
-			// 解放しとく
-			for (auto& a : adapters)
-			{
-				a->Release();
-			}
-			fLavel = level;
 			return;
 		}
 	}
@@ -294,6 +274,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 
 	// フォーマット�
 	swapchainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	backBufferFormat_ = Format::R8G8B8A8_UNORM;
 
 	// ステレオ表示フラグｰ
 	swapchainDesc.Stereo = false;
@@ -572,6 +553,10 @@ Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
 	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat,bool reverseDepth, std::uint64_t maxNumm
 ) const
 {
+	if (rtFormat == Format::AUTO_BACKBUFFER)
+	{
+		rtFormat = backBufferFormat_;
+	}
 	auto rtF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(rtFormat)]);
 	auto depthF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(depthFormat)]);
 	DXGI_SWAP_CHAIN_DESC1 desc;

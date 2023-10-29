@@ -1,5 +1,6 @@
 ﻿#include "../../Include/Graphics/Graphics.h"
 
+Eugene::Format Eugene::Graphics::backBufferFormat_{Format::NON};
 
 #ifdef USE_EFFEKSEER
 Eugene::EffekseerWarpper::~EffekseerWarpper()

@@ -7,6 +7,10 @@
 #include "../../../Include/Graphics/ImageResource.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
+#ifdef USE_IMGUI
+struct ImGui_ImplVulkanH_Window;
+#endif
+
 namespace Eugene
 {
 #ifdef USE_EFFEKSEER
@@ -120,6 +124,11 @@ namespace Eugene
 		/// <param name="isHostVisible"></param>
 		/// <returns></returns>
 		vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
+
+#ifdef USE_IMGUI
+		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
+		vk::RenderPass GetRenderPass(void);
+#endif
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 		CommandList* CreateCommandList(void) const final;
@@ -203,15 +212,12 @@ namespace Eugene
 		vk::UniqueDescriptorPool imguiDescriptorPool_;
 		vk::UniqueRenderPass imguiRenderPass_;
 		std::unique_ptr<ShaderResourceViews> imguiSrviews_;
+		void ImguiNewFrame(void) const override;
+		void* GetImguiImageID(std::uint64_t index) const override;
+		ShaderResourceViews& GetImguiShaderResourceView(void) & override;
 #endif
 
 
-		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
-		void ImguiNewFrame(void) const override;
-
-		void* GetImguiImageID(std::uint64_t index) const override;
-
-		ShaderResourceViews& GetImguiShaderResourceView(void) & override;
 
 };
 

@@ -52,6 +52,19 @@ namespace
 	}
 
 	ImGui_ImplVulkanH_Window imguiWindowH{};
+
+#ifdef USE_WINDOWS
+	HWND imguiHwnd;
+	VkAllocationCallbacks* callbacks = nullptr;
+	int ImGui_ImplVulkan_CreateVkSurface(ImGuiViewport* viewport, ImU64 vk_instance, const void* vk_allocator, ImU64* out_vk_surface)
+	{
+		VkWin32SurfaceCreateInfoKHR info{};
+		info.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+		info.hinstance = GetModuleHandle(nullptr);
+		info.hwnd = imguiHwnd;
+		return static_cast<int>((vkCreateWin32SurfaceKHR(reinterpret_cast<VkInstance>(vk_instance), &info, reinterpret_cast<const VkAllocationCallbacks*>(vk_allocator), reinterpret_cast<VkSurfaceKHR*>(out_vk_surface))));
+	}
+#endif
 #endif
 
 }
@@ -119,6 +132,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 #ifdef USE_IMGUI
 
+	imguiHwnd = hwnd;
+
 	// imgui用ディスクリプタープールの生成
 	vk::DescriptorPoolCreateInfo dPoolInfo{};
 	vk::DescriptorPoolSize a;
@@ -143,11 +158,11 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	vk::AttachmentDescription colorAttachment{};
 	colorAttachment.setFormat(useVkformat);
 	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
 	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
 	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
 	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+	colorAttachment.setInitialLayout(vk::ImageLayout::eColorAttachmentOptimal);
 	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
 	vk::AttachmentReference colorAttachmentRef{};
 	colorAttachmentRef.attachment = 0;
@@ -156,6 +171,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
 	subpass.setColorAttachmentCount(1);
 	subpass.setPColorAttachments(&colorAttachmentRef);
+
 	vk::RenderPassCreateInfo renderPassInfo{};
 	renderPassInfo.setAttachmentCount(1);
 	renderPassInfo.setPAttachments(&colorAttachment);
@@ -174,25 +190,51 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	info.Subpass = 0;
 	info.MinImageCount = bufferNum;
 	info.ImageCount = 2;
-	info.Allocator = nullptr;
+	info.Allocator = callbacks;
 	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
 	info.CheckVkResultFn = CheckVkResult;
 	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
 
-	/*imguiWindowH.Surface = *surfaceKhr_;
+	imguiWindowH.Surface = *surfaceKhr_;
+	//imguiWindowH.RenderPass = *imguiRenderPass_;
 	auto tmpFormat = static_cast<VkFormat>(useVkformat);
 	imguiWindowH.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(physicalDevice_, *surfaceKhr_, &tmpFormat, 1, VK_COLORSPACE_SRGB_NONLINEAR_KHR);
 	VkPresentModeKHR presentModes{ VK_PRESENT_MODE_FIFO_KHR };
 	imguiWindowH.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(physicalDevice_, *surfaceKhr_, &presentModes, 1);
-	ImGui_ImplVulkanH_CreateOrResizeWindow(*instance_, physicalDevice_, *device_, &imguiWindowH, graphicFamilly_, nullptr, size.x, size.y, bufferNum);*/
-
+	ImGui_ImplVulkanH_CreateOrResizeWindow(*instance_, physicalDevice_, *device_, &imguiWindowH, graphicFamilly_, callbacks, size.x, size.y, bufferNum);
+	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
 	
-	
 
-	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
+	if (!ImGui_ImplVulkan_Init(&info, imguiWindowH.RenderPass))
 	{
 		throw EugeneLibException{ "Imgui Init Error" };
 	}
+
+	VkCommandPool command_pool = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandPool;
+	VkCommandBuffer command_buffer = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandBuffer;
+
+	auto err = vkResetCommandPool(*device_, command_pool, 0);
+	CheckVkResult(err);
+	VkCommandBufferBeginInfo begin_info = {};
+	begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+	begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+	err = vkBeginCommandBuffer(command_buffer, &begin_info);
+	CheckVkResult(err);
+
+	ImGui_ImplVulkan_CreateFontsTexture(command_buffer);
+
+	VkSubmitInfo end_info = {};
+	end_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	end_info.commandBufferCount = 1;
+	end_info.pCommandBuffers = &command_buffer;
+	err = vkEndCommandBuffer(command_buffer);
+	CheckVkResult(err);
+	err = vkQueueSubmit(queue_, 1, &end_info, VK_NULL_HANDLE);
+	CheckVkResult(err);
+
+	err = vkDeviceWaitIdle(*device_);
+	CheckVkResult(err);
+	ImGui_ImplVulkan_DestroyFontUploadObjects();
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -269,6 +311,15 @@ Eugene::VkGraphics::~VkGraphics()
 {
 	queue_.waitIdle();
 	device_->waitIdle();
+
+#ifdef USE_IMGUI
+	ImGui_ImplVulkan_Shutdown();
+	surfaceKhr_.release();
+	ImGui_ImplVulkanH_DestroyWindow(*instance_, *device_, &imguiWindowH, callbacks);
+	
+	device_->waitIdle();
+#endif
+	DebugLog("~VkGraphics");
 }
 
 vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
@@ -346,6 +397,16 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool
 	allocateInfo.setAllocationSize(memRq.size);
 	allocateInfo.setMemoryTypeIndex(memIdx);
 	return device_->allocateMemoryUnique(allocateInfo);
+}
+
+ImGui_ImplVulkanH_Window* Eugene::VkGraphics::GetImguiWindow(void)
+{
+	return &imguiWindowH;
+}
+
+vk::RenderPass Eugene::VkGraphics::GetRenderPass(void)
+{
+	return *imguiRenderPass_;
 }
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
@@ -426,7 +487,7 @@ std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void) const
 
 void Eugene::VkGraphics::Present(void)
 {
-	vk::SwapchainKHR sws[]{ *swapchain_ };
+	vk::SwapchainKHR sws[]{ *swapchain_,*swapchain_ };
 	vk::PresentInfoKHR info{};
 	info.setImageIndices(backBufferIdx_);
 	info.setSwapchains(*swapchain_);
@@ -453,6 +514,10 @@ void Eugene::VkGraphics::Present(void)
 
 	device_->waitIdle();
 	device_->resetFences(*fence_);
+
+#ifdef USE_IMGUI
+	imguiWindowH.FrameIndex = backBufferIdx_;
+#endif
 }
 
 Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const
@@ -744,6 +809,7 @@ Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::
 #ifdef USE_IMGUI
 void Eugene::VkGraphics::ImguiNewFrame(void) const
 {
+	ImGui_ImplVulkan_NewFrame();
 }
 void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
 {

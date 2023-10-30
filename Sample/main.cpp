@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include <initializer_list>
-
+#include <Common/Debug.h>
 #include <Color.h>
 #include <Common/ArgsSpan.h>
 
@@ -188,6 +188,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//auto img = graphics->GetImguiImageID(1);
 	//graphics->SetFullScreenFlag(true);
 	bool flag = false;
+	ImGuiIO& io = ImGui::GetIO();
+
 
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -246,27 +248,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
 		Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
 
-		//graphics->ImguiNewFrame();
-		//system->ImguiNewFrame();
-		//ImGui::NewFrame();
+		graphics->ImguiNewFrame();
+		system->ImguiNewFrame();
+		ImGui::NewFrame();
 
-		//ImGui::Begin("window1");
+		ImGui::Begin("window1");
 	
-		//
-		////ImGui::Text("text1");
-		//
-		//ImGui::End();
-		//ImGui::Render();
+		
+		//ImGui::Text("text1");
+		
+		ImGui::End();
+		ImGui::Render();
 
-		//ImGuiIO& io = ImGui::GetIO();
-		//if (!system->IsEnd())
-		//{
-		//	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-		//	{
-		//		ImGui::UpdatePlatformWindows();
-		//		ImGui::RenderPlatformWindowsDefault();
-		//	}
-		//}
+		
+		if (!system->IsEnd())
+		{
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
+		}
 
 		
 #ifdef USE_EFFEKSEER
@@ -323,6 +325,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
 		
+#ifdef USE_IMGUI
+		cmdList->SetImguiCommand(ImGui::GetDrawData(), *graphics);
+#endif
+
 
 		// コマンド終了
 		cmdList->End();
@@ -345,5 +351,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		frameCnt++;
 	}
+	DebugLog("終了するゾ");
 	return 0;
 }

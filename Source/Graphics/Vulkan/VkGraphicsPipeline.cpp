@@ -267,8 +267,10 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vk::PipelineRenderingCreateInfo renderingInfo{};
 	renderingInfo.setColorAttachmentCount(static_cast<std::uint32_t>(attachmentsFormat.size()));
 	renderingInfo.setColorAttachmentFormats(attachmentsFormat);
-	renderingInfo.setDepthAttachmentFormat(vk::Format::eD32Sfloat);
-
+	if (useDepth)
+	{
+		renderingInfo.setDepthAttachmentFormat(vk::Format::eD32Sfloat);
+	}
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
 	scissor.setOffset({ 0,0 });

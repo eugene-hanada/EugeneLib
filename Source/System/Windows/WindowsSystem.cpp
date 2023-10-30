@@ -191,6 +191,7 @@ Eugene::WindowsSystem::~WindowsSystem()
 #ifdef USE_IMGUI
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+	DebugLog("~WindowsSystem");
 #endif
 	CoUninitialize();
 	UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);

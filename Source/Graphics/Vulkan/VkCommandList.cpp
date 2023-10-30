@@ -11,7 +11,9 @@
 #include "VkSamplerViews.h"
 
 #ifdef USE_IMGUI
-
+#include "VkGraphics.h"
+#include <imgui.h>
+#include <backends/imgui_impl_vulkan.h>
 #endif
 
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
@@ -477,5 +479,25 @@ void* Eugene::VkCommandList::GetCommandList(void)
 #ifdef USE_IMGUI
 void Eugene::VkCommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
 {
+	const bool main_is_minimized = (data->DisplaySize.x <= 0.0f || data->DisplaySize.y <= 0.0f);
+	if (main_is_minimized)
+	{
+		return;
+	}
+	auto window = static_cast<VkGraphics&>(graphics).GetImguiWindow();
+	vk::RenderPassBeginInfo info{};
+	info.setRenderPass(window->RenderPass);
+	info.setFramebuffer(window->Frames[window->FrameIndex].Framebuffer);
+	info.setRenderArea(vk::Rect2D{ {} , {static_cast<std::uint32_t>(window->Width), static_cast<std::uint32_t>(window->Height)}});
+	vk::ClearValue clear{};
+	clear.color.float32[3] = 1.0f;
+	clear.depthStencil = 1.0f;
+	/*clear.depthStencil = window->ClearValue.depthStencil;
+	std::copy(std::begin(window->ClearValue.color.float32), std::end(window->ClearValue.color.float32), clear.color.float32.data());*/
+	info.setClearValues(clear);
+	
+	commandBuffer_->beginRenderPass(info, vk::SubpassContents::eInline);
+	ImGui_ImplVulkan_RenderDrawData(data, *commandBuffer_);
+	commandBuffer_->endRenderPass();
 }
 #endif

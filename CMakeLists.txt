@@ -149,7 +149,6 @@ if(USE_DX12 AND NOT USE_VULKAN)
 		Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
 		)
 	endif()
-
 elseif(USE_VULKAN)
 	# Vulkan使用時
 	set(GraphicsApiSource
@@ -165,7 +164,15 @@ elseif(USE_VULKAN)
 		Source/Graphics/Vulkan/VkShaderResourceViews.cpp
 		Source/Graphics/Vulkan/VkSampler.cpp
 		Source/Graphics/Vulkan/VkSamplerViews.cpp
-	 "Source/Graphics/Vulkan/VkRenderTargetViews.cpp" "Source/Graphics/Vulkan/VkIndexView.cpp")
+		Source/Graphics/Vulkan/VkRenderTargetViews.cpp
+		Source/Graphics/Vulkan/VkIndexView.cpp)
+
+	if (USE_IMGUI)
+	set(GraphicsApiSource
+	${GraphicsApiSource}
+	Include/ThirdParty/imgui/backends/imgui_impl_vulkan.cpp
+	)
+	endif()
 endif()
 
 # ランタイムライブラリを静的にリンクする

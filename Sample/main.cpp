@@ -189,7 +189,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//graphics->SetFullScreenFlag(true);
 	bool flag = false;
 
-
+#ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
 	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::AUTO_BACKBUFFER, 2u));
 	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
@@ -197,6 +197,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
 	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
 	effekseer->GetManager()->SetRotation(h, Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(90.0f), 0.0f);
+#endif
+
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -267,8 +269,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//}
 
 		
-
+#ifdef USE_EFFEKSEER
 		effekseer->Update(1.0f / 75.0f);
+#endif
 
 		// コマンド開始
 		cmdList->Begin();
@@ -313,27 +316,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画
 		cmdList->Draw(4);
 
-		
+#ifdef USE_EFFEKSEER
 		effekseer->Draw(*cmdList);
+#endif
 
 		cmdList->TransitionRenderTargetEnd(graphics->GetBackBufferResource());
 		cmdList->TransitionDepthEnd(*depthBuffer);
 		
+
 		// コマンド終了
 		cmdList->End();
 
 		// コマンド実行
-		
 		gpuEngine->Push(*cmdList);
-		//gpuEngine->Push(effekseer->GetCmdList());
 		gpuEngine->Execute();
 		gpuEngine->Wait();
 
-	
-		
-		
-	/*	gpuEngine->Execute();
-		gpuEngine->Wait();*/
 
 
 		graphics->Present();

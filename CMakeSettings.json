@@ -131,7 +131,7 @@
         },
         {
           "name": "USE_EFFEKSEER",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {
@@ -157,6 +157,11 @@
         {
           "name": "GLSLANG_WITHOUT_INSTALL",
           "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_IMGUI",
+          "value": "True",
           "type": "BOOL"
         }
       ]

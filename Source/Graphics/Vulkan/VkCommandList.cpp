@@ -10,6 +10,10 @@
 #include "VkShaderResourceViews.h"
 #include "VkSamplerViews.h"
 
+#ifdef USE_IMGUI
+
+#endif
+
 Eugene::VkCommandList::VkCommandList(const vk::Device& device, std::uint32_t familyIndex):
 	isRendering_{false}, nowLayout_{nullptr}
 {
@@ -469,3 +473,9 @@ void* Eugene::VkCommandList::GetCommandList(void)
 {
 	return &commandBuffer_;
 }
+
+#ifdef USE_IMGUI
+void Eugene::VkCommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
+{
+}
+#endif

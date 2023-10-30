@@ -198,6 +198,21 @@ namespace Eugene
 
 		vk::UniqueCommandPool effekseerPool_;
 #endif
+
+#ifdef USE_IMGUI
+		vk::UniqueDescriptorPool imguiDescriptorPool_;
+		vk::UniqueRenderPass imguiRenderPass_;
+		std::unique_ptr<ShaderResourceViews> imguiSrviews_;
+#endif
+
+
+		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
+		void ImguiNewFrame(void) const override;
+
+		void* GetImguiImageID(std::uint64_t index) const override;
+
+		ShaderResourceViews& GetImguiShaderResourceView(void) & override;
+
 };
 
 }

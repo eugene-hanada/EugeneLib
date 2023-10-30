@@ -77,6 +77,11 @@ namespace Eugene
 		vk::PipelineLayout* nowLayout_;
 
 		friend class VkEffekseerWarpper;
+
+#ifdef USE_IMGUI
+		// CommandList ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
+#endif
 	};
 }
 

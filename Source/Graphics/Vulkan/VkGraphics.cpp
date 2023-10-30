@@ -23,6 +23,8 @@
 #ifdef USE_IMGUI
 #include "../../../Include/ThirdParty/imgui/imgui.h"
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
+
+#include "../../../Include/ThirdParty/imgui/backends/imgui_impl_win32.h"
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -38,6 +40,20 @@
 namespace
 {
 	std::uint32_t nextQueueIdx_ = 0;
+
+#ifdef USE_IMGUI
+	void CheckVkResult(VkResult err)
+	{
+		if (err != VkResult::VK_SUCCESS)
+		{
+			throw Eugene::EugeneLibException{ "Vulkan Result is not Success" };
+		}
+	
+	}
+
+	ImGui_ImplVulkanH_Window imguiWindowH{};
+#endif
+
 }
 
 #ifdef USE_WINDOWS
@@ -102,16 +118,89 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 
 #ifdef USE_IMGUI
+
+	// imgui用ディスクリプタープールの生成
+	vk::DescriptorPoolCreateInfo dPoolInfo{};
+	vk::DescriptorPoolSize a;
+	constexpr vk::DescriptorPoolSize  sizes[]{
+		vk::DescriptorPoolSize{vk::DescriptorType::eSampler,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eCombinedImageSampler,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eSampledImage,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eStorageImage,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eUniformTexelBuffer,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eStorageTexelBuffer,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eUniformBuffer,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eStorageBuffer,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eUniformBufferDynamic,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eStorageBufferDynamic,1000},
+		vk::DescriptorPoolSize{vk::DescriptorType::eInputAttachment,1000}
+	};
+	dPoolInfo.setPoolSizes(sizes);
+	dPoolInfo.setMaxSets(1000u * std::size(sizes));
+	imguiDescriptorPool_ = device_->createDescriptorPoolUnique(dPoolInfo);
+
+	// imgui用のレンダーパスを生成
+	vk::AttachmentDescription colorAttachment{};
+	colorAttachment.setFormat(useVkformat);
+	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+	colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+	vk::AttachmentReference colorAttachmentRef{};
+	colorAttachmentRef.attachment = 0;
+	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+	vk::SubpassDescription subpass;
+	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+	subpass.setColorAttachmentCount(1);
+	subpass.setPColorAttachments(&colorAttachmentRef);
+	vk::RenderPassCreateInfo renderPassInfo{};
+	renderPassInfo.setAttachmentCount(1);
+	renderPassInfo.setPAttachments(&colorAttachment);
+	renderPassInfo.setSubpassCount(1);
+	renderPassInfo.setPSubpasses(&subpass);
+	imguiRenderPass_ = device_->createRenderPassUnique(renderPassInfo);
+
 	ImGui_ImplVulkan_InitInfo info{};
-	info.
-	ImGui_ImplVulkan_Init()
+	info.Instance = *instance_;
+	info.PhysicalDevice = physicalDevice_;
+	info.Device = *device_;
+	info.QueueFamily = graphicFamilly_;
+	info.PipelineCache = VK_NULL_HANDLE;
+	info.DescriptorPool = *imguiDescriptorPool_;
+	info.Queue = queue_;
+	info.Subpass = 0;
+	info.MinImageCount = bufferNum;
+	info.ImageCount = 2;
+	info.Allocator = nullptr;
+	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+	info.CheckVkResultFn = CheckVkResult;
+	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+
+	/*imguiWindowH.Surface = *surfaceKhr_;
+	auto tmpFormat = static_cast<VkFormat>(useVkformat);
+	imguiWindowH.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(physicalDevice_, *surfaceKhr_, &tmpFormat, 1, VK_COLORSPACE_SRGB_NONLINEAR_KHR);
+	VkPresentModeKHR presentModes{ VK_PRESENT_MODE_FIFO_KHR };
+	imguiWindowH.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(physicalDevice_, *surfaceKhr_, &presentModes, 1);
+	ImGui_ImplVulkanH_CreateOrResizeWindow(*instance_, physicalDevice_, *device_, &imguiWindowH, graphicFamilly_, nullptr, size.x, size.y, bufferNum);*/
+
+	
+	
+
+	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
+	{
+		throw EugeneLibException{ "Imgui Init Error" };
+	}
 #endif
 
-
+#ifdef USE_EFFEKSEER
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(graphicFamilly_);
 	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
 	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
+#endif
 }
 #endif
 
@@ -651,3 +740,18 @@ Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::
 {
 	return new VkIndexView{ size, num, *static_cast<VkBufferData*>(resource.GetResource())->buffer_ };
 }
+
+#ifdef USE_IMGUI
+void Eugene::VkGraphics::ImguiNewFrame(void) const
+{
+}
+void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
+{
+	return nullptr;
+}
+Eugene::ShaderResourceViews& Eugene::VkGraphics::GetImguiShaderResourceView(void)&
+{
+	return *imguiSrviews_;
+}
+
+#endif 

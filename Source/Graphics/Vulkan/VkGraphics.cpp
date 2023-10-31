@@ -61,7 +61,7 @@ namespace
 		VkWin32SurfaceCreateInfoKHR info{};
 		info.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 		info.hinstance = GetModuleHandle(nullptr);
-		info.hwnd = imguiHwnd;
+		info.hwnd = static_cast<HWND>(viewport->PlatformHandle);
 		return static_cast<int>((vkCreateWin32SurfaceKHR(reinterpret_cast<VkInstance>(vk_instance), &info, reinterpret_cast<const VkAllocationCallbacks*>(vk_allocator), reinterpret_cast<VkSurfaceKHR*>(out_vk_surface))));
 	}
 #endif
@@ -189,28 +189,28 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	info.Queue = queue_;
 	info.Subpass = 0;
 	info.MinImageCount = bufferNum;
-	info.ImageCount = 2;
+	info.ImageCount = bufferNum;
 	info.Allocator = callbacks;
 	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
 	info.CheckVkResultFn = CheckVkResult;
 	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
 
-	imguiWindowH.Surface = *surfaceKhr_;
+	//imguiWindowH.Surface = *surfaceKhr_;
 	//imguiWindowH.RenderPass = *imguiRenderPass_;
-	auto tmpFormat = static_cast<VkFormat>(useVkformat);
+	/*auto tmpFormat = static_cast<VkFormat>(useVkformat);
 	imguiWindowH.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(physicalDevice_, *surfaceKhr_, &tmpFormat, 1, VK_COLORSPACE_SRGB_NONLINEAR_KHR);
 	VkPresentModeKHR presentModes{ VK_PRESENT_MODE_FIFO_KHR };
 	imguiWindowH.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(physicalDevice_, *surfaceKhr_, &presentModes, 1);
 	ImGui_ImplVulkanH_CreateOrResizeWindow(*instance_, physicalDevice_, *device_, &imguiWindowH, graphicFamilly_, callbacks, size.x, size.y, bufferNum);
+	*/
 	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
-	
-
-	if (!ImGui_ImplVulkan_Init(&info, imguiWindowH.RenderPass))
+	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
 	{
 		throw EugeneLibException{ "Imgui Init Error" };
 	}
 
-	VkCommandPool command_pool = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandPool;
+	
+	/*VkCommandPool command_pool = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandPool;
 	VkCommandBuffer command_buffer = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandBuffer;
 
 	auto err = vkResetCommandPool(*device_, command_pool, 0);
@@ -234,7 +234,49 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 	err = vkDeviceWaitIdle(*device_);
 	CheckVkResult(err);
+	ImGui_ImplVulkan_DestroyFontUploadObjects();*/
+
+	vk::CommandPoolCreateInfo poolInfo{};
+	poolInfo.setQueueFamilyIndex(graphicFamilly_);
+	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+	auto tmpCommandPool = device_->createCommandPoolUnique(poolInfo);
+
+	vk::CommandBufferAllocateInfo bufferInfo{};
+	bufferInfo.setCommandPool(*tmpCommandPool);
+	bufferInfo.setLevel(vk::CommandBufferLevel::ePrimary);
+	bufferInfo.setCommandBufferCount(1);
+	auto tmpCommandBuffer = std::move(device_->allocateCommandBuffersUnique(bufferInfo)[0]);
+
+	tmpCommandBuffer->reset();
+	tmpCommandBuffer->begin(vk::CommandBufferBeginInfo{});
+	ImGui_ImplVulkan_CreateFontsTexture(*tmpCommandBuffer);
+	tmpCommandBuffer->end();
+	vk::SubmitInfo submitInfo{};
+	submitInfo.setCommandBuffers(*tmpCommandBuffer);
+	queue_.submit(submitInfo);
+	queue_.waitIdle();
 	ImGui_ImplVulkan_DestroyFontUploadObjects();
+
+	imguiFrameBuffer_.resize(bufferNum);
+	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
+	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
+	{
+		
+		vk::ImageView attachments[] = {
+			*backViews[i].imageView
+		};
+		vk::FramebufferCreateInfo info{};
+		info.setRenderPass(*imguiRenderPass_);
+		info.setAttachmentCount(1);
+		info.setAttachments(attachments);
+		info.setWidth(static_cast<std::uint32_t>(size.x));
+		info.setHeight(static_cast<std::uint32_t>(size.y));
+		info.setLayers(1);
+
+		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
+
+	}
+
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -314,9 +356,6 @@ Eugene::VkGraphics::~VkGraphics()
 
 #ifdef USE_IMGUI
 	ImGui_ImplVulkan_Shutdown();
-	surfaceKhr_.release();
-	ImGui_ImplVulkanH_DestroyWindow(*instance_, *device_, &imguiWindowH, callbacks);
-	
 	device_->waitIdle();
 #endif
 	DebugLog("~VkGraphics");
@@ -407,6 +446,11 @@ ImGui_ImplVulkanH_Window* Eugene::VkGraphics::GetImguiWindow(void)
 vk::RenderPass Eugene::VkGraphics::GetRenderPass(void)
 {
 	return *imguiRenderPass_;
+}
+
+vk::Framebuffer Eugene::VkGraphics::GetFrameBuffer(void)
+{
+	return *imguiFrameBuffer_[backBufferIdx_];
 }
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const

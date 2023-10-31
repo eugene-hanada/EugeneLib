@@ -128,6 +128,7 @@ namespace Eugene
 #ifdef USE_IMGUI
 		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
 		vk::RenderPass GetRenderPass(void);
+		vk::Framebuffer GetFrameBuffer(void);
 #endif
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
@@ -211,6 +212,7 @@ namespace Eugene
 #ifdef USE_IMGUI
 		vk::UniqueDescriptorPool imguiDescriptorPool_;
 		vk::UniqueRenderPass imguiRenderPass_;
+		std::vector<vk::UniqueFramebuffer> imguiFrameBuffer_;
 		std::unique_ptr<ShaderResourceViews> imguiSrviews_;
 		void ImguiNewFrame(void) const override;
 		void* GetImguiImageID(std::uint64_t index) const override;

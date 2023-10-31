@@ -295,7 +295,11 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 
 	// レイアウトを未定義からカラーアタッチメント(レンダーターゲット)に
 	barrier.setOldLayout(vk::ImageLayout::eColorAttachmentOptimal);
+#ifdef USE_IMGUI
+
+#else
 	barrier.setNewLayout(vk::ImageLayout::ePresentSrcKHR);
+
 	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
 	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
@@ -312,6 +316,7 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 		0, nullptr, 0, nullptr, 1,
 		&barrier
 	);
+#endif
 }
 
 void Eugene::VkCommandList::TransitionShaderResourceBegin(ImageResource& resource)
@@ -484,17 +489,12 @@ void Eugene::VkCommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics
 	{
 		return;
 	}
-	auto window = static_cast<VkGraphics&>(graphics).GetImguiWindow();
+	auto& vkGraphics = static_cast<VkGraphics&>(graphics);
 	vk::RenderPassBeginInfo info{};
-	info.setRenderPass(window->RenderPass);
-	info.setFramebuffer(window->Frames[window->FrameIndex].Framebuffer);
-	info.setRenderArea(vk::Rect2D{ {} , {static_cast<std::uint32_t>(window->Width), static_cast<std::uint32_t>(window->Height)}});
-	vk::ClearValue clear{};
-	clear.color.float32[3] = 1.0f;
-	clear.depthStencil = 1.0f;
-	/*clear.depthStencil = window->ClearValue.depthStencil;
-	std::copy(std::begin(window->ClearValue.color.float32), std::end(window->ClearValue.color.float32), clear.color.float32.data());*/
-	info.setClearValues(clear);
+	info.setRenderPass(vkGraphics.GetRenderPass());
+	auto size = graphics.GetBackBufferResource().GetSize();
+	info.setRenderArea(vk::Rect2D{ vk::Offset2D{0,0} , vk::Extent2D{static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y)} });
+	info.setFramebuffer(vkGraphics.GetFrameBuffer());
 	
 	commandBuffer_->beginRenderPass(info, vk::SubpassContents::eInline);
 	ImGui_ImplVulkan_RenderDrawData(data, *commandBuffer_);

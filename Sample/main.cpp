@@ -175,7 +175,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	
 
-	float clearColor[]{ 0.0f,0.0f,0.0f,1.0f };
+	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
 	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
 	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
@@ -254,9 +254,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		ImGui::Begin("window1");
 	
-		
 		//ImGui::Text("text1");
 		
+		ImGui::End();
+
+		ImGui::Begin("window2");
+
 		ImGui::End();
 		ImGui::Render();
 
@@ -347,10 +350,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 		}
 
-	
-
 		frameCnt++;
 	}
-	DebugLog("終了するゾ");
 	return 0;
 }

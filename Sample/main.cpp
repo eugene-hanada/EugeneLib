@@ -184,9 +184,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//stream->SetVolume(0.7f);
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
-	//graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
-	//auto img = graphics->GetImguiImageID(1);
-	//graphics->SetFullScreenFlag(true);
+	graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
+	auto img = graphics->GetImguiImageID(1);
+	graphics->SetFullScreenFlag(true);
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 

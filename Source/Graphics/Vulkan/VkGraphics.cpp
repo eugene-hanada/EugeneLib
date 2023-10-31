@@ -194,7 +194,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
 	info.CheckVkResultFn = CheckVkResult;
 	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
-
+	
 	//imguiWindowH.Surface = *surfaceKhr_;
 	//imguiWindowH.RenderPass = *imguiRenderPass_;
 	/*auto tmpFormat = static_cast<VkFormat>(useVkformat);
@@ -276,7 +276,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
 
 	}
-
+	auto srvBind{ Bind{ViewType::Texture,256} };
+	imguiSrviews_.reset(CreateShaderResourceViews(srvBind));
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -857,7 +858,8 @@ void Eugene::VkGraphics::ImguiNewFrame(void) const
 }
 void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
 {
-	return nullptr;
+	auto data{ static_cast<VkShaderResourceViews::Data*>(imguiSrviews_->GetViews()) };
+	return *data->descriptorSet_;
 }
 Eugene::ShaderResourceViews& Eugene::VkGraphics::GetImguiShaderResourceView(void)&
 {

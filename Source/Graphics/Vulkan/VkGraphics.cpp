@@ -72,7 +72,7 @@ namespace
 }
 
 #ifdef USE_WINDOWS
-Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
+Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
 	backBufferIdx_{0}
 {
 	CreateInstance();
@@ -146,7 +146,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 #endif
 
-vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
+vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 {
 	vk::Format useFormat;
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
@@ -349,7 +349,7 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo
 	return new VkImageResource{*this, *device_,formatData};
 }
 
-Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color)
+Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> color)
 {
 	if (format == Format::AUTO_BACKBUFFER)
 	{
@@ -551,7 +551,7 @@ Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const A
 	return new VkResourceBindLayout{*device_,viewTypes};
 }
 
-Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const Vector2I& size, float clear) const
+Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2& size, float clear) const
 {
 	return new VkImageResource{*this,*device_, size, clear};
 }
@@ -768,7 +768,7 @@ void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64
 	}
 }
 
-void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const Eugene::Vector2& size)
+void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
 {
 	imguiHwnd = hwnd;
 

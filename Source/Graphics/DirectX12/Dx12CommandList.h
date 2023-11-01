@@ -34,10 +34,10 @@ namespace Eugene
 		void SetPrimitiveType(PrimitiveType type) final;
 
 		// シザーレクトをセットする
-		void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) final;
+		void SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom) final;
 
 		// ビューポートをセットする
-		void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f);
+		void SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin = 0.0f, float depthMax = 1.0f) final;
 
 		// 頂点ビューをセットする
 		void SetVertexView(VertexView& view) final;

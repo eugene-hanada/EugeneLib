@@ -5,7 +5,7 @@
 #include <span>
 #include <bitset>
 #include <filesystem>
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 #include "KeyID.h"
 #include "GamePad.h"
 
@@ -122,7 +122,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> ウィンドウサイズ </returns>
-		const Vector2& GetWindowSize(void) const&;
+		const glm::vec2& GetWindowSize(void) const&;
 
 		/// <summary>
 		/// Graphicsを生成する
@@ -190,7 +190,7 @@ namespace Eugene
 		/// ウィンドウをリサイズする
 		/// </summary>
 		/// <param name="size"> ウインドウサイズ </param>
-		virtual void ResizeWindow(const Vector2& size) = 0;
+		virtual void ResizeWindow(const glm::vec2& size) = 0;
 
 		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
@@ -221,12 +221,12 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
-		System(const Vector2& size, const std::u8string& title);
+		System(const glm::vec2& size, const std::u8string& title);
 		
 		/// <summary>
 		/// ウィンドウサイズ
 		/// </summary>
-		Vector2 windowSize_;
+		glm::vec2 windowSize_;
 
 		/// <summary>
 		/// タイトル
@@ -252,7 +252,7 @@ namespace Eugene
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
 	[[nodiscard]]
-	System* CreateSystem(const Vector2& size, const std::u8string& title);
+	System* CreateSystem(const glm::vec2& size, const std::u8string& title);
 
 	using UniqueSystem = std::unique_ptr<System>;
 
@@ -262,7 +262,7 @@ namespace Eugene
 	/// <param name="size"> ウィンドウサイズ </param>
 	/// <param name="title"> タイトル </param>
 	/// <returns> std::unique_ptrを使用したSystem </returns>
-	UniqueSystem CreateSystemUnique(const Vector2& size, const std::u8string& title);
+	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title);
 
 	
 }

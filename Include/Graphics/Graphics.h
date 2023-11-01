@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector3.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
+#include "../ThirdParty/glm/glm/vec3.hpp"
 #include "Sampler.h"
 #include "../Common/ArgsSpan.h"
+
 
 #ifdef USE_EFFEKSEER
 namespace Effekseer
@@ -61,9 +62,9 @@ namespace Eugene
 		/// <returns></returns>
 		virtual Effekseer::RefPtr<Effekseer::Manager>& GetManager()& = 0;
 
-		virtual void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) = 0;
+		virtual void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) = 0;
 
-		virtual void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) = 0;
+		virtual void SetCameraProjection(float fov, float aspect, const glm::vec2& nearfar) = 0;
 	protected:
 		EffekseerWarpper();
 	};
@@ -159,7 +160,7 @@ namespace Eugene
 		/// <param name="clearColor"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) = 0;
+		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) = 0;
 
 		/// <summary>
 		/// 深度バッファ用リソースの生成
@@ -168,7 +169,7 @@ namespace Eugene
 		/// <param name="clear"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateDepthResource(const Vector2I& size, float clear) const = 0;
+		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成
@@ -270,7 +271,7 @@ namespace Eugene
 		/// バックバッファをリサイズする
 		/// </summary>
 		/// <param name="size"></param>
-		virtual void ResizeBackBuffer(const Vector2& size);
+		virtual void ResizeBackBuffer(const glm::vec2& size);
 
 		/// <summary>
 		/// 

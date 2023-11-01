@@ -18,8 +18,8 @@ namespace Eugene
 		void End(void) final;
 		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
 		void SetPrimitiveType(PrimitiveType type) final;
-		void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) final;
-		void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax) final;
+		void SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom) final;
+		void SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin, float depthMax) final;
 		void SetVertexView(VertexView& view) final;
 		void SetIndexView(IndexView& view) final;
 		void SetShaderResourceView(ShaderResourceViews& viewsviewsIdx, std::uint64_t paramIdx) final;

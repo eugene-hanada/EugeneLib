@@ -26,7 +26,7 @@ namespace Eugene
 			/// <summary>
 			/// ‰æ‘œƒTƒCƒY
 			/// </summary>
-			Vector2I size;
+			glm::ivec2 size;
 		};
 		using ViewsType = std::vector<Data>;
 	private:

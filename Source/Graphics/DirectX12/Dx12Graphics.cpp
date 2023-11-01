@@ -22,6 +22,8 @@
 #include "Dx12SamplerViews.h"
 #include "../../../Include/Graphics/Shader.h"
 
+#include "../../../Include/ThirdParty/glm/glm/vec3.hpp"
+
 #ifdef USE_EFFEKSEER
 #include <Effekseer.h>
 #include <EffekseerRendererDX12.h>
@@ -118,7 +120,7 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_BC7_UNORM
 };
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum, maxNum);
@@ -183,7 +185,7 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{device_.Get(),formatData};
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor)
 {
 	if (format == Format::AUTO_BACKBUFFER)
 	{
@@ -192,7 +194,7 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I&
 	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2I& size, float clear) const
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear) const
 {
 	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
 }
@@ -270,7 +272,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	throw CreateErrorException("D3D12デバイスの作成に失敗");
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	gpuEngine = CreateGpuEngine(maxNum);
 
@@ -371,7 +373,7 @@ Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout
 
 
 
-void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
+void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size)
 {
 	for (auto& buffer : buffers_)
 	{
@@ -541,7 +543,7 @@ public:
 		return manager_;
 	}
 
-	void SetCameraPos(const Eugene::Vector3& eye, const Eugene::Vector3& at, const Eugene::Vector3& up) final
+	void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) final
 	{
 		renderer_->SetCameraMatrix(
 			Effekseer::Matrix44().LookAtLH(
@@ -550,7 +552,7 @@ public:
 		);
 	}
 
-	void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+	void SetCameraProjection(float fov, float aspect, const glm::vec2 &nearfar) final
 	{
 		renderer_->SetProjectionMatrix(
 			Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));

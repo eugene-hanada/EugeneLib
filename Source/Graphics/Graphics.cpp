@@ -25,7 +25,7 @@ Eugene::ImageResource& Eugene::Graphics::GetBackBufferResource(void)
     return GetBackBufferResource(GetNowBackBufferIndex());
 }
 
-void Eugene::Graphics::ResizeBackBuffer(const Vector2& size)
+void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size)
 {
 }
 

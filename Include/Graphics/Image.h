@@ -3,7 +3,6 @@
 #include <vector>
 #include <unordered_map>
 #include "GraphicsCommon.h"
-#include "../Math/Vector2.h"
 
 namespace Eugene
 {

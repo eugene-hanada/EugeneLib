@@ -3,7 +3,7 @@
 #include <span>
 #include <optional>
 #include "GraphicsCommon.h"
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 
 #ifdef USE_IMGUI
 struct ImDrawData;
@@ -66,7 +66,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="leftTop"> 左上 </param>
 		/// <param name="rightBottom"> 右上 </param>
-		virtual void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) = 0;
+		virtual void SetScissorrect(const glm::ivec2& leftTop, const  glm::ivec2& rightBottom) = 0;
 
 		/// <summary>
 		/// ビューポートをセットする
@@ -75,7 +75,7 @@ namespace Eugene
 		/// <param name="size"> サイズ </param>
 		/// <param name="depthMin"> 深度の最小値(デフォルト0.0f) </param>
 		/// <param name="depthMax"> 深度の最大値(デフォルト1.0f) </param>
-		virtual void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f) = 0;
+		virtual void SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin = 0.0f, float depthMax = 1.0f) = 0;
 		
 		/// <summary>
 		/// 頂点ビューのセット

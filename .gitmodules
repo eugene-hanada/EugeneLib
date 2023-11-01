@@ -8,3 +8,6 @@
 [submodule "Effekseer"]
 	path = Effekseer
 	url = https://github.com/eugene-hanada/Effekseer.git
+[submodule "Include/ThirdParty/glm"]
+	path = Include/ThirdParty/glm
+	url = https://github.com/g-truc/glm.git

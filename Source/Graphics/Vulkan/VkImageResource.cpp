@@ -34,7 +34,7 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
 
-Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, float clearValue) :
+Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, float clearValue) :
 	ImageResource{Format::D32_FLOAT}
 {
 	constexpr auto format{ vk::Format::eD32Sfloat };
@@ -66,7 +66,7 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	size_ = size;
 }
 
-Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const Vector2I& size, Format format) :
+Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, Format format) :
 	ImageResource{format}
 {
 	vk::ImageCreateInfo imageInfo{};
@@ -94,7 +94,7 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 }
 
 
-Eugene::VkImageResource::VkImageResource(const Vector2I& size, Format format, vk::Image& image, const vk::Device& device) :
+Eugene::VkImageResource::VkImageResource(const glm::ivec2& size, Format format, vk::Image& image, const vk::Device& device) :
 	ImageResource{format}
 {
 	size_ = size;
@@ -122,7 +122,7 @@ void* Eugene::VkImageResource::GetResource(void)
 	return &data_;
 }
 
-Eugene::Vector2I Eugene::VkImageResource::GetSize(void)
+glm::ivec2 Eugene::VkImageResource::GetSize(void)
 {
 	return size_;
 }

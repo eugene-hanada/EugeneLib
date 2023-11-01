@@ -69,13 +69,13 @@ void Eugene::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
 	cmdList_->IASetPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(type));
 }
 
-void Eugene::Dx12CommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
+void Eugene::Dx12CommandList::SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom)
 {
 	CD3DX12_RECT rect{ leftTop.x,leftTop.y, rightBottom.x,rightBottom.y };
 	cmdList_->RSSetScissorRects(1,&rect);
 }
 
-void Eugene::Dx12CommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
+void Eugene::Dx12CommandList::SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin, float depthMax)
 {
 	CD3DX12_VIEWPORT viewport{ leftTop.x, leftTop.y, size.x,size.y,depthMin,depthMax };
 	cmdList_->RSSetViewports(1, &viewport);

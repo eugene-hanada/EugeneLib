@@ -104,9 +104,9 @@ namespace Eugene
 		}
 
 #ifdef USE_WINDOWS
-		VkGraphics(HWND& hwnd,const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+		VkGraphics(HWND& hwnd,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 #endif
-		vk::Format CreateSwapChain(const Eugene::Vector2& size);
+		vk::Format CreateSwapChain(const glm::vec2& size);
 		~VkGraphics();
 
 		/// <summary>
@@ -137,7 +137,7 @@ namespace Eugene
 		BufferResource* CreateBufferResource(std::uint64_t size) const final;
 		BufferResource* CreateBufferResource(Image& texture) const final;
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
-		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> color) final;
+		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> color) final;
 		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
@@ -198,7 +198,7 @@ namespace Eugene
 		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
-		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
 
 #ifdef USE_EFFEKSEER
 		// Graphics ÇâÓÇµÇƒåpè≥Ç≥ÇÍÇ‹ÇµÇΩ
@@ -225,7 +225,7 @@ namespace Eugene
 		void* GetImguiImageID(std::uint64_t index) const final;
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #ifdef USE_WINDOWS
-		void InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const Eugene::Vector2& size);
+		void InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size);
 #endif
 #endif
 

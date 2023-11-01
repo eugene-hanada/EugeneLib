@@ -59,7 +59,7 @@ void Eugene::VkCommandList::SetPrimitiveType(PrimitiveType type)
 	commandBuffer_->setPrimitiveTopology(t);
 }
 
-void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom)
+void Eugene::VkCommandList::SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom)
 {
 	vk::Rect2D scissor{};
 	scissor.setOffset({ leftTop.x,leftTop.y});
@@ -67,7 +67,7 @@ void Eugene::VkCommandList::SetScissorrect(const Vector2I& leftTop, const Vector
 	commandBuffer_->setScissor(0, scissor);
 }
 
-void Eugene::VkCommandList::SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin, float depthMax)
+void Eugene::VkCommandList::SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin, float depthMax)
 {
 	vk::Viewport viewPort{};
 	viewPort.setX(0.0f);

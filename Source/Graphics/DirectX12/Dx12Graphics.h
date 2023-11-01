@@ -4,7 +4,6 @@
 #include <vector>
 #include <array>
 #include "../../../Include/Graphics/Graphics.h"
-#include "../../../Include/Math/Vector2.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
 
 
@@ -20,7 +19,7 @@ namespace Eugene
 	{
 	public:
 		static const std::array<int, FormatMax> FormatToDxgiFormat_;
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+		Dx12Graphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		~Dx12Graphics();
 	
 		static const Format& BackBufferFormat()
@@ -40,9 +39,9 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
-		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) final;
+		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) final;
 
-		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 
@@ -54,7 +53,7 @@ namespace Eugene
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+		void CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 
@@ -68,7 +67,7 @@ namespace Eugene
 
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 
-		void ResizeBackBuffer(const Vector2& size) final;
+		void ResizeBackBuffer(const glm::vec2& size) final;
 
 		void SetFullScreenFlag(bool isFullScreen) final;
 

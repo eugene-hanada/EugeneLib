@@ -57,7 +57,7 @@ bool Eugene::System::GetGamePad(GamePad& pad, std::uint32_t idx) const
 	return false;
 }
 
-Eugene::System::System(const Eugene::Vector2& size, const std::u8string& title) :
+Eugene::System::System(const glm::vec2& size, const std::u8string& title) :
 	windowSize_{size}, title_{title}
 {
 }
@@ -68,13 +68,13 @@ Eugene::System::~System()
 	isCreate = false;
 }
 
-const Eugene::Vector2& Eugene::System::GetWindowSize(void) const&
+const glm::vec2& Eugene::System::GetWindowSize(void) const&
 {
 	return windowSize_;
 }
 
 
-Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& title)
+Eugene::System* Eugene::CreateSystem(const glm::vec2& size, const std::u8string& title)
 {
 	if (isCreate)
 	{
@@ -87,7 +87,7 @@ Eugene::System* Eugene::CreateSystem(const Vector2& size, const std::u8string& t
 #endif
 }
 
-Eugene::UniqueSystem Eugene::CreateSystemUnique(const Vector2& size, const std::u8string& title)
+Eugene::UniqueSystem Eugene::CreateSystemUnique(const glm::vec2& size, const std::u8string& title)
 {
 	return UniqueSystem{CreateSystem(size, title)};
 }

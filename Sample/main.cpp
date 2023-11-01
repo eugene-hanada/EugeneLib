@@ -8,6 +8,8 @@
 #include <Color.h>
 #include <Common/ArgsSpan.h>
 
+
+
 #ifdef USE_EFFEKSEER
 #include <Graphics/Graphics.h>
 #include <Effekseer.h>
@@ -24,6 +26,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
 	Eugene::Vector2 v{1.0f, 2.0f};
 	auto result = v.Normalized().Magnitude();
+
+	auto glmMatrix{ glm::rotate(glm::mat4{}, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)) };
+	
 
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
@@ -97,8 +102,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	std::unique_ptr < Eugene::ShaderResourceViews> rtMatrixView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }) };
 	std::unique_ptr<Eugene::BufferResource> rtMatrixBuffer{ graphics->CreateUploadableBufferResource(256) };
 	rtMatrixView->CreateConstantBuffer(*rtMatrixBuffer, 0);
-	Eugene::Matrix4x4* rtMatrix = static_cast<Eugene::Matrix4x4*>(rtMatrixBuffer->Map());
 	
+	auto rtMatrix = static_cast<glm::mat4*>(rtMatrixBuffer->Map());
+	*rtMatrix = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
 
 	// テクスチャ用リソース
 	std::unique_ptr<Eugene::ImageResource> textureResource;
@@ -127,8 +133,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// 画像用の行列
 	std::unique_ptr<Eugene::BufferResource> texMatrixBuffer;
 	texMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
-	Eugene::Matrix4x4* texMatrix = static_cast<Eugene::Matrix4x4*>(texMatrixBuffer->Map());
-	Eugene::Get2DTranslateMatrix(*texMatrix, { (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f)-128.0f });
+	auto texMatrix = static_cast<glm::mat4*>(texMatrixBuffer->Map());
+	*texMatrix = glm::translate(glm::identity<glm::mat4>(), glm::vec3{ (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f) - 128.0f , 0.0f});
 	texMatrixBuffer->UnMap();
 
 	// 画像と定数バッファ用のビュー
@@ -148,8 +154,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// カーソル表示用行列
 	std::unique_ptr<Eugene::BufferResource> cursorMatrixBuffer{ graphics->CreateUploadableBufferResource(256) };
-	Eugene::Matrix4x4* cursorMatrix = static_cast<Eugene::Matrix4x4*>(cursorMatrixBuffer->Map());
-	Eugene::Get2DTransformMatrix(*cursorMatrix, Eugene::zeroVector2<float>, 0.0f, {0.2f,0.2f });
+	auto cursorMatrix = static_cast<glm::mat4*>(cursorMatrixBuffer->Map());
+	*cursorMatrix = glm::identity<glm::mat4>();
 	std::unique_ptr<Eugene::ShaderResourceViews> cursorView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1} }) };
 	cursorView->CreateTexture(*textureResource, 0);
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
@@ -246,18 +252,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			
 		}
 
-		Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
-		Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
+		//Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
+		*cursorMatrix = glm::translate(glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{ mouse.pos.x,mouse.pos.y ,0.0f }), glm::vec3{ 0.2f }), glm::vec3{-128.0f, -128.0f, 0.0f});
+		//Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
+		auto nowWindowSize{ system->GetWindowSize() };
+		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
 		graphics->ImguiNewFrame();
 		system->ImguiNewFrame();
 		ImGui::NewFrame();
 
 		ImGui::Begin("window1");
-	
 		auto imgSize{ textureResource->GetSize() };
 		ImGui::Image(img, ImVec2{static_cast<float>(imgSize.x),static_cast<float>(imgSize.y)});
-		
 		ImGui::End();
 
 		ImGui::Begin("window2");

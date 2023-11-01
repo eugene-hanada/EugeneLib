@@ -15,11 +15,11 @@ namespace Eugene
 	{
 	public:
 		Dx12ImageResource(ID3D12Device* device,const TextureInfo& info);
-		Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float,4> clearColor);
-		Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue);
+		Dx12ImageResource(ID3D12Device* device, const glm::ivec2& size, Format format, std::span<float,4> clearColor);
+		Dx12ImageResource(ID3D12Device* device, const glm::ivec2& size, Format format, float clearValue);
 		Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx);
 	private:
-		Vector2I GetSize(void) final;
+		glm::ivec2 GetSize(void) final;
 		bool CanMap(void) const final;
 		void* GetResource(void) final;
 

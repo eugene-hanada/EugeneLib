@@ -58,7 +58,7 @@ namespace {
 	/// <summary>
 	/// リサイズ時に処理を行う関数オブジェクト
 	/// </summary>
-	std::function<void(const Eugene::Vector2&)> resizeCall;
+	std::function<void(const glm::vec2&)> resizeCall;
 
 	/// <summary>
 	/// 終了フラグ
@@ -103,10 +103,10 @@ namespace {
 
 }
 
-Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
+Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title) :
     System{size,title}
 {
-	resizeCall = [this](const Vector2& size) {
+	resizeCall = [this](const glm::vec2& size) {
 		windowSize_ = size;
 		if (graphics)
 		{
@@ -333,7 +333,7 @@ bool Eugene::WindowsSystem::IsEnd(void) const
 	return isEnd;
 }
 
-void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
+void Eugene::WindowsSystem::ResizeWindow(const glm::vec2& size)
 {
 	if (windowSize_ == size)
 	{

@@ -184,9 +184,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//stream->SetVolume(0.7f);
 	//system->ResizeWindow({ 640.0f, 480.0f });
 	
-	graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
-	auto img = graphics->GetImguiImageID(1);
-	graphics->SetFullScreenFlag(true);
+	/*graphics->GetImguiShaderResourceView().CreateTexture(*textureResource, 1);
+	*/
+	graphics->SetImguiImage(*textureResource);
+	auto img = graphics->GetImguiImageID(0);
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -254,7 +255,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		ImGui::Begin("window1");
 	
-		//ImGui::Text("text1");
+		auto imgSize{ textureResource->GetSize() };
+		ImGui::Image(img, ImVec2{static_cast<float>(imgSize.x),static_cast<float>(imgSize.y)});
 		
 		ImGui::End();
 

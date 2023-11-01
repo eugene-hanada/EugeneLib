@@ -125,9 +125,20 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& 
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
-	srViews_.reset(new Dx12ShaderResourceViews{device_.Get(), 256});
-	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
-	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
+	if (FAILED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))))
+	{
+		throw CreateErrorException("DirectX12ディスクリプタヒープの作成に失敗");
+	}
+
+	ImGui_ImplDX12_Init(
+		device_.Get(),
+		bufferNum, 
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		imguiDescriptorHeap_.Get(),
+		imguiDescriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		imguiDescriptorHeap_->GetGPUDescriptorHandleForHeapStart()
+	);
 	
 #endif
 }
@@ -421,16 +432,34 @@ void Eugene::Dx12Graphics::ImguiNewFrame(void) const
 }
 void* Eugene::Dx12Graphics::GetImguiImageID(std::uint64_t index) const
 {
-	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
+	if (index >= imguiImageMax_)
+	{
+		return nullptr;
+	}
+	auto ptr = imguiDescriptorHeap_.Get();
 	auto handle = ptr->GetGPUDescriptorHandleForHeapStart();
-	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * index;
+	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * (index + 1);
 	return reinterpret_cast<void*>(handle.ptr);
 }
-Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(void)&
-{
-	return *srViews_;
-}
 
+void Eugene::Dx12Graphics::SetImguiImage(ImageResource& imageResource, std::uint64_t index)
+{
+	if (index >= imguiImageMax_)
+	{
+		return;
+	}
+
+	auto img{ static_cast<ID3D12Resource*>(imageResource.GetResource()) };
+	auto imgDesc{ img->GetDesc() };
+	auto handle = imguiDescriptorHeap_.Get()->GetCPUDescriptorHandleForHeapStart();
+	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * (index + 1);
+	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};
+	desc.Format = imgDesc.Format;
+	desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	desc.Texture2D.MipLevels = imgDesc.MipLevels;
+	device_->CreateShaderResourceView(img, &desc, handle);
+}
 #endif
 
 #ifdef USE_EFFEKSEER

@@ -493,7 +493,7 @@ void Eugene::Dx12CommandList::CopyBuffer(BufferResource& dest, BufferResource& s
 #ifdef USE_IMGUI
 void Eugene::Dx12CommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
 {
-	auto dh = static_cast<Dx12ShaderResourceViews&>(*(static_cast<Dx12Graphics&>(graphics).srViews_)).descriptorHeap_.Get();
+	auto dh = static_cast<Dx12Graphics&>(graphics).imguiDescriptorHeap_.Get();
 	cmdList_->SetDescriptorHeaps(1,&dh);
 	ImGui_ImplDX12_RenderDrawData(
 		data,

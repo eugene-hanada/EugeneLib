@@ -293,11 +293,11 @@ namespace Eugene
 		virtual void* GetImguiImageID(std::uint64_t index) const = 0;
 
 		/// <summary>
-		/// 
+		/// Imguiで使用する画像をセットする
 		/// </summary>
-		/// <param name=""></param>
-		/// <returns></returns>
-		virtual ShaderResourceViews& GetImguiShaderResourceView(void) & = 0;
+		/// <param name="imageResource"></param>
+		/// <param name="index"></param>
+		virtual void SetImguiImage(ImageResource& imageResource,std::uint64_t index = 0ull) = 0;
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -320,5 +320,13 @@ namespace Eugene
 		/// バックバッファのフォーマット
 		/// </summary>
 		static Format backBufferFormat_;
+
+#ifdef USE_IMGUI
+
+		/// <summary>
+		/// imguiで使用する画像の最大数
+		/// </summary>
+		const std::uint64_t imguiImageMax_{1000ull};
+#endif
 	};
 }

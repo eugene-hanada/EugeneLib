@@ -11,6 +11,7 @@
 struct ID3D12Device;
 struct IDXGIFactory6;
 struct IDXGISwapChain4;
+struct ID3D12DescriptorHeap;
 
 namespace Eugene
 {
@@ -85,7 +86,7 @@ namespace Eugene
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;
-		ShaderResourceViews& GetImguiShaderResourceView(void) & final;
+		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #endif
 
 		// dxgi
@@ -101,7 +102,7 @@ namespace Eugene
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
 
 #ifdef USE_IMGUI
-		std::unique_ptr<ShaderResourceViews> srViews_;
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> imguiDescriptorHeap_;
 #endif
 
 #ifdef USE_EFFEKSEER

@@ -24,7 +24,9 @@
 #include "../../../Include/ThirdParty/imgui/imgui.h"
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
 
+#ifdef USE_WINDOWS
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_win32.h"
+#endif
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -131,153 +133,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 
 
 #ifdef USE_IMGUI
-
-	imguiHwnd = hwnd;
-
-	// imgui用ディスクリプタープールの生成
-	vk::DescriptorPoolCreateInfo dPoolInfo{};
-	vk::DescriptorPoolSize a;
-	constexpr vk::DescriptorPoolSize  sizes[]{
-		vk::DescriptorPoolSize{vk::DescriptorType::eSampler,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eCombinedImageSampler,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eSampledImage,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eStorageImage,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eUniformTexelBuffer,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eStorageTexelBuffer,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eUniformBuffer,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eStorageBuffer,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eUniformBufferDynamic,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eStorageBufferDynamic,1000},
-		vk::DescriptorPoolSize{vk::DescriptorType::eInputAttachment,1000}
-	};
-	dPoolInfo.setPoolSizes(sizes);
-	dPoolInfo.setMaxSets(1000u * std::size(sizes));
-	imguiDescriptorPool_ = device_->createDescriptorPoolUnique(dPoolInfo);
-
-	// imgui用のレンダーパスを生成
-	vk::AttachmentDescription colorAttachment{};
-	colorAttachment.setFormat(useVkformat);
-	colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
-	colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
-	colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
-	colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
-	colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
-	colorAttachment.setInitialLayout(vk::ImageLayout::eColorAttachmentOptimal);
-	colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
-	vk::AttachmentReference colorAttachmentRef{};
-	colorAttachmentRef.attachment = 0;
-	colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
-	vk::SubpassDescription subpass;
-	subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
-	subpass.setColorAttachmentCount(1);
-	subpass.setPColorAttachments(&colorAttachmentRef);
-
-	vk::RenderPassCreateInfo renderPassInfo{};
-	renderPassInfo.setAttachmentCount(1);
-	renderPassInfo.setPAttachments(&colorAttachment);
-	renderPassInfo.setSubpassCount(1);
-	renderPassInfo.setPSubpasses(&subpass);
-	imguiRenderPass_ = device_->createRenderPassUnique(renderPassInfo);
-
-	ImGui_ImplVulkan_InitInfo info{};
-	info.Instance = *instance_;
-	info.PhysicalDevice = physicalDevice_;
-	info.Device = *device_;
-	info.QueueFamily = graphicFamilly_;
-	info.PipelineCache = VK_NULL_HANDLE;
-	info.DescriptorPool = *imguiDescriptorPool_;
-	info.Queue = queue_;
-	info.Subpass = 0;
-	info.MinImageCount = bufferNum;
-	info.ImageCount = bufferNum;
-	info.Allocator = callbacks;
-	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-	info.CheckVkResultFn = CheckVkResult;
-	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
-	
-	//imguiWindowH.Surface = *surfaceKhr_;
-	//imguiWindowH.RenderPass = *imguiRenderPass_;
-	/*auto tmpFormat = static_cast<VkFormat>(useVkformat);
-	imguiWindowH.SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(physicalDevice_, *surfaceKhr_, &tmpFormat, 1, VK_COLORSPACE_SRGB_NONLINEAR_KHR);
-	VkPresentModeKHR presentModes{ VK_PRESENT_MODE_FIFO_KHR };
-	imguiWindowH.PresentMode = ImGui_ImplVulkanH_SelectPresentMode(physicalDevice_, *surfaceKhr_, &presentModes, 1);
-	ImGui_ImplVulkanH_CreateOrResizeWindow(*instance_, physicalDevice_, *device_, &imguiWindowH, graphicFamilly_, callbacks, size.x, size.y, bufferNum);
-	*/
-	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
-	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
-	{
-		throw EugeneLibException{ "Imgui Init Error" };
-	}
-
-	
-	/*VkCommandPool command_pool = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandPool;
-	VkCommandBuffer command_buffer = imguiWindowH.Frames[imguiWindowH.FrameIndex].CommandBuffer;
-
-	auto err = vkResetCommandPool(*device_, command_pool, 0);
-	CheckVkResult(err);
-	VkCommandBufferBeginInfo begin_info = {};
-	begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-	begin_info.flags |= VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-	err = vkBeginCommandBuffer(command_buffer, &begin_info);
-	CheckVkResult(err);
-
-	ImGui_ImplVulkan_CreateFontsTexture(command_buffer);
-
-	VkSubmitInfo end_info = {};
-	end_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-	end_info.commandBufferCount = 1;
-	end_info.pCommandBuffers = &command_buffer;
-	err = vkEndCommandBuffer(command_buffer);
-	CheckVkResult(err);
-	err = vkQueueSubmit(queue_, 1, &end_info, VK_NULL_HANDLE);
-	CheckVkResult(err);
-
-	err = vkDeviceWaitIdle(*device_);
-	CheckVkResult(err);
-	ImGui_ImplVulkan_DestroyFontUploadObjects();*/
-
-	vk::CommandPoolCreateInfo poolInfo{};
-	poolInfo.setQueueFamilyIndex(graphicFamilly_);
-	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
-	auto tmpCommandPool = device_->createCommandPoolUnique(poolInfo);
-
-	vk::CommandBufferAllocateInfo bufferInfo{};
-	bufferInfo.setCommandPool(*tmpCommandPool);
-	bufferInfo.setLevel(vk::CommandBufferLevel::ePrimary);
-	bufferInfo.setCommandBufferCount(1);
-	auto tmpCommandBuffer = std::move(device_->allocateCommandBuffersUnique(bufferInfo)[0]);
-
-	tmpCommandBuffer->reset();
-	tmpCommandBuffer->begin(vk::CommandBufferBeginInfo{});
-	ImGui_ImplVulkan_CreateFontsTexture(*tmpCommandBuffer);
-	tmpCommandBuffer->end();
-	vk::SubmitInfo submitInfo{};
-	submitInfo.setCommandBuffers(*tmpCommandBuffer);
-	queue_.submit(submitInfo);
-	queue_.waitIdle();
-	ImGui_ImplVulkan_DestroyFontUploadObjects();
-
-	imguiFrameBuffer_.resize(bufferNum);
-	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
-	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
-	{
-		
-		vk::ImageView attachments[] = {
-			*backViews[i].imageView
-		};
-		vk::FramebufferCreateInfo info{};
-		info.setRenderPass(*imguiRenderPass_);
-		info.setAttachmentCount(1);
-		info.setAttachments(attachments);
-		info.setWidth(static_cast<std::uint32_t>(size.x));
-		info.setHeight(static_cast<std::uint32_t>(size.y));
-		info.setLayers(1);
-
-		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
-
-	}
-	auto srvBind{ Bind{ViewType::Texture,256} };
-	imguiSrviews_.reset(CreateShaderResourceViews(srvBind));
+	InitImgui(hwnd, useVkformat, bufferNum, size);
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -287,6 +143,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuE
 	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
 #endif
 }
+
 #endif
 
 vk::Format Eugene::VkGraphics::CreateSwapChain(const Eugene::Vector2& size)
@@ -356,6 +213,13 @@ Eugene::VkGraphics::~VkGraphics()
 	device_->waitIdle();
 
 #ifdef USE_IMGUI
+
+	for (auto& image : imageDatas_)
+	{
+		image.descriptorSet.release();
+		ImGui_ImplVulkan_RemoveTexture(*image.descriptorSet);
+	}
+
 	ImGui_ImplVulkan_Shutdown();
 	device_->waitIdle();
 #endif
@@ -858,12 +722,180 @@ void Eugene::VkGraphics::ImguiNewFrame(void) const
 }
 void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
 {
-	auto data{ static_cast<VkShaderResourceViews::Data*>(imguiSrviews_->GetViews()) };
-	return *data->descriptorSet_;
+	if (index >= imguiImageMax_)
+	{
+		return nullptr;
+	}
+	return *imageDatas_[index].descriptorSet;
 }
-Eugene::ShaderResourceViews& Eugene::VkGraphics::GetImguiShaderResourceView(void)&
+
+void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64_t index)
 {
-	return *imguiSrviews_;
+	if (index >= imguiImageMax_)
+	{
+		return;
+	}
+
+	auto data{ static_cast<VkImageResource::Data*>(imageResource.GetResource()) };
+	auto format = VkGraphics::FormatToVkFormat[static_cast<size_t>(imageResource.GetFormat())];
+	vk::ImageViewCreateInfo viewInfo{};
+	viewInfo.setImage(*data->image_);
+	viewInfo.setViewType(vk::ImageViewType::e2D);
+	viewInfo.setFormat(format);
+	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
+	imageDatas_[index].imageView = device_->createImageViewUnique(viewInfo);
+	if (imageDatas_[index].descriptorSet)
+	{
+		vk::DescriptorImageInfo imgInfo{};
+		imgInfo.setImageLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
+		imgInfo.setSampler(*imguiSampler_);
+		imgInfo.setImageView(*imageDatas_[index].imageView);
+		vk::WriteDescriptorSet write[1] = {};
+		write[0].dstSet = *imageDatas_[index].descriptorSet;
+		write[0].descriptorCount = 1;
+		write[0].descriptorType = vk::DescriptorType::eCombinedImageSampler;
+		write[0].setImageInfo(imgInfo);
+		device_->updateDescriptorSets(write,nullptr);
+	}
+	else
+	{
+		auto set = vk::DescriptorSet{ ImGui_ImplVulkan_AddTexture(*imguiSampler_, *imageDatas_[index].imageView, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL) };
+		imageDatas_[index].descriptorSet = vk::UniqueDescriptorSet{ 
+			set,
+		};
+	}
+}
+
+void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const Eugene::Vector2& size)
+{
+	imguiHwnd = hwnd;
+
+	// imgui用ディスクリプタープールの生成
+	{
+		vk::DescriptorPoolCreateInfo dPoolInfo{};
+		vk::DescriptorPoolSize a;
+		constexpr vk::DescriptorPoolSize  sizes[]{
+			vk::DescriptorPoolSize{ vk::DescriptorType::eSampler,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eCombinedImageSampler,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eSampledImage,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eStorageImage,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eUniformTexelBuffer,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eStorageTexelBuffer,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eUniformBuffer,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eStorageBuffer,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eUniformBufferDynamic,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eStorageBufferDynamic,1000 },
+			vk::DescriptorPoolSize{ vk::DescriptorType::eInputAttachment,1000 }
+		};
+		dPoolInfo.setFlags(vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet);
+		dPoolInfo.setPoolSizes(sizes);
+		dPoolInfo.setMaxSets(1000u * std::size(sizes));
+		imguiDescriptorPool_ = device_->createDescriptorPoolUnique(dPoolInfo);
+	}
+
+	// imgui用のレンダーパスを生成
+	{
+		vk::AttachmentDescription colorAttachment{};
+		colorAttachment.setFormat(useVkformat);
+		colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+		colorAttachment.setLoadOp(vk::AttachmentLoadOp::eLoad);
+		colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+		colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+		colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+		colorAttachment.setInitialLayout(vk::ImageLayout::eColorAttachmentOptimal);
+		colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+		vk::AttachmentReference colorAttachmentRef{};
+		colorAttachmentRef.attachment = 0;
+		colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+		vk::SubpassDescription subpass;
+		subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+		subpass.setColorAttachmentCount(1);
+		subpass.setPColorAttachments(&colorAttachmentRef);
+
+		vk::RenderPassCreateInfo renderPassInfo{};
+		renderPassInfo.setAttachmentCount(1);
+		renderPassInfo.setPAttachments(&colorAttachment);
+		renderPassInfo.setSubpassCount(1);
+		renderPassInfo.setPSubpasses(&subpass);
+		imguiRenderPass_ = device_->createRenderPassUnique(renderPassInfo);
+	}
+
+	ImGui_ImplVulkan_InitInfo info{};
+	info.Instance = *instance_;
+	info.PhysicalDevice = physicalDevice_;
+	info.Device = *device_;
+	info.QueueFamily = graphicFamilly_;
+	info.PipelineCache = VK_NULL_HANDLE;
+	info.DescriptorPool = *imguiDescriptorPool_;
+	info.Queue = queue_;
+	info.Subpass = 0;
+	info.MinImageCount = bufferNum;
+	info.ImageCount = bufferNum;
+	info.Allocator = callbacks;
+	info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+	info.CheckVkResultFn = CheckVkResult;
+	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
+
+	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
+	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
+	{
+		throw EugeneLibException{ "Imgui Init Error" };
+	}
+
+	vk::CommandPoolCreateInfo poolInfo{};
+	poolInfo.setQueueFamilyIndex(graphicFamilly_);
+	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+	auto tmpCommandPool = device_->createCommandPoolUnique(poolInfo);
+
+	vk::CommandBufferAllocateInfo bufferInfo{};
+	bufferInfo.setCommandPool(*tmpCommandPool);
+	bufferInfo.setLevel(vk::CommandBufferLevel::ePrimary);
+	bufferInfo.setCommandBufferCount(1);
+	auto tmpCommandBuffer = std::move(device_->allocateCommandBuffersUnique(bufferInfo)[0]);
+
+	tmpCommandBuffer->reset();
+	tmpCommandBuffer->begin(vk::CommandBufferBeginInfo{});
+	ImGui_ImplVulkan_CreateFontsTexture(*tmpCommandBuffer);
+	tmpCommandBuffer->end();
+	vk::SubmitInfo submitInfo{};
+	submitInfo.setCommandBuffers(*tmpCommandBuffer);
+	queue_.submit(submitInfo);
+	queue_.waitIdle();
+	ImGui_ImplVulkan_DestroyFontUploadObjects();
+
+	imguiFrameBuffer_.resize(bufferNum);
+	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
+	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
+	{
+
+		vk::ImageView attachments[] = {
+			*backViews[i].imageView
+		};
+		vk::FramebufferCreateInfo info{};
+		info.setRenderPass(*imguiRenderPass_);
+		info.setAttachmentCount(1);
+		info.setAttachments(attachments);
+		info.setWidth(static_cast<std::uint32_t>(size.x));
+		info.setHeight(static_cast<std::uint32_t>(size.y));
+		info.setLayers(1);
+
+		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
+	}
+
+	imageDatas_.resize(imguiImageMax_);
+	vk::SamplerCreateInfo samplerInfo{};
+	samplerInfo.setMagFilter(vk::Filter::eLinear);
+	samplerInfo.setMinFilter(vk::Filter::eLinear);
+	samplerInfo.setAddressModeU(vk::SamplerAddressMode::eRepeat);
+	samplerInfo.setAddressModeV(vk::SamplerAddressMode::eRepeat);
+	samplerInfo.setAddressModeW(vk::SamplerAddressMode::eRepeat);
+	samplerInfo.setMinLod(-1000);
+	samplerInfo.setMaxLod(1000);
+	samplerInfo.setMaxAnisotropy(1.0f);
+	imguiSampler_ = device_->createSamplerUnique(samplerInfo);
+
 }
 
 #endif 

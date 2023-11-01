@@ -210,13 +210,23 @@ namespace Eugene
 #endif
 
 #ifdef USE_IMGUI
+
+		struct ImguiImageData
+		{
+			vk::UniqueDescriptorSet descriptorSet;
+			vk::UniqueImageView imageView;
+		};
 		vk::UniqueDescriptorPool imguiDescriptorPool_;
 		vk::UniqueRenderPass imguiRenderPass_;
 		std::vector<vk::UniqueFramebuffer> imguiFrameBuffer_;
-		std::unique_ptr<ShaderResourceViews> imguiSrviews_;
-		void ImguiNewFrame(void) const override;
-		void* GetImguiImageID(std::uint64_t index) const override;
-		ShaderResourceViews& GetImguiShaderResourceView(void) & override;
+		std::vector<ImguiImageData> imageDatas_;
+		vk::UniqueSampler imguiSampler_;
+		void ImguiNewFrame(void) const final;
+		void* GetImguiImageID(std::uint64_t index) const final;
+		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
+#ifdef USE_WINDOWS
+		void InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const Eugene::Vector2& size);
+#endif
 #endif
 
 

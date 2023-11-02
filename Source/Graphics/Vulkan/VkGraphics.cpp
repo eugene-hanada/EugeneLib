@@ -54,7 +54,6 @@ namespace
 	ImGui_ImplVulkanH_Window imguiWindowH{};
 
 #ifdef USE_WINDOWS
-	HWND imguiHwnd;
 	VkAllocationCallbacks* callbacks = nullptr;
 	int ImGui_ImplVulkan_CreateVkSurface(ImGuiViewport* viewport, ImU64 vk_instance, const void* vk_allocator, ImU64* out_vk_surface)
 	{
@@ -67,19 +66,24 @@ namespace
 #endif
 #endif
 
+#ifdef USE_WINDOWS
+	HWND hWindow;
+#endif
+
 }
 
 #ifdef USE_WINDOWS
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
 	backBufferIdx_{0}
 {
+	hWindow = hwnd;
 	CreateInstance();
 
 	CreateDevice();
 
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo{};
 	surfaceInfo.setHinstance(GetModuleHandle(nullptr));
-	surfaceInfo.setHwnd(hwnd);
+	surfaceInfo.setHwnd(hWindow);
 	surfaceKhr_ = instance_->createWin32SurfaceKHRUnique(surfaceInfo);
 	
 
@@ -108,7 +112,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 
 
 #ifdef USE_IMGUI
-	InitImgui(hwnd, useVkformat, bufferNum, size);
+	InitImgui(useVkformat, bufferNum, size);
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -169,7 +173,16 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 	}
 
 
+	vk::SurfaceFullScreenExclusiveInfoEXT fullscrInfo{};
+	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eDisallowed);
+	vk::SurfaceFullScreenExclusiveWin32InfoEXT fullscrWin32Info{};
+	fullscrWin32Info.setHmonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST));
+	fullscrInfo.setPNext(&fullscrWin32Info);
+
+
 	vk::SwapchainCreateInfoKHR info{};
+
+	info.setPNext(&fullscrInfo);
 
 	// サーフェスを指定
 	info.setSurface(*surfaceKhr_);
@@ -461,7 +474,14 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 
 void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 {
-	//
+	if (isFullScreen)
+	{
+		device_->acquireFullScreenExclusiveModeEXT(*swapchain_);
+	}
+	else
+	{
+		device_->releaseFullScreenExclusiveModeEXT(*swapchain_);
+	}
 }
 
 void Eugene::VkGraphics::CreateInstance(void)
@@ -485,7 +505,8 @@ void Eugene::VkGraphics::CreateInstance(void)
 		VK_EXT_DEBUG_REPORT_EXTENSION_NAME,
 		VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
 #endif
-		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME
+		VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME,
+		VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME
 	};
 
 	auto info{ vk::InstanceCreateInfo() };
@@ -792,10 +813,8 @@ void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64
 	}
 }
 
-void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
+void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
 {
-	imguiHwnd = hwnd;
-
 	// imgui用ディスクリプタープールの生成
 	{
 		vk::DescriptorPoolCreateInfo dPoolInfo{};

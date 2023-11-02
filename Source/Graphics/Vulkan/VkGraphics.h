@@ -252,7 +252,7 @@ namespace Eugene
 		void* GetImguiImageID(std::uint64_t index) const final;
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #ifdef USE_WINDOWS
-		void InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size);
+		void InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size);
 		void CreateImguiFrameBuffer(const glm::vec2& size);
 #endif
 #endif

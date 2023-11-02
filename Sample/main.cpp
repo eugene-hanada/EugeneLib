@@ -190,6 +190,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 
+	graphics->SetFullScreenFlag(true);
 
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;

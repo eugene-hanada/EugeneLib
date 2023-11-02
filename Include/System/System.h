@@ -72,7 +72,7 @@ namespace Eugene
 		/// <summary>
 		/// マウス座標
 		/// </summary>
-		Vector2 pos;
+		glm::vec2 pos;
 
 		/// <summary>
 		/// ホイール

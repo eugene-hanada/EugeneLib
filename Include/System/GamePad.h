@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <bitset>
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 
 namespace Eugene
 {
@@ -138,12 +138,12 @@ namespace Eugene
 		/// <summary>
 		/// 左スティックの傾き
 		/// </summary>
-		Vector2 leftThumb_;
+		glm::vec2 leftThumb_;
 
 		/// <summary>
 		/// 右スティックの傾き
 		/// </summary>
-		Vector2 rightThumb_;
+		glm::vec2 rightThumb_;
 
 		/// <summary>
 		/// ボタンデータ

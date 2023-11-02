@@ -100,30 +100,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	buffers_.resize(bufferNum);
 
 
-	for (std::uint64_t i = 0ull; i < FormatMax; i++)
-	{
-		if (FormatToVkFormat[i] == useVkformat)
-		{
-			backBufferFormat_ = static_cast<Format>(i);
-			break;
-		}
-	}
-
-	auto images = device_->getSwapchainImagesKHR(*swapchain_);
-	//vk::UniqueImage i{images[0], vk::ObjectDestroy<vk::Device, vk::DispatchLoaderStatic>(*device_) };
-	
-	
-	for (std::uint32_t i = 0u; i < bufferNum; i++)
-	{
-		buffers_[i] = std::make_unique<VkImageResource>(size, backBufferFormat_, images[i],*device_);
-	}
-
-	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(),true));
-
-	for (size_t i = 0ull; i < buffers_.size(); i++)
-	{
-		renderTargetViews_->Create(*buffers_[i], i);
-	}
+	CreateBackBuffer(useVkformat, size);
 	
 	
 	device_->resetFences(*fence_);
@@ -144,7 +121,29 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 #endif
 }
 
+
+
 #endif
+
+void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
+{
+	for (std::uint64_t i = 0ull; i < FormatMax; i++)
+	{
+		if (FormatToVkFormat[i] == useVkformat)
+		{
+			backBufferFormat_ = static_cast<Format>(i);
+			break;
+		}
+	}
+
+	auto images = device_->getSwapchainImagesKHR(*swapchain_);
+	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(), true));
+	for (std::uint64_t i = 0u; i < buffers_.size(); i++)
+	{
+		buffers_[i] = std::make_unique<VkImageResource>(size, backBufferFormat_, images[i], *device_);
+		renderTargetViews_->Create(*buffers_[i], i);
+	}
+}
 
 vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 {
@@ -223,7 +222,6 @@ Eugene::VkGraphics::~VkGraphics()
 	ImGui_ImplVulkan_Shutdown();
 	device_->waitIdle();
 #endif
-	DebugLog("~VkGraphics");
 }
 
 vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
@@ -439,6 +437,34 @@ Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(const ArgsSpan<Bind
 	return new VkSamplerViews{*device_, viewTypes};
 }
 
+void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
+{
+	queue_.waitIdle();
+	device_->waitIdle();
+	
+	for (auto& buffer : buffers_)
+	{
+		buffer.reset();
+	}
+	swapchain_.reset();
+	
+	auto swapChainFormat = CreateSwapChain(size);
+	CreateBackBuffer(swapChainFormat, size);
+
+#ifdef USE_IMGUI
+	CreateImguiFrameBuffer(size);
+#endif
+	device_->resetFences(*fence_);
+	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_);
+	result = device_->waitForFences(*fence_, true, UINT64_MAX);
+	device_->resetFences(*fence_);
+}
+
+
+void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
+{
+	//
+}
 
 void Eugene::VkGraphics::CreateInstance(void)
 {
@@ -865,24 +891,7 @@ void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uin
 	queue_.waitIdle();
 	ImGui_ImplVulkan_DestroyFontUploadObjects();
 
-	imguiFrameBuffer_.resize(bufferNum);
-	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
-	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
-	{
-
-		vk::ImageView attachments[] = {
-			*backViews[i].imageView
-		};
-		vk::FramebufferCreateInfo info{};
-		info.setRenderPass(*imguiRenderPass_);
-		info.setAttachmentCount(1);
-		info.setAttachments(attachments);
-		info.setWidth(static_cast<std::uint32_t>(size.x));
-		info.setHeight(static_cast<std::uint32_t>(size.y));
-		info.setLayers(1);
-
-		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
-	}
+	CreateImguiFrameBuffer(size);
 
 	imageDatas_.resize(imguiImageMax_);
 	vk::SamplerCreateInfo samplerInfo{};
@@ -896,6 +905,27 @@ void Eugene::VkGraphics::InitImgui(HWND& hwnd, vk::Format useVkformat, const uin
 	samplerInfo.setMaxAnisotropy(1.0f);
 	imguiSampler_ = device_->createSamplerUnique(samplerInfo);
 
+}
+
+void Eugene::VkGraphics::CreateImguiFrameBuffer(const glm::vec2& size)
+{
+	imguiFrameBuffer_.resize(buffers_.size());
+	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
+	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
+	{
+		vk::ImageView attachments[] = {
+			*backViews[i].imageView
+		};
+		vk::FramebufferCreateInfo info{};
+		info.setRenderPass(*imguiRenderPass_);
+		info.setAttachmentCount(1);
+		info.setAttachments(attachments);
+		info.setWidth(static_cast<std::uint32_t>(size.x));
+		info.setHeight(static_cast<std::uint32_t>(size.y));
+		info.setLayers(1);
+
+		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
+	}
 }
 
 #endif 

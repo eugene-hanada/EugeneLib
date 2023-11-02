@@ -105,9 +105,24 @@ namespace Eugene
 
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+
+
 #endif
-		vk::Format CreateSwapChain(const glm::vec2& size);
 		~VkGraphics();
+
+		/// <summary>
+		/// バックバッファ生成
+		/// </summary>
+		/// <param name="useVkformat"></param>
+		/// <param name="size"></param>
+		void CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size);
+
+		/// <summary>
+		/// スワップチェイン生成
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		vk::Format CreateSwapChain(const glm::vec2& size);
 
 		/// <summary>
 		/// Image用デバイスメモリを生成する
@@ -149,10 +164,9 @@ namespace Eugene
 		void Present(void) final;
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
-
-
+		void ResizeBackBuffer(const glm::vec2& size) final;
+		void SetFullScreenFlag(bool isFullScreen) final;
 		void CreateInstance(void);
-
 		void CreateDevice(void);
 
 		/// <summary>
@@ -226,6 +240,7 @@ namespace Eugene
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #ifdef USE_WINDOWS
 		void InitImgui(HWND& hwnd, vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size);
+		void CreateImguiFrameBuffer(const glm::vec2& size);
 #endif
 #endif
 

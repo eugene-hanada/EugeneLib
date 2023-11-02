@@ -24,12 +24,6 @@
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
-	Eugene::Vector2 v{1.0f, 2.0f};
-	auto result = v.Normalized().Magnitude();
-
-	auto glmMatrix{ glm::rotate(glm::mat4{}, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)) };
-	
-
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 
@@ -68,8 +62,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	{
 		struct Vertex
 		{
-			Eugene::Vector2 pos;
-			Eugene::Vector2 uv;
+			glm::vec2 pos;
+			glm::vec2 uv;
 		};
 		Vertex vertex[4]
 		{
@@ -111,7 +105,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	{
 		// 画像読み込み
 		Eugene::Image image{ "./Logo.png" };
-		//Eugene::Image image2{ "./Logo.png" };
 		
 		image.LoadInfo();
 		image.LoadData();
@@ -239,10 +232,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			// 3フレームごとに処理する
 
 			// 中心からの座標にする
-			auto pos = mouse.pos - Eugene::Vector2{ 640.0f,360.0f };
+			auto pos = mouse.pos - (system->GetWindowSize() / 2.0f);
 
 			// 正規化して10倍
-			pos.Normalize();
+			pos = glm::normalize(pos);
 			//pos *= 10.0f;
 			
 			//ctrl->Set3DSound(

@@ -166,6 +166,10 @@ namespace Eugene
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
 		void ResizeBackBuffer(const glm::vec2& size) final;
 		void SetFullScreenFlag(bool isFullScreen) final;
+		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
+
 		void CreateInstance(void);
 		void CreateDevice(void);
 
@@ -199,21 +203,30 @@ namespace Eugene
 		/// </summary>
 		std::uint32_t graphicFamilly_;
 
-
+		/// <summary>
+		/// キュー
+		/// </summary>
 		vk::Queue queue_;
 
+		/// <summary>
+		/// スワップチェイン
+		/// </summary>
 		vk::UniqueSwapchainKHR swapchain_;
 
+		/// <summary>
+		/// フェンス
+		/// </summary>
 		vk::UniqueFence fence_;
 
+		/// <summary>
+		/// バックバッファ
+		/// </summary>
 		std::vector<std::unique_ptr<ImageResource>> buffers_;
+		
+		/// <summary>
+		/// レンダーターゲットビュー
+		/// </summary>
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
-
-		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
-
 #ifdef USE_EFFEKSEER
 		// Graphics を介して継承されました
 		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,

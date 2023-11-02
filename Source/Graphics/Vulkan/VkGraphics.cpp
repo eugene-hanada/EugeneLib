@@ -36,8 +36,6 @@
 
 #include "../../../Include/Common/Debug.h"
 
-//#pragma comment(lib,"VkLayer_utils.lib")
-//#pragma comment(lib,"vulkan-1.lib")
 
 namespace
 {

@@ -16,6 +16,8 @@ namespace
 	bool isCreate = false;
 }
 
+Eugene::Graphics* Eugene::System::graphics{ nullptr };
+
 Eugene::Mouse::Mouse()
 {
 	flags.reset();
@@ -71,6 +73,35 @@ Eugene::System::~System()
 const glm::vec2& Eugene::System::GetWindowSize(void) const&
 {
 	return windowSize_;
+}
+
+void Eugene::System::OnResizeWindow(const glm::vec2& size)
+{
+	// 実装しない
+}
+
+void Eugene::System::ReSizeWindow(const glm::vec2& size)
+{
+	if (windowSize_ == size)
+	{
+		return;
+	}
+
+	windowSize_ = size;
+	OnResizeWindow(size);
+	if (graphics)
+	{
+		graphics->ResizeBackBuffer(size);
+	}
+}
+
+void Eugene::System::SetFullScreen(bool isFullScreen)
+{
+	OnSetFullScreen(isFullScreen);
+}
+
+void Eugene::System::OnSetFullScreen(bool isFullScreen)
+{
 }
 
 

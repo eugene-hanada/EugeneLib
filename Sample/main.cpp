@@ -190,8 +190,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 
-	graphics->SetFullScreenFlag(true);
-
+	system->SetFullScreen(true);
+	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
 	effekseer.reset(graphics->CreateEffekseerWarpper(*gpuEngine, Eugene::Format::AUTO_BACKBUFFER, 2u));

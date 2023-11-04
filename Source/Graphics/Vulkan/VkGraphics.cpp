@@ -1,7 +1,9 @@
 
 #ifdef USE_WINDOWS
+
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
+
 
 #include "VkGraphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
@@ -69,6 +71,8 @@ namespace
 #ifdef USE_WINDOWS
 	HWND hWindow;
 #endif
+
+	bool isFullScreenDisAllowed{ false };
 
 }
 
@@ -174,7 +178,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 
 	vk::SurfaceFullScreenExclusiveInfoEXT fullscrInfo{};
-	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eDisallowed);
+	fullscrInfo.setFullScreenExclusive(isFullScreenDisAllowed ? vk::FullScreenExclusiveEXT::eApplicationControlled : vk::FullScreenExclusiveEXT::eDefault);
 	vk::SurfaceFullScreenExclusiveWin32InfoEXT fullscrWin32Info{};
 	fullscrWin32Info.setHmonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST));
 	fullscrInfo.setPNext(&fullscrWin32Info);
@@ -314,7 +318,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool
 
 ImGui_ImplVulkanH_Window* Eugene::VkGraphics::GetImguiWindow(void)
 {
-	return &imguiWindowH;
+	return &::imguiWindowH;
 }
 
 vk::RenderPass Eugene::VkGraphics::GetRenderPass(void)
@@ -410,7 +414,19 @@ void Eugene::VkGraphics::Present(void)
 	info.setImageIndices(backBufferIdx_);
 	info.setSwapchains(*swapchain_);
 	
-	if (queue_.presentKHR(info) != vk::Result::eSuccess)
+	vk::Result result{};
+
+	try
+	{
+		result = queue_.presentKHR(info);
+	}
+	catch (const std::exception& e)
+	{
+		DebugLog(e.what());
+		throw e;
+	}
+
+	if (result != vk::Result::eSuccess)
 	{
 		DebugLog("PresentError");
 		return;
@@ -434,7 +450,7 @@ void Eugene::VkGraphics::Present(void)
 	device_->resetFences(*fence_);
 
 #ifdef USE_IMGUI
-	imguiWindowH.FrameIndex = backBufferIdx_;
+	::imguiWindowH.FrameIndex = backBufferIdx_;
 #endif
 }
 
@@ -453,6 +469,7 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 	queue_.waitIdle();
 	device_->waitIdle();
 	
+	renderTargetViews_.reset();
 	for (auto& buffer : buffers_)
 	{
 		buffer.reset();
@@ -474,14 +491,50 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 
 void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 {
-	if (isFullScreen)
+	queue_.waitIdle();
+	device_->waitIdle();
+	isFullScreenDisAllowed = isFullScreen;
+	RECT rect{};
+	GetWindowRect(hWindow, &rect);
+	//CreateSwapChain()
+
+	//auto tmp = std::move(swapchain_);
+
+	
+	
+	auto style = GetWindowLong(hWindow, GWL_STYLE);
+	auto styleEx = GetWindowLong(hWindow, GWL_EXSTYLE);
+
+	//
+	auto newStyle = style &   (~WS_BORDER)  &  (~WS_DLGFRAME) & (~WS_THICKFRAME);
+	auto newStyleEx = styleEx & (~WS_EX_WINDOWEDGE);
+
+	//if (!isFullScreen)
+	//{
+	//	newStyle = WS_OVERLAPPEDWINDOW;
+	//}
+
+	SetWindowLongA(hWindow, GWL_STYLE, newStyle | static_cast<long>(WS_POPUP));
+	SetWindowLongA(hWindow, GWL_EXSTYLE, newStyleEx | WS_EX_TOPMOST);
+	ShowWindow(hWindow, SW_SHOWMAXIMIZED);
+
+	GetWindowRect(hWindow, &rect);
+
+	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
+	//ResizeBackBuffer({ static_cast<float>(capabilities.currentExtent.width),static_cast<float>(capabilities.currentExtent.height) });
+
+	VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
+	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
+	auto result = func(*device_, *swapchain_);
+	device_->waitIdle();
+	queue_.waitIdle();
+	if (result != VkResult::VK_SUCCESS)
 	{
-		device_->acquireFullScreenExclusiveModeEXT(*swapchain_);
+		return;
 	}
-	else
-	{
-		device_->releaseFullScreenExclusiveModeEXT(*swapchain_);
-	}
+
+
+
 }
 
 void Eugene::VkGraphics::CreateInstance(void)
@@ -494,6 +547,9 @@ void Eugene::VkGraphics::CreateInstance(void)
 
 	const std::vector< const char* > layers{
 		"VK_LAYER_KHRONOS_validation"
+#ifdef _DEBUG
+		//"VK_LAYER_RENDERDOC_Capture"
+#endif 
 	};
 	std::vector<const char*> extens{
 		VK_KHR_SURFACE_EXTENSION_NAME,
@@ -564,7 +620,11 @@ void Eugene::VkGraphics::CreateDevice(void)
 	std::vector<const char*> extension{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
-		VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME
+		VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
+
+#ifdef USE_WINDOWS
+		VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME
+#endif
 	};
 	vk::DeviceQueueCreateInfo queueInfo{};
 	queueInfo.setQueueCount(queueMax);

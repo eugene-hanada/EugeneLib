@@ -21,7 +21,8 @@ namespace Eugene
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
 		bool IsEnd(void) const final;
-		void ResizeWindow(const glm::vec2& size) final;
+		void OnResizeWindow(const glm::vec2& size) final;
+		void OnSetFullScreen(bool isFullScreen) final;
 		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;

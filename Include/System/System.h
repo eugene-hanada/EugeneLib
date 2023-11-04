@@ -187,18 +187,27 @@ namespace Eugene
 		virtual bool IsEnd(void) const = 0;
 
 		/// <summary>
-		/// ウィンドウをリサイズする
-		/// </summary>
-		/// <param name="size"> ウインドウサイズ </param>
-		virtual void ResizeWindow(const glm::vec2& size) = 0;
-
-		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
 		/// </summary>
 		/// <param name="path"> ライブラリのパス </param>
 		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
 		[[nodiscard]]
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
+
+		/// <summary>
+		/// ウィンドウのリサイズを行う
+		/// </summary>
+		/// <param name="size"></param>
+		void ReSizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンにしたりする
+		/// </summary>
+		/// <param name="isFullScreen"> trueでフルスクリーン </param>
+		void SetFullScreen(bool isFullScreen);
+
+
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -224,6 +233,18 @@ namespace Eugene
 		System(const glm::vec2& size, const std::u8string& title);
 		
 		/// <summary>
+		/// ウィンドウをリサイズ時のサブクラスがわの処理
+		/// </summary>
+		/// <param name="size"> ウインドウサイズ </param>
+		virtual void OnResizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンフラグセット時のサブクラスの処理
+		/// </summary>
+		/// <param name="isFullScreen"></param>
+		virtual void OnSetFullScreen(bool isFullScreen);
+
+		/// <summary>
 		/// ウィンドウサイズ
 		/// </summary>
 		glm::vec2 windowSize_;
@@ -232,6 +253,11 @@ namespace Eugene
 		/// タイトル
 		/// </summary>
 		std::u8string title_;
+
+		/// <summary>
+		/// リサイズように使用
+		/// </summary>
+		static Eugene::Graphics* graphics;
 
 #ifdef USE_IMGUI
 

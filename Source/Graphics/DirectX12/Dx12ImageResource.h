@@ -2,7 +2,6 @@
 #include "../../../Include/Graphics/ImageResource.h"
 #include <span>
 #include <wrl.h>
-#include "../../../Include/Math/Vector2.h"
 
 struct ID3D12Resource;
 struct ID3D12Device;

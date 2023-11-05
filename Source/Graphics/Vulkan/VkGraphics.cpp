@@ -178,7 +178,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 
 	vk::SurfaceFullScreenExclusiveInfoEXT fullscrInfo{};
-	fullscrInfo.setFullScreenExclusive(isFullScreenDisAllowed ? vk::FullScreenExclusiveEXT::eApplicationControlled : vk::FullScreenExclusiveEXT::eDefault);
+	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eApplicationControlled);
 	vk::SurfaceFullScreenExclusiveWin32InfoEXT fullscrWin32Info{};
 	fullscrWin32Info.setHmonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST));
 	fullscrInfo.setPNext(&fullscrWin32Info);
@@ -493,38 +493,22 @@ void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 {
 	queue_.waitIdle();
 	device_->waitIdle();
-	isFullScreenDisAllowed = isFullScreen;
-	RECT rect{};
-	GetWindowRect(hWindow, &rect);
-	//CreateSwapChain()
-
-	//auto tmp = std::move(swapchain_);
-
-	
-	
-	auto style = GetWindowLong(hWindow, GWL_STYLE);
-	auto styleEx = GetWindowLong(hWindow, GWL_EXSTYLE);
-
-	//
-	auto newStyle = style &   (~WS_BORDER)  &  (~WS_DLGFRAME) & (~WS_THICKFRAME);
-	auto newStyleEx = styleEx & (~WS_EX_WINDOWEDGE);
-
-	//if (!isFullScreen)
-	//{
-	//	newStyle = WS_OVERLAPPEDWINDOW;
-	//}
-
-	SetWindowLongA(hWindow, GWL_STYLE, newStyle | static_cast<long>(WS_POPUP));
-	SetWindowLongA(hWindow, GWL_EXSTYLE, newStyleEx | WS_EX_TOPMOST);
-	ShowWindow(hWindow, SW_SHOWMAXIMIZED);
-
-	GetWindowRect(hWindow, &rect);
 
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
 	//ResizeBackBuffer({ static_cast<float>(capabilities.currentExtent.width),static_cast<float>(capabilities.currentExtent.height) });
 
 	VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
-	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
+
+
+	if (isFullScreen)
+	{
+		func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
+	}
+	else
+	{
+		func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkReleaseFullScreenExclusiveModeEXT"));
+	}
+	
 	auto result = func(*device_, *swapchain_);
 	device_->waitIdle();
 	queue_.waitIdle();

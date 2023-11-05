@@ -56,6 +56,11 @@ namespace {
 	std::function<void(const glm::vec2&)> resizeCall;
 
 	/// <summary>
+	/// ウィンドウがアクティブもしくは非アクティブになった時の処理
+	/// </summary>
+	std::function<void(bool)> activateCall;
+
+	/// <summary>
 	/// 終了フラグ
 	/// </summary>
 	bool isEnd = false;
@@ -92,9 +97,13 @@ namespace {
 			DebugLog("リサイズ{:0},{:1}", LOWORD(lparam), HIWORD(lparam));
 			resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
 			return 0;
-
 		case WM_ACTIVATE:
+
 			DebugLog("アクティブ");
+			if (activateCall)
+			{
+				activateCall(WA_INACTIVE != wparam);
+			}
 			return 0;
 		default:
 			return DefWindowProc(hwnd, msg, wparam, lparam);
@@ -114,6 +123,16 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 
 		};
 	};
+
+#if USE_VULKAN
+	activateCall = [this](bool active) {
+		if (!active)
+		{
+			SetFullScreen(false);
+		}
+	};
+#endif
+
 
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
@@ -361,7 +380,39 @@ void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 {
 #ifdef USE_VULKAN
+	//isFullScreenDisAllowed = isFullScreen;
+	RECT rect{};
+	GetWindowRect(hwnd, &rect);
+	//CreateSwapChain()
 
+	//auto tmp = std::move(swapchain_);
+
+
+
+	auto style = GetWindowLong(hwnd, GWL_STYLE);
+	auto styleEx = GetWindowLong(hwnd, GWL_EXSTYLE);
+
+	auto newStyle = 0;
+	auto newStyleEx = 0;
+
+	if (isFullScreen)
+	{
+		newStyle = style & (~WS_BORDER) & (~WS_DLGFRAME) & (~WS_THICKFRAME);
+		newStyle |= static_cast<long>(WS_POPUP);
+		newStyleEx = styleEx & (~WS_EX_WINDOWEDGE);
+		newStyleEx |= WS_EX_TOPMOST;
+	}
+	else
+	{
+		newStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+	}
+
+
+	SetWindowLongA(hwnd, GWL_STYLE, newStyle);
+
+	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
+
+	GetWindowRect(hwnd, &rect);
 #endif
 	if (graphics)
 	{

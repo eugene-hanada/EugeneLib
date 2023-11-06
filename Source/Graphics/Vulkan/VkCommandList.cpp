@@ -1,4 +1,4 @@
-#include "VkCommandList.h"
+ï»¿#include "VkCommandList.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "VkBufferResource.h"
 #include "VkImageResource.h"
@@ -154,7 +154,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 {
 	if (isRendering_)
 	{
-		// ‚·‚Å‚ÉDynamicRendering‚ğŠJn‚µ‚Ä‚¢‚é‚Ì‚ÅI—¹‚µ‚Æ‚­
+		// ã™ã§ã«DynamicRenderingã‚’é–‹å§‹ã—ã¦ã„ã‚‹ã®ã§çµ‚äº†ã—ã¨ã
 		commandBuffer_->endRendering();
 	}
 
@@ -162,7 +162,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 	auto& renderTarget{ (*static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews.GetViews()))};
 	vk::RenderingInfo rdInfo{};
 	
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg‚·‚é
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
 	auto colorAttachmentIdx{ 0 };
 	for (std::uint32_t i = rtRange.first; i < rtRange.second; i++)
@@ -181,7 +181,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 		}
 	}
 
-	// [“xƒoƒbƒtƒ@‚ğƒZƒbƒg‚·‚é
+	// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	vk::RenderingAttachmentInfo depthAttachment{};
 	auto& depth{ (*static_cast<std::vector<vk::UniqueImageView>*>(depthViews.GetViews())) };
 	depthAttachment.setImageView(*depth[depthIndex]);
@@ -214,7 +214,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 {
 	if (isRendering_)
 	{
-		// ‚·‚Å‚ÉDynamicRendering‚ğŠJn‚µ‚Ä‚¢‚é‚Ì‚ÅI—¹‚µ‚Æ‚­
+		// ã™ã§ã«DynamicRenderingã‚’é–‹å§‹ã—ã¦ã„ã‚‹ã®ã§çµ‚äº†ã—ã¨ã
 		commandBuffer_->endRendering();
 	}
 
@@ -222,7 +222,7 @@ void Eugene::VkCommandList::SetRenderTarget(
 	auto& renderTarget{ (*static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews.GetViews())) };
 	vk::RenderingInfo rdInfo{};
 
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg‚·‚é
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	std::array<vk::RenderingAttachmentInfo, 8> colorAttachments;
 	auto colorAttachmentIdx{ 0 };
 	for (std::uint32_t i = rtRange.first; i < (rtRange.second + rtRange.first); i++)
@@ -256,10 +256,10 @@ void Eugene::VkCommandList::TransitionRenderTargetBegin(ImageResource& resource)
 {
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 	
-	// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	vk::ImageMemoryBarrier barrier{};
 
-	// ƒŒƒCƒAƒEƒg‚ğ–¢’è‹`‚©‚çƒJƒ‰[ƒAƒ^ƒbƒ`ƒƒ“ƒg(ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg)‚É
+	// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æœªå®šç¾©ã‹ã‚‰ã‚«ãƒ©ãƒ¼ã‚¢ã‚¿ãƒƒãƒãƒ¡ãƒ³ãƒˆ(ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ)ã«
 	barrier.setOldLayout(vk::ImageLayout::eUndefined);
 	barrier.setNewLayout(vk::ImageLayout::eColorAttachmentOptimal);
 	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
@@ -290,10 +290,10 @@ void Eugene::VkCommandList::TransitionRenderTargetEnd(ImageResource& resource)
 
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
-	// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	vk::ImageMemoryBarrier barrier{};
 
-	// ƒŒƒCƒAƒEƒg‚ğ–¢’è‹`‚©‚çƒJƒ‰[ƒAƒ^ƒbƒ`ƒƒ“ƒg(ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg)‚É
+	// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æœªå®šç¾©ã‹ã‚‰ã‚«ãƒ©ãƒ¼ã‚¢ã‚¿ãƒƒãƒãƒ¡ãƒ³ãƒˆ(ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ)ã«
 	barrier.setOldLayout(vk::ImageLayout::eColorAttachmentOptimal);
 #ifdef USE_IMGUI
 
@@ -323,7 +323,7 @@ void Eugene::VkCommandList::TransitionShaderResourceBegin(ImageResource& resourc
 {
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
-	// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	vk::ImageMemoryBarrier barrier{};
 
 	barrier.setOldLayout(vk::ImageLayout::eUndefined);
@@ -350,7 +350,7 @@ void Eugene::VkCommandList::TransitionShaderResourceEnd(ImageResource& resource)
 {
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
-	// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	vk::ImageMemoryBarrier barrier{};
 
 	barrier.setOldLayout(vk::ImageLayout::eShaderReadOnlyOptimal);
@@ -378,10 +378,10 @@ void Eugene::VkCommandList::TransitionDepthBegin(ImageResource& resource)
 
 	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
-	// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	vk::ImageMemoryBarrier barrier{};
 
-	// ƒŒƒCƒAƒEƒg‚ğ–¢’è‹`‚©‚çƒfƒvƒX‚É
+	// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æœªå®šç¾©ã‹ã‚‰ãƒ‡ãƒ—ã‚¹ã«
 	barrier.setOldLayout(vk::ImageLayout::eUndefined);
 	barrier.setNewLayout(vk::ImageLayout::eDepthAttachmentOptimal);
 	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
@@ -407,10 +407,10 @@ void Eugene::VkCommandList::TransitionDepthEnd(ImageResource& resource)
 {
 	//auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
 
-	//// ƒƒ‚ƒŠƒoƒŠƒA‚ğƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Æ‚µ‚Äg—p‚Å‚«‚é‚æ‚¤‚É•ÏX‚µ‚Ü‚·
+	//// ãƒ¡ãƒ¢ãƒªãƒãƒªã‚¢ã‚’ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ã—ã¦ä½¿ç”¨ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ã—ã¾ã™
 	//vk::ImageMemoryBarrier barrier{};
 
-	//// ƒŒƒCƒAƒEƒg‚ğ–¢’è‹`‚©‚çƒfƒvƒX‚É
+	//// ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æœªå®šç¾©ã‹ã‚‰ãƒ‡ãƒ—ã‚¹ã«
 	//barrier.setOldLayout(vk::ImageLayout::eDepthAttachmentOptimal);
 	//barrier.setNewLayout(vk::ImageLayout::eDepthAttachmentOptimal);
 	//barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);

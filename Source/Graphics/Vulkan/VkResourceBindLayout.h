@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/ResourceBindLayout.h"
 #include <vulkan/vulkan.hpp>
 #include <vector>
@@ -15,12 +15,12 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒfƒBƒXƒNƒŠƒvƒ^ƒZƒbƒg‚ÌƒŒƒCƒAƒEƒg
+		/// ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚»ãƒƒãƒˆã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 		/// </summary>
 		std::vector<vk::DescriptorSetLayout> descriptorLayoutArray_;
 
 		/// <summary>
-		/// ƒpƒCƒvƒ‰ƒCƒ“‚ÌƒŒƒCƒAƒEƒg
+		/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 		/// </summary>
 		vk::UniquePipelineLayout pipelineLayout_;
 

@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include <vulkan/vulkan.hpp>
 
 namespace Eugene
 {
 	/// <summary>
-	/// [“xƒoƒbƒtƒ@—pƒrƒ…[
+	/// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ“ãƒ¥ãƒ¼
 	/// </summary>
 	class  VkDepthStencilView :
 		public DepthStencilViews
@@ -13,12 +13,12 @@ namespace Eugene
 	public:
 		VkDepthStencilView(const vk::Device& device, size_t size);
 	private:
-		// DepthStencilViews ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// DepthStencilViews ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Create(ImageResource& resource, std::uint64_t idx) final;
 		void* GetViews(void) final;
 
 		/// <summary>
-		/// ImageViews‚Ìstd::vector
+		/// ImageViewsã®std::vector
 		/// </summary>
 		std::vector<vk::UniqueImageView> imageViews_;
 	};

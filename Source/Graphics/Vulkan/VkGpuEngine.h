@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/GpuEngine.h"
 #include <vulkan/vulkan.hpp>
 #include <vector>
@@ -21,17 +21,17 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒLƒ…[
+		/// ã‚­ãƒ¥ãƒ¼
 		/// </summary>
 		vk::Queue queue_;
 		
 		/// <summary>
-		/// Às‚·‚éƒRƒ}ƒ“ƒhƒoƒbƒtƒ@
+		/// å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		std::vector<vk::CommandBuffer> cmdBuffers_;
 
 		/// <summary>
-		/// Œ»İ‚ÌÀs‚·‚éƒRƒ}ƒ“ƒhƒoƒbƒtƒ@‚Ì”
+		/// ç¾åœ¨ã®å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡ã®æ•°
 		/// </summary>
 		std::uint64_t nowNum_;
 	};

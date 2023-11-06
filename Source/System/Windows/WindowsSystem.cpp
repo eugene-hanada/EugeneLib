@@ -87,19 +87,20 @@ namespace {
 		switch (msg)
 		{
 		case WM_DESTROY:
+			// ウィンドウ破棄時
 			isEnd = true;
 			PostQuitMessage(0);
 			return 0;
 		case WM_MOUSEWHEEL:
+			// マウスホイールを動かしたとき
 			wheel += static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
 			return 0;
 		case WM_SIZE:
-			DebugLog("リサイズ{:0},{:1}", LOWORD(lparam), HIWORD(lparam));
+			// ウィンドウがリサイズされたとき
 			resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
 			return 0;
 		case WM_ACTIVATE:
-
-			DebugLog("アクティブ");
+			// ウィンドウがアクティブもしくは非アクティブになった時
 			if (activateCall)
 			{
 				activateCall(WA_INACTIVE != wparam);
@@ -380,15 +381,6 @@ void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 {
 #ifdef USE_VULKAN
-	//isFullScreenDisAllowed = isFullScreen;
-	RECT rect{};
-	GetWindowRect(hwnd, &rect);
-	//CreateSwapChain()
-
-	//auto tmp = std::move(swapchain_);
-
-
-
 	auto style = GetWindowLong(hwnd, GWL_STYLE);
 	auto styleEx = GetWindowLong(hwnd, GWL_EXSTYLE);
 
@@ -412,12 +404,7 @@ void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 
-	GetWindowRect(hwnd, &rect);
 #endif
-	if (graphics)
-	{
-		graphics->SetFullScreenFlag(isFullScreen);
-	}
 }
 
 Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const

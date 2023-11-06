@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/IndexView.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Graphics/GraphicsCommon.h"
@@ -12,7 +12,7 @@ namespace Eugene
 	public:
 		VkIndexView(std::uint32_t size, std::uint32_t indexNum, vk::Buffer& buffer);
 	private:
-		// IndexView ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// IndexView ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void* GetView(void) final;
 	
 		vk::Buffer buffer_;

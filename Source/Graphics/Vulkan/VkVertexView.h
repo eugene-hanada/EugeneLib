@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/VertexView.h"
 #include <vulkan/vulkan.hpp>
 
@@ -10,11 +10,11 @@ namespace Eugene
 	public:
 		VkVertexView(size_t size, size_t vertexNum, vk::Buffer& buffer);
 	private:
-		// VertexView ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// VertexView ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void* GetView(void);
 
 		/// <summary>
-		/// ƒoƒbƒtƒ@
+		/// ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		vk::Buffer buffer_;
 	};

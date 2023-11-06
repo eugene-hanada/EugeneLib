@@ -1,4 +1,4 @@
-#include "VkResourceBindLayout.h"
+﻿#include "VkResourceBindLayout.h"
 
 Eugene::VkResourceBindLayout::VkResourceBindLayout(const vk::Device& device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
 {

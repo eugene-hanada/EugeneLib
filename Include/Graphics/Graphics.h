@@ -278,6 +278,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="isFullScreen"></param>
 		virtual void SetFullScreenFlag(bool isFullScreen);
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -315,12 +316,15 @@ namespace Eugene
 #endif
 
 	protected:
+
 		Graphics();
 
 		/// <summary>
 		/// バックバッファのフォーマット
 		/// </summary>
 		static Format backBufferFormat_;
+
+		friend class System;
 
 #ifdef USE_IMGUI
 

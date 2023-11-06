@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/Sampler.h"
 #include <vulkan/vulkan.hpp>
 
@@ -12,7 +12,7 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒTƒ“ƒvƒ‰[
+		/// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 		/// </summary>
 		vk::UniqueSampler sampler_;
 		friend class VkSamplerViews;

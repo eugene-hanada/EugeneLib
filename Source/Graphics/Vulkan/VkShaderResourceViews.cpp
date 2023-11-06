@@ -1,4 +1,4 @@
-#include "VkShaderResourceViews.h"
+Ôªø#include "VkShaderResourceViews.h"
 #include "VkBufferResource.h"
 #include "VkImageResource.h"
 #include "VkGraphics.h"
@@ -31,7 +31,7 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 			poolSize[i].setType(vk::DescriptorType::eSampler);
 			break;
 		default:
-			// ì¡Ç…âΩÇ‡ÇµÇ»Ç¢
+			// Áâπ„Å´‰Ωï„ÇÇ„Åó„Å™„ÅÑ
 			break;
 		}
 	}

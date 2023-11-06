@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
 #include <memory>
@@ -111,28 +111,28 @@ namespace Eugene
 		~VkGraphics();
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@¶¬
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 		/// </summary>
 		/// <param name="useVkformat"></param>
 		/// <param name="size"></param>
 		void CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size);
 
 		/// <summary>
-		/// ƒXƒƒbƒvƒ`ƒFƒCƒ“¶¬
+		/// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ç”Ÿæˆ
 		/// </summary>
 		/// <param name="size"></param>
 		/// <returns></returns>
 		vk::Format CreateSwapChain(const glm::vec2& size);
 
 		/// <summary>
-		/// Image—pƒfƒoƒCƒXƒƒ‚ƒŠ‚ğ¶¬‚·‚é
+		/// Imageç”¨ãƒ‡ãƒã‚¤ã‚¹ãƒ¡ãƒ¢ãƒªã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
 		/// <param name="image"></param>
 		/// <returns></returns>
 		vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
 
 		/// <summary>
-		/// buffer—pƒfƒoƒCƒXƒƒ‚ƒŠ‚ğ¶¬‚·‚é
+		/// bufferç”¨ãƒ‡ãƒã‚¤ã‚¹ãƒ¡ãƒ¢ãƒªã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
 		/// <param name="buffer"></param>
 		/// <param name="isDeviceLoacal"></param>
@@ -174,61 +174,61 @@ namespace Eugene
 		void CreateDevice(void);
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 		/// </summary>
 		std::uint32_t backBufferIdx_;
 
 		/// <summary>
-		/// vulkan‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+		/// vulkanã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 		/// </summary>
 		vk::UniqueInstance instance_;
 
 		/// <summary>
-		/// •¨—ƒfƒoƒCƒX
+		/// ç‰©ç†ãƒ‡ãƒã‚¤ã‚¹
 		/// </summary>
 		vk::PhysicalDevice physicalDevice_;
 
 		/// <summary>
-		/// vulkan‚ÌƒfƒoƒCƒX
+		/// vulkanã®ãƒ‡ãƒã‚¤ã‚¹
 		/// </summary>
 		vk::UniqueDevice device_;
 
 		/// <summary>
-		/// ƒT[ƒtƒFƒXKHR
+		/// ã‚µãƒ¼ãƒ•ã‚§ã‚¹KHR
 		/// </summary>
 		vk::UniqueSurfaceKHR surfaceKhr_;
 
 		/// <summary>
-		/// ƒtƒ@ƒ~ƒŠ[ƒLƒ…[
+		/// ãƒ•ã‚¡ãƒŸãƒªãƒ¼ã‚­ãƒ¥ãƒ¼
 		/// </summary>
 		std::uint32_t graphicFamilly_;
 
 		/// <summary>
-		/// ƒLƒ…[
+		/// ã‚­ãƒ¥ãƒ¼
 		/// </summary>
 		vk::Queue queue_;
 
 		/// <summary>
-		/// ƒXƒƒbƒvƒ`ƒFƒCƒ“
+		/// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³
 		/// </summary>
 		vk::UniqueSwapchainKHR swapchain_;
 
 		/// <summary>
-		/// ƒtƒFƒ“ƒX
+		/// ãƒ•ã‚§ãƒ³ã‚¹
 		/// </summary>
 		vk::UniqueFence fence_;
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		std::vector<std::unique_ptr<ImageResource>> buffers_;
 		
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼
 		/// </summary>
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
 #ifdef USE_EFFEKSEER
-		// Graphics ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// Graphics ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,
 			bool reverseDepth = false,
 			std::uint64_t maxNumm = 8000) const final;
@@ -238,21 +238,65 @@ namespace Eugene
 
 #ifdef USE_IMGUI
 
+		/// <summary>
+		/// Imguiç”¨ã®ç”»åƒãƒ‡ãƒ¼ã‚¿
+		/// </summary>
 		struct ImguiImageData
 		{
+			/// <summary>
+			/// ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚»ãƒƒãƒˆ
+			/// </summary>
 			vk::UniqueDescriptorSet descriptorSet;
+
+			/// <summary>
+			/// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ“ãƒ¥ãƒ¼
+			/// </summary>
 			vk::UniqueImageView imageView;
 		};
+
+		/// <summary>
+		/// Imguiç”¨ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚»ãƒƒãƒˆ
+		/// </summary>
 		vk::UniqueDescriptorPool imguiDescriptorPool_;
+
+		/// <summary>
+		/// Imguiç”¨ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¹
+		/// </summary>
 		vk::UniqueRenderPass imguiRenderPass_;
+
+		/// <summary>
+		/// Imguiç”¨ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡
+		/// </summary>
 		std::vector<vk::UniqueFramebuffer> imguiFrameBuffer_;
+
+		/// <summary>
+		/// Imguiç”¨ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
+		/// </summary>
 		std::vector<ImguiImageData> imageDatas_;
+
+		/// <summary>
+		/// Imguiç”¨ã‚µãƒ³ãƒ—ãƒ©ãƒ¼
+		/// </summary>
 		vk::UniqueSampler imguiSampler_;
+
+
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #ifdef USE_WINDOWS
+
+		/// <summary>
+		/// Imguiç”¨ã®åˆæœŸåŒ–å‡¦ç†
+		/// </summary>
+		/// <param name="useVkformat"> ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ </param>
+		/// <param name="bufferNum"> ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®æ•° </param>
+		/// <param name="size"> ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º </param>
 		void InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size);
+
+		/// <summary>
+		/// Imguiç”¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+		/// </summary>
+		/// <param name="size"> ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º </param>
 		void CreateImguiFrameBuffer(const glm::vec2& size);
 #endif
 #endif

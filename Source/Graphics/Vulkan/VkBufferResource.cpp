@@ -1,4 +1,4 @@
-#include "VkBufferResource.h"
+﻿#include "VkBufferResource.h"
 #include "VkGraphics.h"
 #include "../../../Include/Graphics/Image.h"
 

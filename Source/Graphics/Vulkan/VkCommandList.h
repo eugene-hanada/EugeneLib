@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/CommandList.h"
 #include <vulkan/vulkan.hpp>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒRƒ}ƒ“ƒhƒŠƒXƒgƒNƒ‰ƒX‚ğvulkanÀ‘•”Å
+	/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚¯ãƒ©ã‚¹ã‚’vulkanå®Ÿè£…ç‰ˆ
 	/// </summary>
 	class VkCommandList :
 		public CommandList
@@ -13,7 +13,7 @@ namespace Eugene
 	public:
 		VkCommandList(const vk::Device& device, std::uint32_t familyIndex);
 	private:
-		// CommandList ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// CommandList ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Begin(void) final;
 		void End(void) final;
 		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
@@ -55,31 +55,31 @@ namespace Eugene
 
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒv[ƒ‹
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒ—ãƒ¼ãƒ«
 		/// </summary>
 		vk::UniqueCommandPool commandPool_;
 
 
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒoƒbƒtƒ@
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		vk::UniqueCommandBuffer commandBuffer_;
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_ƒŠƒ“ƒOŠJn‚µ‚Ä‚¢‚é‚©H
+		/// ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°é–‹å§‹ã—ã¦ã„ã‚‹ã‹ï¼Ÿ
 		/// </summary>
 		bool isRendering_;
 
 		/// <summary>
-		/// Œ»İ‚ÌƒpƒCƒvƒ‰ƒCƒ“‚ÌƒŒƒCƒAƒEƒg
+		/// ç¾åœ¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 		/// </summary>
 		vk::PipelineLayout* nowLayout_;
 
 		friend class VkEffekseerWarpper;
 
 #ifdef USE_IMGUI
-		// CommandList ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// CommandList ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
 #endif
 	};

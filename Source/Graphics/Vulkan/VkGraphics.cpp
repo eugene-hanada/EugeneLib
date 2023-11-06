@@ -1,4 +1,4 @@
-
+ï»¿
 #ifdef USE_WINDOWS
 
 #define VK_USE_PLATFORM_WIN32_KHR
@@ -160,8 +160,8 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 	if (format.size() <= 0 || modes.size() <= 0)
 	{
-		// ƒtƒH[ƒ}ƒbƒg‚àPresent‚à0ˆÈ‰º‚È‚çƒXƒƒbƒvƒ`ƒFƒCƒ“g‚¦‚È‚¢‚Ì‚Å‚â‚ß‚é
-		throw EugeneLibException{ "‘Î‰ƒtƒH[ƒ}ƒbƒg‚ª‚ ‚è‚Ü‚¹‚ñ" };
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚‚Presentã‚‚0ä»¥ä¸‹ãªã‚‰ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ä½¿ãˆãªã„ã®ã§ã‚„ã‚ã‚‹
+		throw EugeneLibException{ "å¯¾å¿œãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãŒã‚ã‚Šã¾ã›ã‚“" };
 	}
 
 	auto itr = std::find_if(
@@ -188,13 +188,13 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 	info.setPNext(&fullscrInfo);
 
-	// ƒT[ƒtƒFƒX‚ğw’è
+	// ã‚µãƒ¼ãƒ•ã‚§ã‚¹ã‚’æŒ‡å®š
 	info.setSurface(*surfaceKhr_);
 
-	// ƒoƒbƒtƒ@‚Ì”‚ğw’è
+	// ãƒãƒƒãƒ•ã‚¡ã®æ•°ã‚’æŒ‡å®š
 	info.setMinImageCount(2);
 
-	// ˆê‚Â‚ÌƒLƒ…[‚©‚ç‚Ì‘€ì‚Å‚«‚éó‘Ô‚É‚·‚é
+	// ä¸€ã¤ã®ã‚­ãƒ¥ãƒ¼ã‹ã‚‰ã®æ“ä½œã§ãã‚‹çŠ¶æ…‹ã«ã™ã‚‹
 	info.setImageSharingMode(vk::SharingMode::eExclusive);
 
 	info.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
@@ -246,7 +246,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) 
 	std::uint32_t heapIdx = 0u;
 	std::uint32_t memIdx = 0u;
 
-	// ƒq[ƒv‚ğ’T‚·
+	// ãƒ’ãƒ¼ãƒ—ã‚’æ¢ã™
 	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
 	{
 		if (memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal)
@@ -256,7 +256,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) 
 		}
 	}
 
-	// ƒƒ‚ƒŠ[ƒ^ƒCƒv‚ğ’T‚·
+	// ãƒ¡ãƒ¢ãƒªãƒ¼ã‚¿ã‚¤ãƒ—ã‚’æ¢ã™
 	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
 	{
 		if (memProps.memoryTypes[i].propertyFlags & vk::MemoryPropertyFlagBits::eDeviceLocal)
@@ -284,7 +284,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool
 	std::uint32_t heapIdx = 0u;
 	std::uint32_t memIdx = 0u;
 
-	// ƒq[ƒv‚ğ’T‚·
+	// ãƒ’ãƒ¼ãƒ—ã‚’æ¢ã™
 	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
 	{
 		if (((memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal) == vk::MemoryHeapFlagBits::eDeviceLocal) == isDeviceLoacal)
@@ -294,7 +294,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool
 		}
 	}
 
-	// ƒƒ‚ƒŠ[ƒ^ƒCƒv‚ğ’T‚·
+	// ãƒ¡ãƒ¢ãƒªãƒ¼ã‚¿ã‚¤ãƒ—ã‚’æ¢ã™
 	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
 	{
 		auto propFlag = isHostVisible ? (vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent) : vk::MemoryPropertyFlagBits::eDeviceLocal;
@@ -495,11 +495,8 @@ void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 	device_->waitIdle();
 
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
-	//ResizeBackBuffer({ static_cast<float>(capabilities.currentExtent.width),static_cast<float>(capabilities.currentExtent.height) });
 
 	VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
-
-
 	if (isFullScreen)
 	{
 		func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
@@ -514,6 +511,7 @@ void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 	queue_.waitIdle();
 	if (result != VkResult::VK_SUCCESS)
 	{
+		DebugLog("ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³å¤±æ•— [:0] ã‚¨ãƒ©ãƒ¼[:1]", isFullScreen, static_cast<int>(result));
 		return;
 	}
 
@@ -579,7 +577,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 
 	if (!physicalDevice_)
 	{
-		throw CreateErrorException{"g—p‚Å‚«‚é•¨—ƒfƒoƒCƒX‚ª‚ ‚è‚Ü‚¹‚ñ"};
+		throw CreateErrorException{"ä½¿ç”¨ã§ãã‚‹ç‰©ç†ãƒ‡ãƒã‚¤ã‚¹ãŒã‚ã‚Šã¾ã›ã‚“"};
 	}
 
 
@@ -594,13 +592,13 @@ void Eugene::VkGraphics::CreateDevice(void)
 			queueMax = queueFamilyProp[i].queueCount;
 			break;
 		}
-		throw EugeneLibException{ "ƒOƒ‰ƒtƒBƒbƒNƒX‚ğg—p‚Å‚«‚éƒfƒoƒCƒX‚ª‚ ‚è‚Ü‚¹‚ñ" };
+		throw EugeneLibException{ "ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚’ä½¿ç”¨ã§ãã‚‹ãƒ‡ãƒã‚¤ã‚¹ãŒã‚ã‚Šã¾ã›ã‚“" };
 	}
 	
 	std::vector<float> priority(queueMax);
 	std::fill(priority.begin(), priority.end(), 0.0f);
 
-	// ƒXƒƒbƒvƒ`ƒFƒCƒ“‚Ì‹@”\‚ğ—LŒø‚©‚·‚é‚Ì‚Å
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã®æ©Ÿèƒ½ã‚’æœ‰åŠ¹ã‹ã™ã‚‹ã®ã§
 	std::vector<const char*> extension{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
@@ -681,19 +679,19 @@ namespace Eugene
 			renderer_ = EffekseerRendererVulkan::Create(graphicsDevice, renderPassInfo, maxNum);
 			manager_ = Effekseer::Manager::Create(maxNum);
 
-			// ƒŒƒ“ƒ_ƒ‰[ƒZƒbƒg
+			// ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼ã‚»ãƒƒãƒˆ
 			manager_->SetSpriteRenderer(renderer_->CreateSpriteRenderer());
 			manager_->SetRibbonRenderer(renderer_->CreateRibbonRenderer());
 			manager_->SetRingRenderer(renderer_->CreateRingRenderer());
 			manager_->SetTrackRenderer(renderer_->CreateTrackRenderer());
 			manager_->SetModelRenderer(renderer_->CreateModelRenderer());
 
-			// ƒ[ƒ_[ƒZƒbƒg
+			// ãƒ­ãƒ¼ãƒ€ãƒ¼ã‚»ãƒƒãƒˆ
 			manager_->SetTextureLoader(renderer_->CreateTextureLoader());
 			manager_->SetModelLoader(renderer_->CreateModelLoader());
 			manager_->SetMaterialLoader(renderer_->CreateMaterialLoader());
 
-			// ƒƒ‚ƒŠ[ƒv[ƒ‹‚ÆƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ¶¬
+			// ãƒ¡ãƒ¢ãƒªãƒ¼ãƒ—ãƒ¼ãƒ«ã¨ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆ
 			memoryPool_ = EffekseerRenderer::CreateSingleFrameMemoryPool(renderer_->GetGraphicsDevice());
 			cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
 			renderer_->SetCommandList(cmdList_);
@@ -706,16 +704,16 @@ namespace Eugene
 			);
 		}
 
-		// EffekseerWarpper ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// EffekseerWarpper ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Update(float delta) override
 		{
-			// 1ƒtƒŒ[ƒ€‚ÌŒo‰ßŠÔ‚ğ60ƒtƒŒ[ƒ€Šî€‚Å‚ÌŒo‰ßƒtƒŒ[ƒ€‚É•ÏŠ·—p
+			// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®çµŒéæ™‚é–“ã‚’60ãƒ•ãƒ¬ãƒ¼ãƒ åŸºæº–ã§ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ ã«å¤‰æ›ç”¨
 			constexpr auto frameParSec = 1.0f / 60.0f;
 
-			// ŠJnˆ—
+			// é–‹å§‹å‡¦ç†
 			memoryPool_->NewFrame();
 
-			// XVˆ—
+			// æ›´æ–°å‡¦ç†
 			manager_->Update(delta / frameParSec);
 		}
 
@@ -758,22 +756,22 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_ƒ‰[
+		/// ãƒ¬ãƒ³ãƒ€ãƒ©ãƒ¼
 		/// </summary>
 		EffekseerRenderer::RendererRef renderer_;
 
 		/// <summary>
-		/// ƒ}ƒl[ƒWƒƒ[
+		/// ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 		/// </summary>
 		Effekseer::RefPtr<Effekseer::Manager> manager_;
 
 		/// <summary>
-		/// ƒƒ‚ƒŠƒv[ƒ‹
+		/// ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«
 		/// </summary>
 		Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> memoryPool_;
 
 		/// <summary>
-		/// ƒRƒ}ƒ“ƒhƒŠƒXƒg
+		/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 		/// </summary>
 		Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
 	};
@@ -859,7 +857,7 @@ void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64
 
 void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
 {
-	// imgui—pƒfƒBƒXƒNƒŠƒvƒ^[ƒv[ƒ‹‚Ì¶¬
+	// imguiç”¨ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¼ãƒ—ãƒ¼ãƒ«ã®ç”Ÿæˆ
 	{
 		vk::DescriptorPoolCreateInfo dPoolInfo{};
 		vk::DescriptorPoolSize a;
@@ -882,7 +880,7 @@ void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& buffe
 		imguiDescriptorPool_ = device_->createDescriptorPoolUnique(dPoolInfo);
 	}
 
-	// imgui—p‚ÌƒŒƒ“ƒ_[ƒpƒX‚ğ¶¬
+	// imguiç”¨ã®ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ‘ã‚¹ã‚’ç”Ÿæˆ
 	{
 		vk::AttachmentDescription colorAttachment{};
 		colorAttachment.setFormat(useVkformat);
@@ -928,7 +926,7 @@ void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& buffe
 	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
 	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
 	{
-		throw EugeneLibException{ "Imgui Init Error" };
+		throw EugeneLibException{ "ImguiåˆæœŸåŒ–ã‚¨ãƒ©ãƒ¼" };
 	}
 
 	vk::CommandPoolCreateInfo poolInfo{};

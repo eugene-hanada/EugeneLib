@@ -1,4 +1,4 @@
-#include "VkGpuEngine.h"
+﻿#include "VkGpuEngine.h"
 #include "VkCommandList.h"
 
 Eugene::VkGpuEngine::VkGpuEngine(vk::Queue& queue, std::uint64_t size) :

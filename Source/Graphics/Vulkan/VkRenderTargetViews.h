@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Math/Geometry.h"
@@ -14,7 +14,7 @@ namespace Eugene
 		VkRenderTargetViews(std::uint64_t size);
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		struct Data
 		{
@@ -24,18 +24,18 @@ namespace Eugene
 			vk::UniqueImageView imageView;
 
 			/// <summary>
-			/// ‰æ‘œƒTƒCƒY
+			/// ç”»åƒã‚µã‚¤ã‚º
 			/// </summary>
 			glm::ivec2 size;
 		};
 		using ViewsType = std::vector<Data>;
 	private:
-		// RenderTargetViews ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// RenderTargetViews ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Create(ImageResource& resource, std::uint64_t idx) final;
 		void* GetViews(void) final;
 
 		/// <summary>
-		/// ƒrƒ…[‚Ìƒf[ƒ^
+		/// ãƒ“ãƒ¥ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		ViewsType imageViews_;
 	};

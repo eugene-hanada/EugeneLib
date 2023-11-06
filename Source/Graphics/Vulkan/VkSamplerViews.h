@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/SamplerViews.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Common/ArgsSpan.h"
@@ -17,7 +17,7 @@ namespace Eugene
 			vk::UniqueDescriptorSetLayout layout_;
 		};
 	private:
-		// SamplerViews ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// SamplerViews ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void CreateSampler(Sampler& sampler, std::uint64_t idx) final;
 		void* GetViews(void) final;
 		vk::UniqueDescriptorPool descriptorPool_;

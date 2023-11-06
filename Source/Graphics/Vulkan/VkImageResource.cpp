@@ -1,4 +1,4 @@
-#include "VkImageResource.h"
+ï»¿#include "VkImageResource.h"
 #include "VkGraphics.h"
 
 Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info) :
@@ -19,13 +19,13 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
 
-	// Image¶¬
+	// Imageç”Ÿæˆ
 	data_.image_ = device.createImageUnique(imageInfo);
 
-	// DeviceMemory¶¬
+	// DeviceMemoryç”Ÿæˆ
 	data_.memory_ = graphics.CreateMemory(data_.image_);
 
-	// ƒoƒCƒ“ƒh
+	// ãƒã‚¤ãƒ³ãƒ‰
 	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
 
 	data_.arraySize_ = info.arraySize;
@@ -52,13 +52,13 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
 
-	// Image¶¬
+	// Imageç”Ÿæˆ
 	data_.image_ = device.createImageUnique(imageInfo);
 
-	// DeviceMemory¶¬
+	// DeviceMemoryç”Ÿæˆ
 	data_.memory_ = graphics.CreateMemory(data_.image_);
 
-	// ƒoƒCƒ“ƒh
+	// ãƒã‚¤ãƒ³ãƒ‰
 	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
 
 	data_.arraySize_ = 1;

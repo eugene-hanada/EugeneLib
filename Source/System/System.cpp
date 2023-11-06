@@ -98,6 +98,10 @@ void Eugene::System::ReSizeWindow(const glm::vec2& size)
 void Eugene::System::SetFullScreen(bool isFullScreen)
 {
 	OnSetFullScreen(isFullScreen);
+	if (graphics)
+	{
+		graphics->SetFullScreenFlag(isFullScreen);
+	}
 }
 
 void Eugene::System::OnSetFullScreen(bool isFullScreen)

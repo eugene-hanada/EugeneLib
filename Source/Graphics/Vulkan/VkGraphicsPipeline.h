@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Common/ArgsSpan.h"
@@ -27,7 +27,7 @@ namespace Eugene
 		using PipelineType = Data;
 	private:
 
-		// GraphicsPipeline ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// GraphicsPipeline ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void* GetPipeline(void) final;
 		Data data_;
 	};

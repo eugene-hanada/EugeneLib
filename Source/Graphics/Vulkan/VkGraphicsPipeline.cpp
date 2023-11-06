@@ -1,4 +1,4 @@
-#include "VkGraphicsPipeline.h"
+ï»¿#include "VkGraphicsPipeline.h"
 #include "VkResourceBindLayout.h"
 #include "VkGraphics.h"
 #include "../../../Include/Graphics/Shader.h"
@@ -20,7 +20,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	auto& bindLayout{ static_cast<VkResourceBindLayout&>(resourceBindLayout) };
 	data_.layout_ = *bindLayout.pipelineLayout_;
 	
-	// ƒVƒF[ƒ_[ƒXƒe[ƒW‚Ìİ’è
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¸ã®è¨­å®š
 	std::vector<vk::PipelineShaderStageCreateInfo> shaderStage(shaders.size());
 	std::vector<vk::UniqueShaderModule> modules(shaders.size());
 	int shaderIndex = 0;
@@ -58,7 +58,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		shaderIndex++;
 	}
 
-	// ƒ_ƒCƒiƒ~ƒbƒNƒXƒe[ƒg‚ğİ’è
+	// ãƒ€ã‚¤ãƒŠãƒŸãƒƒã‚¯ã‚¹ãƒ†ãƒ¼ãƒˆã‚’è¨­å®š
 	constexpr vk::DynamicState dynamicStates[]{
 	vk::DynamicState::eViewport,
 	vk::DynamicState::eScissor,
@@ -67,7 +67,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vk::PipelineDynamicStateCreateInfo dynamicState{};
 	dynamicState.setDynamicStates(dynamicStates);
 
-	// ’¸“_“ü—Í‚Ìİ’è
+	// é ‚ç‚¹å…¥åŠ›ã®è¨­å®š
 	vk::VertexInputBindingDescription vertexInputLayout{};
 	vertexInputLayout.setBinding(0);
 	vertexInputLayout.setInputRate(vk::VertexInputRate::eVertex);
@@ -94,10 +94,10 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vertexInputInfo.setVertexAttributeDescriptions(vertexInputAtr);
 
 
-	// “ü—ÍƒAƒZƒ“ƒuƒŠ‚Ìİ’è
+	// å…¥åŠ›ã‚¢ã‚»ãƒ³ãƒ–ãƒªã®è¨­å®š
 	vk::PipelineInputAssemblyStateCreateInfo inputAssembly;
 
-	// ƒgƒ|ƒƒW[İ’è
+	// ãƒˆãƒãƒ­ã‚¸ãƒ¼è¨­å®š
 	constexpr vk::PrimitiveTopology toVkPrimitiveTopology[]{
 		vk::PrimitiveTopology::ePointList,
 		vk::PrimitiveTopology::ePointList,
@@ -107,10 +107,10 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	};
 	inputAssembly.setTopology(toVkPrimitiveTopology[static_cast<size_t>(topologyType)]);
 	
-	// true‚Åü‚ÆOŠpŒ`‚É‚È‚Á‚½‚è_STRIP‚¾‚Á‚½‚èdocumentŒ©‚é
+	// trueã§ç·šã¨ä¸‰è§’å½¢ã«ãªã£ãŸã‚Š_STRIPã ã£ãŸã‚Šdocumentè¦‹ã‚‹
 	inputAssembly.setPrimitiveRestartEnable(false);
 
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
 	vk::PipelineRasterizationStateCreateInfo rasterizer{};
 	rasterizer.setRasterizerDiscardEnable(false);
 	rasterizer.setDepthBiasEnable(useDepth);
@@ -120,7 +120,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	{
 		rasterizer.setCullMode(vk::CullModeFlagBits::eBack);
 	}
-		// Œvü‚è‚É‚·‚é(DirectX‚Æ“¯‚¶)
+		// æ™‚è¨ˆå‘¨ã‚Šã«ã™ã‚‹(DirectXã¨åŒã˜)
 	rasterizer.setFrontFace(vk::FrontFace::eClockwise);
 
 	vk::PipelineMultisampleStateCreateInfo multiSampleInfo{};
@@ -247,7 +247,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
 			break;
 		default:
-			// À‘•‚µ‚È‚¢
+			// å®Ÿè£…ã—ãªã„
 			break;
 		}
 
@@ -276,14 +276,14 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	scissor.setOffset({ 0,0 });
 	scissor.setExtent(vk::Extent2D{1280, 720});
 
-	// ‚±‚ê‚ÅƒVƒU[‚Æƒrƒ…[ƒ|[ƒgŒÅ’è‚Å‚«‚é(w’è‚µ‚È‚¯‚ê‚Î“®“I‚É‚È‚é)
+	// ã“ã‚Œã§ã‚·ã‚¶ãƒ¼ã¨ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå›ºå®šã§ãã‚‹(æŒ‡å®šã—ãªã‘ã‚Œã°å‹•çš„ã«ãªã‚‹)
 	vk::PipelineViewportStateCreateInfo viewportState;
 
-	// ‚»‚ê‚¼‚ê”‚ğw’è
+	// ãã‚Œãã‚Œæ•°ã‚’æŒ‡å®š
 	viewportState.setViewportCount(1);
 	viewportState.setScissorCount(1);
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“‚Ìİ’è
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®è¨­å®š
 	vk::GraphicsPipelineCreateInfo pipelineInfo{};
 	
 	pipelineInfo.setStages(shaderStage);
@@ -295,7 +295,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPViewportState(&viewportState);
 	pipelineInfo.setPNext(&renderingInfo);
 	//pipelineInfo.setRenderPass(*tmp);
-	// ƒfƒvƒXü‚è‚Æ‚è‚ ‚¦‚¸‚È‚µ‚ÅÀ‘•
+	// ãƒ‡ãƒ—ã‚¹å‘¨ã‚Šã¨ã‚Šã‚ãˆãšãªã—ã§å®Ÿè£…
 	if (useDepth)
 	{
 		pipelineInfo.setPDepthStencilState(&depthInfo);
@@ -309,7 +309,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 	if (result != vk::Result::eSuccess)
 	{
-		throw CreateErrorException{ "ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg¶¬¸”s" };
+		throw CreateErrorException{ "ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆç”Ÿæˆå¤±æ•—" };
 	}
 
 	data_.pipeline_ = std::move(pipeline);

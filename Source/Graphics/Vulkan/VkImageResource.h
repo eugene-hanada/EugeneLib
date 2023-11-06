@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Graphics/ImageResource.h"
 
@@ -10,15 +10,15 @@ namespace Eugene
 	{
 	public:
 		/// <summary>
-		/// ƒeƒNƒXƒ`ƒƒ—p‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
-		/// <param name="graphics"> ƒOƒ‰ƒtƒBƒbƒNƒXƒNƒ‰ƒX </param>
-		/// <param name="device"> Vulkan‚ÌƒfƒoƒCƒX </param>
-		/// <param name="info"> ƒeƒNƒXƒ`ƒƒ‚Ìî•ñ </param>
+		/// <param name="graphics"> ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚¯ãƒ©ã‚¹ </param>
+		/// <param name="device"> Vulkanã®ãƒ‡ãƒã‚¤ã‚¹ </param>
+		/// <param name="info"> ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æƒ…å ± </param>
 		VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info);
 
 		/// <summary>
-		/// ƒfƒuƒXƒoƒbƒtƒ@‚Ìê‡‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ãƒ‡ãƒ–ã‚¹ãƒãƒƒãƒ•ã‚¡ã®å ´åˆã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="device"></param>
@@ -28,7 +28,7 @@ namespace Eugene
 
 
 		/// <summary>
-		/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ìê‡‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å ´åˆã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="device"></param>
@@ -39,7 +39,7 @@ namespace Eugene
 
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		/// <param name="image"></param>
 		VkImageResource(const glm::ivec2& size, Format format,vk::Image& image, const vk::Device& device);
@@ -47,12 +47,12 @@ namespace Eugene
 		~VkImageResource();
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		struct Data
 		{
 			/// <summary>
-			/// ƒfƒoƒCƒXƒƒ‚ƒŠ
+			/// ãƒ‡ãƒã‚¤ã‚¹ãƒ¡ãƒ¢ãƒª
 			/// </summary>
 			vk::UniqueDeviceMemory memory_;
 
@@ -62,34 +62,34 @@ namespace Eugene
 			vk::UniqueImage image_;
 
 			/// <summary>
-			/// ‰æ‘œ”z—ñƒTƒCƒY
+			/// ç”»åƒé…åˆ—ã‚µã‚¤ã‚º
 			/// </summary>
 			std::uint32_t arraySize_;
 
 			/// <summary>
-			/// ƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹
+			/// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ãƒ¬ãƒ™ãƒ«
 			/// </summary>
 			std::uint32_t mipmapLevels_;
 		};
 
 	private:
-		// ImageResource ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// ImageResource ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		bool CanMap(void) const final;
 		void* GetResource(void) final;
 		glm::ivec2 GetSize(void) final;
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		Data data_;
 
 		/// <summary>
-		/// ‰æ‘œƒTƒCƒY
+		/// ç”»åƒã‚µã‚¤ã‚º
 		/// </summary>
 		glm::ivec2 size_;
 
 		/// <summary>
-		/// ƒoƒbƒNƒoƒbƒtƒ@‚©H
+		/// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‹ï¼Ÿ
 		/// </summary>
 		bool isBackBuffer_{false};
 	};

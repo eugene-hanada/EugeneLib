@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Common/ArgsSpan.h"
@@ -15,23 +15,23 @@ namespace Eugene
 		~VkShaderResourceViews();
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		struct Data
 		{
 			/// <summary>
-			/// ƒfƒBƒXƒNƒŠƒvƒ^ƒZƒbƒg
+			/// ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚»ãƒƒãƒˆ
 			/// </summary>
 			vk::UniqueDescriptorSet descriptorSet_;
 
 			/// <summary>
-			/// ƒfƒBƒXƒNƒŠƒvƒ^ƒZƒbƒg‚ÌƒŒƒCƒAƒEƒg
+			/// ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã‚»ãƒƒãƒˆã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 			/// </summary>
 			vk::UniqueDescriptorSetLayout layout_;
 		};
 	private:
 
-		// ShaderResourceViews ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// ShaderResourceViews ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void CreateTexture(ImageResource& resource, std::uint64_t idx) final;
 		void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) final;
 		void CreateCubeMap(ImageResource& resource, std::uint64_t idx) final;
@@ -39,22 +39,22 @@ namespace Eugene
 		std::uint64_t GetImg(void) final;
 		
 		/// <summary>
-		/// ƒfƒBƒXƒNƒŠƒvƒ^ƒv[ƒ‹
+		/// ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ—ãƒ¼ãƒ«
 		/// </summary>
 		vk::UniqueDescriptorPool descriptorPool_;
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		Data data_;
 		
 		/// <summary>
-		/// ƒCƒ“ƒfƒbƒNƒX‚²‚Æ‚Ìƒrƒ…[ƒ^ƒCƒv‚Æbinding‚Æ”z—ñ‚Ì—v‘f”
+		/// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã”ã¨ã®ãƒ“ãƒ¥ãƒ¼ã‚¿ã‚¤ãƒ—ã¨bindingã¨é…åˆ—ã®è¦ç´ æ•°
 		/// </summary>
 		std::vector<std::tuple<ViewType, std::uint32_t, std::uint32_t>> typeData_;
 
 		/// <summary>
-		/// ImageView‚Ìƒ}ƒbƒv
+		/// ImageViewã®ãƒãƒƒãƒ—
 		/// </summary>
 		std::map<std::uint64_t, vk::UniqueImageView> imageViewMap_;
 	};

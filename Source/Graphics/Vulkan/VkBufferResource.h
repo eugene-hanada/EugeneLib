@@ -1,21 +1,21 @@
-#pragma once
+ï»¿#pragma once
 #include "../../../Include/Graphics/BufferResource.h"
 #include <vulkan/vulkan.hpp>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒoƒbƒtƒ@‚É•K—v‚Èƒf[ƒ^
+	/// ãƒãƒƒãƒ•ã‚¡ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿
 	/// </summary>
 	struct VkBufferData
 	{
 		/// <summary>
-		/// ƒfƒoƒCƒXƒƒ‚ƒŠ
+		/// ãƒ‡ãƒã‚¤ã‚¹ãƒ¡ãƒ¢ãƒª
 		/// </summary>
 		vk::UniqueDeviceMemory memory_;
 
 		/// <summary>
-		/// ƒoƒbƒtƒ@
+		/// ãƒãƒƒãƒ•ã‚¡
 		/// </summary>
 		vk::UniqueBuffer buffer_;
 	};
@@ -24,7 +24,7 @@ namespace Eugene
 	class Image;
 
 	/// <summary>
-	/// ƒoƒbƒtƒ@—p(’è”A’¸“_AƒCƒ“ƒfƒbƒNƒX‚È‚Ç—p)
+	/// ãƒãƒƒãƒ•ã‚¡ç”¨(å®šæ•°ã€é ‚ç‚¹ã€ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãªã©ç”¨)
 	/// </summary>
 	class VkBufferResource :
 		public BufferResource
@@ -33,19 +33,19 @@ namespace Eugene
 		VkBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size);
 	private:
 
-		// BufferResource ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// BufferResource ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		bool CanMap(void) const final;
 		void* GetResource(void) final;
 		std::uint64_t GetSize(void) final;
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		VkBufferData data_;
 	};
 
 	/// <summary>
-	/// ƒAƒbƒvƒ[ƒh—p
+	/// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç”¨
 	/// </summary>
 	class VkUploadableBufferResource :
 		public BufferResource
@@ -54,7 +54,7 @@ namespace Eugene
 		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size);
 		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, Image& image);
 	private:
-		// BufferResource ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// BufferResource ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		bool CanMap(void) const final;
 		void* GetResource(void) final;
 		std::uint64_t GetSize(void) final;
@@ -62,7 +62,7 @@ namespace Eugene
 		virtual void UnMap(void) final;
 
 		/// <summary>
-		/// ƒf[ƒ^
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		VkBufferData data_;
 	};

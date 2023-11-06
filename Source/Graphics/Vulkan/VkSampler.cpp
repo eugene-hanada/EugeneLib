@@ -1,4 +1,4 @@
-#include "VkSampler.h"
+ï»¿#include "VkSampler.h"
 
 Eugene::VkSampler::VkSampler(const vk::Device& device, const SamplerLayout& layout) :
 	Sampler{}
@@ -32,7 +32,7 @@ Eugene::VkSampler::VkSampler(const vk::Device& device, const SamplerLayout& layo
 		smpInfo.setAnisotropyEnable(VK_TRUE);
 		break;
 	default:
-		// “Á‚ÉÀ‘•‚µ‚È‚¢
+		// ç‰¹ã«å®Ÿè£…ã—ãªã„
 		break;
 	}
 

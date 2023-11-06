@@ -5,7 +5,6 @@
 #include <vector>
 #include <initializer_list>
 #include <Common/Debug.h>
-#include <Color.h>
 #include <Common/ArgsSpan.h>
 
 

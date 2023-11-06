@@ -71,14 +71,11 @@ namespace
 #ifdef USE_WINDOWS
 	HWND hWindow;
 #endif
-
-	bool isFullScreenDisAllowed{ false };
-
 }
 
 #ifdef USE_WINDOWS
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
-	backBufferIdx_{0}
+	backBufferIdx_{0}, isNotPresent_{false}
 {
 	hWindow = hwnd;
 	CreateInstance();
@@ -133,6 +130,11 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 
 void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
 {
+	if (isNotPresent_)
+	{
+		return;
+	}
+
 	for (std::uint64_t i = 0ull; i < FormatMax; i++)
 	{
 		if (FormatToVkFormat[i] == useVkformat)
@@ -153,8 +155,11 @@ void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec
 
 vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 {
+
+
 	vk::Format useFormat;
 	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
+	auto clampSize = glm::clamp(size, glm::vec2{ capabilities.minImageExtent.width, capabilities.minImageExtent.height }, glm::vec2{ capabilities.maxImageExtent.width, capabilities.maxImageExtent.height });
 	auto format = physicalDevice_.getSurfaceFormatsKHR(*surfaceKhr_);
 	auto modes = physicalDevice_.getSurfacePresentModesKHR(*surfaceKhr_);
 
@@ -174,6 +179,11 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 	else
 	{
 		useFormat = format[0].format;
+	}
+
+	if (isNotPresent_)
+	{
+		return useFormat;
 	}
 
 
@@ -201,7 +211,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 	info.setImageFormat(useFormat);
 
-	info.setImageExtent({ static_cast<std::uint32_t>(size.x), static_cast<std::uint32_t>(size.y) });
+	info.setImageExtent({ static_cast<std::uint32_t>(clampSize.x), static_cast<std::uint32_t>(clampSize.y) });
 
 	info.setImageArrayLayers(1);
 
@@ -409,6 +419,11 @@ std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void) const
 
 void Eugene::VkGraphics::Present(void)
 {
+	if (isNotPresent_)
+	{
+		return;
+	}
+
 	vk::SwapchainKHR sws[]{ *swapchain_,*swapchain_ };
 	vk::PresentInfoKHR info{};
 	info.setImageIndices(backBufferIdx_);
@@ -468,6 +483,12 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 {
 	queue_.waitIdle();
 	device_->waitIdle();
+
+	if (size == zeroVector2<float>)
+	{
+		isNotPresent_ = true;
+		return;
+	}
 	
 	renderTargetViews_.reset();
 	for (auto& buffer : buffers_)

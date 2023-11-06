@@ -227,6 +227,8 @@ namespace Eugene
 		/// レンダーターゲットビュー
 		/// </summary>
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
+
+		bool isNotPresent_;
 #ifdef USE_EFFEKSEER
 		// Graphics を介して継承されました
 		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,

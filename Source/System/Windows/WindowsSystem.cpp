@@ -120,19 +120,18 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 		windowSize_ = size;
 		if (graphics)
 		{
+			DebugLog("resize_{:0}:{:1}", size.x, size.y);
 			graphics->ResizeBackBuffer(windowSize_);
 
 		};
 	};
 
-#if USE_VULKAN
 	activateCall = [this](bool active) {
 		if (!active)
 		{
 			SetFullScreen(false);
 		}
 	};
-#endif
 
 
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
@@ -380,7 +379,6 @@ void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 
 void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 {
-#ifdef USE_VULKAN
 	auto style = GetWindowLong(hwnd, GWL_STYLE);
 	auto newStyle = 0;
 	if (isFullScreen)
@@ -398,8 +396,6 @@ void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 	
 	// フルスクリーン時は最大化表示、そうでないときは通常通り表示する
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
-
-#endif
 }
 
 Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const

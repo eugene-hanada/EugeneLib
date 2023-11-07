@@ -12,10 +12,12 @@
 #ifdef USE_EFFEKSEER
 #include <Graphics/Graphics.h>
 #include <Effekseer.h>
+
 #endif
 
 #ifdef USE_IMGUI
 #include <ThirdParty/imgui/imgui.h>
+#include <ImGuizmo.h>
 #endif
 
 #include "Common/Debug.h"
@@ -127,7 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	texMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
 	auto texMatrix = static_cast<glm::mat4*>(texMatrixBuffer->Map());
 	*texMatrix = glm::translate(glm::identity<glm::mat4>(), glm::vec3{ (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f) - 128.0f , 0.0f});
-	texMatrixBuffer->UnMap();
+	//texMatrixBuffer->UnMap();
 
 	// 画像と定数バッファ用のビュー
 	std::unique_ptr<Eugene::ShaderResourceViews> texAndMatrixView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}}) };
@@ -188,8 +190,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto img = graphics->GetImguiImageID(0);
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
+	ImGuizmo::Enable(true);
 
-	//system->SetFullScreen(true);
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -200,6 +202,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
 	effekseer->GetManager()->SetRotation(h, Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(90.0f), 0.0f);
 #endif
+
+	auto cameraView{ glm::lookAt({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
+	auto cameraProjection{ glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 500.0f) };
+	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
+	auto identy = glm::identity<glm::mat4>();
 
 	while (system->Update())
 	{
@@ -254,6 +261,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		graphics->ImguiNewFrame();
 		system->ImguiNewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::BeginFrame();
 
 		ImGui::Begin("window1");
 		auto imgSize{ textureResource->GetSize() };
@@ -261,8 +270,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::End();
 
 		ImGui::Begin("window2");
-
+		
 		ImGui::End();
+
+		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+		ImGuizmo::DrawGrid(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(identy), 100.0f);
+		ImGuizmo::DrawCubes(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(objectTransform), 1);
+		ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(objectTransform));
+		ImGuizmo::ViewManipulate(glm::value_ptr(cameraView), 8.0f, ImVec2(0, 0), ImVec2(128, 128), 0x10101010);
 		ImGui::Render();
 
 		
@@ -354,5 +369,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		frameCnt++;
 	}
+	ImGuizmo::Enable(true);
 	return 0;
 }

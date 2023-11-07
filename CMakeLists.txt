@@ -39,6 +39,12 @@ if(USE_IMGUI)
 		Include/ThirdParty/imgui/imgui_draw.cpp
 		Include/ThirdParty/imgui/imgui_tables.cpp
 		Include/ThirdParty/imgui/imgui_widgets.cpp
+		ImGuizmo/GraphEditor.cpp
+		ImGuizmo/ImCurveEdit.cpp
+		ImGuizmo/ImGradient.cpp
+		ImGuizmo/ImGuizmo.cpp
+		ImGuizmo/ImSequencer.cpp
+
 	)
 endif()
 
@@ -203,6 +209,8 @@ endif()
 if (USE_IMGUI)
 	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
+	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
+
 endif()
 
 

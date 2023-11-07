@@ -303,7 +303,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, Gp
 	swapchainDesc.Scaling = DXGI_SCALING_STRETCH;
 	swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
-	swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	swapchainDesc.Flags = 0;
 
 
 	ID3D12CommandQueue* cmdQueue{ static_cast<ID3D12CommandQueue*>(gpuEngine->GetQueue()) };
@@ -393,6 +393,8 @@ void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size)
 
 void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
 {
+	DXGI_SWAP_CHAIN_DESC1 dec;
+	swapChain_->GetDesc1(&dec);
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
 }
 

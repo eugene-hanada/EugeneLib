@@ -382,26 +382,21 @@ void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 {
 #ifdef USE_VULKAN
 	auto style = GetWindowLong(hwnd, GWL_STYLE);
-	auto styleEx = GetWindowLong(hwnd, GWL_EXSTYLE);
-
 	auto newStyle = 0;
-	auto newStyleEx = 0;
-
 	if (isFullScreen)
 	{
+		// フルスクリーン時、ボーダーレススタイルにする
 		newStyle = style & (~WS_BORDER) & (~WS_DLGFRAME) & (~WS_THICKFRAME);
 		newStyle |= static_cast<long>(WS_POPUP);
-		newStyleEx = styleEx & (~WS_EX_WINDOWEDGE);
-		newStyleEx |= WS_EX_TOPMOST;
 	}
 	else
 	{
+		// 通常のウィンドウにする
 		newStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
 	}
-
-
 	SetWindowLongA(hwnd, GWL_STYLE, newStyle);
-
+	
+	// フルスクリーン時は最大化表示、そうでないときは通常通り表示する
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 
 #endif

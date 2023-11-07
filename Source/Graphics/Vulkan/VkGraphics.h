@@ -98,6 +98,10 @@ namespace Eugene
 			vk::Format::eBc7UnormBlock,
 		};
 
+		/// <summary>
+		/// バックバッファで使用しているフォーマットを取得する
+		/// </summary>
+		/// <returns> バックバッファで使用しているフォーマット </returns>
 		static const Format& BackBufferFormat()
 		{
 			return Graphics::backBufferFormat_;
@@ -105,8 +109,6 @@ namespace Eugene
 
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-
-
 #endif
 		~VkGraphics();
 
@@ -228,7 +230,11 @@ namespace Eugene
 		/// </summary>
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
 
-		bool isNotPresent_;
+		/// <summary>
+		/// 画面が最小状態か？
+		/// </summary>
+		bool isMinimized;
+
 #ifdef USE_EFFEKSEER
 		// Graphics を介して継承されました
 		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,

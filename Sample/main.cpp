@@ -98,7 +98,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	auto rtMatrix = static_cast<glm::mat4*>(rtMatrixBuffer->Map());
 	*rtMatrix = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
-
+	
 	// テクスチャ用リソース
 	std::unique_ptr<Eugene::ImageResource> textureResource;
 	{
@@ -189,7 +189,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 
-	system->SetFullScreen(true);
+	//system->SetFullScreen(true);
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;

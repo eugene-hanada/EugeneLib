@@ -75,7 +75,7 @@ namespace
 
 #ifdef USE_WINDOWS
 Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
-	backBufferIdx_{0}, isNotPresent_{false}
+	backBufferIdx_{0}, isMinimized{false}
 {
 	hWindow = hwnd;
 	CreateInstance();
@@ -130,7 +130,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 
 void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
 {
-	if (isNotPresent_)
+	if (isMinimized)
 	{
 		return;
 	}
@@ -181,7 +181,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 		useFormat = format[0].format;
 	}
 
-	if (isNotPresent_)
+	if (isMinimized)
 	{
 		return useFormat;
 	}
@@ -419,8 +419,9 @@ std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void) const
 
 void Eugene::VkGraphics::Present(void)
 {
-	if (isNotPresent_)
+	if (isMinimized)
 	{
+		// 最小状態の時はPresent処理しない
 		return;
 	}
 
@@ -486,9 +487,18 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 
 	if (size == zeroVector2<float>)
 	{
-		isNotPresent_ = true;
+		// ウィンドウ最小時
+		isMinimized = true;
 		return;
 	}
+	else if (isMinimized)
+	{
+		// 最小状態から復帰時
+		isMinimized = false;
+		return;
+	}
+
+
 	
 	renderTargetViews_.reset();
 	for (auto& buffer : buffers_)

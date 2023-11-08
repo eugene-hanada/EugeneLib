@@ -2,7 +2,7 @@
 #define GLM_FORCE_LEFT_HANDED
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <algorithm>
-#include "../../ThirdParty/glm/glm/ext.hpp"
+//clude "../../ThirdParty/glm/glm/ext.hpp"
 #include "../../ThirdParty/glm/glm/glm.hpp"
 #include "MathConcepts.h"
 

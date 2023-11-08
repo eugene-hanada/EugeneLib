@@ -5,7 +5,7 @@
 #include <span>
 #include <bitset>
 #include <filesystem>
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 #include "KeyID.h"
 #include "GamePad.h"
 
@@ -72,7 +72,7 @@ namespace Eugene
 		/// <summary>
 		/// マウス座標
 		/// </summary>
-		Vector2 pos;
+		glm::vec2 pos;
 
 		/// <summary>
 		/// ホイール
@@ -122,7 +122,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> ウィンドウサイズ </returns>
-		const Vector2& GetWindowSize(void) const&;
+		const glm::vec2& GetWindowSize(void) const&;
 
 		/// <summary>
 		/// Graphicsを生成する
@@ -187,18 +187,27 @@ namespace Eugene
 		virtual bool IsEnd(void) const = 0;
 
 		/// <summary>
-		/// ウィンドウをリサイズする
-		/// </summary>
-		/// <param name="size"> ウインドウサイズ </param>
-		virtual void ResizeWindow(const Vector2& size) = 0;
-
-		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
 		/// </summary>
 		/// <param name="path"> ライブラリのパス </param>
 		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
 		[[nodiscard]]
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
+
+		/// <summary>
+		/// ウィンドウのリサイズを行う
+		/// </summary>
+		/// <param name="size"></param>
+		void ReSizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンにしたりする
+		/// </summary>
+		/// <param name="isFullScreen"> trueでフルスクリーン </param>
+		void SetFullScreen(bool isFullScreen);
+
+
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -221,17 +230,34 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
-		System(const Vector2& size, const std::u8string& title);
+		System(const glm::vec2& size, const std::u8string& title);
 		
+		/// <summary>
+		/// ウィンドウをリサイズ時のサブクラスがわの処理
+		/// </summary>
+		/// <param name="size"> ウインドウサイズ </param>
+		virtual void OnResizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンフラグセット時のサブクラスの処理
+		/// </summary>
+		/// <param name="isFullScreen"></param>
+		virtual void OnSetFullScreen(bool isFullScreen);
+
 		/// <summary>
 		/// ウィンドウサイズ
 		/// </summary>
-		Vector2 windowSize_;
+		glm::vec2 windowSize_;
 
 		/// <summary>
 		/// タイトル
 		/// </summary>
 		std::u8string title_;
+
+		/// <summary>
+		/// リサイズように使用
+		/// </summary>
+		static Eugene::Graphics* graphics;
 
 #ifdef USE_IMGUI
 
@@ -252,7 +278,7 @@ namespace Eugene
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
 	[[nodiscard]]
-	System* CreateSystem(const Vector2& size, const std::u8string& title);
+	System* CreateSystem(const glm::vec2& size, const std::u8string& title);
 
 	using UniqueSystem = std::unique_ptr<System>;
 
@@ -262,7 +288,7 @@ namespace Eugene
 	/// <param name="size"> ウィンドウサイズ </param>
 	/// <param name="title"> タイトル </param>
 	/// <returns> std::unique_ptrを使用したSystem </returns>
-	UniqueSystem CreateSystemUnique(const Vector2& size, const std::u8string& title);
+	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title);
 
 	
 }

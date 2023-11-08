@@ -6,9 +6,10 @@
 #include "Dll.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "../../../Include/Common/Debug.h"
+
 #ifdef USE_VULKAN
 #include "../../Graphics/Vulkan/VkGraphics.h"
-#else
+#elif USE_DX12
 #include "../../Graphics/DirectX12/Dx12Graphics.h"
 #endif
 
@@ -40,11 +41,6 @@ namespace {
 	HWND hwnd;
 
 	/// <summary>
-	/// リサイズように使用
-	/// </summary>
-	Eugene::Graphics* graphics = nullptr;
-
-	/// <summary>
 	/// 
 	/// </summary>
 	Eugene::GpuEngine* gpuEngine = nullptr;
@@ -57,14 +53,17 @@ namespace {
 	/// <summary>
 	/// リサイズ時に処理を行う関数オブジェクト
 	/// </summary>
-	std::function<void(const Eugene::Vector2&)> resizeCall;
+	std::function<void(const glm::vec2&)> resizeCall;
+
+	/// <summary>
+	/// ウィンドウがアクティブもしくは非アクティブになった時の処理
+	/// </summary>
+	std::function<void(bool)> activateCall;
 
 	/// <summary>
 	/// 終了フラグ
 	/// </summary>
 	bool isEnd = false;
-
-	
 
 	/// <summary>
 	/// ウィンドウプロシージャ
@@ -86,14 +85,24 @@ namespace {
 		switch (msg)
 		{
 		case WM_DESTROY:
+			// ウィンドウ破棄時
 			isEnd = true;
 			PostQuitMessage(0);
 			return 0;
 		case WM_MOUSEWHEEL:
+			// マウスホイールを動かしたとき
 			wheel += static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam)) / static_cast<float>(WHEEL_DELTA);
 			return 0;
 		case WM_SIZE:
+			// ウィンドウがリサイズされたとき
 			resizeCall({ static_cast<float>(LOWORD(lparam)), static_cast<float>(HIWORD(lparam)) });
+			return 0;
+		case WM_ACTIVATE:
+			// ウィンドウがアクティブもしくは非アクティブになった時
+			if (activateCall)
+			{
+				activateCall(WA_INACTIVE != wparam);
+			}
 			return 0;
 		default:
 			return DefWindowProc(hwnd, msg, wparam, lparam);
@@ -102,17 +111,26 @@ namespace {
 
 }
 
-Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& title) :
+Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title) :
     System{size,title}
 {
-	resizeCall = [this](const Vector2& size) {
+	resizeCall = [this](const glm::vec2& size) {
 		windowSize_ = size;
 		if (graphics)
 		{
-			graphics->ResizeBackBuffer(size);
-		}
+			DebugLog("resize_{:0}:{:1}", size.x, size.y);
+			graphics->ResizeBackBuffer(windowSize_);
 
+		};
 	};
+
+	activateCall = [this](bool active) {
+		/*if (!active)
+		{
+			SetFullScreen(false);
+		}*/
+	};
+
 
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
@@ -131,7 +149,8 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
-	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
+	auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+	if (!AdjustWindowRect(&wSize, style, false))
 	{
 		throw CreateErrorException("ウィンドウサイズ調整に失敗");
 	}
@@ -140,7 +159,7 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	hwnd = CreateWindow(
 		windowClass.lpszClassName,
 		tmpTitle.c_str(),
-		WS_OVERLAPPEDWINDOW,			// タイトルバーと境界線のあるウィンドウ
+		style,			// タイトルバーと境界線のあるウィンドウ
 		CW_USEDEFAULT,					// OSに任せる
 		CW_USEDEFAULT,
 		wSize.right - wSize.left,		// ウィンドウ幅と高さ
@@ -152,7 +171,8 @@ Eugene::WindowsSystem::WindowsSystem(const Vector2& size, const std::u8string& t
 	);
 
 
-	MONITORINFO monitorInfo;
+	SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE | WS_EX_ACCEPTFILES);
+	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
 
@@ -207,7 +227,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
-		graphics = new VkGraphics{hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #else
 		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #endif
@@ -331,28 +351,20 @@ bool Eugene::WindowsSystem::IsEnd(void) const
 	return isEnd;
 }
 
-void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
+void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 {
-	if (windowSize_ == size)
-	{
-		return;
-	}
-
-	windowSize_ = size;
-
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
-	if (!AdjustWindowRect(&wSize, WS_OVERLAPPEDWINDOW, false))
+	
+	if (!AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false))
 	{
 		throw CreateErrorException("ウィンドウサイズ調整に失敗");
 	}
 
-	MONITORINFO monitorInfo;
+	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
 
 	// モニターの座標とサイズを取得
-	int monitorX = monitorInfo.rcWork.left;
-	int monitorY = monitorInfo.rcWork.top;
 	int monitorWidth = monitorInfo.rcWork.right - monitorInfo.rcWork.left;
 	int monitorHeight = monitorInfo.rcWork.bottom - monitorInfo.rcWork.top;
 
@@ -361,11 +373,27 @@ void Eugene::WindowsSystem::ResizeWindow(const Vector2& size)
 	int centerY = (monitorHeight - static_cast<int>(wSize.bottom - wSize.top)) / 2;
 
 	SetWindowPos(hwnd, nullptr, centerX, centerY, static_cast<int>(wSize.right - wSize.left), static_cast<int>(wSize.bottom - wSize.top), false);
-	
-	if (graphics)
+}
+
+void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
+{
+	auto style = GetWindowLong(hwnd, GWL_STYLE);
+	auto newStyle = 0;
+	if (isFullScreen)
 	{
-		graphics->ResizeBackBuffer(size);
+		// フルスクリーン時、ボーダーレススタイルにする
+		newStyle = style & (~WS_BORDER) & (~WS_DLGFRAME) & (~WS_THICKFRAME);
+		newStyle |= static_cast<long>(WS_POPUP);
 	}
+	else
+	{
+		// 通常のウィンドウにする
+		newStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+	}
+	SetWindowLongA(hwnd, GWL_STYLE, newStyle);
+	
+	// フルスクリーン時は最大化表示、そうでないときは通常通り表示する
+	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 }
 
 Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const

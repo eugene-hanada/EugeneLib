@@ -17,13 +17,14 @@ namespace Eugene
 		~Dx12BufferResource();
 	private:
 		bool CanMap(void) const final;
-		void* GetResource(void) const final;
+		void* GetResource(void)  final;
 		std::uint64_t GetSize(void) final;
 
 		/// <summary>
 		/// ÉäÉ\Å[ÉX
 		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
+
 	};
 
 	class Dx12UploadableBufferResource :
@@ -38,7 +39,7 @@ namespace Eugene
 		void UnMap(void) final;
 
 		bool CanMap(void) const final;
-		void* GetResource(void) const final;
+		void* GetResource(void)  final;
 		std::uint64_t GetSize(void) final;
 
 		/// <summary>

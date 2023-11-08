@@ -43,7 +43,7 @@ namespace Eugene
 		R16G16B16A16_SNORM,
 		R16G16B16A16_SINT ,
 
-		// R16B16
+		// R16G16
 		R16G16_TYPELESS,
 		R16G16_FLOAT,
 		R16G16_UNORM,
@@ -68,18 +68,102 @@ namespace Eugene
 		R8G8B8A8_SNORM,
 		R8G8B8A8_SINT,
 
+		// B8G8R8A8
+		B8G8R8A8_TYPELESS,
+		B8G8R8A8_UNORM,
+		B8G8R8A8_UNORM_SRGB,
+		B8G8R8A8_UINT,
+		B8G8R8A8_SNORM,
+		B8G8R8A8_SINT,
+
 		// 圧縮テクスチャ
 		BC1_UNORM,
 		BC2_UNORM,
 		BC3_UNORM,
 		BC5_UNORM,
-		BC7_UNORM
+		BC7_UNORM,
+
+		/// <summary>
+		/// バックバッファと同じフォーマットにする
+		/// </summary>
+		AUTO_BACKBUFFER
+	};
+
+	constexpr size_t FormatSize[]
+	{
+		// NON
+		0ull,
+
+		// R32G32B32A32
+		16ull,
+		16ull,
+		16ull,
+		16ull,
+
+		// R32G32B32
+		12ull,
+		12ull,
+		12ull,
+		12ull,
+
+		// R32G32
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+
+		// R32
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+
+		// R16G16B16A16
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+		8ull,
+
+		// R16G16
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+
+		// R16
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+		2ull,
+
+		// R8G8B8A8
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
+		4ull,
 	};
 
 	/// <summary>
 	/// フォーマットの最大数
 	/// </summary>
-	constexpr auto FormatMax = 48ull;
+	constexpr auto FormatMax = 54ull;
+
+	enum class IndexType
+	{
+		UINT32,
+		UINT16,
+		UINT8
+	};
 
 	/// <summary>
 	/// テクスチャ用画像情報
@@ -92,6 +176,7 @@ namespace Eugene
 		std::uint32_t arraySize;		// 配列サイズ
 		std::uint16_t mipLevels;			// ミップマップレベル
 		std::int32_t pixelPerBite;			// ピクセル当たりのバイト数
+		std::uint32_t totalSize_;
 	};
 
 	/// <summary>

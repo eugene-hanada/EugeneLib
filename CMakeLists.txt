@@ -4,10 +4,21 @@ project(EugeneLib)
 # c++20を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
+option(USE_WINDOWS "Windowsm向けにビルドするか？" ON)
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
+option(USE_DX12 "DirectX12を使用するか？" ON)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
+
+
+if(USE_WINDOWS)
+	# Windows向けビルド時
+	if (NOT USE_VULKAN)
+		# Vulkanを使用しない時は一応DirectX12のオプションをONに
+		set(USE_DX12 ON)
+	endif()
+endif()
 
 set(LIBRARY_OUTPUT_PATH ../)
 
@@ -28,6 +39,12 @@ if(USE_IMGUI)
 		Include/ThirdParty/imgui/imgui_draw.cpp
 		Include/ThirdParty/imgui/imgui_tables.cpp
 		Include/ThirdParty/imgui/imgui_widgets.cpp
+		ImGuizmo/GraphEditor.cpp
+		ImGuizmo/ImCurveEdit.cpp
+		ImGuizmo/ImGradient.cpp
+		ImGuizmo/ImGuizmo.cpp
+		ImGuizmo/ImSequencer.cpp
+
 	)
 endif()
 
@@ -60,18 +77,6 @@ set(CommonSource
 # Math系のソースファイルをセット
 set(MathSource
 	Source/Math/Geometry.cpp
-	Include/ThirdParty/DirectXMath/DirectXCollision.h
-	Include/ThirdParty/DirectXMath/DirectXCollision.inl
-	Include/ThirdParty/DirectXMath/DirectXColors.h
-	Include/ThirdParty/DirectXMath/DirectXMath.h
-	Include/ThirdParty/DirectXMath/DirectXMathConvert.inl
-	Include/ThirdParty/DirectXMath/DirectXMathMatrix.inl
-	Include/ThirdParty/DirectXMath/DirectXMathMisc.inl
-	Include/ThirdParty/DirectXMath/DirectXMathVector.inl
-	Include/ThirdParty/DirectXMath/DirectXPackedVector.h
-	Include/ThirdParty/DirectXMath/DirectXPackedVector.inl
-	Source/Math/Vector3.cpp
-	Source/Math/Quaternion.cpp
   "Source/Math/Random.cpp")
 
 # サウンド系のクラスのソースファイルをセット
@@ -88,50 +93,19 @@ set(SoundSource
 )
 
 
-if (MSVC)
+if (USE_WINDOWS)
+	# Windows用の時
 
 	# システム系の実装クラスのソースファイルをセット
 	set(SystemApiSource 
 		Source/System/Windows/WindowsSystem.cpp
-		Source/System/Windows/Dll.cpp
-		)
+		Source/System/Windows/Dll.cpp)
 
 	if (USE_IMGUI)
 		# imgui使用時
 		set(SystemApiSource 
 			${SystemApiSource}
-			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp
-		)
-	endif()
-
-	if (USE_VULKAN)
-		# Vulkan使用時
-	else()
-		# グラフィック系の実装クラスのソースファイルをセット
-		set(GraphicsApiSource
-			Source/Graphics/DirectX12/Dx12CommandList.cpp
-			Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
-			Source/Graphics/DirectX12/Dx12GpuEngine.cpp
-			Source/Graphics/DirectX12/Dx12BufferResource.cpp
-			Source/Graphics/DirectX12/Dx12ImageResource.cpp
-			Source/Graphics/DirectX12/Dx12Graphics.cpp
-			Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
-			Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
-			Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
-			Source/Graphics/DirectX12/Dx12VertexView.cpp
-			Source/Graphics/DirectX12/Dx12IndexView.cpp
-			Source/Graphics/DirectX12/Dx12Views.cpp
-			Source/Graphics/DirectX12/Dx12Sampler.cpp
-			Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-		 "Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp")
-
-		if (USE_IMGUI)
-			  set(GraphicsApiSource
-			  ${GraphicsApiSource}
-			  Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
-			  )
-		endif()
-
+			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp)
 	endif()
 
 	# サウンド系の実装クラスのソースファイルをセット
@@ -142,14 +116,63 @@ if (MSVC)
 		Source/Sound/Xaudio2/Xa2SoundControl.cpp
 		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
 	)
+endif()
 
+if(USE_DX12 AND NOT USE_VULKAN)
+	# グラフィック系の実装クラスのソースファイルをセット
+	set(GraphicsApiSource
+		Source/Graphics/DirectX12/Dx12CommandList.cpp
+		Source/Graphics/DirectX12/Dx12DepthStencilViews.cpp
+		Source/Graphics/DirectX12/Dx12GpuEngine.cpp
+		Source/Graphics/DirectX12/Dx12BufferResource.cpp
+		Source/Graphics/DirectX12/Dx12ImageResource.cpp
+		Source/Graphics/DirectX12/Dx12Graphics.cpp
+		Source/Graphics/DirectX12/Dx12GraphicsPipeline.cpp
+		Source/Graphics/DirectX12/Dx12RenderTargetViews.cpp
+		Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
+		Source/Graphics/DirectX12/Dx12VertexView.cpp
+		Source/Graphics/DirectX12/Dx12IndexView.cpp
+		Source/Graphics/DirectX12/Dx12Views.cpp
+		Source/Graphics/DirectX12/Dx12Sampler.cpp
+		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
+		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp)
+
+	if (USE_IMGUI)
+		set(GraphicsApiSource
+		${GraphicsApiSource}
+		Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
+		)
+	endif()
+elseif(USE_VULKAN)
+	# Vulkan使用時
+	set(GraphicsApiSource
+		Source/Graphics/Vulkan/VkGraphics.cpp
+		Source/Graphics/Vulkan/VkGpuEngine.cpp
+		Source/Graphics/Vulkan/VkImageResource.cpp
+		Source/Graphics/Vulkan/VkResourceBindLayout.cpp
+		Source/Graphics/Vulkan/VkCommandList.cpp
+		Source/Graphics/Vulkan/VkDepthStencilViews.cpp
+		Source/Graphics/Vulkan/VkGraphicsPipeline.cpp
+		Source/Graphics/Vulkan/VkBufferResource.cpp
+		Source/Graphics/Vulkan/VkVertexView.cpp
+		Source/Graphics/Vulkan/VkShaderResourceViews.cpp
+		Source/Graphics/Vulkan/VkSampler.cpp
+		Source/Graphics/Vulkan/VkSamplerViews.cpp
+		Source/Graphics/Vulkan/VkRenderTargetViews.cpp
+		Source/Graphics/Vulkan/VkIndexView.cpp)
+
+	if (USE_IMGUI)
+	set(GraphicsApiSource
+	${GraphicsApiSource}
+	Include/ThirdParty/imgui/backends/imgui_impl_vulkan.cpp
+	)
+	endif()
 endif()
 
 # ランタイムライブラリを静的にリンクする
 if(MSVC)
 	# visual stdio用にunicodeを使うように
 	add_definitions(-D_UNICODE -DUNICODE)
-
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
@@ -165,11 +188,29 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
+if (USE_WINDOWS)
+	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
+endif()
 
+if (USE_DX12 AND NOT USE_VULKAN)
+	# DirectX12使用時defineを用意
+	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+elseif(USE_VULKAN)
+	# Vulkan使用時define用意
+	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
+	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
+
+	if (NOT USE_EFFEKSEER)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+	endif()
+endif()
 
 if (USE_IMGUI)
 	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
+	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
+
 endif()
 
 
@@ -187,15 +228,16 @@ endif()
 
 	# 使用時
 	add_subdirectory("Effekseer")
-	target_link_libraries(EugeneLib Effekseer)
-	target_link_libraries(EugeneLib LLGI)
+	target_link_libraries(EugeneLib LLGI Effekseer)
 	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
 	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
+
 	
 	# Vulkan使用するか？
 	if (USE_VULKAN)
 		# VULKAN使用時
-		target_link_libraries(EugeneLib EffekseerRendererVULKAN)
+		target_link_libraries(EugeneLib EffekseerRendererVulkan glslang SPIRV)
+		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererVulkan")
 	else()
 		# 
 		target_link_libraries(EugeneLib EffekseerRendererDX12)

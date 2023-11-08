@@ -4,13 +4,13 @@
 #include <vector>
 #include <array>
 #include "../../../Include/Graphics/Graphics.h"
-#include "../../../Include/Math/Vector2.h"
 #include "../../../Include/Graphics/GraphicsCommon.h"
 
 
 struct ID3D12Device;
 struct IDXGIFactory6;
 struct IDXGISwapChain4;
+struct ID3D12DescriptorHeap;
 
 namespace Eugene
 {
@@ -19,24 +19,17 @@ namespace Eugene
 	{
 	public:
 		static const std::array<int, FormatMax> FormatToDxgiFormat_;
-		Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+		Dx12Graphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 		~Dx12Graphics();
 	
-		
+		static const Format& BackBufferFormat()
+		{
+			return Graphics::backBufferFormat_;
+		}
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 
 		CommandList* CreateCommandList(void) const final;
-		GraphicsPipeline* CreateGraphicsPipeline(
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
-			TopologyType topologyType = TopologyType::Triangle,
-			bool isCulling = false,
-			bool useDepth = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}
-			) const final;
 
 		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
 
@@ -46,11 +39,9 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
-		ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) final;
+		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) final;
 
-		ImageResource* CreateDepthResource(const Vector2I& size, float clear) const final;
-
-		ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 
@@ -62,7 +53,7 @@ namespace Eugene
 
 		void CreateDevice(void);
 
-		void CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+		void CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 
 		void CreateBackBuffers(std::uint64_t bufferCount);
 
@@ -70,21 +61,31 @@ namespace Eugene
 
 		RenderTargetViews& GetViews(void) final;
 
-		std::uint64_t GetNowBackBufferIndex(void) final;
+		std::uint64_t GetNowBackBufferIndex(void) const final;
 
 		void Present(void) final;
 
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 
-		SamplerViews* CreateSamplerViews(std::uint64_t size) const final;
-
-		void ResizeBackBuffer(const Vector2& size) final;
+		void ResizeBackBuffer(const glm::vec2& size) final;
 
 		void SetFullScreenFlag(bool isFullScreen) final;
+
+		// Graphics を介して継承されました
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+
+		// Graphics を介して継承されました
+		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+
+		// Graphics を介して継承されました
+		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
+
+		// Graphics を介して継承されました
+		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;
-		ShaderResourceViews& GetImguiShaderResourceView(void) & final;
+		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
 #endif
 
 		// dxgi
@@ -100,7 +101,7 @@ namespace Eugene
 		std::unique_ptr<RenderTargetViews> renderTargetViews_;
 
 #ifdef USE_IMGUI
-		std::unique_ptr<ShaderResourceViews> srViews_;
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> imguiDescriptorHeap_;
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -114,11 +115,5 @@ namespace Eugene
 		) const final;
 #endif
 		friend class Dx12CommandList;
-
-		// Graphics を介して継承されました
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
-
-		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
 };
 }

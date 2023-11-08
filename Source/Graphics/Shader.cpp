@@ -4,14 +4,13 @@
 
 Eugene::Shader::Shader(const std::filesystem::path& path)
 {
-	std::ifstream file{ path , std::ios::binary | std::ios::ate};
+	std::ifstream file{ path , std::ios::binary};
 	
 	if (!file)
 	{
 		throw EugeneLibException{"ファイルを開けませんでした"};
 	}
-	code_.resize(file.tellg());
-	file.seekg(0);
+	code_.resize((std::filesystem::file_size(path) / 4ull) * 4ull);
 	file.read(code_.data(), code_.size());
 }
 

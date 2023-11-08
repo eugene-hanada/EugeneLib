@@ -84,7 +84,10 @@ bool Eugene::Image::LoadStbInfo(BinaryReader& br)
 	info_.format = Format::R8G8B8A8_UNORM;
 	info_.width = w;
 	info_.height = h;
+	info_.pixelPerBite = c;
+	info_.totalSize_ = w * h * c;
 	isInfoLoaded_ = true;
+
 
 	if (data_.size() > 0ull)
 	{

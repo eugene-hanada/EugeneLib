@@ -28,7 +28,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Texture
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, std::span<float, 4> clearColor) :
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const glm::ivec2& size, Format format, std::span<float, 4> clearColor) :
 	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
@@ -51,7 +51,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const Vector2I& size, Format format, float clearValue) :
+Eugene::Dx12ImageResource::Dx12ImageResource(ID3D12Device* device, const glm::ivec2& size, Format format, float clearValue) :
 	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
@@ -83,7 +83,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(IDXGISwapChain4* swapChain, std::ui
 }
 
 
-Eugene::Vector2I Eugene::Dx12ImageResource::GetSize(void)
+glm::ivec2 Eugene::Dx12ImageResource::GetSize(void)
 {
 	return { static_cast<int>(resource_->GetDesc().Width) , static_cast<int>(resource_->GetDesc().Height) };
 }
@@ -93,7 +93,7 @@ bool Eugene::Dx12ImageResource::CanMap(void) const
 	return false;
 }
 
-void* Eugene::Dx12ImageResource::GetResource(void) const
+void* Eugene::Dx12ImageResource::GetResource(void) 
 {
 	return resource_.Get();
 }

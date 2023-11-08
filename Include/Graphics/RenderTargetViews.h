@@ -20,9 +20,8 @@ namespace Eugene
 		/// </summary>
 		/// <param name="resource"> リソース </param>
 		/// <param name="idx"> インデックス </param>
-		/// <param name="format"> フォーマット </param>
-		virtual void Create(ImageResource& resource,std::uint64_t idx, const Format& format) = 0;
-		virtual void* GetViews(void) const = 0;
+		virtual void Create(ImageResource& resource,std::uint64_t idx) = 0;
+		virtual void* GetViews(void) = 0;
 
 		/// <summary>
 		/// サイズの取得

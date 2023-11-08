@@ -19,7 +19,7 @@ void Eugene::Dx12SamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx
 	device->CreateSampler(&static_cast<Dx12Sampler&>(sampler).desc_, handle);
 }
 
-void* Eugene::Dx12SamplerViews::GetViews(void) const
+void* Eugene::Dx12SamplerViews::GetViews(void)
 {
 	return descriptorHeap_.Get();
 }

@@ -18,7 +18,7 @@ namespace Eugene
 		using ComPtr = Microsoft::WRL::ComPtr<T>;
 	public:
 		Dx12CommandList(ID3D12Device* device);
-		void* GetCommandList(void) const final;
+		void* GetCommandList(void) final;
 	private:
 
 		// 開始処理
@@ -34,10 +34,10 @@ namespace Eugene
 		void SetPrimitiveType(PrimitiveType type) final;
 
 		// シザーレクトをセットする
-		void SetScissorrect(const Vector2I& leftTop, const Vector2I& rightBottom) final;
+		void SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom) final;
 
 		// ビューポートをセットする
-		void SetViewPort(const Vector2& leftTop, const Vector2& size, float depthMin = 0.0f, float depthMax = 1.0f);
+		void SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin = 0.0f, float depthMax = 1.0f) final;
 
 		// 頂点ビューをセットする
 		void SetVertexView(VertexView& view) final;
@@ -48,10 +48,10 @@ namespace Eugene
 		// シェーダリソースセット系 //
 
 		// 指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする
-		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
+		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) final;
 
 		// 指定のパラメータインデックスに指定のサンプラービューのインデックスを先頭にセットする
-		void SetSamplerView(SamplerViews& views, std::uint64_t viewsIdx, std::uint64_t paramIdx) final;
+		void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) final;
 
 		// 描画系 //
 
@@ -63,25 +63,25 @@ namespace Eugene
 
 		// レンダーターゲットセット系 //
 
-		// 指定のインデックスのビューをセットする
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) final;
+		//// 指定のインデックスのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& views, std::uint64_t idx = 0) final;
 
-		// 指定の範囲のインデックスのビューをセットする
-		void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) final;
+		//// 指定の範囲のインデックスのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& views, std::uint64_t startIdx, std::uint64_t endIdx) final;
 
-		// ビューにあるすべてをセットする
-		void SetRenderTarget(RenderTargetViews& views) final;
+		//// ビューにあるすべてをセットする
+		//void SetRenderTarget(RenderTargetViews& views) final;
 
-		// 指定のインデックスのデプスとレンダーターゲットのビューをセットする
-		void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0)final;
+		//// 指定のインデックスのデプスとレンダーターゲットのビューをセットする
+		//void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::uint64_t rtViewsIdx = 0, std::uint64_t dsViewsIdx = 0)final;
 
-		// クリア系 //
+		//// クリア系 //
 
-		// 
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx = 0) final;
-		void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
+		//// 
+		//void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color, std::uint64_t idx = 0) final;
+		//void ClearRenderTarget(RenderTargetViews& views, std::span<float, 4> color) final;
 
-		void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) final;
+		//void ClearDepth(DepthStencilViews& views, float clearValue = 1.0f, std::uint64_t idx = 0) final;
 
 		// バリア遷移系 //
 
@@ -105,8 +105,8 @@ namespace Eugene
 
 		// コピー系 //
 
-		void Copy(GpuResource& destination, GpuResource& source) final;
-		void CopyTexture(GpuResource& destination, GpuResource& source) final;
+	/*	void Copy(GpuResource& destination, GpuResource& source) final;
+		void CopyTexture(GpuResource& destination, GpuResource& source) final;*/
 
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 
@@ -123,7 +123,15 @@ namespace Eugene
 		/// </summary>
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
 
-	};
+
+		// CommandList を介して継承されました
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange, std::optional<float> depthClear, std::uint32_t depthIndex) override;
+
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange) override;
+
+		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) override;
+
+};
 }
 
 

@@ -12,6 +12,6 @@ namespace Eugene
         Dx12SamplerViews(ID3D12Device* device, std::uint64_t size);
     private:
         void CreateSampler(Sampler& sampler, std::uint64_t idx) final;
-        void* GetViews(void) const final;
+        void* GetViews(void) final;
     };
 }

@@ -8,7 +8,7 @@ Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, std::
 {
 }
 
-void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_t idx, const Format& format)
+void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_t idx)
 {
 	if (size_ <= idx)
 	{
@@ -20,18 +20,17 @@ void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_
 	{
 		return;
 	}
-
+	
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_RENDER_TARGET_VIEW_DESC rtViewDesc{};
-	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
-	rtViewDesc.Format = tmp;
+	rtViewDesc.Format = dx12Resource->GetDesc().Format;
 	rtViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(static_cast<ID3D12Resource*>(resource.GetResource()), &rtViewDesc, handle);
 }
 
-void* Eugene::Dx12RenderTargetViews::GetViews(void) const
+void* Eugene::Dx12RenderTargetViews::GetViews(void)
 {
 	return descriptorHeap_.Get();
 }

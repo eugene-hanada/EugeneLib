@@ -10,7 +10,7 @@ namespace Eugene
 	{
 	public:
 		virtual ~VertexView();
-		virtual void* GetView(void) const = 0;
+		virtual void* GetView(void) = 0;
 
 		/// <summary>
 		/// 頂点数を取得する

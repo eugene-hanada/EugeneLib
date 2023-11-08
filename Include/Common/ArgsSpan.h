@@ -49,6 +49,11 @@ namespace Eugene
 			return ptr_;
 		}
 
+		constexpr const T* end()
+		{
+
+		}
+
 		constexpr std::uint64_t size() const
 		{
 			return size_;
@@ -63,8 +68,18 @@ namespace Eugene
 			return *(ptr_ + index);
 		}
 
+		constexpr T& operator[](size_t index)&
+		{
+			if (ptr_ == nullptr || index >= size_)
+			{
+				throw EugeneLibException{"範囲外のインデックスを指定しています"};
+			}
+			return *(ptr_ + index);
+		}
+
 	private:
 		const T* ptr_;
 		std::uint64_t size_;
 	};
+
 }

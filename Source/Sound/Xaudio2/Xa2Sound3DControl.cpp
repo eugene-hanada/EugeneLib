@@ -3,6 +3,7 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include <vector>
+#include <cmath>
 #include "../../../Include/Common/EugeneLibException.h"
 
 
@@ -25,8 +26,8 @@ Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
 }
 
 void Eugene::Xa2Sound3DControl::Set3DSound(
-	const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity,
-	const Vector3& emitterFront, const Vector3& emitterTop, const Vector3& emitterPos, const Vector3& emitterVelocity)
+	const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity,
+	const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity)
 {
 	X3DAUDIO_EMITTER emitter{};
 	X3DAUDIO_LISTENER listener{};

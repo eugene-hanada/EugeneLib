@@ -21,9 +21,12 @@
 
 #endif
 
-//#include "Common/Debug.h"
+#ifdef USE_IMGUI
+void UpdateImgui()
+{
 
-
+}
+#endif
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	// システム(osとかの)処理をするクラス
@@ -52,7 +55,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			Eugene::TopologyType::Triangle,
 			true,
 			false
-		) };
+	) };
+
 
 	std::unique_ptr<Eugene::ImageResource> depthBuffer{ graphics->CreateDepthResource({ 1280, 720 }, 0.0f) };
 	std::unique_ptr<Eugene::DepthStencilViews> depthView{ graphics->CreateDepthStencilViews(1) };
@@ -130,7 +134,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	texMatrixBuffer.reset(graphics->CreateUploadableBufferResource(256));
 	auto texMatrix = static_cast<glm::mat4*>(texMatrixBuffer->Map());
 	*texMatrix = glm::translate(glm::identity<glm::mat4>(), glm::vec3{ (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f) - 128.0f , 0.0f});
-	//texMatrixBuffer->UnMap();
 
 	// 画像と定数バッファ用のビュー
 	std::unique_ptr<Eugene::ShaderResourceViews> texAndMatrixView{ graphics->CreateShaderResourceViews({ Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}}) };
@@ -206,10 +209,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	auto cameraView{ glm::lookAt({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
 	auto cameraProjection{ glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 500.0f) };
-	//cameraProjection = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identy = glm::identity<glm::mat4>();
-
+	
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -255,11 +257,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 
 		auto nowWindowSize{ system->GetWindowSize() };
-		//Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
 		*cursorMatrix = glm::translate(glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{ mouse.pos.x,mouse.pos.y ,0.0f }), glm::vec3{ 0.2f }), glm::vec3{-128.0f, -128.0f, 0.0f});
-		
-		*texMatrix = glm::translate(glm::translate(glm::identity<glm::mat4>(), { nowWindowSize.x/2.0f,nowWindowSize.y / 2.0f, 0.0f}), { -128.0f, -128.0f, 0.0f });
-		//Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
 		
 		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
@@ -269,9 +267,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGuizmo::SetOrthographic(false);
 		ImGuizmo::BeginFrame();
 		
-		ImGui::Begin("window1");
+		ImGui::Begin("texture");
 		auto imgSize{ textureResource->GetSize() };
 		ImGui::Image(img, ImVec2{static_cast<float>(imgSize.x),static_cast<float>(imgSize.y)});
+		{
+			float pos[]{ (*texMatrix)[3][0],(*texMatrix)[3][1] };
+			bool dirty = false;
+			if (ImGui::DragFloat2("Position", pos))
+			{
+				dirty = true;
+				*texMatrix = { glm::translate(identy,{pos[0],pos[1], 0.0f}) };
+			}
+		}
 		ImGui::End();
 
 
@@ -318,8 +325,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		cmdList->TransitionDepthBegin(*depthBuffer);
 		
 		cmdList->SetRenderTarget(graphics->GetViews(), clearColor, {static_cast<std::uint32_t>(graphics->GetNowBackBufferIndex()),1u});
-		//cmdList->ClearDepth(*depthView);
-
+		
 		// グラフィックパイプラインセット
 		cmdList->SetGraphicsPipeline(*pipeline);
 

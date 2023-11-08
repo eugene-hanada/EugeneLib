@@ -188,7 +188,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 
 	vk::SurfaceFullScreenExclusiveInfoEXT fullscrInfo{};
-	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eApplicationControlled);
+	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eDefault);
 	vk::SurfaceFullScreenExclusiveWin32InfoEXT fullscrWin32Info{};
 	fullscrWin32Info.setHmonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST));
 	fullscrInfo.setPNext(&fullscrWin32Info);
@@ -522,31 +522,29 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
 
 void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 {
-	queue_.waitIdle();
-	device_->waitIdle();
+	//queue_.waitIdle();
+	//device_->waitIdle();
 
-	auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
+	//auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
 
-	VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
-	if (isFullScreen)
-	{
-		func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
-	}
-	else
-	{
-		func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkReleaseFullScreenExclusiveModeEXT"));
-	}
-	
-	auto result = func(*device_, *swapchain_);
-	device_->waitIdle();
-	queue_.waitIdle();
-	if (result != VkResult::VK_SUCCESS)
-	{
-		DebugLog("フルスクリーン失敗 [:0] エラー[:1]", isFullScreen, static_cast<int>(result));
-		return;
-	}
-
-
+	//VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
+	//if (isFullScreen)
+	//{
+	//	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
+	//}
+	//else
+	//{
+	//	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkReleaseFullScreenExclusiveModeEXT"));
+	//}
+	//
+	//auto result = func(*device_, *swapchain_);
+	//device_->waitIdle();
+	//queue_.waitIdle();
+	//if (result != VkResult::VK_SUCCESS)
+	//{
+	//	DebugLog("フルスクリーン失敗 [:0] エラー[:1]", isFullScreen, static_cast<int>(result));
+	//	return;
+	//}
 
 }
 

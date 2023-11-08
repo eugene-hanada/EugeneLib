@@ -65,8 +65,6 @@ namespace {
 	/// </summary>
 	bool isEnd = false;
 
-	
-
 	/// <summary>
 	/// ウィンドウプロシージャ
 	/// </summary>
@@ -127,10 +125,10 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	};
 
 	activateCall = [this](bool active) {
-		if (!active)
+		/*if (!active)
 		{
 			SetFullScreen(false);
-		}
+		}*/
 	};
 
 

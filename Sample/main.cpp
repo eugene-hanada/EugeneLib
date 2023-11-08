@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 #include <initializer_list>
-#include <Common/Debug.h>
 #include <Common/ArgsSpan.h>
 
 
@@ -17,10 +16,12 @@
 
 #ifdef USE_IMGUI
 #include <ThirdParty/imgui/imgui.h>
+#include <ThirdParty/imgui/imgui_internal.h>
 #include <ImGuizmo.h>
+
 #endif
 
-#include "Common/Debug.h"
+//#include "Common/Debug.h"
 
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
@@ -154,9 +155,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	cursorView->CreateTexture(*textureResource, 0);
 	cursorView->CreateConstantBuffer(*cursorMatrixBuffer, 1);
 
-	std::unique_ptr<Eugene::BufferResource> index{ graphics->CreateBufferResource(256) };
-
-	std::unique_ptr<Eugene::IndexView> indexView_{ graphics->CreateIndexView(4u, 4u,Eugene::Format::R16_FLOAT,*index) };
 
 	//// サウンド
 	//auto sound = Eugene::CreateSoundUnique();
@@ -188,10 +186,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	*/
 	graphics->SetImguiImage(*textureResource);
 	auto img = graphics->GetImguiImageID(0);
+
+	//system->SetFullScreen(true);
+
 	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::Enable(true);
-
+	ImGuiFocusedFlags gizmoWindowFlags = 0;
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -205,6 +206,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	auto cameraView{ glm::lookAt({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
 	auto cameraProjection{ glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 500.0f) };
+	//cameraProjection = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identy = glm::identity<glm::mat4>();
 
@@ -252,10 +254,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			
 		}
 
+		auto nowWindowSize{ system->GetWindowSize() };
 		//Eugene::Get2DTransformMatrix(*cursorMatrix, mouse.pos, 0.0f, { 0.2f,0.2f }, {128.0f,128.0f});
 		*cursorMatrix = glm::translate(glm::scale(glm::translate(glm::identity<glm::mat4>(), glm::vec3{ mouse.pos.x,mouse.pos.y ,0.0f }), glm::vec3{ 0.2f }), glm::vec3{-128.0f, -128.0f, 0.0f});
+		
+		*texMatrix = glm::translate(glm::translate(glm::identity<glm::mat4>(), { nowWindowSize.x/2.0f,nowWindowSize.y / 2.0f, 0.0f}), { -128.0f, -128.0f, 0.0f });
 		//Eugene::Get2DMatrix(*rtMatrix, system->GetWindowSize());
-		auto nowWindowSize{ system->GetWindowSize() };
+		
 		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
 		graphics->ImguiNewFrame();
@@ -263,21 +268,31 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::NewFrame();
 		ImGuizmo::SetOrthographic(false);
 		ImGuizmo::BeginFrame();
-
+		
 		ImGui::Begin("window1");
 		auto imgSize{ textureResource->GetSize() };
 		ImGui::Image(img, ImVec2{static_cast<float>(imgSize.x),static_cast<float>(imgSize.y)});
 		ImGui::End();
 
-		ImGui::Begin("window2");
-		
-		ImGui::End();
 
-		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+		ImGui::Begin("window2", 0, gizmoWindowFlags);
+		ImGuizmo::SetDrawlist();
+		float windowWidth = (float)ImGui::GetWindowWidth();
+		float windowHeight = (float)ImGui::GetWindowHeight();
+		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+		auto viewManipulateRight = ImGui::GetWindowPos().x + windowWidth;
+		auto viewManipulateTop = ImGui::GetWindowPos().y;
+		ImGuiWindow* window = ImGui::GetCurrentWindow();
+		gizmoWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : 0;
+
+		io = ImGui::GetIO();
 		ImGuizmo::DrawGrid(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(identy), 100.0f);
 		ImGuizmo::DrawCubes(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(objectTransform), 1);
 		ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(objectTransform));
-		ImGuizmo::ViewManipulate(glm::value_ptr(cameraView), 8.0f, ImVec2(0, 0), ImVec2(128, 128), 0x10101010);
+		ImGuizmo::ViewManipulate(glm::value_ptr(cameraView), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
+		ImGui::End();
+		
+
 		ImGui::Render();
 
 		

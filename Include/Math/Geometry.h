@@ -1,6 +1,4 @@
 ﻿#pragma once
-#define GLM_FORCE_LEFT_HANDED
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <algorithm>
 #include "../ThirdParty/glm/glm/glm.hpp"
 #include "../ThirdParty/glm/glm/ext.hpp"
@@ -52,6 +50,25 @@ namespace Eugene
 
 	template<ValueC T>
 	constexpr vec<3, T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };
+
+	template<ValueC T>
+	vec<3,T>  Translate(const glm::mat<4, 4, T>& matrix)
+	{
+		return { matrix[3][0], matrix[3][1], matrix[3][2]};
+	}
+
+	template<ValueC T>
+	vec<3, T> Scale(const glm::mat<4, 4, T>& matrix)
+	{
+		return { glm::length(matrix[0]),glm::length(matrix[1]), glm::length(matrix[2]) };
+	}
+
+	template<ValueC T>
+	glm::qua<T> Qua(const glm::mat<4, 4, T>& matrix)
+	{
+		return {};
+	}
+
 
 	/// <summary>
 	/// 二乗する

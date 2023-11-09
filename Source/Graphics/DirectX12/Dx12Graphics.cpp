@@ -547,10 +547,10 @@ public:
 
 	void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) final
 	{
+		auto tmp = Effekseer::Matrix44().LookAtLH(
+			Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{ up.x, up.y, up.z });
 		renderer_->SetCameraMatrix(
-			Effekseer::Matrix44().LookAtLH(
-				Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{up.x, up.y, up.z}
-			)
+			tmp
 		);
 	}
 
@@ -558,6 +558,34 @@ public:
 	{
 		renderer_->SetProjectionMatrix(
 			Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
+	}
+
+	// EffekseerWarpper を介して継承されました
+	void SetCameraPos(const glm::mat4& mat) final
+	{
+		Effekseer::Matrix44 tmp;
+		for (int y = 0; y < 4; y++)
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				tmp.Values[y][x] = mat[y][x];
+			}
+		}
+		renderer_->SetCameraMatrix(
+			tmp
+		);
+	}
+	void SetCameraProjection(const glm::mat4& mat) final
+	{
+		Effekseer::Matrix44 tmp;
+		for (int y = 0; y < 4; y++)
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				tmp.Values[y][x] = mat[y][x];
+			}
+		}
+		renderer_->SetProjectionMatrix(tmp);
 	}
 private:
 
@@ -580,6 +608,8 @@ private:
 	/// コマンドリスト
 	/// </summary>
 	Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
+
+
 };
 
 Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(

@@ -186,6 +186,8 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	int centerX =(monitorWidth - (wSize.right - wSize.left)) / 2;
 	int centerY = (monitorHeight - (wSize.bottom - wSize.top))/ 2;
 
+	maxWindowSize_ = {static_cast<float>(monitorWidth), static_cast<float>(monitorHeight)};
+
 	SetWindowPos(hwnd, nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
 
 	ShowWindow(hwnd, SW_SHOW);

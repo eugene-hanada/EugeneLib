@@ -125,6 +125,13 @@ namespace Eugene
 		const glm::vec2& GetWindowSize(void) const&;
 
 		/// <summary>
+		/// 最大ウィンドウサイズを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		const glm::vec2& GetMaxWindowSize(void) const&;
+
+		/// <summary>
 		/// Graphicsを生成する
 		/// </summary>
 		/// <param name="bufferNum"> バックバッファの数 </param>
@@ -258,6 +265,11 @@ namespace Eugene
 		/// リサイズように使用
 		/// </summary>
 		static Eugene::Graphics* graphics;
+
+		/// <summary>
+		/// 最大ウィンドウサイズ
+		/// </summary>
+		glm::vec2 maxWindowSize_;
 
 #ifdef USE_IMGUI
 

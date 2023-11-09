@@ -8,6 +8,7 @@
 
 
 #ifdef USE_EFFEKSEER
+#include "../ThirdParty/glm/glm/mat4x4.hpp"
 namespace Effekseer
 {
 	template<class T>
@@ -64,7 +65,11 @@ namespace Eugene
 
 		virtual void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) = 0;
 
+		virtual void SetCameraPos(const glm::mat4& mat) = 0;
+
 		virtual void SetCameraProjection(float fov, float aspect, const glm::vec2& nearfar) = 0;
+
+		virtual void SetCameraProjection(const glm::mat4& mat) = 0;
 	protected:
 		EffekseerWarpper();
 	};

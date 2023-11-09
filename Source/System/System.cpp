@@ -75,6 +75,11 @@ const glm::vec2& Eugene::System::GetWindowSize(void) const&
 	return windowSize_;
 }
 
+const glm::vec2& Eugene::System::GetMaxWindowSize(void) const&
+{
+	return maxWindowSize_;
+}
+
 void Eugene::System::OnResizeWindow(const glm::vec2& size)
 {
 	// 実装しない

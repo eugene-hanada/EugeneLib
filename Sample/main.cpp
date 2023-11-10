@@ -6,8 +6,11 @@
 #include <initializer_list>
 #include <Common/ArgsSpan.h>
 
-#include <ThirdParty/glm/glm/ext/matrix_common.hpp>
+#include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
+#include <ThirdParty/glm/glm/gtx/transform.hpp>
 
+#include <ThirdParty/glm/glm/gtx/matrix_decompose.hpp>
+#include <iostream>
 
 
 #ifdef USE_EFFEKSEER
@@ -200,24 +203,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	effekseer->SetCameraPos({ 0.0f,0.0f,-30.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
 	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
-	glm::vec3 effectPos;
+	glm::vec3 effectPos = { 0,0,0 };
 	effekseer->GetManager()->SetRotation(h, Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(90.0f), 0.0f);
 #endif
 
-	auto cameraView{ glm::lookAt({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
+	auto cameraView{ glm::lookAtRH({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
+	auto cameraViewLH{ glm::lookAtLH({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
 	
-	auto cameraProjection{ glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
+	
+	auto cameraProjection{ glm::perspectiveRH(glm::radians(45.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
 
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
 	
-	
-	auto length = Eugene::Scale(glm::scale(identity,{1.0f,2.0f, 3.0f}));
-	auto testMatrix = glm::scale(glm::translate(identity, { 10.0f,20.0f,30.0f }), { 1.0f,2.0f, 3.0f });
-	auto pos = Eugene::Translate(testMatrix);
 
-	auto q  = glm::quat_cast(cameraView);
-	auto euler = glm::eulerAngles(q);
 	while (system->Update())
 	{
 		// マウスの情報を取得
@@ -303,12 +302,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		
 		if (ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(objectTransform)))
 		{
-			auto a =rectPos;
-
+			glm::vec3 decomposeTr;
+			glm::vec3 decomposeSc;
+			glm::quat decomposeRt;
+			glm::vec3 decomposeSkew;
+			glm::vec4 decomposePer;
+			glm::decompose(objectTransform, decomposeSc, decomposeRt, decomposeTr, decomposeSkew, decomposePer);
+			effectPos += decomposeTr;
 		}
 		ImGuizmo::ViewManipulate(glm::value_ptr(cameraView), 8.0f, ImVec2(rectPos.x, rectPos.y), ImVec2(128, 128), 0x10101010);
 
 #ifdef USE_EFFEKSEER
+		{
+			glm::vec3 decomposeTr;
+			glm::vec3 decomposeSc;
+			glm::quat decomposeRt;
+			glm::vec3 decomposeSkew;
+			glm::vec4 decomposePer;
+			glm::decompose(cameraView, decomposeSc, decomposeRt, decomposeTr, decomposeSkew, decomposePer);
+			decomposeTr.z *= -1.0f;
+			glm::mat4 tmpLH = glm::recompose(decomposeSc, decomposeRt, decomposeTr, decomposeSkew, decomposePer);
+			effekseer->SetCameraPos(tmpLH);
+		}
 #endif
 		ImGui::Render();
 

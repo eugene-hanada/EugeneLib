@@ -216,8 +216,8 @@ endif()
 
 
  target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
- #target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_LEFT_HANDED)
- #target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_DEPTH_ZERO_TO_ONE)
+ target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_LEFT_HANDED)
+ target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_DEPTH_ZERO_TO_ONE)
 
  # サンプルをビルドするか？
  if (BUILD_SAMPLE)

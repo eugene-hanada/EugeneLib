@@ -124,14 +124,9 @@ namespace Eugene
 		std::uint32_t miscFlag2 = 0u;
 	};
 
-	struct ColcBase
-	{
-		virtual ~ColcBase() {};
-		virtual std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize) = 0;
-	};
-
 	struct ColcDxt1Size 
 	{
+		constexpr ColcDxt1Size() = default;
 		std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize)
 		{
 			return std::max(1, ((x + 3) / 4)) * std::max(1, ((y + 3) / 4)) * 8;
@@ -140,6 +135,7 @@ namespace Eugene
 
 	struct ColcSize
 	{
+		constexpr ColcSize() = default;
 		std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize)
 		{
 			return x * y * pixelSize;
@@ -148,6 +144,7 @@ namespace Eugene
 
 	struct ColcDxt3Size
 	{
+		constexpr ColcDxt3Size() = default;
 		std::int32_t operator()(std::int32_t x, std::int32_t y, std::int32_t pixelSize)
 		{
 			return std::max(1, ((x + 3) / 4)) * std::max(1, ((y + 3) / 4)) * 16;
@@ -162,11 +159,11 @@ namespace Eugene
 		{Format::BC3_UNORM,ColcDxt3Size{}}
 	};
 
-	void LoadDdsExtension(Image::BinaryReader& file, TextureInfo& info)
+	void LoadDdsExtension(std::ifstream& file, TextureInfo& info)
 	{
 		// 追加情報を読み込む
 		DdsExtensionHeader ext;
-		file.Read(static_cast<void*>(&ext), sizeof(ext));
+		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
 		info.arraySize = std::max(1u,ext.arraySize);
 		
 		// フォーマットをセットする

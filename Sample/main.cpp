@@ -8,7 +8,6 @@
 
 #include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
 #include <ThirdParty/glm/glm/gtx/transform.hpp>
-
 #include <ThirdParty/glm/glm/gtx/matrix_decompose.hpp>
 #include <iostream>
 
@@ -23,15 +22,8 @@
 #include <ThirdParty/imgui/imgui.h>
 #include <ThirdParty/imgui/imgui_internal.h>
 #include <ImGuizmo.h>
-
 #endif
 
-#ifdef USE_IMGUI
-void UpdateImgui()
-{
-
-}
-#endif
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	// システム(osとかの)処理をするクラス
@@ -123,10 +115,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	{
 		// 画像読み込み
 		Eugene::Image image{ "./Logo.png" };
-		
-		image.LoadInfo();
-		image.LoadData();
-		//auto tmp = std::move(image);
 
 		// リソース生成
 		std::unique_ptr<Eugene::BufferResource> uploadBuffer;
@@ -164,37 +152,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 
-	//// サウンド
-	//auto sound = Eugene::CreateSoundUnique();
-	//std::unique_ptr<Eugene::SoundControl> ctrl2;
-	//std::unique_ptr<Eugene::Sound3DControl> ctrl;
-	//
-	//std::unique_ptr<Eugene::SoundControl> ctrl3;
-	//std::unique_ptr<Eugene::SoundSpeaker> speaker;
-
-	//std::unique_ptr<Eugene::SoundStreamSpeaker> stream;
-	//stream.reset(sound->CreateSoundStreamSpeaker("./BGM.wav"));
-	//stream->SetOutput(*ctrl);
-	//stream->Play(1);
-	//stream->SetVolume(0.7f);
-	//system->ResizeWindow({ 640.0f, 480.0f });
-
-
-	// マウスの情報を受け取る構造体
-	Eugene::Mouse mouse;
-
-	// フレーム数
-	std::uint32_t frameCnt = 0;
+	// サウンド
+	auto sound = Eugene::CreateSoundUnique();
+	auto soundFile{ Eugene::SoundFile("./exp.wav") };
+	std::unique_ptr<Eugene::SoundSpeaker> speaker{sound->CreateSoundSpeaker(soundFile)};
+	float panValue = 0.0f;
+	speaker->SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
+	speaker->Play();
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
-	graphics->SetImguiImage(*textureResource);
-	auto img = graphics->GetImguiImageID(0);
-
-	bool flag = false;
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::Enable(true);
-	ImGuiFocusedFlags gizmoWindowFlags = 0;
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -202,102 +171,83 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	effekseer->SetCameraProjection(90.0f / 180.0f * 3.14f, 1280.f / 720.f, { 1.0f, 500.0f });
 	effekseer->SetCameraPos({ 0.0f,0.0f,-30.0f }, { 0.0f, 0.0f, 0.0f }, Eugene::upVector3<float>);
 	auto effect = Effekseer::Effect::Create(effekseer->GetManager(), u"Laser01.efkefc");
-	auto h = effekseer->GetManager()->Play(effect, 0,0,0.0f);
+	auto effectHandle = effekseer->GetManager()->Play(effect, 0,0,0.0f);
 	glm::vec3 effectPos = { 0,0,0 };
-	effekseer->GetManager()->SetRotation(h, Eugene::Deg2Rad(45.0f), Eugene::Deg2Rad(90.0f), 0.0f);
 #endif
 
 	auto cameraView{ glm::lookAtRH({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
-	auto cameraViewLH{ glm::lookAtLH({0.0f,0.0f,-10.0f},{0.0f,0.0f,0.0f}, Eugene::upVector3<float>) };
-	
-	
-	auto cameraProjection{ glm::perspectiveRH(glm::radians(45.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
-
+	auto cameraProjection{ glm::perspectiveRH(glm::radians(90.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
 	
 
 	while (system->Update())
 	{
-		// マウスの情報を取得
-		system->GetMouse(mouse);
-
-		// 再生チェック
-		if (mouse.CheckFlags(Eugene::Mouse::Flags::LeftButton))
-		{
-			if (!flag)
-			{
-				//stream->Play(0);
-				flag = true;
-			}
-		}
-		else
-		{
-			flag = false;
-		}
-
-		if (system->IsHitKey(Eugene::KeyID::SPACE))
-		{
-			mouse.flags.set(static_cast<size_t>(Eugene::Mouse::Flags::ShowCursor), !mouse.CheckFlags(Eugene::Mouse::Flags::ShowCursor));
-			system->SetMouse(mouse);
-		}
-
-
-		if (frameCnt % 3 == 0)
-		{
-			// 3フレームごとに処理する
-
-			// 中心からの座標にする
-			auto pos = mouse.pos - (system->GetWindowSize() / 2.0f);
-
-			// 正規化して10倍
-			pos = glm::normalize(pos);
-			//pos *= 10.0f;
-			
-			//ctrl->Set3DSound(
-			//	Eugene::forwardVector3<float>,Eugene::upVector3<float>,Eugene::zeroVector3<float>, Eugene::zeroVector3<float>,
-			//	Eugene::forwardVector3<float>, Eugene::upVector3<float>, Eugene::Vector3{pos.x, 0.0f, pos.y}, Eugene::zeroVector3<float>
-			//);
-			
-		}
-
 		auto nowWindowSize{ system->GetWindowSize() };
 		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
+#ifdef USE_IMGUI
 		graphics->ImguiNewFrame();
 		system->ImguiNewFrame();
 		ImGui::NewFrame();
 		
 		ImGuizmo::BeginFrame();
 		ImGuizmo::SetOrthographic(false);
-		ImGui::Begin("texture");
+		ImGui::Begin("Texture");
 		{
 			float pos[]{ (*texMatrix)[3][0],(*texMatrix)[3][1] };
 			bool dirty = false;
 			if (ImGui::DragFloat2("Position", pos))
 			{
-				dirty = true;
 				*texMatrix = { glm::translate(identity,{pos[0],pos[1], 0.0f}) };
 			}
 		}
 		ImGui::End();
 
-
-		ImGui::Begin("effect", 0, gizmoWindowFlags);
+#ifdef USE_EFFEKSEER
+		ImGui::Begin("Effect");
 		{
+			float pos[]{ effectPos.x,effectPos.y, effectPos.z};
 			if (ImGui::Button("Play"))
 			{
-				h = effekseer->GetManager()->Play(effect, { 0.0f,0.0f,0.0f });
+				effectHandle = effekseer->GetManager()->Play(effect, { 0.0f,0.0f,0.0f });
+				effectPos = Eugene::zeroVector3<float>;
+				objectTransform = glm::identity<glm::mat4>();
+			}
+			if (ImGui::DragFloat3("Position", pos))
+			{
+				effekseer->GetManager()->AddLocation(effectHandle,{ pos[0] - effectPos.x, pos[1] - effectPos.y, pos[2] - effectPos.z });
+				effectPos = { pos[0],pos[1],pos[2] };
 			}
 		}
-
-		
 		ImGui::End();
+#endif
 		
+		ImGui::Begin("Sound");
+		if (ImGui::Button("Play"))
+		{
+			speaker->Play();
+		}
+
+		{
+			float volume = speaker->GetVolume();
+			if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f))
+			{
+				speaker->SetVolume(volume);
+			}
+
+			
+			if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
+			{
+				auto rate = (panValue + 1.0f) /2.0f;
+				float pan[]{ 1.0f - rate,rate };
+				speaker->SetPan(pan);
+			}
+		}
+		ImGui::End();
+
 		auto rectPos{ (system->GetMaxWindowSize() - nowWindowSize) / 2.0f };
 		ImGuizmo::SetRect(rectPos.x, rectPos.y, nowWindowSize.x, nowWindowSize.y);
-
-		ImGuizmo::DrawCubes(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(objectTransform), 1);
 		ImGuizmo::DrawGrid(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), glm::value_ptr(identity), 100.0f);
 		
 		if (ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::MODE::WORLD, glm::value_ptr(objectTransform)))
@@ -307,11 +257,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			glm::quat decomposeRt;
 			glm::vec3 decomposeSkew;
 			glm::vec4 decomposePer;
+#ifdef USE_EFFEKSEER
 			glm::decompose(objectTransform, decomposeSc, decomposeRt, decomposeTr, decomposeSkew, decomposePer);
-			effectPos += decomposeTr;
+			auto deff = decomposeTr - effectPos;
+
+			effekseer->GetManager()->AddLocation(effectHandle, {deff.x, deff.y, deff.z});
+			effectPos += deff;
+#endif
 		}
 		ImGuizmo::ViewManipulate(glm::value_ptr(cameraView), 8.0f, ImVec2(rectPos.x, rectPos.y), ImVec2(128, 128), 0x10101010);
-
+#endif
 #ifdef USE_EFFEKSEER
 		{
 			glm::vec3 decomposeTr;
@@ -339,7 +294,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		
 #ifdef USE_EFFEKSEER
-		effekseer->Update(1.0f / 240.0f);
+		effekseer->Update(1.0f / 60.0f);
 #endif
 
 		// コマンド開始
@@ -398,13 +353,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 		graphics->Present();
-
-		if (system->IsHitKey(Eugene::KeyID::ESCAPE))
-		{
-			break;
-		}
-
-		frameCnt++;
 	}
 	ImGuizmo::Enable(true);
 	return 0;

@@ -69,10 +69,10 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 
 void Eugene::Xa2Sound3DControl::SetVolume(float volume)
 {
-	if (volume * volume != volume_)
+	if (volume != volume_)
 	{
-		volume_ = volume * volume;
-		submix_->SetVolume(volume_);
+		volume_ = volume;
+		submix_->SetVolume(volume * volume);
 	}
 }
 

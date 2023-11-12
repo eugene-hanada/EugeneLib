@@ -167,7 +167,11 @@ void Eugene::Xa2SoundSpeaker::SetPitchRate(float rate)
 
 void Eugene::Xa2SoundSpeaker::SetVolume(float volume)
 {
-	source_->SetVolume(volume * volume);
+	if (volume != volume_)
+	{
+		source_->SetVolume(volume * volume);
+		volume_ = volume;
+	}
 }
 
 void Eugene::Xa2SoundSpeaker::SetPan(std::span<float> volumes)

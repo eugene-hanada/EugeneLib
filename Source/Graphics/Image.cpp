@@ -7,25 +7,30 @@
 
 #include "DdsLoad.h"
 
-const Eugene::Image::LoadFuncMap Eugene::Image::loadFuncMap_{
-	{std::hash<std::string>()(".png"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".jpeg"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".tga"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".bmp"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".psd"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".gif"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".hdr"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".pic"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".pnm"),{&Image::LoadStbInfo,&Image::LoadStbData}},
-	{std::hash<std::string>()(".dds"),{&Image::LoadDdsInfo,&Image::LoadDdsData}}
+const Eugene::Image::LoadFuncMap Eugene::Image::loadFuncMap_
+{
+	{std::hash<std::string>()(".png"),&Image::LoadStb},
+	{std::hash<std::string>()(".jpeg"),&Image::LoadStb},
+	{std::hash<std::string>()(".tga"),&Image::LoadStb},
+	{std::hash<std::string>()(".bmp"),&Image::LoadStb},
+	{std::hash<std::string>()(".psd"),&Image::LoadStb},
+	{std::hash<std::string>()(".gif"),&Image::LoadStb},
+	{std::hash<std::string>()(".hdr"),&Image::LoadStb},
+	{std::hash<std::string>()(".pic"),&Image::LoadStb},
+	{std::hash<std::string>()(".pnm"),&Image::LoadStb},
+	{std::hash<std::string>()(".dds"),&Image::LoadDds}
 };
 
 constexpr int ddsSig = std::endian::native == std::endian::little ? 542327876 : 7678324205;
 
 Eugene::Image::Image(const std::filesystem::path& path) :
-	info_{}, br_{path}, isInfoLoaded_{false}
+	info_{}
 {
-	ext_ = std::hash<std::string>()(path.extension().string());
+	auto tmp = std::hash<std::string>()(path.extension().string());
+	if (!(this->*loadFuncMap_.at(tmp))(path))
+	{
+		throw EugeneLibException{ "ファイル読み込み失敗" };
+	}
 }
 
 const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
@@ -39,25 +44,9 @@ std::uint8_t* Eugene::Image::GetData(std::uint32_t arrayIndex, std::uint16_t mip
 	return data_.at((arrayIndex * info_.mipLevels) + mipMapLevel).data();
 }
 
-void Eugene::Image::LoadData(void)
-{
-	(this->*loadFuncMap_.at(ext_).second)(br_);
-}
-
-void Eugene::Image::LoadInfo(void)
-{
-	(this->*loadFuncMap_.at(ext_).first)(br_);
-}
-
-void Eugene::Image::Load(void)
-{
-	LoadInfo();
-	LoadData();
-}
-
 
 Eugene::Image::Image(Image&& img) noexcept:
-	info_{img.info_}, br_{ std::move(img.br_) }, isInfoLoaded_{ img.isInfoLoaded_ }, ext_{img.ext_}
+	info_{img.info_}
 {
 	data_ = std::move(img.data_);
 }
@@ -66,19 +55,20 @@ Eugene::Image& Eugene::Image::operator=(Image&& img) noexcept
 {
 	data_ = std::move(img.data_);
 	info_ = img.info_;
-	ext_ = img.ext_;
-	br_ = std::move(img.br_);
 	return *this;
 }
 
-bool Eugene::Image::LoadStbInfo(BinaryReader& br)
+
+
+bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 {
-	if (isInfoLoaded_)
+	int w, h, c;
+	auto img = stbi_load(path.string().c_str(), &w, &h, &c, STBI_default);
+	if (img == nullptr)
 	{
 		return false;
 	}
-	int w, h, c;
-	stbi_info_from_file(br.GetFilePtr(), &w, &h, &c);
+
 	info_.arraySize = 1;
 	info_.mipLevels = 1;
 	info_.format = Format::R8G8B8A8_UNORM;
@@ -86,45 +76,25 @@ bool Eugene::Image::LoadStbInfo(BinaryReader& br)
 	info_.height = h;
 	info_.pixelPerBite = c;
 	info_.totalSize_ = w * h * c;
-	isInfoLoaded_ = true;
-
-
-	if (data_.size() > 0ull)
-	{
-		// すでにデータが読み込まれているときバイナリリーダーを閉じる
-		br.Close();
-	}
-
-	return true;
-}
-
-bool Eugene::Image::LoadStbData(BinaryReader& br)
-{
-	if (!isInfoLoaded_)
-	{
-		return false;
-	}
-	int w, h, c;
-	auto img = stbi_load_from_file(br.GetFilePtr(), &w, &h, &c, STBI_default);
 	data_.resize(1);
 	data_[0].resize(w * h * c);
 	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
-
-	if (isInfoLoaded_)
-	{
-		br_.Close();
-	}
-
 	return true;
 }
 
-bool Eugene::Image::LoadDdsInfo(BinaryReader& br)
+bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 {
+	std::ifstream file{ path };
+	if (!file)
+	{
+		return false;
+	}
+
 	int sig;
 
 	// シグネチャ読み込み
-	br.Read(static_cast<void*>(&sig), 4);
+	file.read(reinterpret_cast<char*>(&sig), sizeof(sig));
 	if (sig != ddsSig)
 	{
 		// シグネチャがあってなかったら読み込みをやめる
@@ -133,7 +103,7 @@ bool Eugene::Image::LoadDdsInfo(BinaryReader& br)
 
 	// ヘッダー読み込み
 	DdsHeader h;
-	br.Read(static_cast<void*>(&h), sizeof(h));
+	file.read(reinterpret_cast<char*>(&h), sizeof(h));
 
 	// 情報をセット
 	info_.arraySize = 1;
@@ -146,7 +116,7 @@ bool Eugene::Image::LoadDdsInfo(BinaryReader& br)
 	{
 	case '01XD':
 		// DX10の時
-		LoadDdsExtension(br, info_);
+		LoadDdsExtension(file, info_);
 		break;
 	case '1TXD':
 		// DXT1の時
@@ -174,17 +144,6 @@ bool Eugene::Image::LoadDdsInfo(BinaryReader& br)
 	}
 
 	info_.pixelPerBite = h.rgbBitCount / 8;
-	isInfoLoaded_ = true;
-	return false;
-}
-
-bool Eugene::Image::LoadDdsData(BinaryReader& br)
-{
-	if (!isInfoLoaded_)
-	{
-		return false;
-	}
-
 	data_.resize(info_.arraySize * info_.mipLevels);
 
 	// 配列サイズとミップマップの分を読み込む
@@ -204,62 +163,14 @@ bool Eugene::Image::LoadDdsData(BinaryReader& br)
 
 			// リサイズして読み込む
 			data_[idx].resize(size);
-			br.Read(static_cast<void*>(data_[idx].data()), size);
+			file.read(reinterpret_cast<char*>(data_[idx].data()), size);
 		}
 	}
-	br.Close();
+
+	info_.totalSize_ = 0u;
+	for (const auto& tmpData : data_)
+	{
+		info_.totalSize_ += static_cast<std::uint32_t>(tmpData.size());
+	}
 	return true;
-}
-
-Eugene::Image::BinaryReader::BinaryReader(BinaryReader&& br) noexcept
-{
-	file_ = br.file_;
-	br.file_ = nullptr;
-}
-
-Eugene::Image::BinaryReader::BinaryReader(const std::filesystem::path& path)
-{
-#if _WIN64
-	fopen_s(&file_,path.string().c_str(), "rb");
-#endif
-	if (file_ == nullptr)
-	{
-		throw CreateErrorException{ "ファイルオープンに失敗" };
-	}
-}
-
-Eugene::Image::BinaryReader::~BinaryReader()
-{
-	if (file_ != nullptr)
-	{
-		Close();
-	}
-}
-
-Eugene::Image::BinaryReader& Eugene::Image::BinaryReader::operator=(BinaryReader&& br) noexcept
-{
-	file_ = br.file_;
-	br.file_ = nullptr;
-	return *this;
-}
-
-void Eugene::Image::BinaryReader::Read(void* ptr, std::uint64_t size)
-{
-	std::fread(ptr, size, 1, file_);
-}
-
-bool Eugene::Image::BinaryReader::IsOpen(void) const
-{
-	return file_ != nullptr;
-}
-
-void Eugene::Image::BinaryReader::Close(void)
-{
-	std::fclose(file_);
-	file_ = nullptr;
-}
-
- FILE* Eugene::Image::BinaryReader::GetFilePtr(void) 
-{
-	return file_;
 }

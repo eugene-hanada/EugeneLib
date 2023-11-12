@@ -44,7 +44,6 @@ if(USE_IMGUI)
 		ImGuizmo/ImGradient.cpp
 		ImGuizmo/ImGuizmo.cpp
 		ImGuizmo/ImSequencer.cpp
-
 	)
 endif()
 
@@ -66,7 +65,7 @@ set(GraphicsSource
 	Source/Graphics/Image.cpp
 	Source/Graphics/Sampler.cpp
 	Source/Graphics/SamplerViews.cpp
- "Source/Graphics/ResourceBindLayout.cpp")
+	Source/Graphics/ResourceBindLayout.cpp)
 
 # Common系のソースファイルをセット
 set(CommonSource
@@ -77,7 +76,7 @@ set(CommonSource
 # Math系のソースファイルをセット
 set(MathSource
 	Source/Math/Geometry.cpp
-  "Source/Math/Random.cpp")
+	Source/Math/Random.cpp)
 
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
@@ -88,8 +87,6 @@ set(SoundSource
 	Source/Sound/SoundControl.cpp
 	Source/Sound/Sound3DControl.cpp
 	Source/Sound/SoundFile.cpp
-	Source/Sound/Wave.cpp
-	Source/Sound/OggVorbis.cpp
 )
 
 

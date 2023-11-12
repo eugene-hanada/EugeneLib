@@ -10,23 +10,38 @@ namespace Eugene
 {
 	using namespace glm;
 
-	// Vector2Tmpのx=0,y=0を表す定数
+	/// <summary>
+	/// Vector2Tmpのx=0,y=0を表す定数
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<ValueC T>
 	constexpr vec<2,T> zeroVector2{ static_cast<T>(0),static_cast<T>(0) };
 
-	// Vector2Tmpの上方向x=0,y=-1を表す定数
+	/// <summary>
+	/// Vector2Tmpの上方向x=0,y=-1を表す定数
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<ValueC T>
 	constexpr vec<2, T> upVector2{ static_cast<T>(0),static_cast<T>(-1) };
 
-	// Vector2Tmpの下方向x=0,y=1を表す定数
+	/// <summary>
+	/// Vector2Tmpの下方向x=0,y=1を表す定数
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<ValueC T>
 	constexpr vec<2, T> downVector2{ static_cast<T>(0),static_cast<T>(1) };
 
-	// Vector2Tmpの右方向x=1,y=0を表す定数
+	/// <summary>
+	/// Vector2Tmpの右方向x=1,y=0を表す定数
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<ValueC T>
 	constexpr vec<2, T> rightVector2{ static_cast<T>(1),static_cast<T>(0) };
 
-	// Vector2Tmpの上方向x=-1,y=0を表す定数
+	/// <summary>
+	/// Vector2Tmpの上方向x=-1,y=0を表す定数
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<ValueC T>
 	constexpr vec<2, T> leftVector2{ static_cast<T>(-1),static_cast<T>(0) };
 
@@ -50,25 +65,6 @@ namespace Eugene
 
 	template<ValueC T>
 	constexpr vec<3, T> rightVector3{ static_cast<T>(1),static_cast<T>(0) ,static_cast<T>(0) };
-
-	template<ValueC T>
-	vec<3,T>  Translate(const glm::mat<4, 4, T>& matrix)
-	{
-		return { matrix[3][0], matrix[3][1], matrix[3][2]};
-	}
-
-	template<ValueC T>
-	vec<3, T> Scale(const glm::mat<4, 4, T>& matrix)
-	{
-		return { glm::length(matrix[0]),glm::length(matrix[1]), glm::length(matrix[2]) };
-	}
-
-	template<ValueC T>
-	glm::qua<T> Qua(const glm::mat<4, 4, T>& matrix)
-	{
-		return {};
-	}
-
 
 	/// <summary>
 	/// 二乗する
@@ -147,7 +143,7 @@ namespace Eugene
 	/// <param name="size"> サイズ </param>
 	/// <param name="alignment"> アライメントサイズ </param>
 	/// <returns> アライメントされたサイズ </returns>
-	constexpr size_t AlignmentedSize(const size_t& size, const size_t& alignment)
+	constexpr size_t AlignmentedSize(const size_t& size, const size_t& alignment) noexcept
 	{
 		return size + alignment - size % alignment;
 	}
@@ -159,7 +155,7 @@ namespace Eugene
 	/// <typeparam name="Alignment"></typeparam>
 	/// <returns></returns>
 	template<size_t Size, size_t Alignment>
-	constexpr size_t AlignmentedSize()
+	constexpr size_t AlignmentedSize() noexcept
 	{
 		return Size + Alignment - Size % Alignment;
 	}

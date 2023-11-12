@@ -23,10 +23,10 @@ namespace Eugene
 		{
 
 		}
-		const char* semanticName_;
 		std::uint32_t semanticIdx_;
 		Format format_;
 		std::uint32_t slot_;
+		const char* semanticName_;
 	};
 
 	/// <summary>

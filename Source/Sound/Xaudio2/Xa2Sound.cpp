@@ -50,7 +50,11 @@ Eugene::Xa2Sound::~Xa2Sound()
 
 void Eugene::Xa2Sound::SetVolume(float volume)
 {
-	mastering_->SetVolume(volume * volume);
+	if (volume_ != volume)
+	{
+		volume_ = volume;
+		mastering_->SetVolume(volume * volume);
+	}
 }
 
 void Eugene::Xa2Sound::SetPan(std::span<float> volumes)

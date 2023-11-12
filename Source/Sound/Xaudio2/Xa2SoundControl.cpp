@@ -34,10 +34,10 @@ void Eugene::Xa2SoundControl::SetPan(std::span<float> volumes)
 
 void Eugene::Xa2SoundControl::SetVolume(float volume)
 {
-	if (volume * volume != volume_)
+	if (volume  != volume_)
 	{
-		volume_ = volume * volume;
-		submix_->SetVolume(volume_);
+		volume_ = volume;
+		submix_->SetVolume(volume  * volume);
 	}
 }
 

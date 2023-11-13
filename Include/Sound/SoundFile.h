@@ -26,25 +26,6 @@ namespace Eugene
 
 		SoundFile& operator=(SoundFile&& soundFile);
 
-		/*virtual ~SoundFile();
-		/// <summary>
-		/// フォーマット部分を読み込みます
-		/// </summary>
-		/// <param name=""></param>
-		virtual void LoadFormat(void) = 0;
-
-		/// <summary>
-		/// データ部分を読み込みます
-		/// </summary>
-		/// <param name=""></param>
-		virtual void LoadData(void) = 0;
-
-		/// <summary>
-		/// ファイルを閉じる
-		/// </summary>
-		/// <param name=""></param>
-		virtual void Close(void) = 0;*/
-
 		/// <summary>
 		/// データへのポインタを取得する
 		/// </summary>
@@ -74,6 +55,10 @@ namespace Eugene
 		const SoundFormatEx& GetFormatExt(void) const noexcept;
 	protected:
 
+		bool LoadWave(const std::filesystem::path& path);
+
+		bool LoadOggVorbis(const std::filesystem::path& path);
+
 		/// <summary>
 		/// データ部
 		/// </summary>
@@ -89,11 +74,4 @@ namespace Eugene
 		/// </summary>
 		SoundFormatEx ex_;
 	};
-
-	/// <summary>
-	/// サウンドファイルを開きインターフェースクラスを生成する
-	/// </summary>
-	/// <param name="path"></param>
-	/// <returns></returns>
-	//SoundFile* OpenSoundFile(const std::filesystem::path& path);
 }

@@ -69,12 +69,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			glm::vec2 uv;
 		};
 
-		struct Vertex3D
-		{
-			glm::vec3 pos;
-			glm::vec2 uv;
-		};
-
 		Vertex2D vertex[4]
 		{
 			{{0.0f,0.0f},{0.0f,0.0f}},
@@ -155,7 +149,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// サウンド
 	auto sound = Eugene::CreateSoundUnique();
 	auto soundFile{ Eugene::SoundFile("./exp.wav") };
+	std::unique_ptr<Eugene::SoundControl> soundCtrl{ sound->CreateSoundControl(0,soundFile.GetFormat().sample, 2) };
 	std::unique_ptr<Eugene::SoundSpeaker> speaker{sound->CreateSoundSpeaker(soundFile)};
+	speaker->SetOutput(*soundCtrl);
 	float panValue = 0.0f;
 	speaker->SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
 	speaker->Play();

@@ -8,23 +8,24 @@
 #include <cuchar>
 #include <chrono>
 #include <thread>
-#ifdef _WIN64
+
+#ifdef USE_WINDOWS
 #include <Windows.h>
 FILE* fp;
 #endif
 
 
 
-Eugene::Debug& Eugene::Debug::GetInstance(void)
+Eugene::DebugIO& Eugene::DebugIO::GetInstance(void)
 {
-	static Debug instance_;
+	static DebugIO instance_;
 	return instance_;
 }
 
 
 
 
-void Eugene::Debug::Log(const std::string& str)
+void Eugene::DebugIO::Log(const std::string& str)
 {
 	// ロック
 	binarySemphore_.acquire();
@@ -35,15 +36,19 @@ void Eugene::Debug::Log(const std::string& str)
 	// バッファを利用したストリームからスレッドIDを文字列に変換
 	oss_ << std::this_thread::get_id();
 
+	auto tmp = std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, oss_.str(), str);
+
 	// 時間とスレッドIDとstrを出力
-	std::cout << std::format("Log[{0:%H:%M:%S}][Thread={1:}]{2:}\n", std::chrono::zoned_time{ std::chrono::current_zone(),now }, oss_.str(), str);
+	std::cout << tmp;
+
+	file_ << tmp;
 
 	oss_.seekp(0);
 	binarySemphore_.release();
 }
 
-Eugene::Debug::Debug() :
-	binarySemphore_{1}
+Eugene::DebugIO::DebugIO() :
+	binarySemphore_{1}, file_{ "./log.txt",std::ios::out }
 {
 #ifdef _WIN64
 
@@ -58,7 +63,7 @@ Eugene::Debug::Debug() :
 	oss_.seekp(0);
 }
 
-Eugene::Debug::~Debug()
+Eugene::DebugIO::~DebugIO()
 {
 #ifdef _WIN64
 	fclose(fp);

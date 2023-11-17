@@ -4,22 +4,25 @@
 #include <filesystem>
 #include <format>
 #include <semaphore>
-
+#include <fstream>
 
 #if defined(_DEBUG)
+#define DebugLog(str,...) (Eugene::DebugIO::GetInstance().Log(str,__VA_ARGS__))
+#else
+#define DebugLog(...) 
+#endif
 
-#define DebugLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
+#define Debug (Eugene::DebugIO::GetInstance())
 
 namespace Eugene
 {
 	/// <summary>
 	/// コンソールにデバッグ出力するクラス、シングルトンになっている
 	/// </summary>
-	class Debug
+	class DebugIO
 	{
 	public:
-		static Debug& GetInstance(void);
-
+		static DebugIO& GetInstance(void);
 
 #if _MSC_FULL_VER < 193532215 
 
@@ -64,10 +67,10 @@ namespace Eugene
 		void Log(const std::string& str);
 
 	private:
-		Debug();
-		~Debug();
-		Debug(const Debug&) = delete;
-		void operator=(const Debug&) = delete;
+		DebugIO();
+		~DebugIO();
+		DebugIO(const DebugIO&) = delete;
+		void operator=(const DebugIO&) = delete;
 
 		/// <summary>
 		/// アクセス制御用バイナリセマフォ
@@ -78,15 +81,13 @@ namespace Eugene
 		/// スレッドID出力用oss
 		/// </summary>
 		std::ostringstream oss_;
+
+		std::ofstream file_;
 	};
 
 	
 }
 
 
-#else
 
-#define DebugLog(...) 
-
-#endif
 

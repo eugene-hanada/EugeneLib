@@ -32,8 +32,7 @@ jobs:
       run: |
         cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
         cmake --build ${{github.workspace}}/build
-        
-      # アップロード
+    
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:

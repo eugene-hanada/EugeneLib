@@ -8,7 +8,7 @@
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
-
+#include "Dx12ResourceBindLayout.h"
 
 #include "Dx12BufferResource.h"
 #include "Dx12ImageResource.h"
@@ -21,6 +21,8 @@
 #include "Dx12Sampler.h"
 #include "Dx12SamplerViews.h"
 #include "../../../Include/Graphics/Shader.h"
+
+#include "../../../Include/ThirdParty/glm/glm/vec3.hpp"
 
 #ifdef USE_EFFEKSEER
 #include <Effekseer.h>
@@ -102,6 +104,14 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_R8G8B8A8_SNORM,
 	DXGI_FORMAT_R8G8B8A8_SINT,
 
+	// B8G8R8A8
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+	DXGI_FORMAT_B8G8R8A8_UNORM,
+	DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+	DXGI_FORMAT_B8G8R8A8_TYPELESS,
+
 	//
 	DXGI_FORMAT_BC1_UNORM,
 	DXGI_FORMAT_BC2_UNORM,
@@ -110,16 +120,27 @@ const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat
 	DXGI_FORMAT_BC7_UNORM
 };
 
-Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	CreateDevice();
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum, maxNum);
 	CreateBackBuffers(bufferNum);
 
 #ifdef USE_IMGUI
-	srViews_.reset(CreateShaderResourceViews(256));
-	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
-	ImGui_ImplDX12_Init(device_.Get(), bufferNum, DXGI_FORMAT_R8G8B8A8_UNORM, ptr, ptr->GetCPUDescriptorHandleForHeapStart(), ptr->GetGPUDescriptorHandleForHeapStart());
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
+	if (FAILED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))))
+	{
+		throw CreateErrorException("DirectX12ディスクリプタヒープの作成に失敗");
+	}
+
+	ImGui_ImplDX12_Init(
+		device_.Get(),
+		bufferNum, 
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		imguiDescriptorHeap_.Get(),
+		imguiDescriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		imguiDescriptorHeap_->GetGPUDescriptorHandleForHeapStart()
+	);
 	
 #endif
 }
@@ -143,24 +164,6 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 	return new Dx12CommandList{device_.Get()};
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
-	ShaderInputSpan layout, ShaderTypePaisrSpan shaders,
-	RenderTargetSpan rendertarges, TopologyType topologyType, 
-	bool isCulling, bool useDepth, ShaderLayoutSpan shaderLayout, SamplerSpan samplerLayout
-	) const
-{
-	return new Dx12GraphicsPipeline{
-		device_.Get(),
-		layout,
-		shaders,
-		rendertarges,
-		topologyType,
-		isCulling,
-		shaderLayout,
-		samplerLayout,
-		useDepth
-	};
-}
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
@@ -182,20 +185,20 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{device_.Get(),formatData};
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor)
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor)
 {
+	if (format == Format::AUTO_BACKBUFFER)
+	{
+		format = backBufferFormat_;
+	}
 	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const Vector2I& size, float clear) const
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear) const
 {
 	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
 }
 
-Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(std::uint64_t size) const
-{
-	return new Dx12ShaderResourceViews{ device_.Get(), size};
-}
 
 Eugene::RenderTargetViews* Eugene::Dx12Graphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
 {
@@ -214,6 +217,11 @@ Eugene::VertexView* Eugene::Dx12Graphics::CreateVertexView(std::uint64_t size, s
 
 Eugene::IndexView* Eugene::Dx12Graphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
 {
+	if (format == Format::AUTO_BACKBUFFER)
+	{
+		format = backBufferFormat_;
+	}
+
 	return new Dx12IndexView{size,num, format,resource};
 }
 
@@ -233,37 +241,18 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 
 	if (FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("DXGIファクトリーの生成に失敗");
+		throw CreateErrorException("DXGIファクトリーの生成に失敗");
 	}
 
-	// アダプター列挙用リスト
-	std::list<IDXGIAdapter*> adapters;
+
 
 	// アダプター格納用
 	IDXGIAdapter* tmpAdapter = nullptr;
 
-	// アダプターを格納する
-	for (int i = 0; dxgiFactory_->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++)
-	{
-		adapters.push_back(tmpAdapter);
-	}
+	// 最もパフォーマンスの高いGPUを選択
+	dxgiFactory_->EnumAdapterByGpuPreference(0, DXGI_GPU_PREFERENCE::DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter));
 
-	// 格納したアダプターから探す
-	std::wstring strDesc;
-	tmpAdapter = *adapters.begin();
-	for (auto& adpt : adapters)
-	{
-		DXGI_ADAPTER_DESC adesc{};
-		adpt->GetDesc(&adesc);			// アダプターについて取得する
-		strDesc = adesc.Description;
-		if (strDesc.find(L"NVIDIA") != std::string::npos || strDesc.find(L"AMD") != std::string::npos)
-		{
-			// 見つかったら抜ける
-			tmpAdapter = adpt;
-			break;
-		}
-	}
-
+	
 	// フューチャーレベル
 	D3D_FEATURE_LEVEL levels[]{
 		D3D_FEATURE_LEVEL_12_1,
@@ -271,28 +260,19 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 		D3D_FEATURE_LEVEL_11_1,
 		D3D_FEATURE_LEVEL_11_0
 	};
-	D3D_FEATURE_LEVEL fLavel;
-
-
-
+	
 	for (auto& level : levels)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
-			// 解放しとく
-			for (auto& a : adapters)
-			{
-				a->Release();
-			}
-			fLavel = level;
 			return;
 		}
 	}
 
-	throw EugeneLibException("D3D12デバイスの作成に失敗");
+	throw CreateErrorException("D3D12デバイスの作成に失敗");
 }
 
-void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
 	gpuEngine = CreateGpuEngine(maxNum);
 
@@ -307,6 +287,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 
 	// フォーマット�
 	swapchainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	backBufferFormat_ = Format::R8G8B8A8_UNORM;
 
 	// ステレオ表示フラグｰ
 	swapchainDesc.Stereo = false;
@@ -322,7 +303,7 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	swapchainDesc.Scaling = DXGI_SCALING_STRETCH;
 	swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
-	swapchainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	swapchainDesc.Flags = 0;
 
 
 	ID3D12CommandQueue* cmdQueue{ static_cast<ID3D12CommandQueue*>(gpuEngine->GetQueue()) };
@@ -338,11 +319,11 @@ void Eugene::Dx12Graphics::CreateSwapChain(HWND& hwnd, const Vector2& size, GpuE
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
-		throw EugeneLibException("スワップチェイン生成失敗");
+		throw CreateErrorException("スワップチェイン生成失敗");
 	}
 	if (FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))))
 	{
-		throw EugeneLibException("スワップチェイン生成失敗");
+		throw CreateErrorException("スワップチェイン生成失敗");
 	}
 
 	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
@@ -357,7 +338,7 @@ void Eugene::Dx12Graphics::CreateBackBuffers(std::uint64_t bufferCount)
 	{
 		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i)});
 
-		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
+		renderTargetViews_->Create(*buffers_[i], i);
 	}
 
 }
@@ -374,7 +355,7 @@ Eugene::RenderTargetViews& Eugene::Dx12Graphics::GetViews(void)
 	return *renderTargetViews_;
 }
 
-size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void)
+size_t Eugene::Dx12Graphics::GetNowBackBufferIndex(void) const
 {
 	// バックバッファのインデックスを取得
 	return swapChain_->GetCurrentBackBufferIndex();
@@ -390,12 +371,9 @@ Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout
 	return new Dx12Sampler{ layout };
 }
 
-Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(size_t size) const
-{
-	return new Dx12SamplerViews{device_.Get(), size};
-}
 
-void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
+
+void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size)
 {
 	for (auto& buffer : buffers_)
 	{
@@ -409,13 +387,45 @@ void Eugene::Dx12Graphics::ResizeBackBuffer(const Vector2& size)
 	for (size_t i = 0; i < buffers_.size(); i++)
 	{
 		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i) });
-		renderTargetViews_->Create(*buffers_[i], i, Format::R8G8B8A8_UNORM);
+		renderTargetViews_->Create(*buffers_[i], i);
 	}
 }
 
 void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
 {
+	DXGI_SWAP_CHAIN_DESC1 dec;
+	swapChain_->GetDesc1(&dec);
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
+}
+
+Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+{
+	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
+}
+
+Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+{
+	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
+}
+
+Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	std::uint64_t num{ 0ull };
+	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
+	{
+		num += viewTypes.at(i).viewNum_;
+	}
+	return new Dx12ShaderResourceViews{device_.Get(),num };
+}
+
+Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+{
+	std::uint64_t num{ 0ull };
+	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
+	{
+		num += viewTypes.at(i).viewNum_;
+	}
+	return new Dx12SamplerViews{device_.Get(),num};
 }
 
 #ifdef USE_IMGUI
@@ -426,16 +436,34 @@ void Eugene::Dx12Graphics::ImguiNewFrame(void) const
 }
 void* Eugene::Dx12Graphics::GetImguiImageID(std::uint64_t index) const
 {
-	auto ptr = static_cast<ID3D12DescriptorHeap*>(srViews_->GetViews());
+	if (index >= imguiImageMax_)
+	{
+		return nullptr;
+	}
+	auto ptr = imguiDescriptorHeap_.Get();
 	auto handle = ptr->GetGPUDescriptorHandleForHeapStart();
-	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * index;
+	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * (index + 1);
 	return reinterpret_cast<void*>(handle.ptr);
 }
-Eugene::ShaderResourceViews& Eugene::Dx12Graphics::GetImguiShaderResourceView(void)&
-{
-	return *srViews_;
-}
 
+void Eugene::Dx12Graphics::SetImguiImage(ImageResource& imageResource, std::uint64_t index)
+{
+	if (index >= imguiImageMax_)
+	{
+		return;
+	}
+
+	auto img{ static_cast<ID3D12Resource*>(imageResource.GetResource()) };
+	auto imgDesc{ img->GetDesc() };
+	auto handle = imguiDescriptorHeap_.Get()->GetCPUDescriptorHandleForHeapStart();
+	handle.ptr += device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * (index + 1);
+	D3D12_SHADER_RESOURCE_VIEW_DESC desc{};
+	desc.Format = imgDesc.Format;
+	desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	desc.Texture2D.MipLevels = imgDesc.MipLevels;
+	device_->CreateShaderResourceView(img, &desc, handle);
+}
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -517,19 +545,47 @@ public:
 		return manager_;
 	}
 
-	void SetCameraPos(const Eugene::Vector3& eye, const Eugene::Vector3& at, const Eugene::Vector3& up) final
+	void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) final
 	{
+		auto tmp = Effekseer::Matrix44().LookAtLH(
+			Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{ up.x, up.y, up.z });
 		renderer_->SetCameraMatrix(
-			Effekseer::Matrix44().LookAtLH(
-				Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{up.x, up.y, up.z}
-			)
+			tmp
 		);
 	}
 
-	void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+	void SetCameraProjection(float fov, float aspect, const glm::vec2 &nearfar) final
 	{
 		renderer_->SetProjectionMatrix(
 			Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
+	}
+
+	// EffekseerWarpper を介して継承されました
+	void SetCameraPos(const glm::mat4& mat) final
+	{
+		Effekseer::Matrix44 tmp;
+		for (int y = 0; y < 4; y++)
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				tmp.Values[y][x] = mat[y][x];
+			}
+		}
+		renderer_->SetCameraMatrix(
+			tmp
+		);
+	}
+	void SetCameraProjection(const glm::mat4& mat) final
+	{
+		Effekseer::Matrix44 tmp;
+		for (int y = 0; y < 4; y++)
+		{
+			for (int x = 0; x < 4; x++)
+			{
+				tmp.Values[y][x] = mat[y][x];
+			}
+		}
+		renderer_->SetProjectionMatrix(tmp);
 	}
 private:
 
@@ -552,12 +608,18 @@ private:
 	/// コマンドリスト
 	/// </summary>
 	Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
+
+
 };
 
 Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
 	GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat,bool reverseDepth, std::uint64_t maxNumm
 ) const
 {
+	if (rtFormat == Format::AUTO_BACKBUFFER)
+	{
+		rtFormat = backBufferFormat_;
+	}
 	auto rtF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(rtFormat)]);
 	auto depthF = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_[static_cast<int>(depthFormat)]);
 	DXGI_SWAP_CHAIN_DESC1 desc;
@@ -567,4 +629,5 @@ Eugene::EffekseerWarpper* Eugene::Dx12Graphics::CreateEffekseerWarpper(
 		desc.BufferCount, rtF, depthF,reverseDepth,maxNumm
 	};
 }
+
 #endif

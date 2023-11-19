@@ -15,7 +15,7 @@ Eugene::Xa2Sound::Xa2Sound()
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
-		throw EugeneLibException("XAudio2生成失敗");
+		throw CreateErrorException("XAudio2生成失敗");
 	}
 #ifdef _DEBUG
 	// デバッグ設定
@@ -26,7 +26,7 @@ Eugene::Xa2Sound::Xa2Sound()
 #endif
 	if (FAILED(xaudio2_->CreateMasteringVoice(&mastering_)))
 	{
-		throw EugeneLibException("マスタリングボイスの作成に失敗");
+		throw CreateErrorException("マスタリングボイスの作成に失敗");
 	}
 	
 	XAUDIO2_VOICE_DETAILS details;
@@ -39,7 +39,7 @@ Eugene::Xa2Sound::Xa2Sound()
 	
 	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
 	{
-		throw EugeneLibException("X3DAudioの初期化に失敗");
+		throw CreateErrorException("X3DAudioの初期化に失敗");
 	}
 }
 
@@ -50,7 +50,11 @@ Eugene::Xa2Sound::~Xa2Sound()
 
 void Eugene::Xa2Sound::SetVolume(float volume)
 {
-	mastering_->SetVolume(volume * volume);
+	if (volume_ != volume)
+	{
+		volume_ = volume;
+		mastering_->SetVolume(volume * volume);
+	}
 }
 
 void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
@@ -66,11 +70,6 @@ Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const SoundFile& soun
 	return new Xa2SoundSpeaker{xaudio2_.Get(),soundFile, inChannel_, maxPitchRate};
 }
 
-Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const OggVorbis& ogg, const float maxPitchRate) const
-{
-	return nullptr;
-	//return new Xa2SoundSpeaker{xaudio2_.Get(), ogg, inChannel_, maxPitchRate};
-}
 
 Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {

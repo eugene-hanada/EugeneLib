@@ -1,11 +1,14 @@
 ﻿#pragma once
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
-#include "../Math/Vector2.h"
-#include "../Math/Vector3.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
+#include "../ThirdParty/glm/glm/vec3.hpp"
 #include "Sampler.h"
+#include "../Common/ArgsSpan.h"
+
 
 #ifdef USE_EFFEKSEER
+#include "../ThirdParty/glm/glm/mat4x4.hpp"
 namespace Effekseer
 {
 	template<class T>
@@ -60,9 +63,13 @@ namespace Eugene
 		/// <returns></returns>
 		virtual Effekseer::RefPtr<Effekseer::Manager>& GetManager()& = 0;
 
-		virtual void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) = 0;
+		virtual void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) = 0;
 
-		virtual void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) = 0;
+		virtual void SetCameraPos(const glm::mat4& mat) = 0;
+
+		virtual void SetCameraProjection(float fov, float aspect, const glm::vec2& nearfar) = 0;
+
+		virtual void SetCameraProjection(const glm::mat4& mat) = 0;
 	protected:
 		EffekseerWarpper();
 	};
@@ -91,30 +98,31 @@ namespace Eugene
 		/// <returns> CommandListのポインタ </returns>
 		[[nodiscard]]
 		virtual CommandList* CreateCommandList(void) const = 0;
-
+		
 		/// <summary>
-		/// GraphicsPipelineの生成
+		/// グラフィックスパイプラインクラスを生成する
 		/// </summary>
-		/// <param name="layout"> シェーダーの入力レイアウト </param>
-		/// <param name="shaders"> シェーダー </param>
+		/// <param name="resourceBindLayout"> シェーダへのリソースバインドを設定への参照 </param>
+		/// <param name="layout"> シェーダ入力のレイアウト </param>
+		/// <param name="shaders"> 各シェーダ(頂点シェーダ、ピクセルシェーダ...など) </param>
 		/// <param name="rendertarges"> レンダーターゲットの設定 </param>
-		/// <param name="topologyType"> トポロジー設定 </param>
-		/// <param name="isCulling"> カリングを行うか(デフォルトでは行わない) </param>
-		/// <param name="shaderLayout"> シェーダーで使う定数バッファ等の情報 </param>
-		/// <param name="samplerLayout"> サンプラーの情報 </param>
+		/// <param name="topologyType"> トポロジータイプ </param>
+		/// <param name="isCulling"> バックカリングを使用するか? </param>
+		/// <param name="useDepth">　デプスバッファを使用するか?　</param>
 		/// <returns></returns>
 		[[nodiscard]]
 		virtual GraphicsPipeline* CreateGraphicsPipeline(
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
+			ResourceBindLayout& resourceBindLayout,
+			const ArgsSpan<ShaderInputLayout>& layout,
+			const ArgsSpan<ShaderPair>&  shaders,
+			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
-			bool useDepth = false,
-			ShaderLayoutSpan shaderLayout = ShaderLayoutSpan{},
-			SamplerSpan samplerLayout = SamplerSpan{}
+			bool useDepth = false
 		) const = 0;
-		
+
+		[[nodiscard]]
+		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const = 0;
 
 		/// <summary>
 		/// アップロードのためのバッファー(頂点、インデックス、定数)用のリソースを生成する
@@ -157,18 +165,24 @@ namespace Eugene
 		/// <param name="clearColor"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateImageResource(const Vector2I& size, Format format, std::span<float, 4> clearColor) = 0;
+		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) = 0;
 
+		/// <summary>
+		/// 深度バッファ用リソースの生成
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="clear"></param>
+		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateDepthResource(const Vector2I& size, float clear) const = 0;
+		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成
 		/// </summary>
-		/// <param name="size"> Viewの数 </param>
+		/// <param name="viewTypes"> Viewの情報 </param>
 		/// <returns> ShaderResourceViewsのポインタ </returns>
 		[[nodiscard]]
-		virtual ShaderResourceViews* CreateShaderResourceViews(std::uint64_t size) const = 0;
+		virtual ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const = 0;
 
 		/// <summary>
 		/// RenderTargetViewsの生成
@@ -234,7 +248,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> インデックス </returns>
-		virtual std::uint64_t GetNowBackBufferIndex(void) = 0;
+		virtual std::uint64_t GetNowBackBufferIndex(void) const = 0 ;
 
 		/// <summary>
 		/// 
@@ -253,22 +267,23 @@ namespace Eugene
 		/// <summary>
 		/// サンプラービューを作成する
 		/// </summary>
-		/// <param name="size"> ビューの数 </param>
+		/// <param name="viewTypes">  </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual SamplerViews* CreateSamplerViews(std::uint64_t size) const = 0;
+		virtual SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const = 0;
 
 		/// <summary>
 		/// バックバッファをリサイズする
 		/// </summary>
 		/// <param name="size"></param>
-		virtual void ResizeBackBuffer(const Vector2& size);
+		virtual void ResizeBackBuffer(const glm::vec2& size);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="isFullScreen"></param>
 		virtual void SetFullScreenFlag(bool isFullScreen);
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -285,11 +300,11 @@ namespace Eugene
 		virtual void* GetImguiImageID(std::uint64_t index) const = 0;
 
 		/// <summary>
-		/// 
+		/// Imguiで使用する画像をセットする
 		/// </summary>
-		/// <param name=""></param>
-		/// <returns></returns>
-		virtual ShaderResourceViews& GetImguiShaderResourceView(void) & = 0;
+		/// <param name="imageResource"></param>
+		/// <param name="index"></param>
+		virtual void SetImguiImage(ImageResource& imageResource,std::uint64_t index = 0ull) = 0;
 #endif
 
 #ifdef USE_EFFEKSEER
@@ -306,6 +321,22 @@ namespace Eugene
 #endif
 
 	protected:
+
 		Graphics();
+
+		/// <summary>
+		/// バックバッファのフォーマット
+		/// </summary>
+		static Format backBufferFormat_;
+
+		friend class System;
+
+#ifdef USE_IMGUI
+
+		/// <summary>
+		/// imguiで使用する画像の最大数
+		/// </summary>
+		const std::uint64_t imguiImageMax_{1000ull};
+#endif
 	};
 }

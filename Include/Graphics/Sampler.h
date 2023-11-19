@@ -68,8 +68,10 @@ namespace Eugene
 	class Sampler
 	{
 	public:
+		virtual ~Sampler();
 	protected:
 		Sampler();
+		
 	private:
 	};
 }

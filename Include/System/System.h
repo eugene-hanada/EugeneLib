@@ -5,7 +5,7 @@
 #include <span>
 #include <bitset>
 #include <filesystem>
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 #include "KeyID.h"
 #include "GamePad.h"
 
@@ -28,22 +28,66 @@ namespace Eugene
 		/// </summary>
 		enum class Flags
 		{
+			/// <summary>
+			/// 左クリック
+			/// </summary>
 			LeftButton,
+
+			/// <summary>
+			/// 右クリック
+			/// </summary>
 			RightButton,
+
+			/// <summary>
+			/// ホイール
+			/// </summary>
 			CenterButton,
+
+			/// <summary>
+			/// 追加ボタン1
+			/// </summary>
 			Other1Button,
+
+			/// <summary>
+			/// 追加ボタン2
+			/// </summary>
 			Other2Button,
+
+			/// <summary>
+			/// カーソル表示フラグ
+			/// </summary>
 			ShowCursor,
 			Max
 		};
 
 		Mouse();
+
+		/// <summary>
+		/// 指定のフラグがtrueかチェックする
+		/// </summary>
+		/// <param name="flag"> チェックしたいフラグ </param>
+		/// <returns> 結果 </returns>
 		bool CheckFlags(Flags flag) const;
-		Vector2 pos;
+
+		/// <summary>
+		/// マウス座標
+		/// </summary>
+		glm::vec2 pos;
+
+		/// <summary>
+		/// ホイール
+		/// </summary>
 		float wheel = 0.0f;
+
+		/// <summary>
+		/// フラグ
+		/// </summary>
 		std::bitset<static_cast<size_t>(Flags::Max)> flags;
 	private:
 	};
+
+	using UniqueGraphics = std::unique_ptr<Graphics>;
+	using UniqueGpuEngine = std::unique_ptr<GpuEngine>;
 
 	/// <summary>
 	/// OS等の処理をするクラス
@@ -51,7 +95,6 @@ namespace Eugene
 	class System
 	{
 	public:
-
 		/// <summary>
 		/// キーボードの情報()
 		/// </summary>
@@ -79,15 +122,14 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> ウィンドウサイズ </returns>
-		const Vector2& GetWindowSize(void) const&;
+		const glm::vec2& GetWindowSize(void) const&;
 
 		/// <summary>
-		/// Graphicsをを生成する
+		/// 最大ウィンドウサイズを取得する
 		/// </summary>
-		/// <param name="gpuEngine"> GpuEngineのポインタの参照 </param>
-		/// <returns> Graphicsのポインタ </returns>
-		[[nodiscard]]
-		virtual Graphics* CreateGraphics(GpuEngine*& gpuEngine, std::uint32_t bufferNum = 2) const& = 0;
+		/// <param name=""></param>
+		/// <returns></returns>
+		const glm::vec2& GetMaxWindowSize(void) const&;
 
 		/// <summary>
 		/// Graphicsを生成する
@@ -97,6 +139,9 @@ namespace Eugene
 		/// <returns></returns>
 		[[nodiscard]]
 		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
+
+		[[nodiscard]]
+		virtual std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		/// <summary>
 		/// マウスの情報を取得する
@@ -142,13 +187,11 @@ namespace Eugene
 		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
 		/// <summary>
-		/// 
+		/// 終了するか？
 		/// </summary>
-		/// <param name=""></param>
+		/// <param name=""> trueの時終了する </param>
 		/// <returns></returns>
 		virtual bool IsEnd(void) const = 0;
-
-		virtual void ResizeWindow(const Vector2& size) = 0;
 
 		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
@@ -157,8 +200,34 @@ namespace Eugene
 		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
 		[[nodiscard]]
 		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
+
+		/// <summary>
+		/// ウィンドウのリサイズを行う
+		/// </summary>
+		/// <param name="size"></param>
+		void ReSizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンにしたりする
+		/// </summary>
+		/// <param name="isFullScreen"> trueでフルスクリーン </param>
+		void SetFullScreen(bool isFullScreen);
+
+
+
 #ifdef USE_IMGUI
+
+		/// <summary>
+		/// Imguiのフレーム開始処理を行う
+		/// </summary>
+		/// <param name=""></param>
 		virtual void ImguiNewFrame(void) const = 0;
+
+		/// <summary>
+		/// Systemクラスが作成したImguiのコンテキストを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> Imguiのコンテキスト </returns>
 		ImGuiContext* GetContextFromCreatedLib(void) const;
 #endif
 	protected:
@@ -168,26 +237,50 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
-		System(const Vector2& size, const std::u8string& title);
+		System(const glm::vec2& size, const std::u8string& title);
 		
+		/// <summary>
+		/// ウィンドウをリサイズ時のサブクラスがわの処理
+		/// </summary>
+		/// <param name="size"> ウインドウサイズ </param>
+		virtual void OnResizeWindow(const glm::vec2& size);
+
+		/// <summary>
+		/// フルスクリーンフラグセット時のサブクラスの処理
+		/// </summary>
+		/// <param name="isFullScreen"></param>
+		virtual void OnSetFullScreen(bool isFullScreen);
+
 		/// <summary>
 		/// ウィンドウサイズ
 		/// </summary>
-		Vector2 windowSize_;
+		glm::vec2 windowSize_;
 
 		/// <summary>
 		/// タイトル
 		/// </summary>
 		std::u8string title_;
 
+		/// <summary>
+		/// リサイズように使用
+		/// </summary>
+		static Eugene::Graphics* graphics;
+
+		/// <summary>
+		/// 最大ウィンドウサイズ
+		/// </summary>
+		glm::vec2 maxWindowSize_;
+
 #ifdef USE_IMGUI
+
+		/// <summary>
+		/// Imgui用コンテキスト
+		/// </summary>
 		ImGuiContext* context_{ nullptr };
 #endif
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
-
-
 	};
 
 	/// <summary>
@@ -197,5 +290,17 @@ namespace Eugene
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
 	[[nodiscard]]
-	System* CreateSystem(const Vector2& size, const std::u8string& title);
+	System* CreateSystem(const glm::vec2& size, const std::u8string& title);
+
+	using UniqueSystem = std::unique_ptr<System>;
+
+	/// <summary>
+	/// CreateSystemのstd::unique_ptrを返す版
+	/// </summary>
+	/// <param name="size"> ウィンドウサイズ </param>
+	/// <param name="title"> タイトル </param>
+	/// <returns> std::unique_ptrを使用したSystem </returns>
+	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title);
+
+	
 }

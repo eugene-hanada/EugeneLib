@@ -3,6 +3,8 @@
 #include "../../../Include/Graphics/BufferResource.h"
 #include "../../../Include/Graphics/ImageResource.h"
 
+#include "../../../Include/Graphics/ResourceBindLayout.h"
+
 Eugene::Dx12ShaderResourceViews::Dx12ShaderResourceViews(ID3D12Device* device, std::uint64_t size) :
 	Dx12Views{device,size,true,D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV}, ShaderResourceViews{size}
 {
@@ -83,7 +85,7 @@ void Eugene::Dx12ShaderResourceViews::CreateCubeMap(ImageResource& resource, std
 	device->CreateShaderResourceView(dx12Resource, &viewDesc, handle);
 }
 
-void* Eugene::Dx12ShaderResourceViews::GetViews(void) const
+void* Eugene::Dx12ShaderResourceViews::GetViews(void)
 {
 	return descriptorHeap_.Get();
 }

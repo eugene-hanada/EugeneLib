@@ -1,10 +1,13 @@
 #pragma once
 #include "GpuResource.h"
 #include "GraphicsCommon.h"
-#include "../Math/Vector2.h"
+#include "../ThirdParty/glm/glm/vec2.hpp"
 
 namespace Eugene
 {
+	/// <summary>
+	/// テクスチャやレンダーターゲット等に使うリソース
+	/// </summary>
 	class ImageResource :
 		public GpuResource
 	{
@@ -23,7 +26,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		virtual Vector2I GetSize(void) = 0;
+		virtual glm::ivec2 GetSize(void) = 0;
 	protected:
 		ImageResource(Format format);
 

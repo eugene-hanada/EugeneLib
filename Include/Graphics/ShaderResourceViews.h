@@ -37,7 +37,7 @@ namespace Eugene
 		/// <param name="resource"> リソース </param>
 		/// <param name="idx"> インデックス </param>
 		virtual void CreateCubeMap(ImageResource& resource, std::uint64_t idx) = 0;
-		virtual void* GetViews(void) const = 0;
+		virtual void* GetViews(void) = 0;
 
 		/// <summary>
 		/// サイズを取得

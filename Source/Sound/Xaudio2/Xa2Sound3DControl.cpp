@@ -3,6 +3,7 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include <vector>
+#include <cmath>
 #include "../../../Include/Common/EugeneLibException.h"
 
 
@@ -13,7 +14,7 @@ Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::u
 	outChannel_ = outChannel;
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw EugeneLibException("3D用サブミックスボイスの作成");
+		throw CreateErrorException("3D用サブミックスボイスの作成");
 	}
 
 
@@ -25,8 +26,8 @@ Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
 }
 
 void Eugene::Xa2Sound3DControl::Set3DSound(
-	const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity,
-	const Vector3& emitterFront, const Vector3& emitterTop, const Vector3& emitterPos, const Vector3& emitterVelocity)
+	const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity,
+	const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity)
 {
 	X3DAUDIO_EMITTER emitter{};
 	X3DAUDIO_LISTENER listener{};
@@ -68,10 +69,10 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 
 void Eugene::Xa2Sound3DControl::SetVolume(float volume)
 {
-	if (volume * volume != volume_)
+	if (volume != volume_)
 	{
-		volume_ = volume * volume;
-		submix_->SetVolume(volume_);
+		volume_ = volume;
+		submix_->SetVolume(volume * volume);
 	}
 }
 

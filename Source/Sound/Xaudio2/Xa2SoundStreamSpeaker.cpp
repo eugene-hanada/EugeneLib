@@ -1,8 +1,7 @@
 ﻿#include "Xa2SoundStreamSpeaker.h"
 #include "../../../Include/Sound/SoundCommon.h"
-#include "../Wave.h"
 #include "../../../Include/Sound/SoundControl.h"
-
+#include "../../../Include/Sound/SoundFile.h"
 #include "../../../Include/Common/Debug.h"
 
 
@@ -14,7 +13,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	isRun_.store(true);
 	collback_ = std::make_unique<CollBack>(*this);
 	file_ = std::ifstream{ path, std::ios::binary };
-	Wave::RIFF riff;
+	SoundFile::RIFF riff;
 	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 	int id = 0;
 
@@ -22,7 +21,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
-		if (Wave::fmt == id)
+		if (SoundFile::fmt == id)
 		{
 			break;
 		}
@@ -51,7 +50,7 @@ Eugene::Xa2SoundStreamSpeaker::Xa2SoundStreamSpeaker(IXAudio2* device, const std
 	while (true)
 	{
 		file_.read(reinterpret_cast<char*>(&id), 4);
-		if (Wave::data == id)
+		if (SoundFile::data == id)
 		{
 			break;
 		}
@@ -132,10 +131,10 @@ void Eugene::Xa2SoundStreamSpeaker::SetOutput(SoundControl& control)
 
 void Eugene::Xa2SoundStreamSpeaker::SetVolume(float volume)
 {
-	auto vol = volume * volume;
-	if (vol != volume_)
+	if (volume != volume_)
 	{
-		source_->SetVolume(vol);
+		volume_ = volume;
+		source_->SetVolume(volume * volume);
 	}
 }
 

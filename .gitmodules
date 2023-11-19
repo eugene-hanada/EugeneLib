@@ -8,3 +8,12 @@
 [submodule "Effekseer"]
 	path = Effekseer
 	url = https://github.com/eugene-hanada/Effekseer.git
+[submodule "Include/ThirdParty/glm"]
+	path = Include/ThirdParty/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "ImGuizmo"]
+	path = ImGuizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo.git
+[submodule "Test/doctest"]
+	path = Test/doctest
+	url = https://github.com/doctest/doctest.git

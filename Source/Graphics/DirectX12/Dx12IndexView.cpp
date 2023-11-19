@@ -13,7 +13,7 @@ Eugene::Dx12IndexView::Dx12IndexView(std::uint32_t size, std::uint32_t indexNum,
     bufferView_->SizeInBytes = size * indexNum;
 }
 
-void* Eugene::Dx12IndexView::GetView(void) const
+void* Eugene::Dx12IndexView::GetView(void)
 {
     return bufferView_.get();
 }

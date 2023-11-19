@@ -7,7 +7,7 @@ Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample
 
 	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw EugeneLibException("サブミックスボイスの作成に失敗");
+		throw CreateErrorException("サブミックスボイスの作成に失敗");
 	}
 
 	inChannel_ = inputChannel;
@@ -34,10 +34,10 @@ void Eugene::Xa2SoundControl::SetPan(std::span<float> volumes)
 
 void Eugene::Xa2SoundControl::SetVolume(float volume)
 {
-	if (volume * volume != volume_)
+	if (volume  != volume_)
 	{
-		volume_ = volume * volume;
-		submix_->SetVolume(volume_);
+		volume_ = volume;
+		submix_->SetVolume(volume  * volume);
 	}
 }
 

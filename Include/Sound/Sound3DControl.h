@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "SoundControl.h"
-#include "../Math/Vector3.h"
+#include "../ThirdParty/glm/glm/vec3.hpp"
 
 namespace Eugene
 {
+	/// <summary>
+	/// 3Dサウンドをコントロールするクラス
+	/// </summary>
 	class Sound3DControl :
 		public SoundControl
 	{
@@ -22,7 +25,7 @@ namespace Eugene
 		/// <param name="emitterPos"> エミッタの座標 </param>
 		/// <param name="emitterVelocity"> エミッタの速度 </param>
 		virtual void Set3DSound(
-			const Vector3& listenerFront, const Vector3& listenerTop, const Vector3& listenerPos, const Vector3& listenerVeclocity
-			,const Vector3& emitterFront, const Vector3& emitterTop, const Vector3& emitterPos, const Vector3& emitterVelocity) = 0;
+			const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity
+			,const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity) = 0;
 	};
 }

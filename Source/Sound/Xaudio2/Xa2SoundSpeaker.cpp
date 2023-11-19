@@ -117,7 +117,7 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& sou
 	// ソースボイス生成
 	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, maxPitchRate)))
 	{
-		throw EugeneLibException("ソースボイス生成失敗");
+		throw CreateErrorException("ソースボイス生成失敗");
 	}
 
 	// バッファも用意
@@ -167,7 +167,11 @@ void Eugene::Xa2SoundSpeaker::SetPitchRate(float rate)
 
 void Eugene::Xa2SoundSpeaker::SetVolume(float volume)
 {
-	source_->SetVolume(volume * volume);
+	if (volume != volume_)
+	{
+		source_->SetVolume(volume * volume);
+		volume_ = volume;
+	}
 }
 
 void Eugene::Xa2SoundSpeaker::SetPan(std::span<float> volumes)

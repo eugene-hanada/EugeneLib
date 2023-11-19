@@ -14,6 +14,7 @@
 
 #include "Graphics/Shader.h"
 #include "Graphics/GraphicsPipeline.h"
+#include "Graphics/ResourceBindLayout.h"
 #include "Graphics/RenderTargetViews.h"
 #include "Graphics/VertexView.h"
 #include "Graphics/IndexView.h"
@@ -32,6 +33,4 @@
 #include "Sound/SoundStreamSpeaker.h"
 
 #include "Math/Geometry.h"
-
-#include "Common/RefPtr.h"
 

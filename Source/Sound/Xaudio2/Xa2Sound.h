@@ -20,8 +20,6 @@ namespace Eugene
 
 		SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const final;
 
-		SoundSpeaker* CreateSoundSpeaker(const OggVorbis&, const float maxPitchRate = 2.0f) const final;
-
 		SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const final;
 
 		SoundControl* CreateSoundControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const final;

@@ -69,6 +69,16 @@
           "name": "USE_VULKAN",
           "value": "False",
           "type": "BOOL"
+        },
+        {
+          "name": "BUILD_TEST",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_DOCTEST",
+          "value": "False",
+          "type": "BOOL"
         }
       ],
       "intelliSenseMode": "windows-msvc-x64"

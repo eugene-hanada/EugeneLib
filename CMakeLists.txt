@@ -10,7 +10,7 @@ option(USE_VULKAN "Vulkanを使用するか?" OFF)
 option(USE_DX12 "DirectX12を使用するか？" ON)
 option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
-
+option(BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
 
 if(USE_WINDOWS)
 	# Windows向けビルド時
@@ -207,7 +207,6 @@ if (USE_IMGUI)
 	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
-
 endif()
 
 
@@ -245,4 +244,8 @@ endif()
 
   else()
 
+ endif()
+
+ if (BUILD_DOCTEST)
+ add_subdirectory("Test")
  endif()

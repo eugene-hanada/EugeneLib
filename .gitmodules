@@ -14,3 +14,6 @@
 [submodule "ImGuizmo"]
 	path = ImGuizmo
 	url = https://github.com/CedricGuillemet/ImGuizmo.git
+[submodule "Test/doctest"]
+	path = Test/doctest
+	url = https://github.com/doctest/doctest.git

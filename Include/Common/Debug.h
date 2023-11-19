@@ -42,48 +42,6 @@ namespace Eugene
 		};
 
 		static Debug& GetInstance(void);
-
-#if _MSC_FULL_VER < 193532215 
-
-
-#if _MSC_FULL_VER <= 193030709
-		template<class... Args>
-		constexpr void Log(const std::string_view fmt, const Args& ...args)
-		{
-			Log(std::vformat(fmt, std::make_format_args(args...)));
-		}
-#else
-		/// <summary>
-		/// std::formatを使用してフォーマットして出力する
-		/// </summary>
-		/// <typeparam name="...Args"></typeparam>
-		/// <param name="fmt"></param>
-		/// <param name="...args"></param>
-		template<class... Args>
-		constexpr void Log(const std::_Fmt_string<Args...>& fmt, const Args ...args)
-		{
-			Log(std::vformat(fmt._Str, std::make_format_args(args...)));
-		}
-#endif
-#else
-		/// <summary>
-		/// std::formatを使用してフォーマットして出力する
-		/// </summary>
-		/// <typeparam name="...Args"></typeparam>
-		/// <param name="fmt"></param>
-		/// <param name="...args"></param>
-		//template<class... Args>
-		//constexpr void Log(std::format_string<Args...> fmt, const Args ...args)
-		//{
-		//	Log(std::vformat(fmt.get(), std::make_format_args(args...)));
-		//}
-#endif
-
-
-
-
-		
-
 		
 		/// <summary>
 		/// ログを出力する(フォーマット版)

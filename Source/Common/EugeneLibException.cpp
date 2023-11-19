@@ -6,8 +6,7 @@
 Eugene::EugeneLibException::EugeneLibException(const std::string& mess) :
 	mess_{mess}
 {
-	// ログにメッセージを出す
-	DebugLog(mess_);
+	DebugIO.Error("Exception {}", mess_);
 }
 
 Eugene::EugeneLibException::~EugeneLibException()

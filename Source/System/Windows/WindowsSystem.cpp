@@ -118,7 +118,6 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 		windowSize_ = size;
 		if (graphics)
 		{
-			DebugLog("resize_{:0}:{:1}", size.x, size.y);
 			graphics->ResizeBackBuffer(windowSize_);
 
 		};

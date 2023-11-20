@@ -1,1 +1,43 @@
+name: main
 
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+   
+    # windowsでビルドする
+    runs-on: windows-latest
+    steps:
+    - name: Clear Git cache
+      run: |
+        dir
+    
+    
+    - uses: actions/checkout@v3.5.2
+      with:
+       submodules: 'recursive'
+      
+      # msbuildのセットアップ
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+      
+      # ビルド
+    - name: Build
+      run: |
+        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_DOCTEST=ON -A x64
+        cmake --build ${{github.workspace}}/build
+    - name: RunTest
+      run: |
+        ${{github.workspace}}/${{env.BUILD_TYPE}}/test.exe
+        
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MyArtifact
+        path: ${{github.workspace}}/${{env.BUILD_TYPE}}/EugeneLib.lib

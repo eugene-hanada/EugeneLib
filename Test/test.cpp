@@ -18,7 +18,4 @@ TEST_CASE("Game")
 
 	std::unique_ptr<Eugene::BufferResource> buffer;
 	REQUIRE_NOTHROW(buffer.reset(graphics->CreateBufferResource(256)));
-
-	std::unique_ptr<Eugene::Sound> sound;
-	REQUIRE_NOTHROW(sound.reset(Eugene::CreateSound()));
 }

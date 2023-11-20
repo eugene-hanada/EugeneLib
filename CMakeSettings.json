@@ -77,7 +77,7 @@
         },
         {
           "name": "BUILD_DOCTEST",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         }
       ],

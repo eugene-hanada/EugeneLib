@@ -174,7 +174,7 @@ if(MSVC)
 endif()
 
 # ライブラリを作る
-add_library(EugeneLib STATIC 
+add_library(EugeneLib STATIC  
 	${SystemSource}
 	 ${SystemApiSource}
 	${GraphicsSource}

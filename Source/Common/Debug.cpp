@@ -63,7 +63,7 @@ std::string_view Eugene::Debug::GetBuffer_View(void)
 
 void Eugene::Debug::ClearBuffer(void)
 {
-	std::fill(buffer_.begin(), buffer_.end(), '/0');
+	std::fill(buffer_.begin(), buffer_.end(), '\0');
 	std::streampos pos{0};
 	spanStream_.seekp(pos);
 }
@@ -135,7 +135,7 @@ void Eugene::Debug::LogDebug(const std::string_view& string)
 
 void Eugene::Debug::CheckBuffer(const std::string_view& string)&
 {
-	if (string.length() >= buffer_.size())
+	if ((string.length() + spanStream_.tellp()) >= buffer_.size())
 	{
 		auto nowPos = spanStream_.tellp();
 		buffer_.resize(buffer_.size() * 2ull);

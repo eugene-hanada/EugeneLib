@@ -41,7 +41,7 @@ jobs:
       if: always()
       with:
         files: |
-           ${{github.workspace}}/result.xml
+           ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/result.xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:

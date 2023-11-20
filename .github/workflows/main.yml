@@ -34,14 +34,14 @@ jobs:
         cmake --build ${{github.workspace}}/build
     - name: RunTest
       run: |
-        ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/tests.exe -r junit -o ./result.xml
+        ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/tests.exe -r=junit -o="./result.xml"
     
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
       with:
         files: |
-           ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/result.xml
+           ${{github.workspace}}/result.xml
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:

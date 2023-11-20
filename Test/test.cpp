@@ -6,7 +6,7 @@ TEST_CASE("Game")
 {
 	std::unique_ptr<Eugene::System> sys;
 	REQUIRE_NOTHROW(sys.reset(Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"Test")));
-	CHECK(sys->GetWindowSize() == glm::vec2{ 1280.0f, 720.0f });
+	CHECK(static_cast<glm::ivec2>(sys->GetWindowSize()) == glm::ivec2{ 1280, 720 });
 
 	std::unique_ptr<Eugene::Graphics> graphics;
 	std::unique_ptr<Eugene::GpuEngine> gpuEngine;

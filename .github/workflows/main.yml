@@ -35,6 +35,12 @@ jobs:
     - name: RunTest
       run: |
         ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/tests.exe -r junit -o ./result.xml
+    
+    - name: Show test results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      with:
+        check_name: doctest tests
+        path: ${{github.workspace}}/result.xml
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

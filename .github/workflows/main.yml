@@ -34,7 +34,7 @@ jobs:
         cmake --build ${{github.workspace}}/build
     - name: RunTest
       run: |
-        ${{github.workspace}}/${{env.BUILD_TYPE}}/test.exe
+        ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/test.exe
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

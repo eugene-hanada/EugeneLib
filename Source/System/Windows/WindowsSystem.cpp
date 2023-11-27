@@ -111,14 +111,14 @@ namespace {
 
 }
 
-Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title) :
-    System{size,title}
+Eugene::System::SystemImpl::SystemImpl(System& system ,const glm::vec2& size, const std::u8string& title) :
+    system_{system}
 {
 	resizeCall = [this](const glm::vec2& size) {
-		windowSize_ = size;
+		system_.windowSize_ = size;
 		if (graphics)
 		{
-			graphics->ResizeBackBuffer(windowSize_);
+			graphics->ResizeBackBuffer(system_.windowSize_);
 
 		};
 	};
@@ -147,7 +147,7 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	}
 
 	// ウィンドウのサイズ設定
-	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
+	RECT wSize{ 0,0,static_cast<long>(system_.windowSize_.x), static_cast<long>(system_.windowSize_.y) };
 	auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
 	if (!AdjustWindowRect(&wSize, style, false))
 	{
@@ -185,7 +185,7 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	int centerX =(monitorWidth - (wSize.right - wSize.left)) / 2;
 	int centerY = (monitorHeight - (wSize.bottom - wSize.top))/ 2;
 
-	maxWindowSize_ = {static_cast<float>(monitorWidth), static_cast<float>(monitorHeight)};
+	system_.maxWindowSize_ = {static_cast<float>(monitorWidth), static_cast<float>(monitorHeight)};
 
 	SetWindowPos(hwnd, nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
 
@@ -199,13 +199,13 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplWin32_Init(hwnd);
 
-	context_ = ImGui::GetCurrentContext();
+	system_.context_ = ImGui::GetCurrentContext();
 
 #endif
 
 }
 
-Eugene::WindowsSystem::~WindowsSystem()
+Eugene::System::SystemImpl::~SystemImpl()
 {
 
 #ifdef USE_IMGUI
@@ -218,7 +218,7 @@ Eugene::WindowsSystem::~WindowsSystem()
 
 
 
-std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
+std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::System::SystemImpl::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
 	if (graphics)
 	{
@@ -228,15 +228,15 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
-		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new VkGraphics{hwnd, system_.GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #else
-		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new Dx12Graphics{ hwnd,system_.GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #endif
 	}
 	return std::make_pair(graphics, gpuEngine);
 }
 
-bool Eugene::WindowsSystem::Update(void)
+bool Eugene::System::SystemImpl::Update(void)
 {
 	while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
@@ -250,7 +250,7 @@ bool Eugene::WindowsSystem::Update(void)
 	return !isEnd;
 }
 
-bool Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
+bool Eugene::System::SystemImpl::GetMouse(Mouse& outMouse) const&
 {
 	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::LeftButton), GetKeyState(VK_LBUTTON) & 0x8000);
 	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::RightButton), GetKeyState(VK_RBUTTON) & 0x8000);
@@ -276,7 +276,7 @@ bool Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
 	return true;
 }
 
-bool Eugene::WindowsSystem::SetMouse(Mouse& inMouse) const
+bool Eugene::System::SystemImpl::SetMouse(Mouse& inMouse) const
 {
 	WINDOWINFO windowInfo{};
 	windowInfo.cbSize = sizeof(WINDOWINFO);
@@ -296,12 +296,12 @@ bool Eugene::WindowsSystem::SetMouse(Mouse& inMouse) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::IsHitKey(KeyID keyID) const
+bool Eugene::System::SystemImpl::IsHitKey(KeyID keyID) const
 {
 	return GetKeyState(codeTable_[std::underlying_type<KeyID>::type(keyID)]) & 0x8000;
 }
 
-bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan keyData) const
+bool Eugene::System::SystemImpl::GetKeyData(KeyDataSpan keyData) const
 {
 	std::uint8_t k[256];
 	if (!GetKeyboardState(k))
@@ -315,13 +315,13 @@ bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan keyData) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+bool Eugene::System::SystemImpl::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	codeTable_ = keyCodeTable;
 	return true;
 }
 
-bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
+bool Eugene::System::SystemImpl::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
 	XINPUT_STATE state;
 	if (XInputGetState(idx, &state) != ERROR_SUCCESS)
@@ -347,14 +347,14 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::IsEnd(void) const
+bool Eugene::System::SystemImpl::IsEnd(void) const
 {
 	return isEnd;
 }
 
-void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
+void Eugene::System::SystemImpl::OnResizeWindow(const glm::vec2& size)
 {
-	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
+	RECT wSize{ 0,0,static_cast<long>(system_.windowSize_.x), static_cast<long>(system_.windowSize_.y) };
 	
 	if (!AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false))
 	{
@@ -376,7 +376,7 @@ void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 	SetWindowPos(hwnd, nullptr, centerX, centerY, static_cast<int>(wSize.right - wSize.left), static_cast<int>(wSize.bottom - wSize.top), false);
 }
 
-void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
+void Eugene::System::SystemImpl::OnSetFullScreen(bool isFullScreen)
 {
 	auto style = GetWindowLong(hwnd, GWL_STYLE);
 	auto newStyle = 0;
@@ -397,13 +397,13 @@ void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 }
 
-Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const
+Eugene::DynamicLibrary* Eugene::System::SystemImpl::CreateDynamicLibrary(const std::filesystem::path& path) const
 {
 	return new Dll{path};
 }
 
 #ifdef USE_IMGUI
-void Eugene::WindowsSystem::ImguiNewFrame(void) const
+void Eugene::System::SystemImpl::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();
 }

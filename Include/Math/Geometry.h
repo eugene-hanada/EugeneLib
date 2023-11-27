@@ -145,7 +145,11 @@ namespace Eugene
 	/// <returns> アライメントされたサイズ </returns>
 	constexpr size_t AlignmentedSize(const size_t& size, const size_t& alignment) noexcept
 	{
-		return size + alignment - size % alignment;
+		if ((alignment & 0xfffffffffffffffd) == 0ull)
+		{
+			return (size + alignment - 1ull) & ~(alignment - 1ull);
+		}
+		return (size + alignment - 1ull) - (size % alignment - 1ull);
 	}
 
 	/// <summary>
@@ -157,6 +161,10 @@ namespace Eugene
 	template<size_t Size, size_t Alignment>
 	constexpr size_t AlignmentedSize() noexcept
 	{
-		return Size + Alignment - Size % Alignment;
+		if constexpr ((Alignment & 0xfffffffffffffffd) == 0ull)
+		{
+			return (Size + Alignment - 1ull) & ~(Alignment - 1ull);
+		}
+		return (Size + Alignment - 1ull) - (Size % Alignment - 1ull);
 	}
 };

@@ -24,6 +24,8 @@
 #include <ImGuizmo.h>
 #endif
 
+#include <Common/Debug.h>
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {
 	// システム(osとかの)処理をするクラス
@@ -148,7 +150,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	auto sound = Eugene::CreateSoundUnique();
-	auto soundFile{ Eugene::SoundFile("./exp.wav") };
+	auto soundFile{ Eugene::SoundFile("./exp.ogg") };
 	std::unique_ptr<Eugene::SoundControl> soundCtrl{ sound->CreateSoundControl(0,soundFile.GetFormat().sample, 2) };
 	std::unique_ptr<Eugene::SoundSpeaker> speaker{sound->CreateSoundSpeaker(soundFile)};
 	speaker->SetOutput(*soundCtrl);
@@ -160,6 +162,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::Enable(true);
+	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -176,6 +179,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
 	
+	DebugIO.Log(reinterpret_cast<const char*>(u8"ログです"));
+	//std::string_view viewTest = std::format("{}",u8"テスト");
 
 	while (system->Update())
 	{
@@ -199,6 +204,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 		}
 		ImGui::End();
+
+		ImGui::Begin("Log");
+		{
+			auto size = ImVec2{ ImGui::GetWindowWidth() - 50, ImGui::GetWindowHeight() };
+			
+			if (ImGui::Button(reinterpret_cast<const char*>(u8"クリア")))
+			{
+				DebugIO.ClearBuffer();
+			}
+			if (ImGui::Button(reinterpret_cast<const char*>(u8"追加")))
+			{
+				DebugIO.LogDebug(reinterpret_cast<const char*>(u8"デバッグ用の出力です"));
+			}
+			auto text = DebugIO.GetBuffer_View();
+			ImGui::BeginChild(ImGui::GetID((void*)0), size);
+			if (text.length() > 0)
+			{
+				ImGui::Text(text.data());
+			}
+			ImGui::EndChild();
+		}
+		ImGui::End();
+
 
 #ifdef USE_EFFEKSEER
 		ImGui::Begin("Effect");

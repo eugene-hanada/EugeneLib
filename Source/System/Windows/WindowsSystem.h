@@ -5,29 +5,28 @@
 
 namespace Eugene
 {
-	class WindowsSystem :
-		public System
+	class System::SystemImpl
 	{
 	public:
-		WindowsSystem(const glm::vec2& size, const std::u8string& title);
-		~WindowsSystem();
-		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const final;
-	private:
-		bool Update(void) final;
-		bool GetMouse(Mouse& outMouse) const& final;
-		bool SetMouse(Mouse& outMouse) const final;
-		bool IsHitKey(KeyID keyID) const final;
-		bool GetKeyData(KeyDataSpan keyData) const final;
-		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
-		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
-		bool IsEnd(void) const final;
-		void OnResizeWindow(const glm::vec2& size) final;
-		void OnSetFullScreen(bool isFullScreen) final;
-		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const final;
+		SystemImpl(System& system,const glm::vec2& size, const std::u8string& title);
+		~SystemImpl();
+		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const ;
+		bool Update(void) ;
+		bool GetMouse(Mouse& outMouse) const& ;
+		bool SetMouse(Mouse& outMouse) const ;
+		bool IsHitKey(KeyID keyID) const ;
+		bool GetKeyData(KeyDataSpan keyData) const ;
+		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) ;
+		bool GetGamePad(GamePad& pad, std::uint32_t idx) const ;
+		bool IsEnd(void) const ;
+		void OnResizeWindow(const glm::vec2& size) ;
+		void OnSetFullScreen(bool isFullScreen) ;
+		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const ;
 #ifdef USE_IMGUI
-		void ImguiNewFrame(void) const final;
+		void ImguiNewFrame(void) const ;
 #endif
-
+	private:
+		System& system_;
 		/// <summary>
 		/// キーコードのテーブル
 		/// </summary>

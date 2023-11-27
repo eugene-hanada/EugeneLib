@@ -119,6 +119,15 @@ namespace Eugene
 			return d(engine_);
 		}
 
+		/// <summary>
+		/// —”‚ğ•Ô‚·
+		/// </summary>
+		/// <returns></returns>
+		std::uint64_t operator()() noexcept
+		{
+			return engine_();
+		}
+
 	private:
 		R engine_;
 	};

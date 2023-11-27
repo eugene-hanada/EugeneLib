@@ -110,12 +110,12 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> 継続すべき時true、終了すべき時false </returns>
-		virtual bool Update(void) = 0;
+		bool Update(void);
 
 		/// <summary>
 		/// デストラクタ
 		/// </summary>
-		virtual ~System();
+		~System();
 
 		/// <summary>
 		/// ウィンドウサイズを取得する
@@ -138,45 +138,45 @@ namespace Eugene
 		/// <param name="maxSize"> GpuEngineの一度に処理するCommandListの数 </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
+		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		[[nodiscard]]
-		virtual std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
+		std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		/// <summary>
 		/// マウスの情報を取得する
 		/// </summary>
 		/// <param name="outMouse"></param>
 		/// <returns></returns>
-		virtual bool GetMouse(Mouse& outMouse) const&;
+		bool GetMouse(Mouse& outMouse) const&;
 
 		/// <summary>
 		/// マウス情報をセットする
 		/// </summary>
 		/// <param name="inMouse"></param>
 		/// <returns></returns>
-		virtual bool SetMouse(Mouse& inMouse) const;
+		bool SetMouse(Mouse& inMouse) const;
 
 		/// <summary>
 		/// キーが押されているか
 		/// </summary>
 		/// <param name="keyID"> 押されているキーのID </param>
 		/// <returns> 押されているときtrue、押されていないときfalse </returns>
-		virtual bool IsHitKey(KeyID keyID) const;
+		bool IsHitKey(KeyID keyID) const;
 
 		/// <summary>
 		/// キー入力情報を取得する
 		/// </summary>
 		/// <param name="keySpan"> キー情報 </param>
 		/// <returns> キー情報がある場合はtrue、ない場合はfalse </returns>
-		virtual bool GetKeyData(KeyDataSpan keyData) const;
+		bool GetKeyData(KeyDataSpan keyData) const;
 
 		/// <summary>
 		/// キーコードのデータテーブル
 		/// </summary>
 		/// <param name="keyCodeTable"> セットするキーコード </param>
 		/// <returns> 成功時true、失敗時false </returns>
-		virtual bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
+		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
 
 		/// <summary>
 		/// ゲームパッドを取得する
@@ -184,14 +184,14 @@ namespace Eugene
 		/// <param name="pad"> ゲームパッド </param>
 		/// <param name="idx"></param>
 		/// <returns></returns>
-		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
+		bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
 		/// <summary>
 		/// 終了するか？
 		/// </summary>
 		/// <param name=""> trueの時終了する </param>
 		/// <returns></returns>
-		virtual bool IsEnd(void) const = 0;
+		bool IsEnd(void) const;
 
 		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
@@ -199,7 +199,7 @@ namespace Eugene
 		/// <param name="path"> ライブラリのパス </param>
 		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
 		[[nodiscard]]
-		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
+		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const;
 
 		/// <summary>
 		/// ウィンドウのリサイズを行う
@@ -221,7 +221,7 @@ namespace Eugene
 		/// Imguiのフレーム開始処理を行う
 		/// </summary>
 		/// <param name=""></param>
-		virtual void ImguiNewFrame(void) const = 0;
+		void ImguiNewFrame(void) const;
 
 		/// <summary>
 		/// Systemクラスが作成したImguiのコンテキストを取得する
@@ -238,18 +238,7 @@ namespace Eugene
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
 		System(const glm::vec2& size, const std::u8string& title);
-		
-		/// <summary>
-		/// ウィンドウをリサイズ時のサブクラスがわの処理
-		/// </summary>
-		/// <param name="size"> ウインドウサイズ </param>
-		virtual void OnResizeWindow(const glm::vec2& size);
 
-		/// <summary>
-		/// フルスクリーンフラグセット時のサブクラスの処理
-		/// </summary>
-		/// <param name="isFullScreen"></param>
-		virtual void OnSetFullScreen(bool isFullScreen);
 
 		/// <summary>
 		/// ウィンドウサイズ
@@ -281,6 +270,10 @@ namespace Eugene
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
+		class SystemImpl;
+		std::unique_ptr<SystemImpl> impl_;
+
+		friend System* CreateSystem(const glm::vec2& size, const std::u8string& title);
 	};
 
 	/// <summary>

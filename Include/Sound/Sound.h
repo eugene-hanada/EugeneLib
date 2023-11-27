@@ -30,7 +30,7 @@ namespace Eugene
 		/// <param name="wave"> サウンドファイルクラス </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const = 0;
+		SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const;
 
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace Eugene
 		/// <param name="path"> ストリーミング再生を行うWaveファイルのパス </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const = 0;
+		SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const;
 
 		/// <summary>
 		/// サウンドをコントロールするクラスを作成する
@@ -49,7 +49,7 @@ namespace Eugene
 		/// <param name="outChannel"> 出力チャンネル </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual SoundControl* CreateSoundControl(std::uint32_t stage = 0,std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
+		SoundControl* CreateSoundControl(std::uint32_t stage = 0,std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const;
 
 		/// <summary>
 		/// サウンドを3Dで出力しコントロールするクラスを作成する
@@ -59,8 +59,23 @@ namespace Eugene
 		/// <param name="outChannel"> 出力チャンネル </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual Sound3DControl* CreateSound3DControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
+		Sound3DControl* CreateSound3DControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const;
+
+		/// <summary>
+		/// 全体のボリュームをセットする
+		/// </summary>
+		/// <param name="volume"> ボリューム </param>
+		void SetVolume(float volume) final;
+
+		/// <summary>
+		/// パンニング用にボリュームをセットする
+		/// </summary>
+		/// <param name="volumes"></param>
+		void SetPan(std::span<float> volumes) final;
 	protected:
+		class SoundImpl;
+
+		std::unique_ptr<SoundImpl> impl_;
 		Sound();
 
 		/// <summary>
@@ -72,6 +87,8 @@ namespace Eugene
 		/// サンプリングレート
 		/// </summary>
 		std::uint32_t sampleRate_;
+
+		friend Sound* CreateSound(void);
 	};
 
 	/// <summary>

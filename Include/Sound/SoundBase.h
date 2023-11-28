@@ -48,6 +48,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="control"> サウンドコントロールクラス </param>
 		virtual void SetOutput(SoundControl& control);
+
 	protected:
 		SoundBase();
 

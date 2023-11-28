@@ -7,17 +7,17 @@ struct IXAudio2SubmixVoice;
 namespace Eugene
 {
 
-    class Xa2SoundControl :
-        public SoundControl
+    class SoundControl::SoundControlImpl
     {
     public:
-        Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel, std::uint32_t stage);
-        ~Xa2SoundControl();
-        void SetPan(std::span<float> volumes) final;
-        void SetVolume(float volume) final;
-        void SetOutput(SoundControl& control) final;
+        SoundControlImpl(std::uintptr_t devicePtr, SoundControl& control,std::uint32_t sample, std::uint32_t stage);
+        ~SoundControlImpl();
+        void SetPan(std::span<float> volumes);
+        void SetVolume(float volume) ;
+        void SetOutput(SoundControl& control);
+        void* Get(void);
     private:
-        void* Get(void) final;
+        SoundControl& control_;
         IXAudio2SubmixVoice* submix_;
     };
 }

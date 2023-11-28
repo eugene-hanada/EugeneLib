@@ -91,9 +91,10 @@
 //	inChannel_ = format.nChannels;
 //}
 
-Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate) :
-	SoundSpeaker{maxPitchRate}
+Eugene::SoundSpeaker::SoundSpeakerImpl::SoundSpeakerImpl(std::uintptr_t devicePtr, SoundSpeaker& speaker, const SoundFile& soundFile) :
+	speaker_{speaker}
 {
+	auto xaudio2{ reinterpret_cast<IXAudio2*>(devicePtr) };
 	// フォーマットをセット
 	const auto& format = soundFile.GetFormat();
 	const auto ext = soundFile.GetFormatExt();
@@ -115,7 +116,7 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& sou
 	std::copy(std::begin(ext.d4), std::end(ext.d4), formatEx.SubFormat.Data4);
 
 	// ソースボイス生成
-	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, maxPitchRate)))
+	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, speaker_.maxPitchRate_)))
 	{
 		throw CreateErrorException("ソースボイス生成失敗");
 	}
@@ -123,20 +124,18 @@ Eugene::Xa2SoundSpeaker::Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& sou
 	// バッファも用意
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 
-	// 入出力チャンネルをセット
-	outChannel_ = outChannel;
-	inChannel_ = formatEx.Format.nChannels;
+	speaker_.inChannel_ = formatEx.Format.nChannels;
 }
 
 
 
-Eugene::Xa2SoundSpeaker::~Xa2SoundSpeaker()
+Eugene::SoundSpeaker::SoundSpeakerImpl::~SoundSpeakerImpl()
 {
 	source_->Stop();
 	source_->DestroyVoice();
 }
 
-void Eugene::Xa2SoundSpeaker::Play(int loopCount)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::Play(int loopCount)
 {
 	buffer_->LoopCount = loopCount == -1 ? XAUDIO2_LOOP_INFINITE : static_cast<std::uint32_t>(loopCount);
 	if (FAILED(source_->Stop(XAUDIO2_PLAY_TAILS)) ||
@@ -148,50 +147,50 @@ void Eugene::Xa2SoundSpeaker::Play(int loopCount)
 	}
 }
 
-void Eugene::Xa2SoundSpeaker::Stop(void)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::Stop(void)
 {
 	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
 
-bool Eugene::Xa2SoundSpeaker::IsEnd(void) const
+bool Eugene::SoundSpeaker::SoundSpeakerImpl::IsEnd(void) const
 {
 	XAUDIO2_VOICE_STATE state;
 	source_->GetState(&state);
 	return state.BuffersQueued <= 0;
 }
 
-void Eugene::Xa2SoundSpeaker::SetPitchRate(float rate)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::SetPitchRate(float rate)
 {
 	source_->SetFrequencyRatio(std::clamp(rate, XAUDIO2_MIN_FREQ_RATIO, XAUDIO2_MAX_FREQ_RATIO));
 }
 
-void Eugene::Xa2SoundSpeaker::SetVolume(float volume)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::SetVolume(float volume)
 {
-	if (volume != volume_)
+	if (volume != speaker_.volume_)
 	{
 		source_->SetVolume(volume * volume);
-		volume_ = volume;
+		speaker_.volume_ = volume;
 	}
 }
 
-void Eugene::Xa2SoundSpeaker::SetPan(std::span<float> volumes)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::SetPan(std::span<float> volumes)
 {
-	if ((inChannel_ * outChannel_) + inChannel_ >= volumes.size())
+	if ((speaker_.inChannel_ * speaker_.outChannel_) + speaker_.inChannel_ >= volumes.size())
 	{
-		source_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
+		source_->SetOutputMatrix(nullptr, speaker_.inChannel_, speaker_.outChannel_, volumes.data());
 	}
 }
 
-void Eugene::Xa2SoundSpeaker::SetOutput(SoundControl& control)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::SetOutput(SoundControl& control)
 {
-	outChannel_ = control.GetInChannel();
+	speaker_.outChannel_ = control.GetInChannel();
 	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	source_->SetOutputVoices(&sends);
 }
 
-void Eugene::Xa2SoundSpeaker::SetData(const std::uint8_t* ptr, const std::uint64_t size)
+void Eugene::SoundSpeaker::SoundSpeakerImpl::SetData(const std::uint8_t* ptr, const std::uint64_t size)
 {
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
 	buffer_->pAudioData = ptr;

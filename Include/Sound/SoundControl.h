@@ -11,7 +11,9 @@ namespace Eugene
 	{
 	public:
 		virtual void* Get(void) = 0;
-	private:
+	protected:
+		class SoundControlImpl;
+		std::unique_ptr< SoundControlImpl> impl_;
 	};
 
 }

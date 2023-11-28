@@ -22,7 +22,7 @@ namespace Eugene
 		public SoundBase
 	{
 	public:
-		virtual ~Sound();
+		~Sound();
 
 		/// <summary>
 		/// サウンド再生するクラスを作成する
@@ -72,7 +72,13 @@ namespace Eugene
 		/// </summary>
 		/// <param name="volumes"></param>
 		void SetPan(std::span<float> volumes) final;
-	protected:
+
+		/// <summary>
+		/// デバイスの取得
+		/// </summary>
+		/// <returns></returns>
+		void* GetDevice();
+	private:
 		class SoundImpl;
 
 		std::unique_ptr<SoundImpl> impl_;
@@ -88,6 +94,7 @@ namespace Eugene
 		/// </summary>
 		std::uint32_t sampleRate_;
 
+		// コンストラクタアクセスのためにfriendにしてる
 		friend Sound* CreateSound(void);
 	};
 

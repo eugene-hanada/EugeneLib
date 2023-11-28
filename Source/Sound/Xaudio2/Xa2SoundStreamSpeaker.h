@@ -14,35 +14,35 @@
 namespace Eugene
 {
 	
-	class Xa2SoundStreamSpeaker :
-		public SoundStreamSpeaker
+	class SoundStreamSpeaker::SoundStreamSpeakerImpl
 	{
 	public:
-		Xa2SoundStreamSpeaker(IXAudio2* device,const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate);
-		~Xa2SoundStreamSpeaker();
+		SoundStreamSpeakerImpl(std::uintptr_t devicePtr, SoundStreamSpeaker& speaker,const std::filesystem::path& path);
+		~SoundStreamSpeakerImpl();
+
+		void Play(int loopCount = 0);
+		void Stop(void);
+		bool IsEnd(void) const;
+		void SetPitchRate(float rate);
+		void SetOutput(SoundControl& control);
+		void SetVolume(float volume);
+		void SetPan(std::span<float> volumes);
 	private:
+
 		class CollBack : public IXAudio2VoiceCallback
 		{
 		public:
-			CollBack(Xa2SoundStreamSpeaker& speaker);
+			CollBack(SoundStreamSpeakerImpl& speaker);
 			void OnBufferEnd(void* pBufferContext) noexcept final;
 			void OnBufferStart(void* pBufferContext) noexcept final;
 			void OnLoopEnd(void* pBufferContext) noexcept final;
 			void OnStreamEnd() noexcept final;
-			void OnVoiceError(void* pBufferContext,HRESULT Error) noexcept final;
+			void OnVoiceError(void* pBufferContext, HRESULT Error) noexcept final;
 			void OnVoiceProcessingPassEnd() noexcept final;
 			void OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept final;
 		private:
-			Xa2SoundStreamSpeaker& speaker_;
+			SoundStreamSpeakerImpl& speaker_;
 		};
-
-		void Play(int loopCount = 0) final;
-		void Stop(void);
-		bool IsEnd(void) const final;
-		void SetPitchRate(float rate) final;
-		void SetOutput(SoundControl& control) final;
-		void SetVolume(float volume) final;
-		void SetPan(std::span<float> volumes) final;
 
 		/// <summary>
 		/// 再生ようにデータをセットアップする
@@ -55,6 +55,8 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		void Worker(void);
+
+		SoundStreamSpeaker& speaker_;
 
 		/// <summary>
 		/// ソースボイス

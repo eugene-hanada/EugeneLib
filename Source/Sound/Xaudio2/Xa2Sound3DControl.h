@@ -7,28 +7,25 @@ struct IXAudio2SubmixVoice;
 
 namespace Eugene
 {
-	class Xa2Sound3DControl :
-		public Sound3DControl
+	class Sound3DControl::Sound3DControlImpl
 	{
 	public:
-		Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle,std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample, std::uint32_t stage);
-		~Xa2Sound3DControl();
-	private:
+		Sound3DControlImpl(SoundControl& control,SoundControlImpl& impl, std::span<std::uint8_t, 20> handle);
+		~Sound3DControlImpl();
 		void Set3DSound(
 			const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity
-			, const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity) final;
+			, const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity);
 
-		void SetVolume(float volume) final;
+		void SetVolume(float volume) ;
 
-		void SetPan(std::span<float> volumes) final
-		{}
+		void SetPan(std::span<float> volumes);
 
-		void SetOutput(SoundControl& control) final;
+		void SetOutput(SoundControl& control);
 
-		void* Get(void) final;
-
+		void* Get(void);
+	private:
 		std::span<std::uint8_t, 20> handle_;
-
-		IXAudio2SubmixVoice* submix_;
+		SoundControl& control_;
+		SoundControlImpl& impl_;
 	};
 }

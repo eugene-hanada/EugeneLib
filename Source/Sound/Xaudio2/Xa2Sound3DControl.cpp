@@ -5,27 +5,19 @@
 #include <vector>
 #include <cmath>
 #include "../../../Include/Common/EugeneLibException.h"
+#include "Xa2SoundControl.h"
 
 
-Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample, std::uint32_t stage) :
-	handle_{handle}
+Eugene::Sound3DControl::Sound3DControlImpl::Sound3DControlImpl(SoundControl& control,SoundControlImpl& impl, std::span<std::uint8_t, 20> handle) :
+	handle_{handle}, impl_{impl}, control_{control}
 {
-	inChannel_ = inChannel;
-	outChannel_ = outChannel;
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
-	{
-		throw CreateErrorException("3D用サブミックスボイスの作成");
-	}
-
-
 }
 
-Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
+Eugene::Sound3DControl::Sound3DControlImpl::~Sound3DControlImpl()
 {
-	submix_->DestroyVoice();
 }
 
-void Eugene::Xa2Sound3DControl::Set3DSound(
+void Eugene::Sound3DControl::Sound3DControlImpl::Set3DSound(
 	const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity,
 	const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity)
 {
@@ -44,8 +36,8 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 	listener.Velocity = X3DAUDIO_VECTOR{ listenerVeclocity.x,listenerVeclocity.y,listenerVeclocity.z };
 
 	X3DAUDIO_DSP_SETTINGS dsp{};
-	dsp.SrcChannelCount = inChannel_;
-	dsp.DstChannelCount = outChannel_;
+	dsp.SrcChannelCount = control_.inChannel_;
+	dsp.DstChannelCount = control_.outChannel_;
 	std::vector<float>  matrix(outChannel_ * inChannel_);
 	dsp.pMatrixCoefficients = matrix.data();
 	
@@ -57,6 +49,7 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 		&dsp
 	);
 
+	impl_.
 	submix_->SetOutputMatrix(nullptr, inChannel_, dsp.DstChannelCount, dsp.pMatrixCoefficients);
 	
 	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
@@ -67,7 +60,7 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 
 }
 
-void Eugene::Xa2Sound3DControl::SetVolume(float volume)
+void Eugene::Sound3DControl::Sound3DControlImpl::SetVolume(float volume)
 {
 	if (volume != volume_)
 	{
@@ -76,7 +69,7 @@ void Eugene::Xa2Sound3DControl::SetVolume(float volume)
 	}
 }
 
-void Eugene::Xa2Sound3DControl::SetOutput(SoundControl& control)
+void Eugene::Sound3DControl::Sound3DControlImpl::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
 	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
@@ -85,7 +78,7 @@ void Eugene::Xa2Sound3DControl::SetOutput(SoundControl& control)
 	submix_->SetOutputVoices(&sends);
 }
 
-void* Eugene::Xa2Sound3DControl::Get(void)
+void* Eugene::Sound3DControl::Sound3DControlImpl::Get(void)
 {
 	return submix_;
 }

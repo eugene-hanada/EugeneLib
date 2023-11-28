@@ -9,27 +9,30 @@ struct XAUDIO2_BUFFER;
 namespace Eugene
 {
 	class SoundFile;
-	class Xa2SoundSpeaker :
-		public SoundSpeaker
+	class SoundSpeaker::SoundSpeakerImpl
 	{
 	public:
-	/*	Xa2SoundSpeaker(IXAudio2* xaudio2,const Wave& wave, std::uint16_t outChannel, const float maxPitchRate);
-		Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate);*/
-		Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate);
-		~Xa2SoundSpeaker();
+		SoundSpeakerImpl(std::uintptr_t device, SoundSpeaker& speaker, const SoundFile& soundFile);
+		~SoundSpeakerImpl();
+	
+		void Play(int loopCount = 0) ;
+		void Stop(void) ;
+		bool IsEnd(void) const ;
+		void SetPitchRate(float rate) ;
+
+		void SetVolume(float volume) ;
+
+		void SetPan(std::span<float> volumes) ;
+
+		void SetOutput(SoundControl& control) ;
+
+		void SetData(const std::uint8_t* ptr, const std::uint64_t size) ;
+
 	private:
-		void Play(int loopCount = 0) final;
-		void Stop(void) final;
-		bool IsEnd(void) const final;
-		void SetPitchRate(float rate) final;
-
-		void SetVolume(float volume) final;
-
-		void SetPan(std::span<float> volumes) final;
-
-		void SetOutput(SoundControl& control) final;
-
-		void SetData(const std::uint8_t* ptr, const std::uint64_t size) final;
+		/// <summary>
+		/// 
+		/// </summary>
+		SoundSpeaker& speaker_;
 
 		IXAudio2SourceVoice* source_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;

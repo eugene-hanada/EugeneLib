@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "SoundControl.h"
 #include "../ThirdParty/glm/glm/vec3.hpp"
+#include <memory>
 
 namespace Eugene
 {
@@ -27,5 +28,8 @@ namespace Eugene
 		virtual void Set3DSound(
 			const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity
 			,const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity) = 0;
+	private:
+		class Sound3DControlImpl;
+		std::unique_ptr<Sound3DControlImpl> impl3D_;
 	};
 }

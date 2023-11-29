@@ -36,9 +36,9 @@ void Eugene::Sound3DControl::Sound3DControlImpl::Set3DSound(
 	listener.Velocity = X3DAUDIO_VECTOR{ listenerVeclocity.x,listenerVeclocity.y,listenerVeclocity.z };
 
 	X3DAUDIO_DSP_SETTINGS dsp{};
-	dsp.SrcChannelCount = control_.inChannel_;
-	dsp.DstChannelCount = control_.outChannel_;
-	std::vector<float>  matrix(outChannel_ * inChannel_);
+	dsp.SrcChannelCount = control_.GetInChannel();
+	dsp.DstChannelCount = control_.GetOutChannel();
+	std::vector<float>  matrix(control_.GetOutChannel() * control_.GetInChannel());
 	dsp.pMatrixCoefficients = matrix.data();
 	
 	X3DAudioCalculate(
@@ -49,36 +49,13 @@ void Eugene::Sound3DControl::Sound3DControlImpl::Set3DSound(
 		&dsp
 	);
 
-	impl_.
-	submix_->SetOutputMatrix(nullptr, inChannel_, dsp.DstChannelCount, dsp.pMatrixCoefficients);
+	auto submix{ reinterpret_cast<IXAudio2SubmixVoice*>(impl_.Get()) };
+	submix->SetOutputMatrix(nullptr, control_.GetInChannel(), dsp.DstChannelCount, dsp.pMatrixCoefficients);
 	
 	XAUDIO2_FILTER_PARAMETERS filter{ LowPassFilter, 2.0f * std::sin(X3DAUDIO_PI / 6.0f * dsp.LPFDirectCoefficient), 1.0f };
 	XAUDIO2_VOICE_DETAILS details;
-	submix_->GetVoiceDetails(&details);
+	submix->GetVoiceDetails(&details);
 	//filter.OneOverQ = XAudio2CutoffFrequencyToOnePoleCoefficient(filter.Frequency, details.InputSampleRate);
-	submix_->SetFilterParameters(&filter);
+	submix->SetFilterParameters(&filter);
 
-}
-
-void Eugene::Sound3DControl::Sound3DControlImpl::SetVolume(float volume)
-{
-	if (volume != volume_)
-	{
-		volume_ = volume;
-		submix_->SetVolume(volume * volume);
-	}
-}
-
-void Eugene::Sound3DControl::Sound3DControlImpl::SetOutput(SoundControl& control)
-{
-	outChannel_ = control.GetInChannel();
-	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
-	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
-	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
-	submix_->SetOutputVoices(&sends);
-}
-
-void* Eugene::Sound3DControl::Sound3DControlImpl::Get(void)
-{
-	return submix_;
 }

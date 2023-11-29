@@ -16,6 +16,7 @@ namespace Eugene
         void SetVolume(float volume) ;
         void SetOutput(SoundControl& control);
         void* Get(void);
+        void SetOutChannel(std::uint16_t channel);
     private:
         SoundControl& control_;
         IXAudio2SubmixVoice* submix_;

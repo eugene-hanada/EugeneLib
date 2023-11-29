@@ -72,12 +72,6 @@ namespace Eugene
 		/// </summary>
 		/// <param name="volumes"></param>
 		void SetPan(std::span<float> volumes) final;
-
-		/// <summary>
-		/// デバイスの取得
-		/// </summary>
-		/// <returns></returns>
-		void* GetDevice();
 	private:
 		class SoundImpl;
 

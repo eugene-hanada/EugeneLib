@@ -2,9 +2,9 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include "../../../Include/Common/EugeneLibException.h"
-#include "Xa2Sound3DControl.h"
+#include "../../../Include/Sound/Sound3DControl.h"
 #include "../../../Include/Sound/SoundSpeaker.h"
-#include "Xa2SoundControl.h"
+#include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundStreamSpeaker.h"
 
 #pragma comment (lib,"xaudio2.lib")
@@ -79,8 +79,8 @@ Eugene::SoundStreamSpeaker* Eugene::Sound::SoundImpl::CreateSoundStreamSpeaker(c
 
 Eugene::SoundControl* Eugene::Sound::SoundImpl::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2SoundControl{
-		xaudio2_.Get(),
+	return new SoundControl{
+		reinterpret_cast<std::uintptr_t>(xaudio2_.Get()),
 		(sample == 0u ? sound_.sampleRate_ : sample),
 		(inputChannel == 0u ? sound_.inChannel_ : inputChannel),
 		(outChannel == 0u ? sound_.inChannel_ : outChannel) ,
@@ -90,17 +90,14 @@ Eugene::SoundControl* Eugene::Sound::SoundImpl::CreateSoundControl(std::uint32_t
 
 Eugene::Sound3DControl* Eugene::Sound::SoundImpl::CreateSound3DControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2Sound3DControl{
-		xaudio2_.Get(), 
-		handle,
+	std::span<std::uint8_t, 20> h{ handle };
+	return new Sound3DControl{
+		reinterpret_cast<std::uintptr_t>(xaudio2_.Get()), 
+		(sample == 0u ? sound_.sampleRate_ : sample),
 		(outChannel == 0u ? sound_.inChannel_ : outChannel),
 		(inputChannel == 0u ? sound_.inChannel_ : inputChannel),
-		(sample == 0u ? sound_.sampleRate_ : sample),
-		stage
+		stage,
+		reinterpret_cast<std::uintptr_t>(&h)
 	};
 }
 
-void* Eugene::Sound::SoundImpl::GetDevice(void)
-{
-	return xaudio2_.Get();
-}

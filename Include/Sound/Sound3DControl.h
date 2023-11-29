@@ -25,11 +25,14 @@ namespace Eugene
 		/// <param name="emitterTop"> エミッタの上方向 </param>
 		/// <param name="emitterPos"> エミッタの座標 </param>
 		/// <param name="emitterVelocity"> エミッタの速度 </param>
-		virtual void Set3DSound(
+		void Set3DSound(
 			const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity
-			,const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity) = 0;
+			,const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity);
 	private:
+		Sound3DControl(std::uintptr_t devicePtr, std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage, std::uintptr_t handle);
 		class Sound3DControlImpl;
 		std::unique_ptr<Sound3DControlImpl> impl3D_;
+
+		friend class Sound;
 	};
 }

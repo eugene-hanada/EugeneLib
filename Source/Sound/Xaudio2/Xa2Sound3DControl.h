@@ -15,14 +15,6 @@ namespace Eugene
 		void Set3DSound(
 			const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity
 			, const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity);
-
-		void SetVolume(float volume) ;
-
-		void SetPan(std::span<float> volumes);
-
-		void SetOutput(SoundControl& control);
-
-		void* Get(void);
 	private:
 		std::span<std::uint8_t, 20> handle_;
 		SoundControl& control_;

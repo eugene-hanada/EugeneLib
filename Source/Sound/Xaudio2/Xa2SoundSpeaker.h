@@ -1,10 +1,8 @@
 ﻿#pragma once
 #include "../../../Include/Sound/SoundSpeaker.h"
+#include <xaudio2.h>
 #include <memory>
 
-struct IXAudio2SourceVoice;
-struct IXAudio2;
-struct XAUDIO2_BUFFER;
 
 namespace Eugene
 {
@@ -29,12 +27,22 @@ namespace Eugene
 		void SetData(const std::uint8_t* ptr, const std::uint64_t size) ;
 
 	private:
+		
+
+		struct SourceVoiceDeleter
+		{
+			void operator()(IXAudio2SourceVoice* voice)
+			{
+				voice->DestroyVoice();
+			}
+		};
+
 		/// <summary>
 		/// 
 		/// </summary>
 		SoundSpeaker& speaker_;
 
-		IXAudio2SourceVoice* source_;
+		std::unique_ptr<IXAudio2SourceVoice, SourceVoiceDeleter> source_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
 	};
 }

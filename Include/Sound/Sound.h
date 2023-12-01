@@ -13,7 +13,6 @@ namespace Eugene
 
 	class Wave;
 	class OggVorbis;
-	
 
 	/// <summary>
 	/// サウンド用のクラス
@@ -75,6 +74,9 @@ namespace Eugene
 	private:
 		class SoundImpl;
 
+		/// <summary>
+		/// 実装
+		/// </summary>
 		std::unique_ptr<SoundImpl> impl_;
 		Sound();
 

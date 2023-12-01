@@ -44,6 +44,14 @@ namespace Eugene
 			SoundStreamSpeakerImpl& speaker_;
 		};
 
+		struct SourceVoiceDeleter
+		{
+			void operator()(IXAudio2SourceVoice* voice)
+			{
+				voice->DestroyVoice();
+			}
+		};
+
 		/// <summary>
 		/// 再生ようにデータをセットアップする
 		/// </summary>
@@ -61,7 +69,7 @@ namespace Eugene
 		/// <summary>
 		/// ソースボイス
 		/// </summary>
-		IXAudio2SourceVoice* source_;
+		std::unique_ptr<IXAudio2SourceVoice, SourceVoiceDeleter> source_;
 
 		/// <summary>
 		/// コールバック用オブジェクト

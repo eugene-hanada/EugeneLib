@@ -116,7 +116,7 @@ Eugene::SoundSpeaker::SoundSpeakerImpl::SoundSpeakerImpl(std::uintptr_t devicePt
 	std::copy(std::begin(ext.d4), std::end(ext.d4), formatEx.SubFormat.Data4);
 
 	// ソースボイス生成
-	if (FAILED(xaudio2->CreateSourceVoice(&source_, &formatEx.Format, 0, speaker_.maxPitchRate_)))
+	if (FAILED(xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, speaker_.maxPitchRate_)))
 	{
 		throw CreateErrorException("ソースボイス生成失敗");
 	}
@@ -132,7 +132,6 @@ Eugene::SoundSpeaker::SoundSpeakerImpl::SoundSpeakerImpl(std::uintptr_t devicePt
 Eugene::SoundSpeaker::SoundSpeakerImpl::~SoundSpeakerImpl()
 {
 	source_->Stop();
-	source_->DestroyVoice();
 }
 
 void Eugene::SoundSpeaker::SoundSpeakerImpl::Play(int loopCount)

@@ -19,7 +19,6 @@ namespace Eugene
 		SoundControl(std::uintptr_t devicePtr, std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
 		class SoundControlImpl;
 		std::unique_ptr< SoundControlImpl> impl_;
-
 		friend class Sound;
 	};
 

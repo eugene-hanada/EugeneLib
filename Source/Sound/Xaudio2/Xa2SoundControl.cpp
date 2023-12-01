@@ -6,7 +6,7 @@ Eugene::SoundControl::SoundControlImpl::SoundControlImpl(std::uintptr_t devicePt
 	control_{control}
 {
 	auto xaudio2{ reinterpret_cast<IXAudio2*>(devicePtr) };
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, control_.inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
+	if (FAILED(xaudio2->CreateSubmixVoice(std::out_ptr(submix_), control_.inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
 		throw CreateErrorException("サブミックスボイスの作成に失敗");
 	}
@@ -14,12 +14,11 @@ Eugene::SoundControl::SoundControlImpl::SoundControlImpl(std::uintptr_t devicePt
 
 Eugene::SoundControl::SoundControlImpl::~SoundControlImpl()
 {
-	submix_->DestroyVoice();
 }
 
 void* Eugene::SoundControl::SoundControlImpl::Get(void)
 {
-	return submix_;
+	return submix_.get();
 }
 
 void Eugene::SoundControl::SoundControlImpl::SetOutChannel(std::uint16_t channel)

@@ -9,8 +9,10 @@
 
 #pragma comment (lib,"xaudio2.lib")
 
-X3DAUDIO_HANDLE handle;
-
+namespace
+{
+	X3DAUDIO_HANDLE handle;
+}
 Eugene::Sound::SoundImpl::SoundImpl(Sound& sound):
 	sound_{sound}
 {
@@ -25,7 +27,7 @@ Eugene::Sound::SoundImpl::SoundImpl(Sound& sound):
 	debug.BreakMask = XAUDIO2_LOG_ERRORS;
 	xaudio2_->SetDebugConfiguration(&debug, 0);
 #endif
-	if (FAILED(xaudio2_->CreateMasteringVoice(&mastering_)))
+	if (FAILED(xaudio2_->CreateMasteringVoice(std::out_ptr(mastering_))))
 	{
 		throw CreateErrorException("マスタリングボイスの作成に失敗");
 	}
@@ -46,7 +48,6 @@ Eugene::Sound::SoundImpl::SoundImpl(Sound& sound):
 
 Eugene::Sound::SoundImpl::~SoundImpl()
 {
-	mastering_->DestroyVoice();
 }
 
 void Eugene::Sound::SoundImpl::SetVolume(float volume)

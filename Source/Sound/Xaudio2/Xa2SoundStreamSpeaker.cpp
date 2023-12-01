@@ -64,7 +64,7 @@ Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SoundStreamSpeakerImpl(std::
 	starPos_ = speaker_.file_.tellg();
 
 	// ソースボイスの作成
-	device->CreateSourceVoice(&source_, &format.Format, 0, speaker_.maxPitchRate_, collback_.get());
+	device->CreateSourceVoice(std::out_ptr(source_), &format.Format, 0, speaker_.maxPitchRate_, collback_.get());
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 
 	// バイト数入れとく

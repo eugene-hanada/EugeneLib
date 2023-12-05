@@ -180,10 +180,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto identity = glm::identity<glm::mat4>();
 	
 	DebugIO.Log(reinterpret_cast<const char*>(u8"ログです"));
-	//std::string_view viewTest = std::format("{}",u8"テスト");
-
+	std::chrono::system_clock::time_point startTime, endTime;
+	float delta = 0.0f;
 	while (system->Update())
 	{
+		startTime = std::chrono::system_clock::now();
 		auto nowWindowSize{ system->GetWindowSize() };
 		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
@@ -207,15 +208,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		ImGui::Begin("Log");
 		{
+			ImGui::Text("Delta=%f", delta);
+			ImGui::Text("FPS=%f", 1.0f / delta);
 			auto size = ImVec2{ ImGui::GetWindowWidth() - 50, ImGui::GetWindowHeight() };
 			
 			if (ImGui::Button(reinterpret_cast<const char*>(u8"クリア")))
 			{
 				DebugIO.ClearBuffer();
 			}
-			if (ImGui::Button(reinterpret_cast<const char*>(u8"追加")))
+			if (ImGui::Button(reinterpret_cast<const char*>(u8"デルタタイムをログ出力")))
 			{
-				DebugIO.LogDebug(reinterpret_cast<const char*>(u8"デバッグ用の出力です"));
+				DebugIO.LogDebug("Delta={}", delta);
 			}
 			auto text = DebugIO.GetBuffer_View();
 			ImGui::BeginChild(ImGui::GetID((void*)0), size);
@@ -377,6 +380,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 		graphics->Present();
+
+		endTime = std::chrono::system_clock::now();
+		delta = std::chrono::duration<float, std::chrono::seconds::period>(endTime - startTime).count();
 	}
 	ImGuizmo::Enable(true);
 	return 0;

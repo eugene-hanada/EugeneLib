@@ -135,12 +135,18 @@ void Eugene::Debug::LogDebug(const std::string_view& string)
 
 void Eugene::Debug::CheckBuffer(const std::string_view& string)&
 {
-	if ((string.length() + spanStream_.tellp()) >= buffer_.size())
+	// 現在の位置
+	size_t pos = spanStream_.tellp();
+
+	// フォーマット後ののサイズ
+	constexpr auto fmtSize = std::size("WARNING[HH:MM:SSSSSS][Thread=00000]");
+
+	if ((string.length() + fmtSize + pos) >= buffer_.size())
 	{
-		auto nowPos = spanStream_.tellp();
+		// 書き込んだ際バッファよりサイズが超える場合リサイズする
 		buffer_.resize(buffer_.size() * 2ull);
 		spanStream_ = std::spanstream{ buffer_ };
-		spanStream_.seekp(nowPos);
+		spanStream_.seekp(pos);
 	}
 }
 

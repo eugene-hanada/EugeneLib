@@ -438,13 +438,13 @@ void Eugene::VkGraphics::Present(void)
 	}
 	catch (const std::exception& e)
 	{
-		DebugLog(e.what());
+		DebugIO.Error(e.what());
 		throw e;
 	}
 
 	if (result != vk::Result::eSuccess)
 	{
-		DebugLog("PresentError");
+		DebugIO.Error("PresentError");
 		return;
 	}
 	device_->resetFences(*fence_);
@@ -452,13 +452,13 @@ void Eugene::VkGraphics::Present(void)
 	
 	if (device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
 	{
-		DebugLog("acquireNextImageKHR Error");
+		DebugIO.Error("acquireNextImageKHR Error");
 		return;
 	}
 
 	if (device_->waitForFences(*fence_, true, UINT64_MAX) != vk::Result::eSuccess)
 	{
-		DebugLog("WaitFence Error");
+		DebugIO.Error("WaitFence Error");
 		return;
 	}
 

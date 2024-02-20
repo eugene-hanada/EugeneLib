@@ -53,7 +53,7 @@ namespace Eugene
 		template<class ...Args>
 		void Log(std::format_string<Args...> fmt, const Args ...args)
 		{
-			Out(Type::Log, fmt, args...);
+			Log(std::vformat(fmt.get(), std::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -72,7 +72,7 @@ namespace Eugene
 		template<class ...Args>
 		void Error(std::format_string<Args...> fmt, const Args ...args)
 		{
-			Out(Type::Error, fmt, args...);
+			Error(std::vformat(fmt.get(),std::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace Eugene
 		template<class ...Args>
 		void Warning(std::format_string<Args...> fmt, const Args ...args)
 		{
-			Out(Type::Warning, fmt, args...);
+			Warning(std::vformat(fmt.get(), std::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -110,7 +110,7 @@ namespace Eugene
 		template<class ...Args>
 		void LogDebug(std::format_string<Args...> fmt, const Args ...args)
 		{
-			Out(Type::Debug, fmt, args...);
+			LogDebug(std::vformat(fmt.get(), std::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -172,12 +172,12 @@ namespace Eugene
 		/// <param name="string"> 文字列 </param>
 		void CheckBuffer(const std::string_view& string) &;
 
-		template<class... Args>
-		void Out(Type type, std::format_string<Args...> fmt, const Args ...args)
-		{
-			Out(type, std::vformat(fmt.get(), std::make_format_args(args...)));
-		}
 
+		/// <summary>
+		/// 出力を行う
+		/// </summary>
+		/// <param name="type"> 出力タイプ </param>
+		/// <param name="string"> 出力する文字列 </param>
 		void Out(Type type, const std::string_view& string);
 
 
@@ -215,20 +215,4 @@ namespace Eugene
 
 }
 
-/// <summary>
-/// Type用フォーマッター
-/// </summary>
-template<>
-class std::formatter<Eugene::Debug::Type> :
-	public std::formatter<const char*>
-{
-public:
-	template<class Out>
-	auto format(Eugene::Debug::Type type, std::basic_format_context<Out, char>& ctx)
-	{
-		return std::formatter<const char*>::format(names[std::to_underlying(type)].data(), ctx);
-	}
-private:
-	static constexpr std::string_view names[]{"\x1B[31;1mERROR\x1B[37;m","\x1B[33;1mWARNING\x1B[37;m","LOG","\x1B[34;1mDEBUG\x1B[37;m"};
-};
 

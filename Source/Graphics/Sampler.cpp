@@ -1,5 +1,6 @@
 #include "../../Include/Graphics/Sampler.h"
-#include <numeric>
+#include <limits>
+
 
 
 Eugene::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode v, TextureAddressMode w, SampleFilter filter) :
@@ -8,6 +9,7 @@ Eugene::SamplerLayout::SamplerLayout(TextureAddressMode u, TextureAddressMode v,
 	maxAnisotropy_ = 16;
 	comparison_ = SamplerComparison::Non;
 	minLod_ = 0.0f;
+	
 	maxLod_ = std::numeric_limits<float>::max();
 }
 

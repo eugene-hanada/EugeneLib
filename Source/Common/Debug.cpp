@@ -7,6 +7,8 @@
 #include <ostream>
 #include <fstream>
 
+#include <iostream>
+
 #ifdef USE_WINDOWS
 #include <Windows.h>
 #endif
@@ -16,6 +18,27 @@ namespace
 	FILE* fp = nullptr;
 	constexpr std::string_view names[]{ "ERROR","WARNING","LOG","DEBUG" };
 }
+
+/// <summary>
+/// Type用フォーマッター
+/// </summary>
+template<>
+class std::formatter<Eugene::Debug::Type>
+{
+public:
+
+	constexpr auto parse(std::format_parse_context& ctx)
+	{
+		return ctx.begin();
+	}
+
+	auto format(Eugene::Debug::Type type, std::format_context& ctx) const
+	{
+		return std::format_to(ctx.out(), "{}", names[std::to_underlying(type)]);
+	}
+private:
+	static constexpr std::string_view names[]{ "\x1B[31;1mERROR\x1B[37;m","\x1B[33;1mWARNING\x1B[37;m","LOG","\x1B[34;1mDEBUG\x1B[37;m" };
+};
 
 
 Eugene::Debug& Eugene::Debug::GetInstance(void)
@@ -159,13 +182,13 @@ void Eugene::Debug::Out(Type type, const std::string_view& string)
 	if ((filter_ & tmp).any())
 	{
 		CheckBuffer(string);
-		
+
 		// 現在時刻を
 		auto now = std::chrono::zoned_time{ std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) };
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
-		std::println(fmt, type, now, oss_.view(), string);
+		std::println(std::cout,fmt, type, now, oss_.view(), string);
 		std::println(spanStream_, fmt, names[std::to_underlying(type)], now, oss_.view(), string);
 		oss_.seekp(0);
 	}

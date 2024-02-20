@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.20)
 project(EugeneLib)
 
-# c++20を使うのでセット
+# c++23を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
 option(USE_WINDOWS "Windowsm向けにビルドするか？" ON)
@@ -198,7 +198,7 @@ elseif(USE_VULKAN)
 	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
 
 	if (NOT USE_EFFEKSEER)
-	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+	#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
 	endif()
 endif()

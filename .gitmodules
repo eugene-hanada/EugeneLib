@@ -17,3 +17,6 @@
 [submodule "Test/doctest"]
 	path = Test/doctest
 	url = https://github.com/doctest/doctest.git
+[submodule "Include/ThirdParty/VulkanMemoryAllocator-Hpp"]
+	path = Include/ThirdParty/VulkanMemoryAllocator-Hpp
+	url = https://github.com/YaaZ/VulkanMemoryAllocator-Hpp.git

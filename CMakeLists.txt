@@ -195,12 +195,15 @@ if (USE_DX12 AND NOT USE_VULKAN)
 elseif(USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
-	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
-
+	#target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
 	if (NOT USE_EFFEKSEER)
-	#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
 	endif()
+
 endif()
 
 if (USE_IMGUI)

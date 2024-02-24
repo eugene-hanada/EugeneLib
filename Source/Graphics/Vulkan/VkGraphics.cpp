@@ -4,7 +4,7 @@
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
 
-
+#define VMA_IMPLEMENTATION
 #include "VkGraphics.h"
 #include "../../../Include/Common/EugeneLibException.h"
 #include "VkGpuEngine.h"
@@ -78,10 +78,24 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	backBufferIdx_{0}, isMinimized{false}
 {
 	hWindow = hwnd;
+
 	CreateInstance();
 
 	CreateDevice();
 
+	vma::VulkanFunctions vulkanFunc{};
+	vulkanFunc.setVkGetInstanceProcAddr(&vkGetInstanceProcAddr);
+	vulkanFunc.setVkGetDeviceProcAddr(&vkGetDeviceProcAddr);
+
+	vma::AllocatorCreateInfo allocatorInfo{};
+	allocatorInfo.setPhysicalDevice(physicalDevice_);
+	allocatorInfo.setDevice(*device_);
+	allocatorInfo.setInstance(*instance_);
+	allocatorInfo.setVulkanApiVersion(VK_API_VERSION_1_3);
+	allocatorInfo.setPVulkanFunctions(&vulkanFunc);
+	allocatorInfo.setFlags(vma::AllocatorCreateFlagBits::eExtMemoryBudget);
+	allocator_ = vma::createAllocatorUnique(allocatorInfo);
+	
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo{};
 	surfaceInfo.setHinstance(GetModuleHandle(nullptr));
 	surfaceInfo.setHwnd(hWindow);
@@ -353,17 +367,17 @@ Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
-	return new VkUploadableBufferResource{*device_, *this, size};
+	return new VkUploadableBufferResource{ *allocator_, size};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size) const
 {
-	return new VkBufferResource{*device_, *this, size};
+	return new VkBufferResource{*allocator_, size};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
 {
-	return new VkUploadableBufferResource{*device_,*this, texture};
+	return new VkUploadableBufferResource{ *allocator_, texture};
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const

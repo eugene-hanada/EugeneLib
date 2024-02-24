@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
+#include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
 #include <memory>
 #include <array>
 #include <Windows.h>
@@ -194,6 +195,11 @@ namespace Eugene
 		/// vulkanのデバイス
 		/// </summary>
 		vk::UniqueDevice device_;
+
+		/// <summary>
+		/// メモリアロケーター
+		/// </summary>
+		vma::UniqueAllocator allocator_;
 
 		/// <summary>
 		/// サーフェスKHR

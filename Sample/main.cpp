@@ -162,7 +162,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::Enable(true);
-	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+	//io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -384,6 +384,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		endTime = std::chrono::system_clock::now();
 		delta = std::chrono::duration<float, std::chrono::seconds::period>(endTime - startTime).count();
 	}
+
+	//texMatrixBuffer->UnMap();
+	//rtMatrixBuffer->UnMap();
 	ImGuizmo::Enable(true);
 	return 0;
 }

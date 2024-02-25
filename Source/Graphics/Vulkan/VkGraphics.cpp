@@ -383,7 +383,7 @@ Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture)
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
 {
 	// 
-	return new VkImageResource{*this, *device_,formatData};
+	return new VkImageResource{ *allocator_,formatData};
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> color)
@@ -392,7 +392,7 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const glm::ivec2&
 	{
 		format = backBufferFormat_;
 	}
-	return new VkImageResource{ *this, *device_, size,format, };
+	return new VkImageResource{ *allocator_, size,format, };
 }
 
 
@@ -408,7 +408,7 @@ Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint
 
 Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
 {
-	return new VkRenderTargetViews{size};
+	return new VkRenderTargetViews{*device_,size};
 }
 
 Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
@@ -683,7 +683,7 @@ Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const A
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2& size, float clear) const
 {
-	return new VkImageResource{*this,*device_, size, clear};
+	return new VkImageResource{*allocator_, size, clear};
 }
 
 

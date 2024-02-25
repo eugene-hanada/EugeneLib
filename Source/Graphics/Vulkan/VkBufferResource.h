@@ -10,11 +10,10 @@ namespace Eugene
 	/// </summary>
 	struct VkBufferData
 	{
-		/// <summary>
-		/// デバイスメモリ
-		/// </summary>
-		//vk::UniqueDeviceMemory memory_;
 
+		/// <summary>
+		/// アロケーターで確保したメモリ
+		/// </summary>
 		vma::UniqueAllocation allocation_;
 
 

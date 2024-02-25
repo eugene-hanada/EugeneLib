@@ -1,7 +1,7 @@
 ﻿#include "VkImageResource.h"
 #include "VkGraphics.h"
 
-Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info) :
+Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const TextureInfo& info) :
 	ImageResource{info.format }
 {
 	auto format{ VkGraphics::FormatToVkFormat[static_cast<size_t>(info.format)] };
@@ -19,14 +19,12 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
 
-	// Image生成
-	data_.image_ = device.createImageUnique(imageInfo);
+	vma::AllocationCreateInfo allocInfo{};
+	allocInfo.setUsage(vma::MemoryUsage::eAuto);
 
-	// DeviceMemory生成
-	data_.memory_ = graphics.CreateMemory(data_.image_);
-
-	// バインド
-	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
+	auto result = allocator.createImageUnique(imageInfo, allocInfo);
+	data_.allocation_ = std::move(result.second);
+	data_.image_ = std::move(result.first);
 
 	data_.arraySize_ = info.arraySize;
 	data_.mipmapLevels_ = info.mipLevels;
@@ -34,7 +32,7 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics,const vk::De
 	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
 
-Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, float clearValue) :
+Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue) :
 	ImageResource{Format::D32_FLOAT}
 {
 	constexpr auto format{ vk::Format::eD32Sfloat };
@@ -52,21 +50,19 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
 
-	// Image生成
-	data_.image_ = device.createImageUnique(imageInfo);
+	vma::AllocationCreateInfo allocInfo{};
+	allocInfo.setUsage(vma::MemoryUsage::eAuto);
 
-	// DeviceMemory生成
-	data_.memory_ = graphics.CreateMemory(data_.image_);
-
-	// バインド
-	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
+	auto result = allocator.createImageUnique(imageInfo, allocInfo);
+	data_.allocation_ = std::move(result.second);
+	data_.image_ = std::move(result.first);
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
 	size_ = size;
 }
 
-Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, Format format) :
+Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, Format format) :
 	ImageResource{format}
 {
 	vk::ImageCreateInfo imageInfo{};
@@ -83,9 +79,12 @@ Eugene::VkImageResource::VkImageResource(const VkGraphics& graphics, const vk::D
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(format)]);
 
-	data_.image_ = device.createImageUnique(imageInfo);
-	data_.memory_ = graphics.CreateMemory(data_.image_);
-	device.bindImageMemory(*data_.image_, *data_.memory_, 0);
+	vma::AllocationCreateInfo allocInfo{};
+	allocInfo.setUsage(vma::MemoryUsage::eAuto);
+
+	auto result = allocator.createImageUnique(imageInfo, allocInfo);
+	data_.allocation_ = std::move(result.second);
+	data_.image_ = std::move(result.first);
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
@@ -100,7 +99,7 @@ Eugene::VkImageResource::VkImageResource(const glm::ivec2& size, Format format, 
 	size_ = size;
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
-	data_.image_ = vk::UniqueImage{image,vk::ObjectDestroy<vk::Device,vk::DispatchLoaderStatic>(device)};
+	data_.image_ = vma::UniqueImage{image};
 	isBackBuffer_ = true;
 }
 

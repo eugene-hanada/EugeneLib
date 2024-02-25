@@ -2,8 +2,8 @@
 #include "VkImageResource.h"
 #include "VkGraphics.h"
 
-Eugene::VkRenderTargetViews::VkRenderTargetViews(std::uint64_t size) :
-	RenderTargetViews{size}
+Eugene::VkRenderTargetViews::VkRenderTargetViews(const vk::Device& device,std::uint64_t size) :
+	RenderTargetViews{size},device_{device}
 {
 	imageViews_.resize(size);
 }
@@ -25,7 +25,7 @@ void Eugene::VkRenderTargetViews::Create(ImageResource& resource, std::uint64_t 
 	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
 	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
 
-	imageViews_[idx].imageView = data->image_.getOwner().createImageViewUnique(viewInfo);
+	imageViews_[idx].imageView = device_.createImageViewUnique(viewInfo);
 	imageViews_[idx].size = resource.GetSize();
 }
 

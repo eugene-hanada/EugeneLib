@@ -88,8 +88,10 @@ void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
 	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
-	imageViewMap_.emplace(idx,data->image_.getOwner().createImageViewUnique(viewInfo));
+	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
+
+	
 
 	vk::DescriptorImageInfo imageInfo{};
 	imageInfo.setImageView(*imageViewMap_[idx]);
@@ -146,7 +148,7 @@ void Eugene::VkShaderResourceViews::CreateCubeMap(ImageResource& resource, std::
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
 	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
-	imageViewMap_.emplace(idx, data->image_.getOwner().createImageViewUnique(viewInfo));
+	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
 	vk::DescriptorImageInfo imageInfo{};

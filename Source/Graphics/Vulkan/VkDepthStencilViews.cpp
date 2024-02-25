@@ -3,7 +3,7 @@
 #include "VkGraphics.h"
 
 Eugene::VkDepthStencilView::VkDepthStencilView(const vk::Device& device, size_t size) :
-	DepthStencilViews{size}
+	DepthStencilViews{size}, device_{device}
 {
 	imageViews_.resize(size);
 }
@@ -22,7 +22,7 @@ void Eugene::VkDepthStencilView::Create(ImageResource& resource, std::uint64_t i
 	info.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
 	info.subresourceRange.setLayerCount(1u);
 	info.subresourceRange.setLevelCount(1u);
-	imageViews_[idx] = data->image_.getOwner().createImageViewUnique(info);
+	imageViews_[idx] = device_.createImageViewUnique(info);
 }
 
 void* Eugene::VkDepthStencilView::GetViews(void)

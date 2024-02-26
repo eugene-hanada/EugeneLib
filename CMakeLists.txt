@@ -132,7 +132,9 @@ if(USE_DX12 AND NOT USE_VULKAN)
 		Source/Graphics/DirectX12/Dx12Views.cpp
 		Source/Graphics/DirectX12/Dx12Sampler.cpp
 		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp)
+		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp
+		Include/ThirdParty/D3D12MemoryAllocator/src/D3D12MemAlloc.cpp
+	)
 
 	if (USE_IMGUI)
 		set(GraphicsApiSource
@@ -192,6 +194,7 @@ endif()
 if (USE_DX12 AND NOT USE_VULKAN)
 	# DirectX12使用時defineを用意
 	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
 elseif(USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)

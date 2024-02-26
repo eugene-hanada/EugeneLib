@@ -1,6 +1,7 @@
 ﻿#include "Dx12Graphics.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
+#include <D3D12MemAlloc.h>
 #include <list>
 #include <string>
 #include <cassert>
@@ -167,22 +168,22 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(), size};
+	return new Dx12UploadableBufferResource{allocator_.Get(), size};
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size) const
 {
-	return new Dx12BufferResource{ device_.Get(),size};
+	return new Dx12BufferResource{ allocator_.Get(),size};
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(), texture};
+	return new Dx12UploadableBufferResource{device_.Get(),allocator_.Get(), texture};
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureInfo& formatData) const
 {
-	return new Dx12ImageResource{device_.Get(),formatData};
+	return new Dx12ImageResource{allocator_.Get(),formatData};
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor)
@@ -191,12 +192,12 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec
 	{
 		format = backBufferFormat_;
 	}
-	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
+	return new Dx12ImageResource{ allocator_.Get(),size,format, clearColor };
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear) const
 {
-	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
+	return new Dx12ImageResource{allocator_.Get(), size, Format::R32_TYPELESS,clear};
 }
 
 
@@ -265,6 +266,13 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
+			D3D12MA::ALLOCATOR_DESC allocatorDesc{};
+			allocatorDesc.pAdapter = tmpAdapter;
+			allocatorDesc.pDevice = device_.Get();
+			if (FAILED(D3D12MA::CreateAllocator(&allocatorDesc, allocator_.ReleaseAndGetAddressOf())))
+			{
+				throw CreateErrorException("D3D12MAのアロケーター生成失敗");
+			}
 			return;
 		}
 	}

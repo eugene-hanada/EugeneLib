@@ -12,6 +12,11 @@ struct IDXGIFactory6;
 struct IDXGISwapChain4;
 struct ID3D12DescriptorHeap;
 
+namespace D3D12MA
+{
+	struct Allocator;
+}
+
 namespace Eugene
 {
 	class Dx12Graphics :
@@ -93,6 +98,8 @@ namespace Eugene
 
 		// DirectX12デバイス
 		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
+
+		Microsoft::WRL::ComPtr<D3D12MA::Allocator> allocator_;
 
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };

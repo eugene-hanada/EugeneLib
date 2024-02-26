@@ -87,6 +87,8 @@ namespace Eugene
 
 		// Graphics を介して継承されました
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
+
+		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;

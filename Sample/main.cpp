@@ -210,6 +210,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			ImGui::Text("Delta=%f", delta);
 			ImGui::Text("FPS=%f", 1.0f / delta);
+
+			const auto info = graphics->GetGpuMemoryInfo();
+
+			ImGui::Text("LocalMemory=%f/%f",info.first.usage / static_cast<float>(std::giga::num), info.first.budget / static_cast<float>(std::giga::num));
+			ImGui::Text("SharedMemory=%f/%f", info.second.usage / static_cast<float>(std::giga::num), info.second.budget / static_cast<float>(std::giga::num));
 			auto size = ImVec2{ ImGui::GetWindowWidth() - 50, ImGui::GetWindowHeight() };
 			
 			if (ImGui::Button(reinterpret_cast<const char*>(u8"クリア")))

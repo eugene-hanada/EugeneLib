@@ -436,6 +436,13 @@ Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(const ArgsSpan<Bi
 	return new Dx12SamplerViews{device_.Get(),num};
 }
 
+std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::Dx12Graphics::GetGpuMemoryInfo(void) const
+{
+	D3D12MA::Budget local, sys;
+	allocator_->GetBudget(&local, &sys);
+	return { {local.UsageBytes,local.BudgetBytes},{sys.UsageBytes,sys.BudgetBytes} };
+}
+
 #ifdef USE_IMGUI
 
 void Eugene::Dx12Graphics::ImguiNewFrame(void) const

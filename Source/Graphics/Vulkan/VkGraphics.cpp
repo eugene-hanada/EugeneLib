@@ -686,6 +686,27 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2&
 	return new VkImageResource{*allocator_, size, clear};
 }
 
+std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::VkGraphics::GetGpuMemoryInfo(void) const
+{
+	auto budgets = allocator_->getHeapBudgets();
+	auto properties = physicalDevice_.getMemoryProperties();
+	std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> rtn;
+	for (auto i = 0u; i < properties.memoryHeapCount; i++)
+	{
+		if ((properties.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal))
+		{
+			rtn.first.usage += budgets[i].usage;
+			rtn.first.budget += budgets[i].budget;
+		}
+		else
+		{
+			rtn.second.usage += budgets[i].usage;
+			rtn.second.budget += budgets[i].budget;
+		}
+	}
+	return rtn;
+}
+
 
 #ifdef USE_EFFEKSEER
 

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/BufferResource.h"
 #include <vulkan/vulkan.hpp>
+#include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
 
 namespace Eugene
 {
@@ -9,15 +10,23 @@ namespace Eugene
 	/// </summary>
 	struct VkBufferData
 	{
+
 		/// <summary>
-		/// デバイスメモリ
+		/// アロケーターで確保したメモリ
 		/// </summary>
-		vk::UniqueDeviceMemory memory_;
+		vma::UniqueAllocation allocation_;
+
 
 		/// <summary>
 		/// バッファ
 		/// </summary>
-		vk::UniqueBuffer buffer_;
+		vma::UniqueBuffer buffer_;
+
+
+		/// <summary>
+		/// バッファのサイズ(バイト数)
+		/// </summary>
+		std::uint64_t size_{0ull};
 	};
 
 	class VkGraphics;
@@ -30,7 +39,7 @@ namespace Eugene
 		public BufferResource
 	{
 	public:
-		VkBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size);
+		VkBufferResource(const vma::Allocator& allocator, std::uint64_t size);
 	private:
 
 		// BufferResource を介して継承されました
@@ -51,8 +60,9 @@ namespace Eugene
 		public BufferResource
 	{
 	public:
-		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, std::uint64_t size);
-		VkUploadableBufferResource(const vk::Device& device, const VkGraphics& graphics, Image& image);
+		VkUploadableBufferResource(const vma::Allocator& allocator, std::uint64_t size);
+		VkUploadableBufferResource(const vma::Allocator& allocator, Image& image);
+		~VkUploadableBufferResource();
 	private:
 		// BufferResource を介して継承されました
 		bool CanMap(void) const final;
@@ -65,6 +75,16 @@ namespace Eugene
 		/// データ
 		/// </summary>
 		VkBufferData data_;
+
+		/// <summary>
+		/// Vulkanのメモリアロケーター
+		/// </summary>
+		const vma::Allocator& allocator_;
+
+		/// <summary>
+		/// マップした回数
+		/// </summary>
+		std::uint64_t mapCount_;
 	};
 }
 

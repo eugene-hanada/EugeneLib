@@ -17,3 +17,9 @@
 [submodule "Test/doctest"]
 	path = Test/doctest
 	url = https://github.com/doctest/doctest.git
+[submodule "Include/ThirdParty/VulkanMemoryAllocator-Hpp"]
+	path = Include/ThirdParty/VulkanMemoryAllocator-Hpp
+	url = https://github.com/YaaZ/VulkanMemoryAllocator-Hpp.git
+[submodule "Include/ThirdParty/D3D12MemoryAllocator"]
+	path = Include/ThirdParty/D3D12MemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator.git

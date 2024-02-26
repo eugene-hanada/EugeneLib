@@ -195,4 +195,22 @@ namespace Eugene
 	/// サブリソースの最大数
 	/// </summary>
 	constexpr auto maxSubResource = 64u;
+
+	/// <summary>
+	/// Gpuメモリの情報
+	/// </summary>
+	struct GpuMemoryInfo
+	{
+		/// <summary>
+		/// 使用中のバイト数
+		/// </summary>
+		std::uint64_t usage;
+
+		/// <summary>
+		/// プログラムで使用可能なバイト数
+		/// </summary>
+		std::uint64_t budget;
+	};
+
+
 }

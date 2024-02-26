@@ -284,6 +284,13 @@ namespace Eugene
 		/// <param name="isFullScreen"></param>
 		virtual void SetFullScreenFlag(bool isFullScreen);
 
+		/// <summary>
+		/// Gpuメモリの情報を取得します
+		/// </summary>
+		/// <param name=""> firstは専用メモリ、secondは共有メモリの情報 </param>
+		/// <returns></returns>
+		virtual std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const = 0;
+
 #ifdef USE_IMGUI
 
 		/// <summary>

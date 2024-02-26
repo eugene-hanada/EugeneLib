@@ -132,7 +132,9 @@ if(USE_DX12 AND NOT USE_VULKAN)
 		Source/Graphics/DirectX12/Dx12Views.cpp
 		Source/Graphics/DirectX12/Dx12Sampler.cpp
 		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
-		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp)
+		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp
+		Include/ThirdParty/D3D12MemoryAllocator/src/D3D12MemAlloc.cpp
+	)
 
 	if (USE_IMGUI)
 		set(GraphicsApiSource
@@ -192,15 +194,19 @@ endif()
 if (USE_DX12 AND NOT USE_VULKAN)
 	# DirectX12使用時defineを用意
 	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
 elseif(USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
-	target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
-
+	#target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
+	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
 	if (NOT USE_EFFEKSEER)
-	#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
 	endif()
+
 endif()
 
 if (USE_IMGUI)

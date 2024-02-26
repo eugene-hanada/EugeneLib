@@ -12,6 +12,11 @@ struct IDXGIFactory6;
 struct IDXGISwapChain4;
 struct ID3D12DescriptorHeap;
 
+namespace D3D12MA
+{
+	struct Allocator;
+}
+
 namespace Eugene
 {
 	class Dx12Graphics :
@@ -82,6 +87,8 @@ namespace Eugene
 
 		// Graphics を介して継承されました
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
+
+		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 		void* GetImguiImageID(std::uint64_t index) const final;
@@ -93,6 +100,8 @@ namespace Eugene
 
 		// DirectX12デバイス
 		Microsoft::WRL::ComPtr<ID3D12Device> device_{ nullptr };
+
+		Microsoft::WRL::ComPtr<D3D12MA::Allocator> allocator_;
 
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };

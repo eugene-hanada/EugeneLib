@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
+#include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
 #include <memory>
 #include <array>
 #include <Windows.h>
@@ -171,7 +172,7 @@ namespace Eugene
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
 		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
-
+		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 		void CreateInstance(void);
 		void CreateDevice(void);
 
@@ -194,6 +195,11 @@ namespace Eugene
 		/// vulkanのデバイス
 		/// </summary>
 		vk::UniqueDevice device_;
+
+		/// <summary>
+		/// メモリアロケーター
+		/// </summary>
+		vma::UniqueAllocator allocator_;
 
 		/// <summary>
 		/// サーフェスKHR

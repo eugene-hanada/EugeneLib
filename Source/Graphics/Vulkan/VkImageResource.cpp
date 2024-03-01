@@ -18,7 +18,6 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(format);
-
 	vma::AllocationCreateInfo allocInfo{};
 	allocInfo.setUsage(vma::MemoryUsage::eAuto);
 
@@ -28,6 +27,7 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 
 	data_.arraySize_ = info.arraySize;
 	data_.mipmapLevels_ = info.mipLevels;
+	data_.pixelPerSize = info.pixelPerBite;
 
 	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
@@ -59,6 +59,7 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
+	data_.pixelPerSize = 4u;
 	size_ = size;
 }
 
@@ -88,7 +89,7 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 
 	data_.arraySize_ = 1;
 	data_.mipmapLevels_ = 1;
-
+	data_.pixelPerSize = FormatSize[static_cast<std::size_t>(format)];
 	size_ = size;
 }
 

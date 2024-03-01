@@ -77,7 +77,8 @@ bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 	info_.pixelPerBite = c;
 	info_.totalSize_ = w * h * c;
 	data_.resize(1);
-	data_[0].resize(w * h * c);
+	baseData_.resize(info_.totalSize_);
+	data_[0] = { baseData_ };
 	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
 	return true;
@@ -85,7 +86,7 @@ bool Eugene::Image::LoadStb(const std::filesystem::path& path)
 
 bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 {
-	std::ifstream file{ path };
+	std::ifstream file{ path,std::ios::binary };
 	if (!file)
 	{
 		return false;
@@ -130,6 +131,9 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 		// DXT5の時
 		info_.format = Format::BC3_UNORM;
 		break;
+	case '2ITA':
+		info_.format = Format::BC5_UNORM;
+		break;
 	default:
 		// それ以外の時とりあえずRGBA8ビットのやつにしとく
 		info_.format = Format::R8G8B8A8_UNORM;
@@ -143,34 +147,43 @@ bool Eugene::Image::LoadDds(const std::filesystem::path& path)
 		info_.arraySize = 6;
 	}
 
-	info_.pixelPerBite = h.rgbBitCount / 8;
+	info_.pixelPerBite = std::max(1,h.rgbBitCount / 8);
 	data_.resize(info_.arraySize * info_.mipLevels);
+	
 
 	// 配列サイズとミップマップの分を読み込む
 	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
 	{
 		for (int i = 0; i < info_.mipLevels; i++)
 		{
-			// インデックス
-			auto idx = j * info_.mipLevels + i;
-
 			// サイズを計算
-			auto size = colcMap.at(info_.format)(
+			info_.totalSize_ += calcSizeMap.at(info_.format)(
 				std::max(1, static_cast<int>(info_.width) >> i),
 				std::max(1, static_cast<int>(info_.height) >> i),
 				info_.pixelPerBite
 				);
-
-			// リサイズして読み込む
-			data_[idx].resize(size);
-			file.read(reinterpret_cast<char*>(data_[idx].data()), size);
 		}
 	}
 
-	info_.totalSize_ = 0u;
-	for (const auto& tmpData : data_)
+	baseData_.resize(info_.totalSize_);
+	file.read(reinterpret_cast<char*>(baseData_.data()), info_.totalSize_);
+
+	std::size_t sizeOffset = 0ull;
+	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
 	{
-		info_.totalSize_ += static_cast<std::uint32_t>(tmpData.size());
+		for (int i = 0; i < info_.mipLevels; i++)
+		{
+			// インデックス
+			auto idx{ j * info_.mipLevels + i };
+			auto byteSize{ calcSizeMap.at(info_.format)(
+				std::max(1, static_cast<int>(info_.width) >> i),
+				std::max(1, static_cast<int>(info_.height) >> i),
+				info_.pixelPerBite
+				) };
+			data_[idx] = { &baseData_[sizeOffset],static_cast<std::size_t>(byteSize)};
+			sizeOffset += byteSize;
+		}
 	}
+
 	return true;
 }

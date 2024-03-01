@@ -73,6 +73,11 @@ namespace Eugene
 			/// ミップマップレベル
 			/// </summary>
 			std::uint32_t mipmapLevels_{ 0u };
+
+			/// <summary>
+			/// 1ピクセル当たりのサイズ
+			/// </summary>
+			std::uint32_t pixelPerSize{ 0u };
 		};
 
 	private:

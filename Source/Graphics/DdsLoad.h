@@ -151,12 +151,14 @@ namespace Eugene
 		}
 	};
 
-	const std::unordered_map<Format, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> colcMap
+
+	const std::unordered_map<Format, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> calcSizeMap
 	{
 		{Format::R8G8B8A8_UNORM,ColcSize{}},
 		{Format::BC1_UNORM,ColcDxt1Size{}},
 		{Format::BC2_UNORM,ColcDxt3Size{}},
-		{Format::BC3_UNORM,ColcDxt3Size{}}
+		{Format::BC3_UNORM,ColcDxt3Size{}},
+		{Format::BC5_UNORM,ColcDxt3Size{}}
 	};
 
 	void LoadDdsExtension(std::ifstream& file, TextureInfo& info)

@@ -100,7 +100,8 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vma::Alloca
 	data_.size_ = image.GetInfo().totalSize_;
 
 	auto ptr = static_cast<std::uint8_t*>(Map());
-	std::memcpy(ptr, image.GetData(), static_cast<size_t>(image.GetInfo().totalSize_));
+
+	std::memcpy(ptr, image.GetData(), image.GetInfo().totalSize_);
 	UnMap();
 }
 

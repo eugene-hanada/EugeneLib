@@ -387,7 +387,6 @@ void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& s
 	for (int i = 0; i < subResource; i++)
 	{
 		// サブリソースごとのコピー
-		s.SubresourceIndex = i;
 		s.PlacedFootprint = footprint[i];
 		d.SubresourceIndex = i;
 		cmdList_->CopyTextureRegion(&d, 0, 0, 0, &s, nullptr);

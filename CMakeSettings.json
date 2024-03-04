@@ -121,7 +121,7 @@
         },
         {
           "name": "BUILD_EXTERNAL",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {
@@ -141,7 +141,7 @@
         },
         {
           "name": "USE_EFFEKSEER",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         },
         {

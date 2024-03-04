@@ -177,6 +177,11 @@ namespace Eugene
 		void CreateDevice(void);
 
 		/// <summary>
+		/// ダイナミックローダー
+		/// </summary>
+		vk::DynamicLoader dl;
+
+		/// <summary>
 		/// バックバッファのインデックス
 		/// </summary>
 		std::uint32_t backBufferIdx_;

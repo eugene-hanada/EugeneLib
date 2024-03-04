@@ -38,6 +38,8 @@
 
 #include "../../../Include/Common/Debug.h"
 
+VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
+
 
 namespace
 {
@@ -63,7 +65,7 @@ namespace
 		info.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 		info.hinstance = GetModuleHandle(nullptr);
 		info.hwnd = static_cast<HWND>(viewport->PlatformHandle);
-		return static_cast<int>((vkCreateWin32SurfaceKHR(reinterpret_cast<VkInstance>(vk_instance), &info, reinterpret_cast<const VkAllocationCallbacks*>(vk_allocator), reinterpret_cast<VkSurfaceKHR*>(out_vk_surface))));
+		return static_cast<int>((VULKAN_HPP_DEFAULT_DISPATCHER.vkCreateWin32SurfaceKHR(reinterpret_cast<VkInstance>(vk_instance), &info, reinterpret_cast<const VkAllocationCallbacks*>(vk_allocator), reinterpret_cast<VkSurfaceKHR*>(out_vk_surface))));
 	}
 #endif
 #endif
@@ -84,8 +86,9 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	CreateDevice();
 
 	vma::VulkanFunctions vulkanFunc{};
-	vulkanFunc.setVkGetInstanceProcAddr(&vkGetInstanceProcAddr);
-	vulkanFunc.setVkGetDeviceProcAddr(&vkGetDeviceProcAddr);
+	
+	vulkanFunc.setVkGetInstanceProcAddr(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
+	vulkanFunc.setVkGetDeviceProcAddr(dl.getProcAddress<PFN_vkGetDeviceProcAddr>("vkGetDeviceProcAddr"));
 
 	vma::AllocatorCreateInfo allocatorInfo{};
 	allocatorInfo.setPhysicalDevice(physicalDevice_);
@@ -564,6 +567,8 @@ void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 
 void Eugene::VkGraphics::CreateInstance(void)
 {
+	VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
+
 	auto appInfo{ vk::ApplicationInfo{} };
 	appInfo.setPApplicationName("vulkanTest");
 	appInfo.setPEngineName("No Engine");
@@ -599,6 +604,8 @@ void Eugene::VkGraphics::CreateInstance(void)
 	instance_ = vk::createInstanceUnique(
 		info
 	);
+
+	VULKAN_HPP_DEFAULT_DISPATCHER.init(*instance_);
 }
 
 void Eugene::VkGraphics::CreateDevice(void)
@@ -669,6 +676,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 	};
 	device_ = physicalDevice_.createDeviceUnique(createInfoChain.get<vk::DeviceCreateInfo>());
 	graphicFamilly_ = idx;
+	VULKAN_HPP_DEFAULT_DISPATCHER.init(*device_);
 }
 
 Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
@@ -803,7 +811,7 @@ namespace Eugene
 			return manager_;
 
 		}
-		void SetCameraPos(const Vector3& eye, const Vector3& at, const Vector3& up) final
+		void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) final
 		{
 			renderer_->SetCameraMatrix(
 				Effekseer::Matrix44().LookAtLH(
@@ -811,10 +819,38 @@ namespace Eugene
 				)
 			);
 		}
-		void SetCameraProjection(float fov, float aspect, const Eugene::Vector2& nearfar) final
+		void SetCameraProjection(float fov, float aspect, const glm::vec2& nearfar) final
 		{
 			renderer_->SetProjectionMatrix(
 				Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
+		}
+
+		void SetCameraPos(const glm::mat4& mat) final
+		{
+			Effekseer::Matrix44 tmp;
+			for (int y = 0; y < 4; y++)
+			{
+				for (int x = 0; x < 4; x++)
+				{
+					tmp.Values[y][x] = mat[y][x];
+				}
+			}
+			renderer_->SetCameraMatrix(
+				tmp
+			);
+		}
+
+		void SetCameraProjection(const glm::mat4& mat) final
+		{
+			Effekseer::Matrix44 tmp;
+			for (int y = 0; y < 4; y++)
+			{
+				for (int x = 0; x < 4; x++)
+				{
+					tmp.Values[y][x] = mat[y][x];
+				}
+			}
+			renderer_->SetProjectionMatrix(tmp);
 		}
 
 	private:
@@ -921,6 +957,10 @@ void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64
 
 void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
 {
+	ImGui_ImplVulkan_LoadFunctions([](const char* function_name, void* data) {
+		return reinterpret_cast<vk::DynamicLoader*>(data)->getProcAddress<PFN_vkVoidFunction>(function_name);
+		}, &dl);
+
 	// imgui用ディスクリプタープールの生成
 	{
 		vk::DescriptorPoolCreateInfo dPoolInfo{};

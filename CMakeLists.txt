@@ -202,9 +202,19 @@ elseif(USE_VULKAN)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
+
+	target_compile_definitions(EugeneLib PRIVATE VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
+	target_compile_definitions(EugeneLib PRIVATE VMA_STATIC_VULKAN_FUNCTIONS=0)
+	 
+	if (USE_IMGUI)
+		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
+	endif()
+
+
 	if (NOT USE_EFFEKSEER)
 	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
-	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+	#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+
 	endif()
 
 endif()

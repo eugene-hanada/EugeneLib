@@ -381,7 +381,7 @@ Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout
 
 
 
-void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size)
+void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size,void* window)
 {
 	for (auto& buffer : buffers_)
 	{

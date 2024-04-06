@@ -86,6 +86,24 @@ namespace Eugene
 	private:
 	};
 
+	struct TouchData
+	{
+	public:
+		struct Touch
+		{
+			Touch();
+			glm::vec2 pos;
+			float nowTime;
+			float downTime;
+		};
+
+		TouchData();
+
+		std::uint32_t touchCount_;
+		std::array<Touch, 8> touchList_;
+	private:
+	};
+
 	using UniqueGraphics = std::unique_ptr<Graphics>;
 	using UniqueGpuEngine = std::unique_ptr<GpuEngine>;
 
@@ -187,6 +205,15 @@ namespace Eugene
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
 		/// <summary>
+		/// タッチ状態を取得する
+		/// </summary>
+		/// <param name="pressed"> タッチした瞬間のもの </param>
+		/// <param name="move"> タッチした状態で移動した時のもの </param>
+		/// <param name="released"> タッチを話した瞬間のもの </param>
+		/// <returns></returns>
+		bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
+
+		/// <summary>
 		/// 終了するか？
 		/// </summary>
 		/// <param name=""> trueの時終了する </param>
@@ -237,7 +264,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
-		System(const glm::vec2& size, const std::u8string& title);
+		System(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {});
 
 
 		/// <summary>
@@ -254,6 +281,11 @@ namespace Eugene
 		/// リサイズように使用
 		/// </summary>
 		static Eugene::Graphics* graphics;
+
+        /// <summary>
+        /// リサイズように使用
+        /// </summary>
+        static GpuEngine* gpuEngine;
 
 		/// <summary>
 		/// 最大ウィンドウサイズ
@@ -273,7 +305,7 @@ namespace Eugene
 		class SystemImpl;
 		std::unique_ptr<SystemImpl> impl_;
 
-		friend System* CreateSystem(const glm::vec2& size, const std::u8string& title);
+		friend System* CreateSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories);
 	};
 
 	/// <summary>
@@ -283,7 +315,7 @@ namespace Eugene
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
 	[[nodiscard]]
-	System* CreateSystem(const glm::vec2& size, const std::u8string& title);
+	System* CreateSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0,std::span<std::string_view> directories = {});
 
 	using UniqueSystem = std::unique_ptr<System>;
 
@@ -293,7 +325,7 @@ namespace Eugene
 	/// <param name="size"> ウィンドウサイズ </param>
 	/// <param name="title"> タイトル </param>
 	/// <returns> std::unique_ptrを使用したSystem </returns>
-	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title);
+	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0,std::span<std::string_view> directories = {});
 
 	
 }

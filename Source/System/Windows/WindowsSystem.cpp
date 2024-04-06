@@ -40,10 +40,6 @@ namespace {
 	/// </summary>
 	HWND hwnd;
 
-	/// <summary>
-	/// 
-	/// </summary>
-	Eugene::GpuEngine* gpuEngine = nullptr;
 	
 	/// <summary>
 	/// ホイール
@@ -111,7 +107,7 @@ namespace {
 
 }
 
-Eugene::System::SystemImpl::SystemImpl(System& system ,const glm::vec2& size, const std::u8string& title) :
+Eugene::System::SystemImpl::SystemImpl(System& system ,const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories) :
     system_{system}
 {
 	resizeCall = [this](const glm::vec2& size) {
@@ -220,7 +216,7 @@ Eugene::System::SystemImpl::~SystemImpl()
 
 std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::System::SystemImpl::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
-	if (graphics)
+	if (graphics && gpuEngine)
 	{
 		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
 	}
@@ -345,6 +341,11 @@ bool Eugene::System::SystemImpl::GetGamePad(GamePad& pad, std::uint32_t idx) con
 	pad.rightThumb_.y = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
 
 	return true;
+}
+
+bool Eugene::System::SystemImpl::GetTouch(TouchData& pressed, TouchData& hold, TouchData& released) const
+{
+	return false;
 }
 
 bool Eugene::System::SystemImpl::IsEnd(void) const

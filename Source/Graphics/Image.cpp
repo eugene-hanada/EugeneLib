@@ -1,6 +1,7 @@
 ﻿#include "../../Include/Graphics/Image.h"
 #include "../../Include/Common/EugeneLibException.h"
 #include <fstream>
+#include <bit>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_image.h"

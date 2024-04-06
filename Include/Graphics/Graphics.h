@@ -276,7 +276,7 @@ namespace Eugene
 		/// バックバッファをリサイズする
 		/// </summary>
 		/// <param name="size"></param>
-		virtual void ResizeBackBuffer(const glm::vec2& size);
+		virtual void ResizeBackBuffer(const glm::vec2& size,void* window = nullptr);
 
 		/// <summary>
 		/// 

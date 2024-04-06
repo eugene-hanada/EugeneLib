@@ -4,7 +4,13 @@
 #include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
 #include <memory>
 #include <array>
+
+#ifdef USE_WINDOWS
 #include <Windows.h>
+#else USE_ANDROID
+struct android_app;S
+#endif
+
 #include "../../../Include/Graphics/ImageResource.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
@@ -110,6 +116,8 @@ namespace Eugene
 
 #ifdef USE_WINDOWS
 		VkGraphics(HWND& hwnd,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#else  USE_ANDROID
+        VkGraphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 #endif
 		~VkGraphics();
 
@@ -167,7 +175,7 @@ namespace Eugene
 		void Present(void) final;
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
-		void ResizeBackBuffer(const glm::vec2& size) final;
+		void ResizeBackBuffer(const glm::vec2& size, void* window = nullptr) final;
 		void SetFullScreenFlag(bool isFullScreen) final;
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
@@ -175,6 +183,7 @@ namespace Eugene
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 		void CreateInstance(void);
 		void CreateDevice(void);
+        void SetUpVma(void);
 
 		/// <summary>
 		/// ダイナミックローダー

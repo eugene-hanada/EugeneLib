@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include <concepts>
+#include <algorithm>
 
 namespace Eugene
 {
@@ -14,7 +15,7 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// 64ƒrƒbƒg”ÅxorƒVƒtƒg‚Ì—”¶¬ƒGƒ“ƒWƒ“
+	/// 64ï¿½rï¿½bï¿½gï¿½ï¿½xorï¿½Vï¿½tï¿½gï¿½Ì—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½Wï¿½ï¿½
 	/// </summary>
 	class XorShift64Engine
 	{
@@ -54,9 +55,9 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// —”‚ğˆµ‚¤ƒNƒ‰ƒX
+	/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 	/// </summary>
-	/// <typeparam name="R"> —”ƒGƒ“ƒWƒ“‚ÌŒ^ </typeparam>
+	/// <typeparam name="R"> ï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ÌŒ^ </typeparam>
 	template<RandomEngine R>
 	class Random
 	{
@@ -67,9 +68,9 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// p‚ÌŠm—¦‚Åtrue‚ğ•Ô‚·
+		/// pï¿½ÌŠmï¿½ï¿½ï¿½ï¿½trueï¿½ï¿½Ô‚ï¿½
 		/// </summary>
-		/// <param name="p"> true‚É‚È‚éŠm—¦ </param>
+		/// <param name="p"> trueï¿½É‚È‚ï¿½mï¿½ï¿½ </param>
 		/// <returns></returns>
 		bool operator()(double p) noexcept
 		{
@@ -78,12 +79,12 @@ namespace Eugene
 		}
 		
 		/// <summary>
-		/// w’è‚Ì®”’l‚Ì”ÍˆÍ‚Å’l‚ğ•Ô‚·
+		/// ï¿½wï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½lï¿½Ì”ÍˆÍ‚Å’lï¿½ï¿½Ô‚ï¿½
 		/// </summary>
-		/// <typeparam name="Int"> ®”‚ÌŒ^ </typeparam>
-		/// <param name="min"> Å¬’l </param>
-		/// <param name="max"> Å‘å’l </param>
-		/// <returns> Œ‹‰Ê </returns>
+		/// <typeparam name="Int"> ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒ^ </typeparam>
+		/// <param name="min"> ï¿½Åï¿½ï¿½l </param>
+		/// <param name="max"> ï¿½Å‘ï¿½l </param>
+		/// <returns> ï¿½ï¿½ï¿½ï¿½ </returns>
 		template<std::integral Int>
 		Int operator()(Int min, Int max) noexcept
 		{
@@ -92,12 +93,12 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// w’è‚Ì•‚“®¬”“_”‚Ì”ÍˆÍ‚Å’l‚ğ•Ô‚·
+		/// ï¿½wï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Ì”ÍˆÍ‚Å’lï¿½ï¿½Ô‚ï¿½
 		/// </summary>
-		/// <typeparam name="Float"> •‚“®¬”“_”‚ÌŒ^ </typeparam>
-		/// <param name="min"> Å¬’l </param>
-		/// <param name="max"> Å‘å’l </param>
-		/// <returns> Œ‹‰Ê </returns>
+		/// <typeparam name="Float"> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ÌŒ^ </typeparam>
+		/// <param name="min"> ï¿½Åï¿½ï¿½l </param>
+		/// <param name="max"> ï¿½Å‘ï¿½l </param>
+		/// <returns> ï¿½ï¿½ï¿½ï¿½ </returns>
 		template<std::floating_point Float>
 		Float operator()(Float min, Float max) noexcept
 		{
@@ -106,11 +107,11 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// w’è‚ÌŠm—¦‚ğw’è‚Ì‰ñ”s‚Á‚½ê‡‚Ì¬Œ÷”
+		/// ï¿½wï¿½ï¿½ÌŠmï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½Ì‰ñ”sï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
-		/// <typeparam name="Int"> ‰ñ”‚Ì®”Œ^ </typeparam>
-		/// <param name="count"> s‰ñ” </param>
-		/// <param name="p"> Šm—¦ </param>
+		/// <typeparam name="Int"> ï¿½ñ”‚Ìï¿½ï¿½ï¿½ï¿½^ </typeparam>
+		/// <param name="count"> ï¿½ï¿½ï¿½sï¿½ï¿½ </param>
+		/// <param name="p"> ï¿½mï¿½ï¿½ </param>
 		/// <returns></returns>
 		template<std::integral Int>
 		Int operator()(Int count, double p) noexcept
@@ -120,7 +121,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// —”‚ğ•Ô‚·
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
 		/// </summary>
 		/// <returns></returns>
 		std::uint64_t operator()() noexcept

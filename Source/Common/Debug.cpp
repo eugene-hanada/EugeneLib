@@ -1,44 +1,48 @@
 ﻿#include "../../Include/Common/Debug.h"
-#ifdef _DEBUG
 
+
+#include "fmt/chrono.h"
 #include <cuchar>
 #include <chrono>
 #include <thread>
 #include <ostream>
 #include <fstream>
-
 #include <iostream>
+
 
 #ifdef USE_WINDOWS
 #include <Windows.h>
+#endif
+
+#ifdef USE_ANDROID
+#include <android/log.h>
+
+namespace
+{
+    class AndroidOut :
+            public std::stringbuf
+    {
+    public:
+        int sync() final {
+            __android_log_print(ANDROID_LOG_INFO, "EugeneLibLog", "%s", str().c_str());
+            str("");
+            return 0;
+        }
+    };
+    auto androidOut{AndroidOut{}};
+    std::ostream androidOs{&androidOut};
+}
 #endif
 
 namespace
 {
 	FILE* fp = nullptr;
 	constexpr std::string_view names[]{ "ERROR","WARNING","LOG","DEBUG" };
+	constexpr std::string_view colorNames[]{ "\x1B[31;1mERROR\x1B[37;m","\x1B[33;1mWARNING\x1B[37;m","LOG","\x1B[34;1mDEBUG\x1B[37;m" };
 }
 
-/// <summary>
-/// Type用フォーマッター
-/// </summary>
-template<>
-class std::formatter<Eugene::Debug::Type>
-{
-public:
 
-	constexpr auto parse(std::format_parse_context& ctx)
-	{
-		return ctx.begin();
-	}
 
-	auto format(Eugene::Debug::Type type, std::format_context& ctx) const
-	{
-		return std::format_to(ctx.out(), "{}", names[std::to_underlying(type)]);
-	}
-private:
-	static constexpr std::string_view names[]{ "\x1B[31;1mERROR\x1B[37;m","\x1B[33;1mWARNING\x1B[37;m","LOG","\x1B[34;1mDEBUG\x1B[37;m" };
-};
 
 
 Eugene::Debug& Eugene::Debug::GetInstance(void)
@@ -48,14 +52,17 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 }
 
 Eugene::Debug::Debug() :
-	binarySemphore_{1}, spanStream_{buffer_}, filter_{0u}, exportPath_{"./Log.txt"}
+	binarySemphore_{1},  filter_{0u}, exportPath_{"./Log.txt"},
+
+#ifdef USE_ANDROID
+    os_{androidOs}
+#else
+	os_{std::cout}
+#endif
 {
 	// スレッドIDを文字列に変換してバッファのサイズにする
 	oss_ << std::this_thread::get_id();
 	oss_.seekp(0);
-
-	buffer_.resize(256ull);
-	spanStream_ = std::spanstream{ buffer_ };
 
 	filter_.flip();
 }
@@ -71,29 +78,33 @@ void Eugene::Debug::ClearFillter(bool flag)
 
 void Eugene::Debug::AddFilter(Type type)
 {
-	filter_.set(std::to_underlying(type), true);
+	filter_.set(static_cast<std::size_t>(type), true);
 }
 
 void Eugene::Debug::RemoveFilter(Type type)
 {
-	filter_.set(std::to_underlying(type), false);
+	filter_.set(static_cast<std::size_t>(type), false);
 }
 
 std::string_view Eugene::Debug::GetBuffer_View(void)
 {
-	return std::string_view{buffer_.data(), static_cast<size_t>(spanStream_.tellp()) };
+#ifndef USE_ANDROID
+    return ss_.view();
+#else
+	return ss_.str();
+#endif
 }
 
 void Eugene::Debug::ClearBuffer(void)
 {
-	std::fill(buffer_.begin(), buffer_.end(), '\0');
+	ss_.fill('\0');
 	std::streampos pos{0};
-	spanStream_.seekp(pos);
+	ss_.seekp(pos);
 }
 
 void Eugene::Debug::OpenConsole(void)
 {
-#ifdef _WIN64
+#ifdef USE_WINDOWS
 
 	// コンソールを開く
 	AllocConsole();
@@ -115,6 +126,7 @@ void Eugene::Debug::SetExportPath(const std::filesystem::path& path)
 
 Eugene::Debug::~Debug()
 {
+#ifndef USE_ANDROID
 	if (fp != nullptr)
 	{
 		fclose(fp);
@@ -130,11 +142,10 @@ Eugene::Debug::~Debug()
 		return;
 	}
 
-	size_t pos = spanStream_.tellp();
-	file << std::string_view{buffer_.data(),pos };
+	file << ss_.view();
+#endif
 }
 
-#endif
 
 void Eugene::Debug::Log(const std::string_view& string)
 {
@@ -158,38 +169,39 @@ void Eugene::Debug::LogDebug(const std::string_view& string)
 
 void Eugene::Debug::CheckBuffer(const std::string_view& string)&
 {
-	// 現在の位置
-	size_t pos = spanStream_.tellp();
+	//// 現在の位置
+	//size_t pos = spanStream_.tellp();
 
-	// フォーマット後ののサイズ
-	constexpr auto fmtSize = std::size("WARNING[HH:MM:SSSSSS][Thread=00000]");
+	//// フォーマット後ののサイズ
+	//constexpr auto fmtSize = std::size("WARNING[HH:MM:SSSSSS][Thread=00000]");
 
-	if ((string.length() + fmtSize + pos) >= buffer_.size())
-	{
-		// 書き込んだ際バッファよりサイズが超える場合リサイズする
-		buffer_.resize(buffer_.size() * 2ull);
-		spanStream_ = std::spanstream{ buffer_ };
-		spanStream_.seekp(pos);
-	}
+	//if ((string.length() + fmtSize + pos) >= buffer_.size())
+	//{
+	//	// 書き込んだ際バッファよりサイズが超える場合リサイズする
+	//	buffer_.resize(buffer_.size() * 2ull);
+	//	spanStream_ = std::spanstream{ buffer_ };
+	//	spanStream_.seekp(pos);
+	//}
 }
 
 void Eugene::Debug::Out(Type type, const std::string_view& string)
 {
 	binarySemphore_.acquire();
-	constexpr auto fmt = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}";
+	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}";
 	std::bitset<4> tmp;
-	tmp.set(std::to_underlying(type), true);
+	tmp.set(static_cast<std::size_t>(type), true);
 	if ((filter_ & tmp).any())
 	{
-		CheckBuffer(string);
+		//CheckBuffer(string);
 
 		// 現在時刻を
-		auto now = std::chrono::zoned_time{ std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) };
+		//auto now = std::chrono::zoned_time{ std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) };
+		std::time_t t = std::time(nullptr);
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
-		std::println(std::cout,fmt, type, now, oss_.view(), string);
-		std::println(spanStream_, fmt, names[std::to_underlying(type)], now, oss_.view(), string);
+		os_ << fmt::format("{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}", colorNames[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
+		ss_ << fmt::format("{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}", names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
 		oss_.seekp(0);
 	}
 	binarySemphore_.release();

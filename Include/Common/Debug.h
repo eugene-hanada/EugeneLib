@@ -1,14 +1,12 @@
 ﻿#pragma once
+#include "../ThirdParty/fmt/include/fmt/core.h"
 #include <string>
-#include <format>
 #include <semaphore>
-#include <spanstream>
-#include <print>
-#include <ostream>
 #include <bitset>
 #include <sstream>
-#include <vector>
 #include <filesystem>
+
+
 
 #if defined(_DEBUG)
 #define DebugIOLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
@@ -51,9 +49,9 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Log(std::format_string<Args...> fmt, const Args ...args)
+		void Log(fmt::format_string<Args...> format, const Args ...args)
 		{
-			Log(std::vformat(fmt.get(), std::make_format_args(args...)));
+			Log(fmt::vformat(format, fmt::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -70,9 +68,9 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Error(std::format_string<Args...> fmt, const Args ...args)
+		void Error(fmt::format_string<Args...> format, const Args& ...args)
 		{
-			Error(std::vformat(fmt.get(),std::make_format_args(args...)));
+			Error(fmt::vformat(format, fmt::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -89,9 +87,9 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Warning(std::format_string<Args...> fmt, const Args ...args)
+		void Warning(fmt::format_string<Args...> format, const Args ...args)
 		{
-			Warning(std::vformat(fmt.get(), std::make_format_args(args...)));
+			Warning(fmt::vformat(format, fmt::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -108,9 +106,9 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void LogDebug(std::format_string<Args...> fmt, const Args ...args)
+		void LogDebug(fmt::format_string<Args...> format, const Args ...args)
 		{
-			LogDebug(std::vformat(fmt.get(), std::make_format_args(args...)));
+			LogDebug(fmt::vformat(format.get(), fmt::make_format_args(args...)));
 		}
 
 		/// <summary>
@@ -191,15 +189,10 @@ namespace Eugene
 		/// </summary>
 		std::ostringstream oss_;
 
-		/// <summary>
-		/// 文字列用バッファ
-		/// </summary>
-		std::vector<char> buffer_;
 
-		/// <summary>
-		/// バッファを使用したストリーム
-		/// </summary>
-		std::spanstream spanStream_;
+		std::stringstream ss_;
+
+		std::ostream& os_;
 
 		/// <summary>
 		/// 表示用フィルター

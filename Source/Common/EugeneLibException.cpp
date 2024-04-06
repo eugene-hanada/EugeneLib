@@ -1,5 +1,4 @@
 ﻿#include "../../Include/Common/EugeneLibException.h"
-#include <format>
 #include "../../Include/Common/Debug.h"
 #include <filesystem>
 
@@ -18,7 +17,7 @@ const char* Eugene::EugeneLibException::what() const noexcept
 }
 
 Eugene::CreateErrorException::CreateErrorException(const std::string& mess) :
-	EugeneLibException{std::format("[CreateError]{}",mess)}
+	EugeneLibException{fmt::format("[CreateError]{}",mess)}
 {
 }
 

@@ -1,7 +1,9 @@
 ﻿
 #ifdef USE_WINDOWS
-
 #define VK_USE_PLATFORM_WIN32_KHR
+#else USE_ANDROID
+#define VK_USE_PLATFORM_ANDROID_KHR
+#include <game-activity/native_app_glue/android_native_app_glue.h>
 #endif
 
 #define VMA_IMPLEMENTATION
@@ -72,6 +74,8 @@ namespace
 
 #ifdef USE_WINDOWS
 	HWND hWindow;
+#else USE_ANDROID
+    android_app* pApp{nullptr};
 #endif
 }
 
@@ -85,20 +89,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 
 	CreateDevice();
 
-	vma::VulkanFunctions vulkanFunc{};
-	
-	vulkanFunc.setVkGetInstanceProcAddr(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
-	vulkanFunc.setVkGetDeviceProcAddr(dl.getProcAddress<PFN_vkGetDeviceProcAddr>("vkGetDeviceProcAddr"));
+    SetUpVma();
 
-	vma::AllocatorCreateInfo allocatorInfo{};
-	allocatorInfo.setPhysicalDevice(physicalDevice_);
-	allocatorInfo.setDevice(*device_);
-	allocatorInfo.setInstance(*instance_);
-	allocatorInfo.setVulkanApiVersion(VK_API_VERSION_1_3);
-	allocatorInfo.setPVulkanFunctions(&vulkanFunc);
-	allocatorInfo.setFlags(vma::AllocatorCreateFlagBits::eExtMemoryBudget);
-	allocator_ = vma::createAllocatorUnique(allocatorInfo);
-	
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo{};
 	surfaceInfo.setHinstance(GetModuleHandle(nullptr));
 	surfaceInfo.setHwnd(hWindow);
@@ -140,10 +132,49 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
 #endif
 }
+#else  USE_ANDROID
+Eugene::VkGraphics::VkGraphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+{
+    pApp = app;
+
+    // インスタンス生成
+    CreateInstance();
+
+    // デバイス生成
+    CreateDevice();
+
+    // Vmaをセットアップ
+    SetUpVma();
+
+    vk::AndroidSurfaceCreateInfoKHR surfaceInfo{};
+    surfaceInfo.setWindow(pApp->window);
+    surfaceKhr_ = instance_->createAndroidSurfaceKHRUnique(surfaceInfo);
+
+    vk::FenceCreateInfo fenceInfo{};
+    fenceInfo.setFlags(vk::FenceCreateFlagBits::eSignaled);
+
+    fence_ = device_->createFenceUnique(fenceInfo);
+    queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
+
+    auto useVkformat = CreateSwapChain(size);
+
+    gpuEngine = new VkGpuEngine{ queue_,maxNum };
+
+    buffers_.resize(bufferNum);
 
 
+    CreateBackBuffer(useVkformat, size);
+
+
+    device_->resetFences(*fence_);
+    auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
+    result = device_->waitForFences(*fence_,true,UINT64_MAX);
+    device_->resetFences(*fence_);
+}
 
 #endif
+
+
 
 void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
 {
@@ -203,17 +234,19 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 		return useFormat;
 	}
 
-
+#ifdef USE_WINDOWS
 	vk::SurfaceFullScreenExclusiveInfoEXT fullscrInfo{};
 	fullscrInfo.setFullScreenExclusive(vk::FullScreenExclusiveEXT::eDefault);
 	vk::SurfaceFullScreenExclusiveWin32InfoEXT fullscrWin32Info{};
 	fullscrWin32Info.setHmonitor(MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST));
 	fullscrInfo.setPNext(&fullscrWin32Info);
-
+#endif
 
 	vk::SwapchainCreateInfoKHR info{};
 
+#ifdef USE_WINDOWS
 	info.setPNext(&fullscrInfo);
+#endif
 
 	// サーフェスを指定
 	info.setSurface(*surfaceKhr_);
@@ -343,6 +376,7 @@ vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool
 	return device_->allocateMemoryUnique(allocateInfo);
 }
 
+#ifdef USE_IMGUI
 ImGui_ImplVulkanH_Window* Eugene::VkGraphics::GetImguiWindow(void)
 {
 	return &::imguiWindowH;
@@ -357,6 +391,7 @@ vk::Framebuffer Eugene::VkGraphics::GetFrameBuffer(void)
 {
 	return *imguiFrameBuffer_[backBufferIdx_];
 }
+#endif
 
 Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
 {
@@ -406,7 +441,7 @@ Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(const
 
 Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint64_t size) const
 {
-	return new VkDepthStencilView{*device_, size};
+	return new VkDepthStencilView{*device_, static_cast<std::uint32_t>(size)};
 }
 
 Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
@@ -416,7 +451,7 @@ Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint
 
 Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
 {
-	return new VkVertexView{size,vertexNum, *static_cast<VkBufferData*>(resource.GetResource())->buffer_};
+	return new VkVertexView{ static_cast<std::uint32_t>(size),static_cast<std::uint32_t>(vertexNum), *static_cast<VkBufferData*>(resource.GetResource())->buffer_};
 }
 
 Eugene::ImageResource& Eugene::VkGraphics::GetBackBufferResource(std::uint64_t idx)
@@ -459,7 +494,7 @@ void Eugene::VkGraphics::Present(void)
 		throw e;
 	}
 
-	if (result != vk::Result::eSuccess)
+	if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR)
 	{
 		DebugIO.Error("PresentError");
 		return;
@@ -497,43 +532,58 @@ Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(const ArgsSpan<Bind
 	return new VkSamplerViews{*device_, viewTypes};
 }
 
-void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size)
-{
-	queue_.waitIdle();
-	device_->waitIdle();
+void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
+    queue_.waitIdle();
+    device_->waitIdle();
 
-	if (size == zeroVector2<float>)
-	{
-		// ウィンドウ最小時
-		isMinimized = true;
-		return;
-	}
-	else if (isMinimized)
-	{
-		// 最小状態から復帰時
-		isMinimized = false;
-		return;
-	}
+    if (size == zeroVector2<float>) {
+        // ウィンドウ最小時
+        isMinimized = true;
+        return;
+    } else if (isMinimized) {
+        // 最小状態から復帰時
+        isMinimized = false;
+#ifdef USE_ANDROID
+        if (window != nullptr)
+        {
+            pApp->window = static_cast<ANativeWindow *>(window);
+        }
+        vk::AndroidSurfaceCreateInfoKHR surfaceInfo{};
+        surfaceInfo.setWindow(pApp->window);
+        surfaceKhr_ = instance_->createAndroidSurfaceKHRUnique(surfaceInfo);
+#else
+        return;
+#endif
+    }
 
 
-	
-	renderTargetViews_.reset();
-	for (auto& buffer : buffers_)
-	{
-		buffer.reset();
-	}
-	swapchain_.reset();
-	
-	auto swapChainFormat = CreateSwapChain(size);
-	CreateBackBuffer(swapChainFormat, size);
+    renderTargetViews_.reset();
+    for (auto &buffer: buffers_) {
+        buffer.reset();
+    }
+    swapchain_.reset();
+
+    auto swapChainFormat = CreateSwapChain(size);
+    CreateBackBuffer(swapChainFormat, size);
 
 #ifdef USE_IMGUI
-	CreateImguiFrameBuffer(size);
+    CreateImguiFrameBuffer(size);
 #endif
-	device_->resetFences(*fence_);
-	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_);
-	result = device_->waitForFences(*fence_, true, UINT64_MAX);
-	device_->resetFences(*fence_);
+    device_->resetFences(*fence_);
+
+    try {
+        auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_,
+                                                   &backBufferIdx_);
+        result = device_->waitForFences(*fence_, true, UINT64_MAX);
+    }
+    catch (std::exception& e)
+    {
+        DebugIO.Log("ResizeError={}",e.what());
+        throw e;
+    }
+    device_->resetFences(*fence_);
+
+    DebugIO.Log("Resize完了");
 }
 
 
@@ -585,6 +635,8 @@ void Eugene::VkGraphics::CreateInstance(void)
 		VK_KHR_SURFACE_EXTENSION_NAME,
 #ifdef USE_WINDOWS
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+#else USE_ANDROID
+        VK_KHR_ANDROID_SURFACE_EXTENSION_NAME,
 #endif
 
 #ifdef _DEBUG
@@ -651,8 +703,8 @@ void Eugene::VkGraphics::CreateDevice(void)
 	// スワップチェインの機能を有効かするので
 	std::vector<const char*> extension{
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
-		VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
-		VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
+		//VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
+		//VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
 
 #ifdef USE_WINDOWS
 		VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME
@@ -677,6 +729,23 @@ void Eugene::VkGraphics::CreateDevice(void)
 	device_ = physicalDevice_.createDeviceUnique(createInfoChain.get<vk::DeviceCreateInfo>());
 	graphicFamilly_ = idx;
 	VULKAN_HPP_DEFAULT_DISPATCHER.init(*device_);
+}
+
+void Eugene::VkGraphics::SetUpVma(void)
+{
+    vma::VulkanFunctions vulkanFunc{};
+
+    vulkanFunc.setVkGetInstanceProcAddr(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
+    vulkanFunc.setVkGetDeviceProcAddr(dl.getProcAddress<PFN_vkGetDeviceProcAddr>("vkGetDeviceProcAddr"));
+
+    vma::AllocatorCreateInfo allocatorInfo{};
+    allocatorInfo.setPhysicalDevice(physicalDevice_);
+    allocatorInfo.setDevice(*device_);
+    allocatorInfo.setInstance(*instance_);
+    allocatorInfo.setVulkanApiVersion(VK_API_VERSION_1_3);
+    allocatorInfo.setPVulkanFunctions(&vulkanFunc);
+    allocatorInfo.setFlags(vma::AllocatorCreateFlagBits::eExtMemoryBudget);
+    allocator_ = vma::createAllocatorUnique(allocatorInfo);
 }
 
 Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const

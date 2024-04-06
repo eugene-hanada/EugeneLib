@@ -5,6 +5,7 @@ project(EugeneLib)
 set(CMAKE_CXX_STANDARD 23)
 
 option(USE_WINDOWS "Windowsm向けにビルドするか？" ON)
+option(USE_ANDROID "ANDROID向けにビルドするか？" OFF)
 option(USE_IMGUI "Imguiを使用するか?" OFF)
 option(USE_VULKAN "Vulkanを使用するか?" OFF)
 option(USE_DX12 "DirectX12を使用するか？" ON)
@@ -18,6 +19,9 @@ if(USE_WINDOWS)
 		# Vulkanを使用しない時は一応DirectX12のオプションをONに
 		set(USE_DX12 ON)
 	endif()
+elseif(USE_ANDROID)
+	set(USE_VULKAN ON)
+	set(USE_DX12 OFF)
 endif()
 
 set(LIBRARY_OUTPUT_PATH ../)
@@ -78,6 +82,7 @@ set(MathSource
 	Source/Math/Geometry.cpp
 	Source/Math/Random.cpp)
 
+if (NOT USE_ANDROID)
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
 	Source/Sound/Sound.cpp
@@ -88,6 +93,7 @@ set(SoundSource
 	Source/Sound/Sound3DControl.cpp
 	Source/Sound/SoundFile.cpp
 )
+endif()
 
 
 if (USE_WINDOWS)
@@ -112,6 +118,10 @@ if (USE_WINDOWS)
 		Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
 		Source/Sound/Xaudio2/Xa2SoundControl.cpp
 		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
+	)
+elseif(USE_ANDROID)
+	set(SystemApiSource
+		Source/System/Android/AndroidSystem.cpp
 	)
 endif()
 
@@ -161,10 +171,10 @@ elseif(USE_VULKAN)
 		Source/Graphics/Vulkan/VkIndexView.cpp)
 
 	if (USE_IMGUI)
-	set(GraphicsApiSource
-	${GraphicsApiSource}
-	Include/ThirdParty/imgui/backends/imgui_impl_vulkan.cpp
-	)
+		set(GraphicsApiSource
+		${GraphicsApiSource}
+		Include/ThirdParty/imgui/backends/imgui_impl_vulkan.cpp
+		)
 	endif()
 endif()
 
@@ -189,6 +199,10 @@ add_library(EugeneLib STATIC
 
 if (USE_WINDOWS)
 	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
+elseif(USE_ANDROID)
+	target_compile_definitions(EugeneLib PRIVATE USE_ANDROID)
+	find_package(game-activity REQUIRED CONFIG)
+	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity)
 endif()
 
 if (USE_DX12 AND NOT USE_VULKAN)
@@ -212,8 +226,10 @@ elseif(USE_VULKAN)
 
 
 	if (NOT USE_EFFEKSEER)
-	target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
-	#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+		if (NOT USE_ANDROID)
+			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
+		endif()
+			#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
 
 	endif()
 
@@ -231,6 +247,9 @@ endif()
  target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_LEFT_HANDED)
  target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_DEPTH_ZERO_TO_ONE)
 
+ add_subdirectory("Include/ThirdParty/fmt")
+ target_link_libraries(EugeneLib PRIVATE fmt::fmt)
+
  # サンプルをビルドするか？
  if (BUILD_SAMPLE)
  add_subdirectory("Sample")
@@ -242,7 +261,7 @@ endif()
 
 	# 使用時
 	add_subdirectory("Effekseer")
-	target_link_libraries(EugeneLib LLGI Effekseer)
+	target_link_libraries(EugeneLib PUBLIC LLGI Effekseer)
 	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
 	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
 
@@ -250,11 +269,11 @@ endif()
 	# Vulkan使用するか？
 	if (USE_VULKAN)
 		# VULKAN使用時
-		target_link_libraries(EugeneLib EffekseerRendererVulkan glslang SPIRV)
+		target_link_libraries(EugeneLib PUBLIC EffekseerRendererVulkan glslang SPIRV)
 		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererVulkan")
 	else()
 		# 
-		target_link_libraries(EugeneLib EffekseerRendererDX12)
+		target_link_libraries(EugeneLib PUBLIC EffekseerRendererDX12)
 		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererDX12")
 	endif()
 

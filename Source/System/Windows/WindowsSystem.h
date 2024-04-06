@@ -8,7 +8,7 @@ namespace Eugene
 	class System::SystemImpl
 	{
 	public:
-		SystemImpl(System& system,const glm::vec2& size, const std::u8string& title);
+		SystemImpl(System& system,const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories ={});
 		~SystemImpl();
 		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const ;
 		bool Update(void) ;
@@ -18,6 +18,7 @@ namespace Eugene
 		bool GetKeyData(KeyDataSpan keyData) const ;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) ;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const ;
+		bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
 		bool IsEnd(void) const ;
 		void OnResizeWindow(const glm::vec2& size) ;
 		void OnSetFullScreen(bool isFullScreen) ;

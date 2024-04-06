@@ -27,7 +27,7 @@
 #include <Common/Debug.h>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
-{
+{	
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 
@@ -178,10 +178,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto cameraProjection{ glm::perspectiveRH(glm::radians(90.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
-	
-	DebugIO.Log(reinterpret_cast<const char*>(u8"ログです"));
+	DebugIO.OpenConsole();
+	auto a = fmt::format("Log{}", 114514);
+	DebugIO.Error("Log{0:}",114514);
 	std::chrono::system_clock::time_point startTime, endTime;
 	float delta = 0.0f;
+	float pan[] = {0.5f,0.5f};
+	speaker->SetPan(pan);
 	while (system->Update())
 	{
 		startTime = std::chrono::system_clock::now();
@@ -272,8 +275,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
 			{
 				auto rate = (panValue + 1.0f) /2.0f;
-				float pan[]{ 1.0f - rate,rate };
-				speaker->SetPan(pan);
+				pan[0] = 1.0f - rate; 
+				pan[1] = rate;
+				
 			}
 		}
 		ImGui::End();

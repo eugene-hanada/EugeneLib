@@ -72,7 +72,7 @@ namespace Eugene
 
 		Sampler* CreateSampler(const SamplerLayout& layout) const final;
 
-		void ResizeBackBuffer(const glm::vec2& size) final;
+		void ResizeBackBuffer(const glm::vec2& size,void* window = nullptr) final;
 
 		void SetFullScreenFlag(bool isFullScreen) final;
 

@@ -4,24 +4,25 @@ project(EugeneLib)
 # c++23を使うのでセット
 set(CMAKE_CXX_STANDARD 23)
 
-option(USE_WINDOWS "Windowsm向けにビルドするか？" ON)
-option(USE_ANDROID "ANDROID向けにビルドするか？" OFF)
-option(USE_IMGUI "Imguiを使用するか?" OFF)
-option(USE_VULKAN "Vulkanを使用するか?" OFF)
-option(USE_DX12 "DirectX12を使用するか？" ON)
-option(USE_EFFEKSEER "Effekseerを使用するか?" OFF)
-option(BUILD_SAMPLE "サンプルをbuildするか？" OFF)
-option(BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
+option(EUGENE_USE_WINDOWS "Windowsm向けにビルドするか？" ON)
+option(EUGENE_USE_ANDROID "ANDROID向けにビルドするか？" OFF)
+option(EUGENE_USE_IMGUI "Imguiを使用するか?" OFF)
+option(EUGENE_USE_VULKAN "Vulkanを使用するか?" OFF)
+option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
+option(EUGENE_USE_EFFEKSEER "Effekseerを使用するか?" OFF)
+option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
+option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
+set(EUGENE_EFFEKSEER_DIR EVN{EFFEKSEER_DIR} CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
 
-if(USE_WINDOWS)
+if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
-	if (NOT USE_VULKAN)
+	if (NOT EUGENE_USE_VULKAN)
 		# Vulkanを使用しない時は一応DirectX12のオプションをONに
-		set(USE_DX12 ON)
+		set(EUGENE_USE_DX12 ON)
 	endif()
-elseif(USE_ANDROID)
-	set(USE_VULKAN ON)
-	set(USE_DX12 OFF)
+elseif(EUGENE_USE_ANDROID)
+	set(EUGENE_USE_VULKAN ON)
+	set(EUGENE_USE_DX12 OFF)
 endif()
 
 set(LIBRARY_OUTPUT_PATH ../)
@@ -33,7 +34,7 @@ set(SystemSource
 	Source/System/DynamicLibrary.cpp
 )
 
-if(USE_IMGUI)
+if(EUGENE_USE_IMGUI)
 
 	# imgui使用時
 	set(SystemSource 
@@ -82,7 +83,7 @@ set(MathSource
 	Source/Math/Geometry.cpp
 	Source/Math/Random.cpp)
 
-if (NOT USE_ANDROID)
+if (NOT EUGENE_USE_ANDROID)
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
 	Source/Sound/Sound.cpp
@@ -96,7 +97,7 @@ set(SoundSource
 endif()
 
 
-if (USE_WINDOWS)
+if (EUGENE_USE_WINDOWS)
 	# Windows用の時
 
 	# システム系の実装クラスのソースファイルをセット
@@ -104,7 +105,7 @@ if (USE_WINDOWS)
 		Source/System/Windows/WindowsSystem.cpp
 		Source/System/Windows/Dll.cpp)
 
-	if (USE_IMGUI)
+	if (EUGENE_USE_IMGUI)
 		# imgui使用時
 		set(SystemApiSource 
 			${SystemApiSource}
@@ -119,13 +120,13 @@ if (USE_WINDOWS)
 		Source/Sound/Xaudio2/Xa2SoundControl.cpp
 		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
 	)
-elseif(USE_ANDROID)
+elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
 		Source/System/Android/AndroidSystem.cpp
 	)
 endif()
 
-if(USE_DX12 AND NOT USE_VULKAN)
+if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 	# グラフィック系の実装クラスのソースファイルをセット
 	set(GraphicsApiSource
 		Source/Graphics/DirectX12/Dx12CommandList.cpp
@@ -146,13 +147,13 @@ if(USE_DX12 AND NOT USE_VULKAN)
 		Include/ThirdParty/D3D12MemoryAllocator/src/D3D12MemAlloc.cpp
 	)
 
-	if (USE_IMGUI)
+	if (EUGENE_USE_IMGUI)
 		set(GraphicsApiSource
 		${GraphicsApiSource}
 		Include/ThirdParty/imgui/backends/imgui_impl_dx12.cpp
 		)
 	endif()
-elseif(USE_VULKAN)
+elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時
 	set(GraphicsApiSource
 		Source/Graphics/Vulkan/VkGraphics.cpp
@@ -170,7 +171,7 @@ elseif(USE_VULKAN)
 		Source/Graphics/Vulkan/VkRenderTargetViews.cpp
 		Source/Graphics/Vulkan/VkIndexView.cpp)
 
-	if (USE_IMGUI)
+	if (EUGENE_USE_IMGUI)
 		set(GraphicsApiSource
 		${GraphicsApiSource}
 		Include/ThirdParty/imgui/backends/imgui_impl_vulkan.cpp
@@ -197,19 +198,19 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
-if (USE_WINDOWS)
+if (EUGENE_USE_WINDOWS)
 	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
-elseif(USE_ANDROID)
+elseif(EUGENE_USE_ANDROID)
 	target_compile_definitions(EugeneLib PRIVATE USE_ANDROID)
 	find_package(game-activity REQUIRED CONFIG)
 	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity)
 endif()
 
-if (USE_DX12 AND NOT USE_VULKAN)
+if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 	# DirectX12使用時defineを用意
 	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
 	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
-elseif(USE_VULKAN)
+elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
 	#target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
@@ -220,13 +221,13 @@ elseif(USE_VULKAN)
 	target_compile_definitions(EugeneLib PRIVATE VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
 	target_compile_definitions(EugeneLib PRIVATE VMA_STATIC_VULKAN_FUNCTIONS=0)
 	 
-	if (USE_IMGUI)
+	if (EUGENE_USE_IMGUI)
 		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
 	endif()
 
 
 	if (NOT USE_EFFEKSEER)
-		if (NOT USE_ANDROID)
+		if (NOT EUGENE_USE_ANDROID)
 			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 		endif()
 			#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
@@ -235,7 +236,7 @@ elseif(USE_VULKAN)
 
 endif()
 
-if (USE_IMGUI)
+if (EUGENE_USE_IMGUI)
 	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
@@ -251,23 +252,23 @@ endif()
  target_link_libraries(EugeneLib PRIVATE fmt::fmt)
 
  # サンプルをビルドするか？
- if (BUILD_SAMPLE)
+ if (EUGENE_BUILD_SAMPLE)
  add_subdirectory("Sample")
  endif()
 
 
  # Effekseerを使用するか？
- if (USE_EFFEKSEER)
+ if (EUGENE_USE_EFFEKSEER)
 
 	# 使用時
 	add_subdirectory("Effekseer")
-	target_link_libraries(EugeneLib PUBLIC LLGI Effekseer)
+	target_link_libraries(EugeneLib PUBLIC EUGENE_EFFEKSEER_DIR/lib/LGI EUGENE_EFFEKSEER_DIR/lib/Effekseer)
 	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/Effekseer")
+	target_include_directories(EugeneLib PUBLIC EUGENE_EFFEKSEER_DIR/include)
 
 	
 	# Vulkan使用するか？
-	if (USE_VULKAN)
+	if (EUGENE_USE_VULKAN)
 		# VULKAN使用時
 		target_link_libraries(EugeneLib PUBLIC EffekseerRendererVulkan glslang SPIRV)
 		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererVulkan")
@@ -281,6 +282,6 @@ endif()
 
  endif()
 
- if (BUILD_DOCTEST)
+ if (EUGENE_BUILD_DOCTEST)
  add_subdirectory("Test")
  endif()

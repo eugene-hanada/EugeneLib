@@ -20,6 +20,6 @@
 [submodule "Include/ThirdParty/D3D12MemoryAllocator"]
 	path = Include/ThirdParty/D3D12MemoryAllocator
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator.git
-[submodule "Effekseer"]
-	path = Effekseer
-	url = https://github.com/effekseer/Effekseer
+[submodule "Include/ThirdParty/fmt"]
+	path = Include/ThirdParty/fmt
+	url = https://github.com/fmtlib/fmt.git

@@ -12,7 +12,7 @@ option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
 option(EUGENE_USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
-set(EUGENE_EFFEKSEER_DIR EVN{EFFEKSEER_DIR} CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
+set(EUGENE_EFFEKSEER_DIR "" CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
 
 if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
@@ -124,6 +124,11 @@ elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
 		Source/System/Android/AndroidSystem.cpp
 	)
+
+	set(
+		SoundApiSource
+	)
+
 endif()
 
 if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
@@ -213,7 +218,6 @@ if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
-	#target_include_directories(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Include)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
@@ -230,9 +234,9 @@ elseif(EUGENE_USE_VULKAN)
 		if (NOT EUGENE_USE_ANDROID)
 			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 		endif()
-			#target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
-
 	endif()
+
+
 
 endif()
 
@@ -261,25 +265,26 @@ endif()
  if (EUGENE_USE_EFFEKSEER)
 
 	# 使用時
-	add_subdirectory("Effekseer")
-	target_link_libraries(EugeneLib PUBLIC EUGENE_EFFEKSEER_DIR/lib/LGI EUGENE_EFFEKSEER_DIR/lib/Effekseer)
+	target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/Effekseer)
 	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	target_include_directories(EugeneLib PUBLIC EUGENE_EFFEKSEER_DIR/include)
+	if (EUGENE_USE_ANDROID)
+		message("対応していない")
+	else ()
+		target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/LLGId.lib ${EUGENE_EFFEKSEER_DIR}/lib/Effekseerd.lib)
 
-	
-	# Vulkan使用するか？
-	if (EUGENE_USE_VULKAN)
-		# VULKAN使用時
-		target_link_libraries(EugeneLib PUBLIC EffekseerRendererVulkan glslang SPIRV)
-		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererVulkan")
-	else()
-		# 
-		target_link_libraries(EugeneLib PUBLIC EffekseerRendererDX12)
-		target_include_directories(EugeneLib PUBLIC "Effekseer/Dev/Cpp/EffekseerRendererDX12")
+
+		# Vulkan使用するか？
+		if (EUGENE_USE_VULKAN)
+			# VULKAN使用時
+			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererVulkand.lib $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
+			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererVulkan)
+		else()
+			#
+			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererDX12d.lib)
+			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererDX12)
+		endif()
+
 	endif()
-
-  else()
-
  endif()
 
  if (EUGENE_BUILD_DOCTEST)

@@ -187,7 +187,7 @@ void Eugene::Debug::CheckBuffer(const std::string_view& string)&
 void Eugene::Debug::Out(Type type, const std::string_view& string)
 {
 	binarySemphore_.acquire();
-	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}";
+	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}\n";
 	std::bitset<4> tmp;
 	tmp.set(static_cast<std::size_t>(type), true);
 	if ((filter_ & tmp).any())
@@ -200,8 +200,8 @@ void Eugene::Debug::Out(Type type, const std::string_view& string)
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
-		os_ << fmt::format("{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}", colorNames[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
-		ss_ << fmt::format("{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}", names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
+		os_ << fmt::format(format, colorNames[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
+		ss_ << fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
 		oss_.seekp(0);
 	}
 	binarySemphore_.release();

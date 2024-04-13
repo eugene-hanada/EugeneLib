@@ -8,7 +8,7 @@
 #ifdef USE_WINDOWS
 #include <Windows.h>
 #else USE_ANDROID
-struct android_app;S
+struct android_app;
 #endif
 
 #include "../../../Include/Graphics/ImageResource.h"

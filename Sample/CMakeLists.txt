@@ -15,7 +15,7 @@ project ("Sample")
 # 実行ファイルを作成
 add_executable (Sample WIN32  "main.cpp")
 
-target_include_directories(Sample PRIVATE "../Include")
+target_include_directories(Sample PRIVATE "../Include" ${EUGENE_EFFEKSEER_DIR}/include)
 target_link_libraries(Sample EugeneLib)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

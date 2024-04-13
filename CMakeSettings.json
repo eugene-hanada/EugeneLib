@@ -2,7 +2,7 @@
   "configurations": [
     {
       "name": "x64-Debug",
-      "generator": "Ninja",
+      "generator": "Visual Studio 17 2022 Win64",
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
@@ -21,6 +21,16 @@
           "name": "EUGENE_BUILD_SAMPLE",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_USE_EFFEKSEER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_EFFEKSEER_DIR",
+          "value": "C:/install_msvc2022_x64",
+          "type": "PATH"
         }
       ]
     },
@@ -50,6 +60,16 @@
           "name": "EUGENE_USE_VULKAN",
           "value": "True",
           "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_USE_EFFEKSEER",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_EFFEKSEER_DIR",
+          "value": "C:/install_vulkan_msvc2022_x64",
+          "type": "PATH"
         }
       ]
     }

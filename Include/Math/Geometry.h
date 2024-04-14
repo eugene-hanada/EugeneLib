@@ -1,10 +1,19 @@
 ﻿#pragma once
 #include <algorithm>
+#include <bit>
 #include "../ThirdParty/glm/glm/glm.hpp"
 #include "../ThirdParty/glm/glm/ext.hpp"
 #include "MathConcepts.h"
 #include "Random.h"
 
+template<class T>
+concept IntegerByte1 = std::same_as<T, std::uint8_t> || std::same_as<T, std::int8_t> || std::same_as<T, char8_t>;
+
+template<class T>
+concept IntegerByte2 = std::same_as<T, std::uint16_t> || std::same_as<T, std::int16_t> || std::same_as<T, char16_t> || std::same_as<T, wchar_t>;
+
+template<class T>
+concept IntegerByte4 = std::same_as<T, std::uint32_t> || std::same_as<T, std::int32_t>;
 
 namespace Eugene
 {
@@ -152,4 +161,104 @@ namespace Eugene
 		return (size + alignment - 1ull) - (size % alignment - 1ull);
 	}
 
+	/// <summary>
+	/// バイト列を並び帰る
+	/// </summary>
+	/// <param name="data"> バイト列のポインタ </param>
+	/// <param name="size"> バイト数 </param>
+	constexpr void BytesSwap(std::uint8_t* data, std::uint64_t size)
+	{
+		for (std::uint64_t i = 0ull; i < size / 2ull; ++i)
+		{
+			std::swap(data[i], data[size - i - 1ull]);
+		}
+	}
+
+	/// <summary>
+	/// FNV1aでハッシュ値を生成する
+	/// </summary>
+	/// <typeparam name="T"> 1バイトの型 </typeparam>
+	/// <param name="data"> 対象データの配列のポインタ </param>
+	/// <param name="size"> 数 </param>
+	/// <returns></returns>
+	template<IntegerByte1 T>
+	constexpr std::uint64_t FNV1aHash64(const T* data, std::uint64_t size) {
+		constexpr uint64_t FNV_PRIME = 1099511628211ULL;  // FNV素数 (2^40 + 2^8 + 0xb3)
+		constexpr uint64_t FNV_OFFSET_BASIS = 14695981039346656037ULL;
+		std::uint64_t hash = FNV_OFFSET_BASIS;
+
+		if constexpr (std::endian::native == std::endian::big)
+		{
+			BytesSwap(data, size);
+		}
+
+		for (size_t i = 0; i < size; ++i) {
+			hash ^= static_cast<std::uint8_t>(data[i]);
+			hash *= FNV_PRIME;
+		}
+
+		return hash;
+	}
+
+	/// <summary>
+	/// FNV1aでハッシュ値を生成する
+	/// </summary>
+	/// <typeparam name="T"> 2バイトの型 </typeparam>
+	/// <param name="data"> 対象データの配列のポインタ </param>
+	/// <param name="size"> 数 </param>
+	/// <returns></returns>
+	template<IntegerByte2 T>
+	constexpr std::uint64_t FNV1aHash64(const T* data, std::uint64_t size) {
+		constexpr uint64_t FNV_PRIME = 1099511628211ULL;  // FNV素数 (2^40 + 2^8 + 0xb3)
+		constexpr uint64_t FNV_OFFSET_BASIS = 14695981039346656037ULL;
+
+		std::uint64_t hash = FNV_OFFSET_BASIS;
+
+		if constexpr (std::endian::native == std::endian::big)
+		{
+			BytesSwap(data, size * sizeof(T));
+		}
+
+		for (size_t i = 0; i < size; ++i) {
+			hash ^= static_cast<std::uint8_t>(data[i] >> 8 & 0xff);
+			hash *= FNV_PRIME;
+			hash ^= static_cast<std::uint8_t>(data[i] & 0xff);
+			hash *= FNV_PRIME;
+		}
+
+		return hash;
+	}
+
+	/// <summary>
+	/// FNV1aでハッシュ値を生成する
+	/// </summary>
+	/// <typeparam name="T"> 4バイトの型 </typeparam>
+	/// <param name="data"> 対象データの配列のポインタ </param>
+	/// <param name="size"> 数 </param>
+	/// <returns></returns>
+	template<IntegerByte4 T>
+	constexpr std::uint64_t FNV1aHash64(const T* data, std::uint64_t size) {
+		constexpr uint64_t FNV_PRIME = 1099511628211ULL;  // FNV素数 (2^40 + 2^8 + 0xb3)
+		constexpr uint64_t FNV_OFFSET_BASIS = 14695981039346656037ULL;
+
+		std::uint64_t hash = FNV_OFFSET_BASIS;
+
+		if constexpr (std::endian::native == std::endian::big)
+		{
+			BytesSwap(data, size * sizeof(T));
+		}
+		
+		for (size_t i = 0; i < size; ++i) {
+			hash ^= static_cast<std::uint8_t>(data[i] >> 24 & 0xff);
+			hash *= FNV_PRIME;
+			hash ^= static_cast<std::uint8_t>(data[i] >> 16 & 0xff);
+			hash *= FNV_PRIME;
+			hash ^= static_cast<std::uint8_t>(data[i] >> 8 & 0xff);
+			hash *= FNV_PRIME;
+			hash ^= static_cast<std::uint8_t>(data[i] & 0xff);
+			hash *= FNV_PRIME;
+		}
+
+		return hash;
+	}
 };

@@ -1,7 +1,10 @@
 ﻿#include "../../Include/Sound/SoundControl.h"
 
+#ifdef USE_WINDOWS
 #include "Xaudio2/Xa2SoundControl.h"
-
+#elif USE_ANDROID
+#include "AAudio/AaSoundControl.h"
+#endif
 void* Eugene::SoundControl::Get(void)
 {
 	return impl_->Get();
@@ -26,5 +29,11 @@ Eugene::SoundControl::SoundControl(std::uintptr_t devicePtr, std::uint32_t sampl
 {
 	inChannel_ = inChannel;
 	outChannel_ = outChannel;
-	impl_ = std::make_unique<SoundControlImpl>(devicePtr, *this, sample, stage);
+	impl_.reset(new SoundControlImpl(devicePtr, *this, sample, stage));
+}
+
+void Eugene::SoundControl::SoundControlImplDeleter::operator()(
+Eugene::SoundControl::SoundControlImpl *ptr)
+{
+    delete ptr;
 }

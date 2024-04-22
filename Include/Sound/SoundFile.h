@@ -1,12 +1,14 @@
 #pragma once
 #include <cstdint>
 #include <filesystem>
+#include <vector>
+#include <bit>
 #include "SoundCommon.h"
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş‚½‚ß‚ÌƒNƒ‰ƒX
+	/// ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½Ş‚ï¿½ï¿½ß‚ÌƒNï¿½ï¿½ï¿½X
 	/// </summary>
 	class SoundFile
 	{
@@ -27,28 +29,28 @@ namespace Eugene
 		SoundFile& operator=(SoundFile&& soundFile);
 
 		/// <summary>
-		/// ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚é
+		/// ï¿½fï¿½[ï¿½^ï¿½Ö‚Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint8_t* GetDataPtr(void) const noexcept;
 
 		/// <summary>
-		/// ƒf[ƒ^‚ÌƒoƒCƒg”‚ğæ“¾‚·‚é
+		/// ï¿½fï¿½[ï¿½^ï¿½Ìƒoï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint64_t GetDataSize(void) const noexcept;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚Ìæ“¾
+		/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½Ìæ“¾
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormat& GetFormat(void) const noexcept;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚ÌŠg’£ƒf[ƒ^‚ğæ“¾
+		/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½ÌŠgï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
@@ -60,17 +62,17 @@ namespace Eugene
 		bool LoadOggVorbis(const std::filesystem::path& path);
 
 		/// <summary>
-		/// ƒf[ƒ^•”
+		/// ï¿½fï¿½[ï¿½^ï¿½ï¿½
 		/// </summary>
 		std::vector<std::uint8_t> data_;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg
+		/// ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g
 		/// </summary>
 		SoundFormat format_;
 
 		/// <summary>
-		/// Šg’£ƒf[ƒ^•”•ª
+		/// ï¿½gï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		SoundFormatEx ex_;
 	};

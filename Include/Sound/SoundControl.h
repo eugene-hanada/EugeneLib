@@ -16,9 +16,15 @@ namespace Eugene
 		void SetPan(std::span<float> volumes) final;
 		void SetOutput(SoundControl& control) final;
 	protected:
+        class SoundControlImpl;
+
+        struct SoundControlImplDeleter
+        {
+            void operator()(SoundControlImpl* ptr);
+        };
+
 		SoundControl(std::uintptr_t devicePtr, std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
-		class SoundControlImpl;
-		std::unique_ptr< SoundControlImpl> impl_;
+		std::unique_ptr<SoundControlImpl, SoundControlImplDeleter> impl_;
 		friend class Sound;
 	};
 

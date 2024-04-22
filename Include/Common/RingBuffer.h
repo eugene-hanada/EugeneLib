@@ -7,16 +7,16 @@
 namespace Eugene
 {
 	/// <summary>
-	/// ƒŠƒTƒCƒY‰Â”\‚ÈƒŠƒ“ƒOƒoƒbƒtƒ@A—v‘f”‚Í2‚Ì™pæŒÅ’è‚É‚È‚é
+	/// ï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½Â”\ï¿½Èƒï¿½ï¿½ï¿½ï¿½Oï¿½oï¿½bï¿½tï¿½@ï¿½Aï¿½vï¿½fï¿½ï¿½ï¿½ï¿½2ï¿½Ì™pï¿½ï¿½Å’ï¿½É‚È‚ï¿½
 	/// </summary>
-	/// <typeparam name="T"> —v‘f‚ÌŒ^ </typeparam>
+	/// <typeparam name="T"> ï¿½vï¿½fï¿½ÌŒ^ </typeparam>
 	template<class T>
 	class RingBuffer
 	{
 	public:
 
 		/// <summary>
-		/// ƒCƒeƒŒ[ƒ^[
+		/// ï¿½Cï¿½eï¿½ï¿½ï¿½[ï¿½^ï¿½[
 		/// </summary>
 		class iterator
 		{
@@ -63,26 +63,26 @@ namespace Eugene
 		private:
 
 			/// <summary>
-			/// Œ³‚Ìƒoƒbƒtƒ@‚ğQÆ‚·‚é‚½‚ß‚Ìspan
+			/// ï¿½ï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½Qï¿½Æ‚ï¿½ï¿½é‚½ï¿½ß‚ï¿½span
 			/// </summary>
 			std::span<T> span_;
 
 			
 			/// <summary>
-			/// Œ»İ‚ÌƒCƒ“ƒfƒbƒNƒX
+			/// ï¿½ï¿½ï¿½İ‚ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X
 			/// </summary>
 			std::uint64_t index_;
 
 			/// <summary>
-			/// ŠJnƒCƒ“ƒfƒbƒNƒX
+			/// ï¿½Jï¿½nï¿½Cï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X
 			/// </summary>
 			std::uint64_t startIndex_;
 		};
 
 		/// <summary>
-		/// ƒTƒCƒYw’è‚ª‚Å‚«‚éƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ï¿½Tï¿½Cï¿½Yï¿½wï¿½è‚ªï¿½Å‚ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 		/// </summary>
-		/// <param name="size"> —v‘f” </param>
+		/// <param name="size"> ï¿½vï¿½fï¿½ï¿½ </param>
 		RingBuffer(std::uint64_t size) :
 			buffer_(0), writeIndex_{ 0ull }, readIndex_{ 0ull }
 		{
@@ -97,7 +97,7 @@ namespace Eugene
 
 
 		/// <summary>
-		/// —v‘f”‚ğ•ÏX‚·‚é
+		/// ï¿½vï¿½fï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="size"></param>
 		void Resize(std::uint64_t size)
@@ -115,7 +115,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ƒRƒs[‚µ‚½—v‘f‚ğ’Ç‰Á‚·‚é
+		/// ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½fï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="value"></param>
 		void Push(const T& value)
@@ -128,7 +128,7 @@ namespace Eugene
 		}
 		
 		/// <summary>
-		/// —v‘f‚ğ’Ç‰Á‚·‚é
+		/// ï¿½vï¿½fï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="value"></param>
 		void Emplace(T&&value)
@@ -141,7 +141,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// —v‘f‚ğíœ‚·‚é
+		/// ï¿½vï¿½fï¿½ï¿½ï¿½íœï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		void Pop()
 		{
@@ -150,7 +150,7 @@ namespace Eugene
 
 
 		/// <summary>
-		/// æ“ª‚ÌQÆ‚ğæ“¾‚·‚é
+		/// ï¿½æ“ªï¿½ÌQï¿½Æ‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		T& Front()
@@ -159,7 +159,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// æ“ª‚ÌQÆ‚ğæ“¾‚·‚é
+		/// ï¿½æ“ªï¿½ÌQï¿½Æ‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		const T& Front() const
@@ -168,7 +168,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ––”ö‚ÌQÆ‚ğæ“¾‚·‚é
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ÌQï¿½Æ‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		T& Back()
@@ -177,7 +177,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ––”ö‚ğæ“¾‚·‚é
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		const T& Back() const
@@ -195,7 +195,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// æ“ª‚ÌƒCƒeƒŒ[ƒ^[‚ğæ“¾‚·‚é
+		/// ï¿½æ“ªï¿½ÌƒCï¿½eï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		iterator begin()
@@ -204,7 +204,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ––’[‚ÌƒCƒeƒŒ[ƒ^[‚ğæ“¾‚·‚é
+		/// ï¿½ï¿½ï¿½[ï¿½ÌƒCï¿½eï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <returns></returns>
 		iterator end()
@@ -214,26 +214,26 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒoƒbƒtƒ@
+		/// ï¿½oï¿½bï¿½tï¿½@
 		/// </summary>
 		std::vector<T> buffer_;
 
 		/// <summary>
-		/// ‘‚«‚İˆÊ’u‚ÌƒCƒ“ƒfƒbƒNƒX
+		/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İˆÊ’uï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X
 		/// </summary>
 		std::uint64_t writeIndex_;
 
 		/// <summary>
-		/// “Ç‚İæ‚èˆÊ’u‚ÌƒCƒ“ƒfƒbƒNƒX
+		/// ï¿½Ç‚İï¿½ï¿½Ê’uï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X
 		/// </summary>
 		std::uint64_t readIndex_;
 	};
 
 	/// <summary>
-	/// ƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌŒÅ’èƒTƒCƒY”Å
+	/// ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½oï¿½bï¿½tï¿½@ï¿½ÌŒÅ’ï¿½Tï¿½Cï¿½Yï¿½ï¿½
 	/// </summary>
-	/// <typeparam name="T"> —v‘f‚ÌŒ^ </typeparam>
-	/// <typeparam name="size"> —v‘f‚Ì”(2‚Ì‚×‚«æ‚Ì”) </typeparam>
+	/// <typeparam name="T"> ï¿½vï¿½fï¿½ÌŒ^ </typeparam>
+	/// <typeparam name="size"> ï¿½vï¿½fï¿½Ìï¿½(2ï¿½Ì‚×‚ï¿½ï¿½ï¿½Ìï¿½) </typeparam>
 	template<class T, std::uint64_t size>
 	class RingBufferArray
 	{
@@ -286,10 +286,9 @@ namespace Eugene
 			std::uint64_t startIndex_;
 		};
 
-		RingBufferArray(std::uint64_t size) :
-			buffer_(0), writeIndex_{ 0ull }, readIndex_{ 0ull }
+		RingBufferArray() :
+			writeIndex_{ 0ull }, readIndex_{ 0ull }
 		{
-			buffer_.resize(AlignmentedSize(size, 2ull));
 		}
 
 		RingBufferArray(std::initializer_list<T> initList) :
@@ -362,21 +361,21 @@ namespace Eugene
 		std::array < T, size> buffer_;
 		std::uint64_t writeIndex_;
 		std::uint64_t readIndex_;
-		static_assert((size& (size - 1)) == 0 && size != 0,"2‚Ì™pæ‚ÌƒTƒCƒY‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢");
+		static_assert((size& (size - 1)) == 0 && size != 0,"2ï¿½Ì™pï¿½ï¿½ÌƒTï¿½Cï¿½Yï¿½ï¿½ï¿½wï¿½è‚µï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	};
 
 	/// <summary>
-	/// ƒƒbƒNƒtƒŠ[”ÅƒŠƒ“ƒOƒoƒbƒtƒ@
+	/// ï¿½ï¿½ï¿½bï¿½Nï¿½tï¿½ï¿½ï¿½[ï¿½Åƒï¿½ï¿½ï¿½ï¿½Oï¿½oï¿½bï¿½tï¿½@
 	/// </summary>
-	/// <typeparam name="T"> —v‘f‚ÌŒ^ </typeparam>
-	/// <typeparam name="cashLineSize"> ƒLƒƒƒbƒVƒ…ƒ‰ƒCƒ“‚ÌƒTƒCƒY(CPU‚Ì‚â‚Â‚É‡‚í‚¹‚Ä) </typeparam>
+	/// <typeparam name="T"> ï¿½vï¿½fï¿½ÌŒ^ </typeparam>
+	/// <typeparam name="cashLineSize"> ï¿½Lï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ÌƒTï¿½Cï¿½Y(CPUï¿½Ì‚ï¿½Â‚Éï¿½ï¿½í‚¹ï¿½ï¿½) </typeparam>
 	template<class T, std::uint8_t cashLineSize = 64>
 	class LockFreeRingBuffer
 	{
 	public:
 
 		/// <summary>
-		/// ƒCƒeƒŒ[ƒ^[
+		/// ï¿½Cï¿½eï¿½ï¿½ï¿½[ï¿½^ï¿½[
 		/// </summary>
 		class iterator
 		{
@@ -439,7 +438,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// —v‘f”‚ğ•ÏX‚·‚é
+		/// ï¿½vï¿½fï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 		/// </summary>
 		/// <param name="size"></param>
 		void Resize(std::uint64_t size)
@@ -460,10 +459,10 @@ namespace Eugene
 
 		void Push(const T& value)
 		{
-			// ‡˜ŠÖŒW‚È‚µ‚Å“Ç‚İ‚Ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒWï¿½È‚ï¿½ï¿½Å“Ç‚İï¿½ï¿½ï¿½
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// “Ç‚İ‚İ‚ğ‚·‚é
+			// ï¿½Ç‚İï¿½ï¿½İ‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -471,16 +470,16 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = value;
 
-			// ‰ÁZ‚·‚é
+			// ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
 			writeIndex_.fetch_add(1ull,std::memory_order_release);
 		}
 
 		void Emplace(T&& value)
 		{
-			// ‡˜ŠÖŒW‚È‚µ‚Å“Ç‚İ‚Ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒWï¿½È‚ï¿½ï¿½Å“Ç‚İï¿½ï¿½ï¿½
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// “Ç‚İ‚İ‚ğ‚·‚é
+			// ï¿½Ç‚İï¿½ï¿½İ‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -488,7 +487,7 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = std::move(value);
 
-			// ‰ÁZ‚·‚é
+			// ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
 			writeIndex_.fetch_add(1ull, std::memory_order_release);
 		}
 
@@ -539,7 +538,7 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// ƒƒbƒNƒtƒŠ[”ÅƒŠƒ“ƒOƒoƒbƒtƒ@‚ÌŒÅ’èƒTƒCƒY
+	/// ï¿½ï¿½ï¿½bï¿½Nï¿½tï¿½ï¿½ï¿½[ï¿½Åƒï¿½ï¿½ï¿½ï¿½Oï¿½oï¿½bï¿½tï¿½@ï¿½ÌŒÅ’ï¿½Tï¿½Cï¿½Y
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="cashLineSize"></typeparam>
@@ -550,7 +549,7 @@ namespace Eugene
 	public:
 
 		/// <summary>
-		/// ƒCƒeƒŒ[ƒ^[
+		/// ï¿½Cï¿½eï¿½ï¿½ï¿½[ï¿½^ï¿½[
 		/// </summary>
 		class iterator
 		{
@@ -607,10 +606,10 @@ namespace Eugene
 
 		void Push(const T& value)
 		{
-			// ‡˜ŠÖŒW‚È‚µ‚Å“Ç‚İ‚Ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒWï¿½È‚ï¿½ï¿½Å“Ç‚İï¿½ï¿½ï¿½
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// “Ç‚İ‚İ‚ğ‚·‚é
+			// ï¿½Ç‚İï¿½ï¿½İ‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -618,16 +617,16 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = value;
 
-			// ‰ÁZ‚·‚é
+			// ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
 			writeIndex_.fetch_add(1ull, std::memory_order_release);
 		}
 
 		void Emplace(T&& value)
 		{
-			// ‡˜ŠÖŒW‚È‚µ‚Å“Ç‚İ‚Ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒWï¿½È‚ï¿½ï¿½Å“Ç‚İï¿½ï¿½ï¿½
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// “Ç‚İ‚İ‚ğ‚·‚é
+			// ï¿½Ç‚İï¿½ï¿½İ‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -635,7 +634,7 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = std::move(value);
 
-			// ‰ÁZ‚·‚é
+			// ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
 			writeIndex_.fetch_add(1ull, std::memory_order_release);
 		}
 
@@ -683,7 +682,7 @@ namespace Eugene
 		std::array<T,size> buffer_;
 		alignas(cashLineSize) std::atomic_uint64_t readIndex_;
 		alignas(cashLineSize) std::atomic_uint64_t writeIndex_;
-		static_assert((size& (size - 1)) == 0 && size != 0, "2‚Ì™pæ‚ÌƒTƒCƒY‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢");
+		static_assert((size& (size - 1)) == 0 && size != 0, "2ï¿½Ì™pï¿½ï¿½ÌƒTï¿½Cï¿½Yï¿½ï¿½ï¿½wï¿½è‚µï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	};
 }
 

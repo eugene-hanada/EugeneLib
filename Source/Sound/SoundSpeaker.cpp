@@ -1,7 +1,10 @@
 ﻿#include "../../Include/Sound/SoundSpeaker.h"
 
-
+#ifdef USE_WINDOWS
 #include "Xaudio2/Xa2SoundSpeaker.h"
+#elif USE_ANDROID
+#include "AAudio/AaSoundSpeaker.h"
+#endif
 
 Eugene::SoundSpeaker::SoundSpeaker(std::uintptr_t devicePtr, const SoundFile& soundFile, std::uint16_t outChannel,const float maxPitchRate):
 	maxPitchRate_{maxPitchRate}

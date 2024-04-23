@@ -45,59 +45,55 @@ Eugene::TouchData::TouchData() :
 
 bool Eugene::System::GetMouse(Mouse& outMouse) const&
 {
-	return impl_->GetMouse(outMouse);
+	return false;
 }
 
 bool Eugene::System::SetMouse(Mouse& inMouse) const
 {
-	return impl_->SetMouse(inMouse);
+	return false;
 }
 
 bool Eugene::System::IsHitKey(KeyID keyID) const
 {
-	return impl_->IsHitKey(keyID);
+	return false;
 }
 
 bool Eugene::System::GetKeyData(KeyDataSpan keyData) const
 {
-	return impl_->GetKeyData(keyData);
+	return false;
 }
 
 bool Eugene::System::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
-	return impl_->SetKeyCodeTable(keyCodeTable);
+	return false;
 }
 
 bool Eugene::System::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
-	return impl_->GetGamePad(pad,idx);
+	return false;
 }
 
 bool Eugene::System::GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const
 {
-	return impl_->GetTouch(pressed,move,released);
+	return false;
 }
 
 bool Eugene::System::IsEnd(void) const
 {
-	return impl_->IsEnd();
+	return false;
 }
 
-Eugene::DynamicLibrary* Eugene::System::CreateDynamicLibrary(const std::filesystem::path& path) const
-{
-	return impl_->CreateDynamicLibrary(path);
-}
 
 Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories) :
 	windowSize_{size}, title_{title}
 {
-	impl_ = std::make_unique<SystemImpl>(*this,size, title_, other,directories);
+	//impl_ = std::make_unique<SystemImpl>(*this,size, title_, other,directories);
 }
 
-bool Eugene::System::Update(void)
-{
-	return impl_->Update();
-}
+//bool Eugene::System::Update(void)
+//{
+//	return impl_->Update();
+//}
 
 Eugene::System::~System()
 {
@@ -116,7 +112,7 @@ const glm::vec2& Eugene::System::GetMaxWindowSize(void) const&
 
 std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::System::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
-	return impl_->CreateGraphics(bufferNum, maxSize);
+	return CreateGraphics(bufferNum, maxSize);
 }
 
 
@@ -128,7 +124,7 @@ void Eugene::System::ReSizeWindow(const glm::vec2& size)
 	}
 
 	windowSize_ = size;
-	impl_->OnResizeWindow(size);
+	OnResizeWindow(size);
 	if (graphics)
 	{
 		graphics->ResizeBackBuffer(size);
@@ -137,7 +133,7 @@ void Eugene::System::ReSizeWindow(const glm::vec2& size)
 
 void Eugene::System::SetFullScreen(bool isFullScreen)
 {
-	impl_->OnSetFullScreen(isFullScreen); 
+	OnSetFullScreen(isFullScreen); 
 	if (graphics)
 	{
 		graphics->SetFullScreenFlag(isFullScreen);
@@ -154,7 +150,7 @@ Eugene::System* Eugene::CreateSystem(const glm::vec2& size, const std::u8string&
 	}
 	isCreate = true;
 
-	return new System{size,title,other,directories};
+	return new WindowsSystem{size,title,other,directories};
 }
 
 Eugene::UniqueSystem Eugene::CreateSystemUnique(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories)
@@ -170,14 +166,14 @@ std::pair<Eugene::UniqueGraphics, Eugene::UniqueGpuEngine> Eugene::System::Creat
 
 
 
-#ifdef USE_IMGUI
-void Eugene::System::ImguiNewFrame(void) const
-{
-	impl_->ImguiNewFrame();
-}
-
-ImGuiContext* Eugene::System::GetContextFromCreatedLib(void) const
-{
-	return context_;
-}
-#endif
+//#ifdef USE_IMGUI
+//void Eugene::System::ImguiNewFrame(void) const
+//{
+//	impl_->ImguiNewFrame();
+//}
+//
+//ImGuiContext* Eugene::System::GetContextFromCreatedLib(void) const
+//{
+//	return context_;
+//}
+//#endif

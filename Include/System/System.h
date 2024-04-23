@@ -128,7 +128,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> 継続すべき時true、終了すべき時false </returns>
-		bool Update(void);
+		virtual bool Update(void) = 0;
 
 		/// <summary>
 		/// デストラクタ
@@ -156,7 +156,7 @@ namespace Eugene
 		/// <param name="maxSize"> GpuEngineの一度に処理するCommandListの数 </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
+		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
 
 		[[nodiscard]]
 		std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
@@ -166,35 +166,35 @@ namespace Eugene
 		/// </summary>
 		/// <param name="outMouse"></param>
 		/// <returns></returns>
-		bool GetMouse(Mouse& outMouse) const&;
+		virtual bool GetMouse(Mouse& outMouse) const&;
 
 		/// <summary>
 		/// マウス情報をセットする
 		/// </summary>
 		/// <param name="inMouse"></param>
 		/// <returns></returns>
-		bool SetMouse(Mouse& inMouse) const;
+		virtual bool SetMouse(Mouse& inMouse) const;
 
 		/// <summary>
 		/// キーが押されているか
 		/// </summary>
 		/// <param name="keyID"> 押されているキーのID </param>
 		/// <returns> 押されているときtrue、押されていないときfalse </returns>
-		bool IsHitKey(KeyID keyID) const;
+		virtual bool IsHitKey(KeyID keyID) const;
 
 		/// <summary>
 		/// キー入力情報を取得する
 		/// </summary>
 		/// <param name="keySpan"> キー情報 </param>
 		/// <returns> キー情報がある場合はtrue、ない場合はfalse </returns>
-		bool GetKeyData(KeyDataSpan keyData) const;
+		virtual bool GetKeyData(KeyDataSpan keyData) const;
 
 		/// <summary>
 		/// キーコードのデータテーブル
 		/// </summary>
 		/// <param name="keyCodeTable"> セットするキーコード </param>
 		/// <returns> 成功時true、失敗時false </returns>
-		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
+		virtual bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
 
 		/// <summary>
 		/// ゲームパッドを取得する
@@ -202,7 +202,7 @@ namespace Eugene
 		/// <param name="pad"> ゲームパッド </param>
 		/// <param name="idx"></param>
 		/// <returns></returns>
-		bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
+		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
 
 		/// <summary>
 		/// タッチ状態を取得する
@@ -211,14 +211,14 @@ namespace Eugene
 		/// <param name="move"> タッチした状態で移動した時のもの </param>
 		/// <param name="released"> タッチを話した瞬間のもの </param>
 		/// <returns></returns>
-		bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
+		virtual bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
 
 		/// <summary>
 		/// 終了するか？
 		/// </summary>
 		/// <param name=""> trueの時終了する </param>
 		/// <returns></returns>
-		bool IsEnd(void) const;
+		virtual bool IsEnd(void) const = 0;
 
 		/// <summary>
 		/// 動的リンクライブラリ用のクラスを生成する
@@ -226,7 +226,7 @@ namespace Eugene
 		/// <param name="path"> ライブラリのパス </param>
 		/// <returns> 動的ライブラリを扱うクラスのポインタ </returns>
 		[[nodiscard]]
-		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const;
+		virtual DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const = 0;
 
 		/// <summary>
 		/// ウィンドウのリサイズを行う
@@ -248,7 +248,7 @@ namespace Eugene
 		/// Imguiのフレーム開始処理を行う
 		/// </summary>
 		/// <param name=""></param>
-		void ImguiNewFrame(void) const;
+		virtual void ImguiNewFrame(void) const = 0;
 
 		/// <summary>
 		/// Systemクラスが作成したImguiのコンテキストを取得する
@@ -266,6 +266,9 @@ namespace Eugene
 		/// <param name="title"> ウィンドウタイトル </param>
 		System(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {});
 
+		virtual void OnSetFullScreen(bool isFullscreen) = 0;
+
+		virtual void OnResizeWindow(const glm::vec2& size) = 0;
 
 		/// <summary>
 		/// ウィンドウサイズ
@@ -302,8 +305,6 @@ namespace Eugene
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
-		class SystemImpl;
-		std::unique_ptr<SystemImpl> impl_;
 
 		friend System* CreateSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories);
 	};

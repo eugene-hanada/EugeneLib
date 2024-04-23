@@ -83,7 +83,6 @@ set(MathSource
 	Source/Math/Geometry.cpp
 	Source/Math/Random.cpp)
 
-if (NOT EUGENE_USE_ANDROID)
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
 	Source/Sound/Sound.cpp
@@ -94,7 +93,7 @@ set(SoundSource
 	Source/Sound/Sound3DControl.cpp
 	Source/Sound/SoundFile.cpp
 )
-endif()
+
 
 
 if (EUGENE_USE_WINDOWS)
@@ -127,6 +126,21 @@ elseif(EUGENE_USE_ANDROID)
 
 	set(
 		SoundApiSource
+		Source/Sound/AAudio/AaSound.cpp
+		Source/Sound/AAudio/AaSoundSpeaker.cpp
+		Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
+		Source/Sound/AAudio/AaSoundControl.cpp
+		Source/Sound/AAudio/AaSound3DControl.cpp
+		Source/Sound/AAudio/AaSubmix.cpp
+		Source/Sound/AAudio/AaVoice.cpp
+		Source/Sound/AAudio/resampler/IntegerRatio.cpp
+		Source/Sound/AAudio/resampler/LinearResampler.cpp
+		Source/Sound/AAudio/resampler/MultiChannelResampler.cpp
+		Source/Sound/AAudio/resampler/PolyphaseResampler.cpp
+		Source/Sound/AAudio/resampler/PolyphaseResamplerMono.cpp
+		Source/Sound/AAudio/resampler/PolyphaseResamplerStereo.cpp
+		Source/Sound/AAudio/resampler/SincResampler.cpp
+		Source/Sound/AAudio/resampler/SincResamplerStereo.cpp
 	)
 
 endif()
@@ -208,7 +222,7 @@ if (EUGENE_USE_WINDOWS)
 elseif(EUGENE_USE_ANDROID)
 	target_compile_definitions(EugeneLib PRIVATE USE_ANDROID)
 	find_package(game-activity REQUIRED CONFIG)
-	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity)
+	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity aaudio)
 endif()
 
 if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)

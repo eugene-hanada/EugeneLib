@@ -1,6 +1,12 @@
 ﻿#include "../../Include/Sound/Sound3DControl.h"
+
+#ifdef USE_WINDOWS
 #include "Xaudio2/Xa2Sound3DControl.h"
 #include "Xaudio2/Xa2SoundControl.h"
+#elif USE_ANDROID
+#include "AAudio/AaSound3DControl.h"
+#include "AAudio/AaSoundControl.h"
+#endif
 
 Eugene::Sound3DControl::~Sound3DControl()
 {

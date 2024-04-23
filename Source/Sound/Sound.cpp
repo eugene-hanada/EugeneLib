@@ -1,7 +1,11 @@
 ﻿#include "../../Include/Sound/Sound.h"
-#include "Xaudio2/Xa2Sound.h"
-#include "../../Include/Common/EugeneLibException.h"
 
+#ifdef USE_WINDOWS
+#include "Xaudio2/Xa2Sound.h"
+#elif USE_ANDROID
+#include "AAudio/AaSound.h"
+#endif
+#include "../../Include/Common/EugeneLibException.h"
 namespace {
 	bool isCreate = false;
 }

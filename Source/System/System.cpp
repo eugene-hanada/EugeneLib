@@ -150,7 +150,11 @@ Eugene::System* Eugene::CreateSystem(const glm::vec2& size, const std::u8string&
 	}
 	isCreate = true;
 
+#ifdef USE_WINDOWS
 	return new WindowsSystem{size,title,other,directories};
+#elif USE_ANDROID
+	return new AndroidSystem{ size,title,other,directories };
+#endif 
 }
 
 Eugene::UniqueSystem Eugene::CreateSystemUnique(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories)

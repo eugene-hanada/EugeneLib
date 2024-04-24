@@ -64,8 +64,8 @@ namespace
     }
 }
 
-Eugene::System::SystemImpl::SystemImpl(System& system, const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories) :
-	system_{ system },app_{reinterpret_cast<android_app*>(other)},isEnd_{false}
+Eugene::AndroidSystem::AndroidSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories) :
+	System{size,title},app_{reinterpret_cast<android_app*>(other)},isEnd_{false}
 {
     app_->onAppCmd = OnHandleCmd;
     app_->userData = this;
@@ -139,9 +139,9 @@ Eugene::System::SystemImpl::SystemImpl(System& system, const glm::vec2& size, co
         }
     } while (command != APP_CMD_INIT_WINDOW);
 
-    system_.maxWindowSize_.x = ANativeWindow_getWidth(app_->window);
-    system_.maxWindowSize_.y = ANativeWindow_getHeight(app_->window);
-    system_.windowSize_ = system_.maxWindowSize_;
+    maxWindowSize_.x = ANativeWindow_getWidth(app_->window);
+    maxWindowSize_.y = ANativeWindow_getHeight(app_->window);
+    windowSize_ = maxWindowSize_;
     DebugIO.Log("Init");
 
     onPause = []()
@@ -214,22 +214,22 @@ Eugene::System::SystemImpl::SystemImpl(System& system, const glm::vec2& size, co
     DebugIO.Log("SystemInit終了");
 }
 
-Eugene::System::SystemImpl::~SystemImpl()
+Eugene::AndroidSystem::~AndroidSystem()
 {
 }
 
-std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::System::SystemImpl::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
+std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::AndroidSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
     if (graphics && gpuEngine)
     {
         throw CreateErrorException("すでにGraphicsは生成されています");
     }
 
-    graphics = new VkGraphics{app_,system_.maxWindowSize_,gpuEngine,bufferNum,maxSize};
+    graphics = new VkGraphics{app_,maxWindowSize_,gpuEngine,bufferNum,maxSize};
     return {graphics,gpuEngine};
 }
 
-bool Eugene::System::SystemImpl::Update(void)
+bool Eugene::AndroidSystem::Update(void)
 {
     int events;
     android_poll_source *pSource;
@@ -245,43 +245,43 @@ bool Eugene::System::SystemImpl::Update(void)
     if (isResized)
     {
         isResized = false;
-        graphics->ResizeBackBuffer(system_.maxWindowSize_,app_->window);
+        graphics->ResizeBackBuffer(maxWindowSize_,app_->window);
     }
 
     return !isEnd_;
 }
 
-bool Eugene::System::SystemImpl::GetMouse(Mouse& outMouse) const&
+bool Eugene::AndroidSystem::GetMouse(Mouse& outMouse) const&
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::SetMouse(Mouse& inMouse) const
+bool Eugene::AndroidSystem::SetMouse(Mouse& inMouse) const
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::IsHitKey(KeyID keyID) const
+bool Eugene::AndroidSystem::IsHitKey(KeyID keyID) const
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::GetKeyData(KeyDataSpan keyData) const
+bool Eugene::AndroidSystem::GetKeyData(KeyDataSpan keyData) const
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+bool Eugene::AndroidSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::GetGamePad(GamePad& pad, std::uint32_t idx) const
+bool Eugene::AndroidSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
 	return false;
 }
 
-bool Eugene::System::SystemImpl::GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const
+bool Eugene::AndroidSystem::GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const
 {
     auto& input = app_->inputBuffers[app_->currentInputBuffer];
     pressed.touchCount_ = 0;
@@ -329,26 +329,26 @@ bool Eugene::System::SystemImpl::GetTouch(TouchData& pressed, TouchData& move, T
     return pressed.touchCount_ > 0 || move.touchCount_ > 0 || released.touchCount_ > 0;
 }
 
-bool Eugene::System::SystemImpl::IsEnd(void) const
+bool Eugene::AndroidSystem::IsEnd(void) const
 {
 	return isEnd_;
 }
 
-void Eugene::System::SystemImpl::OnResizeWindow(const glm::vec2& size)
+void Eugene::AndroidSystem::OnResizeWindow(const glm::vec2& size)
 {
 }
 
-void Eugene::System::SystemImpl::OnSetFullScreen(bool isFullScreen)
+void Eugene::AndroidSystem::OnSetFullScreen(bool isFullScreen)
 {
 }
 
-Eugene::DynamicLibrary* Eugene::System::SystemImpl::CreateDynamicLibrary(const std::filesystem::path& path) const
+Eugene::DynamicLibrary* Eugene::AndroidSystem::CreateDynamicLibrary(const std::filesystem::path& path) const
 {
 	return nullptr;
 }
 
 #ifdef USE_IMGUI
-void Eugene::System::SystemImpl::ImguiNewFrame(void) const
+void Eugene::AndroidSystem::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();
 }

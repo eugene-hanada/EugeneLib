@@ -133,7 +133,7 @@ namespace Eugene
 		/// <summary>
 		/// デストラクタ
 		/// </summary>
-		~System();
+		virtual ~System();
 
 		/// <summary>
 		/// ウィンドウサイズを取得する

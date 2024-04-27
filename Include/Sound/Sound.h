@@ -21,7 +21,7 @@ namespace Eugene
 		public SoundBase
 	{
 	public:
-		~Sound();
+		virtual ~Sound();
 
 		/// <summary>
 		/// サウンド再生するクラスを作成する
@@ -29,7 +29,7 @@ namespace Eugene
 		/// <param name="wave"> サウンドファイルクラス </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const;
+		virtual SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f) const = 0;
 
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace Eugene
 		/// <param name="path"> ストリーミング再生を行うWaveファイルのパス </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const;
+		virtual SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate = 2.0f) const = 0;
 
 		/// <summary>
 		/// サウンドをコントロールするクラスを作成する
@@ -48,7 +48,7 @@ namespace Eugene
 		/// <param name="outChannel"> 出力チャンネル </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		SoundControl* CreateSoundControl(std::uint32_t stage = 0,std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const;
+		virtual SoundControl* CreateSoundControl(std::uint32_t stage = 0,std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
 
 		/// <summary>
 		/// サウンドを3Dで出力しコントロールするクラスを作成する
@@ -58,26 +58,20 @@ namespace Eugene
 		/// <param name="outChannel"> 出力チャンネル </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		Sound3DControl* CreateSound3DControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const;
+		virtual Sound3DControl* CreateSound3DControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
 
 		/// <summary>
 		/// 全体のボリュームをセットする
 		/// </summary>
 		/// <param name="volume"> ボリューム </param>
-		void SetVolume(float volume) final;
+		//void SetVolume(float volume) final;
 
 		/// <summary>
 		/// パンニング用にボリュームをセットする
 		/// </summary>
 		/// <param name="volumes"></param>
-		void SetPan(std::span<float> volumes) final;
-	private:
-		class SoundImpl;
-
-		/// <summary>
-		/// 実装
-		/// </summary>
-		std::unique_ptr<SoundImpl> impl_;
+		//void SetPan(std::span<float> volumes) final;
+	protected:
 		Sound();
 
 		/// <summary>

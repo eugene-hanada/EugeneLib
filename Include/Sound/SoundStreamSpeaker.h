@@ -18,16 +18,18 @@ namespace Eugene
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
-		SoundStreamSpeaker(std::uintptr_t devicePtr, const std::filesystem::path& path, std::uint16_t outChannel,const float maxPitchRate);
+		SoundStreamSpeaker( std::uint16_t outChannel,const float maxPitchRate);
 		~SoundStreamSpeaker();
-		void SetVolume(float volume);
-		void SetPan(std::span<float> volumes);
+		//void SetVolume(float volume);
+		//void SetPan(std::span<float> volumes);
 
-		void SetOutput(SoundControl& control) final;
-	 private:
-		 class SoundStreamSpeakerImpl;
+		//void SetOutput(SoundControl& control) final;
 
-		 std::unique_ptr< SoundStreamSpeakerImpl> impl_;
+		virtual void Play(int loopCount = 0) = 0;
+		virtual void Stop(void) = 0;
+		virtual bool IsEnd(void) const = 0;
+	 protected:
+
 
 		 /// <summary>
 		/// 最大ビッチレート

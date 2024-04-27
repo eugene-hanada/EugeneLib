@@ -14,15 +14,16 @@
 namespace Eugene
 {
 	
-	class SoundStreamSpeaker::SoundStreamSpeakerImpl
+	class Xaudio2StreamSpeaker:
+		public SoundStreamSpeaker
 	{
 	public:
-		SoundStreamSpeakerImpl(std::uintptr_t devicePtr, SoundStreamSpeaker& speaker,const std::filesystem::path& path);
-		~SoundStreamSpeakerImpl();
+		Xaudio2StreamSpeaker(IXAudio2* xaudio2,const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate);
+		~Xaudio2StreamSpeaker();
 
-		void Play(int loopCount = 0);
-		void Stop(void);
-		bool IsEnd(void) const;
+		void Play(int loopCount = 0) final;
+		void Stop(void) final;
+		bool IsEnd(void) const final;
 		void SetPitchRate(float rate);
 		void SetOutput(SoundControl& control);
 		void SetVolume(float volume);
@@ -32,7 +33,7 @@ namespace Eugene
 		class CollBack : public IXAudio2VoiceCallback
 		{
 		public:
-			CollBack(SoundStreamSpeakerImpl& speaker);
+			CollBack(Xaudio2StreamSpeaker& speaker);
 			void OnBufferEnd(void* pBufferContext) noexcept final;
 			void OnBufferStart(void* pBufferContext) noexcept final;
 			void OnLoopEnd(void* pBufferContext) noexcept final;
@@ -41,7 +42,7 @@ namespace Eugene
 			void OnVoiceProcessingPassEnd() noexcept final;
 			void OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept final;
 		private:
-			SoundStreamSpeakerImpl& speaker_;
+			Xaudio2StreamSpeaker& speaker_;
 		};
 
 		struct SourceVoiceDeleter
@@ -63,8 +64,6 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		void Worker(void);
-
-		SoundStreamSpeaker& speaker_;
 
 		/// <summary>
 		/// ソースボイス

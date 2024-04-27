@@ -16,60 +16,52 @@ namespace Eugene
 	{
 	public:
 
-		~SoundSpeaker();
+		virtual ~SoundSpeaker();
 
 		/// <summary>
 		/// 再生
 		/// </summary>
 		/// <param name=""></param>
-		void Play(int loopCount = 0);
+		virtual void Play(int loopCount = 0) = 0;
 
 		/// <summary>
 		/// 停止
 		/// </summary>
 		/// param name=""></param>
-		void Stop(void);
+		virtual void Stop(void) = 0;
 
 		/// <summary>
 		/// 再生が終了しているか?
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> 終了時true、再生中の時false </returns>
-		bool IsEnd(void) const;
+		virtual bool IsEnd(void) const = 0;
 
 		/// <summary>
 		/// ピッチレートをセットする
 		/// </summary>
 		/// <param name="rate"></param>
-		void SetPitchRate(float rate);
+		virtual void SetPitchRate(float rate) = 0;
 
 		/// <summary>
 		/// 再生するサウンドデータをセットする
 		/// </summary>
 		/// <param name="ptr"></param>
 		/// <param name="size"></param>
-		void SetData(const std::uint8_t* ptr, const std::uint64_t size);
+		virtual void SetData(const std::uint8_t* ptr, const std::uint64_t size) = 0;
 
 
-		void SetVolume(float volume) final;
+		/*void SetVolume(float volume) final;
 
 		void SetPan(std::span<float> volumes) final;
 
-		void SetOutput(SoundControl& control) final;
-	private:
-
-		class SoundSpeakerImpl;
-
+		void SetOutput(SoundControl& control) final;*/
+	protected:
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
-		SoundSpeaker(std::uintptr_t devicePtr, const SoundFile& soundFile, std::uint16_t outChannel,const float maxPitchRate);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		std::unique_ptr<SoundSpeakerImpl> impl_;
+		SoundSpeaker(std::uint16_t outChannel,const float maxPitchRate);
 
 		/// <summary>
 		/// 最大ビッチレート

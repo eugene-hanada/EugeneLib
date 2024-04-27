@@ -11,20 +11,12 @@ namespace Eugene
 		public SoundBase
 	{
 	public:
-		void* Get(void);
-		void SetVolume(float volume) final;
-		void SetPan(std::span<float> volumes) final;
-		void SetOutput(SoundControl& control) final;
+		virtual void* Get(void) = 0;
+		virtual void SetVolume(float volume) = 0;
+		virtual void SetPan(std::span<float> volumes) = 0;
+		virtual void SetOutput(SoundControl& control) = 0;
 	protected:
-        class SoundControlImpl;
-
-        struct SoundControlImplDeleter
-        {
-            void operator()(SoundControlImpl* ptr);
-        };
-
-		SoundControl(std::uintptr_t devicePtr, std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
-		std::unique_ptr<SoundControlImpl, SoundControlImplDeleter> impl_;
+		SoundControl(std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
 		friend class Sound;
 	};
 

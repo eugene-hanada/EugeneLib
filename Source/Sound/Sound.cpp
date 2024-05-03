@@ -58,7 +58,11 @@ Eugene::Sound* Eugene::CreateSound(void)
 		throw CreateErrorException{"すでにSoundは生成されています"};
 	}
 	isCreate = true;
+#ifdef USE_WINDOWS
 	return new Xaudio2Sound{};
+#elif USE_ANDROID
+    return new AaudioSound{};
+#endif
 }
 
 Eugene::UniqueSound Eugene::CreateSoundUnique(void)

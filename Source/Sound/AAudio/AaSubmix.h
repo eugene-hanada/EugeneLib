@@ -11,10 +11,11 @@ class AaSubmix :
         public AaVoice
 {
 public:
-    AaSubmix(AaSubmix*  submix,std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t sample);
+    AaSubmix(Eugene::SoundBase& soundBase,AaSubmix*  submix, std::uint32_t sample);
     virtual ~AaSubmix();
     void AddVoice(AaVoice* voice);
     void RemoveVoice(AaVoice* voice);
+    void GetNextFrame(std::span<float> outSpan) final;
 protected:
     std::set<AaVoice*> voices_;
     std::map<
@@ -22,6 +23,5 @@ protected:
     std::unique_ptr<oboe::resampler::MultiChannelResampler>
     > resamplerMap_;
     std::vector<float> convertBuffer_;
-    std::uint16_t  channel_;
 
 };

@@ -20,13 +20,24 @@ namespace Eugene
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
 		SoundStreamSpeaker( std::uint16_t outChannel,const float maxPitchRate);
 		~SoundStreamSpeaker();
-		//void SetVolume(float volume);
-		//void SetPan(std::span<float> volumes);
 
-		//void SetOutput(SoundControl& control) final;
-
+		/// <summary>
+		/// 再生
+		/// </summary>
+		/// <param name="loopCount"> ループ回数 </param>
 		virtual void Play(int loopCount = 0) = 0;
+		
+		/// <summary>
+		/// 停止
+		/// </summary>
+		/// <param name=""></param>
 		virtual void Stop(void) = 0;
+		
+		/// <summary>
+		/// 再生終了したか？
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		virtual bool IsEnd(void) const = 0;
 	 protected:
 

@@ -6,10 +6,10 @@
 #include "AAudio/AaSoundSpeaker.h"
 #endif
 
-Eugene::SoundSpeaker::SoundSpeaker(std::uint16_t outChannel,const float maxPitchRate):
-	maxPitchRate_{maxPitchRate}
+Eugene::SoundSpeaker::SoundSpeaker(std::uint16_t inChannel, std::uint16_t outChannel,const float maxPitchRate):
+        SoundBase{inChannel,outChannel},maxPitchRate_{maxPitchRate}
 {
-	outChannel_ = outChannel;
+	//outChannel_ = outChannel;
 }
 
 //void Eugene::SoundSpeaker::Play(int loopCount)

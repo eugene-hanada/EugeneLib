@@ -27,7 +27,7 @@ namespace Eugene
 		/// <summary>
 		/// 停止
 		/// </summary>
-		/// param name=""></param>
+		/// <param name=""></param>
 		virtual void Stop(void) = 0;
 
 		/// <summary>
@@ -50,18 +50,12 @@ namespace Eugene
 		/// <param name="size"></param>
 		virtual void SetData(const std::uint8_t* ptr, const std::uint64_t size) = 0;
 
-
-		/*void SetVolume(float volume) final;
-
-		void SetPan(std::span<float> volumes) final;
-
-		void SetOutput(SoundControl& control) final;*/
 	protected:
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
-		SoundSpeaker(std::uint16_t outChannel,const float maxPitchRate);
+		SoundSpeaker(std::uint16_t inChannel, std::uint16_t outChannel,const float maxPitchRate);
 
 		/// <summary>
 		/// 最大ビッチレート

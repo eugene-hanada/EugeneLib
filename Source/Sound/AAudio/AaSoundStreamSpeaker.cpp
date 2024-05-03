@@ -1,43 +1,43 @@
 #include "AaSoundStreamSpeaker.h"
 
 
-Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SoundStreamSpeakerImpl(std::uintptr_t devicePtr, SoundStreamSpeaker& speaker, const std::filesystem::path& path) :
-	 speaker_{ speaker }
+Eugene::AaudioStreamSpeaker::AaudioStreamSpeaker(std::uintptr_t devicePtr, SoundStreamSpeaker& speaker, const std::filesystem::path& path) :
+        SoundStreamSpeaker{0,0.0f},speaker_{ speaker }
 {
 }
 
-Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::~SoundStreamSpeakerImpl()
+Eugene::AaudioStreamSpeaker::~AaudioStreamSpeaker()
 {
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::Play(int loopCount)
+void Eugene::AaudioStreamSpeaker::Play(int loopCount)
 {
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::Stop(void)
+void Eugene::AaudioStreamSpeaker::Stop(void)
 {
 }
 
-bool Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::IsEnd(void) const
+bool Eugene::AaudioStreamSpeaker::IsEnd(void) const
 {
 	return true;
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SetPitchRate(float rate)
+void Eugene::AaudioStreamSpeaker::SetPitchRate(float rate)
 {
 	
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SetOutput(SoundControl& control)
+void Eugene::AaudioStreamSpeaker::SetOutput(SoundControl& control)
 {
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SetVolume(float volume)
+void Eugene::AaudioStreamSpeaker::SetVolume(float volume)
 {
 	
 }
 
-void Eugene::SoundStreamSpeaker::SoundStreamSpeakerImpl::SetPan(std::span<float> volumes)
+void Eugene::AaudioStreamSpeaker::SetPan(std::span<float> volumes)
 {
 	
 }

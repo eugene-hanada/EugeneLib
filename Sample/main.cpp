@@ -277,7 +277,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				auto rate = (panValue + 1.0f) /2.0f;
 				pan[0] = 1.0f - rate; 
 				pan[1] = rate;
-				
+				speaker->SetPan(pan);
 			}
 		}
 		ImGui::End();

@@ -1,11 +1,11 @@
 #include "AaVoice.h"
 #include "AaSubmix.h"
+#include "../../../Include/Sound/SoundBase.h"
 
-AaVoice::AaVoice(AaSubmix*  submix,std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t sample) :
-    sample_{sample}, submix_{submix}
+AaVoice::AaVoice(Eugene::SoundBase& soundBase,AaSubmix*  submix, std::uint32_t sample) :
+    soundBase_{soundBase}, submix_{submix}, sample_{sample}
 {
-
-    SetChannel(inChannel,outChannel);
+    SetChannel(soundBase_.GetInChannel(),soundBase_.GetOutChannel());
     if (submix_ != nullptr)
     {
         submix_->AddVoice(this);
@@ -52,4 +52,8 @@ void AaVoice::SetChannel(std::uint16_t inChannel, std::uint16_t outChannel) {
             }
         }
     }
+}
+
+void AaVoice::SetOutMatrix(std::span<float> volumes) {
+    std::copy(volumes.begin(),volumes.end(),outMatrix_.begin());
 }

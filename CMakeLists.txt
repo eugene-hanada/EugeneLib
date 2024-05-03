@@ -133,6 +133,8 @@ elseif(EUGENE_USE_ANDROID)
 		Source/Sound/AAudio/AaSound3DControl.cpp
 		Source/Sound/AAudio/AaSubmix.cpp
 		Source/Sound/AAudio/AaVoice.cpp
+		Source/Sound/AAudio/AaSourceVoice.cpp
+		Source/Sound/AAudio/AaMaster.cpp
 		Source/Sound/AAudio/resampler/IntegerRatio.cpp
 		Source/Sound/AAudio/resampler/LinearResampler.cpp
 		Source/Sound/AAudio/resampler/MultiChannelResampler.cpp

@@ -2,7 +2,7 @@
 #include <dxgi1_6.h>
 #include <D3D12MemAlloc.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "Dx12Graphics.h"
 
 Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const TextureInfo& info) :

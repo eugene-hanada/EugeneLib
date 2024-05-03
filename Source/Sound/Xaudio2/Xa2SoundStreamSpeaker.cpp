@@ -2,7 +2,7 @@
 #include "../../../Include/Sound/SoundCommon.h"
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundFile.h"
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 
 Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :

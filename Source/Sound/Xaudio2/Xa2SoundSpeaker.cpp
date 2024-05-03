@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "../../../Include/Sound/SoundFile.h"
 #include "../../../Include/Sound/SoundControl.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 
 

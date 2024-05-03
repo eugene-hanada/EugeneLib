@@ -4,7 +4,7 @@
 #include "../../../Include/Graphics/Shader.h"
 #include "Dx12Graphics.h"
 #include "Dx12ResourceBindLayout.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	ID3D12Device* device,

@@ -33,5 +33,5 @@
 #include "Sound/SoundStreamSpeaker.h"
 
 #include "Math/Geometry.h"
-#include "Common/RingBuffer.h"
-#include "Common/SharedPtr.h"
+#include "Utils/RingBuffer.h"
+#include "Utils/SharedPtr.h"

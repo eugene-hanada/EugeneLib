@@ -74,8 +74,8 @@ set(GraphicsSource
 
 # Common系のソースファイルをセット
 set(CommonSource
-	Source/Common/Debug.cpp
-	Source/Common/EugeneLibException.cpp
+	Source/Debug/Debug.cpp
+	Source/Utils/EugeneLibException.cpp
 )
 
 # Math系のソースファイルをセット

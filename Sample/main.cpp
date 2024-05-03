@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include <initializer_list>
-#include <Common/ArgsSpan.h>
+#include <Utils/ArgsSpan.h>
 
 #include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
 #include <ThirdParty/glm/glm/gtx/transform.hpp>
@@ -24,7 +24,7 @@
 #include <ImGuizmo.h>
 #endif
 
-#include <Common/Debug.h>
+#include <Debug/Debug.h>
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
 {	

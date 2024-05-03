@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 #include <wrl.h>
-#include "../../../Include/Common/ArgsSpan.h"
+#include "../../../Include/Utils/ArgsSpan.h"
 
 struct ID3D12Device;
 struct ID3D12RootSignature;

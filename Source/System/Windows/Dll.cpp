@@ -1,5 +1,5 @@
 ﻿#include "Dll.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 Eugene::Dll::Dll(const std::filesystem::path& path)
 {

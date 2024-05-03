@@ -1,6 +1,6 @@
 ﻿#include "Xa2SoundControl.h"
 #include <xaudio2.h>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 Eugene::Xaudio2Control::Xaudio2Control(IXAudio2* xaudio2,std::uint32_t sample, std::uint32_t stage, std::uint16_t inChannel, std::uint16_t outChannel):
 	SoundControl{sample,inChannel,outChannel,stage}

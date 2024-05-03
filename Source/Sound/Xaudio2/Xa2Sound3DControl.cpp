@@ -4,7 +4,7 @@
 #include <x3daudio.h>
 #include <vector>
 #include <cmath>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "Xa2SoundControl.h"
 
 

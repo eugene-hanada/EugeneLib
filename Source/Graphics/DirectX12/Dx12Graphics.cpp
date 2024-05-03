@@ -5,7 +5,7 @@
 #include <list>
 #include <string>
 #include <cassert>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
@@ -36,7 +36,7 @@
 
 #endif
 
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")

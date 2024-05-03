@@ -92,7 +92,7 @@
 //}
 
 Eugene::Xaudio2Speaker::Xaudio2Speaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate):
-	SoundSpeaker{outChannel,maxPitchRate}
+	SoundSpeaker{soundFile.GetFormat().channel,outChannel,maxPitchRate}
 {
 	// フォーマットをセット
 	const auto& format = soundFile.GetFormat();

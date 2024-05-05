@@ -1,7 +1,7 @@
 #include "../../Include/Sound/SoundFile.h"
-#include "../../Include/Math/Geometry.h"
+#include "../../Include/Utils/Utils.h"
 #include <fstream>
-#include "../../Include/Common/EugeneLibException.h"
+#include "../../Include/Utils/EugeneLibException.h"
 #define STB_VORBIS_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_vorbis.c"
 

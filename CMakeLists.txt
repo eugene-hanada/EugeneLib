@@ -72,16 +72,17 @@ set(GraphicsSource
 	Source/Graphics/SamplerViews.cpp
 	Source/Graphics/ResourceBindLayout.cpp)
 
-# Common系のソースファイルをセット
-set(CommonSource
-	Source/Debug/Debug.cpp
+# Utils系のソースファイルをセット
+set(UtilsSource
 	Source/Utils/EugeneLibException.cpp
+	Source/Debug/Debug.cpp
 )
 
 # Math系のソースファイルをセット
 set(MathSource
-	Source/Math/Geometry.cpp
-	Source/Math/Random.cpp)
+	Source/Math/Random.cpp 
+	Source/Math/Math.cpp
+)
 
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
@@ -213,7 +214,7 @@ add_library(EugeneLib STATIC
 	 ${SystemApiSource}
 	${GraphicsSource}
 	${GraphicsApiSource}
-	${CommonSource}
+	${UtilsSource}
 	${MathSource}
 	${SoundSource}
 	${SoundApiSource}

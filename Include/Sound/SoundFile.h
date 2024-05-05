@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 #include <filesystem>
 #include <vector>
@@ -8,7 +8,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// �T�E���h�t�@�C����ǂݍ��ނ��߂̃N���X
+	/// サウンドファイル
 	/// </summary>
 	class SoundFile
 	{
@@ -29,50 +29,60 @@ namespace Eugene
 		SoundFile& operator=(SoundFile&& soundFile);
 
 		/// <summary>
-		/// �f�[�^�ւ̃|�C���^���擾����
+		/// データのポインタを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint8_t* GetDataPtr(void) const noexcept;
 
 		/// <summary>
-		/// �f�[�^�̃o�C�g�����擾����
+		/// データのサイズを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint64_t GetDataSize(void) const noexcept;
 
 		/// <summary>
-		/// �t�H�[�}�b�g�̎擾
+		/// フォーマットを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormat& GetFormat(void) const noexcept;
 
 		/// <summary>
-		/// �t�H�[�}�b�g�̊g���f�[�^���擾
+		/// フォーマットの拡張部分を取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormatEx& GetFormatExt(void) const noexcept;
 	protected:
 
+		/// <summary>
+		/// waveファイルを読み込む
+		/// </summary>
+		/// <param name="path"> パス </param>
+		/// <returns> 成功時true、失敗時false </returns>
 		bool LoadWave(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ogg vorbisファイルを読み込む
+		/// </summary>
+		/// <param name="path"> パス </param>
+		/// <returns> 成功時true、失敗時false </returns>
 		bool LoadOggVorbis(const std::filesystem::path& path);
 
 		/// <summary>
-		/// �f�[�^��
+		/// データ
 		/// </summary>
 		std::vector<std::uint8_t> data_;
 
 		/// <summary>
-		/// �t�H�[�}�b�g
+		/// フォーマット
 		/// </summary>
 		SoundFormat format_;
 
 		/// <summary>
-		/// �g���f�[�^����
+		/// フォーマットの拡張部分
 		/// </summary>
 		SoundFormatEx ex_;
 	};

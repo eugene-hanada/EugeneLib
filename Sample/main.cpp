@@ -1,10 +1,8 @@
 ﻿#include <Windows.h>
 #include <EugeneLib.h>
-#include <Math/Geometry.h>
 #include <memory>
 #include <vector>
-#include <initializer_list>
-#include <Utils/ArgsSpan.h>
+
 
 #include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
 #include <ThirdParty/glm/glm/gtx/transform.hpp>

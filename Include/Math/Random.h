@@ -1,10 +1,13 @@
-#pragma once
+﻿#pragma once
 #include <random>
 #include <concepts>
 #include <algorithm>
 
 namespace Eugene
 {
+	/// <summary>
+	/// 乱数エンジンに必要な要件のコンセプト
+	/// </summary>
 	template<class T>
 	concept RandomEngine = requires (T & e) {
 		{ e() } -> std::same_as<std::uint64_t>;
@@ -15,7 +18,7 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// 64�r�b�g��xor�V�t�g�̗��������G���W��
+	/// 65ビットXorシフトを使用した乱数エンジン
 	/// </summary>
 	class XorShift64Engine
 	{
@@ -36,6 +39,9 @@ namespace Eugene
 		std::uint64_t state_;
 	};
 
+	/// <summary>
+	/// Xoshiroの128ビットの乱数エンジン
+	/// </summary>
 	class Xoshiro128ppEngine
 	{
 	public:
@@ -55,9 +61,9 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// �����������N���X
+	/// 乱数クラス
 	/// </summary>
-	/// <typeparam name="R"> �����G���W���̌^ </typeparam>
+	/// <typeparam name="R"> 乱数エンジンの型 </typeparam>
 	template<RandomEngine R>
 	class Random
 	{
@@ -68,9 +74,9 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// p�̊m����true��Ԃ�
+		/// 引数で指定した確率でtrueを返す
 		/// </summary>
-		/// <param name="p"> true�ɂȂ�m�� </param>
+		/// <param name="p"> trueになる確率 </param>
 		/// <returns></returns>
 		bool operator()(double p) noexcept
 		{
@@ -79,12 +85,12 @@ namespace Eugene
 		}
 		
 		/// <summary>
-		/// �w��̐����l�͈̔͂Œl��Ԃ�
+		/// 指定された整数の最小値から最大値ないのランダムな整数値を返す
 		/// </summary>
-		/// <typeparam name="Int"> �����̌^ </typeparam>
-		/// <param name="min"> �ŏ��l </param>
-		/// <param name="max"> �ő�l </param>
-		/// <returns> ���� </returns>
+		/// <typeparam name="Int"> 整数の型 </typeparam>
+		/// <param name="min"> 最小値 </param>
+		/// <param name="max"> 最大値 </param>
+		/// <returns> ランダムな整数値 </returns>
 		template<std::integral Int>
 		Int operator()(Int min, Int max) noexcept
 		{
@@ -93,12 +99,12 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �w��̕��������_���͈̔͂Œl��Ԃ�
+		/// 指定された浮動小数点数の最小値から最大値のランダムな値を返す
 		/// </summary>
-		/// <typeparam name="Float"> ���������_���̌^ </typeparam>
-		/// <param name="min"> �ŏ��l </param>
-		/// <param name="max"> �ő�l </param>
-		/// <returns> ���� </returns>
+		/// <typeparam name="Float"> 浮動小数点数の型 </typeparam>
+		/// <param name="min"> 最小値 </param>
+		/// <param name="max"> 最大値</param>
+		/// <returns> ランダムな値 </returns>
 		template<std::floating_point Float>
 		Float operator()(Float min, Float max) noexcept
 		{
@@ -107,12 +113,12 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �w��̊m�����w��̉񐔍s�����ꍇ�̐�����
+		/// 指定したし試行回数と確率でtrueになった数を返す
 		/// </summary>
-		/// <typeparam name="Int"> �񐔂̐����^ </typeparam>
-		/// <param name="count"> ���s�� </param>
-		/// <param name="p"> �m�� </param>
-		/// <returns></returns>
+		/// <typeparam name="Int"> 整数の型 </typeparam>
+		/// <param name="count"> 試行回数 </param>
+		/// <param name="p"> 確率 </param>
+		/// <returns> trueになった回数 </returns>
 		template<std::integral Int>
 		Int operator()(Int count, double p) noexcept
 		{
@@ -121,9 +127,9 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ������Ԃ�
+		/// ランダムな値を取得する
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> ランダムな値 </returns>
 		std::uint64_t operator()() noexcept
 		{
 			return engine_();

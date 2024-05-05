@@ -1,4 +1,4 @@
-#include "../../../Include/Math/Math.h"
+#include "../../Include/Math/Math.h"
 
 float Eugene::GetNormalizedAngle(float angle, float valMin, float valMax)
 {

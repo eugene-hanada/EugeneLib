@@ -1,5 +1,5 @@
 ﻿#include "../../Include/Graphics/Image.h"
-#include "../../Include/Common/EugeneLibException.h"
+#include "../../Include/Utils/EugeneLibException.h"
 #include <fstream>
 #include <bit>
 

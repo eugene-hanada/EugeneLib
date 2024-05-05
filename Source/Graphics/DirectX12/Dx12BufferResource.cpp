@@ -4,7 +4,7 @@
 #include <D3D12MemAlloc.h>
 
 #include "../../../Include/ThirdParty/d3dx12.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Graphics/Image.h"
 #include "Dx12Graphics.h"
 

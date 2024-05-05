@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/ShaderResourceViews.h"
 #include "Dx12Views.h"
-#include "../../../Include/Common/ArgsSpan.h"
+#include "../../../Include/Utils/ArgsSpan.h"
 
 namespace Eugene
 {

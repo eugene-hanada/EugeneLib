@@ -4,8 +4,8 @@
 #include <filesystem>
 #include <functional>
 #include "Dll.h"
-#include "../../../Include/Common/EugeneLibException.h"
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 #ifdef USE_VULKAN
 #include "../../Graphics/Vulkan/VkGraphics.h"
@@ -19,7 +19,6 @@
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
-#include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib, "Xinput.lib")
 

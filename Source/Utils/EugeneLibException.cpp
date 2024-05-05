@@ -1,5 +1,5 @@
-﻿#include "../../Include/Common/EugeneLibException.h"
-#include "../../Include/Common/Debug.h"
+﻿#include "../../Include/Utils/EugeneLibException.h"
+#include "../../Include/Debug/Debug.h"
 #include <filesystem>
 
 Eugene::EugeneLibException::EugeneLibException(const std::string& mess) :

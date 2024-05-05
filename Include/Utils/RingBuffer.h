@@ -1,22 +1,22 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <array>
 #include <atomic>
-#include "../Math/Geometry.h"
+
 
 namespace Eugene
 {
 	/// <summary>
-	/// ���T�C�Y�\�ȃ����O�o�b�t�@�A�v�f����2�̙p��Œ�ɂȂ�
+	/// リングバッファ
 	/// </summary>
-	/// <typeparam name="T"> �v�f�̌^ </typeparam>
+	/// <typeparam name="T"> 要素の型 </typeparam>
 	template<class T>
 	class RingBuffer
 	{
 	public:
 
 		/// <summary>
-		/// �C�e���[�^�[
+		/// イテレーター
 		/// </summary>
 		class iterator
 		{
@@ -80,15 +80,19 @@ namespace Eugene
 		};
 
 		/// <summary>
-		/// �T�C�Y�w�肪�ł���R���X�g���N�^
+		/// サイズ指定コンストラクタ
 		/// </summary>
-		/// <param name="size"> �v�f�� </param>
+		/// <param name="size"> サイズ </param>
 		RingBuffer(std::uint64_t size) :
 			buffer_(0), writeIndex_{ 0ull }, readIndex_{ 0ull }
 		{
 			buffer_.resize(1ull << static_cast<std::uint64_t>(std::ceil(std::log2(size))));
 		}
 
+		/// <summary>
+		/// 初期化リスト使用のコンストラクタ
+		/// </summary>
+		/// <param name="initList"> 初期化リスト </param>
 		RingBuffer(std::initializer_list<T> initList) :
 			buffer_(initList), writeIndex_{ initList.size()}, readIndex_{0ull}
 		{
@@ -97,9 +101,9 @@ namespace Eugene
 
 
 		/// <summary>
-		/// �v�f����ύX����
+		/// サイズを変更する
 		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size"> 変更後のサイズ </param>
 		void Resize(std::uint64_t size)
 		{
 			size = 1ull << static_cast<std::uint64_t>(std::ceil(std::log2(size)));
@@ -115,9 +119,9 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �R�s�[�����v�f��ǉ�����
+		/// 要素を入れる
 		/// </summary>
-		/// <param name="value"></param>
+		/// <param name="value"> 要素 </param>
 		void Push(const T& value)
 		{
 			if (writeIndex_ - readIndex_ >= buffer_.size()) 
@@ -128,7 +132,7 @@ namespace Eugene
 		}
 		
 		/// <summary>
-		/// �v�f��ǉ�����
+		/// 要素を入れる
 		/// </summary>
 		/// <param name="value"></param>
 		void Emplace(T&&value)
@@ -141,7 +145,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �v�f���폜����
+		/// 要素を削除する
 		/// </summary>
 		void Pop()
 		{
@@ -150,7 +154,7 @@ namespace Eugene
 
 
 		/// <summary>
-		/// �擪�̎Q�Ƃ��擾����
+		/// 先頭の要素を取得する
 		/// </summary>
 		/// <returns></returns>
 		T& Front()
@@ -159,7 +163,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �擪�̎Q�Ƃ��擾����
+		/// 先頭の要素を取得する
 		/// </summary>
 		/// <returns></returns>
 		const T& Front() const
@@ -168,7 +172,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �����̎Q�Ƃ��擾����
+		/// 末尾の要素を取得する
 		/// </summary>
 		/// <returns></returns>
 		T& Back()
@@ -177,7 +181,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �������擾����
+		/// 末尾の要素を取得する
 		/// </summary>
 		/// <returns></returns>
 		const T& Back() const
@@ -195,7 +199,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �擪�̃C�e���[�^�[���擾����
+		/// 先頭のイテレーターを取得する
 		/// </summary>
 		/// <returns></returns>
 		iterator begin()
@@ -204,7 +208,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// ���[�̃C�e���[�^�[���擾����
+		/// 末端のイテレーターを取得する
 		/// </summary>
 		/// <returns></returns>
 		iterator end()
@@ -214,26 +218,26 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// �o�b�t�@
+		/// 配列
 		/// </summary>
 		std::vector<T> buffer_;
 
 		/// <summary>
-		/// �������݈ʒu�̃C���f�b�N�X
+		/// 書き込みインデックス
 		/// </summary>
 		std::uint64_t writeIndex_;
 
 		/// <summary>
-		/// �ǂݎ��ʒu�̃C���f�b�N�X
+		/// 読み込みインデックス
 		/// </summary>
 		std::uint64_t readIndex_;
 	};
 
 	/// <summary>
-	/// �����O�o�b�t�@�̌Œ�T�C�Y��
+	/// 固定配列版リングバッファ
 	/// </summary>
-	/// <typeparam name="T"> �v�f�̌^ </typeparam>
-	/// <typeparam name="size"> �v�f�̐�(2�ׂ̂���̐�) </typeparam>
+	/// <typeparam name="T"> 要素の型</typeparam>
+	/// <typeparam name="size"> サイズ </typeparam>
 	template<class T, std::uint64_t size>
 	class RingBufferArray
 	{
@@ -361,21 +365,21 @@ namespace Eugene
 		std::array < T, size> buffer_;
 		std::uint64_t writeIndex_;
 		std::uint64_t readIndex_;
-		static_assert((size& (size - 1)) == 0 && size != 0,"2�̙p��̃T�C�Y���w�肵�Ă�������");
+		static_assert((size& (size - 1)) == 0 && size != 0,"サイズが０以外かつ2の倍数にしてください");
 	};
 
 	/// <summary>
-	/// ���b�N�t���[�Ń����O�o�b�t�@
+	/// ロックフリー版リングバッファ
 	/// </summary>
-	/// <typeparam name="T"> �v�f�̌^ </typeparam>
-	/// <typeparam name="cashLineSize"> �L���b�V�����C���̃T�C�Y(CPU�̂�ɍ��킹��) </typeparam>
-	template<class T, std::uint8_t cashLineSize = 64>
+	/// <typeparam name="T"> 要素の型 </typeparam>
+	/// <typeparam name="cashLineSize"> キャッシュラインサイズ </typeparam>
+	template<class T, std::uint8_t cashLineSize = std::hardware_destructive_interference_size >
 	class LockFreeRingBuffer
 	{
 	public:
 
 		/// <summary>
-		/// �C�e���[�^�[
+		/// イテレーター
 		/// </summary>
 		class iterator
 		{
@@ -438,7 +442,7 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// �v�f����ύX����
+		/// 要素を変更する
 		/// </summary>
 		/// <param name="size"></param>
 		void Resize(std::uint64_t size)
@@ -459,10 +463,8 @@ namespace Eugene
 
 		void Push(const T& value)
 		{
-			// �����֌W�Ȃ��œǂݍ���
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// �ǂݍ��݂�����
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -476,10 +478,8 @@ namespace Eugene
 
 		void Emplace(T&& value)
 		{
-			// �����֌W�Ȃ��œǂݍ���
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// �ǂݍ��݂�����
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -487,7 +487,6 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = std::move(value);
 
-			// ���Z����
 			writeIndex_.fetch_add(1ull, std::memory_order_release);
 		}
 
@@ -538,18 +537,18 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// ���b�N�t���[�Ń����O�o�b�t�@�̌Œ�T�C�Y
+	/// 固定配列版
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="cashLineSize"></typeparam>
 	/// <typeparam name="size"></typeparam>
-	template<class T, std::uint64_t size,std::uint8_t cashLineSize = 64>
+	template<class T, std::uint64_t size,std::uint8_t cashLineSize = std::hardware_destructive_interference_size>
 	class LockFreeRingBufferArray
 	{
 	public:
 
 		/// <summary>
-		/// �C�e���[�^�[
+		/// イテレーター
 		/// </summary>
 		class iterator
 		{
@@ -606,10 +605,8 @@ namespace Eugene
 
 		void Push(const T& value)
 		{
-			// �����֌W�Ȃ��œǂݍ���
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// �ǂݍ��݂�����
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -623,10 +620,8 @@ namespace Eugene
 
 		void Emplace(T&& value)
 		{
-			// �����֌W�Ȃ��œǂݍ���
 			auto writeIndex{ writeIndex_.load(std::memory_order_relaxed) };
 
-			// �ǂݍ��݂�����
 			auto readIndex{ readIndex_.load(std::memory_order_acquire) };
 			if (writeIndex - readIndex >= buffer_.size())
 			{
@@ -634,7 +629,6 @@ namespace Eugene
 			}
 			buffer_[writeIndex & (buffer_.size() - 1ull)] = std::move(value);
 
-			// ���Z����
 			writeIndex_.fetch_add(1ull, std::memory_order_release);
 		}
 
@@ -682,7 +676,7 @@ namespace Eugene
 		std::array<T,size> buffer_;
 		alignas(cashLineSize) std::atomic_uint64_t readIndex_;
 		alignas(cashLineSize) std::atomic_uint64_t writeIndex_;
-		static_assert((size& (size - 1)) == 0 && size != 0, "2�̙p��̃T�C�Y���w�肵�Ă�������");
+		static_assert((size& (size - 1)) == 0 && size != 0, "サイズが０以外かつ2の倍数にしてください");
 	};
 }
 

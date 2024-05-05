@@ -1,5 +1,5 @@
 ﻿#include "../../Include/System/System.h"
-#include "../../Include/Common/EugeneLibException.h"
+#include "../../Include/Utils/EugeneLibException.h"
 #include "../../Include/Graphics/GpuEngine.h"
 #include "../../Include/Graphics/Graphics.h"
 

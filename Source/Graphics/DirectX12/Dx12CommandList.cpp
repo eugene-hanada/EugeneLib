@@ -4,7 +4,7 @@
 #include <array>
 #include <cassert>
 #include "../../../Include/Graphics/Graphics.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Graphics/RenderTargetViews.h"
 
 #include "../../../Include/Graphics/GpuResource.h"

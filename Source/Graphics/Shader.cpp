@@ -1,6 +1,6 @@
 ﻿#include "../../Include/Graphics/Shader.h"
 #include <fstream>
-#include "../../Include/Common/EugeneLibException.h"
+#include "../../Include/Utils/EugeneLibException.h"
 
 Eugene::Shader::Shader(const std::filesystem::path& path)
 {

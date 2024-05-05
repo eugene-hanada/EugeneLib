@@ -5,7 +5,7 @@
 #elif USE_ANDROID
 #include "AAudio/AaSound.h"
 #endif
-#include "../../Include/Common/EugeneLibException.h"
+#include "../../Include/Utils/EugeneLibException.h"
 namespace {
 	bool isCreate = false;
 }

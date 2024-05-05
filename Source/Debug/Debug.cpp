@@ -1,4 +1,4 @@
-﻿#include "../../Include/Common/Debug.h"
+﻿#include "../../Include/Debug/Debug.h"
 
 
 #include "fmt/chrono.h"

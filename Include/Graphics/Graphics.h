@@ -4,7 +4,7 @@
 #include "../ThirdParty/glm/glm/vec2.hpp"
 #include "../ThirdParty/glm/glm/vec3.hpp"
 #include "Sampler.h"
-#include "../Common/ArgsSpan.h"
+#include "../Utils/ArgsSpan.h"
 
 
 #ifdef USE_EFFEKSEER

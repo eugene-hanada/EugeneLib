@@ -148,13 +148,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	auto sound = Eugene::CreateSoundUnique();
-	auto soundFile{ Eugene::SoundFile("./exp.ogg") };
+	auto soundFile{ Eugene::SoundFile("./Walk.wav") };
 	std::unique_ptr<Eugene::SoundControl> soundCtrl{ sound->CreateSoundControl(0,soundFile.GetFormat().sample, 2) };
 	std::unique_ptr<Eugene::SoundSpeaker> speaker{sound->CreateSoundSpeaker(soundFile)};
-	speaker->SetOutput(*soundCtrl);
-	float panValue = 0.0f;
 	speaker->SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
+
+	std::unique_ptr<Eugene::SoundStreamSpeaker> streamSound{ sound->CreateSoundStreamSpeaker("./test.wav")};
+	streamSound->Play();
+
+	speaker->SetVolume(0.5f);
 	speaker->Play();
+	//speaker->SetOutput(*soundCtrl);
+	float panValue = 0.0f;
+	
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
@@ -176,7 +182,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto cameraProjection{ glm::perspectiveRH(glm::radians(90.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
-	DebugIO.OpenConsole();
+	//DebugIO.OpenConsole();
 	auto a = fmt::format("Log{}", 114514);
 	DebugIO.Error("Log{0:}",114514);
 	std::chrono::system_clock::time_point startTime, endTime;
@@ -270,13 +276,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 
 			
-			if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
-			{
-				auto rate = (panValue + 1.0f) /2.0f;
-				pan[0] = 1.0f - rate; 
-				pan[1] = rate;
-				speaker->SetPan(pan);
-			}
+			//if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
+			//{
+			//	//auto rate = (panValue + 1.0f) /2.0f;
+			//	//pan[0] = 1.0f - rate; 
+			//	//pan[1] = rate;
+			//	//speaker->SetPan(pan);
+			//}
 		}
 		ImGui::End();
 

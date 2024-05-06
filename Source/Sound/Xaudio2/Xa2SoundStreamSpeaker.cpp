@@ -82,7 +82,7 @@ Eugene::Xaudio2StreamSpeaker::~Xaudio2StreamSpeaker()
 	semaphore_.release();
 	streamThread_.join();
 	source_->Stop();
-	source_->DestroyVoice();
+	//source_->DestroyVoice();
 }
 
 void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)

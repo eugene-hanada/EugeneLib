@@ -131,20 +131,17 @@ bool Eugene::SoundFile::LoadOggVorbis(const std::filesystem::path& path)
 	}
 	auto info = stb_vorbis_get_info(ptr);
 	format_.type = 1;
-	format_.channel = info.channels;
+	format_.channel = info.channels ;
 	format_.sample = info.sample_rate;
 	format_.block = (16u * format_.channel) / 8u;
 	format_.byte = format_.sample * format_.block;
 	format_.bit = 16;
-	format_.size = 16;
-
+	format_.size = 16 * format_.channel;
+	
 	auto length = stb_vorbis_stream_length_in_samples(ptr);
-	auto second = stb_vorbis_stream_length_in_seconds(ptr);
-	data_.resize(AlignmentedSize(length * 2u * format_.channel, format_.block));
-	for (int i = 0; i < format_.channel; i++)
-	{
-		stb_vorbis_get_samples_short_interleaved(ptr, format_.channel, reinterpret_cast<std::int16_t*>(data_.data() + AlignmentedSize(length * 2 * i, format_.block)), length);
-	}
+	auto totalSamples = length * info.channels;
+	data_.resize(AlignmentedSize(sizeof(std::int16_t) * totalSamples,format_.block));
+	stb_vorbis_get_samples_short_interleaved(ptr, info.channels, reinterpret_cast<std::int16_t*>(data_.data()), totalSamples);
 	stb_vorbis_close(ptr);
 	return true;
 }

@@ -88,13 +88,14 @@ bool Eugene::SoundFile::LoadWave(const std::filesystem::path& path)
 
 		if (id == fmt)
 		{
+			file.ignore(4);
 			file.read(reinterpret_cast<char*>(&format_), sizeof(format_));
 			if (format_.type == 1u)
 			{
 				auto now = file.tellg();
 				now -= 2ull;
 				file.seekg(now);
-				format_.ex = 0u;
+				//format_.ex = 0u;
 				continue;
 			}
 			file.read(reinterpret_cast<char*>(&ex_), sizeof(ex_));
@@ -136,8 +137,6 @@ bool Eugene::SoundFile::LoadOggVorbis(const std::filesystem::path& path)
 	format_.block = (16u * format_.channel) / 8u;
 	format_.byte = format_.sample * format_.block;
 	format_.bit = 16;
-	format_.size = 16 * format_.channel;
-	
 	auto length = stb_vorbis_stream_length_in_samples(ptr);
 	auto totalSamples = length * info.channels;
 	data_.resize(AlignmentedSize(sizeof(std::int16_t) * totalSamples,format_.block));

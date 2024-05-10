@@ -93,7 +93,7 @@ set(SoundSource
 	Source/Sound/SoundControl.cpp
 	Source/Sound/Sound3DControl.cpp
 	Source/Sound/SoundFile.cpp
-)
+ "Source/Sound/SoundStreamFile.cpp")
 
 
 

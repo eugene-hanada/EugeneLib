@@ -4,6 +4,7 @@
 #include "../../../Include/Sound/SoundFile.h"
 #include "../../../Include/Debug/Debug.h"
 
+#include "../SoundStreamFile.h"
 
 Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :
 	SoundStreamSpeaker{outChannel,maxPitchRate}, nowLoop_ {0}, maxLoop_{ 0 }
@@ -11,68 +12,40 @@ Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std:
 	isPlay_.store(false);
 	isRun_.store(true);
 	collback_ = std::make_unique<CollBack>(*this);
-	file_ = std::ifstream{ path, std::ios::binary };
-	SoundFile::RIFF riff;
-	file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
-	int id = 0;
 
-	// fmtチャンクを見つける
-	while (true)
-	{
-		file_.read(reinterpret_cast<char*>(&id), 4);
-		if (SoundFile::fmt == id)
-		{
-			break;
-		}
-		
-	}
 
-	WAVEFORMATEXTENSIBLE format;
-	file_.ignore(4);
-	file_.read(reinterpret_cast<char*>(&format.Format), sizeof(format.Format));
+	streamFile_ = CreateSoundStreamFile(path);
 
-	inChannel_ = format.Format.nChannels;
-	if (format.Format.wFormatTag != 1)
-	{
-		file_.read(reinterpret_cast<char*>(&format.Samples), sizeof(format.Samples));
-		file_.read(reinterpret_cast<char*>(&format.dwChannelMask), sizeof(format.dwChannelMask));
-		file_.read(reinterpret_cast<char*>(&format.SubFormat), sizeof(format.SubFormat));
-	}
-	else
-	{
-		auto now = file_.tellg();
-		now -= 2ull;
-		file_.seekg(now);
-	}
-	
-	// データチャンクを見つける
-	while (true)
-	{
-		file_.read(reinterpret_cast<char*>(&id), 4);
-		if (SoundFile::data == id)
-		{
-			break;
-		}
-
-	}
-
-	// データのサイズを読み取る
-	file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
-	
-	// データの先頭の位置を保持
-	starPos_ = file_.tellg();
+	const auto& format = streamFile_->GetFormat();
+	const auto ext = streamFile_->GetFormatEx();
+	WAVEFORMATEXTENSIBLE formatEx;
+	formatEx.Format = {
+		format.type,
+		format.channel,
+		format.sample,
+		format.byte,
+		format.block,
+		format.bit,
+		format.ex
+	};
+	formatEx.Samples.wReserved = ext.reserved;
+	formatEx.dwChannelMask = ext.channelMask;
+	formatEx.SubFormat.Data1 = ext.d1;
+	formatEx.SubFormat.Data2 = ext.d2;
+	formatEx.SubFormat.Data3 = ext.d3;
+	std::copy(std::begin(ext.d4), std::end(ext.d4), formatEx.SubFormat.Data4);
 
 	// ソースボイスの作成
-	xaudio2->CreateSourceVoice(std::out_ptr(source_), &format.Format, 0, maxPitchRate_, collback_.get());
+	xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate_, collback_.get());
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 
 	// バイト数入れとく
-	bytesPerSec = format.Format.nAvgBytesPerSec;
+	bytesPerSec = formatEx.Format.nAvgBytesPerSec;
 	
 	// バイト数に合わせてバッファ用データ配列をリサイズ
 	bufferData_.resize(bytesPerSec);
 	streamData_.resize(bytesPerSec);
-	
+	inChannel_ = formatEx.Format.nChannels;
 	streamThread_ = std::thread{ &Xaudio2StreamSpeaker::Worker,this };
 }
 
@@ -82,7 +55,6 @@ Eugene::Xaudio2StreamSpeaker::~Xaudio2StreamSpeaker()
 	semaphore_.release();
 	streamThread_.join();
 	source_->Stop();
-	//source_->DestroyVoice();
 }
 
 void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)
@@ -96,8 +68,7 @@ void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)
 		nowLoop_ = 0u;
 		std::fill(bufferData_.begin(), bufferData_.end(), 0);
 		std::fill(streamData_.begin(), streamData_.end(), 0);
-		file_.clear();
-		file_.seekg(starPos_);
+		streamFile_->SeekStart();
 		SetUp();
 	}
 	source_->Start();
@@ -149,29 +120,28 @@ void Eugene::Xaudio2StreamSpeaker::SetPan(std::span<float> volumes)
 void Eugene::Xaudio2StreamSpeaker::SetUp(void)
 {
 	// 読み込むデータのサイズ
-	auto size = std::min(bytesPerSec, dataSize_);
+	auto size = std::min(bytesPerSec, streamFile_->GetDataSize());
 
 	// データ読み込み
-	file_.read(reinterpret_cast<char*>(bufferData_.data()), size);
+	streamFile_->Read(bufferData_.data(), size);
 
 	// バッファーにセットする
 	buffer_->AudioBytes = size;
 	buffer_->pAudioData = bufferData_.data();
 	buffer_->LoopCount = 0;
 	buffer_->Flags = XAUDIO2_END_OF_STREAM;
-	nowSize_ = size;
 	source_->SubmitSourceBuffer(buffer_.get());
 
 	streamSize_ = 0u;
-	if ((dataSize_ - nowSize_) > 0u)
+	if ((streamFile_->GetDataSize() - streamFile_->GetReadSize()) > 0u)
 	{
 		// データがまだある場合
 
 		// 1秒分もしくは残りのデータのサイズを求める
-		streamSize_ = std::min(bytesPerSec, (dataSize_ - nowSize_));
+		streamSize_ = std::min(bytesPerSec, (streamFile_->GetDataSize() - streamFile_->GetReadSize()));
 
 		// 読み込む
-		file_.read(reinterpret_cast<char*>(streamData_.data()), streamSize_);
+		streamFile_->Read(streamData_.data(), streamSize_);
 	}
 }
 
@@ -190,7 +160,8 @@ void Eugene::Xaudio2StreamSpeaker::Worker(void)
 
 		if (isPlay_.load())
 		{
-			auto nextSize = std::min(dataSize_ - nowSize_, bytesPerSec);
+			auto nextSize = std::min(streamFile_->GetDataSize() - streamFile_->GetReadSize(), bytesPerSec);
+
 			if (nextSize > 0)
 			{
 				std::lock_guard<std::mutex> lock{mutex_};
@@ -208,11 +179,10 @@ void Eugene::Xaudio2StreamSpeaker::Worker(void)
 				source_->SubmitSourceBuffer(buffer_.get());
 				source_->Start();
 
-				file_.read(reinterpret_cast<char*>(streamData_.data()), nextSize);
 				streamSize_ = nextSize;
-				nowSize_ += streamSize_;
+				streamFile_->Read(streamData_.data(), nextSize);
 
-				if (nowSize_ >= dataSize_ || file_.eof())
+				if (streamFile_->GetReadSize() >= streamFile_->GetDataSize())
 				{
 					if (++nowLoop_ > maxLoop_ && maxLoop_ >= 0)
 					{
@@ -222,9 +192,7 @@ void Eugene::Xaudio2StreamSpeaker::Worker(void)
 					else
 					{
 						// データもしくはファイル末端まで読み込んだ時
-						file_.clear();
-						file_.seekg(starPos_);
-						nowSize_ = 0;
+						streamFile_->SeekStart();
 					}
 				}
 

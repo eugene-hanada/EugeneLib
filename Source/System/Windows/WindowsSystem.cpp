@@ -223,7 +223,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGr
 	if (graphics == nullptr)
 	{
 #ifdef USE_VULKAN
-		graphics = new VkGraphics{hwnd, system_.GetWindowSize(),gpuEngine, bufferNum , maxSize };
+		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #else
 		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
 #endif

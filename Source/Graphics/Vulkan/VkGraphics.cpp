@@ -8,7 +8,7 @@
 
 #define VMA_IMPLEMENTATION
 #include "VkGraphics.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "VkGpuEngine.h"
 #include  "../../../Include/Graphics/Shader.h"
 #include "VkResourceBindLayout.h"
@@ -38,7 +38,7 @@
 #include <EffekseerRendererVulkan.h>
 #endif
 
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 

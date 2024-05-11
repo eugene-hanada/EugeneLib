@@ -373,7 +373,13 @@ namespace Eugene
 	/// </summary>
 	/// <typeparam name="T"> 要素の型 </typeparam>
 	/// <typeparam name="cashLineSize"> キャッシュラインサイズ </typeparam>
-	template<class T, std::uint8_t cashLineSize = std::hardware_destructive_interference_size >
+	template<class T, std::uint8_t cashLineSize =
+#ifdef USE_WINDOWS
+	        std::hardware_destructive_interference_size
+#else
+        64
+#endif
+        >
 	class LockFreeRingBuffer
 	{
 	public:
@@ -542,7 +548,14 @@ namespace Eugene
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="cashLineSize"></typeparam>
 	/// <typeparam name="size"></typeparam>
-	template<class T, std::uint64_t size,std::uint8_t cashLineSize = std::hardware_destructive_interference_size>
+	template<class T, std::uint64_t size,
+	        std::uint8_t cashLineSize =
+#ifdef USE_WINDOWS
+            std::hardware_destructive_interference_size
+#else
+            64
+#endif
+                    >
 	class LockFreeRingBufferArray
 	{
 	public:

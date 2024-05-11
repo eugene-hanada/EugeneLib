@@ -5,7 +5,7 @@
 #include "../../Graphics/Vulkan/VkGraphics.h"
 
 #include <game-activity/native_app_glue/android_native_app_glue.h>
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 namespace
 {

@@ -1,5 +1,5 @@
 #include "AaSound.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils//EugeneLibException.h"
 #include "resampler/MultiChannelResampler.h"
 #include "../../../Include/Sound/SoundFile.h"
 #include "AaSoundSpeaker.h"

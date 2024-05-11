@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include <vulkan/vulkan.hpp>
-#include "../../../Include/Math/Geometry.h"
+#include "../../../Include/Math/Math.h"
 #include <optional>
 
 namespace Eugene

@@ -1,5 +1,5 @@
 ﻿#include "VkCommandList.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "VkBufferResource.h"
 #include "VkImageResource.h"
 #include "VkDepthStencilViews.h"

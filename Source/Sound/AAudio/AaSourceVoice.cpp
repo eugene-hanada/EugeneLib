@@ -30,10 +30,10 @@ AaSourceVoice::AaSourceVoice(Eugene::SoundBase &soundBase, AaSubmix *submix,
         AaVoice{soundBase,submix,format.sample}
 {
     auto sample = format.sample;
-    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.size) / 8ull) / sample;
+    byteParFrame_ = (soundBase_.GetInChannel() * format.bit) / 8ull;
 
     getNextFrameFunc_ = &AaSourceVoice::GetPcm16NextFrame;
-    if (format.size == 32)
+    if (format.bit == 32)
     {
         getNextFrameFunc_ = &AaSourceVoice::GetPcm32NextFrame;
     }

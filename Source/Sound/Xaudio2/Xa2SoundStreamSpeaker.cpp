@@ -7,7 +7,7 @@
 #include "../SoundStreamFile.h"
 
 Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :
-	SoundStreamSpeaker{outChannel,maxPitchRate}, nowLoop_ {0}, maxLoop_{ 0 }
+	SoundStreamSpeaker{outChannel,maxPitchRate}, nowLoop_ {0}, maxLoop_{ 0 }, streamSize_{0}
 {
 	isPlay_.store(false);
 	isRun_.store(true);
@@ -16,8 +16,8 @@ Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std:
 
 	streamFile_ = CreateSoundStreamFile(path);
 
-	const auto& format = streamFile_->GetFormat();
-	const auto ext = streamFile_->GetFormatEx();
+	const auto& format{ streamFile_->GetFormat() };
+	const auto ext{ streamFile_->GetFormatEx() };
 	WAVEFORMATEXTENSIBLE formatEx;
 	formatEx.Format = {
 		format.type,
@@ -60,8 +60,9 @@ Eugene::Xaudio2StreamSpeaker::~Xaudio2StreamSpeaker()
 void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)
 {
 	isPlay_.store(false);
-	auto a = source_->Stop();
-	a = source_->FlushSourceBuffers();
+
+	source_->Stop();
+	source_->FlushSourceBuffers();
 	{
 		std::lock_guard<std::mutex> lock{mutex_};
 		maxLoop_ = loopCount;
@@ -94,7 +95,7 @@ void Eugene::Xaudio2StreamSpeaker::SetPitchRate(float rate)
 void Eugene::Xaudio2StreamSpeaker::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
-	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	source_->SetOutputVoices(&sends);
@@ -120,7 +121,7 @@ void Eugene::Xaudio2StreamSpeaker::SetPan(std::span<float> volumes)
 void Eugene::Xaudio2StreamSpeaker::SetUp(void)
 {
 	// 読み込むデータのサイズ
-	auto size = std::min(bytesPerSec, streamFile_->GetDataSize());
+	auto size{ std::min(bytesPerSec, streamFile_->GetDataSize()) };
 
 	// データ読み込み
 	streamFile_->Read(bufferData_.data(), size);

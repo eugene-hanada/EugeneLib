@@ -5,5 +5,4 @@ Eugene::SoundControl::SoundControl( std::uint32_t sample, std::uint16_t inChanne
 {
 	inChannel_ = inChannel;
 	outChannel_ = outChannel;
-	//impl_.reset(new SoundControlImpl(devicePtr, *this, sample, stage));
 }

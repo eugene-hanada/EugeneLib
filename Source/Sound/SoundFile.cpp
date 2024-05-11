@@ -47,13 +47,11 @@ Eugene::SoundFile::SoundFile(const std::filesystem::path& path)
 			throw CreateErrorException("Waveファイルが開けませんでした");
 		}
 	}
-
-   
 }
 
 
 
-Eugene::SoundFile::SoundFile(SoundFile&& soundFile) :
+Eugene::SoundFile::SoundFile(SoundFile&& soundFile)noexcept :
 	ex_{soundFile.ex_}, format_{soundFile.format_}
 {
 	data_ = std::move(soundFile.data_);
@@ -137,8 +135,8 @@ bool Eugene::SoundFile::LoadOggVorbis(const std::filesystem::path& path)
 	format_.block = (16u * format_.channel) / 8u;
 	format_.byte = format_.sample * format_.block;
 	format_.bit = 16;
-	auto length = stb_vorbis_stream_length_in_samples(ptr);
-	auto totalSamples = length * info.channels;
+	auto length{ stb_vorbis_stream_length_in_samples(ptr) };
+	auto totalSamples {length * info.channels };
 	data_.resize(AlignmentedSize(sizeof(std::int16_t) * totalSamples,format_.block));
 	stb_vorbis_get_samples_short_interleaved(ptr, info.channels, reinterpret_cast<std::int16_t*>(data_.data()), totalSamples);
 	stb_vorbis_close(ptr);

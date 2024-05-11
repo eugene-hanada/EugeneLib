@@ -124,8 +124,8 @@ bool Eugene::SoundFile::LoadWave(const std::filesystem::path& path)
 bool Eugene::SoundFile::LoadOggVorbis(const std::filesystem::path& path)
 {
 	int error = 0;
-	stb_vorbis_alloc* alloc = nullptr;
-	auto ptr = stb_vorbis_open_filename(path.string().c_str(), &error, alloc);
+	stb_vorbis_alloc* alloc{ nullptr };
+	auto ptr{ stb_vorbis_open_filename(path.string().c_str(), &error, alloc) };
 	if (ptr == nullptr)
 	{
 		return false;

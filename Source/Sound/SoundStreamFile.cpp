@@ -1,6 +1,8 @@
 #include "SoundStreamFile.h"
 #include <fstream>
 #include "../../Include/Sound/SoundFile.h"
+#define STB_VORBIS_HEADER_ONLY
+#include "../../Include/ThirdParty/stb/stb_vorbis.c"
 
 namespace Eugene
 {
@@ -17,12 +19,12 @@ namespace Eugene
 			file_ = std::ifstream{ path, std::ios::binary };
 			SoundFile::RIFF riff;
 			file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
-			int id = 0;
+			std::int32_t id{ 0 };
 
 			// fmtチャンクを見つける
 			while (true)
 			{
-				file_.read(reinterpret_cast<char*>(&id), 4);
+				file_.read(reinterpret_cast<char*>(&id), sizeof(id));
 				if (SoundFile::fmt == id)
 				{
 					break;
@@ -38,7 +40,7 @@ namespace Eugene
 			}
 			else
 			{
-				auto now = file_.tellg();
+				auto now{ file_.tellg() };
 				now -= 2ull;
 				file_.seekg(now);
 			}
@@ -56,6 +58,7 @@ namespace Eugene
 
 			file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
 
+			// データ開始位置をセット
 			startPos_ = file_.tellg();
 		}
 
@@ -86,24 +89,58 @@ namespace Eugene
 		std::streampos startPos_;
 	};
 
-	class OggStreamFile :
+	/// <summary>
+	/// OggVorbisファイルのファイルストリーム
+	/// </summary>
+	class OggVorbisStreamFile :
 		public SoundStreamFile
 	{
 	public:
 
-		OggStreamFile(const std::filesystem::path& path)
+		OggVorbisStreamFile(const std::filesystem::path& path) :
+			allocPtr_{nullptr}
 		{
+			int error{ 0 };
+			vorbisPtr_ = stb_vorbis_open_filename(path.string().c_str(), &error, allocPtr_);
 
+			auto info{ stb_vorbis_get_info(vorbisPtr_) };
+			format_.type = 1;
+			format_.channel = info.channels;
+			format_.sample = info.sample_rate;
+			format_.block = (16u * format_.channel) / 8u;
+			format_.byte = format_.sample * format_.block;
+			format_.bit = 16;
+			dataSize_ = stb_vorbis_stream_length_in_samples(vorbisPtr_) * format_.channel * format_.block;
+		}
+
+		~OggVorbisStreamFile()
+		{
+			stb_vorbis_close(vorbisPtr_);
 		}
 
 		// SoundStreamFile を介して継承されました
 		void Read(std::uint8_t* ptr, std::uint64_t size) final
 		{
+			auto sampleNum{ size / sizeof(std::int16_t)};
+			stb_vorbis_get_samples_short_interleaved(vorbisPtr_, format_.channel, reinterpret_cast<std::int16_t*>(ptr), sampleNum);
+			readSize_ += size;
 		}
 
 		void SeekStart() final
 		{
+			stb_vorbis_seek_start(vorbisPtr_);
+			readSize_ = 0ull;
 		}
+
+		/// <summary>
+		/// stb_vorbisのallocポインタ
+		/// </summary>
+		stb_vorbis_alloc* allocPtr_;
+
+		/// <summary>
+		/// stb_vorbisのポインタ
+		/// </summary>
+		stb_vorbis* vorbisPtr_;
 
 	};
 }
@@ -147,7 +184,7 @@ std::unique_ptr<Eugene::SoundStreamFile> Eugene::CreateSoundStreamFile(const std
 	}
 	else if (ext == ".ogg")
 	{
-
+		return std::make_unique<OggVorbisStreamFile>(path);
 	}
 
 	return std::unique_ptr<SoundStreamFile>();

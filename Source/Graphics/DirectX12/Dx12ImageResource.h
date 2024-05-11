@@ -21,8 +21,8 @@ namespace Eugene
 	{
 	public:
 		Dx12ImageResource(D3D12MA::Allocator* allocator,const TextureInfo& info);
-		Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, std::span<float,4> clearColor);
-		Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, float clearValue);
+		Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, std::span<float,4> clearColor, std::uint8_t sampleCount);
+		Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, float clearValue, std::uint8_t sampleCount);
 		Dx12ImageResource(IDXGISwapChain4* swapChain, std::uint32_t idx);
 	private:
 		glm::ivec2 GetSize(void) final;

@@ -163,18 +163,20 @@ namespace Eugene
 		/// <param name="size"></param>
 		/// <param name="format"></param>
 		/// <param name="clearColor"></param>
+		/// <param name="sampleCount"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) = 0;
+		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor, std::uint8_t sampleCount = 1) = 0;
 
 		/// <summary>
-		/// 深度バッファ用リソースの生成
+		/// 
 		/// </summary>
 		/// <param name="size"></param>
 		/// <param name="clear"></param>
+		/// <param name="sampleCount"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const = 0;
+		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount = 1) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成
@@ -291,6 +293,12 @@ namespace Eugene
 		/// <returns></returns>
 		virtual std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const = 0;
 
+		/// <summary>
+		/// マルチサンプルアンチエイリアスで使える最大サンプル数を取得する
+		/// </summary>
+		/// <returns></returns>
+		const std::uint8_t GetMaxMultiSampleCount() const;
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -330,6 +338,11 @@ namespace Eugene
 	protected:
 
 		Graphics();
+
+		/// <summary>
+		/// マルチサンプルアンチエイリアスで使える最大サンプル数
+		/// </summary>
+		std::uint8_t multiSampleCount_;
 
 		/// <summary>
 		/// バックバッファのフォーマット

@@ -32,15 +32,16 @@ Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, cons
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, std::span<float, 4> clearColor) :
+Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, std::span<float, 4> clearColor, std::uint8_t sampleCount) :
 	ImageResource{format}
 {
 	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
-	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
-	resourceDesc.Alignment = 65536;
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+		tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),
+		1, sampleCount > 1 ? 1: 0,sampleCount
+	);
+	
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
-	resourceDesc.MipLevels = 0;
-
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
 
@@ -58,13 +59,14 @@ Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, cons
 	}
 }
 
-Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, float clearValue) :
+Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const glm::ivec2& size, Format format, float clearValue, std::uint8_t sampleCount) :
 	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y));
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	resourceDesc.SampleDesc.Count = sampleCount;
 	CD3DX12_CLEAR_VALUE clear{ DXGI_FORMAT_D32_FLOAT, clearValue, 0 };
 
 	D3D12MA::ALLOCATION_DESC allocationDesc{};

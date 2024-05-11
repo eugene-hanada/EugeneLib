@@ -18,7 +18,7 @@ namespace Eugene
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
-		SoundStreamSpeaker( std::uint16_t outChannel,const float maxPitchRate);
+		SoundStreamSpeaker(std::uint16_t inChannel, std::uint16_t outChannel,const float maxPitchRate);
 		~SoundStreamSpeaker();
 
 		/// <summary>

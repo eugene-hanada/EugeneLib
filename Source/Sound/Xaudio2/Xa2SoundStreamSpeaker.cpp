@@ -6,15 +6,12 @@
 
 #include "../SoundStreamFile.h"
 
-Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate) :
-	SoundStreamSpeaker{outChannel,maxPitchRate}, nowLoop_ {0}, maxLoop_{ 0 }, streamSize_{0}
+Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate) :
+	SoundStreamSpeaker{streamFile->GetFormat().channel,outChannel,maxPitchRate}, nowLoop_{0}, maxLoop_{0}, streamSize_{0}, streamFile_{std::move(streamFile)}
 {
 	isPlay_.store(false);
 	isRun_.store(true);
 	collback_ = std::make_unique<CollBack>(*this);
-
-
-	streamFile_ = CreateSoundStreamFile(path);
 
 	const auto& format{ streamFile_->GetFormat() };
 	const auto ext{ streamFile_->GetFormatEx() };

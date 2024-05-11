@@ -93,7 +93,8 @@ set(SoundSource
 	Source/Sound/SoundControl.cpp
 	Source/Sound/Sound3DControl.cpp
 	Source/Sound/SoundFile.cpp
- "Source/Sound/SoundStreamFile.cpp")
+	Source/Sound/SoundStreamFile.cpp
+)
 
 
 
@@ -206,6 +207,7 @@ if(MSVC)
 	# visual stdio用にunicodeを使うように
 	add_definitions(-D_UNICODE -DUNICODE)
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 endif()
 
 # ライブラリを作る

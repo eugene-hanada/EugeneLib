@@ -19,7 +19,7 @@ namespace Eugene
 		public SoundStreamSpeaker
 	{
 	public:
-		Xaudio2StreamSpeaker(IXAudio2* xaudio2,const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate);
+		Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
 		~Xaudio2StreamSpeaker();
 
 		void Play(int loopCount = 0) final;

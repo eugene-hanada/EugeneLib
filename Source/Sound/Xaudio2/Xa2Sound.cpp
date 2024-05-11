@@ -11,6 +11,7 @@
 #include "Xa2SoundControl.h"
 #include "Xa2Sound3DControl.h"
 #include "Xa2SoundStreamSpeaker.h"
+#include "../SoundStreamFile.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
@@ -80,7 +81,7 @@ Eugene::SoundSpeaker* Eugene::Xaudio2Sound::CreateSoundSpeaker(const SoundFile& 
 
 Eugene::SoundStreamSpeaker* Eugene::Xaudio2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {
-	return new Xaudio2StreamSpeaker{xaudio2_.Get(), path,outChannel_,maxPitchRate};
+	return new Xaudio2StreamSpeaker{xaudio2_.Get(), CreateSoundStreamFile(path),outChannel_,maxPitchRate};
 }
 
 Eugene::SoundControl* Eugene::Xaudio2Sound::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const

@@ -13,12 +13,13 @@
 
 namespace Eugene
 {
-	
+	class SoundStreamFile;
+
 	class Xaudio2StreamSpeaker:
 		public SoundStreamSpeaker
 	{
 	public:
-		Xaudio2StreamSpeaker(IXAudio2* xaudio2,const std::filesystem::path& path, std::uint16_t outChannel, const float maxPitchRate);
+		Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
 		~Xaudio2StreamSpeaker();
 
 		void Play(int loopCount = 0) final;
@@ -95,20 +96,22 @@ namespace Eugene
 		/// </summary>
 		std::binary_semaphore semaphore_{0};
 
+		std::unique_ptr<SoundStreamFile> streamFile_;
+
 		/// <summary>
 		/// ファイルの音声データ部分の開始位置
 		/// </summary>
-		std::streampos starPos_;
+		//std::streampos starPos_;
 
 		/// <summary>
 		/// データサイズ
 		/// </summary>
-		std::uint32_t dataSize_;
+		//std::uint32_t dataSize_;
 
 		/// <summary>
 		/// 再生したサイズ
 		/// </summary>
-		std::uint32_t nowSize_;
+		//std::uint32_t nowSize_;
 
 		/// <summary>
 		/// バッファー
@@ -128,12 +131,12 @@ namespace Eugene
 		/// <summary>
 		/// ストリーミングで読み込んだデータサイズ
 		/// </summary>
-		std::uint32_t streamSize_;
+		std::uint64_t streamSize_;
 
 		/// <summary>
 		/// 1秒当たりのバイト数
 		/// </summary>
-		std::uint32_t bytesPerSec;
+		std::uint64_t bytesPerSec;
 
 		/// <summary>
 		/// 現在のループ数

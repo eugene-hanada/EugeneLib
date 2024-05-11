@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/SamplerViews.h"
 #include <vulkan/vulkan.hpp>
-#include "../../../Include/Common/ArgsSpan.h"
+#include "../../../Include/Utils//ArgsSpan.h"
 #include "../../../Include/Graphics/ResourceBindLayout.h"
 
 namespace Eugene

@@ -1,6 +1,6 @@
 #include "AaSoundControl.h"
 #include "resampler/MultiChannelResampler.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils//EugeneLibException.h"
 
 Eugene::AaudioControl::AaudioControl(AaSubmix*  submix,std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage) :
         SoundControl{sample,inChannel,outChannel,stage} ,submix_{*this,submix,sample}

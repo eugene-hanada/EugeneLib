@@ -9,7 +9,14 @@ void AaSourceVoice::GetNextFrame(std::span<float> outSpan) {
     auto size = dataSize_ - playBytye_;
     if (size <= 0)
     {
-        if (loopCount_ == 0) {
+
+        if (loopCount_ == 0)
+        {
+            if (callBack_ != nullptr && !isEnd_)
+            {
+                callBack_->OnPlayEnd(loopCount_);
+            }
+            isEnd_ = true;
             return;
         }
 
@@ -26,14 +33,15 @@ void AaSourceVoice::GetNextFrame(std::span<float> outSpan) {
 }
 
 AaSourceVoice::AaSourceVoice(Eugene::SoundBase &soundBase, AaSubmix *submix,
-                             const Eugene::SoundFormat &format) :
-        AaVoice{soundBase,submix,format.sample}
+                             const Eugene::SoundFormat& format,CallBack* callBack ) :
+        AaVoice{soundBase,submix,format.sample},
+        callBack_{callBack},loopCount_{0},dataSize_{0},playBytye_{0},isEnd_{true}
 {
     auto sample = format.sample;
-    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.size) / 8ull) / sample;
+    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.bit) / 8ull) / sample;
 
     getNextFrameFunc_ = &AaSourceVoice::GetPcm16NextFrame;
-    if (format.size == 32)
+    if (format.bit == 32)
     {
         getNextFrameFunc_ = &AaSourceVoice::GetPcm32NextFrame;
     }
@@ -81,6 +89,7 @@ void AaSourceVoice::SetData(const std::uint8_t *ptr, const std::uint64_t size) {
 void AaSourceVoice::Play(std::int32_t loopCount) {
     loopCount_ = loopCount;
     playBytye_ = 0;
+    isEnd_ = false;
 }
 
 void AaSourceVoice::Stop() {
@@ -93,4 +102,16 @@ bool AaSourceVoice::IsEnd() const{
         return loopCount_ == 0u;
     }
     return false;
+}
+
+void AaSourceVoice::SetFormat(const Eugene::SoundFormat format) {
+    SetChannel(soundBase_.GetInChannel(),soundBase_.GetOutChannel());
+    auto sample = format.sample;
+    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.bit) / 8ull) / sample;
+
+    getNextFrameFunc_ = &AaSourceVoice::GetPcm16NextFrame;
+    if (format.bit == 32)
+    {
+        getNextFrameFunc_ = &AaSourceVoice::GetPcm32NextFrame;
+    }
 }

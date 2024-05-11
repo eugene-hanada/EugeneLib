@@ -24,7 +24,7 @@ namespace Eugene
 		};
 
 		SoundFile(const std::filesystem::path& path);
-		SoundFile(SoundFile&& soundFile);
+		SoundFile(SoundFile&& soundFile) noexcept;
 
 		SoundFile& operator=(SoundFile&& soundFile);
 

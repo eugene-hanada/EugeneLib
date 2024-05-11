@@ -95,8 +95,8 @@ Eugene::Xaudio2Speaker::Xaudio2Speaker(IXAudio2* xaudio2, const SoundFile& sound
 	SoundSpeaker{soundFile.GetFormat().channel,outChannel,maxPitchRate}
 {
 	// フォーマットをセット
-	const auto& format = soundFile.GetFormat();
-	const auto ext = soundFile.GetFormatExt();
+	const auto& format{ soundFile.GetFormat() };
+	const auto ext{ soundFile.GetFormatExt() };
 	WAVEFORMATEXTENSIBLE formatEx;
 	formatEx.Format = {
 		format.type,
@@ -182,7 +182,7 @@ void Eugene::Xaudio2Speaker::SetPan(std::span<float> volumes)
 void Eugene::Xaudio2Speaker::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
-	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	source_->SetOutputVoices(&sends);

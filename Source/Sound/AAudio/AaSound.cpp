@@ -1,10 +1,11 @@
 #include "AaSound.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils//EugeneLibException.h"
 #include "resampler/MultiChannelResampler.h"
 #include "../../../Include/Sound/SoundFile.h"
 #include "AaSoundSpeaker.h"
 #include "AaSoundControl.h"
-
+#include "AaSoundStreamSpeaker.h"
+#include "../SoundStreamFile.h"
 
 namespace {
 
@@ -91,7 +92,13 @@ Eugene::SoundSpeaker *Eugene::AaudioSound::CreateSoundSpeaker(
 
 Eugene::SoundStreamSpeaker* Eugene::AaudioSound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {
-    return nullptr;
+    try {
+        return new AaudioStreamSpeaker{CreateSoundStreamFile(path),master_.get(), inChannel_};
+    }
+    catch (const std::exception& e)
+    {
+        return nullptr;
+    }
 }
 
 

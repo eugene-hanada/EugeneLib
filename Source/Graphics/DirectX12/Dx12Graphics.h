@@ -44,9 +44,13 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
-		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) final;
+		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, 
+			std::uint32_t arraySize = 1,
+			std::uint8_t mipLeveles = 1,
+			std::uint8_t sampleCount = 1,
+			std::optional<std::span<float, 4>> clearColor = std::nullopt) final;
 
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 
@@ -80,7 +84,16 @@ namespace Eugene
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
 
 		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+		GraphicsPipeline* CreateGraphicsPipeline(
+			ResourceBindLayout& resourceBindLayout,
+			const ArgsSpan<ShaderInputLayout>& layout, 
+			const ArgsSpan<ShaderPair>& shaders,
+			const ArgsSpan<RendertargetLayout>& rendertarges, 
+			TopologyType topologyType = TopologyType::Triangle,
+			bool isCulling = false,
+			bool useDepth = false,
+			std::uint8_t sampleCount = 1
+		) const final;
 
 		// Graphics を介して継承されました
 		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;

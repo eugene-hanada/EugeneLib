@@ -120,6 +120,39 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	result = device_->waitForFences(*fence_,true,UINT64_MAX);
 	device_->resetFences(*fence_);
 
+	const auto& limits{ physicalDevice_.getProperties().limits };
+	auto flag = limits.framebufferColorSampleCounts & limits.framebufferDepthSampleCounts;
+	
+	if (flag & vk::SampleCountFlagBits::e64)
+	{
+		multiSampleCount_ = 64;
+	}
+	else if(flag & vk::SampleCountFlagBits::e32)
+	{
+		multiSampleCount_ = 32;
+	}
+	else if (flag & vk::SampleCountFlagBits::e16)
+	{
+		multiSampleCount_ = 16;
+	}
+	else if (flag & vk::SampleCountFlagBits::e8)
+	{
+		multiSampleCount_ = 8;
+	}
+	else if (flag & vk::SampleCountFlagBits::e4)
+	{
+		multiSampleCount_ = 4;
+	}
+	else if (flag & vk::SampleCountFlagBits::e2)
+	{
+		multiSampleCount_ = 2;
+	}
+	else
+	{
+		multiSampleCount_ = 1;
+	}
+
+	
 
 #ifdef USE_IMGUI
 	InitImgui(useVkformat, bufferNum, size);
@@ -424,13 +457,19 @@ Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo
 	return new VkImageResource{ *allocator_,formatData};
 }
 
-Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> color)
+Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(
+	const glm::ivec2& size, Format format,
+	std::uint32_t arraySize,
+	std::uint8_t mipLeveles,
+	std::uint8_t sampleCount,
+	std::optional<std::span<float, 4>> clearColor
+	)
 {
 	if (format == Format::AUTO_BACKBUFFER)
 	{
 		format = backBufferFormat_;
 	}
-	return new VkImageResource{ *allocator_, size,format, };
+	return new VkImageResource{ *allocator_, size,format,arraySize,mipLeveles,sampleCount,clearColor};
 }
 
 
@@ -705,7 +744,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		//VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
 		//VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
-
+		
 #ifdef USE_WINDOWS
 		VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME
 #endif
@@ -748,9 +787,18 @@ void Eugene::VkGraphics::SetUpVma(void)
     allocator_ = vma::createAllocatorUnique(allocatorInfo);
 }
 
-Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
+	ResourceBindLayout& resourceBindLayout,
+	const ArgsSpan<ShaderInputLayout>& layout,
+	const ArgsSpan<ShaderPair>& shaders,
+	const ArgsSpan<RendertargetLayout>& rendertarges, 
+	TopologyType topologyType, 
+	bool isCulling,
+	bool useDepth,
+	std::uint8_t sampleCount
+) const
 {
-	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
+	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount};
 }
 
 Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
@@ -758,9 +806,9 @@ Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const A
 	return new VkResourceBindLayout{*device_,viewTypes};
 }
 
-Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2& size, float clear) const
+Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount) const
 {
-	return new VkImageResource{*allocator_, size, clear};
+	return new VkImageResource{*allocator_, size, clear, sampleCount};
 }
 
 std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::VkGraphics::GetGpuMemoryInfo(void) const

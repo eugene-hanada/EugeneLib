@@ -498,6 +498,72 @@ void Eugene::VkCommandList::CopyBuffer(BufferResource& dest, BufferResource& src
 	commandBuffer_->copyBuffer(*srcData->buffer_, *destData->buffer_, cpy);
 }
 
+void Eugene::VkCommandList::Resolve(ImageResource& dest, ImageResource& src)
+{
+	auto destData = static_cast<VkImageResource::Data*>(dest.GetResource());
+	auto srcData = static_cast<VkImageResource::Data*>(src.GetResource());
+
+	vk::ImageMemoryBarrier barrier{};
+	barrier.setOldLayout(vk::ImageLayout::eUndefined);
+	barrier.setNewLayout(vk::ImageLayout::eTransferDstOptimal);
+	barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
+	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eTransferWrite);
+	barrier.setImage(*destData->image_);
+	barrier.subresourceRange.setLayerCount(destData->arraySize_);
+	barrier.subresourceRange.setLevelCount(destData->mipmapLevels_);
+
+	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+
+	barrier.setImage(*srcData->image_);
+	barrier.setNewLayout(vk::ImageLayout::eTransferSrcOptimal);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eTransferRead);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	barrier.subresourceRange.setLayerCount(srcData->arraySize_);
+	barrier.subresourceRange.setLevelCount(srcData->mipmapLevels_);
+
+	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eTransfer, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+
+	vk::ImageResolve region;
+	const auto& size{ src.GetSize() };
+	region.dstSubresource.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	region.dstSubresource.setLayerCount(destData->arraySize_);
+	region.dstSubresource.setLayerCount(destData->mipmapLevels_);
+	region.srcSubresource.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	region.srcSubresource.setLayerCount(srcData->arraySize_);
+	region.srcSubresource.setLayerCount(srcData->mipmapLevels_);
+	region.setExtent({ static_cast<std::uint32_t>(size .x),static_cast<std::uint32_t>(size .y),1});
+
+	commandBuffer_->resolveImage(
+		*srcData->image_,
+		vk::ImageLayout::eTransferSrcOptimal,
+		*destData->image_,
+		vk::ImageLayout::eTransferDstOptimal,
+		region
+	);
+
+	barrier.setImage(*destData->image_);
+	barrier.setNewLayout(vk::ImageLayout::ePresentSrcKHR);
+	barrier.setOldLayout(vk::ImageLayout::eTransferDstOptimal);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	barrier.subresourceRange.setLayerCount(destData->arraySize_);
+	barrier.subresourceRange.setLevelCount(destData->mipmapLevels_);
+	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+
+	//barrier.setImage(*srcData->image_);
+	//barrier.setNewLayout(vk::ImageLayout::eUndefined);
+	//barrier.setOldLayout(vk::ImageLayout::eTransferSrcOptimal);
+	//barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
+	//barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
+	//barrier.subresourceRange.setLayerCount(srcData->arraySize_);
+	//barrier.subresourceRange.setLevelCount(srcData->mipmapLevels_);
+	//commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
+
+}
+
 void* Eugene::VkCommandList::GetCommandList(void)
 {
 	return &commandBuffer_;

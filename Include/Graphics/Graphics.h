@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <optional>
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
 #include "../ThirdParty/glm/glm/vec2.hpp"
@@ -118,7 +119,8 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
-			bool useDepth = false
+			bool useDepth = false,
+			std::uint8_t sampleCount = 1
 		) const = 0;
 
 		[[nodiscard]]
@@ -158,23 +160,34 @@ namespace Eugene
 		virtual ImageResource* CreateImageResource(const TextureInfo& formatData) const = 0;
 
 		/// <summary>
-		/// 
+		/// レンダーターゲット用のImageResourceを生成
 		/// </summary>
 		/// <param name="size"></param>
 		/// <param name="format"></param>
+		/// <param name="arraySize"></param>
+		/// <param name="mipLeveles"></param>
+		/// <param name="sampleCount"></param>
 		/// <param name="clearColor"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor) = 0;
+		virtual ImageResource* CreateImageResource(
+			const glm::ivec2& size,
+			Format format,
+			std::uint32_t arraySize = 1,
+			std::uint8_t mipLeveles = 1,
+			std::uint8_t sampleCount = 1,
+			std::optional<std::span<float, 4>> clearColor = std::nullopt
+		) = 0;
 
 		/// <summary>
-		/// 深度バッファ用リソースの生成
+		/// 
 		/// </summary>
 		/// <param name="size"></param>
 		/// <param name="clear"></param>
+		/// <param name="sampleCount"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const = 0;
+		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成
@@ -291,6 +304,12 @@ namespace Eugene
 		/// <returns></returns>
 		virtual std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const = 0;
 
+		/// <summary>
+		/// マルチサンプルアンチエイリアスで使える最大サンプル数を取得する
+		/// </summary>
+		/// <returns></returns>
+		const std::uint8_t GetMaxMultiSampleCount() const;
+
 #ifdef USE_IMGUI
 
 		/// <summary>
@@ -330,6 +349,11 @@ namespace Eugene
 	protected:
 
 		Graphics();
+
+		/// <summary>
+		/// マルチサンプルアンチエイリアスで使える最大サンプル数
+		/// </summary>
+		std::uint8_t multiSampleCount_;
 
 		/// <summary>
 		/// バックバッファのフォーマット

@@ -1,6 +1,6 @@
 ﻿#include "Dx12Views.h"
 #include "../../../Include/Graphics/Graphics.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 Eugene::Dx12Views::~Dx12Views()
 {

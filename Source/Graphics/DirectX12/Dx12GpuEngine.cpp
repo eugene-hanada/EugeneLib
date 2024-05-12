@@ -3,9 +3,9 @@
 #include <d3d12.h>
 #include "../../../Include/Graphics/CommandList.h"
 #include "Dx12Graphics.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 
 Eugene::Dx12GpuEngine::Dx12GpuEngine(ID3D12Device* device,size_t maxSize) :

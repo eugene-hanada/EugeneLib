@@ -2,7 +2,7 @@
 #include "VkResourceBindLayout.h"
 #include "VkGraphics.h"
 #include "../../../Include/Graphics/Shader.h"
-#include "../../../Include/Math/Geometry.h"
+#include "../../../Include/Math/Math.h"
 
 
 
@@ -14,7 +14,8 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	const ArgsSpan<RendertargetLayout>& rendertarges,
 	TopologyType topologyType,
 	bool isCulling,
-	bool useDepth
+	bool useDepth,
+	std::uint8_t sampleCount
 )
 {
 	auto& bindLayout{ static_cast<VkResourceBindLayout&>(resourceBindLayout) };
@@ -116,6 +117,8 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	rasterizer.setDepthBiasEnable(useDepth);
 	rasterizer.setPolygonMode(vk::PolygonMode::eFill);
 	rasterizer.setLineWidth(1.0f);
+
+
 	if (isCulling)
 	{
 		rasterizer.setCullMode(vk::CullModeFlagBits::eBack);
@@ -125,8 +128,15 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 	vk::PipelineMultisampleStateCreateInfo multiSampleInfo{};
 	multiSampleInfo.setSampleShadingEnable(false);
-	multiSampleInfo.setRasterizationSamples(vk::SampleCountFlagBits::e1);
+	if (sampleCount > 1)
+	{
+		multiSampleInfo.setRasterizationSamples(static_cast<vk::SampleCountFlagBits>(sampleCount));
+	}
+	else
+	{
 
+		multiSampleInfo.setRasterizationSamples(vk::SampleCountFlagBits::e1);
+	}
 
 	std::vector<vk::PipelineColorBlendAttachmentState> attachments{rendertarges.size()};
 	std::vector<vk::Format> attachmentsFormat(rendertarges.size());
@@ -294,6 +304,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPMultisampleState(&multiSampleInfo);
 	pipelineInfo.setPViewportState(&viewportState);
 	pipelineInfo.setPNext(&renderingInfo);
+	
 	//pipelineInfo.setRenderPass(*tmp);
 	// デプス周りとりあえずなしで実装
 	if (useDepth)

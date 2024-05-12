@@ -1,17 +1,26 @@
 ﻿#include "Xa2Sound.h"
 #include <xaudio2.h>
 #include <x3daudio.h>
-#include "../../../Include/Common/EugeneLibException.h"
-#include "Xa2Sound3DControl.h"
+#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Sound/Sound3DControl.h"
+
+#include "../../../Include/Sound/SoundControl.h"
+#include "../../../Include/Sound/SoundStreamSpeaker.h"
+
 #include "Xa2SoundSpeaker.h"
 #include "Xa2SoundControl.h"
+#include "Xa2Sound3DControl.h"
 #include "Xa2SoundStreamSpeaker.h"
+#include "../SoundStreamFile.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
-X3DAUDIO_HANDLE handle;
-
-Eugene::Xa2Sound::Xa2Sound()
+namespace
+{
+	X3DAUDIO_HANDLE handle;
+}
+Eugene::Xaudio2Sound::Xaudio2Sound():
+	Sound{}
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
@@ -24,7 +33,7 @@ Eugene::Xa2Sound::Xa2Sound()
 	debug.BreakMask = XAUDIO2_LOG_ERRORS;
 	xaudio2_->SetDebugConfiguration(&debug, 0);
 #endif
-	if (FAILED(xaudio2_->CreateMasteringVoice(&mastering_)))
+	if (FAILED(xaudio2_->CreateMasteringVoice(std::out_ptr(mastering_))))
 	{
 		throw CreateErrorException("マスタリングボイスの作成に失敗");
 	}
@@ -43,12 +52,11 @@ Eugene::Xa2Sound::Xa2Sound()
 	}
 }
 
-Eugene::Xa2Sound::~Xa2Sound()
+Eugene::Xaudio2Sound::~Xaudio2Sound()
 {
-	mastering_->DestroyVoice();
 }
 
-void Eugene::Xa2Sound::SetVolume(float volume)
+void Eugene::Xaudio2Sound::SetVolume(float volume)
 {
 	if (volume_ != volume)
 	{
@@ -57,7 +65,7 @@ void Eugene::Xa2Sound::SetVolume(float volume)
 	}
 }
 
-void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
+void Eugene::Xaudio2Sound::SetPan(std::span<float> volumes)
 {
 	if (outChannel_ == volumes.size())
 	{
@@ -65,36 +73,39 @@ void Eugene::Xa2Sound::SetPan(std::span<float> volumes)
 	}
 }
 
-Eugene::SoundSpeaker* Eugene::Xa2Sound::CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate) const
+Eugene::SoundSpeaker* Eugene::Xaudio2Sound::CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate) const
 {
-	return new Xa2SoundSpeaker{xaudio2_.Get(),soundFile, inChannel_, maxPitchRate};
+	return new Xaudio2Speaker{xaudio2_.Get(),soundFile,outChannel_,maxPitchRate};
 }
 
 
-Eugene::SoundStreamSpeaker* Eugene::Xa2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
+Eugene::SoundStreamSpeaker* Eugene::Xaudio2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
 {
-	return new Xa2SoundStreamSpeaker{xaudio2_.Get(), path, outChannel_, maxPitchRate };
+	return new Xaudio2StreamSpeaker{xaudio2_.Get(), CreateSoundStreamFile(path),outChannel_,maxPitchRate};
 }
 
-Eugene::SoundControl* Eugene::Xa2Sound::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::SoundControl* Eugene::Xaudio2Sound::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2SoundControl{
+	return new Xaudio2Control{
 		xaudio2_.Get(),
-		(sample == 0u ? sampleRate_ : sample), 
-		(inputChannel == 0u ? inChannel_ : inputChannel), 
-		(outChannel == 0u ? inChannel_ : outChannel) ,
-		stage
+		(sample == 0u ? sampleRate_ : sample),
+		stage,
+		(inputChannel == 0u ? inChannel_ : inputChannel),
+		(outChannel == 0u ? inChannel_ : outChannel) 
+		
 	};
 }
 
-Eugene::Sound3DControl* Eugene::Xa2Sound::CreateSound3DControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
+Eugene::Sound3DControl* Eugene::Xaudio2Sound::CreateSound3DControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
 {
-	return new Xa2Sound3DControl{
+	std::span<std::uint8_t, 20> h{ handle };
+	return new Xaudio23DControl{
 		xaudio2_.Get(), 
-		handle,
-		(outChannel == 0u ? inChannel_ : outChannel), 
-		(inputChannel == 0u ? inChannel_ : inputChannel),
 		(sample == 0u ? sampleRate_ : sample),
-		stage
+		stage,
+		(outChannel == 0u ?inChannel_ : outChannel),
+		(inputChannel == 0u ? inChannel_ : inputChannel),
+		h
 	};
 }
+

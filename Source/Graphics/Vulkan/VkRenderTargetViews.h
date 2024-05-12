@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/RenderTargetViews.h"
 #include <vulkan/vulkan.hpp>
-#include "../../../Include/Math/Geometry.h"
+#include "../../../Include/Math/Math.h"
 #include <optional>
 
 namespace Eugene
@@ -11,7 +11,7 @@ namespace Eugene
 	{
 	public:
 		
-		VkRenderTargetViews(std::uint64_t size);
+		VkRenderTargetViews(const vk::Device& device,std::uint64_t size);
 
 		/// <summary>
 		/// データ
@@ -26,7 +26,7 @@ namespace Eugene
 			/// <summary>
 			/// 画像サイズ
 			/// </summary>
-			glm::ivec2 size;
+			glm::ivec2 size{0,0};
 		};
 		using ViewsType = std::vector<Data>;
 	private:
@@ -38,5 +38,10 @@ namespace Eugene
 		/// ビューのデータ
 		/// </summary>
 		ViewsType imageViews_;
+
+		/// <summary>
+		/// デバイスの参照
+		/// </summary>
+		const vk::Device& device_;
 	};
 }

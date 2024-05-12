@@ -8,80 +8,31 @@
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
       "ctestCommandArgs": "",
+      "intelliSenseMode": "windows-msvc-x64",
       "variables": [
         {
-          "name": "BUILD_EXAMPLES",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_EFFEKSEER",
+          "name": "EUGENE_USE_IMGUI",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "BUILD_SAMPLE",
+          "name": "EUGENE_BUILD_SAMPLE",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "CATCH_CONFIG_NO_CPP17_STRING_VIEW",
-          "value": "false",
-          "type": "BOOL"
-        },
-        {
-          "name": "CATCH_CONFIG_CPP17_OPTIONAL",
+          "name": "EUGENE_USE_EFFEKSEER",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER",
-          "value": "false",
-          "type": "BOOL"
-        },
-        {
-          "name": "CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER",
-          "value": "false",
-          "type": "BOOL"
-        },
-        {
-          "name": "CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER",
-          "value": "false",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_CATCH2TEST",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_IMGUI",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_DX12",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_VULKAN",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_TEST",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_DOCTEST",
-          "value": "True",
-          "type": "BOOL"
+          "name": "EUGENE_EFFEKSEER_DIR",
+          "value": "C:/install_msvc2022_x64",
+          "type": "PATH"
         }
-      ],
-      "intelliSenseMode": "windows-msvc-x64"
+      ]
     },
     {
       "name": "x64-Debug-Vulkan",
@@ -93,86 +44,32 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
+      "intelliSenseMode": "windows-msvc-x64",
       "variables": [
         {
-          "name": "USE_DX12",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_VULKAN",
+          "name": "EUGENE_USE_IMGUI",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "BUILD_SAMPLE",
+          "name": "EUGENE_BUILD_SAMPLE",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "BUILD_GL",
+          "name": "EUGENE_USE_VULKAN",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "BUILD_EXAMPLE",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_EXTERNAL",
+          "name": "EUGENE_USE_EFFEKSEER",
           "value": "True",
           "type": "BOOL"
         },
         {
-          "name": "GLFW_BUILD_DOCS",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_EXAMPLES",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "ENABLE_SPVREMAPPER",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_EFFEKSEER",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_VULKAN",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "BUILD_VULKAN_COMPILER",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "SKIP_GLSLANG_INSTALL",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_XAUDIO2",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "GLSLANG_WITHOUT_INSTALL",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "USE_IMGUI",
-          "value": "True",
-          "type": "BOOL"
+          "name": "EUGENE_EFFEKSEER_DIR",
+          "value": "C:/install_vulkan_msvc2022_x64",
+          "type": "PATH"
         }
       ]
     }

@@ -28,3 +28,9 @@ void Eugene::SoundBase::SetOutput(SoundControl& output)
 {
 
 }
+
+Eugene::SoundBase::SoundBase(std::uint16_t inChannel, std::uint16_t outChannel) :
+    inChannel_{inChannel}, outChannel_{outChannel},volume_{1.0f}
+{
+
+}

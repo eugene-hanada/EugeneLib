@@ -13,7 +13,6 @@ namespace Eugene
 
 	class Wave;
 	class OggVorbis;
-	
 
 	/// <summary>
 	/// サウンド用のクラス
@@ -60,6 +59,18 @@ namespace Eugene
 		/// <returns></returns>
 		[[nodiscard]]
 		virtual Sound3DControl* CreateSound3DControl(std::uint32_t stage = 0, std::uint32_t sample = 0u, std::uint16_t inputChannel = 0u, std::uint16_t outChannel = 0u) const = 0;
+
+		/// <summary>
+		/// 全体のボリュームをセットする
+		/// </summary>
+		/// <param name="volume"> ボリューム </param>
+		//void SetVolume(float volume) final;
+
+		/// <summary>
+		/// パンニング用にボリュームをセットする
+		/// </summary>
+		/// <param name="volumes"></param>
+		//void SetPan(std::span<float> volumes) final;
 	protected:
 		Sound();
 
@@ -72,6 +83,9 @@ namespace Eugene
 		/// サンプリングレート
 		/// </summary>
 		std::uint32_t sampleRate_;
+
+		// コンストラクタアクセスのためにfriendにしてる
+		friend Sound* CreateSound(void);
 	};
 
 	/// <summary>

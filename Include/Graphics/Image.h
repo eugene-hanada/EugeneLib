@@ -2,6 +2,8 @@
 #include <filesystem>
 #include <vector>
 #include <unordered_map>
+#include <span>
+#include <functional>
 #include "GraphicsCommon.h"
 
 namespace Eugene
@@ -58,12 +60,23 @@ namespace Eugene
 		/// <returns></returns>
 		bool LoadStb(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ddsファイルを読み込む
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		bool LoadDds(const std::filesystem::path& path);
 
+
 		/// <summary>
-		/// テクスチャデータ
+		/// テクスチャデータのアクセス用(ミップマップや配列ごとにspanに分けてる)
 		/// </summary>
-		std::vector<std::vector<std::uint8_t>> data_;
+		std::vector<std::span<std::uint8_t>> data_;
+
+		/// <summary>
+		/// テクスチャデータ(ひとまとまりにしている)
+		/// </summary>
+		std::vector<std::uint8_t> baseData_;
 
 		/// <summary>
 		/// テクスチャ情報
@@ -75,4 +88,9 @@ namespace Eugene
 		/// </summary>
 		static const LoadFuncMap loadFuncMap_;
 	};
+
+	/// <summary>
+	/// フォーマットごとにサイズを計算するfunctionを返すunordered_map
+	/// </summary>
+	extern const std::unordered_map<Format, std::function<std::int32_t(std::int32_t, std::int32_t, std::int32_t)>> calcSizeMap;
 }

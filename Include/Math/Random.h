@@ -1,9 +1,13 @@
-#pragma once
+ï»¿#pragma once
 #include <random>
 #include <concepts>
+#include <algorithm>
 
 namespace Eugene
 {
+	/// <summary>
+	/// ä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³ã«å¿…è¦ãªè¦ä»¶ã®ã‚³ãƒ³ã‚»ãƒ—ãƒˆ
+	/// </summary>
 	template<class T>
 	concept RandomEngine = requires (T & e) {
 		{ e() } -> std::same_as<std::uint64_t>;
@@ -14,7 +18,7 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// 64ƒrƒbƒg”ÅxorƒVƒtƒg‚Ì—”¶¬ƒGƒ“ƒWƒ“
+	/// 65ãƒ“ãƒƒãƒˆXorã‚·ãƒ•ãƒˆã‚’ä½¿ç”¨ã—ãŸä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³
 	/// </summary>
 	class XorShift64Engine
 	{
@@ -35,6 +39,9 @@ namespace Eugene
 		std::uint64_t state_;
 	};
 
+	/// <summary>
+	/// Xoshiroã®128ãƒ“ãƒƒãƒˆã®ä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³
+	/// </summary>
 	class Xoshiro128ppEngine
 	{
 	public:
@@ -54,9 +61,9 @@ namespace Eugene
 	};
 
 	/// <summary>
-	/// —”‚ğˆµ‚¤ƒNƒ‰ƒX
+	/// ä¹±æ•°ã‚¯ãƒ©ã‚¹
 	/// </summary>
-	/// <typeparam name="R"> —”ƒGƒ“ƒWƒ“‚ÌŒ^ </typeparam>
+	/// <typeparam name="R"> ä¹±æ•°ã‚¨ãƒ³ã‚¸ãƒ³ã®å‹ </typeparam>
 	template<RandomEngine R>
 	class Random
 	{
@@ -67,9 +74,9 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// p‚ÌŠm—¦‚Åtrue‚ğ•Ô‚·
+		/// å¼•æ•°ã§æŒ‡å®šã—ãŸç¢ºç‡ã§trueã‚’è¿”ã™
 		/// </summary>
-		/// <param name="p"> true‚É‚È‚éŠm—¦ </param>
+		/// <param name="p"> trueã«ãªã‚‹ç¢ºç‡ </param>
 		/// <returns></returns>
 		bool operator()(double p) noexcept
 		{
@@ -78,12 +85,12 @@ namespace Eugene
 		}
 		
 		/// <summary>
-		/// w’è‚Ì®”’l‚Ì”ÍˆÍ‚Å’l‚ğ•Ô‚·
+		/// æŒ‡å®šã•ã‚ŒãŸæ•´æ•°ã®æœ€å°å€¤ã‹ã‚‰æœ€å¤§å€¤ãªã„ã®ãƒ©ãƒ³ãƒ€ãƒ ãªæ•´æ•°å€¤ã‚’è¿”ã™
 		/// </summary>
-		/// <typeparam name="Int"> ®”‚ÌŒ^ </typeparam>
-		/// <param name="min"> Å¬’l </param>
-		/// <param name="max"> Å‘å’l </param>
-		/// <returns> Œ‹‰Ê </returns>
+		/// <typeparam name="Int"> æ•´æ•°ã®å‹ </typeparam>
+		/// <param name="min"> æœ€å°å€¤ </param>
+		/// <param name="max"> æœ€å¤§å€¤ </param>
+		/// <returns> ãƒ©ãƒ³ãƒ€ãƒ ãªæ•´æ•°å€¤ </returns>
 		template<std::integral Int>
 		Int operator()(Int min, Int max) noexcept
 		{
@@ -92,12 +99,12 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// w’è‚Ì•‚“®¬”“_”‚Ì”ÍˆÍ‚Å’l‚ğ•Ô‚·
+		/// æŒ‡å®šã•ã‚ŒãŸæµ®å‹•å°æ•°ç‚¹æ•°ã®æœ€å°å€¤ã‹ã‚‰æœ€å¤§å€¤ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’è¿”ã™
 		/// </summary>
-		/// <typeparam name="Float"> •‚“®¬”“_”‚ÌŒ^ </typeparam>
-		/// <param name="min"> Å¬’l </param>
-		/// <param name="max"> Å‘å’l </param>
-		/// <returns> Œ‹‰Ê </returns>
+		/// <typeparam name="Float"> æµ®å‹•å°æ•°ç‚¹æ•°ã®å‹ </typeparam>
+		/// <param name="min"> æœ€å°å€¤ </param>
+		/// <param name="max"> æœ€å¤§å€¤</param>
+		/// <returns> ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ </returns>
 		template<std::floating_point Float>
 		Float operator()(Float min, Float max) noexcept
 		{
@@ -106,17 +113,26 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// w’è‚ÌŠm—¦‚ğw’è‚Ì‰ñ”s‚Á‚½ê‡‚Ì¬Œ÷”
+		/// æŒ‡å®šã—ãŸã—è©¦è¡Œå›æ•°ã¨ç¢ºç‡ã§trueã«ãªã£ãŸæ•°ã‚’è¿”ã™
 		/// </summary>
-		/// <typeparam name="Int"> ‰ñ”‚Ì®”Œ^ </typeparam>
-		/// <param name="count"> s‰ñ” </param>
-		/// <param name="p"> Šm—¦ </param>
-		/// <returns></returns>
+		/// <typeparam name="Int"> æ•´æ•°ã®å‹ </typeparam>
+		/// <param name="count"> è©¦è¡Œå›æ•° </param>
+		/// <param name="p"> ç¢ºç‡ </param>
+		/// <returns> trueã«ãªã£ãŸå›æ•° </returns>
 		template<std::integral Int>
 		Int operator()(Int count, double p) noexcept
 		{
 			std::binomial_distribution<> d(count, p);
 			return d(engine_);
+		}
+
+		/// <summary>
+		/// ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’å–å¾—ã™ã‚‹
+		/// </summary>
+		/// <returns> ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ </returns>
+		std::uint64_t operator()() noexcept
+		{
+			return engine_();
 		}
 
 	private:

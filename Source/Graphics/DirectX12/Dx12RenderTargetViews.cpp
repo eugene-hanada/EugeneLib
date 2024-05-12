@@ -23,8 +23,14 @@ void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_
 	
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_RENDER_TARGET_VIEW_DESC rtViewDesc{};
-	rtViewDesc.Format = dx12Resource->GetDesc().Format;
+	const auto& desc{ dx12Resource->GetDesc() };
+	rtViewDesc.Format = desc.Format;
 	rtViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+	if (desc.SampleDesc.Count > 1)
+	{
+		// サンプルカウントが1以上の場合はMSAAとする
+		rtViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2DMS;
+	}
 	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(static_cast<ID3D12Resource*>(resource.GetResource()), &rtViewDesc, handle);

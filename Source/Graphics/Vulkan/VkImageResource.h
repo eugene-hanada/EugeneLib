@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Graphics/ImageResource.h"
+#include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
 
 namespace Eugene
 {
@@ -15,7 +16,7 @@ namespace Eugene
 		/// <param name="graphics"> グラフィックスクラス </param>
 		/// <param name="device"> Vulkanのデバイス </param>
 		/// <param name="info"> テクスチャの情報 </param>
-		VkImageResource(const VkGraphics& graphics,const vk::Device& device, const TextureInfo& info);
+		VkImageResource(const vma::Allocator& allocator, const TextureInfo& info);
 
 		/// <summary>
 		/// デブスバッファの場合のコンストラクタ
@@ -24,7 +25,7 @@ namespace Eugene
 		/// <param name="device"></param>
 		/// <param name="size"></param>
 		/// <param name="clearValue"></param>
-		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, float clearValue);
+		VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue, std::uint8_t sampleCount);
 
 
 		/// <summary>
@@ -35,7 +36,14 @@ namespace Eugene
 		/// <param name="size"></param>
 		/// <param name="format"></param>
 		/// <param name="clearColor"></param>
-		VkImageResource(const VkGraphics& graphics, const vk::Device& device, const glm::ivec2& size, Format format);
+		VkImageResource(const vma::Allocator& allocator, 
+			const glm::ivec2& size, 
+			Format format,
+			std::uint32_t arraySize,
+			std::uint8_t mipLeveles ,
+			std::uint8_t sampleCount,
+			std::optional<std::span<float, 4>> clearColor
+		);
 
 
 		/// <summary>
@@ -51,25 +59,32 @@ namespace Eugene
 		/// </summary>
 		struct Data
 		{
+
 			/// <summary>
-			/// デバイスメモリ
+			/// アロケーターで確保したメモリ
 			/// </summary>
-			vk::UniqueDeviceMemory memory_;
+			vma::UniqueAllocation allocation_;
+
 
 			/// <summary>
 			/// Image
 			/// </summary>
-			vk::UniqueImage image_;
+			vma::UniqueImage image_;
 
 			/// <summary>
 			/// 画像配列サイズ
 			/// </summary>
-			std::uint32_t arraySize_;
+			std::uint32_t arraySize_{ 0u };
 
 			/// <summary>
 			/// ミップマップレベル
 			/// </summary>
-			std::uint32_t mipmapLevels_;
+			std::uint32_t mipmapLevels_{ 0u };
+
+			/// <summary>
+			/// 1ピクセル当たりのサイズ
+			/// </summary>
+			std::uint32_t pixelPerSize{ 0u };
 		};
 
 	private:

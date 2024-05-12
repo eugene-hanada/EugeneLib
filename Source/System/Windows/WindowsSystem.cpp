@@ -4,8 +4,8 @@
 #include <filesystem>
 #include <functional>
 #include "Dll.h"
-#include "../../../Include/Common/EugeneLibException.h"
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 #ifdef USE_VULKAN
 #include "../../Graphics/Vulkan/VkGraphics.h"
@@ -19,7 +19,6 @@
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
-#include "../../../Include/Common/Debug.h"
 
 #pragma comment(lib, "Xinput.lib")
 
@@ -40,10 +39,6 @@ namespace {
 	/// </summary>
 	HWND hwnd;
 
-	/// <summary>
-	/// 
-	/// </summary>
-	Eugene::GpuEngine* gpuEngine = nullptr;
 	
 	/// <summary>
 	/// ホイール
@@ -111,8 +106,8 @@ namespace {
 
 }
 
-Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title) :
-    System{size,title}
+Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories):
+	System{size,title,other,directories}
 {
 	resizeCall = [this](const glm::vec2& size) {
 		windowSize_ = size;
@@ -137,11 +132,11 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 	}
 
 	std::filesystem::path tmpTitle{ title };
-	windowClass.cbSize = sizeof(WNDCLASSEX);
-	windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
-	windowClass.lpszClassName = tmpTitle.c_str();
-	windowClass.hInstance = GetModuleHandle(nullptr);
-	if (!RegisterClassEx(&windowClass))
+	::windowClass.cbSize = sizeof(WNDCLASSEX);
+	::windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
+	::windowClass.lpszClassName = tmpTitle.c_str();
+	::windowClass.hInstance = GetModuleHandle(nullptr);
+	if (!RegisterClassEx(&::windowClass))
 	{
 		throw CreateErrorException("ウィンドウクラスの登録に失敗");
 	}
@@ -156,7 +151,7 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 
 	// ウィンドウの生成
 	hwnd = CreateWindow(
-		windowClass.lpszClassName,
+		::windowClass.lpszClassName,
 		tmpTitle.c_str(),
 		style,			// タイトルバーと境界線のあるウィンドウ
 		CW_USEDEFAULT,					// OSに任せる
@@ -220,7 +215,7 @@ Eugene::WindowsSystem::~WindowsSystem()
 
 std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
 {
-	if (graphics)
+	if (graphics && gpuEngine)
 	{
 		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
 	}
@@ -345,6 +340,11 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 	pad.rightThumb_.y = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
 
 	return true;
+}
+
+bool Eugene::WindowsSystem::GetTouch(TouchData& pressed, TouchData& hold, TouchData& released) const
+{
+	return false;
 }
 
 bool Eugene::WindowsSystem::IsEnd(void) const

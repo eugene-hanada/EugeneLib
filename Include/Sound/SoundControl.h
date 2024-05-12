@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "SoundBase.h"
+#include <memory>
 
 namespace Eugene
 {
@@ -11,7 +12,12 @@ namespace Eugene
 	{
 	public:
 		virtual void* Get(void) = 0;
-	private:
+		virtual void SetVolume(float volume) = 0;
+		virtual void SetPan(std::span<float> volumes) = 0;
+		virtual void SetOutput(SoundControl& control) = 0;
+	protected:
+		SoundControl(std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
+		friend class Sound;
 	};
 
 }

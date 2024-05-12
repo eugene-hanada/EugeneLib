@@ -1,10 +1,12 @@
 ﻿#pragma once
 #include "SoundBase.h"
+#include <memory>
 
 namespace Eugene
 {
 	class Wave;
 	class SoundControl;
+	class SoundFile;
 
 	/// <summary>
 	/// サウンドを再生するクラス
@@ -46,18 +48,22 @@ namespace Eugene
 		/// </summary>
 		/// <param name="ptr"></param>
 		/// <param name="size"></param>
-		virtual void SetData(const std::uint8_t* ptr, const std::uint64_t size) {};
-	protected:
+		virtual void SetData(const std::uint8_t* ptr, const std::uint64_t size) = 0;
 
+	protected:
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="maxPitchRate"> 最大ピッチレート </param>
-		SoundSpeaker(const float maxPitchRate);
-		
+		SoundSpeaker(std::uint16_t inChannel, std::uint16_t outChannel,const float maxPitchRate);
+
 		/// <summary>
 		/// 最大ビッチレート
 		/// </summary>
 		const float maxPitchRate_;
+
+
+		// コンストラクタ公開のためfriend指定(生成時がSoundクラス依存なので致し方ない)
+		friend class Sound;
 	};
 }

@@ -21,5 +21,10 @@ namespace Eugene
 		/// ImageViewsのstd::vector
 		/// </summary>
 		std::vector<vk::UniqueImageView> imageViews_;
+
+		/// <summary>
+		/// デバイスの参照
+		/// </summary>
+		const vk::Device& device_;
 	};
 }

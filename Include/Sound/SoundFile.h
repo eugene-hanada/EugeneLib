@@ -1,12 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 #include <filesystem>
+#include <vector>
+#include <bit>
 #include "SoundCommon.h"
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş‚½‚ß‚ÌƒNƒ‰ƒX
+	/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 	/// </summary>
 	class SoundFile
 	{
@@ -22,55 +24,65 @@ namespace Eugene
 		};
 
 		SoundFile(const std::filesystem::path& path);
-		SoundFile(SoundFile&& soundFile);
+		SoundFile(SoundFile&& soundFile) noexcept;
 
 		SoundFile& operator=(SoundFile&& soundFile);
 
 		/// <summary>
-		/// ƒf[ƒ^‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾‚·‚é
+		/// ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint8_t* GetDataPtr(void) const noexcept;
 
 		/// <summary>
-		/// ƒf[ƒ^‚ÌƒoƒCƒg”‚ğæ“¾‚·‚é
+		/// ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const std::uint64_t GetDataSize(void) const noexcept;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚Ìæ“¾
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormat& GetFormat(void) const noexcept;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚ÌŠg’£ƒf[ƒ^‚ğæ“¾
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ‹¡å¼µéƒ¨åˆ†ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormatEx& GetFormatExt(void) const noexcept;
 	protected:
 
+		/// <summary>
+		/// waveãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+		/// </summary>
+		/// <param name="path"> ãƒ‘ã‚¹ </param>
+		/// <returns> æˆåŠŸæ™‚trueã€å¤±æ•—æ™‚false </returns>
 		bool LoadWave(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ogg vorbisãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+		/// </summary>
+		/// <param name="path"> ãƒ‘ã‚¹ </param>
+		/// <returns> æˆåŠŸæ™‚trueã€å¤±æ•—æ™‚false </returns>
 		bool LoadOggVorbis(const std::filesystem::path& path);
 
 		/// <summary>
-		/// ƒf[ƒ^•”
+		/// ãƒ‡ãƒ¼ã‚¿
 		/// </summary>
 		std::vector<std::uint8_t> data_;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		/// </summary>
 		SoundFormat format_;
 
 		/// <summary>
-		/// Šg’£ƒf[ƒ^•”•ª
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ‹¡å¼µéƒ¨åˆ†
 		/// </summary>
 		SoundFormatEx ex_;
 	};

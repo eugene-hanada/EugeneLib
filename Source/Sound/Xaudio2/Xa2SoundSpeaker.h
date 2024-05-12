@@ -1,23 +1,19 @@
 ﻿#pragma once
 #include "../../../Include/Sound/SoundSpeaker.h"
+#include <xaudio2.h>
 #include <memory>
 
-struct IXAudio2SourceVoice;
-struct IXAudio2;
-struct XAUDIO2_BUFFER;
 
 namespace Eugene
 {
 	class SoundFile;
-	class Xa2SoundSpeaker :
+	class Xaudio2Speaker : 
 		public SoundSpeaker
 	{
 	public:
-	/*	Xa2SoundSpeaker(IXAudio2* xaudio2,const Wave& wave, std::uint16_t outChannel, const float maxPitchRate);
-		Xa2SoundSpeaker(IXAudio2* xaudio2, const OggVorbis& ogg, std::uint16_t outChannel, const float maxPitchRate);*/
-		Xa2SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate);
-		~Xa2SoundSpeaker();
-	private:
+		Xaudio2Speaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate);
+		~Xaudio2Speaker();
+	
 		void Play(int loopCount = 0) final;
 		void Stop(void) final;
 		bool IsEnd(void) const final;
@@ -31,7 +27,18 @@ namespace Eugene
 
 		void SetData(const std::uint8_t* ptr, const std::uint64_t size) final;
 
-		IXAudio2SourceVoice* source_;
+	private:
+		
+
+		struct SourceVoiceDeleter
+		{
+			void operator()(IXAudio2SourceVoice* voice)
+			{
+				voice->DestroyVoice();
+			}
+		};
+
+		std::unique_ptr<IXAudio2SourceVoice, SourceVoiceDeleter> source_;
 		std::unique_ptr<XAUDIO2_BUFFER> buffer_;
 	};
 }

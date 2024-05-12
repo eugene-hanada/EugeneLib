@@ -86,6 +86,24 @@ namespace Eugene
 	private:
 	};
 
+	struct TouchData
+	{
+	public:
+		struct Touch
+		{
+			Touch();
+			glm::vec2 pos;
+			float nowTime;
+			float downTime;
+		};
+
+		TouchData();
+
+		std::uint32_t touchCount_;
+		std::array<Touch, 8> touchList_;
+	private:
+	};
+
 	using UniqueGraphics = std::unique_ptr<Graphics>;
 	using UniqueGpuEngine = std::unique_ptr<GpuEngine>;
 
@@ -141,7 +159,7 @@ namespace Eugene
 		virtual std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const = 0;
 
 		[[nodiscard]]
-		virtual std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
+		std::pair<UniqueGraphics, UniqueGpuEngine> CreateGraphicsUnique(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const;
 
 		/// <summary>
 		/// マウスの情報を取得する
@@ -185,6 +203,15 @@ namespace Eugene
 		/// <param name="idx"></param>
 		/// <returns></returns>
 		virtual bool GetGamePad(GamePad& pad, std::uint32_t idx) const;
+
+		/// <summary>
+		/// タッチ状態を取得する
+		/// </summary>
+		/// <param name="pressed"> タッチした瞬間のもの </param>
+		/// <param name="move"> タッチした状態で移動した時のもの </param>
+		/// <param name="released"> タッチを話した瞬間のもの </param>
+		/// <returns></returns>
+		virtual bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
 
 		/// <summary>
 		/// 終了するか？
@@ -237,19 +264,11 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> ウィンドウサイズ </param>
 		/// <param name="title"> ウィンドウタイトル </param>
-		System(const glm::vec2& size, const std::u8string& title);
-		
-		/// <summary>
-		/// ウィンドウをリサイズ時のサブクラスがわの処理
-		/// </summary>
-		/// <param name="size"> ウインドウサイズ </param>
-		virtual void OnResizeWindow(const glm::vec2& size);
+		System(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {});
 
-		/// <summary>
-		/// フルスクリーンフラグセット時のサブクラスの処理
-		/// </summary>
-		/// <param name="isFullScreen"></param>
-		virtual void OnSetFullScreen(bool isFullScreen);
+		virtual void OnSetFullScreen(bool isFullscreen) = 0;
+
+		virtual void OnResizeWindow(const glm::vec2& size) = 0;
 
 		/// <summary>
 		/// ウィンドウサイズ
@@ -266,6 +285,11 @@ namespace Eugene
 		/// </summary>
 		static Eugene::Graphics* graphics;
 
+        /// <summary>
+        /// リサイズように使用
+        /// </summary>
+        static GpuEngine* gpuEngine;
+
 		/// <summary>
 		/// 最大ウィンドウサイズ
 		/// </summary>
@@ -281,6 +305,8 @@ namespace Eugene
 	private:
 		System(const System&) = delete;
 		System& operator=(const System&) = delete;
+
+		friend System* CreateSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories);
 	};
 
 	/// <summary>
@@ -290,7 +316,7 @@ namespace Eugene
 	/// <param name="title"> タイトル </param>
 	/// <returns></returns>
 	[[nodiscard]]
-	System* CreateSystem(const glm::vec2& size, const std::u8string& title);
+	System* CreateSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0,std::span<std::string_view> directories = {});
 
 	using UniqueSystem = std::unique_ptr<System>;
 
@@ -300,7 +326,7 @@ namespace Eugene
 	/// <param name="size"> ウィンドウサイズ </param>
 	/// <param name="title"> タイトル </param>
 	/// <returns> std::unique_ptrを使用したSystem </returns>
-	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title);
+	UniqueSystem CreateSystemUnique(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0,std::span<std::string_view> directories = {});
 
 	
 }

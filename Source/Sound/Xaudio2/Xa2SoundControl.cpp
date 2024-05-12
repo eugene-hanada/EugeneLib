@@ -1,38 +1,39 @@
 ﻿#include "Xa2SoundControl.h"
 #include <xaudio2.h>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
-Eugene::Xa2SoundControl::Xa2SoundControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel, std::uint32_t stage)
+Eugene::Xaudio2Control::Xaudio2Control(IXAudio2* xaudio2,std::uint32_t sample, std::uint32_t stage, std::uint16_t inChannel, std::uint16_t outChannel):
+	SoundControl{sample,inChannel,outChannel,stage}
 {
-
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inputChannel, sample, XAUDIO2_VOICE_USEFILTER, stage)))
+	if (FAILED(xaudio2->CreateSubmixVoice(std::out_ptr(submix_), inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
 		throw CreateErrorException("サブミックスボイスの作成に失敗");
 	}
-
-	inChannel_ = inputChannel;
-	outChannel_ = outChannel;
 }
 
-Eugene::Xa2SoundControl::~Xa2SoundControl()
+Eugene::Xaudio2Control::~Xaudio2Control()
 {
-	submix_->DestroyVoice();
 }
 
-void* Eugene::Xa2SoundControl::Get(void)
+void* Eugene::Xaudio2Control::Xaudio2Control::Get(void)
 {
-	return submix_;
+	return submix_.get();
 }
 
-void Eugene::Xa2SoundControl::SetPan(std::span<float> volumes)
+void Eugene::Xaudio2Control::Xaudio2Control::SetOutChannel(std::uint16_t channel)
 {
-	if ((inChannel_ * outChannel_) + inChannel_  >= volumes.size())
+	outChannel_ = channel;
+}
+
+void Eugene::Xaudio2Control::Xaudio2Control::SetPan(std::span<float> volumes)
+{
+	if ((inChannel_ * outChannel_) <= volumes.size())
 	{
 		submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
 	}
 }
 
-void Eugene::Xa2SoundControl::SetVolume(float volume)
+void Eugene::Xaudio2Control::Xaudio2Control::SetVolume(float volume)
 {
 	if (volume  != volume_)
 	{
@@ -41,10 +42,10 @@ void Eugene::Xa2SoundControl::SetVolume(float volume)
 	}
 }
 
-void Eugene::Xa2SoundControl::SetOutput(SoundControl& control)
+void Eugene::Xaudio2Control::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
-	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	submix_->SetOutputVoices(&sends);

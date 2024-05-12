@@ -24,7 +24,7 @@ cbuffer TextureMat : register(b1)
 VertexOutput main(VertexInput input)
 {
 	VertexOutput output;
-	float4 pos = mul(texMat, input.pos);
+    float4 pos = mul(texMat, input.pos);
     output.svPos = mul(rtMat, pos);
 	output.uv = input.uv;
 	return output;

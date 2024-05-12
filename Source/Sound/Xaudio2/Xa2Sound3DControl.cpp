@@ -4,28 +4,24 @@
 #include <x3daudio.h>
 #include <vector>
 #include <cmath>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
+#include "Xa2SoundControl.h"
 
 
-Eugene::Xa2Sound3DControl::Xa2Sound3DControl(IXAudio2* xaudio2, std::span<std::uint8_t, 20> handle, std::uint16_t outChannel, std::uint16_t inChannel, std::uint32_t sample, std::uint32_t stage) :
-	handle_{handle}
+Eugene::Xaudio23DControl::Xaudio23DControl(IXAudio2* xaudio2, std::uint32_t sample, std::uint32_t stage, std::uint16_t inChannel, std::uint16_t outChannel,std::span<std::uint8_t, 20> handle) :
+	Sound3DControl{sample, inChannel,outChannel,stage}, handle_{handle}
 {
-	inChannel_ = inChannel;
-	outChannel_ = outChannel;
-	if (FAILED(xaudio2->CreateSubmixVoice(&submix_, inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
+	if (FAILED(xaudio2->CreateSubmixVoice(std::out_ptr(submix_), inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw CreateErrorException("3D用サブミックスボイスの作成");
+		throw CreateErrorException("サブミックスボイスの作成に失敗");
 	}
-
-
 }
 
-Eugene::Xa2Sound3DControl::~Xa2Sound3DControl()
+Eugene::Xaudio23DControl::~Xaudio23DControl()
 {
-	submix_->DestroyVoice();
 }
 
-void Eugene::Xa2Sound3DControl::Set3DSound(
+void Eugene::Xaudio23DControl::Set3DSound(
 	const glm::vec3& listenerFront, const glm::vec3& listenerTop, const glm::vec3& listenerPos, const glm::vec3& listenerVeclocity,
 	const glm::vec3& emitterFront, const glm::vec3& emitterTop, const glm::vec3& emitterPos, const glm::vec3& emitterVelocity)
 {
@@ -67,25 +63,33 @@ void Eugene::Xa2Sound3DControl::Set3DSound(
 
 }
 
-void Eugene::Xa2Sound3DControl::SetVolume(float volume)
+void* Eugene::Xaudio23DControl::Get(void)
+{
+	return submix_.get();
+}
+
+void Eugene::Xaudio23DControl::SetVolume(float volume)
 {
 	if (volume != volume_)
 	{
-		volume_ = volume;
 		submix_->SetVolume(volume * volume);
+		volume_ = volume;
 	}
 }
 
-void Eugene::Xa2Sound3DControl::SetOutput(SoundControl& control)
+void Eugene::Xaudio23DControl::SetPan(std::span<float> volumes)
+{
+	if ((inChannel_ * outChannel_) <= volumes.size())
+	{
+		submix_->SetOutputMatrix(nullptr, inChannel_, outChannel_, volumes.data());
+	}
+}
+
+void Eugene::Xaudio23DControl::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
-	auto ptr = static_cast<IXAudio2SubmixVoice*>(control.Get());
+	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
 	submix_->SetOutputVoices(&sends);
-}
-
-void* Eugene::Xa2Sound3DControl::Get(void)
-{
-	return submix_;
 }

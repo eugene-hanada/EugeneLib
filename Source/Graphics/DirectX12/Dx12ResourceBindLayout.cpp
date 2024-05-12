@@ -1,7 +1,7 @@
 #include "Dx12ResourceBindLayout.h"
 #include <vector>
 #include "../../../Include/ThirdParty/d3dx12.h"
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 
 
 Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes)

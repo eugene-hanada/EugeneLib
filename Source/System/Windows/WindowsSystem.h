@@ -9,10 +9,9 @@ namespace Eugene
 		public System
 	{
 	public:
-		WindowsSystem(const glm::vec2& size, const std::u8string& title);
+		WindowsSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories ={});
 		~WindowsSystem();
-		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum = 2, std::uint64_t maxSize = 100) const final;
-	private:
+		std::pair<Graphics*, GpuEngine*> CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const final ;
 		bool Update(void) final;
 		bool GetMouse(Mouse& outMouse) const& final;
 		bool SetMouse(Mouse& outMouse) const final;
@@ -20,14 +19,16 @@ namespace Eugene
 		bool GetKeyData(KeyDataSpan keyData) const final;
 		bool SetKeyCodeTable(KeyCodeTable& keyCodeTable) final;
 		bool GetGamePad(GamePad& pad, std::uint32_t idx) const final;
+		bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const final;
 		bool IsEnd(void) const final;
 		void OnResizeWindow(const glm::vec2& size) final;
 		void OnSetFullScreen(bool isFullScreen) final;
-		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const final;
+		DynamicLibrary* CreateDynamicLibrary(const std::filesystem::path& path) const ;
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const final;
 #endif
-
+	private:
+		
 		/// <summary>
 		/// キーコードのテーブル
 		/// </summary>

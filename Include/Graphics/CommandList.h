@@ -201,6 +201,13 @@ namespace Eugene
 		/// <param name="src"></param>
 		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) = 0;
 
+		/// <summary>
+		/// MSAAのソースをResolveして結果を書き込みます
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="src"></param>
+		virtual void Resolve(ImageResource& dest, ImageResource& src) = 0;
+
 		virtual void* GetCommandList(void) = 0;
 
 #ifdef USE_IMGUI

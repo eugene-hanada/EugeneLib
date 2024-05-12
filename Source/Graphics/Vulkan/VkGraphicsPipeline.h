@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../../Include/Graphics/GraphicsPipeline.h"
 #include <vulkan/vulkan.hpp>
-#include "../../../Include/Common/ArgsSpan.h"
+#include "../../../Include/Utils//ArgsSpan.h"
 
 namespace Eugene
 {
@@ -17,7 +17,9 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
-			bool useDepth);
+			bool useDepth,
+			std::uint8_t sampleCount
+		);
 
 		struct Data
 		{

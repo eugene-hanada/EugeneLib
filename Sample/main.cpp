@@ -1,10 +1,8 @@
 ﻿#include <Windows.h>
 #include <EugeneLib.h>
-#include <Math/Geometry.h>
 #include <memory>
 #include <vector>
-#include <initializer_list>
-#include <Common/ArgsSpan.h>
+
 
 #include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
 #include <ThirdParty/glm/glm/gtx/transform.hpp>
@@ -24,8 +22,10 @@
 #include <ImGuizmo.h>
 #endif
 
+#include <Debug/Debug.h>
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
-{
+{	
 	// システム(osとかの)処理をするクラス
 	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 
@@ -148,18 +148,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// サウンド
 	auto sound = Eugene::CreateSoundUnique();
-	auto soundFile{ Eugene::SoundFile("./exp.wav") };
+	auto soundFile{ Eugene::SoundFile("./Walk.wav") };
 	std::unique_ptr<Eugene::SoundControl> soundCtrl{ sound->CreateSoundControl(0,soundFile.GetFormat().sample, 2) };
 	std::unique_ptr<Eugene::SoundSpeaker> speaker{sound->CreateSoundSpeaker(soundFile)};
-	speaker->SetOutput(*soundCtrl);
-	float panValue = 0.0f;
 	speaker->SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
+
+	std::unique_ptr<Eugene::SoundStreamSpeaker> streamSound{ sound->CreateSoundStreamSpeaker("./test.wav")};
+	streamSound->Play();
+
+	speaker->SetVolume(0.5f);
 	speaker->Play();
+	//speaker->SetOutput(*soundCtrl);
+	float panValue = 0.0f;
+	
 
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::Enable(true);
+	//io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	
 #ifdef USE_EFFEKSEER
 	std::unique_ptr<Eugene::EffekseerWarpper> effekseer;
@@ -175,10 +182,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	auto cameraProjection{ glm::perspectiveRH(glm::radians(90.0f), 1280.0f / 720.0f, 1.0f, 500.0f) };
 	auto objectTransform{ glm::scale(glm::identity<glm::mat4>(),{1.0f,1.0f,1.0f})};
 	auto identity = glm::identity<glm::mat4>();
-	
-
+	//DebugIO.OpenConsole();
+	auto a = fmt::format("Log{}", 114514);
+	DebugIO.Error("Log{0:}",114514);
+	std::chrono::system_clock::time_point startTime, endTime;
+	float delta = 0.0f;
+	float pan[] = {0.5f,0.5f};
+	speaker->SetPan(pan);
 	while (system->Update())
 	{
+		startTime = std::chrono::system_clock::now();
 		auto nowWindowSize{ system->GetWindowSize() };
 		*rtMatrix = glm::ortho(0.0f, nowWindowSize.x, nowWindowSize.y, 0.0f);
 
@@ -199,6 +212,36 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 		}
 		ImGui::End();
+
+		ImGui::Begin("Log");
+		{
+			ImGui::Text("Delta=%f", delta);
+			ImGui::Text("FPS=%f", 1.0f / delta);
+
+			const auto info = graphics->GetGpuMemoryInfo();
+
+			ImGui::Text("LocalMemory=%f/%f",info.first.usage / static_cast<float>(std::giga::num), info.first.budget / static_cast<float>(std::giga::num));
+			ImGui::Text("SharedMemory=%f/%f", info.second.usage / static_cast<float>(std::giga::num), info.second.budget / static_cast<float>(std::giga::num));
+			auto size = ImVec2{ ImGui::GetWindowWidth() - 50, ImGui::GetWindowHeight() };
+			
+			if (ImGui::Button(reinterpret_cast<const char*>(u8"クリア")))
+			{
+				DebugIO.ClearBuffer();
+			}
+			if (ImGui::Button(reinterpret_cast<const char*>(u8"デルタタイムをログ出力")))
+			{
+				DebugIO.LogDebug("Delta={}", delta);
+			}
+			auto text = DebugIO.GetBuffer_View();
+			ImGui::BeginChild(ImGui::GetID((void*)0), size);
+			if (text.length() > 0)
+			{
+				ImGui::Text(text.data());
+			}
+			ImGui::EndChild();
+		}
+		ImGui::End();
+
 
 #ifdef USE_EFFEKSEER
 		ImGui::Begin("Effect");
@@ -233,12 +276,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			}
 
 			
-			if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
-			{
-				auto rate = (panValue + 1.0f) /2.0f;
-				float pan[]{ 1.0f - rate,rate };
-				speaker->SetPan(pan);
-			}
+			//if (ImGui::SliderFloat("Pan", &panValue, -1.0f, 1.0f))
+			//{
+			//	//auto rate = (panValue + 1.0f) /2.0f;
+			//	//pan[0] = 1.0f - rate; 
+			//	//pan[1] = rate;
+			//	//speaker->SetPan(pan);
+			//}
 		}
 		ImGui::End();
 
@@ -349,7 +393,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 		graphics->Present();
+
+		endTime = std::chrono::system_clock::now();
+		delta = std::chrono::duration<float, std::chrono::seconds::period>(endTime - startTime).count();
 	}
+
+	//texMatrixBuffer->UnMap();
+	//rtMatrixBuffer->UnMap();
 	ImGuizmo::Enable(true);
 	return 0;
 }

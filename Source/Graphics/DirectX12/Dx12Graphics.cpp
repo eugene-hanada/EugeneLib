@@ -1,10 +1,11 @@
 ﻿#include "Dx12Graphics.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
+#include <D3D12MemAlloc.h>
 #include <list>
 #include <string>
 #include <cassert>
-#include "../../../Include/Common/EugeneLibException.h"
+#include "../../../Include/Utils/EugeneLibException.h"
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
 #include "Dx12GraphicsPipeline.h"
@@ -35,7 +36,7 @@
 
 #endif
 
-#include "../../../Include/Common/Debug.h"
+#include "../../../Include/Debug/Debug.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -126,6 +127,20 @@ Eugene::Dx12Graphics::Dx12Graphics(HWND& hwnd, const glm::vec2& size, GpuEngine*
 	CreateSwapChain(hwnd, size,gpuEngine, bufferNum, maxNum);
 	CreateBackBuffers(bufferNum);
 
+	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS f;
+	f.Format = static_cast<DXGI_FORMAT>(FormatToDxgiFormat_.at(static_cast<std::size_t>(backBufferFormat_)));
+	f.SampleCount = 1;
+
+	while (SUCCEEDED(device_->CheckFeatureSupport(
+		D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
+		&f,
+		sizeof(f))))
+	{
+		
+		f.SampleCount++;
+	}
+	multiSampleCount_ = f.SampleCount - 1;
+
 #ifdef USE_IMGUI
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
 	if (FAILED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))))
@@ -167,36 +182,41 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(), size};
+	return new Dx12UploadableBufferResource{allocator_.Get(), size};
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size) const
 {
-	return new Dx12BufferResource{ device_.Get(),size};
+	return new Dx12BufferResource{ allocator_.Get(),size};
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(), texture};
+	return new Dx12UploadableBufferResource{device_.Get(),allocator_.Get(), texture};
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureInfo& formatData) const
 {
-	return new Dx12ImageResource{device_.Get(),formatData};
+	return new Dx12ImageResource{allocator_.Get(),formatData};
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor)
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(
+	const glm::ivec2& size, Format format,
+	std::uint32_t arraySize,
+	std::uint8_t mipLeveles,
+	std::uint8_t sampleCount,
+	std::optional<std::span<float, 4>> clearColor)
 {
 	if (format == Format::AUTO_BACKBUFFER)
 	{
 		format = backBufferFormat_;
 	}
-	return new Dx12ImageResource{ device_.Get(),size,format, clearColor };
+	return new Dx12ImageResource{ allocator_.Get(),size,format, arraySize, mipLeveles, sampleCount,clearColor };
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear) const
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount ) const
 {
-	return new Dx12ImageResource{device_.Get(), size, Format::R32_TYPELESS,clear};
+	return new Dx12ImageResource{allocator_.Get(), size, Format::R32_TYPELESS,clear,sampleCount};
 }
 
 
@@ -265,6 +285,13 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 	{
 		if (SUCCEEDED(D3D12CreateDevice(tmpAdapter, level, IID_PPV_ARGS(device_.ReleaseAndGetAddressOf()))))
 		{
+			D3D12MA::ALLOCATOR_DESC allocatorDesc{};
+			allocatorDesc.pAdapter = tmpAdapter;
+			allocatorDesc.pDevice = device_.Get();
+			if (FAILED(D3D12MA::CreateAllocator(&allocatorDesc, allocator_.ReleaseAndGetAddressOf())))
+			{
+				throw CreateErrorException("D3D12MAのアロケーター生成失敗");
+			}
 			return;
 		}
 	}
@@ -373,7 +400,7 @@ Eugene::Sampler* Eugene::Dx12Graphics::CreateSampler(const SamplerLayout& layout
 
 
 
-void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size)
+void Eugene::Dx12Graphics::ResizeBackBuffer(const glm::vec2& size,void* window)
 {
 	for (auto& buffer : buffers_)
 	{
@@ -403,9 +430,18 @@ Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const
 	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
+	ResourceBindLayout& resourceBindLayout,
+	const ArgsSpan<ShaderInputLayout>& layout, 
+	const ArgsSpan<ShaderPair>& shaders,
+	const ArgsSpan<RendertargetLayout>& rendertarges,
+	TopologyType topologyType,
+	bool isCulling,
+	bool useDepth,
+	std::uint8_t sampleCount 
+) const
 {
-	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
+	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
 }
 
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
@@ -426,6 +462,13 @@ Eugene::SamplerViews* Eugene::Dx12Graphics::CreateSamplerViews(const ArgsSpan<Bi
 		num += viewTypes.at(i).viewNum_;
 	}
 	return new Dx12SamplerViews{device_.Get(),num};
+}
+
+std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::Dx12Graphics::GetGpuMemoryInfo(void) const
+{
+	D3D12MA::Budget local, sys;
+	allocator_->GetBudget(&local, &sys);
+	return { {local.UsageBytes,local.BudgetBytes},{sys.UsageBytes,sys.BudgetBytes} };
 }
 
 #ifdef USE_IMGUI

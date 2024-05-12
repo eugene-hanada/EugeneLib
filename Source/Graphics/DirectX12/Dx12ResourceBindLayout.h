@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Include/Graphics/ResourceBindLayout.h"
-#include "../../../Include/Common/ArgsSpan.h"
+#include "../../../Include/Utils/ArgsSpan.h"
 #include <wrl.h>
 
 struct ID3D12RootSignature;

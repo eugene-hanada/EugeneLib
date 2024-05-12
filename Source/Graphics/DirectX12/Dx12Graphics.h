@@ -44,9 +44,13 @@ namespace Eugene
 
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
-		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor, std::uint8_t sampleCount = 1) final;
+		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, 
+			std::uint32_t arraySize = 1,
+			std::uint8_t mipLeveles = 1,
+			std::uint8_t sampleCount = 1,
+			std::optional<std::span<float, 4>> clearColor = std::nullopt) final;
 
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount = 1) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const final;
 
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
 

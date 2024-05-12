@@ -200,13 +200,18 @@ Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureIn
 	return new Dx12ImageResource{allocator_.Get(),formatData};
 }
 
-Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor, std::uint8_t sampleCount)
+Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(
+	const glm::ivec2& size, Format format,
+	std::uint32_t arraySize,
+	std::uint8_t mipLeveles,
+	std::uint8_t sampleCount,
+	std::optional<std::span<float, 4>> clearColor)
 {
 	if (format == Format::AUTO_BACKBUFFER)
 	{
 		format = backBufferFormat_;
 	}
-	return new Dx12ImageResource{ allocator_.Get(),size,format, clearColor,sampleCount };
+	return new Dx12ImageResource{ allocator_.Get(),size,format, arraySize, mipLeveles, sampleCount,clearColor };
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount ) const

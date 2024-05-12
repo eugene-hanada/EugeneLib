@@ -292,6 +292,7 @@ void Eugene::Dx12Graphics::CreateDevice(void)
 			{
 				throw CreateErrorException("D3D12MAのアロケーター生成失敗");
 			}
+			tmpAdapter->Release();
 			return;
 		}
 	}

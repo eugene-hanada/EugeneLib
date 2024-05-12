@@ -744,7 +744,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		//VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
 		//VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
-
+		
 #ifdef USE_WINDOWS
 		VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME
 #endif
@@ -787,9 +787,18 @@ void Eugene::VkGraphics::SetUpVma(void)
     allocator_ = vma::createAllocatorUnique(allocatorInfo);
 }
 
-Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
+	ResourceBindLayout& resourceBindLayout,
+	const ArgsSpan<ShaderInputLayout>& layout,
+	const ArgsSpan<ShaderPair>& shaders,
+	const ArgsSpan<RendertargetLayout>& rendertarges, 
+	TopologyType topologyType, 
+	bool isCulling,
+	bool useDepth,
+	std::uint8_t sampleCount
+) const
 {
-	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
+	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount};
 }
 
 Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const

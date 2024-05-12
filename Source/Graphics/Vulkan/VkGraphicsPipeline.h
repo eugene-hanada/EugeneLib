@@ -17,7 +17,9 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
-			bool useDepth);
+			bool useDepth,
+			std::uint8_t sampleCount
+		);
 
 		struct Data
 		{

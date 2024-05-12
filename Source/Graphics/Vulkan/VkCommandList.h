@@ -51,6 +51,7 @@ namespace Eugene
 		void TransitionDepthEnd(ImageResource& resource) final;
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 		void CopyBuffer(BufferResource& dest, BufferResource& src) final;
+		void Resolve(ImageResource& dest, ImageResource& src) final;
 		void* GetCommandList(void) final;
 
 

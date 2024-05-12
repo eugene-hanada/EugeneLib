@@ -9,7 +9,7 @@ namespace Eugene
 	concept ValueC = std::integral<T> || std::floating_point<T>;
 
 	template<class T>
-	concept IntegerByte1 = std::same_as<T, std::uint8_t> || std::same_as<T, std::int8_t> || std::same_as<T, char8_t>;
+	concept IntegerByte1 = std::same_as<T, std::uint8_t> || std::same_as<T, std::int8_t> || std::same_as<T, char8_t> || std::same_as<T, char>;
 
 	template<class T>
 	concept IntegerByte2 = std::same_as<T, std::uint16_t> || std::same_as<T, std::int16_t> || std::same_as<T, char16_t> || std::same_as<T, wchar_t>;

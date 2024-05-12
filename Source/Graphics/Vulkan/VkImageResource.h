@@ -25,7 +25,7 @@ namespace Eugene
 		/// <param name="device"></param>
 		/// <param name="size"></param>
 		/// <param name="clearValue"></param>
-		VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue);
+		VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue, std::uint8_t sampleCount);
 
 
 		/// <summary>
@@ -36,7 +36,14 @@ namespace Eugene
 		/// <param name="size"></param>
 		/// <param name="format"></param>
 		/// <param name="clearColor"></param>
-		VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, Format format);
+		VkImageResource(const vma::Allocator& allocator, 
+			const glm::ivec2& size, 
+			Format format,
+			std::uint32_t arraySize,
+			std::uint8_t mipLeveles ,
+			std::uint8_t sampleCount,
+			std::optional<std::span<float, 4>> clearColor
+		);
 
 
 		/// <summary>

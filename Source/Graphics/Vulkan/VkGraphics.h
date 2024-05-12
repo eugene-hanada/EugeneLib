@@ -163,7 +163,15 @@ namespace Eugene
 		BufferResource* CreateBufferResource(std::uint64_t size) const final;
 		BufferResource* CreateBufferResource(Image& texture) const final;
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
-		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> color) final;
+
+		ImageResource* CreateImageResource(
+			const glm::ivec2& size,
+			Format format, 
+			std::uint32_t arraySize = 1,
+			std::uint8_t mipLeveles = 1,
+			std::uint8_t sampleCount = 1,
+			std::optional<std::span<float, 4>> clearColor = std::nullopt
+			) final;
 		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
 		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
 		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
@@ -179,7 +187,7 @@ namespace Eugene
 		void SetFullScreenFlag(bool isFullScreen) final;
 		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const final;
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear) const final;
+		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const final;
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 		void CreateInstance(void);
 		void CreateDevice(void);

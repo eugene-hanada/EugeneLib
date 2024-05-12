@@ -32,7 +32,7 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
 
-Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue) :
+Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, float clearValue,  std::uint8_t sampleCount) :
 	ImageResource{Format::D32_FLOAT}
 {
 	constexpr auto format{ vk::Format::eD32Sfloat };
@@ -47,7 +47,7 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eDepthStencilAttachment);
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
-	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
+	imageInfo.setSamples(static_cast<vk::SampleCountFlagBits>(sampleCount));
 	imageInfo.setFormat(format);
 
 	vma::AllocationCreateInfo allocInfo{};
@@ -63,21 +63,29 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 	size_ = size;
 }
 
-Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const glm::ivec2& size, Format format) :
+Eugene::VkImageResource::VkImageResource(
+	const vma::Allocator& allocator, 
+	const glm::ivec2& size,
+	Format format,
+	std::uint32_t arraySize,
+	std::uint8_t mipLeveles,
+	std::uint8_t sampleCount,
+	std::optional<std::span<float, 4>> clearColor
+) :
 	ImageResource{format}
 {
 	vk::ImageCreateInfo imageInfo{};
-	imageInfo.setArrayLayers(1);
-	imageInfo.setMipLevels(1);
+	imageInfo.setArrayLayers(arraySize);
+	imageInfo.setMipLevels(mipLeveles);
 	imageInfo.extent.setHeight(size.y);
 	imageInfo.extent.setWidth(size.x);
 	imageInfo.extent.setDepth(1u);
+	imageInfo.setSamples(static_cast<vk::SampleCountFlagBits>(sampleCount));
 	imageInfo.setTiling(vk::ImageTiling::eOptimal);
 	imageInfo.setImageType(vk::ImageType::e2D);
 	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eSampled);
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
-	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
 	imageInfo.setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(format)]);
 
 	vma::AllocationCreateInfo allocInfo{};
@@ -87,8 +95,8 @@ Eugene::VkImageResource::VkImageResource(const vma::Allocator& allocator, const 
 	data_.allocation_ = std::move(result.second);
 	data_.image_ = std::move(result.first);
 
-	data_.arraySize_ = 1;
-	data_.mipmapLevels_ = 1;
+	data_.arraySize_ = arraySize;
+	data_.mipmapLevels_ = mipLeveles;
 	data_.pixelPerSize = FormatSize[static_cast<std::size_t>(format)];
 	size_ = size;
 }

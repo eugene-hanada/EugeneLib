@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <optional>
 #include "GraphicsPipeline.h"
 #include "GraphicsCommon.h"
 #include "../ThirdParty/glm/glm/vec2.hpp"
@@ -158,15 +159,24 @@ namespace Eugene
 		virtual ImageResource* CreateImageResource(const TextureInfo& formatData) const = 0;
 
 		/// <summary>
-		/// 
+		/// レンダーターゲット用のImageResourceを生成
 		/// </summary>
 		/// <param name="size"></param>
 		/// <param name="format"></param>
-		/// <param name="clearColor"></param>
+		/// <param name="arraySize"></param>
+		/// <param name="mipLeveles"></param>
 		/// <param name="sampleCount"></param>
+		/// <param name="clearColor"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateImageResource(const glm::ivec2& size, Format format, std::span<float, 4> clearColor, std::uint8_t sampleCount = 1) = 0;
+		virtual ImageResource* CreateImageResource(
+			const glm::ivec2& size,
+			Format format,
+			std::uint32_t arraySize = 1,
+			std::uint8_t mipLeveles = 1,
+			std::uint8_t sampleCount = 1,
+			std::optional<std::span<float, 4>> clearColor = std::nullopt
+		) = 0;
 
 		/// <summary>
 		/// 
@@ -176,7 +186,7 @@ namespace Eugene
 		/// <param name="sampleCount"></param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount = 1) const = 0;
+		virtual ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const = 0;
 
 		/// <summary>
 		/// ShaderResourceViewsの生成

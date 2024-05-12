@@ -45,7 +45,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(
 	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),
-		arraySize, mipLeveles,1,sampleCount
+		arraySize, mipLeveles,sampleCount
 	);
 	
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;

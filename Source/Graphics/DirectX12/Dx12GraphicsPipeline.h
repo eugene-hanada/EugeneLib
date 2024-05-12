@@ -15,17 +15,6 @@ namespace Eugene
 		public GraphicsPipeline
 	{
 	public:
-		Dx12GraphicsPipeline(
-			ID3D12Device* device,
-			ShaderInputSpan layout,
-			ShaderTypePaisrSpan  shaders,
-			RenderTargetSpan rendertarges,
-			TopologyType topologyType,
-			bool isCulling,
-			ShaderLayoutSpan shaderLayout,
-			SamplerSpan smplerLayout,
-			bool useDepth
-			);
 
 		Dx12GraphicsPipeline(
 			ID3D12Device* device,
@@ -35,7 +24,8 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
-			bool useDepth
+			bool useDepth,
+			std::uint8_t sampleCount
 		);
 
 		struct PipeLine

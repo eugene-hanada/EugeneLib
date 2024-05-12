@@ -430,9 +430,18 @@ Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const
 	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType, bool isCulling, bool useDepth) const
+Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
+	ResourceBindLayout& resourceBindLayout,
+	const ArgsSpan<ShaderInputLayout>& layout, 
+	const ArgsSpan<ShaderPair>& shaders,
+	const ArgsSpan<RendertargetLayout>& rendertarges,
+	TopologyType topologyType,
+	bool isCulling,
+	bool useDepth,
+	std::uint8_t sampleCount 
+) const
 {
-	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth};
+	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
 }
 
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const

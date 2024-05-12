@@ -103,12 +103,9 @@ namespace Eugene
 		// デプス使用状態から終了する
 		void TransitionDepthEnd(ImageResource& resource) final;
 
-		// コピー系 //
-
-	/*	void Copy(GpuResource& destination, GpuResource& source) final;
-		void CopyTexture(GpuResource& destination, GpuResource& source) final;*/
-
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
+
+		void Resolve(ImageResource& dest, ImageResource& src) final;
 
 #ifdef USE_IMGUI
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
@@ -127,9 +124,9 @@ namespace Eugene
 		// CommandList を介して継承されました
 		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange, std::optional<float> depthClear, std::uint32_t depthIndex) override;
 
-		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange) override;
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange) final;
 
-		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) override;
+		virtual void CopyBuffer(BufferResource& dest, BufferResource& src) final;
 
 };
 }

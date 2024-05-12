@@ -119,7 +119,8 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
-			bool useDepth = false
+			bool useDepth = false,
+			std::uint8_t sampleCount = 1
 		) const = 0;
 
 		[[nodiscard]]

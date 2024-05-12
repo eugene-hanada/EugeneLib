@@ -84,7 +84,16 @@ namespace Eugene
 		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
 
 		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(ResourceBindLayout& resourceBindLayout, const ArgsSpan<ShaderInputLayout>& layout, const ArgsSpan<ShaderPair>& shaders, const ArgsSpan<RendertargetLayout>& rendertarges, TopologyType topologyType = TopologyType::Triangle, bool isCulling = false, bool useDepth = false) const final;
+		GraphicsPipeline* CreateGraphicsPipeline(
+			ResourceBindLayout& resourceBindLayout,
+			const ArgsSpan<ShaderInputLayout>& layout, 
+			const ArgsSpan<ShaderPair>& shaders,
+			const ArgsSpan<RendertargetLayout>& rendertarges, 
+			TopologyType topologyType = TopologyType::Triangle,
+			bool isCulling = false,
+			bool useDepth = false,
+			std::uint8_t sampleCount = 1
+		) const final;
 
 		// Graphics を介して継承されました
 		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;

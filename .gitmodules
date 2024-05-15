@@ -23,3 +23,6 @@
 [submodule "Include/ThirdParty/fmt"]
 	path = Include/ThirdParty/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "Include/ThirdParty/mimalloc"]
+	path = Include/ThirdParty/mimalloc
+	url = https://github.com/microsoft/mimalloc.git

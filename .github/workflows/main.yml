@@ -30,7 +30,7 @@ jobs:
       # ビルド
     - name: Build
       run: |
-        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DEUGENE_BUILD_DOCTEST=ON -A x64
+        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DEUGENE_BUILD_DOCTEST=ON -DMI_OVERRIDE=OFF -A x64
         cmake --build ${{github.workspace}}/build
     - name: RunTest
       run: |

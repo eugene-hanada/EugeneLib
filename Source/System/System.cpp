@@ -1,4 +1,5 @@
-﻿#include "../../Include/System/System.h"
+﻿#include <mimalloc-new-delete.h>
+#include "../../Include/System/System.h"
 #include "../../Include/Utils/EugeneLibException.h"
 #include "../../Include/Graphics/GpuEngine.h"
 #include "../../Include/Graphics/Graphics.h"

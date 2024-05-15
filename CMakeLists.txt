@@ -274,6 +274,10 @@ endif()
  add_subdirectory("Include/ThirdParty/fmt")
  target_link_libraries(EugeneLib PRIVATE fmt::fmt)
 
+ add_subdirectory("Include/ThirdParty/mimalloc")
+ target_link_libraries(EugeneLib PUBLIC mimalloc-static)
+ target_include_directories(EugeneLib PUBLIC "Include/ThirdParty/mimalloc/include")
+
  # サンプルをビルドするか？
  if (EUGENE_BUILD_SAMPLE)
  add_subdirectory("Sample")

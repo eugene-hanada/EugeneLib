@@ -312,4 +312,5 @@ endif()
 
  if (EUGENE_BUILD_DOCTEST)
  add_subdirectory("Test")
+ target_compile_definitions(EugeneLib PRIVATE BUILD_DOCTEST)
  endif()

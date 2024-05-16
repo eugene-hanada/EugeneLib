@@ -1,4 +1,7 @@
-﻿#include <mimalloc-new-delete.h>
+﻿#ifndef BUILD_DOCTEST
+#include <mimalloc-new-delete.h>
+#endif
+
 #include "../../Include/System/System.h"
 #include "../../Include/Utils/EugeneLibException.h"
 #include "../../Include/Graphics/GpuEngine.h"

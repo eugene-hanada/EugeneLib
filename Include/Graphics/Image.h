@@ -21,6 +21,11 @@ namespace Eugene
 		/// <param name="path"> テクスチャファイルのパス </param>
 		Image(const std::filesystem::path& path);
 
+		/// <summary>
+		/// コンストラクタ(指定されたバイナリデータから読み込む)
+		/// </summary>
+		/// <param name="data"></param>
+		Image(std::span<std::uint8_t> data, const std::string_view& ext);
 
 		/// <summary>
 		/// テクスチャの情報を取得する
@@ -50,23 +55,38 @@ namespace Eugene
 		Image& operator=(Image&& img) noexcept;
 	private:
 
-		using LoadFunc = bool(Image::*)(const std::filesystem::path&);
-		using LoadFuncMap = std::unordered_map<std::uint64_t, LoadFunc>;
+		using LoadFromFileFunc = bool(Image::*)(const std::filesystem::path&);
+		using LoadFromMemoryFunc = bool(Image::*)(const std::span<std::uint8_t>&);
+		using LoadFromFileFuncMap = std::unordered_map<std::uint64_t, LoadFromFileFunc>;
+		using LoadFromMemoryFuncMap = std::unordered_map<std::uint64_t, LoadFromMemoryFunc>;
 
 		/// <summary>
 		/// stbライブラリを使用して読み込む
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		bool LoadStb(const std::filesystem::path& path);
+		bool LoadStbFromFile(const std::filesystem::path& path);
+
+		/// <summary>
+		/// stbライブラリを使用してメモリ上のデータを読み込む
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		bool LoadStbFromMemory(const std::span<std::uint8_t>& data);
 
 		/// <summary>
 		/// ddsファイルを読み込む
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		bool LoadDds(const std::filesystem::path& path);
+		bool LoadDdsFromFile(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ddsファイルのデータメモリ上から読み込む
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		bool LoadDdsFromMemory(const std::span<std::uint8_t>& data);
 
 		/// <summary>
 		/// テクスチャデータのアクセス用(ミップマップや配列ごとにspanに分けてる)
@@ -86,7 +106,12 @@ namespace Eugene
 		/// <summary>
 		/// ロード用関数のmap
 		/// </summary>
-		static const LoadFuncMap loadFuncMap_;
+		static const LoadFromFileFuncMap loadFromFileFuncMap_;
+
+		/// <summary>
+		/// メモリからのロード用の関数map
+		/// </summary>
+		static const LoadFromMemoryFuncMap loadFromMemoryMap_;
 	};
 
 	/// <summary>

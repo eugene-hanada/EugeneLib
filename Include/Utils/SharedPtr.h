@@ -202,7 +202,7 @@ namespace Eugene
 		/// 次のポインタを取得する
 		/// </summary>
 		/// <returns></returns>
-		const SharedPtr* GetNext()const
+		SharedPtr* GetNext()const
 		{
 			return next_;
 		}
@@ -211,7 +211,7 @@ namespace Eugene
 		/// 次のポインタをセットする
 		/// </summary>
 		/// <param name="sharedPtr"></param>
-		void SetNext(const SharedPtr* sharedPtr)
+		void SetNext(SharedPtr* sharedPtr)
 		{
 			next_ = sharedPtr;
 		}
@@ -220,7 +220,7 @@ namespace Eugene
 		/// 前のポインタを取得する
 		/// </summary>
 		/// <returns></returns>
-		const SharedPtr* GetPrev()const
+		SharedPtr* GetPrev()const
 		{
 			return prev_;
 		}
@@ -229,7 +229,7 @@ namespace Eugene
 		/// 前のポインタをセットする
 		/// </summary>
 		/// <param name="sharedPtr"></param>
-		void SetPrev(const SharedPtr* sharedPtr)
+		void SetPrev(SharedPtr* sharedPtr)
 		{
 			prev_ = sharedPtr;
 		}
@@ -238,7 +238,7 @@ namespace Eugene
 		/// ポインタを取得する
 		/// </summary>
 		/// <returns></returns>
-		const T* GetPtr()const
+		T* GetPtr()const
 		{
 			return ptr_;
 		}
@@ -506,7 +506,7 @@ namespace Eugene
 		/// 次へのポインタ
 		/// </summary>
 		/// <returns></returns>
-		const ThreadSafeSharedPtr* GetNext()const
+		ThreadSafeSharedPtr* GetNext()const
 		{
 			return next_;
 		}
@@ -515,7 +515,7 @@ namespace Eugene
 		/// 次へのポインタをセットする
 		/// </summary>
 		/// <param name="sharedPtr"></param>
-		void SetNext(const ThreadSafeSharedPtr* sharedPtr)
+		void SetNext(ThreadSafeSharedPtr* sharedPtr)
 		{
 			next_ = sharedPtr;
 		}
@@ -524,7 +524,7 @@ namespace Eugene
 		/// 前へのポインタ
 		/// </summary>
 		/// <returns></returns>
-		const ThreadSafeSharedPtr* GetPrev()const
+		ThreadSafeSharedPtr* GetPrev()const
 		{
 			return prev_;
 		}
@@ -533,7 +533,7 @@ namespace Eugene
 		/// 前のポインタへセットする
 		/// </summary>
 		/// <param name="sharedPtr"></param>
-		void SetPrev(const ThreadSafeSharedPtr* sharedPtr)
+		void SetPrev(ThreadSafeSharedPtr* sharedPtr)
 		{
 			prev_ = sharedPtr;
 		}
@@ -543,7 +543,7 @@ namespace Eugene
 		/// ポインタを取得する
 		/// </summary>
 		/// <returns></returns>
-		const T* GetPtr()const
+		constexpr T* GetPtr()const
 		{
 			return ptr_;
 		}

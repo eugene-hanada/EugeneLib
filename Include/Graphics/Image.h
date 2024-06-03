@@ -25,7 +25,7 @@ namespace Eugene
 		/// コンストラクタ(指定されたバイナリデータから読み込む)
 		/// </summary>
 		/// <param name="data"></param>
-		Image(std::span<std::byte> data, const std::string_view& ext);
+		Image(std::span<std::uint8_t> data, const std::string_view& ext);
 
 		/// <summary>
 		/// テクスチャの情報を取得する
@@ -56,7 +56,9 @@ namespace Eugene
 	private:
 
 		using LoadFromFileFunc = bool(Image::*)(const std::filesystem::path&);
+		using LoadFromMemoryFunc = bool(Image::*)(const std::span<std::uint8_t>&);
 		using LoadFromFileFuncMap = std::unordered_map<std::uint64_t, LoadFromFileFunc>;
+		using LoadFromMemoryFuncMap = std::unordered_map<std::uint64_t, LoadFromMemoryFunc>;
 
 		/// <summary>
 		/// stbライブラリを使用して読み込む
@@ -65,7 +67,12 @@ namespace Eugene
 		/// <returns></returns>
 		bool LoadStbFromFile(const std::filesystem::path& path);
 
-		bool LoadStbFromMemory(const std::span<std::byte>& data);
+		/// <summary>
+		/// stbライブラリを使用してメモリ上のデータを読み込む
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		bool LoadStbFromMemory(const std::span<std::uint8_t>& data);
 
 		/// <summary>
 		/// ddsファイルを読み込む
@@ -74,6 +81,12 @@ namespace Eugene
 		/// <returns></returns>
 		bool LoadDdsFromFile(const std::filesystem::path& path);
 
+		/// <summary>
+		/// ddsファイルのデータメモリ上から読み込む
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		bool LoadDdsFromMemory(const std::span<std::uint8_t>& data);
 
 		/// <summary>
 		/// テクスチャデータのアクセス用(ミップマップや配列ごとにspanに分けてる)
@@ -94,6 +107,11 @@ namespace Eugene
 		/// ロード用関数のmap
 		/// </summary>
 		static const LoadFromFileFuncMap loadFromFileFuncMap_;
+
+		/// <summary>
+		/// メモリからのロード用の関数map
+		/// </summary>
+		static const LoadFromMemoryFuncMap loadFromMemoryMap_;
 	};
 
 	/// <summary>

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <cstdint>
 #include <filesystem>
 #include <unordered_map>
@@ -11,62 +11,62 @@ namespace Eugene
 	struct DdsHeader
 	{
 		/// <summary>
-		/// ƒwƒbƒ_[ƒTƒCƒY
+		/// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚µã‚¤ã‚º
 		/// </summary>
 		std::int32_t size;
 
 		/// <summary>
-		/// ƒwƒbƒ_“à‚Ìî•ñ‚Ìƒtƒ‰ƒO
+		/// ãƒ˜ãƒƒãƒ€å†…ã®æƒ…å ±ã®ãƒ•ãƒ©ã‚°
 		/// </summary>
 		std::int32_t flags;
 
 		/// <summary>
-		/// ‚‚³
+		/// é«˜ã•
 		/// </summary>
 		std::int32_t height;
 
 		/// <summary>
-		/// •
+		/// å¹…
 		/// </summary>
 		std::int32_t width;
 
 		/// <summary>
-		/// ‰¡1ƒ‰ƒCƒ“‚ÌƒoƒCƒg”‚Ü‚½‚Í1–Ê•ª‚ÌƒoƒCƒg”
+		/// æ¨ª1ãƒ©ã‚¤ãƒ³ã®ãƒã‚¤ãƒˆæ•°ã¾ãŸã¯1é¢åˆ†ã®ãƒã‚¤ãƒˆæ•°
 		/// </summary>
 		std::int32_t pitchOrLinearSize;
 
 		/// <summary>
-		/// ‰œsƒTƒCƒY
+		/// å¥¥è¡Œã‚µã‚¤ã‚º
 		/// </summary>
 		std::int32_t depth;
 
 		/// <summary>
-		/// ƒ~ƒbƒvƒ}ƒbƒv”
+		/// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—æ•°
 		/// </summary>
 		std::int32_t mipMapCount;
 
 		/// <summary>
-		/// —\–ñ—Ìˆæ
+		/// äºˆç´„é ˜åŸŸ
 		/// </summary>
 		std::int32_t reserved1[11];
 
 		/// <summary>
-		/// ƒsƒNƒZƒ‹ƒtƒH[ƒ}ƒbƒgî•ñ‚ÌƒoƒCƒg”
+		/// ãƒ”ã‚¯ã‚»ãƒ«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæƒ…å ±ã®ãƒã‚¤ãƒˆæ•°
 		/// </summary>
 		std::int32_t pixelFormatSize;
 
 		/// <summary>
-		/// ƒsƒNƒZƒ‹ƒtƒH[ƒ}ƒbƒg‚Ìƒtƒ‰ƒO
+		/// ãƒ”ã‚¯ã‚»ãƒ«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®ãƒ•ãƒ©ã‚°
 		/// </summary>
 		std::int32_t pixelFormatFlags;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚Ì’è‹`
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®å®šç¾©
 		/// </summary>
 		std::int32_t fourCC;
 
 		/// <summary>
-		/// 1ƒsƒNƒZƒ‹“–‚½‚è‚Ìƒrƒbƒg”
+		/// 1ãƒ”ã‚¯ã‚»ãƒ«å½“ãŸã‚Šã®ãƒ“ãƒƒãƒˆæ•°
 		/// </summary>
 		std::int32_t rgbBitCount;
 
@@ -76,22 +76,22 @@ namespace Eugene
 		std::int32_t aBitMask;
 
 		/// <summary>
-		/// ƒ~ƒbƒvƒ}ƒbƒv‚âƒLƒ…[ƒuƒ}ƒbƒv‚Æ‚©‚Ìî•ñ
+		/// ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ã‚„ã‚­ãƒ¥ãƒ¼ãƒ–ãƒãƒƒãƒ—ã¨ã‹ã®æƒ…å ±
 		/// </summary>
 		std::int32_t caps;
 
 		/// <summary>
-		/// ã‚ÌÚ×‚È“z
+		/// ä¸Šã®è©³ç´°ãªå¥´
 		/// </summary>
 		std::int32_t caps2;
 
 		/// <summary>
-		/// —\–ñ—Ìˆæ
+		/// äºˆç´„é ˜åŸŸ
 		/// </summary>
 		std::int32_t reservedCaps[2];
 
 		/// <summary>
-		/// —\–ñ—Ìˆæ
+		/// äºˆç´„é ˜åŸŸ
 		/// </summary>
 		std::int32_t reserved2;
 	};
@@ -99,12 +99,12 @@ namespace Eugene
 	struct DdsExtensionHeader
 	{
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		/// </summary>
 		std::uint32_t format = 0u;
 
 		/// <summary>
-		/// 1D‚Æ‚©2D‚Æ‚©‚Ìî•ñ
+		/// 1Dã¨ã‹2Dã¨ã‹ã®æƒ…å ±
 		/// </summary>
 		std::uint32_t dimension = 0u;
 
@@ -114,7 +114,7 @@ namespace Eugene
 		std::uint32_t miscFlag = 0u;
 
 		/// <summary>
-		/// ”z—ñƒTƒCƒY
+		/// é…åˆ—ã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint32_t arraySize = 0u;
 
@@ -163,12 +163,12 @@ namespace Eugene
 
 	void LoadDdsExtension(std::ifstream& file, TextureInfo& info)
 	{
-		// ’Ç‰Áî•ñ‚ğ“Ç‚İ‚Ş
+		// è¿½åŠ æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
 		DdsExtensionHeader ext;
 		file.read(reinterpret_cast<char*>(&ext), sizeof(ext));
 		info.arraySize = std::max(1u,ext.arraySize);
 		
-		// ƒtƒH[ƒ}ƒbƒg‚ğƒZƒbƒg‚·‚é
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		switch (ext.format)
 		{
 		case 98:
@@ -182,5 +182,28 @@ namespace Eugene
 			return;
 		}
 		
+	}
+
+	void LoadDdsExtension(const std::span<std::uint8_t>& data, std::uint64_t& nowLoadByte, TextureInfo& info)
+	{
+		DdsExtensionHeader* extHeader{ reinterpret_cast<DdsExtensionHeader*>(data.data() + nowLoadByte) };
+
+		nowLoadByte += sizeof(DdsExtensionHeader);
+
+		info.arraySize = std::max(1u, extHeader->arraySize);
+
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+		switch (extHeader->format)
+		{
+		case 98:
+			info.format = Format::BC7_UNORM;
+			return;
+		case 70:
+			info.format = Format::BC1_UNORM;
+			return;
+		default:
+			info.format = Format::R8G8B8A8_SNORM;
+			return;
+		}
 	}
 }

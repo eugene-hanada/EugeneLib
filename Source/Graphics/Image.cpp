@@ -22,6 +22,20 @@ const Eugene::Image::LoadFromFileFuncMap Eugene::Image::loadFromFileFuncMap_
 	{std::hash<std::string_view>()(".dds"),&Image::LoadDdsFromFile}
 };
 
+const Eugene::Image::LoadFromMemoryFuncMap Eugene::Image::loadFromMemoryMap_
+{
+	{std::hash<std::string_view>()(".png"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".jpeg"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".tga"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".bmp"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".psd"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".gif"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".hdr"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".pic"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".pnm"),&Image::LoadStbFromMemory},
+	{std::hash<std::string_view>()(".dds"),&Image::LoadDdsFromMemory}
+};
+
 constexpr int ddsSig = std::endian::native == std::endian::little ? 542327876 : 7678324205;
 
 Eugene::Image::Image(const std::filesystem::path& path) :
@@ -34,10 +48,14 @@ Eugene::Image::Image(const std::filesystem::path& path) :
 	}
 }
 
-Eugene::Image::Image(std::span<std::byte> data, const std::string_view& ext):
+Eugene::Image::Image(std::span<std::uint8_t> data, const std::string_view& ext):
 	info_{}
 {
 	auto tmp = std::hash<std::string_view>()(ext);
+	if (!(this->*loadFromMemoryMap_.at(tmp))(data))
+	{
+		throw EugeneLibException{ "画像読み込み失敗" };
+	}
 }
 
 const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&
@@ -92,7 +110,7 @@ bool Eugene::Image::LoadStbFromFile(const std::filesystem::path& path)
 }
 
 
-bool Eugene::Image::LoadStbFromMemory(const std::span<std::byte>& data)
+bool Eugene::Image::LoadStbFromMemory(const std::span<std::uint8_t>& data)
 {
 	int w, h, c;
 	auto img = stbi_load_from_memory(reinterpret_cast<stbi_uc*>(data.data()), static_cast<int>(data.size()), &w, &h, &c, STBI_default);
@@ -212,6 +230,99 @@ bool Eugene::Image::LoadDdsFromFile(const std::filesystem::path& path)
 				info_.pixelPerBite
 				) };
 			data_[idx] = { &baseData_[sizeOffset],static_cast<std::size_t>(byteSize)};
+			sizeOffset += byteSize;
+		}
+	}
+
+	return true;
+}
+
+bool Eugene::Image::LoadDdsFromMemory(const std::span<std::uint8_t>& data)
+{
+	std::uint64_t loadByte{ 0 };
+	
+	int* sig{ reinterpret_cast<int*>(data.data()) };
+	loadByte += sizeof(int);
+	if (*sig != ddsSig)
+	{
+		return false;
+	}
+
+	DdsHeader* h{ reinterpret_cast<DdsHeader*>(data.data() + loadByte)};
+	loadByte += sizeof(DdsHeader);
+	info_.arraySize = 1;
+	info_.mipLevels = h->mipMapCount;
+	info_.height = h->height;
+	info_.width = h->width;
+
+	// fourCCをチェック
+	switch (h->fourCC)
+	{
+	case '01XD':
+		// DX10の時
+		LoadDdsExtension(data, loadByte, info_);
+		break;
+	case '1TXD':
+		// DXT1の時
+		info_.format = Format::BC1_UNORM;
+		break;
+	case '3TXD':
+		// DXT3の時
+		info_.format = Format::BC2_UNORM;
+		break;
+	case '5TXD':
+		// DXT5の時
+		info_.format = Format::BC3_UNORM;
+		break;
+	case '2ITA':
+		info_.format = Format::BC5_UNORM;
+		break;
+	default:
+		// それ以外の時とりあえずRGBA8ビットのやつにしとく
+		info_.format = Format::R8G8B8A8_UNORM;
+		break;
+	}
+
+	constexpr auto cubeMapFlagBit = 0x200 | 0x400 | 0x800 | 0x1000 | 0x2000 | 0x4000 | 0x8000;
+	if ((cubeMapFlagBit & h->caps2) != 0)
+	{
+		info_.arraySize = 6;
+	}
+
+	info_.pixelPerBite = std::max(1, h->rgbBitCount / 8);
+	data_.resize(info_.arraySize * info_.mipLevels);
+
+	// 配列サイズとミップマップの分を読み込む
+	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
+	{
+		for (int i = 0; i < info_.mipLevels; i++)
+		{
+			// サイズを計算
+			info_.totalSize_ += calcSizeMap.at(info_.format)(
+				std::max(1, static_cast<int>(info_.width) >> i),
+				std::max(1, static_cast<int>(info_.height) >> i),
+				info_.pixelPerBite
+				);
+		}
+	}
+
+	baseData_.resize(info_.totalSize_);
+	std::copy_n(reinterpret_cast<std::uint8_t*>(data.data() + loadByte), info_.totalSize_, baseData_.data());
+	loadByte += info_.totalSize_;
+
+	std::size_t sizeOffset = 0ull;
+	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
+	{
+		for (int i = 0; i < info_.mipLevels; i++)
+		{
+			// インデックス
+			auto idx{ j * info_.mipLevels + i };
+			auto byteSize{ calcSizeMap.at(info_.format)(
+				std::max(1, static_cast<int>(info_.width) >> i),
+				std::max(1, static_cast<int>(info_.height) >> i),
+				info_.pixelPerBite
+				) };
+			data_[idx] = { &baseData_[sizeOffset],static_cast<std::size_t>(byteSize) };
 			sizeOffset += byteSize;
 		}
 	}

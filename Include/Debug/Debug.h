@@ -139,7 +139,10 @@ namespace Eugene
 		/// 現在のバッファにある文字列を取得する
 		/// </summary>
 		/// <returns> 文字列 </returns>
-		std::string_view GetBuffer_View(void);
+		std::string_view GetBuffer_View(void) noexcept
+		{
+			return logStringBuffer_;
+		}
 
 		/// <summary>
 		/// バッファをクリアする
@@ -158,18 +161,20 @@ namespace Eugene
 		/// </summary>
 		/// <param name="path"> パス </param>
 		void SetExportPath(const std::filesystem::path& path);
+
+		/// <summary>
+		/// エクスポートするかのフラグをセットする
+		/// </summary>
+		void SetExportFlag(bool isExport) noexcept
+		{
+			isExport_ = isExport;
+		}
+
 	private:
 		Debug();
 		~Debug();
 		Debug(const Debug&) = delete;
 		void operator=(const Debug&) = delete;
-
-		/// <summary>
-		/// バッファをチェックして必要なら拡張する
-		/// </summary>
-		/// <param name="string"> 文字列 </param>
-		void CheckBuffer(const std::string_view& string) &;
-
 
 		/// <summary>
 		/// 出力を行う
@@ -189,9 +194,14 @@ namespace Eugene
 		/// </summary>
 		std::ostringstream oss_;
 
+		/// <summary>
+		/// ログの文字列バッファ
+		/// </summary>
+		std::string logStringBuffer_;
 
-		std::stringstream ss_;
-
+		/// <summary>
+		/// 出力先の参照
+		/// </summary>
 		std::ostream& os_;
 
 		/// <summary>
@@ -203,6 +213,11 @@ namespace Eugene
 		/// ログをファイルを出力するパス
 		/// </summary>
 		std::filesystem::path exportPath_;
+
+		/// <summary>
+		/// ファイルをエクスポートするか？
+		/// </summary>
+		bool isExport_;
 	};
 
 

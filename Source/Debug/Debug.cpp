@@ -52,7 +52,7 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 }
 
 Eugene::Debug::Debug() :
-	binarySemphore_{1},  filter_{0u}, exportPath_{"./Log.txt"},
+	binarySemphore_{1},  filter_{0u}, exportPath_{"./Log.txt"}, isExport_{true},
 
 #ifdef USE_ANDROID
     os_{androidOs}
@@ -63,7 +63,6 @@ Eugene::Debug::Debug() :
 	// スレッドIDを文字列に変換してバッファのサイズにする
 	oss_ << std::this_thread::get_id();
 	oss_.seekp(0);
-
 	filter_.flip();
 }
 
@@ -86,20 +85,9 @@ void Eugene::Debug::RemoveFilter(Type type)
 	filter_.set(static_cast<std::size_t>(type), false);
 }
 
-std::string_view Eugene::Debug::GetBuffer_View(void)
-{
-#ifndef USE_ANDROID
-    return ss_.view();
-#else
-	return ss_.str();
-#endif
-}
-
 void Eugene::Debug::ClearBuffer(void)
 {
-	ss_.fill('\0');
-	std::streampos pos{0};
-	ss_.seekp(pos);
+	logStringBuffer_.clear();
 }
 
 void Eugene::Debug::OpenConsole(void)
@@ -132,17 +120,20 @@ Eugene::Debug::~Debug()
 		fclose(fp);
 	}
 
-	if (!exportPath_.has_filename())
+	if (isExport_)
 	{
-		exportPath_ += "Log.txt";
-	}
-	std::ofstream file{ exportPath_ };
-	if (!file)
-	{
-		return;
-	}
+		if (!exportPath_.has_filename())
+		{
+			exportPath_ += "Log.txt";
+		}
+		std::ofstream file{ exportPath_ };
+		if (!file)
+		{
+			return;
+		}
 
-	file << ss_.view();
+		file << logStringBuffer_;
+	}
 #endif
 }
 
@@ -167,41 +158,30 @@ void Eugene::Debug::LogDebug(const std::string_view& string)
 	Out(Type::Debug, string);
 }
 
-void Eugene::Debug::CheckBuffer(const std::string_view& string)&
-{
-	//// 現在の位置
-	//size_t pos = spanStream_.tellp();
-
-	//// フォーマット後ののサイズ
-	//constexpr auto fmtSize = std::size("WARNING[HH:MM:SSSSSS][Thread=00000]");
-
-	//if ((string.length() + fmtSize + pos) >= buffer_.size())
-	//{
-	//	// 書き込んだ際バッファよりサイズが超える場合リサイズする
-	//	buffer_.resize(buffer_.size() * 2ull);
-	//	spanStream_ = std::spanstream{ buffer_ };
-	//	spanStream_.seekp(pos);
-	//}
-}
 
 void Eugene::Debug::Out(Type type, const std::string_view& string)
 {
 	binarySemphore_.acquire();
-	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}\n";
+	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}\0";
 	std::bitset<4> tmp;
 	tmp.set(static_cast<std::size_t>(type), true);
 	if ((filter_ & tmp).any())
 	{
-		//CheckBuffer(string);
-
 		// 現在時刻を
-		//auto now = std::chrono::zoned_time{ std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()) };
 		std::time_t t = std::time(nullptr);
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
 		os_ << fmt::format(format, colorNames[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
-		ss_ << fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
+		
+		if (logStringBuffer_.size() > 0)
+		{
+			logStringBuffer_.erase(logStringBuffer_.size() - 1);
+			logStringBuffer_ += '\n';
+		}
+		
+		auto finalString = fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
+		logStringBuffer_ += finalString;
 		oss_.seekp(0);
 	}
 	binarySemphore_.release();

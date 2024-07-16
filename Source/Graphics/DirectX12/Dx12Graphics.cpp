@@ -180,9 +180,14 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 }
 
 
-Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateUnloadableBufferResource(std::uint64_t size) const
 {
-	return new Dx12UploadableBufferResource{allocator_.Get(), size};
+	return new Dx12UnloadableBufferResource{allocator_.Get(), size};
+}
+
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered) const
+{
+	return new Dx12ReadableBuffeResource{allocator_.Get(),size, isUnordered};
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
@@ -192,7 +197,7 @@ Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(),allocator_.Get(), texture};
+	return new Dx12UnloadableBufferResource{device_.Get(),allocator_.Get(), texture};
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureInfo& formatData) const

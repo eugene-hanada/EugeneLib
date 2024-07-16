@@ -132,7 +132,7 @@ namespace Eugene
 		/// <param name="size"> サイズ </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual BufferResource* CreateUploadableBufferResource(std::uint64_t size) const = 0;
+		virtual BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const = 0;
 
 		/// <summary>
 		/// バッファー(頂点、インデックス、定数)用のリソースを生成する
@@ -142,6 +142,9 @@ namespace Eugene
 		/// <returns></returns>
 		[[nodiscard]]
 		virtual BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const = 0;
+
+		[[nodiscard]]
+		virtual BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const = 0;
 
 		/// <summary>
 		/// テクスチャアップロード用バッファーリソースを生成する

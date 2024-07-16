@@ -36,7 +36,9 @@ namespace Eugene
 
 		CommandList* CreateCommandList(void) const final;
 
-		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
+		BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const final;
+
+		BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const;
 
 		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const final;
 

@@ -53,7 +53,7 @@ std::uint64_t Eugene::Dx12BufferResource::GetSize(void)
 	return resource_->GetDesc().Width;
 }
 
-Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device* device, D3D12MA::Allocator* allocator, Image& image)
+Eugene::Dx12UnloadableBufferResource::Dx12UnloadableBufferResource(ID3D12Device* device, D3D12MA::Allocator* allocator, Image& image)
 {
 	auto subResource = std::min(std::max(static_cast<int>(image.GetInfo().mipLevels) , 1) * static_cast<int>(image.GetInfo().arraySize), static_cast<int>(maxSubResource));
 
@@ -115,7 +115,7 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(ID3D12Device*
 	resource_->Unmap(0, nullptr);
 }
 
-Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(D3D12MA::Allocator* allocator, std::uint64_t size) :
+Eugene::Dx12UnloadableBufferResource::Dx12UnloadableBufferResource(D3D12MA::Allocator* allocator, std::uint64_t size) :
 	BufferResource{}
 {
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
@@ -137,33 +137,89 @@ Eugene::Dx12UploadableBufferResource::Dx12UploadableBufferResource(D3D12MA::Allo
 	}
 }
 
-Eugene::Dx12UploadableBufferResource::~Dx12UploadableBufferResource()
+Eugene::Dx12UnloadableBufferResource::~Dx12UnloadableBufferResource()
 {
 }
 
-void* Eugene::Dx12UploadableBufferResource::Map(void)
+void* Eugene::Dx12UnloadableBufferResource::Map(void)
 {
 	void* ptr{ nullptr };
 	resource_->Map(0,nullptr, &ptr);
     return ptr;
 }
 
-void Eugene::Dx12UploadableBufferResource::UnMap(void)
+void Eugene::Dx12UnloadableBufferResource::UnMap(void)
 {
 	resource_->Unmap(0, nullptr);
 }
 
-bool Eugene::Dx12UploadableBufferResource::CanMap(void) const
+bool Eugene::Dx12UnloadableBufferResource::CanMap(void) const
 {
 	return true;
 }
 
-void* Eugene::Dx12UploadableBufferResource::GetResource(void) 
+void* Eugene::Dx12UnloadableBufferResource::GetResource(void) 
 {
 	return resource_.Get();
 }
 
-std::uint64_t Eugene::Dx12UploadableBufferResource::GetSize(void)
+std::uint64_t Eugene::Dx12UnloadableBufferResource::GetSize(void)
+{
+	return resource_->GetDesc().Width;
+}
+
+Eugene::Dx12ReadableBuffeResource::Dx12ReadableBuffeResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered)
+{
+	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
+
+	D3D12MA::ALLOCATION_DESC allocationDesc{};
+	allocationDesc.HeapType = D3D12_HEAP_TYPE_READBACK;
+
+	if (isUnordered)
+	{
+		resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+	}
+
+	if (FAILED(allocator->CreateResource(
+		&allocationDesc,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		nullptr,
+		allocation_.ReleaseAndGetAddressOf(),
+		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
+	)))
+	{
+		throw CreateErrorException("ID3D12Resourceを読み取り用リソースで生成に失敗");
+	}
+}
+
+Eugene::Dx12ReadableBuffeResource::~Dx12ReadableBuffeResource()
+{
+}
+
+void* Eugene::Dx12ReadableBuffeResource::Map(void)
+{
+	void* ptr{ nullptr };
+	resource_->Map(0, nullptr, &ptr);
+	return ptr;
+}
+
+void Eugene::Dx12ReadableBuffeResource::UnMap(void)
+{
+	resource_->Unmap(0, nullptr);
+}
+
+bool Eugene::Dx12ReadableBuffeResource::CanMap(void) const
+{
+	return true;
+}
+
+void* Eugene::Dx12ReadableBuffeResource::GetResource(void)
+{
+	return resource_.Get();
+}
+
+std::uint64_t Eugene::Dx12ReadableBuffeResource::GetSize(void)
 {
 	return resource_->GetDesc().Width;
 }

@@ -185,9 +185,9 @@ Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std
 	return new Dx12UploadableBufferResource{allocator_.Get(), size};
 }
 
-Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
 {
-	return new Dx12BufferResource{ allocator_.Get(),size};
+	return new Dx12BufferResource{ allocator_.Get(),size, isUnordered };
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const

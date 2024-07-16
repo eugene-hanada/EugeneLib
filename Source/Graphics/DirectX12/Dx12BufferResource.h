@@ -20,7 +20,7 @@ namespace Eugene
 		public BufferResource
 	{
 	public:
-		Dx12BufferResource(D3D12MA::Allocator* allocator,std::uint64_t size);
+		Dx12BufferResource(D3D12MA::Allocator* allocator,std::uint64_t size, bool isUnordered);
 		~Dx12BufferResource();
 	private:
 		bool CanMap(void) const final;

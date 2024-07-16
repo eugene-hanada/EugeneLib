@@ -137,10 +137,11 @@ namespace Eugene
 		/// <summary>
 		/// バッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>
-		/// <param name="size"> サイズ </param>
+		/// <param name="size"></param>
+		/// <param name="isUnordered"> Unorderedで使用するか？ </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual BufferResource* CreateBufferResource(std::uint64_t size) const = 0;
+		virtual BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const = 0;
 
 		/// <summary>
 		/// テクスチャアップロード用バッファーリソースを生成する

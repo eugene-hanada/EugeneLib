@@ -8,13 +8,18 @@
 #include "../../../Include/Graphics/Image.h"
 #include "Dx12Graphics.h"
 
-Eugene::Dx12BufferResource::Dx12BufferResource(D3D12MA::Allocator* allocator, std::uint64_t size) :
+Eugene::Dx12BufferResource::Dx12BufferResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered) :
 	BufferResource{}
 {
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
 	
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
+
+	if (isUnordered)
+	{
+		resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+	}
 
 	if (FAILED(allocator->CreateResource(
 			&allocationDesc,

@@ -38,7 +38,7 @@ namespace Eugene
 
 		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
 
-		BufferResource* CreateBufferResource(std::uint64_t size) const final;
+		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const final;
 
 		BufferResource* CreateBufferResource(Image& texture) const final;
 

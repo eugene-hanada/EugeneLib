@@ -16,7 +16,7 @@ namespace Eugene
 		/// <summary>
 		/// UA
 		/// </summary>
-		UnoderedAccsec,
+		UnoderedAccess,
 
 		/// <summary>
 		/// 定数バッファ

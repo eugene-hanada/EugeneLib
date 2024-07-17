@@ -29,7 +29,7 @@ Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, con
 			case ViewType::Texture:
 				nowRegister = texRegister++;
 				break;
-			case ViewType::UnoderedAccsec:
+			case ViewType::UnoderedAccess:
 				nowRegister = cbRegister++;
 				break;
 			case ViewType::ConstantBuffer:

@@ -431,9 +431,9 @@ void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
 }
 
-Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
 {
-	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
+	return new Dx12ResourceBindLayout{device_.Get(), viewTypes,flags };
 }
 
 Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(

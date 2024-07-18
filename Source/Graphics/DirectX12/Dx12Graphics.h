@@ -83,7 +83,7 @@ namespace Eugene
 		void SetFullScreenFlag(bool isFullScreen) final;
 
 		// Graphics を介して継承されました
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const final;
 
 		// Graphics を介して継承されました
 		GraphicsPipeline* CreateGraphicsPipeline(

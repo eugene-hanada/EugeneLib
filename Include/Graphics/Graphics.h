@@ -124,8 +124,13 @@ namespace Eugene
 		) const = 0;
 
 		[[nodiscard]]
-		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const = 0;
+		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const = 0;
 
+		[[nodiscard]]
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
+		{
+			return CreateResourceBindLayout(viewTypes, std::to_underlying(flag));
+		}
 		/// <summary>
 		/// アップロードのためのバッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>

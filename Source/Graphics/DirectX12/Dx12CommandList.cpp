@@ -57,9 +57,9 @@ void Eugene::Dx12CommandList::End(void)
 	cmdList_->Close();
 }
 
-void Eugene::Dx12CommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
+void Eugene::Dx12CommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 {
-	auto pipeline{ static_cast<Dx12GraphicsPipeline::PipeLine*>(gpipeline.GetPipeline()) };
+	auto pipeline{ static_cast<Dx12Pipeline::PipeLineSet*>(gpipeline.GetPipeline()) };
 	cmdList_->SetPipelineState(pipeline->state_.Get());
 	cmdList_->SetGraphicsRootSignature(pipeline->rootSignature_.Get());
 }
@@ -129,6 +129,11 @@ void Eugene::Dx12CommandList::Draw(std::uint32_t vertexCount, std::uint32_t inst
 void Eugene::Dx12CommandList::DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum, std::uint32_t offset)
 {
 	cmdList_->DrawIndexedInstanced(indexCount, instanceNum, offset, 0, 0);
+}
+
+void Eugene::Dx12CommandList::Dispatch(const glm::u32vec3& count)
+{
+	cmdList_->Dispatch(count.x, count.y, count.z);
 }
 
 

@@ -4,6 +4,7 @@
 #include <optional>
 #include "GraphicsCommon.h"
 #include "../ThirdParty/glm/glm/vec2.hpp"
+#include "../ThirdParty/glm/glm/vec3.hpp"
 
 #ifdef USE_IMGUI
 struct ImDrawData;
@@ -21,7 +22,7 @@ namespace Eugene
 	class BufferResource;
 	class ImageResource;
 
-	class GraphicsPipeline;
+	class Pipeline;
 	class ShaderResourceViews;
 	class SamplerViews;
 
@@ -53,7 +54,7 @@ namespace Eugene
 		/// グラフィックスパイプラインをセットする
 		/// </summary>
 		/// <param name="gpipeline"> グラフィックスパイプライン </param>
-		virtual void SetGraphicsPipeline(GraphicsPipeline& gpipeline) = 0;
+		virtual void SetGraphicsPipeline(Pipeline& gpipeline) = 0;
 
 		/// <summary>
 		/// プリミティブタイプをセットする
@@ -119,6 +120,12 @@ namespace Eugene
 		/// <param name="instanceNum"></param>
 		/// <param name="offset"></param>
 		virtual void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="count"></param>
+		virtual void Dispatch(const glm::u32vec3& count) = 0;
 
 		/// <summary>
 		/// レンダーターゲットのセット(深度バッファあり)

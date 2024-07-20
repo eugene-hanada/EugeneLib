@@ -78,14 +78,14 @@ Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, con
 		rootparam.data(),
 		0u,
 		nullptr,
-		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
+		rootSignatureFlags
 	);
 
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
 	if (FAILED(D3D12SerializeRootSignature(
 		&rootSignatureDesc,
-		D3D_ROOT_SIGNATURE_VERSION_1,
+		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob)
 	))

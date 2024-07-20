@@ -11,12 +11,12 @@ namespace Eugene
 {
 	class ResourceBindLayout;
 
-	class Dx12GraphicsPipeline :
-		public GraphicsPipeline
+	class Dx12Pipeline :
+		public Pipeline
 	{
 	public:
 
-		Dx12GraphicsPipeline(
+		Dx12Pipeline(
 			ID3D12Device* device,
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout,
@@ -28,14 +28,20 @@ namespace Eugene
 			std::uint8_t sampleCount
 		);
 
-		struct PipeLine
+		Dx12Pipeline(
+			ID3D12Device* device,
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
+		);
+
+		struct PipeLineSet
 		{
 			Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 			Microsoft::WRL::ComPtr<ID3D12PipelineState> state_;
 		};
 	private:
 		void* GetPipeline(void) final;
-		PipeLine pipeline_;
+		PipeLineSet pipeline_;
 
 	};
 }

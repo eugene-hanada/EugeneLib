@@ -28,7 +28,7 @@ namespace Eugene
 		void End(void) final;
 
 		// グラフィックスパイプラインをセットする
-		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
+		void SetGraphicsPipeline(Pipeline& gpipeline) final;
 
 		// プリミティブタイプをセットする
 		void SetPrimitiveType(PrimitiveType type) final;
@@ -60,6 +60,8 @@ namespace Eugene
 
 		// インデックス付きで描画
 		void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) final;
+
+		void Dispatch(const glm::u32vec3& count) final;
 
 		// レンダーターゲットセット系 //
 

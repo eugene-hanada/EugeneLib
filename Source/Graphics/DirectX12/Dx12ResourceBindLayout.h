@@ -17,6 +17,6 @@ namespace Eugene
 	private:
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 
-		friend class Dx12GraphicsPipeline;
+		friend class Dx12Pipeline;
 	};
 }

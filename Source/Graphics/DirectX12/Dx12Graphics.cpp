@@ -42,7 +42,6 @@
 #pragma comment(lib,"dxgi.lib")
 
 
-
 const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat_
 {
 	DXGI_FORMAT_UNKNOWN,
@@ -436,7 +435,7 @@ Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const
 	return new Dx12ResourceBindLayout{device_.Get(), viewTypes,flags };
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
+Eugene::Pipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
 	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout, 
 	const ArgsSpan<ShaderPair>& shaders,
@@ -447,7 +446,12 @@ Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
 	std::uint8_t sampleCount 
 ) const
 {
-	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
+	return new Dx12Pipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
+}
+
+Eugene::Pipeline* Eugene::Dx12Graphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
+{
+	return new Dx12Pipeline{ device_.Get(), resourceBindLayout, csShader };
 }
 
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const

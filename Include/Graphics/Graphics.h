@@ -112,7 +112,7 @@ namespace Eugene
 		/// <param name="useDepth">　デプスバッファを使用するか?　</param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual GraphicsPipeline* CreateGraphicsPipeline(
+		virtual Pipeline* CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout,
 			const ArgsSpan<ShaderPair>&  shaders,
@@ -121,6 +121,18 @@ namespace Eugene
 			bool isCulling = false,
 			bool useDepth = false,
 			std::uint8_t sampleCount = 1
+		) const = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="resourceBindLayout"></param>
+		/// <param name="csShader"></param>
+		/// <returns></returns>
+		[[nodiscard]]
+		virtual Pipeline* CreateComputePipeline(
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
 		) const = 0;
 
 		[[nodiscard]]

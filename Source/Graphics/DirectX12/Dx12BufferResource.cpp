@@ -174,12 +174,6 @@ Eugene::Dx12ReadableBuffeResource::Dx12ReadableBuffeResource(D3D12MA::Allocator*
 
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_READBACK;
-
-	if (isUnordered)
-	{
-		resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
-	}
-
 	if (FAILED(allocator->CreateResource(
 		&allocationDesc,
 		&resourceDesc,

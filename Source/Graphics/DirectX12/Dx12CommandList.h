@@ -30,6 +30,8 @@ namespace Eugene
 		// グラフィックスパイプラインをセットする
 		void SetGraphicsPipeline(Pipeline& gpipeline) final;
 
+		void SetComputePipeline(Pipeline& gpipeline) final;
+
 		// プリミティブタイプをセットする
 		void SetPrimitiveType(PrimitiveType type) final;
 
@@ -49,6 +51,8 @@ namespace Eugene
 
 		// 指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする
 		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) final;
+
+		void SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx) final;
 
 		// 指定のパラメータインデックスに指定のサンプラービューのインデックスを先頭にセットする
 		void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) final;

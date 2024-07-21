@@ -57,6 +57,12 @@ namespace Eugene
 		virtual void SetGraphicsPipeline(Pipeline& gpipeline) = 0;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="gpipeline"></param>
+		virtual void SetComputePipeline(Pipeline& gpipeline) = 0;
+
+		/// <summary>
 		/// プリミティブタイプをセットする
 		/// </summary>
 		/// <param name="type"> プリミティブタイプ </param>
@@ -97,6 +103,13 @@ namespace Eugene
 		/// <param name="viewsIdx"> ビューのインデックス </param>
 		/// <param name="paramIdx"> セットするインデックス </param>
 		virtual void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) = 0;
+
+		/// <summary>
+		/// コンピュートシェーダー用にシェーダーリソースをセットする
+		/// </summary>
+		/// <param name="views"></param>
+		/// <param name="paramIdx"></param>
+		virtual void SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
 		/// サンプラーをセットする

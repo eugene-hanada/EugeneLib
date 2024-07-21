@@ -78,7 +78,7 @@ Eugene::Dx12UnloadableBufferResource::Dx12UnloadableBufferResource(ID3D12Device*
 	if (FAILED(allocator->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
+		D3D12_RESOURCE_STATE_COMMON,
 		nullptr,
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
@@ -127,7 +127,7 @@ Eugene::Dx12UnloadableBufferResource::Dx12UnloadableBufferResource(D3D12MA::Allo
 	if (FAILED(allocator->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
+		D3D12_RESOURCE_STATE_COMMON,
 		nullptr,
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
@@ -171,7 +171,6 @@ std::uint64_t Eugene::Dx12UnloadableBufferResource::GetSize(void)
 Eugene::Dx12ReadableBuffeResource::Dx12ReadableBuffeResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered)
 {
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
-
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_READBACK;
 	if (FAILED(allocator->CreateResource(

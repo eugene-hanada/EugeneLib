@@ -64,6 +64,13 @@ void Eugene::Dx12CommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 	cmdList_->SetGraphicsRootSignature(pipeline->rootSignature_.Get());
 }
 
+void Eugene::Dx12CommandList::SetComputePipeline(Pipeline& gpipeline)
+{
+	auto pipeline{ static_cast<Dx12Pipeline::PipeLineSet*>(gpipeline.GetPipeline()) };
+	cmdList_->SetPipelineState(pipeline->state_.Get());
+	cmdList_->SetComputeRootSignature(pipeline->rootSignature_.Get());
+}
+
 void Eugene::Dx12CommandList::SetPrimitiveType(PrimitiveType type)
 {
 	cmdList_->IASetPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(type));
@@ -104,6 +111,19 @@ void Eugene::Dx12CommandList::SetShaderResourceView(ShaderResourceViews& views, 
 	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart()};
 	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
+}
+
+void Eugene::Dx12CommandList::SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx)
+{
+	auto descriptorHeap{ static_cast<Dx12ShaderResourceViews&>(views).descriptorHeap_.Get() };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart() };
+	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
+	cmdList_->SetComputeRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
 }
 
 void Eugene::Dx12CommandList::SetSamplerView(SamplerViews& views, std::uint64_t paramIdx)
@@ -379,7 +399,18 @@ void Eugene::Dx12CommandList::CopyBuffer(BufferResource& dest, BufferResource& s
 {
 	ID3D12Resource* srcResource{ static_cast<ID3D12Resource*>(src.GetResource()) };
 	ID3D12Resource* destResource{ static_cast<ID3D12Resource*>(dest.GetResource()) };
+
+	auto barrier{ CD3DX12_RESOURCE_BARRIER::Transition(srcResource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_SOURCE) };
+
+	cmdList_->ResourceBarrier(1, &barrier);
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(destResource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
+	cmdList_->ResourceBarrier(1, &barrier);
 	cmdList_->CopyResource(destResource, srcResource);
+
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(srcResource, D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+	barrier = CD3DX12_RESOURCE_BARRIER::Transition(destResource, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
 }
 
 #ifdef USE_IMGUI

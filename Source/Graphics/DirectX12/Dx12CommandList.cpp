@@ -199,6 +199,20 @@ void Eugene::Dx12CommandList::TransitionDepthEnd(ImageResource& resource)
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
+void Eugene::Dx12CommandList::TransitionUnorderedAccessBegin(BufferResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
+void Eugene::Dx12CommandList::TransitionUnorderedAccessEnd(BufferResource& resource)
+{
+	auto dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(dx12Resource, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, &barrier);
+}
+
 
 void Eugene::Dx12CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 {

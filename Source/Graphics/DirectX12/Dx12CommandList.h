@@ -109,6 +109,10 @@ namespace Eugene
 		// デプス使用状態から終了する
 		void TransitionDepthEnd(ImageResource& resource) final;
 
+		void TransitionUnorderedAccessBegin(BufferResource& resource) final;
+
+		void TransitionUnorderedAccessEnd(BufferResource& resource) final;
+
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 
 		void Resolve(ImageResource& dest, ImageResource& src) final;

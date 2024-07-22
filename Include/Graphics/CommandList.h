@@ -206,6 +206,17 @@ namespace Eugene
 		/// <param name="resource"></param>
 		virtual void TransitionDepthEnd(ImageResource& resource) = 0;
 
+		/// <summary>
+		/// UnorderedAccessでの使用状態を開始する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionUnorderedAccessBegin(BufferResource& resource) = 0;
+
+		/// <summary>
+		/// UnorderedAccessでの使用状態を終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionUnorderedAccessEnd(BufferResource& resource) = 0;
 
 		/// <summary>
 		/// テクスチャのコピーを行う

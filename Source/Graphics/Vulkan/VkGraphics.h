@@ -159,8 +159,8 @@ namespace Eugene
 	private:
 		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
 		CommandList* CreateCommandList(void) const final;
-		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
-		BufferResource* CreateBufferResource(std::uint64_t size) const final;
+		BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const final;
+		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const final;
 		BufferResource* CreateBufferResource(Image& texture) const final;
 		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
 
@@ -185,7 +185,7 @@ namespace Eugene
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
 		void ResizeBackBuffer(const glm::vec2& size, void* window = nullptr) final;
 		void SetFullScreenFlag(bool isFullScreen) final;
-		GraphicsPipeline* CreateGraphicsPipeline(
+		Pipeline* CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout, 
 			const ArgsSpan<ShaderPair>& shaders, 
@@ -195,7 +195,7 @@ namespace Eugene
 			bool useDepth = false,
 			std::uint8_t sampleCount = 1
 		) const final;
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const final;
 		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const final;
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
 		void CreateInstance(void);
@@ -347,6 +347,12 @@ namespace Eugene
 #endif
 
 
+
+
+		// Graphics を介して継承されました
+		Pipeline* CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const override;
+
+		BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const override;
 
 };
 

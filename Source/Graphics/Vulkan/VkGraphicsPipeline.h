@@ -7,7 +7,7 @@ namespace Eugene
 {
 	class ResourceBindLayout;
 	class VkGraphicsPipeline :
-		public GraphicsPipeline
+		public Pipeline
 	{
 	public:
 		VkGraphicsPipeline(const vk::Device& device,

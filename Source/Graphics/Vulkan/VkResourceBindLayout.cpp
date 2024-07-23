@@ -23,8 +23,8 @@ Eugene::VkResourceBindLayout::VkResourceBindLayout(const vk::Device& device, con
 			case ViewType::ConstantBuffer:
 				bindingVector[i][j].setDescriptorType(vk::DescriptorType::eUniformBuffer);
 				break;
-			case ViewType::UnoderedAccsec:
-				bindingVector[i][j].setDescriptorType(vk::DescriptorType::eUniformBuffer);
+			case ViewType::UnoderedAccess:
+				bindingVector[i][j].setDescriptorType(vk::DescriptorType::eStorageBuffer);
 				break;
 			case ViewType::Sampler:
 				bindingVector[i][j].setDescriptorType(vk::DescriptorType::eSampler);

@@ -35,6 +35,7 @@ namespace Eugene
 		void CreateTexture(ImageResource& resource, std::uint64_t idx) final;
 		void CreateConstantBuffer(BufferResource& resource, std::uint64_t idx) final;
 		void CreateCubeMap(ImageResource& resource, std::uint64_t idx) final;
+		void CreateUnorderedAccessBuffer(BufferResource& resource, std::uint64_t idx, std::uint64_t numElements, std::uint64_t strideSize) final;
 		void* GetViews(void) final;
 		std::uint64_t GetImg(void) final;
 		

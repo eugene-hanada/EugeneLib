@@ -47,7 +47,7 @@ void Eugene::VkCommandList::End(void)
 	commandBuffer_->end();
 }
 
-void Eugene::VkCommandList::SetGraphicsPipeline(GraphicsPipeline& gpipeline)
+void Eugene::VkCommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 {
 	auto pipeline{ static_cast<VkGraphicsPipeline::PipelineType*>(gpipeline.GetPipeline()) };
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline->pipeline_);
@@ -569,6 +569,41 @@ void* Eugene::VkCommandList::GetCommandList(void)
 	return &commandBuffer_;
 }
 
+void Eugene::VkCommandList::SetComputePipeline(Pipeline& gpipeline)
+{
+	auto pipeline{ static_cast<VkGraphicsPipeline::PipelineType*>(gpipeline.GetPipeline()) };
+	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eCompute, *pipeline->pipeline_);
+	nowLayout_ = &pipeline->layout_;
+}
+void Eugene::VkCommandList::SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx)
+{
+	if (nowLayout_ == nullptr)
+	{
+		return;
+	}
+	auto data = static_cast<VkShaderResourceViews::Data*>(views.GetViews());
+	commandBuffer_->bindDescriptorSets(
+		vk::PipelineBindPoint::eCompute,
+		*nowLayout_,
+		static_cast<std::uint32_t>(paramIdx),
+		1u,
+		&*data->descriptorSet_,
+		0u,
+		nullptr
+	);
+}
+
+void Eugene::VkCommandList::Dispatch(const glm::u32vec3& count)
+{
+	commandBuffer_->dispatch(count.x, count.y, count.z);
+}
+void Eugene::VkCommandList::TransitionUnorderedAccessBegin(BufferResource& resource)
+{
+}
+void Eugene::VkCommandList::TransitionUnorderedAccessEnd(BufferResource& resource)
+{
+}
+
 #ifdef USE_IMGUI
 void Eugene::VkCommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
 {
@@ -588,4 +623,5 @@ void Eugene::VkCommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics
 	ImGui_ImplVulkan_RenderDrawData(data, *commandBuffer_);
 	commandBuffer_->endRenderPass();
 }
+
 #endif

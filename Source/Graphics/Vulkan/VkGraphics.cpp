@@ -443,7 +443,7 @@ Eugene::BufferResource* Eugene::VkGraphics::CreateReadableBufferResource(std::ui
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
 {
-	return new VkBufferResource{*allocator_, size};
+	return new VkBufferResource{*allocator_, size, isUnordered};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
@@ -1210,7 +1210,7 @@ void Eugene::VkGraphics::CreateImguiFrameBuffer(const glm::vec2& size)
 
 Eugene::Pipeline* Eugene::VkGraphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
 {
-	return nullptr;
+	return new VkGraphicsPipeline{*device_, resourceBindLayout, csShader};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateUnloadableBufferResource(std::uint64_t size) const

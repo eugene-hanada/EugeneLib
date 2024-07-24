@@ -21,6 +21,12 @@ namespace Eugene
 			std::uint8_t sampleCount
 		);
 
+		VkGraphicsPipeline(
+			const vk::Device& device,
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
+		);
+
 		struct Data
 		{
 			vk::PipelineLayout layout_;

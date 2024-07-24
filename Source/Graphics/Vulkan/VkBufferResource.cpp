@@ -2,12 +2,17 @@
 #include "VkGraphics.h"
 #include "../../../Include/Graphics/Image.h"
 
-Eugene::VkBufferResource::VkBufferResource(const vma::Allocator& allocator, std::uint64_t size) :
+Eugene::VkBufferResource::VkBufferResource(const vma::Allocator& allocator, std::uint64_t size, bool isUnordered) :
 	BufferResource{}
 {
 	vk::BufferCreateInfo bufferInfo{};
 	bufferInfo.setSize(size);
-	bufferInfo.setUsage(vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst);
+	auto usage = vk::BufferUsageFlagBits::eUniformBuffer | vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eIndexBuffer | vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst;
+	if (isUnordered)
+	{
+		usage |= vk::BufferUsageFlagBits::eStorageBuffer;
+	}
+	bufferInfo.setUsage(usage);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 	
 	vma::AllocationCreateInfo allocInfo{};

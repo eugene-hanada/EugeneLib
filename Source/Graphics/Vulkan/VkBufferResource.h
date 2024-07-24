@@ -39,7 +39,7 @@ namespace Eugene
 		public BufferResource
 	{
 	public:
-		VkBufferResource(const vma::Allocator& allocator, std::uint64_t size);
+		VkBufferResource(const vma::Allocator& allocator, std::uint64_t size, bool isUnordered);
 	private:
 
 		// BufferResource を介して継承されました

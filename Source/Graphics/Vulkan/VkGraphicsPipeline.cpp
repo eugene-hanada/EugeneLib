@@ -326,6 +326,29 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	data_.pipeline_ = std::move(pipeline);
 }
 
+Eugene::VkGraphicsPipeline::VkGraphicsPipeline(const vk::Device& device, ResourceBindLayout& resourceBindLayout, const Shader& csShader)
+{
+	auto& bindLayout{ static_cast<VkResourceBindLayout&>(resourceBindLayout) };
+	data_.layout_ = *bindLayout.pipelineLayout_;
+
+	vk::ShaderModuleCreateInfo info{};
+	info.setPCode(reinterpret_cast<const std::uint32_t*>(csShader.GetPtr()));
+	info.setCodeSize(csShader.GetSize());
+
+	auto csModule = device.createShaderModuleUnique(info);
+
+	vk::PipelineShaderStageCreateInfo shaderStageInfo{};
+	shaderStageInfo.setStage(vk::ShaderStageFlagBits::eCompute);
+	shaderStageInfo.setModule(*csModule);
+	shaderStageInfo.setPName("main");
+
+	vk::ComputePipelineCreateInfo createInfo{};
+	createInfo.setLayout(data_.layout_);
+	createInfo.setStage(shaderStageInfo);
+	auto [result, pipeline] = device.createComputePipelineUnique(nullptr,createInfo);
+	data_.pipeline_ = std::move(pipeline);
+}
+
 void* Eugene::VkGraphicsPipeline::GetPipeline(void)
 {
 	return &data_;

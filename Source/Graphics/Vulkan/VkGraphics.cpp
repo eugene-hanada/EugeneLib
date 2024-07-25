@@ -438,7 +438,7 @@ Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered)const
 {
-	return new VkUploadableBufferResource{ *allocator_, size};
+	return new VkUnloadableBufferResource{ *allocator_, size, isUnordered};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
@@ -448,7 +448,12 @@ Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t s
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
 {
-	return new VkUploadableBufferResource{ *allocator_, texture};
+	return new VkUnloadableBufferResource{ *allocator_, texture};
+}
+
+Eugene::BufferResource* Eugene::VkGraphics::CreateUnloadableBufferResource(std::uint64_t size) const
+{
+	return new VkUnloadableBufferResource{ *allocator_, size,false };
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
@@ -1213,9 +1218,5 @@ Eugene::Pipeline* Eugene::VkGraphics::CreateComputePipeline(ResourceBindLayout& 
 	return new VkGraphicsPipeline{*device_, resourceBindLayout, csShader};
 }
 
-Eugene::BufferResource* Eugene::VkGraphics::CreateUnloadableBufferResource(std::uint64_t size) const
-{
-	return nullptr;
-}
 
 #endif 

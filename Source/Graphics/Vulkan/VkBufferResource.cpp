@@ -44,16 +44,24 @@ std::uint64_t Eugene::VkBufferResource::GetSize(void)
 	return data_.size_;
 }
 
-Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vma::Allocator& allocator, std::uint64_t size) :
+Eugene::VkUnloadableBufferResource::VkUnloadableBufferResource(const vma::Allocator& allocator, std::uint64_t size, bool isUnordered) :
 	BufferResource{},allocator_{allocator}, mapCount_{0ull}
 {
 	vk::BufferCreateInfo bufferInfo{};
+
+	auto usage{ vk::BufferUsageFlagBits::eUniformBuffer |
+		vk::BufferUsageFlagBits::eTransferSrc |
+		vk::BufferUsageFlagBits::eTransferDst |
+		vk::BufferUsageFlagBits::eVertexBuffer };
+
+	if (isUnordered)
+	{
+		usage |= vk::BufferUsageFlagBits::eStorageBuffer;
+	}
+
 	bufferInfo.setSize(size);
 	bufferInfo.setUsage(
-		vk::BufferUsageFlagBits::eUniformBuffer | 
-		vk::BufferUsageFlagBits::eTransferSrc | 
-		vk::BufferUsageFlagBits::eTransferDst | 
-		vk::BufferUsageFlagBits::eVertexBuffer
+		usage
 	);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 
@@ -77,7 +85,7 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vma::Alloca
 	data_.size_ = size;
 }
 
-Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vma::Allocator& allocator, Image& image):
+Eugene::VkUnloadableBufferResource::VkUnloadableBufferResource(const vma::Allocator& allocator, Image& image):
 	BufferResource{}, allocator_{ allocator }, mapCount_{ 0ull }
 {
 	vk::BufferCreateInfo bufferInfo{};
@@ -110,7 +118,7 @@ Eugene::VkUploadableBufferResource::VkUploadableBufferResource(const vma::Alloca
 	UnMap();
 }
 
-Eugene::VkUploadableBufferResource::~VkUploadableBufferResource()
+Eugene::VkUnloadableBufferResource::~VkUnloadableBufferResource()
 {
 	// Mapした回数分Unmapする
 	for (std::uint64_t i = 0ull; i < mapCount_; i++)
@@ -119,28 +127,28 @@ Eugene::VkUploadableBufferResource::~VkUploadableBufferResource()
 	}
 }
 
-bool Eugene::VkUploadableBufferResource::CanMap(void) const
+bool Eugene::VkUnloadableBufferResource::CanMap(void) const
 {
 	return true;
 }
 
-void* Eugene::VkUploadableBufferResource::GetResource(void)
+void* Eugene::VkUnloadableBufferResource::GetResource(void)
 {
 	return &data_;
 }
 
-std::uint64_t Eugene::VkUploadableBufferResource::GetSize(void)
+std::uint64_t Eugene::VkUnloadableBufferResource::GetSize(void)
 {
 	return data_.size_;
 }
 
-void* Eugene::VkUploadableBufferResource::Map(void)
+void* Eugene::VkUnloadableBufferResource::Map(void)
 {
 	mapCount_++;
 	return allocator_.mapMemory(*data_.allocation_);
 }
 
-void Eugene::VkUploadableBufferResource::UnMap(void)
+void Eugene::VkUnloadableBufferResource::UnMap(void)
 {
 	mapCount_--;
 	allocator_.unmapMemory(*data_.allocation_);

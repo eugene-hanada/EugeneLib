@@ -56,13 +56,13 @@ namespace Eugene
 	/// <summary>
 	/// アップロード用
 	/// </summary>
-	class VkUploadableBufferResource :
+	class VkUnloadableBufferResource :
 		public BufferResource
 	{
 	public:
-		VkUploadableBufferResource(const vma::Allocator& allocator, std::uint64_t size);
-		VkUploadableBufferResource(const vma::Allocator& allocator, Image& image);
-		~VkUploadableBufferResource();
+		VkUnloadableBufferResource(const vma::Allocator& allocator, std::uint64_t size, bool isUnordered);
+		VkUnloadableBufferResource(const vma::Allocator& allocator, Image& image);
+		~VkUnloadableBufferResource();
 	private:
 		// BufferResource を介して継承されました
 		bool CanMap(void) const final;

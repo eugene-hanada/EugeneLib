@@ -599,6 +599,16 @@ void Eugene::VkCommandList::Dispatch(const glm::u32vec3& count)
 }
 void Eugene::VkCommandList::TransitionUnorderedAccessBegin(BufferResource& resource)
 {
+	auto data = static_cast<VkBufferData*>(resource.GetResource());
+	vk::BufferMemoryBarrier barrier{};
+	barrier.setBuffer(*data->buffer_);
+	barrier.setDstAccessMask(vk::AccessFlagBits::eShaderWrite | vk::AccessFlagBits::eShaderRead);
+	barrier.setSrcAccessMask(vk::AccessFlagBits::eShaderWrite | vk::AccessFlagBits::eShaderRead);
+	barrier.setSize(data->size_);
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eAllCommands, vk::PipelineStageFlagBits::eAllCommands, 
+		static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 1, &barrier, 0, nullptr);
+	
 }
 void Eugene::VkCommandList::TransitionUnorderedAccessEnd(BufferResource& resource)
 {

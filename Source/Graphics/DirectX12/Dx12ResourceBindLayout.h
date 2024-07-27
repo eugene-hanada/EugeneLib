@@ -13,10 +13,10 @@ namespace Eugene
 	{
 	public:
 
-		Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
+		Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags);
 	private:
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 
-		friend class Dx12GraphicsPipeline;
+		friend class Dx12Pipeline;
 	};
 }

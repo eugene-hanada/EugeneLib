@@ -8,7 +8,7 @@
 
 
 
-Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
+Eugene::Dx12Pipeline::Dx12Pipeline(
 	ID3D12Device* device, 
 	ResourceBindLayout& resourceBindLayout, 
 	const ArgsSpan<ShaderInputLayout>& layout,
@@ -165,10 +165,56 @@ Eugene::Dx12GraphicsPipeline::Dx12GraphicsPipeline(
 	{
 		throw CreateErrorException{ "グラフィックスパイプラインステート生成失敗" };
 	}
-	
 }
 
-void* Eugene::Dx12GraphicsPipeline::GetPipeline(void)
+Eugene::Dx12Pipeline::Dx12Pipeline(ID3D12Device* device, ResourceBindLayout& resourceBindLayout, const Shader& csShader)
+{
+	//D3D12_DESCRIPTOR_RANGE range[1] = {};
+	//range[0].NumDescriptors = 1;//1つ 
+	//range[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;//u 
+	//range[0].BaseShaderRegister = 0;//u0 
+	//range[0].OffsetInDescriptorsFromTableStart = 0;
+	//range[0].RegisterSpace = 0;
+
+	//D3D12_ROOT_PARAMETER rp[1] = {};
+	//rp[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	//rp[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+	//rp[0].DescriptorTable.NumDescriptorRanges = 1;
+	//rp[0].DescriptorTable.pDescriptorRanges = range;
+
+	//D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	//D3D12_ROOT_SIGNATURE_DESC rootSigDesc = {};
+	//rootSigDesc.NumParameters = 1;
+
+	//rootSigDesc.pParameters = rp;
+	//rootSigDesc.NumStaticSamplers = 0;
+	//rootSigDesc.pStaticSamplers = nullptr;
+	//rootSigDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT;
+	//ID3DBlob* errBlob = nullptr;
+
+	//ID3DBlob* rootSigBlob = nullptr;
+	//D3D12SerializeRootSignature(&rootSigDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob,
+	//	&errBlob);
+	//ID3D12RootSignature* rootSignature = nullptr;
+	//auto result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+	//	rootSigBlob->GetBufferSize(), IID_PPV_ARGS(pipeline_.rootSignature_.ReleaseAndGetAddressOf()));
+
+	pipeline_.rootSignature_ = static_cast<Dx12ResourceBindLayout&>(resourceBindLayout).rootSignature_;
+
+	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineDesc{};
+	computePipelineDesc.CS.pShaderBytecode = csShader.GetPtr();
+	computePipelineDesc.CS.BytecodeLength = csShader.GetSize();
+	computePipelineDesc.NodeMask = 0;
+	computePipelineDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
+	computePipelineDesc.pRootSignature = pipeline_.rootSignature_.Get();
+	auto result = device->CreateComputePipelineState(&computePipelineDesc, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
+	if (FAILED(result))
+	{
+		throw CreateErrorException{ "コンピュートパイプラインステート生成失敗" };
+	}
+}
+
+void* Eugene::Dx12Pipeline::GetPipeline(void)
 {
 	return (&pipeline_);
 }

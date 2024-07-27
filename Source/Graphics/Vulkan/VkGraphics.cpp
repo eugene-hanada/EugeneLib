@@ -436,19 +436,24 @@ Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
 	return new VkCommandList{*device_, graphicFamilly_ };
 }
 
-Eugene::BufferResource* Eugene::VkGraphics::CreateUploadableBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::VkGraphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered)const
 {
-	return new VkUploadableBufferResource{ *allocator_, size};
+	return new VkUnloadableBufferResource{ *allocator_, size, isUnordered};
 }
 
-Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
 {
-	return new VkBufferResource{*allocator_, size};
+	return new VkBufferResource{*allocator_, size, isUnordered};
 }
 
 Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
 {
-	return new VkUploadableBufferResource{ *allocator_, texture};
+	return new VkUnloadableBufferResource{ *allocator_, texture};
+}
+
+Eugene::BufferResource* Eugene::VkGraphics::CreateUnloadableBufferResource(std::uint64_t size) const
+{
+	return new VkUnloadableBufferResource{ *allocator_, size,false };
 }
 
 Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
@@ -787,7 +792,7 @@ void Eugene::VkGraphics::SetUpVma(void)
     allocator_ = vma::createAllocatorUnique(allocatorInfo);
 }
 
-Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
+Eugene::Pipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
 	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout,
 	const ArgsSpan<ShaderPair>& shaders,
@@ -801,7 +806,7 @@ Eugene::GraphicsPipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
 	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount};
 }
 
-Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
 {
 	return new VkResourceBindLayout{*device_,viewTypes};
 }
@@ -1207,5 +1212,11 @@ void Eugene::VkGraphics::CreateImguiFrameBuffer(const glm::vec2& size)
 		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
 	}
 }
+
+Eugene::Pipeline* Eugene::VkGraphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
+{
+	return new VkGraphicsPipeline{*device_, resourceBindLayout, csShader};
+}
+
 
 #endif 

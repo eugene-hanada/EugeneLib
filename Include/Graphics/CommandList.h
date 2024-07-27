@@ -4,6 +4,7 @@
 #include <optional>
 #include "GraphicsCommon.h"
 #include "../ThirdParty/glm/glm/vec2.hpp"
+#include "../ThirdParty/glm/glm/vec3.hpp"
 
 #ifdef USE_IMGUI
 struct ImDrawData;
@@ -21,7 +22,7 @@ namespace Eugene
 	class BufferResource;
 	class ImageResource;
 
-	class GraphicsPipeline;
+	class Pipeline;
 	class ShaderResourceViews;
 	class SamplerViews;
 
@@ -53,7 +54,13 @@ namespace Eugene
 		/// グラフィックスパイプラインをセットする
 		/// </summary>
 		/// <param name="gpipeline"> グラフィックスパイプライン </param>
-		virtual void SetGraphicsPipeline(GraphicsPipeline& gpipeline) = 0;
+		virtual void SetGraphicsPipeline(Pipeline& gpipeline) = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="gpipeline"></param>
+		virtual void SetComputePipeline(Pipeline& gpipeline) = 0;
 
 		/// <summary>
 		/// プリミティブタイプをセットする
@@ -98,6 +105,13 @@ namespace Eugene
 		virtual void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) = 0;
 
 		/// <summary>
+		/// コンピュートシェーダー用にシェーダーリソースをセットする
+		/// </summary>
+		/// <param name="views"></param>
+		/// <param name="paramIdx"></param>
+		virtual void SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx) = 0;
+
+		/// <summary>
 		/// サンプラーをセットする
 		/// </summary>
 		/// <param name="views"></param>
@@ -119,6 +133,12 @@ namespace Eugene
 		/// <param name="instanceNum"></param>
 		/// <param name="offset"></param>
 		virtual void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="count"></param>
+		virtual void Dispatch(const glm::u32vec3& count) = 0;
 
 		/// <summary>
 		/// レンダーターゲットのセット(深度バッファあり)
@@ -186,6 +206,17 @@ namespace Eugene
 		/// <param name="resource"></param>
 		virtual void TransitionDepthEnd(ImageResource& resource) = 0;
 
+		/// <summary>
+		/// UnorderedAccessでの使用状態を開始する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionUnorderedAccessBegin(BufferResource& resource) = 0;
+
+		/// <summary>
+		/// UnorderedAccessでの使用状態を終了する
+		/// </summary>
+		/// <param name="resource"></param>
+		virtual void TransitionUnorderedAccessEnd(BufferResource& resource) = 0;
 
 		/// <summary>
 		/// テクスチャのコピーを行う

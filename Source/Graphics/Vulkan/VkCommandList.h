@@ -16,7 +16,7 @@ namespace Eugene
 		// CommandList を介して継承されました
 		void Begin(void) final;
 		void End(void) final;
-		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
+		void SetGraphicsPipeline(Pipeline& gpipeline) final;
 		void SetPrimitiveType(PrimitiveType type) final;
 		void SetScissorrect(const glm::ivec2& leftTop, const glm::ivec2& rightBottom) final;
 		void SetViewPort(const glm::vec2& leftTop, const glm::vec2& size, float depthMin, float depthMax) final;
@@ -83,6 +83,13 @@ namespace Eugene
 		// CommandList を介して継承されました
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const final;
 #endif
+
+		// CommandList を介して継承されました
+		void SetComputePipeline(Pipeline& gpipeline) override;
+		void SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx) override;
+		void Dispatch(const glm::u32vec3& count) override;
+		void TransitionUnorderedAccessBegin(BufferResource& resource) override;
+		void TransitionUnorderedAccessEnd(BufferResource& resource) override;
 	};
 }
 

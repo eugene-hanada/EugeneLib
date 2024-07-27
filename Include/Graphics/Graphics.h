@@ -112,7 +112,7 @@ namespace Eugene
 		/// <param name="useDepth">　デプスバッファを使用するか?　</param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual GraphicsPipeline* CreateGraphicsPipeline(
+		virtual Pipeline* CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout,
 			const ArgsSpan<ShaderPair>&  shaders,
@@ -123,24 +123,45 @@ namespace Eugene
 			std::uint8_t sampleCount = 1
 		) const = 0;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="resourceBindLayout"></param>
+		/// <param name="csShader"></param>
+		/// <returns></returns>
 		[[nodiscard]]
-		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const = 0;
+		virtual Pipeline* CreateComputePipeline(
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
+		) const = 0;
 
+		[[nodiscard]]
+		virtual ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const = 0;
+
+		[[nodiscard]]
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
+		{
+			return CreateResourceBindLayout(viewTypes, std::to_underlying(flag));
+		}
 		/// <summary>
 		/// アップロードのためのバッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>
 		/// <param name="size"> サイズ </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual BufferResource* CreateUploadableBufferResource(std::uint64_t size) const = 0;
+		virtual BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const = 0;
 
 		/// <summary>
 		/// バッファー(頂点、インデックス、定数)用のリソースを生成する
 		/// </summary>
-		/// <param name="size"> サイズ </param>
+		/// <param name="size"></param>
+		/// <param name="isUnordered"> Unorderedで使用するか？ </param>
 		/// <returns></returns>
 		[[nodiscard]]
-		virtual BufferResource* CreateBufferResource(std::uint64_t size) const = 0;
+		virtual BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const = 0;
+
+		[[nodiscard]]
+		virtual BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const = 0;
 
 		/// <summary>
 		/// テクスチャアップロード用バッファーリソースを生成する

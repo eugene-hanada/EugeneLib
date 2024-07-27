@@ -42,7 +42,6 @@
 #pragma comment(lib,"dxgi.lib")
 
 
-
 const std::array<int,Eugene::FormatMax> Eugene::Dx12Graphics::FormatToDxgiFormat_
 {
 	DXGI_FORMAT_UNKNOWN,
@@ -180,19 +179,24 @@ Eugene::CommandList* Eugene::Dx12Graphics::CreateCommandList(void) const
 }
 
 
-Eugene::BufferResource* Eugene::Dx12Graphics::CreateUploadableBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateUnloadableBufferResource(std::uint64_t size) const
 {
-	return new Dx12UploadableBufferResource{allocator_.Get(), size};
+	return new Dx12UnloadableBufferResource{allocator_.Get(), size};
 }
 
-Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size) const
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered) const
 {
-	return new Dx12BufferResource{ allocator_.Get(),size};
+	return new Dx12ReadableBuffeResource{allocator_.Get(),size, isUnordered};
+}
+
+Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
+{
+	return new Dx12BufferResource{ allocator_.Get(),size, isUnordered };
 }
 
 Eugene::BufferResource* Eugene::Dx12Graphics::CreateBufferResource(Image& texture) const
 {
-	return new Dx12UploadableBufferResource{device_.Get(),allocator_.Get(), texture};
+	return new Dx12UnloadableBufferResource{device_.Get(),allocator_.Get(), texture};
 }
 
 Eugene::ImageResource* Eugene::Dx12Graphics::CreateImageResource(const TextureInfo& formatData) const
@@ -426,12 +430,12 @@ void Eugene::Dx12Graphics::SetFullScreenFlag(bool isFullScreen)
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
 }
 
-Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const
+Eugene::ResourceBindLayout* Eugene::Dx12Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
 {
-	return new Dx12ResourceBindLayout{device_.Get(), viewTypes};
+	return new Dx12ResourceBindLayout{device_.Get(), viewTypes,flags };
 }
 
-Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
+Eugene::Pipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
 	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout, 
 	const ArgsSpan<ShaderPair>& shaders,
@@ -442,7 +446,12 @@ Eugene::GraphicsPipeline* Eugene::Dx12Graphics::CreateGraphicsPipeline(
 	std::uint8_t sampleCount 
 ) const
 {
-	return new Dx12GraphicsPipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
+	return new Dx12Pipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
+}
+
+Eugene::Pipeline* Eugene::Dx12Graphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
+{
+	return new Dx12Pipeline{ device_.Get(), resourceBindLayout, csShader };
 }
 
 Eugene::ShaderResourceViews* Eugene::Dx12Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const

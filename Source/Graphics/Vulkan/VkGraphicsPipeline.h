@@ -7,7 +7,7 @@ namespace Eugene
 {
 	class ResourceBindLayout;
 	class VkGraphicsPipeline :
-		public GraphicsPipeline
+		public Pipeline
 	{
 	public:
 		VkGraphicsPipeline(const vk::Device& device,
@@ -19,6 +19,12 @@ namespace Eugene
 			bool isCulling,
 			bool useDepth,
 			std::uint8_t sampleCount
+		);
+
+		VkGraphicsPipeline(
+			const vk::Device& device,
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
 		);
 
 		struct Data

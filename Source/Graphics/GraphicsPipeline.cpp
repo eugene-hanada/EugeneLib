@@ -1,10 +1,10 @@
 ﻿#include "../../Include/Graphics/GraphicsPipeline.h"
 
-Eugene::GraphicsPipeline::~GraphicsPipeline()
+Eugene::Pipeline::~Pipeline()
 {
 }
 
-Eugene::GraphicsPipeline::GraphicsPipeline()
+Eugene::Pipeline::Pipeline()
 {
 }
 

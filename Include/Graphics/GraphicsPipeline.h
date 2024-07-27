@@ -167,13 +167,13 @@ namespace Eugene
 	/// <summary>
 	/// グラフィックスパイプラインを設定しているクラス
 	/// </summary>
-	class GraphicsPipeline
+	class Pipeline
 	{
 	public:
-		virtual ~GraphicsPipeline();
+		virtual ~Pipeline();
 		virtual void* GetPipeline(void) = 0;
 	protected:
-		GraphicsPipeline();
+		Pipeline();
 
 	};
 }

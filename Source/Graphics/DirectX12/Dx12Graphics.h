@@ -36,9 +36,11 @@ namespace Eugene
 
 		CommandList* CreateCommandList(void) const final;
 
-		BufferResource* CreateUploadableBufferResource(std::uint64_t size) const final;
+		BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const final;
 
-		BufferResource* CreateBufferResource(std::uint64_t size) const final;
+		BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const;
+
+		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const final;
 
 		BufferResource* CreateBufferResource(Image& texture) const final;
 
@@ -81,10 +83,10 @@ namespace Eugene
 		void SetFullScreenFlag(bool isFullScreen) final;
 
 		// Graphics を介して継承されました
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes) const final;
+		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const final;
 
 		// Graphics を介して継承されました
-		GraphicsPipeline* CreateGraphicsPipeline(
+		Pipeline* CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout, 
 			const ArgsSpan<ShaderPair>& shaders,
@@ -93,6 +95,11 @@ namespace Eugene
 			bool isCulling = false,
 			bool useDepth = false,
 			std::uint8_t sampleCount = 1
+		) const final;
+
+		Pipeline* CreateComputePipeline(
+			ResourceBindLayout& resourceBindLayout,
+			const Shader& csShader
 		) const final;
 
 		// Graphics を介して継承されました

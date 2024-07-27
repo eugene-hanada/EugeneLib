@@ -4,13 +4,14 @@
 #include "../../../Include/Utils/EugeneLibException.h"
 
 
-Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
+Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes,ResourceBindFlags flags)
 {
 	auto b = viewTypes.begin();
 	auto size = viewTypes.size();
 
 	std::uint32_t texRegister = 0u;
 	std::uint32_t cbRegister = 0u;
+	std::uint32_t uaRegister = 0u;
 	std::uint32_t smpRegister = 0u;
 
 	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> range(size);
@@ -29,8 +30,8 @@ Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, con
 			case ViewType::Texture:
 				nowRegister = texRegister++;
 				break;
-			case ViewType::UnoderedAccsec:
-				nowRegister = cbRegister++;
+			case ViewType::UnoderedAccess:
+				nowRegister = uaRegister++;
 				break;
 			case ViewType::ConstantBuffer:
 				nowRegister = cbRegister++;
@@ -56,20 +57,35 @@ Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, con
 		rootparam[i].InitAsDescriptorTable(static_cast<std::uint32_t>(range[i].size()), range[i].data());
 	}
 
+	constexpr D3D12_ROOT_SIGNATURE_FLAGS toRootSignatureFlag[]
+	{
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT,
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT,
+	};
+	D3D12_ROOT_SIGNATURE_FLAGS rootSignatureFlags{ D3D12_ROOT_SIGNATURE_FLAG_NONE };
+
+	for (std::size_t i = 0; i < flags.size(); i++)
+	{
+		if (flags.test(i))
+		{
+			rootSignatureFlags |= toRootSignatureFlag[i];
+		}
+	}
+
 	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
 	rootSignatureDesc.Init(
 		static_cast<std::uint32_t>(rootparam.size()),
 		rootparam.data(),
 		0u,
 		nullptr,
-		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT
+		rootSignatureFlags
 	);
 
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
 	if (FAILED(D3D12SerializeRootSignature(
 		&rootSignatureDesc,
-		D3D_ROOT_SIGNATURE_VERSION_1,
+		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob)
 	))

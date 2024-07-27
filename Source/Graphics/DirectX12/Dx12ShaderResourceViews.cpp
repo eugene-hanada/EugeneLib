@@ -85,6 +85,35 @@ void Eugene::Dx12ShaderResourceViews::CreateCubeMap(ImageResource& resource, std
 	device->CreateShaderResourceView(dx12Resource, &viewDesc, handle);
 }
 
+void Eugene::Dx12ShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& resource, std::uint64_t idx, std::uint64_t numElements, std::uint64_t strideSize)
+{
+	if (size_ <= idx)
+	{
+		return;
+	}
+	ID3D12Device* device{ nullptr };
+	ID3D12Resource* dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
+	if (FAILED(dx12Resource->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+	auto resourceDesc = dx12Resource->GetDesc();
+
+	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_UNORDERED_ACCESS_VIEW_DESC viewDesc{};
+	viewDesc.Format = DXGI_FORMAT_UNKNOWN;
+	viewDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+	viewDesc.Buffer.NumElements = numElements;
+	viewDesc.Buffer.StructureByteStride = strideSize;
+	viewDesc.Buffer.FirstElement = 0;
+	viewDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+
+
+	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	device->CreateUnorderedAccessView(dx12Resource, nullptr, &viewDesc, handle);
+}
+
 void* Eugene::Dx12ShaderResourceViews::GetViews(void)
 {
 	return descriptorHeap_.Get();

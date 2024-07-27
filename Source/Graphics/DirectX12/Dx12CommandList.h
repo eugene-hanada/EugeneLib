@@ -28,7 +28,9 @@ namespace Eugene
 		void End(void) final;
 
 		// グラフィックスパイプラインをセットする
-		void SetGraphicsPipeline(GraphicsPipeline& gpipeline) final;
+		void SetGraphicsPipeline(Pipeline& gpipeline) final;
+
+		void SetComputePipeline(Pipeline& gpipeline) final;
 
 		// プリミティブタイプをセットする
 		void SetPrimitiveType(PrimitiveType type) final;
@@ -50,6 +52,8 @@ namespace Eugene
 		// 指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする
 		void SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx) final;
 
+		void SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx) final;
+
 		// 指定のパラメータインデックスに指定のサンプラービューのインデックスを先頭にセットする
 		void SetSamplerView(SamplerViews& views, std::uint64_t paramIdx) final;
 
@@ -60,6 +64,8 @@ namespace Eugene
 
 		// インデックス付きで描画
 		void DrawIndexed(std::uint32_t indexCount, std::uint32_t instanceNum = 1, std::uint32_t offset = 0) final;
+
+		void Dispatch(const glm::u32vec3& count) final;
 
 		// レンダーターゲットセット系 //
 
@@ -102,6 +108,10 @@ namespace Eugene
 
 		// デプス使用状態から終了する
 		void TransitionDepthEnd(ImageResource& resource) final;
+
+		void TransitionUnorderedAccessBegin(BufferResource& resource) final;
+
+		void TransitionUnorderedAccessEnd(BufferResource& resource) final;
 
 		void CopyTexture(ImageResource& dest, BufferResource& src) final;
 

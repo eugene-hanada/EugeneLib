@@ -75,6 +75,16 @@
           "name": "EUGENE_EFFEKSEER_DIR",
           "value": "C:/install_vulkan_msvc2022_x64",
           "type": "PATH"
+        },
+        {
+          "name": "MI_BUILD_SHARED",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "MI_OVERRIDE",
+          "value": "False",
+          "type": "BOOL"
         }
       ]
     }

@@ -37,6 +37,15 @@ namespace Eugene
 		/// <param name="resource"> リソース </param>
 		/// <param name="idx"> インデックス </param>
 		virtual void CreateCubeMap(ImageResource& resource, std::uint64_t idx) = 0;
+
+		/// <summary>
+		/// UnorderedAccess可能なバッファをのビューを生成
+		/// </summary>
+		/// <param name="resource"></param>
+		/// <param name="numElements"></param>
+		/// <param name="strideSize"></param>
+		virtual void CreateUnorderedAccessBuffer(BufferResource& resource, std::uint64_t idx ,std::uint64_t numElements, std::uint64_t strideSize) = 0;
+
 		virtual void* GetViews(void) = 0;
 
 		/// <summary>

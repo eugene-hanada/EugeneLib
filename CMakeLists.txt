@@ -12,7 +12,11 @@ option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
 option(EUGENE_USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
-set(EUGENE_EFFEKSEER_DIR "" CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
+option(EUGENE_BUILD_SOUND "サウンド機能をビルドするか？" ON)
+
+if (EUGENE_USE_EFFEKSEER)
+	set(EUGENE_EFFEKSEER_DIR "" CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
+endif ()
 
 if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
@@ -222,10 +226,23 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
+if (EUGENE_USE_SOUND)
+	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_SOUND)
+endif()
+
 if (EUGENE_USE_WINDOWS)
-	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
+	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_WINDOWS)
+
+	if (EUGENE_USE_SOUND)
+		target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_XAUDIO)
+	endif()
 elseif(EUGENE_USE_ANDROID)
-	target_compile_definitions(EugeneLib PRIVATE USE_ANDROID)
+	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_ANDROID)
+
+	if (EUGENE_USE_SOUND)
+		target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_AAUDIO)
+	endif()
+
 	find_package(game-activity REQUIRED CONFIG)
 	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity aaudio)
 endif()
@@ -254,9 +271,6 @@ elseif(EUGENE_USE_VULKAN)
 			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
 		endif()
 	endif()
-
-
-
 endif()
 
 if (EUGENE_USE_IMGUI)

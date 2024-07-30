@@ -26,13 +26,14 @@
 #include "Graphics/Sampler.h"
 
 // サウンド系
+#ifdef EUGENE_SOUND
 #include "Sound/Sound.h"
 #include "Sound/SoundSpeaker.h"
 #include "Sound/SoundFile.h"
 #include "Sound/SoundControl.h"
 #include "Sound/Sound3DControl.h"
 #include "Sound/SoundStreamSpeaker.h"
-
+#endif
 
 #include "Math/Math.h"
 #include "Math/Random.h"

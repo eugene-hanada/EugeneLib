@@ -226,21 +226,21 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
-if (EUGENE_USE_SOUND)
-	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_SOUND)
+if (EUGENE_BUILD_SOUND)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_SOUND)
 endif()
 
 if (EUGENE_USE_WINDOWS)
-	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_WINDOWS)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_WINDOWS)
 
-	if (EUGENE_USE_SOUND)
-		target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_XAUDIO)
+	if (EUGENE_BUILD_SOUND)
+		target_compile_definitions(EugeneLib PUBLIC EUGENE_XAUDIO)
 	endif()
 elseif(EUGENE_USE_ANDROID)
-	target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_ANDROID)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_ANDROID)
 
-	if (EUGENE_USE_SOUND)
-		target_compile_definitions(EugeneLib PRIVATE EUGENE_USE_AAUDIO)
+	if (EUGENE_BUILD_SOUND)
+		target_compile_definitions(EugeneLib PUBLIC EUGENE_AAUDIO)
 	endif()
 
 	find_package(game-activity REQUIRED CONFIG)

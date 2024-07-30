@@ -17,7 +17,7 @@ namespace Eugene
 		const char* what() const noexcept final;
 
 		/// <summary>
-		/// メッセージ
+		/// メッセージe
 		/// </summary>
 		std::string mess_;
 	};

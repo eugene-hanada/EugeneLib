@@ -1,4 +1,4 @@
-﻿#include "WindowsSystem.h"
+﻿#include "../../../Include/System/System.h"
 #include <Windows.h>
 #include <Xinput.h>
 #include <filesystem>
@@ -106,26 +106,9 @@ namespace {
 
 }
 
-Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories):
-	System{size,title,other,directories}
+Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories):
+	windowSize_{size},title_{title}, isActive_{true}
 {
-	resizeCall = [this](const glm::vec2& size) {
-		windowSize_ = size;
-		if (graphics)
-		{
-			graphics->ResizeBackBuffer(windowSize_);
-
-		};
-	};
-
-	activateCall = [this](bool active) {
-		/*if (!active)
-		{
-			SetFullScreen(false);
-		}*/
-	};
-
-
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
 		throw CreateErrorException("Comの初期化に失敗");
@@ -186,6 +169,14 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 
 	ShowWindow(hwnd, SW_SHOW);
 
+	resizeCall = [this](const glm::vec2& size) {
+		windowSize_ = size;
+		};
+
+	activateCall = [this](bool active) {
+		isActive_ = active;
+		};
+
 #ifdef USE_IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -200,7 +191,7 @@ Eugene::WindowsSystem::WindowsSystem(const glm::vec2& size, const std::u8string&
 
 }
 
-Eugene::WindowsSystem::~WindowsSystem()
+Eugene::System::~System()
 {
 
 #ifdef USE_IMGUI
@@ -213,25 +204,25 @@ Eugene::WindowsSystem::~WindowsSystem()
 
 
 
-std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::WindowsSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
-{
-	if (graphics && gpuEngine)
-	{
-		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
-	}
+//std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::System::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
+//{
+//	if (graphics && gpuEngine)
+//	{
+//		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
+//	}
+//
+//	if (graphics == nullptr)
+//	{
+//#ifdef USE_VULKAN
+//		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
+//#else
+//		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
+//#endif
+//	}
+//	return std::make_pair(graphics, gpuEngine);
+//}
 
-	if (graphics == nullptr)
-	{
-#ifdef USE_VULKAN
-		graphics = new VkGraphics{hwnd, GetWindowSize(),gpuEngine, bufferNum , maxSize };
-#else
-		graphics = new Dx12Graphics{ hwnd,GetWindowSize(),gpuEngine, bufferNum , maxSize };
-#endif
-	}
-	return std::make_pair(graphics, gpuEngine);
-}
-
-bool Eugene::WindowsSystem::Update(void)
+bool Eugene::System::Update(void)
 {
 	while(PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
@@ -245,7 +236,7 @@ bool Eugene::WindowsSystem::Update(void)
 	return !isEnd;
 }
 
-bool Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
+bool Eugene::System::GetMouse(Mouse& outMouse) const&
 {
 	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::LeftButton), GetKeyState(VK_LBUTTON) & 0x8000);
 	outMouse.flags.set(static_cast<size_t>(Mouse::Flags::RightButton), GetKeyState(VK_RBUTTON) & 0x8000);
@@ -271,7 +262,7 @@ bool Eugene::WindowsSystem::GetMouse(Mouse& outMouse) const&
 	return true;
 }
 
-bool Eugene::WindowsSystem::SetMouse(Mouse& inMouse) const
+bool Eugene::System::SetMouse(Mouse& inMouse) const
 {
 	WINDOWINFO windowInfo{};
 	windowInfo.cbSize = sizeof(WINDOWINFO);
@@ -291,12 +282,12 @@ bool Eugene::WindowsSystem::SetMouse(Mouse& inMouse) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::IsHitKey(KeyID keyID) const
+bool Eugene::System::IsHitKey(KeyID keyID) const
 {
 	return GetKeyState(codeTable_[std::underlying_type<KeyID>::type(keyID)]) & 0x8000;
 }
 
-bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan keyData) const
+bool Eugene::System::GetKeyData(KeyDataSpan keyData) const
 {
 	std::uint8_t k[256];
 	if (!GetKeyboardState(k))
@@ -310,13 +301,13 @@ bool Eugene::WindowsSystem::GetKeyData(KeyDataSpan keyData) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+bool Eugene::System::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	codeTable_ = keyCodeTable;
 	return true;
 }
 
-bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
+bool Eugene::System::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
 	XINPUT_STATE state;
 	if (XInputGetState(idx, &state) != ERROR_SUCCESS)
@@ -342,17 +333,17 @@ bool Eugene::WindowsSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
 	return true;
 }
 
-bool Eugene::WindowsSystem::GetTouch(TouchData& pressed, TouchData& hold, TouchData& released) const
+bool Eugene::System::GetTouch(TouchData& pressed, TouchData& hold, TouchData& released) const
 {
 	return false;
 }
 
-bool Eugene::WindowsSystem::IsEnd(void) const
+bool Eugene::System::IsEnd(void) const
 {
 	return isEnd;
 }
 
-void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
+void Eugene::System::ResizeWindow(const glm::vec2& size)
 {
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 	
@@ -376,7 +367,7 @@ void Eugene::WindowsSystem::OnResizeWindow(const glm::vec2& size)
 	SetWindowPos(hwnd, nullptr, centerX, centerY, static_cast<int>(wSize.right - wSize.left), static_cast<int>(wSize.bottom - wSize.top), false);
 }
 
-void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
+void Eugene::System::SetFullScreen(bool isFullScreen)
 {
 	auto style = GetWindowLong(hwnd, GWL_STYLE);
 	auto newStyle = 0;
@@ -397,13 +388,8 @@ void Eugene::WindowsSystem::OnSetFullScreen(bool isFullScreen)
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 }
 
-Eugene::DynamicLibrary* Eugene::WindowsSystem::CreateDynamicLibrary(const std::filesystem::path& path) const
-{
-	return new Dll{path};
-}
-
 #ifdef USE_IMGUI
-void Eugene::WindowsSystem::ImguiNewFrame(void) const
+void Eugene::System::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();
 }

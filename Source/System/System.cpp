@@ -22,8 +22,8 @@ namespace
 	bool isCreate = false;
 }
 
-Eugene::Graphics* Eugene::System::graphics{ nullptr };
-Eugene::GpuEngine* Eugene::System::gpuEngine{nullptr};
+//Eugene::Graphics* Eugene::System::graphics{ nullptr };
+//Eugene::GpuEngine* Eugene::System::gpuEngine{nullptr};
 
 Eugene::Mouse::Mouse() :
 	pos{0.0f,0.0f}

@@ -19,6 +19,6 @@ namespace Eugene
 	protected:
 
 		friend class Dx12ViewTable;
-		friend class Dx12CommandList;
+		friend class CommandList;
 	};
 }

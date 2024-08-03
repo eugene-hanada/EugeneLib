@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <bit>
+#include <memory>
 
 namespace Eugene
 {
@@ -30,4 +31,55 @@ namespace Eugene
 			std::swap(data[i], data[size - i - 1ull]);
 		}
 	}
+
+	/// <summary>
+	/// 動的にインスタンスを生成するシングルトンクラスのテンプレート(継承して使う)
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	template<class T>
+	class DynamicSingleton
+	{
+	public:
+		
+		/// <summary>
+		/// Tのインスタンスを取得する
+		/// </summary>
+		/// <returns></returns>
+		static constexpr T& GetInstance() noexcept
+		{
+			return *instance_;
+		}
+
+		/// <summary>
+		/// 生成を行う
+		/// </summary>
+		/// <typeparam name="...Args"></typeparam>
+		/// <param name="...args"></param>
+		template<class ...Args>
+		static void Create(Args&&... args)
+		{
+			if (!instance_)
+			{
+				instance_ = std::make_unique<T>(args...);
+			}
+		}
+
+		/// <summary>
+		/// 破棄を行う
+		/// </summary>
+		static constexpr void Destroy() noexcept
+		{
+			if (instance_)
+			{
+				instance_.reset();
+			}
+		}
+
+	protected:
+
+		/// <summary>
+		/// インスタンス
+		/// </summary>
+		static inline std::unique_ptr<T> instance_;
+	};
 }

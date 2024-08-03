@@ -3,13 +3,13 @@
 #include <D3D12MemAlloc.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Utils/EugeneLibException.h"
-#include "Dx12Graphics.h"
+#include "../../../Include/Graphics/Graphics.h"
 
 Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, const TextureInfo& info) :
 	ImageResource{info.format}
 {
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-		static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(info.format)))
+		static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(info.format)))
 		, static_cast<std::uint32_t>(info.width),
 		static_cast<std::uint32_t>(info.height),
 		info.arraySize,
@@ -42,7 +42,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(
 	std::optional<std::span<float, 4>> clearColor) :
 	ImageResource{format}
 {
-	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),
 		arraySize, mipLeveles,sampleCount
@@ -70,7 +70,7 @@ Eugene::Dx12ImageResource::Dx12ImageResource(D3D12MA::Allocator* allocator, cons
 	ImageResource{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),1,1);
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 	resourceDesc.SampleDesc.Count = sampleCount;

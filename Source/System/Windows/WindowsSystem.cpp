@@ -1,5 +1,4 @@
 ﻿#include "../../../Include/System/System.h"
-#include <Windows.h>
 #include <Xinput.h>
 #include <filesystem>
 #include <functional>
@@ -33,12 +32,6 @@ namespace {
 	/// ウィンドウクラス
 	/// </summary>
 	WNDCLASSEX windowClass;
-
-	/// <summary>
-	/// ウィンドウハンドル
-	/// </summary>
-	HWND hwnd;
-
 	
 	/// <summary>
 	/// ホイール
@@ -109,6 +102,13 @@ namespace {
 Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories):
 	windowSize_{size},title_{title}, isActive_{true}
 {
+	resizeCall = [this](const glm::vec2& size) {
+		windowSize_ = size;
+		};
+
+	activateCall = [this](bool active) {
+		isActive_ = active;
+		};
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
 		throw CreateErrorException("Comの初期化に失敗");
@@ -168,14 +168,6 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	SetWindowPos(hwnd, nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
 
 	ShowWindow(hwnd, SW_SHOW);
-
-	resizeCall = [this](const glm::vec2& size) {
-		windowSize_ = size;
-		};
-
-	activateCall = [this](bool active) {
-		isActive_ = active;
-		};
 
 #ifdef USE_IMGUI
 	IMGUI_CHECKVERSION();

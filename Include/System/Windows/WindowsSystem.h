@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../SystemCommon.h"
-
+#include "../../Utils/Utils.h"
+#include <Windows.h>
 
 namespace Eugene
 {
@@ -10,30 +11,14 @@ namespace Eugene
 	struct TouchData;
 	class DynamicLibrary;
 
-	class System
+	class System :
+		public DynamicSingleton<System>
 	{
 	public:
 
 		static void Create(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {})
 		{
-			if (instance_ == nullptr)
-			{
-				instance_ = new System{ size, title, other, directories };
-			}
-		}
-
-		static void Destroy(void)
-		{
-			if (instance_ != nullptr)
-			{
-				delete instance_;
-				instance_ = nullptr;
-			}
-		}
-
-		static System& GetInstance(void)
-		{
-			return *instance_;
+			DynamicSingleton::Create(size, title, other, directories);
 		}
 
 		System(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories ={});
@@ -70,12 +55,15 @@ namespace Eugene
 			return maxWindowSize_;
 		}
 
+		void* GetWindow() const
+		{
+			return hwnd;
+		}
+
 #ifdef USE_IMGUI
 		void ImguiNewFrame(void) const;
 #endif
 	private:
-
-		static inline System* instance_{nullptr};
 
 		/// <summary>
 		/// ウィンドウサイズ
@@ -91,6 +79,11 @@ namespace Eugene
 		/// 最大ウィンドウサイズ
 		/// </summary>
 		glm::vec2 maxWindowSize_;
+
+		/// <summary>
+		/// ウィンドウハンドル
+		/// </summary>
+		HWND hwnd;
 
 		/// <summary>
 		/// アクティブフラグ

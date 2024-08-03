@@ -6,7 +6,7 @@
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Graphics/Image.h"
-#include "Dx12Graphics.h"
+#include "../../../Include/Graphics/Graphics.h"
 
 Eugene::Dx12BufferResource::Dx12BufferResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered) :
 	BufferResource{}
@@ -67,7 +67,7 @@ Eugene::Dx12UnloadableBufferResource::Dx12UnloadableBufferResource(ID3D12Device*
 	std::array<std::uint32_t,maxSubResource> numRaw;
 	
 
-	auto tmp = static_cast<DXGI_FORMAT>(Dx12Graphics::FormatToDxgiFormat_.at(static_cast<int>(image.GetInfo().format)));
+	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(image.GetInfo().format)));
 	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, image.GetInfo().width, image.GetInfo().height, image.GetInfo().arraySize, image.GetInfo().mipLevels);
 	device->GetCopyableFootprints(&footDesc, 0, subResource, 0, footprint.data(), numRaw.data(), rowSize.data(), &totalSize);
 

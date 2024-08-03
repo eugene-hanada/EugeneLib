@@ -249,11 +249,11 @@ endif()
 
 if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 	# DirectX12使用時defineを用意
-	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_DX12)
 	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
 elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時define用意
-	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_VULKAN)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
 	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)

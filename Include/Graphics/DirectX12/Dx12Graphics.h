@@ -3,16 +3,22 @@
 #include <memory>
 #include <vector>
 #include <array>
-#include "../Graphics.h"
 #include "../GraphicsCommon.h"
 #include "../../Utils/Utils.h"
 #include "Dx12GpuEngine.h"
 #include "Dx12CommandList.h"
+#include "Dx12ResourceBindLayout.h"
+#include "Dx12GraphicsPipeline.h"
+#include "Dx12ImageResource.h"
+#include "Dx12BufferResource.h"
+#include "Dx12RenderTargetViews.h"
+#include "Dx12DepthStencilViews.h"
+#include "Dx12ShaderResourceViews.h"
 
-struct ID3D12Device;
+//struct ID3D12Device;
 struct IDXGIFactory6;
 struct IDXGISwapChain4;
-struct ID3D12DescriptorHeap;
+//struct ID3D12DescriptorHeap;
 
 namespace D3D12MA
 {
@@ -21,8 +27,6 @@ namespace D3D12MA
 
 namespace Eugene
 {
-	class GpuEngine;
-	class CommandList;
 	class BufferResource;
 	class ImageResource;
 	class RenderTargetViews;
@@ -33,6 +37,7 @@ namespace Eugene
 	class Image;
 	class ShaderResourceViews;
 	class SamplerViews;
+	struct SamplerLayout;
 
 	class Graphics :
 		public DynamicSingleton<Graphics>
@@ -64,27 +69,58 @@ namespace Eugene
 			return {};
 		}
 
-		BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const;
+		BufferResource CreateUnloadableBufferResource(std::uint64_t size) const
+		{
+			return { size,false, GpuResourceType::Upload };
+		}
 
-		BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const;
+		BufferResource CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const
+		{
+			return { size, isUnordered, GpuResourceType::ReadBack };
+		}
 
-		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const;
+		BufferResource CreateBufferResource(std::uint64_t size, bool isUnordered = false) const
+		{
+			return { size, isUnordered, GpuResourceType::Default };
+		}
 
-		BufferResource* CreateBufferResource(Image& texture) const;
+		BufferResource CreateBufferResource(Image& image) const
+		{
+			return { image };
+		}
 
-		ImageResource* CreateImageResource(const TextureInfo& formatData) const;
+		ImageResource CreateImageResource(const TextureInfo& info) const
+		{
+			return { info };
+		}
 
-		ImageResource* CreateImageResource(const glm::ivec2& size, Format format, 
+		ImageResource CreateImageResource(const glm::ivec2& size, Format format,
 			std::uint32_t arraySize = 1,
 			std::uint8_t mipLeveles = 1,
 			std::uint8_t sampleCount = 1,
-			std::optional<std::span<float, 4>> clearColor = std::nullopt);
+			std::optional<std::span<float, 4>> clearColor = std::nullopt) const
+		{
+			if (format == Format::AUTO_BACKBUFFER)
+			{
+				format = backBufferFormat_;
+			}
+			return { size, format, arraySize, mipLeveles, sampleCount, clearColor };
+		}
 
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const;
+		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
+		{
+			return { size, Format::R32_TYPELESS,clear,sampleCount };
+		}
 
-		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const;
+		RenderTargetViews CreateRenderTargetViews(std::uint32_t size, bool isShaderVisible) const
+		{
+			return { size, isShaderVisible };
+		}
 
-		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const;
+		DepthStencilViews CreateDepthStencilViews(std::uint32_t size, bool isShaderVisible) const
+		{
+			return { size, isShaderVisible };
+		}
 
 		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const;
 
@@ -98,7 +134,10 @@ namespace Eugene
 
 		ImageResource& GetBackBufferResource(std::uint64_t idx);
 
-		RenderTargetViews& GetViews(void);
+		RenderTargetViews& GetViews(void)
+		{
+			return renderTargetViews_;
+		}
 
 		std::uint64_t GetNowBackBufferIndex(void) const;
 
@@ -131,7 +170,15 @@ namespace Eugene
 		) const;
 
 		// Graphics を介して継承されました
-		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const;
+		ShaderResourceViews CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+		{
+			std::uint32_t num{ 0ul };
+			for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
+			{
+				num += viewTypes.at(i).viewNum_;
+			}
+			return { num };
+		}
 
 		// Graphics を介して継承されました
 		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const;
@@ -163,9 +210,9 @@ private:
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
-		std::vector<std::unique_ptr<ImageResource>> buffers_;
+		std::vector<ImageResource> buffers_;
 
-		std::unique_ptr<RenderTargetViews> renderTargetViews_;
+		RenderTargetViews renderTargetViews_;
 
 
 		/// <summary>
@@ -181,6 +228,11 @@ private:
 		friend class System;
 		friend class GpuEngine;
 		friend class CommandList;
+		friend class ImageResource;
+		friend class BufferResource;
+		friend class RenderTargetViews;
+		friend class DepthStencilViews;
+		friend class ShaderResourceViews;
 #ifdef USE_IMGUI
 
 		/// <summary>

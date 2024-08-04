@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../Include/Graphics/ResourceBindLayout.h"
+#include "../ResourceBindLayout.h"
 #include "../../../Include/Utils/ArgsSpan.h"
 #include <wrl.h>
 

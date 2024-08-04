@@ -10,7 +10,6 @@ namespace Eugene
 	class GpuEngine
 	{
 	public:
-		GpuEngine() = default;
 		~GpuEngine() = default;
 		GpuEngine(GpuEngine&& gpuEngine) noexcept:
 			cmdQueue_{ gpuEngine.cmdQueue_ }, fenceVal_{ gpuEngine.fenceVal_ }, fence_{gpuEngine.fence_}, commandLists_{std::move(gpuEngine.commandLists_)}
@@ -53,12 +52,6 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// 初期化処理(遅延初期化用)
-		/// </summary>
-		/// <param name="initSize"></param>
-		void Init(std::size_t initSize);
-
-		/// <summary>
 		/// 終了処理
 		/// </summary>
 		void Final() noexcept
@@ -68,9 +61,15 @@ namespace Eugene
 			commandLists_.clear();
 		}
 	private:
-
+		GpuEngine() = default;
 		GpuEngine(const GpuEngine&) = delete;
 		GpuEngine& operator=(const GpuEngine&) = delete;
+
+		/// <summary>
+		/// 初期化処理(遅延初期化用)
+		/// </summary>
+		/// <param name="initSize"></param>
+		void Init(std::size_t initSize);
 
 		// コマンドキュー
 		Microsoft::WRL::ComPtr<ID3D12CommandQueue> cmdQueue_{ nullptr };

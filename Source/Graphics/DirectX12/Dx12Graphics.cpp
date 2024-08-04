@@ -7,17 +7,9 @@
 #include <string>
 #include <cassert>
 #include "../../../Include/Utils/EugeneLibException.h"
-#include "Dx12GraphicsPipeline.h"
-#include "Dx12ResourceBindLayout.h"
 
-#include "Dx12BufferResource.h"
-#include "Dx12ImageResource.h"
-
-#include "Dx12ShaderResourceViews.h"
-#include "Dx12RenderTargetViews.h"
 #include "Dx12VertexView.h"
 #include "Dx12IndexView.h"
-#include "Dx12DepthStencilViews.h"
 #include "Dx12Sampler.h"
 #include "Dx12SamplerViews.h"
 #include "../../../Include/Graphics/Shader.h"
@@ -175,61 +167,6 @@ Eugene::Graphics::~Graphics()
 	}
 }
 
-Eugene::BufferResource* Eugene::Graphics::CreateUnloadableBufferResource(std::uint64_t size) const
-{
-	return new Dx12UnloadableBufferResource{allocator_.Get(), size};
-}
-
-Eugene::BufferResource* Eugene::Graphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered) const
-{
-	return new Dx12ReadableBuffeResource{allocator_.Get(),size, isUnordered};
-}
-
-Eugene::BufferResource* Eugene::Graphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
-{
-	return new Dx12BufferResource{ allocator_.Get(),size, isUnordered };
-}
-
-Eugene::BufferResource* Eugene::Graphics::CreateBufferResource(Image& texture) const
-{
-	return new Dx12UnloadableBufferResource{device_.Get(),allocator_.Get(), texture};
-}
-
-Eugene::ImageResource* Eugene::Graphics::CreateImageResource(const TextureInfo& formatData) const
-{
-	return new Dx12ImageResource{allocator_.Get(),formatData};
-}
-
-Eugene::ImageResource* Eugene::Graphics::CreateImageResource(
-	const glm::ivec2& size, Format format,
-	std::uint32_t arraySize,
-	std::uint8_t mipLeveles,
-	std::uint8_t sampleCount,
-	std::optional<std::span<float, 4>> clearColor)
-{
-	if (format == Format::AUTO_BACKBUFFER)
-	{
-		format = backBufferFormat_;
-	}
-	return new Dx12ImageResource{ allocator_.Get(),size,format, arraySize, mipLeveles, sampleCount,clearColor };
-}
-
-Eugene::ImageResource* Eugene::Graphics::CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount ) const
-{
-	return new Dx12ImageResource{allocator_.Get(), size, Format::R32_TYPELESS,clear,sampleCount};
-}
-
-
-Eugene::RenderTargetViews* Eugene::Graphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
-{
-	return new Dx12RenderTargetViews{ device_.Get(), size,isShaderVisible};
-}
-
-Eugene::DepthStencilViews* Eugene::Graphics::CreateDepthStencilViews(std::uint64_t size) const
-{
-	return new Dx12DepthStencilViews{ device_.Get(), size};
-}
-
 Eugene::VertexView* Eugene::Graphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
 {
 	return new Dx12VertexView{size, vertexNum,resource};
@@ -354,12 +291,12 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 void Eugene::Graphics::CreateBackBuffers(std::uint64_t bufferCount)
 {
 	buffers_.resize(bufferCount);
-	renderTargetViews_.reset(CreateRenderTargetViews(bufferCount, false));
+	renderTargetViews_.Init(bufferCount, false);
 	for (size_t i = 0; i < bufferCount; i++)
 	{
-		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i)});
+		buffers_[i] = ImageResource{ static_cast<std::uint32_t>(i)};
 
-		renderTargetViews_->Create(*buffers_[i], i);
+		renderTargetViews_.Create(buffers_[i], i);
 	}
 
 }
@@ -368,13 +305,9 @@ Eugene::ImageResource& Eugene::Graphics::GetBackBufferResource(std::uint64_t idx
 {
 	assert(idx < buffers_.size());
 
-	return *buffers_[idx];
+	return buffers_[idx];
 }
 
-Eugene::RenderTargetViews& Eugene::Graphics::GetViews(void)
-{
-	return *renderTargetViews_;
-}
 
 size_t Eugene::Graphics::GetNowBackBufferIndex(void) const
 {
@@ -398,7 +331,7 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window)
 {
 	for (auto& buffer : buffers_)
 	{
-		buffer.reset();
+		buffer.Final();
 	}
 	DXGI_SWAP_CHAIN_DESC1 dec;
 	swapChain_->GetDesc1(&dec);
@@ -407,8 +340,8 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window)
 
 	for (size_t i = 0; i < buffers_.size(); i++)
 	{
-		buffers_[i].reset(new Dx12ImageResource{ swapChain_.Get(),static_cast<std::uint32_t>(i) });
-		renderTargetViews_->Create(*buffers_[i], i);
+		buffers_[i] =  ImageResource{static_cast<std::uint32_t>(i) };
+		renderTargetViews_.Create(buffers_[i], i);
 	}
 }
 
@@ -443,15 +376,6 @@ Eugene::Pipeline* Eugene::Graphics::CreateComputePipeline(ResourceBindLayout& re
 	return new Dx12Pipeline{ device_.Get(), resourceBindLayout, csShader };
 }
 
-Eugene::ShaderResourceViews* Eugene::Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
-{
-	std::uint64_t num{ 0ull };
-	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
-	{
-		num += viewTypes.at(i).viewNum_;
-	}
-	return new Dx12ShaderResourceViews{device_.Get(),num };
-}
 
 Eugene::SamplerViews* Eugene::Graphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
 {

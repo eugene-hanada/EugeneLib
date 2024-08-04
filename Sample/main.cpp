@@ -41,14 +41,42 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	auto testGpuEngine = Eugene::Graphics::GetInstance().CreateGpuEngine(1);
 
+	auto cmdList = Eugene::Graphics::GetInstance().CreateCommandList();
+	auto buffer = Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256);
+
+	auto renderTarget = Eugene::Graphics::GetInstance().CreateImageResource({ 128,128 },Eugene::Format::AUTO_BACKBUFFER);
+	auto views = Eugene::Graphics::GetInstance().CreateRenderTargetViews(1, false);
+
+	views.Create(renderTarget, 0);
+
+
+	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 	while (Eugene::System::GetInstance().Update())
 	{
+		// コマンド開始
+		cmdList.Begin();
+
+		// レンダーターゲットセット
+		cmdList.TransitionRenderTargetBegin(Eugene::Graphics::GetInstance().GetBackBufferResource());
+		cmdList.SetRenderTarget(Eugene::Graphics::GetInstance().GetViews(), clearColor, {static_cast<std::uint32_t>(Eugene::Graphics::GetInstance().GetNowBackBufferIndex()),1u});
+
+		cmdList.TransitionRenderTargetEnd(Eugene::Graphics::GetInstance().GetBackBufferResource());
+		cmdList.End();
+
+		gpuEngine.Push(cmdList);
+		gpuEngine.Execute();
+		gpuEngine.Wait();
+		Eugene::Graphics::GetInstance().Present();
 	}
 
+	renderTarget.Final();
+	buffer.Final();
+	cmdList.Final();
 	testGpuEngine.Final();
 	gpuEngine.Final();
 	Eugene::Graphics::Destroy();
 	Eugene::System::Destroy();
+
 //	// システム(osとかの)処理をするクラス
 //	auto system = Eugene::CreateSystemUnique({ 1280.0f,720.0f }, u8"Sample");
 //

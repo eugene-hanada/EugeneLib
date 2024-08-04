@@ -13,9 +13,9 @@
 
 #include "../../../Include/Graphics/VertexView.h"
 #include "../../../Include/Graphics/IndexView.h"
-#include "Dx12ShaderResourceViews.h"
+#include "../../../Include/Graphics/DirectX12/Dx12ShaderResourceViews.h"
 #include "../../../Include/Graphics/DepthStencilViews.h"
-#include "Dx12GraphicsPipeline.h"
+#include "../../../Include/Graphics/DirectX12/Dx12GraphicsPipeline.h"
 #include "Dx12SamplerViews.h"
 
 #ifdef USE_IMGUI
@@ -102,12 +102,7 @@ void Eugene::CommandList::SetIndexView(IndexView& view)
 
 void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
-	auto descriptorHeap{ static_cast<Dx12ShaderResourceViews&>(views).descriptorHeap_.Get()};
-	ID3D12Device* device{ nullptr };
-	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
-	{
-		return;
-	}
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews())};
 	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart()};
 	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
 	cmdList_->SetGraphicsRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);
@@ -115,12 +110,7 @@ void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std:
 
 void Eugene::CommandList::SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
-	auto descriptorHeap{ static_cast<Dx12ShaderResourceViews&>(views).descriptorHeap_.Get() };
-	ID3D12Device* device{ nullptr };
-	if (FAILED(descriptorHeap->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
-	{
-		return;
-	}
+	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews()) };
 	auto handle{ descriptorHeap->GetGPUDescriptorHandleForHeapStart() };
 	cmdList_->SetDescriptorHeaps(1, &descriptorHeap);
 	cmdList_->SetComputeRootDescriptorTable(static_cast<std::uint32_t>(paramIdx), handle);

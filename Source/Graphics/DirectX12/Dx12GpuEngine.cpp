@@ -44,7 +44,7 @@ void Eugene::GpuEngine::Push(CommandList& commandList)
 
 void Eugene::GpuEngine::Init(std::size_t initSize)
 {
-	commandLists_.resize(initSize);
+	commandLists_.reserve(initSize);
 
 	// 設定をDESC構造体で行う
 	D3D12_COMMAND_QUEUE_DESC cmdQueueDesc{};

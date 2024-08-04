@@ -1,9 +1,10 @@
 #pragma once
 #include <wrl.h>
-#include "../../../Include/Graphics/BufferResource.h"
+#include <d3d12.h>
+#include "../../ThirdParty/D3D12MemoryAllocator/include/D3D12MemAlloc.h"
+#include "../../../ThirdParty/glm/glm/vec2.hpp"
+#include "../GraphicsCommon.h"
 
-struct ID3D12Resource;
-struct ID3D12Device;
 
 namespace D3D12MA
 {
@@ -16,16 +17,51 @@ namespace Eugene
 {
 	class Image;
 
-	class Dx12BufferResource :
-		public BufferResource
+	class BufferResource
 	{
 	public:
-		Dx12BufferResource(D3D12MA::Allocator* allocator,std::uint64_t size, bool isUnordered);
-		~Dx12BufferResource();
+		BufferResource() = default;
+		BufferResource(std::uint64_t size, bool isUnordered, GpuResourceType type);
+		BufferResource(Image& image);
+		~BufferResource() = default;
+
+		bool CanMap(void) const noexcept
+		{
+			return canMap_;
+		}
+		
+		void* GetResource(void)
+		{
+			return resource_.Get();
+		}
+
+		std::uint64_t GetSize(void) const
+		{
+			return resource_->GetDesc().Width;
+		}
+
+		void Final()noexcept
+		{
+			resource_.Reset();
+			allocation_.Reset();
+		}
+
+		BufferResource(BufferResource&& bufferResource) noexcept :
+			resource_{bufferResource.resource_}, allocation_{bufferResource.allocation_}, canMap_{bufferResource.canMap_}
+		{
+			bufferResource.Final();
+		}
+
+		BufferResource& operator=(BufferResource&& bufferResource) noexcept
+		{
+			resource_ = bufferResource.resource_;
+			allocation_ = bufferResource.allocation_;
+			canMap_ = bufferResource.canMap_;
+			bufferResource.Final();
+		}
 	private:
-		bool CanMap(void) const final;
-		void* GetResource(void)  final;
-		std::uint64_t GetSize(void) final;
+		BufferResource(const BufferResource&) = delete;
+		BufferResource& operator=(const BufferResource&) = delete;
 
 		/// <summary>
 		/// アロケーターで確保したメモリ
@@ -37,23 +73,25 @@ namespace Eugene
 		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
 
+		bool canMap_;
+
 	};
 
-	class Dx12UnloadableBufferResource :
+	/*class Dx12UnloadableBufferResource :
 		public BufferResource
 	{
 	public:
 		Dx12UnloadableBufferResource(ID3D12Device* device, D3D12MA::Allocator* allocator, Image& image);
 		Dx12UnloadableBufferResource(D3D12MA::Allocator* allocator, std::uint64_t size);
 		~Dx12UnloadableBufferResource();
-	private:
+
 		void* Map(void) final;
 		void UnMap(void) final;
 
 		bool CanMap(void) const final;
 		void* GetResource(void)  final;
 		std::uint64_t GetSize(void) final;
-
+	private:
 		/// <summary>
 		/// アロケーターで確保したメモリ
 		/// </summary>
@@ -71,13 +109,13 @@ namespace Eugene
 	public:
 		Dx12ReadableBuffeResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered);
 		~Dx12ReadableBuffeResource();
-	private:
+	
 		void* Map(void) final;
 		void UnMap(void) final;
 		bool CanMap(void) const final;
 		void* GetResource(void)  final;
 		std::uint64_t GetSize(void) final;
-
+	private:
 		/// <summary>
 		/// アロケーターで確保したメモリ
 		/// </summary>
@@ -88,5 +126,5 @@ namespace Eugene
 		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
 
-	};
+	};*/
 }

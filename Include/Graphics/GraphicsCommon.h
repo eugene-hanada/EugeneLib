@@ -212,5 +212,18 @@ namespace Eugene
 		std::uint64_t budget;
 	};
 
+	/// <summary>
+	/// Gpuリソースの種類
+	/// </summary>
+	enum class GpuResourceType
+	{
+		/// <summary>
+		/// デフォルト
+		/// </summary>
+		Default,
 
+
+		Upload,
+		ReadBack
+	};
 }

@@ -1,9 +1,9 @@
 ﻿#include "Dx12IndexView.h"
 #include <d3d12.h>
-#include "../../../Include/Graphics/GpuResource.h"
+#include "../../../Include/Graphics/DirectX12/Dx12BufferResource.h"
 #include "../../../Include/Graphics/Graphics.h"
 
-Eugene::Dx12IndexView::Dx12IndexView(std::uint32_t size, std::uint32_t indexNum, Format format, GpuResource& resource) :
+Eugene::Dx12IndexView::Dx12IndexView(std::uint32_t size, std::uint32_t indexNum, Format format, BufferResource& resource) :
     IndexView{indexNum}
 {
     bufferView_ = std::make_unique< D3D12_INDEX_BUFFER_VIEW>();

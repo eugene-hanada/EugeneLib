@@ -1,10 +1,13 @@
 ﻿#pragma once
+#include <optional>
+#include <span>
 #include <wrl.h>
-#include "../../../Include/Graphics/CommandList.h"
+#include <d3d12.h>
+#include "../GraphicsCommon.h"
+#include "../../../ThirdParty/glm/glm/vec2.hpp"
+#include "../../../ThirdParty/glm/glm/vec3.hpp"
 
-struct ID3D12Device;
-struct ID3D12CommandAllocator;
-struct ID3D12GraphicsCommandList;
+
 struct ImDrawData;
 
 
@@ -31,10 +34,24 @@ namespace Eugene
 		using ComPtr = Microsoft::WRL::ComPtr<T>;
 	public:
 		void* GetCommandList(void);
-	private:
-		CommandList();
-		CommandList(const CommandList&) = delete;
-		CommandList& operator=(const CommandList&) = delete;
+		CommandList(CommandList&& cmdList) noexcept :
+			cmdList_{cmdList.cmdList_}, cmdAllocator_{cmdList.cmdAllocator_}
+		{
+			cmdList.Final();
+		}
+
+		CommandList& operator=(CommandList&& cmdList) noexcept
+		{
+			cmdList_ = cmdList.cmdList_;
+			cmdAllocator_ = cmdList.cmdAllocator_;
+			cmdList.Final();
+		}
+
+		void Final() noexcept
+		{
+			cmdList_.Reset();
+			cmdAllocator_.Reset();
+		}
 
 		// 開始処理
 		void Begin(void);
@@ -132,9 +149,22 @@ namespace Eugene
 
 		void Resolve(ImageResource& dest, ImageResource& src);
 
+		// CommandList を介して継承されました
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange, std::optional<float> depthClear, std::uint32_t depthIndex);
+
+		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange);
+
+		virtual void CopyBuffer(BufferResource& dest, BufferResource& src);
+
 #ifdef USE_IMGUI
 		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const;
 #endif
+	private:
+		CommandList();
+		CommandList(const CommandList&) = delete;
+		CommandList& operator=(const CommandList&) = delete;
+
+		
 		/// <summary>
 		/// コマンドアロケーター
 		/// </summary>
@@ -144,14 +174,6 @@ namespace Eugene
 		/// コマンドリスト
 		/// </summary>
 		ComPtr< ID3D12GraphicsCommandList> cmdList_;
-
-
-		// CommandList を介して継承されました
-		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, DepthStencilViews& depthViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange, std::optional<float> depthClear, std::uint32_t depthIndex);
-
-		virtual void SetRenderTarget(RenderTargetViews& renderTargetViews, std::optional<std::span<float, 4>> rtClear, std::pair<std::uint32_t, std::uint32_t> rtRange);
-
-		virtual void CopyBuffer(BufferResource& dest, BufferResource& src);
 
 		friend class Graphics;
 	};

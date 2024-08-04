@@ -1,9 +1,9 @@
-﻿#include "Dx12GraphicsPipeline.h"
+﻿#include "../../../Include/Graphics/DirectX12/Dx12GraphicsPipeline.h"
 #include <d3d12.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Graphics/Graphics.h"
-#include "Dx12ResourceBindLayout.h"
+#include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 
 

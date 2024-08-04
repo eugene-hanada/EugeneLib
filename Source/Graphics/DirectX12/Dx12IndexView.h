@@ -7,12 +7,12 @@ struct D3D12_INDEX_BUFFER_VIEW;
 
 namespace Eugene
 {
-	class GpuResource;
+	class BufferResource;
 	class Dx12IndexView :
 		public IndexView
 	{
 	public:
-		Dx12IndexView(std::uint32_t size, std::uint32_t indexNum, Format format, GpuResource& resource);
+		Dx12IndexView(std::uint32_t size, std::uint32_t indexNum, Format format, BufferResource& resource);
 	private:
 		void* GetView(void) final;
 

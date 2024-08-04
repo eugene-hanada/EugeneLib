@@ -1,11 +1,15 @@
 #pragma once
-#include "GpuResource.h"
-#include "GraphicsCommon.h"
-#include "../ThirdParty/glm/glm/vec2.hpp"
+//#include "GpuResource.h"
+//#include "GraphicsCommon.h"
+//#include "../ThirdParty/glm/glm/vec2.hpp"
+
+#ifdef EUGENE_DX12
+#include "DirectX12/Dx12ImageResource.h"
+#endif
 
 namespace Eugene
 {
-	/// <summary>
+	/*/// <summary>
 	/// テクスチャやレンダーターゲット等に使うリソース
 	/// </summary>
 	class ImageResource :
@@ -35,5 +39,5 @@ namespace Eugene
 		/// </summary>
 		Format format_;
 	private:
-	};
+	};*/
 }

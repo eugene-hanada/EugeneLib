@@ -1,4 +1,4 @@
-#include "Dx12ResourceBindLayout.h"
+#include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
 #include <vector>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Utils/EugeneLibException.h"

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../../Include/Graphics/GraphicsPipeline.h"
+#include "../GraphicsPipeline.h"
 #include <wrl.h>
 #include "../../../Include/Utils/ArgsSpan.h"
 

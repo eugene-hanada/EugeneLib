@@ -352,30 +352,6 @@ void Eugene::Graphics::SetFullScreenFlag(bool isFullScreen)
 	swapChain_->SetFullscreenState(isFullScreen, nullptr);
 }
 
-Eugene::ResourceBindLayout* Eugene::Graphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
-{
-	return new Dx12ResourceBindLayout{device_.Get(), viewTypes,flags };
-}
-
-Eugene::Pipeline* Eugene::Graphics::CreateGraphicsPipeline(
-	ResourceBindLayout& resourceBindLayout,
-	const ArgsSpan<ShaderInputLayout>& layout, 
-	const ArgsSpan<ShaderPair>& shaders,
-	const ArgsSpan<RendertargetLayout>& rendertarges,
-	TopologyType topologyType,
-	bool isCulling,
-	bool useDepth,
-	std::uint8_t sampleCount 
-) const
-{
-	return new Dx12Pipeline{device_.Get(),resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount };
-}
-
-Eugene::Pipeline* Eugene::Graphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
-{
-	return new Dx12Pipeline{ device_.Get(), resourceBindLayout, csShader };
-}
-
 
 Eugene::SamplerViews* Eugene::Graphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
 {

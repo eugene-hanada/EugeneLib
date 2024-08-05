@@ -14,22 +14,23 @@ namespace Eugene
 	class ImageResource
 	{
 	public:
-		ImageResource() :
+		ImageResource() noexcept :
 			format_{Format::NON}
 		{
 		}
 
 		ImageResource(ImageResource&& imageResource) noexcept :
-			allocation_{imageResource.allocation_}, resource_{imageResource.resource_}
+			allocation_{std::move(imageResource.allocation_)}, resource_{std::move(imageResource.resource_)}, format_{imageResource.format_}
 		{
-			imageResource.Final();
+			imageResource.format_ = Format::NON;
 		}
 
 		ImageResource& operator=(ImageResource&& imageResource) noexcept
 		{
-			allocation_ = imageResource.allocation_;
-			resource_ = imageResource.resource_;
-			imageResource.Final();
+			allocation_ = std::move(imageResource.allocation_);
+			resource_ = std::move(imageResource.resource_);
+			format_ = imageResource.format_;
+			imageResource.format_ = Format::NON;
 			return *this;
 		}
 
@@ -64,6 +65,7 @@ namespace Eugene
 		{
 			resource_.Reset();
 			allocation_.Reset();
+			format_ = Format::NON;
 		}
 
 	private:

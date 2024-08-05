@@ -59,14 +59,14 @@ void Eugene::CommandList::End(void)
 
 void Eugene::CommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 {
-	auto pipeline{ static_cast<Dx12Pipeline::PipeLineSet*>(gpipeline.GetPipeline()) };
+	auto pipeline{ static_cast<Pipeline::PipeLineSet*>(gpipeline.GetPipeline()) };
 	cmdList_->SetPipelineState(pipeline->state_.Get());
 	cmdList_->SetGraphicsRootSignature(pipeline->rootSignature_.Get());
 }
 
-void Eugene::CommandList::SetComputePipeline(Pipeline& gpipeline)
+void Eugene::CommandList::SetComputePipeline(Pipeline& cpipeline)
 {
-	auto pipeline{ static_cast<Dx12Pipeline::PipeLineSet*>(gpipeline.GetPipeline()) };
+	auto pipeline{ static_cast<Pipeline::PipeLineSet*>(cpipeline.GetPipeline()) };
 	cmdList_->SetPipelineState(pipeline->state_.Get());
 	cmdList_->SetComputeRootSignature(pipeline->rootSignature_.Get());
 }

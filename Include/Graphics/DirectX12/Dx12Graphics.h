@@ -150,24 +150,33 @@ namespace Eugene
 		void SetFullScreenFlag(bool isFullScreen);
 
 		// Graphics を介して継承されました
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const;
+		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
+		{
+			return { viewTypes,flags };
+		}
 
 		// Graphics を介して継承されました
-		Pipeline* CreateGraphicsPipeline(
+		Pipeline CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
-			const ArgsSpan<ShaderInputLayout>& layout, 
+			const ArgsSpan<ShaderInputLayout>& layout,
 			const ArgsSpan<ShaderPair>& shaders,
-			const ArgsSpan<RendertargetLayout>& rendertarges, 
+			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
 			bool useDepth = false,
 			std::uint8_t sampleCount = 1
-		) const;
+		) const
+		{
+			return { resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth, sampleCount };
+		}
 
-		Pipeline* CreateComputePipeline(
+		Pipeline CreateComputePipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const Shader& csShader
-		) const;
+		) const
+		{
+			return { resourceBindLayout, csShader };
+		}
 
 		// Graphics を介して継承されました
 		ShaderResourceViews CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
@@ -233,6 +242,8 @@ private:
 		friend class RenderTargetViews;
 		friend class DepthStencilViews;
 		friend class ShaderResourceViews;
+		friend class ResourceBindLayout;
+		friend class Pipeline;
 #ifdef USE_IMGUI
 
 		/// <summary>

@@ -34,7 +34,7 @@ struct Test :
 	}
 };
 
-int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int mCmdShow)
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {	
 	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
 	auto gpuEngine = Eugene::Graphics::Create();

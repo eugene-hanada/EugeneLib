@@ -11,13 +11,57 @@ namespace Eugene
 {
 	class ResourceBindLayout;
 
-	class Dx12Pipeline :
-		public Pipeline
+	class Pipeline
 	{
 	public:
+		Pipeline() noexcept = default;
 
-		Dx12Pipeline(
-			ID3D12Device* device,
+
+		struct PipeLineSet
+		{
+			Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
+			Microsoft::WRL::ComPtr<ID3D12PipelineState> state_;
+		};
+
+		void* GetPipeline(void) noexcept
+		{
+			return &pipeline_;
+		}
+
+		void Final() noexcept
+		{
+			pipeline_.state_.Reset();
+			pipeline_.rootSignature_.Reset();
+		}
+
+		Pipeline(const Pipeline& pipeline) noexcept
+		{
+			pipeline_.state_ = pipeline.pipeline_.state_;
+			pipeline_.rootSignature_ = pipeline.pipeline_.rootSignature_;
+		}
+
+		Pipeline& operator=(const Pipeline& pipeline) noexcept
+		{
+			pipeline_.state_ = pipeline.pipeline_.state_;
+			pipeline_.rootSignature_ = pipeline.pipeline_.rootSignature_;
+		}
+
+		Pipeline(Pipeline&& pipeline) noexcept
+		{
+			pipeline_.state_ = std::move(pipeline.pipeline_.state_);
+			pipeline_.rootSignature_ = std::move(pipeline.pipeline_.rootSignature_);
+		}
+
+		Pipeline& operator=(Pipeline&& pipeline) noexcept
+		{
+			pipeline_.state_ = std::move(pipeline.pipeline_.state_);
+			pipeline_.rootSignature_ = std::move(pipeline.pipeline_.rootSignature_);
+		}
+	private:
+
+
+
+		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const ArgsSpan<ShaderInputLayout>& layout,
 			const ArgsSpan<ShaderPair>& shaders,
@@ -28,20 +72,13 @@ namespace Eugene
 			std::uint8_t sampleCount
 		);
 
-		Dx12Pipeline(
-			ID3D12Device* device,
+		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const Shader& csShader
 		);
 
-		struct PipeLineSet
-		{
-			Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
-			Microsoft::WRL::ComPtr<ID3D12PipelineState> state_;
-		};
-	private:
-		void* GetPipeline(void) final;
 		PipeLineSet pipeline_;
 
+		friend class Graphics;
 	};
 }

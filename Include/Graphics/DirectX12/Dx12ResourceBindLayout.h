@@ -1,22 +1,46 @@
 #pragma once
-#include "../ResourceBindLayout.h"
-#include "../../../Include/Utils/ArgsSpan.h"
+#include "../GraphicsCommon.h"
+#include "../../Utils/ArgsSpan.h"
 #include <wrl.h>
-
-struct ID3D12RootSignature;
-struct ID3D12Device;
+#include <d3d12.h>
 
 namespace Eugene
 {
-	class Dx12ResourceBindLayout :
-		public ResourceBindLayout
+	class ResourceBindLayout
 	{
 	public:
+		ResourceBindLayout(ResourceBindLayout&& bindLayout) noexcept :
+			rootSignature_{std::move(bindLayout.rootSignature_)}
+		{
+		}
+		ResourceBindLayout& operator=(ResourceBindLayout&& bindLayout) noexcept
+		{
+			rootSignature_ = std::move(bindLayout.rootSignature_);
+		}
 
-		Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags);
+		void Final() noexcept
+		{
+			rootSignature_.Reset();
+		}
+
+		ResourceBindLayout(const ResourceBindLayout& bindLayout) noexcept :
+			rootSignature_{bindLayout.rootSignature_}
+		{
+		}
+
+		ResourceBindLayout& operator=(const ResourceBindLayout& bindLayout) noexcept
+		{
+			rootSignature_ = bindLayout.rootSignature_;
+		}
+
+		ResourceBindLayout() = default;
 	private:
+
+		ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags);
+
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 
-		friend class Dx12Pipeline;
+		friend class Graphics;
+		friend class Pipeline;
 	};
 }

@@ -2,6 +2,7 @@
 #include <d3d12.h>
 #include <wrl.h>
 #include <cstdint>
+#include <utility>
 
 namespace Eugene
 {
@@ -10,7 +11,7 @@ namespace Eugene
 	class RenderTargetViews
 	{
 	public:
-		RenderTargetViews() :
+		RenderTargetViews() noexcept :
 			size_{0}, isShaderVisible_{false}
 		{
 		}
@@ -34,17 +35,17 @@ namespace Eugene
 		}
 
 		RenderTargetViews(RenderTargetViews&& views) noexcept :
-			descriptorHeap_{views.descriptorHeap_}, size_{views.size_}, isShaderVisible_{views.isShaderVisible_}
+			descriptorHeap_{std::move(views.descriptorHeap_)}, size_{std::move(views.size_)}, isShaderVisible_{views.isShaderVisible_}
 		{
-			views.Final();
+			views.size_ = 0;
 		}
 
 		RenderTargetViews& operator=(RenderTargetViews&& views) noexcept
 		{
-			descriptorHeap_ = views.descriptorHeap_;
+			descriptorHeap_ = std::move(views.descriptorHeap_);
 			size_ = views.size_;
+			views.size_ = 0;
 			isShaderVisible_ = views.isShaderVisible_;
-			views.Final();
 		}
 
 		RenderTargetViews(const RenderTargetViews& views) :

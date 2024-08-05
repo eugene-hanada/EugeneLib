@@ -35,16 +35,14 @@ namespace Eugene
 	public:
 		void* GetCommandList(void);
 		CommandList(CommandList&& cmdList) noexcept :
-			cmdList_{cmdList.cmdList_}, cmdAllocator_{cmdList.cmdAllocator_}
+			cmdList_{std::move(cmdList.cmdList_)}, cmdAllocator_{std::move(cmdList.cmdAllocator_)}
 		{
-			cmdList.Final();
 		}
 
 		CommandList& operator=(CommandList&& cmdList) noexcept
 		{
-			cmdList_ = cmdList.cmdList_;
-			cmdAllocator_ = cmdList.cmdAllocator_;
-			cmdList.Final();
+			cmdList_ = std::move(cmdList.cmdList_);
+			cmdAllocator_ = std::move(cmdList.cmdAllocator_);
 		}
 
 		void Final() noexcept

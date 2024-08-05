@@ -20,7 +20,7 @@ namespace Eugene
 	class BufferResource
 	{
 	public:
-		BufferResource() = default;
+		BufferResource() noexcept = default;
 		BufferResource(std::uint64_t size, bool isUnordered, GpuResourceType type);
 		BufferResource(Image& image);
 		~BufferResource() = default;
@@ -47,17 +47,15 @@ namespace Eugene
 		}
 
 		BufferResource(BufferResource&& bufferResource) noexcept :
-			resource_{bufferResource.resource_}, allocation_{bufferResource.allocation_}, canMap_{bufferResource.canMap_}
+			resource_{std::move(bufferResource.resource_)}, allocation_{std::move(bufferResource.allocation_)}, canMap_{bufferResource.canMap_}
 		{
-			bufferResource.Final();
 		}
 
 		BufferResource& operator=(BufferResource&& bufferResource) noexcept
 		{
-			resource_ = bufferResource.resource_;
-			allocation_ = bufferResource.allocation_;
+			resource_ = std::move(bufferResource.resource_);
+			allocation_ = std::move(bufferResource.allocation_);
 			canMap_ = bufferResource.canMap_;
-			bufferResource.Final();
 		}
 	private:
 		BufferResource(const BufferResource&) = delete;

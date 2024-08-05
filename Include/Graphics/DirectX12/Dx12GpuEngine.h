@@ -12,23 +12,20 @@ namespace Eugene
 	public:
 		~GpuEngine() = default;
 		GpuEngine(GpuEngine&& gpuEngine) noexcept:
-			cmdQueue_{ gpuEngine.cmdQueue_ }, fenceVal_{ gpuEngine.fenceVal_ }, fence_{gpuEngine.fence_}, commandLists_{std::move(gpuEngine.commandLists_)}
+			cmdQueue_{ std::move(gpuEngine.cmdQueue_ )}, fenceVal_{ gpuEngine.fenceVal_ }, fence_{ std::move(gpuEngine.fence_)}, commandLists_{std::move(gpuEngine.commandLists_)}
 		{
-			gpuEngine.cmdQueue_.Reset();
 			gpuEngine.fenceVal_ = 0;
-			gpuEngine.fence_.Reset();
+			gpuEngine.commandLists_.clear();
 		}
 
 		GpuEngine& operator=(GpuEngine&& gpuEngine) noexcept
 		{
-			cmdQueue_ = gpuEngine.cmdQueue_;
-			gpuEngine.cmdQueue_.Reset();
+			cmdQueue_ = std::move(gpuEngine.cmdQueue_);
 			
 			fenceVal_ = gpuEngine.fenceVal_;
 			gpuEngine.fenceVal_ = 0;
 
-			fence_ = gpuEngine.fence_;
-			gpuEngine.fence_.Reset();
+			fence_ = std::move(gpuEngine.fence_);
 
 			commandLists_ = std::move(gpuEngine.commandLists_);
 
@@ -61,7 +58,11 @@ namespace Eugene
 			commandLists_.clear();
 		}
 	private:
-		GpuEngine() = default;
+		GpuEngine() noexcept :
+			fenceVal_{0}
+		{
+
+		}
 		GpuEngine(const GpuEngine&) = delete;
 		GpuEngine& operator=(const GpuEngine&) = delete;
 

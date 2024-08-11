@@ -9,14 +9,10 @@ option(EUGENE_USE_ANDROID "ANDROID向けにビルドするか？" OFF)
 option(EUGENE_USE_IMGUI "Imguiを使用するか?" OFF)
 option(EUGENE_USE_VULKAN "Vulkanを使用するか?" OFF)
 option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
-option(EUGENE_USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
 option(EUGENE_BUILD_SOUND "サウンド機能をビルドするか？" ON)
 
-if (EUGENE_USE_EFFEKSEER)
-	set(EUGENE_EFFEKSEER_DIR "" CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
-endif ()
 
 if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
@@ -58,23 +54,23 @@ endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
-	Source/Graphics/Graphics.cpp
-	Source/Graphics/GpuEngine.cpp
-	Source/Graphics/CommandList.cpp
-	Source/Graphics/GpuResource.cpp
-	Source/Graphics/BufferResource.cpp
-	Source/Graphics/ImageResource.cpp
-	Source/Graphics/GraphicsPipeline.cpp
-	Source/Graphics/RenderTargetViews.cpp
-	Source/Graphics/DepthStencilViews.cpp
-	Source/Graphics/ShaderResourceViews.cpp
-	Source/Graphics/VertexView.cpp
-	Source/Graphics/IndexView.cpp
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	Source/Graphics/Shader.cpp
 	Source/Graphics/Image.cpp
-	Source/Graphics/Sampler.cpp
-	Source/Graphics/SamplerViews.cpp
-	Source/Graphics/ResourceBindLayout.cpp)
+	
+	
+	)
 
 # Utils系のソースファイルをセット
 set(UtilsSource
@@ -167,7 +163,7 @@ if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 		Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
 		Source/Graphics/DirectX12/Dx12VertexView.cpp
 		Source/Graphics/DirectX12/Dx12IndexView.cpp
-		Source/Graphics/DirectX12/Dx12Views.cpp
+		
 		Source/Graphics/DirectX12/Dx12Sampler.cpp
 		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
 		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp
@@ -265,12 +261,6 @@ elseif(EUGENE_USE_VULKAN)
 		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
 	endif()
 
-
-	if (NOT USE_EFFEKSEER)
-		if (NOT EUGENE_USE_ANDROID)
-			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
-		endif()
-	endif()
 endif()
 
 if (EUGENE_USE_IMGUI)
@@ -295,33 +285,6 @@ endif()
  # サンプルをビルドするか？
  if (EUGENE_BUILD_SAMPLE)
  add_subdirectory("Sample")
- endif()
-
-
- # Effekseerを使用するか？
- if (EUGENE_USE_EFFEKSEER)
-
-	# 使用時
-	target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/Effekseer)
-	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	if (EUGENE_USE_ANDROID)
-		message("対応していない")
-	else ()
-		target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/LLGId.lib ${EUGENE_EFFEKSEER_DIR}/lib/Effekseerd.lib)
-
-
-		# Vulkan使用するか？
-		if (EUGENE_USE_VULKAN)
-			# VULKAN使用時
-			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererVulkand.lib $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
-			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererVulkan)
-		else()
-			#
-			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererDX12d.lib)
-			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererDX12)
-		endif()
-
-	endif()
  endif()
 
  if (EUGENE_BUILD_DOCTEST)

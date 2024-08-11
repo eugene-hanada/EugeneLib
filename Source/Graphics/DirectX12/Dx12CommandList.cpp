@@ -16,7 +16,7 @@
 #include "../../../Include/Graphics/DirectX12/Dx12ShaderResourceViews.h"
 #include "../../../Include/Graphics/DepthStencilViews.h"
 #include "../../../Include/Graphics/DirectX12/Dx12GraphicsPipeline.h"
-#include "Dx12SamplerViews.h"
+#include "../../../Include/Graphics/DirectX12/Dx12SamplerViews.h"
 
 #ifdef USE_IMGUI
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"

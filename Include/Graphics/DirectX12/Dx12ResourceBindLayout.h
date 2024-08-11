@@ -23,20 +23,14 @@ namespace Eugene
 			rootSignature_.Reset();
 		}
 
-		ResourceBindLayout(const ResourceBindLayout& bindLayout) noexcept :
-			rootSignature_{bindLayout.rootSignature_}
-		{
-		}
-
-		ResourceBindLayout& operator=(const ResourceBindLayout& bindLayout) noexcept
-		{
-			rootSignature_ = bindLayout.rootSignature_;
-		}
-
 		ResourceBindLayout() = default;
 	private:
 
 		ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags);
+
+		ResourceBindLayout(const ResourceBindLayout& bindLayout) = delete;
+
+		ResourceBindLayout& operator=(const ResourceBindLayout& bindLayout) = delete;
 
 		Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature_;
 

@@ -57,6 +57,18 @@ namespace Eugene
 			allocation_ = std::move(bufferResource.allocation_);
 			canMap_ = bufferResource.canMap_;
 		}
+
+		void* Map() noexcept
+		{
+			void* ptr{ nullptr };
+			resource_->Map(0, nullptr, &ptr);
+			return ptr;
+		}
+
+		void UnMap() noexcept
+		{
+			resource_->Unmap(0, nullptr);
+		}
 	private:
 		BufferResource(const BufferResource&) = delete;
 		BufferResource& operator=(const BufferResource&) = delete;

@@ -14,6 +14,10 @@
 #include "Dx12RenderTargetViews.h"
 #include "Dx12DepthStencilViews.h"
 #include "Dx12ShaderResourceViews.h"
+#include "Dx12Sampler.h"
+#include "Dx12SamplerViews.h"
+#include "Dx12VertexView.h"
+#include "Dx12IndexView.h"
 
 //struct ID3D12Device;
 struct IDXGIFactory6;
@@ -45,7 +49,83 @@ namespace Eugene
 	public:
 		~Graphics();
 
-		static const std::array<int, FormatMax> FormatToDxgiFormat_;
+		static constexpr std::array<int, Eugene::FormatMax> FormatToDxgiFormat_
+		{
+			DXGI_FORMAT_UNKNOWN,
+
+			// R32G32B32A32
+			DXGI_FORMAT_R32G32B32A32_TYPELESS,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_R32G32B32A32_UINT,
+			DXGI_FORMAT_R32G32B32A32_SINT,
+
+			// R32G32B32
+			DXGI_FORMAT_R32G32B32_TYPELESS,
+			DXGI_FORMAT_R32G32B32_FLOAT,
+			DXGI_FORMAT_R32G32B32_UINT,
+			DXGI_FORMAT_R32G32B32_SINT,
+
+			// R32G32
+			DXGI_FORMAT_R32G32_TYPELESS,
+			DXGI_FORMAT_R32G32_FLOAT,
+			DXGI_FORMAT_R32G32_UINT,
+			DXGI_FORMAT_R32G32_SINT,
+
+			// R32
+			DXGI_FORMAT_R32_TYPELESS,
+			DXGI_FORMAT_D32_FLOAT,
+			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_R32_UINT,
+			DXGI_FORMAT_R32_SINT,
+
+			// R16G16B16A16
+			DXGI_FORMAT_R16G16B16A16_TYPELESS,
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			DXGI_FORMAT_R16G16B16A16_UNORM,
+			DXGI_FORMAT_R16G16B16A16_UINT,
+			DXGI_FORMAT_R16G16B16A16_SNORM,
+			DXGI_FORMAT_R16G16B16A16_SINT,
+
+			// R16B16
+			DXGI_FORMAT_R16G16_TYPELESS,
+			DXGI_FORMAT_R16G16_FLOAT,
+			DXGI_FORMAT_R16G16_UNORM,
+			DXGI_FORMAT_R16G16_UINT,
+			DXGI_FORMAT_R16G16_SNORM,
+			DXGI_FORMAT_R16G16_SINT,
+
+			// R16
+			DXGI_FORMAT_R16_TYPELESS,
+			DXGI_FORMAT_R16_FLOAT,
+			DXGI_FORMAT_D16_UNORM,
+			DXGI_FORMAT_R16_UNORM,
+			DXGI_FORMAT_R16_UINT,
+			DXGI_FORMAT_R16_SNORM,
+			DXGI_FORMAT_R16_SINT,
+
+			// R8G8B8A8
+			DXGI_FORMAT_R8G8B8A8_TYPELESS,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+			DXGI_FORMAT_R8G8B8A8_UINT,
+			DXGI_FORMAT_R8G8B8A8_SNORM,
+			DXGI_FORMAT_R8G8B8A8_SINT,
+
+			// B8G8R8A8
+			DXGI_FORMAT_B8G8R8A8_TYPELESS,
+			DXGI_FORMAT_B8G8R8A8_UNORM,
+			DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
+			DXGI_FORMAT_B8G8R8A8_TYPELESS,
+			DXGI_FORMAT_B8G8R8A8_TYPELESS,
+			DXGI_FORMAT_B8G8R8A8_TYPELESS,
+
+			//
+			DXGI_FORMAT_BC1_UNORM,
+			DXGI_FORMAT_BC2_UNORM,
+			DXGI_FORMAT_BC3_UNORM,
+			DXGI_FORMAT_BC5_UNORM,
+			DXGI_FORMAT_BC7_UNORM
+		};
 
 		static GpuEngine Create(std::uint32_t bufferNum = 2, std::uint64_t maxNum = 100)
 		{
@@ -122,10 +202,6 @@ namespace Eugene
 			return { size, isShaderVisible };
 		}
 
-		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const;
-
-		IndexView* CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const;
-
 		void CreateDevice(void);
 
 		void CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
@@ -143,7 +219,10 @@ namespace Eugene
 
 		void Present(void);
 
-		Sampler* CreateSampler(const SamplerLayout& layout) const;
+		Sampler CreateSampler(const SamplerLayout& layout) const
+		{
+			return {layout};
+		}
 
 		void ResizeBackBuffer(const glm::vec2& size,void* window = nullptr);
 
@@ -153,6 +232,11 @@ namespace Eugene
 		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
 		{
 			return { viewTypes,flags };
+		}
+
+		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
+		{
+			return { viewTypes,std::to_underlying(flag) };
 		}
 
 		// Graphics を介して継承されました
@@ -190,7 +274,15 @@ namespace Eugene
 		}
 
 		// Graphics を介して継承されました
-		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const;
+		SamplerViews CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+		{
+			std::uint32_t num{ 0ull };
+			for (std::uint32_t i = 0ull; i < viewTypes.size(); i++)
+			{
+				num += viewTypes.at(i).viewNum_;
+			}
+			return {num };
+		}
 
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const;
 
@@ -242,6 +334,7 @@ private:
 		friend class RenderTargetViews;
 		friend class DepthStencilViews;
 		friend class ShaderResourceViews;
+		friend class SamplerViews;
 		friend class ResourceBindLayout;
 		friend class Pipeline;
 #ifdef USE_IMGUI
@@ -254,16 +347,5 @@ private:
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> imguiDescriptorHeap_;
 #endif
 
-#ifdef USE_EFFEKSEER
-		class EffekseerWarpper* CreateEffekseerWarpper(
-			GpuEngine& gpuEngine,
-			Format rtFormat,
-			std::uint32_t rtNum = 1,
-			Format depthFormat = Format::NON,
-			bool reverseDepth = false,
-			std::uint64_t maxNumm = 8000
-		) const;
-#endif
-		friend class Dx12CommandList;
-};
+	};
 }

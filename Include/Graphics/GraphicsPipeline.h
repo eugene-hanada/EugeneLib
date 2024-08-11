@@ -1,12 +1,4 @@
 ﻿#pragma once
-#include <cstdint>
-#include <span>
-#include <vector>
-#include "GraphicsCommon.h"
-#include "ResourceBindLayout.h"
-#include "Sampler.h"
-
-namespace Eugene
-{
-
-}
+#ifdef EUGENE_DX12
+#include "DirectX12/Dx12GraphicsPipeline.h"
+#endif

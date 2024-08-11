@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <cstdint>
+#include <limits>
 #include <bitset>
 #include <span>
 #include <vector>
@@ -447,4 +448,69 @@ namespace Eugene
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
 	using SamplerSpan = std::span<SamplerLayout>;
 	using RenderTargetSpan = std::span <RendertargetLayout>;
+
+	/// <summary>
+/// テクスチャアドレッシングモード
+/// </summary>
+	enum class TextureAddressMode
+	{
+		Wrap = 1,
+		Mirror = 2,
+		Clamp = 3,
+		Border = 4,
+		MirrorOnce = 5
+	};
+
+	/// <summary>
+	/// サンプラーのフィルター
+	/// </summary>
+	enum class SampleFilter
+	{
+		Point = 0,
+		Linear = 0x15,
+		Anisotropic = 0x55
+	};
+
+	/// <summary>
+	/// サンプラーの比較演算用
+	/// </summary>
+	enum class SamplerComparison
+	{
+		Non,
+		Never,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
+	};
+
+	/// <summary>
+	/// サンプラーのレイアウト用
+	/// </summary>
+	struct SamplerLayout
+	{
+		constexpr SamplerLayout(
+			TextureAddressMode u = TextureAddressMode::Wrap,
+			TextureAddressMode v = TextureAddressMode::Wrap,
+			TextureAddressMode w = TextureAddressMode::Wrap,
+			SampleFilter filter = SampleFilter::Point
+		) : u_{u}, v_{v}, w_{w}, filter_{filter}
+		{
+			maxAnisotropy_ = 16;
+			comparison_ = SamplerComparison::Non;
+			minLod_ = 0.0f;
+			maxLod_ = std::numeric_limits<float>::max();
+		}
+		TextureAddressMode u_;
+		TextureAddressMode v_;
+		TextureAddressMode w_;
+		SampleFilter filter_;
+		std::uint32_t maxAnisotropy_;
+		SamplerComparison comparison_;
+		float maxLod_;
+		float minLod_;
+	};
 }

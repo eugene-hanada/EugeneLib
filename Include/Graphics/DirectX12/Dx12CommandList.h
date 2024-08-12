@@ -155,7 +155,7 @@ namespace Eugene
 		virtual void CopyBuffer(BufferResource& dest, BufferResource& src);
 
 #ifdef USE_IMGUI
-		void SetImguiCommand(ImDrawData* data, Graphics& graphics) const;
+		void SetImguiCommand(ImDrawData* data) const;
 #endif
 	private:
 		CommandList();

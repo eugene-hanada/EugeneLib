@@ -35,12 +35,17 @@ namespace Eugene
 		void ResizeWindow(const glm::vec2& size) ;
 		void SetFullScreen(bool isFullScreen);
 
+		bool IsActive() const noexcept
+		{
+			return isActive_;
+		}
+
 		/// <summary>
 		/// ウィンドウサイズを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> ウィンドウサイズ </returns>
-		const glm::vec2& GetWindowSize(void) const&
+		const glm::vec2& GetWindowSize(void) const& noexcept
 		{
 			return windowSize_;
 		}
@@ -50,12 +55,12 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		const glm::vec2& GetMaxWindowSize(void) const&
+		const glm::vec2& GetMaxWindowSize(void) const& noexcept
 		{
 			return maxWindowSize_;
 		}
 
-		void* GetWindow() const
+		void* GetWindow() const noexcept
 		{
 			return hwnd;
 		}

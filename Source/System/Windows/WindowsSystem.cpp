@@ -5,12 +5,8 @@
 #include "Dll.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Debug/Debug.h"
+#include "../../../Include/Graphics/Graphics.h"
 
-#ifdef USE_VULKAN
-#include "../../Graphics/Vulkan/VkGraphics.h"
-#elif USE_DX12
-#include "../../Graphics/DirectX12/Dx12Graphics.h"
-#endif
 
 #ifdef USE_IMGUI
 #include <imgui.h>
@@ -103,7 +99,11 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	windowSize_{size},title_{title}, isActive_{true}
 {
 	resizeCall = [this](const glm::vec2& size) {
-		windowSize_ = size;
+			windowSize_ = size;
+			if (Graphics::GetInstance().IsCreate())
+			{
+				Graphics::GetInstance().ResizeBackBuffer(windowSize_);
+			}
 		};
 
 	activateCall = [this](bool active) {

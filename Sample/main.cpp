@@ -24,16 +24,6 @@
 
 #include <Debug/Debug.h>
 
-struct Test :
-	public Eugene::DynamicSingleton<Test>
-{
-
-	void Exec()
-	{
-
-	}
-};
-
 struct Vertex2D
 {
 	Eugene::vec2 pos;
@@ -48,7 +38,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//コマンドリスト作成
 	auto cmdList = Eugene::Graphics::GetInstance().CreateCommandList();
 
-	//
+	// リソースバインド
 	auto resourceBind{ Eugene::Graphics::GetInstance().CreateResourceBindLayout(
 		{
 			{Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}},
@@ -58,6 +48,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		Eugene::ResourceBindFlag::Input
 	) };
 
+	// グラフィックスパイプライン
 	auto graphicsPipeline{ Eugene::Graphics::GetInstance().CreateGraphicsPipeline(
 		resourceBind,
 		{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
@@ -68,12 +59,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		false
 	) };
 
-	auto vertex{
+	// 頂点バッファ
+	auto vertexBuffer{
 		Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(sizeof(Vertex2D) * 4)
 	};
 
-	Eugene::VertexView vertexView{static_cast<std::uint32_t>(sizeof(Vertex2D)),4,vertex};
-
+	// 頂点ビュー
+	Eugene::VertexView vertexView{static_cast<std::uint32_t>(sizeof(Vertex2D)),4,vertexBuffer};
+	
 	{
 		Vertex2D vert[4]
 		{
@@ -82,24 +75,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			{{0.0f, 256.0f},{0.0f, 1.0f}},
 			{{256.0f,256.0f},{1.0f, 1.0f}}
 		};
-		auto mapVertex = static_cast<Vertex2D*>(vertex.Map());
+		auto mapVertex = static_cast<Vertex2D*>(vertexBuffer.Map());
 		std::copy( std::begin(vert), std::end(vert), mapVertex);
-		vertex.UnMap();
+		vertexBuffer.UnMap();
 	}
 
-	auto renderTarget2D{
+	auto renderTargetBuffer{
 		Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256)
 	};
 
-	auto textureTransform{
+	auto textureTransformBuffer{
 		Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256)
 	};
 
-	*static_cast<Eugene::mat4x4*>(renderTarget2D.Map()) = Eugene::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
-	renderTarget2D.UnMap();
+	auto renderTarget{ static_cast<Eugene::mat4x4*>(renderTargetBuffer.Map()) };
+	*renderTarget = Eugene::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
 
-	*static_cast<Eugene::mat4x4*>(textureTransform.Map()) = Eugene::translate(glm::vec3{ (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f) - 128.0f , 0.0f });
-	textureTransform.UnMap();
+	auto textureTransform{ static_cast<Eugene::mat4x4*>(textureTransformBuffer.Map()) };
+	*textureTransform = Eugene::translate(glm::vec3{ (1280.0f / 2.0f) - 128.0f,(720.0f / 2.0f) - 128.0f , 0.0f });
 
 	auto sampler{
 	Eugene::Graphics::GetInstance().CreateSampler(
@@ -129,75 +122,112 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gpuEngine.Execute();
 		gpuEngine.Wait();
 	}
-	auto renderTarget2DView{ Eugene::Graphics::GetInstance().CreateShaderResourceViews(Eugene::Bind{Eugene::ViewType::ConstantBuffer,1})
+
+	auto renderTargetView{ Eugene::Graphics::GetInstance().CreateShaderResourceViews(Eugene::Bind{Eugene::ViewType::ConstantBuffer,1})
 	};
 
-	renderTarget2DView.CreateConstantBuffer(renderTarget2D, 0);
+	renderTargetView.CreateConstantBuffer(renderTargetBuffer, 0);
 
 	auto textureAndTransformView{
 		Eugene::Graphics::GetInstance().CreateShaderResourceViews({Eugene::Bind{Eugene::ViewType::Texture,1},Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}})
 	};
 
 	textureAndTransformView.CreateTexture(texture, 0);
-	textureAndTransformView.CreateConstantBuffer(textureTransform, 1);
+	textureAndTransformView.CreateConstantBuffer(textureTransformBuffer, 1);
 
 	auto samplerView{
 		Eugene::Graphics::GetInstance().CreateSamplerViews({Eugene::Bind{Eugene::ViewType::ConstantBuffer,1}})
 	};
+
 	samplerView.CreateSampler(sampler, 0);
 
+	ImGuiIO& io = ImGui::GetIO();
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 	while (Eugene::System::GetInstance().Update())
 	{
-		// コマンド開始
-		cmdList.Begin();
+		
+		Eugene::Graphics::GetInstance().ImguiNewFrame();
+		Eugene::System::GetInstance().ImguiNewFrame();
+		ImGui::NewFrame();
 
-		// レンダーターゲットセット
-		cmdList.TransitionRenderTargetBegin(Eugene::Graphics::GetInstance().GetBackBufferResource());
-		cmdList.SetRenderTarget(Eugene::Graphics::GetInstance().GetViews(), clearColor, {static_cast<std::uint32_t>(Eugene::Graphics::GetInstance().GetNowBackBufferIndex()),1u});
+		if (ImGui::Begin("Texture"))
+		{
+			float pos[]{ (*textureTransform)[3][0],(*textureTransform)[3][1] };
+			bool dirty = false;
+			if (ImGui::DragFloat2("Position", pos))
+			{
+				*textureTransform = Eugene::translate(Eugene::vec3{pos[0],pos[1], 0.0f});
+			}
+		}
+		ImGui::End();
 
-		cmdList.SetScissorrect({ 0,0 }, { 1280, 720});
+		ImGui::Render();
 
-		// ビューポートセット
-		cmdList.SetViewPort({ 0.0f,0.0f }, {1280,720});
+		if (!Eugene::System::GetInstance().IsEnd())
+		{
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
+		}
 
-		// プリミティブタイプセット
-		cmdList.SetPrimitiveType(Eugene::PrimitiveType::TriangleStrip);
+		if (Eugene::System::GetInstance().IsActive())
+		{
 
-		// 頂点ビューセット
-		cmdList.SetVertexView(vertexView);
+			// コマンド開始
+			cmdList.Begin();
 
-		// グラフィックスパイプラインをセット
-		cmdList.SetGraphicsPipeline(graphicsPipeline);
+			// レンダーターゲットセット
+			cmdList.TransitionRenderTargetBegin(Eugene::Graphics::GetInstance().GetBackBufferResource());
+			cmdList.SetRenderTarget(Eugene::Graphics::GetInstance().GetViews(), clearColor, { static_cast<std::uint32_t>(Eugene::Graphics::GetInstance().GetNowBackBufferIndex()),1u });
 
-		// レンダーターゲット座標からの変換用の定数バッファのビューをセット
-		cmdList.SetShaderResourceView(renderTarget2DView, 0);
+			cmdList.SetScissorrect({ 0,0 }, { 1280, 720 });
 
-		// テクスチャとトランスフォームのビューをセット
-		cmdList.SetShaderResourceView(textureAndTransformView, 1);
+			// ビューポートセット
+			cmdList.SetViewPort({ 0.0f,0.0f }, { 1280,720 });
 
-		// サンプラーのビューをセット
-		cmdList.SetSamplerView(samplerView, 2);
+			// プリミティブタイプセット
+			cmdList.SetPrimitiveType(Eugene::PrimitiveType::TriangleStrip);
 
-		// 描画
-		cmdList.Draw(4);
+			// 頂点ビューセット
+			cmdList.SetVertexView(vertexView);
 
-		cmdList.TransitionRenderTargetEnd(Eugene::Graphics::GetInstance().GetBackBufferResource());
-		cmdList.End();
+			// グラフィックスパイプラインをセット
+			cmdList.SetGraphicsPipeline(graphicsPipeline);
 
-		gpuEngine.Push(cmdList);
-		gpuEngine.Execute();
-		gpuEngine.Wait();
-		Eugene::Graphics::GetInstance().Present();
+			// レンダーターゲット座標からの変換用の定数バッファのビューをセット
+			cmdList.SetShaderResourceView(renderTargetView, 0);
+
+			// テクスチャとトランスフォームのビューをセット
+			cmdList.SetShaderResourceView(textureAndTransformView, 1);
+
+			// サンプラーのビューをセット
+			cmdList.SetSamplerView(samplerView, 2);
+
+			// 描画
+			cmdList.Draw(4);
+
+			cmdList.TransitionRenderTargetEnd(Eugene::Graphics::GetInstance().GetBackBufferResource());
+
+			cmdList.SetImguiCommand(ImGui::GetDrawData());
+
+			cmdList.End();
+
+			gpuEngine.Push(cmdList);
+			gpuEngine.Execute();
+			gpuEngine.Wait();
+			Eugene::Graphics::GetInstance().Present();
+		}
 	}
 
 	samplerView.Final();
 	textureAndTransformView.Final();
-	renderTarget2DView.Final();
-	textureTransform.Final();
-	renderTarget2D.Final();
+	renderTargetView.Final();
+	textureTransformBuffer.Final();
+	renderTargetBuffer.Final();
 	texture.Final();
-	vertex.Final();
+	vertexBuffer.Final();
 	graphicsPipeline.Final();
 	resourceBind.Final();
 	cmdList.Final();

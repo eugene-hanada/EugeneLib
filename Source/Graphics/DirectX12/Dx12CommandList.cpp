@@ -418,9 +418,9 @@ void Eugene::CommandList::CopyBuffer(BufferResource& dest, BufferResource& src)
 }
 
 #ifdef USE_IMGUI
-void Eugene::CommandList::SetImguiCommand(ImDrawData* data, Graphics& graphics) const
+void Eugene::CommandList::SetImguiCommand(ImDrawData* data) const
 {
-	auto dh = static_cast<Graphics&>(graphics).imguiDescriptorHeap_.Get();
+	auto dh = Graphics::GetInstance().imguiDescriptorHeap_.Get();
 	cmdList_->SetDescriptorHeaps(1,&dh);
 	ImGui_ImplDX12_RenderDrawData(
 		data,

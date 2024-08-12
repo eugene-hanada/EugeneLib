@@ -75,6 +75,14 @@ namespace Eugene
 			}
 		}
 
+		/// <summary>
+		/// 生成済みか？
+		/// </summary>
+		static constexpr bool IsCreate() noexcept
+		{
+			return instance_.operator bool();
+		}
+
 	protected:
 
 		/// <summary>

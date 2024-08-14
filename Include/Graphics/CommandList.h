@@ -8,4 +8,6 @@
 
 #ifdef EUGENE_DX12
 #include "DirectX12/Dx12CommandList.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkCommandList.h"
 #endif

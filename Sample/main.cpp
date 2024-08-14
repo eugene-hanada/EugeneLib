@@ -10,12 +10,6 @@
 #include <iostream>
 
 
-#ifdef USE_EFFEKSEER
-#include <Graphics/Graphics.h>
-#include <Effekseer.h>
-
-#endif
-
 #ifdef USE_IMGUI
 #include <ThirdParty/imgui/imgui.h>
 #include <ThirdParty/imgui/imgui_internal.h>
@@ -23,6 +17,7 @@
 #endif
 
 #include <Debug/Debug.h>
+
 
 struct Vertex2D
 {

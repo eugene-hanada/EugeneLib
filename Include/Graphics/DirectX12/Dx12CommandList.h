@@ -7,7 +7,6 @@
 #include "../../../ThirdParty/glm/glm/vec2.hpp"
 #include "../../../ThirdParty/glm/glm/vec3.hpp"
 
-
 struct ImDrawData;
 
 

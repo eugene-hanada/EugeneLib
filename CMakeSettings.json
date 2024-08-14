@@ -24,13 +24,8 @@
         },
         {
           "name": "EUGENE_USE_EFFEKSEER",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
-        },
-        {
-          "name": "EUGENE_EFFEKSEER_DIR",
-          "value": "C:/install_msvc2022_x64",
-          "type": "PATH"
         },
         {
           "name": "MI_OVERRIDE",
@@ -65,16 +60,6 @@
           "name": "EUGENE_USE_VULKAN",
           "value": "True",
           "type": "BOOL"
-        },
-        {
-          "name": "EUGENE_USE_EFFEKSEER",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "EUGENE_EFFEKSEER_DIR",
-          "value": "C:/install_vulkan_msvc2022_x64",
-          "type": "PATH"
         },
         {
           "name": "MI_BUILD_SHARED",

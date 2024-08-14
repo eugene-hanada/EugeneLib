@@ -30,7 +30,7 @@ namespace Eugene
 			return canMap_;
 		}
 		
-		void* GetResource(void)
+		void* GetResource(void) const
 		{
 			return resource_.Get();
 		}
@@ -86,55 +86,4 @@ namespace Eugene
 		bool canMap_;
 
 	};
-
-	/*class Dx12UnloadableBufferResource :
-		public BufferResource
-	{
-	public:
-		Dx12UnloadableBufferResource(ID3D12Device* device, D3D12MA::Allocator* allocator, Image& image);
-		Dx12UnloadableBufferResource(D3D12MA::Allocator* allocator, std::uint64_t size);
-		~Dx12UnloadableBufferResource();
-
-		void* Map(void) final;
-		void UnMap(void) final;
-
-		bool CanMap(void) const final;
-		void* GetResource(void)  final;
-		std::uint64_t GetSize(void) final;
-	private:
-		/// <summary>
-		/// アロケーターで確保したメモリ
-		/// </summary>
-		Microsoft::WRL::ComPtr<D3D12MA::Allocation> allocation_;
-
-		/// <summary>
-		/// リソース
-		/// </summary>
-		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
-	};
-
-	class Dx12ReadableBuffeResource :
-		public BufferResource
-	{
-	public:
-		Dx12ReadableBuffeResource(D3D12MA::Allocator* allocator, std::uint64_t size, bool isUnordered);
-		~Dx12ReadableBuffeResource();
-	
-		void* Map(void) final;
-		void UnMap(void) final;
-		bool CanMap(void) const final;
-		void* GetResource(void)  final;
-		std::uint64_t GetSize(void) final;
-	private:
-		/// <summary>
-		/// アロケーターで確保したメモリ
-		/// </summary>
-		Microsoft::WRL::ComPtr<D3D12MA::Allocation> allocation_;
-
-		/// <summary>
-		/// リソース
-		/// </summary>
-		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
-
-	};*/
 }

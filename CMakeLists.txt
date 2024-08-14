@@ -54,22 +54,8 @@ endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	Source/Graphics/Shader.cpp
 	Source/Graphics/Image.cpp
-	
-	
 	)
 
 # Utils系のソースファイルをセット
@@ -243,19 +229,19 @@ elseif(EUGENE_USE_ANDROID)
 	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity aaudio)
 endif()
 
-if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
+if (EUGENE_USE_DX12)
 	# DirectX12使用時defineを用意
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_DX12)
 	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
 elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時define用意
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_VULKAN)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/include)
 
-	target_compile_definitions(EugeneLib PRIVATE VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
-	target_compile_definitions(EugeneLib PRIVATE VMA_STATIC_VULKAN_FUNCTIONS=0)
+	target_compile_definitions(EugeneLib PUBLIC VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
+	target_compile_definitions(EugeneLib PUBLIC VMA_STATIC_VULKAN_FUNCTIONS=0)
 	 
 	if (EUGENE_USE_IMGUI)
 		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)

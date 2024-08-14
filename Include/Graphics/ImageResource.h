@@ -5,39 +5,7 @@
 
 #ifdef EUGENE_DX12
 #include "DirectX12/Dx12ImageResource.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkImageResource.h"
 #endif
 
-namespace Eugene
-{
-	/*/// <summary>
-	/// テクスチャやレンダーターゲット等に使うリソース
-	/// </summary>
-	class ImageResource :
-		public GpuResource
-	{
-	public:
-		virtual ~ImageResource();
-
-		/// <summary>
-		/// フォーマットの取得
-		/// </summary>
-		/// <param name=""></param>
-		/// <returns></returns>
-		Format GetFormat(void) const { return format_; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name=""></param>
-		/// <returns></returns>
-		virtual glm::ivec2 GetSize(void) = 0;
-	protected:
-		ImageResource(Format format);
-
-		/// <summary>
-		/// フォーマット
-		/// </summary>
-		Format format_;
-	private:
-	};*/
-}

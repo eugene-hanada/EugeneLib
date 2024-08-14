@@ -1,18 +1,13 @@
 ﻿#pragma once
-#include "../../../Include/Graphics/RenderTargetViews.h"
 #include <vulkan/vulkan.hpp>
 #include "../../../Include/Math/Math.h"
-#include <optional>
 
 namespace Eugene
 {
-	class VkRenderTargetViews :
-		public RenderTargetViews
+	class ImageResource;
+	class RenderTargetViews
 	{
 	public:
-		
-		VkRenderTargetViews(const vk::Device& device,std::uint64_t size);
-
 		/// <summary>
 		/// データ
 		/// </summary>
@@ -26,22 +21,34 @@ namespace Eugene
 			/// <summary>
 			/// 画像サイズ
 			/// </summary>
-			glm::ivec2 size{0,0};
+			glm::ivec2 size{ 0,0 };
 		};
+
 		using ViewsType = std::vector<Data>;
-	private:
+
+		RenderTargetViews() = default;
+
 		// RenderTargetViews を介して継承されました
-		void Create(ImageResource& resource, std::uint64_t idx) final;
-		void* GetViews(void) final;
+		void Create(ImageResource& resource, std::uint32_t idx);
+
+		void Final() noexcept
+		{
+			imageViews_.clear();
+		}
+
+		ViewsType& GetViews(void) noexcept
+		{
+			return imageViews_;
+		}
+	private:
+
+		RenderTargetViews(std::uint32_t size);
 
 		/// <summary>
 		/// ビューのデータ
 		/// </summary>
 		ViewsType imageViews_;
 
-		/// <summary>
-		/// デバイスの参照
-		/// </summary>
-		const vk::Device& device_;
+		friend class Graphics;
 	};
 }

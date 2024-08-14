@@ -1,31 +1,24 @@
-﻿#include "VkDepthStencilViews.h"
-#include "VkImageResource.h"
-#include "VkGraphics.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
+#include "../../../Include/Graphics/Vulkan/VkDepthStencilViews.h"
 
-Eugene::VkDepthStencilView::VkDepthStencilView(const vk::Device& device, size_t size) :
-	DepthStencilViews{size}, device_{device}
+Eugene::DepthStencilViews::DepthStencilViews(std::uint32_t size)
 {
 	imageViews_.resize(size);
 }
 
-void Eugene::VkDepthStencilView::Create(ImageResource& resource, std::uint64_t idx)
+void Eugene::DepthStencilViews::Create(ImageResource& resource, std::uint32_t idx)
 {
-	if (idx >= size_)
+	if (idx >= imageViews_.size())
 	{
 		return;
 	}
-	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
+	
 	vk::ImageViewCreateInfo info{};
-	info.setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())]);
-	info.setImage(*data->image_);
+	info.setFormat(Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())]);
+	info.setImage(*resource.GetResource().image_);
 	info.setViewType(vk::ImageViewType::e2D);
 	info.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
 	info.subresourceRange.setLayerCount(1u);
 	info.subresourceRange.setLevelCount(1u);
-	imageViews_[idx] = device_.createImageViewUnique(info);
-}
-
-void* Eugene::VkDepthStencilView::GetViews(void)
-{
-	return (&imageViews_);
+	imageViews_[idx] = Graphics::GetInstance().device_->createImageViewUnique(info);
 }

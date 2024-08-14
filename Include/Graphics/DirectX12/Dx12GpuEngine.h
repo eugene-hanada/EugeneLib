@@ -10,6 +10,11 @@ namespace Eugene
 	class GpuEngine
 	{
 	public:
+		GpuEngine() noexcept :
+			fenceVal_{ 0 }
+		{
+
+		}
 		~GpuEngine() = default;
 		GpuEngine(GpuEngine&& gpuEngine) noexcept:
 			cmdQueue_{ std::move(gpuEngine.cmdQueue_ )}, fenceVal_{ gpuEngine.fenceVal_ }, fence_{ std::move(gpuEngine.fence_)}, commandLists_{std::move(gpuEngine.commandLists_)}
@@ -32,7 +37,7 @@ namespace Eugene
 			return *this;
 		}
 
-		GpuEngine(size_t initSize) : fenceVal_{ 0 }
+		GpuEngine(std::size_t initSize) : fenceVal_{ 0 }
 		{
 			Init(initSize);
 		}
@@ -43,7 +48,7 @@ namespace Eugene
 
 		void Push(CommandList& commandList);
 		
-		void* GetQueue(void) const
+		void* GetQueue(void) const noexcept
 		{
 			return cmdQueue_.Get();
 		}
@@ -58,11 +63,6 @@ namespace Eugene
 			commandLists_.clear();
 		}
 	private:
-		GpuEngine() noexcept :
-			fenceVal_{0}
-		{
-
-		}
 		GpuEngine(const GpuEngine&) = delete;
 		GpuEngine& operator=(const GpuEngine&) = delete;
 

@@ -1,6 +1,7 @@
-﻿#include "VkResourceBindLayout.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkResourceBindLayout.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 
-Eugene::VkResourceBindLayout::VkResourceBindLayout(const vk::Device& device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
+void Eugene::ResourceBindLayout::Init(const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
 {
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	std::vector<std::vector<vk::DescriptorSetLayoutBinding>> bindingVector(viewTypes.size());
@@ -35,17 +36,10 @@ Eugene::VkResourceBindLayout::VkResourceBindLayout(const vk::Device& device, con
 		}
 		vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 		layoutInfo.setBindings(bindingVector[i]);
-		descriptorLayoutArray_[i] = device.createDescriptorSetLayout(layoutInfo);
+		descriptorLayoutArray_[i] = Graphics::GetInstance().device_->createDescriptorSetLayout(layoutInfo);
 	}
 	vk::PipelineLayoutCreateInfo pipelineLayoutInfo{};
 	pipelineLayoutInfo.setSetLayouts(descriptorLayoutArray_);
-	pipelineLayout_ = device.createPipelineLayoutUnique(pipelineLayoutInfo);
+	pipelineLayout_ = Graphics::GetInstance().device_->createPipelineLayout(pipelineLayoutInfo);
 }
 
-Eugene::VkResourceBindLayout::~VkResourceBindLayout()
-{
-	for (auto descriptorLayout : descriptorLayoutArray_)
-	{
-		pipelineLayout_.getOwner().destroy(descriptorLayout);
-	}
-}

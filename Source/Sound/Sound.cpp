@@ -1,6 +1,6 @@
 ﻿#include "../../Include/Sound/Sound.h"
 
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 #include "Xaudio2/Xa2Sound.h"
 #elif USE_ANDROID
 #include "AAudio/AaSound.h"
@@ -28,9 +28,9 @@ Eugene::Sound* Eugene::CreateSound(void)
 		throw CreateErrorException{"すでにSoundは生成されています"};
 	}
 	isCreate = true;
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 	return new Xaudio2Sound{};
-#elif USE_ANDROID
+#elif EUGENE_ANDROID
     return new AaudioSound{};
 #endif
 }

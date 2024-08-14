@@ -1,42 +1,41 @@
 ﻿
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 #define VK_USE_PLATFORM_WIN32_KHR
-#else USE_ANDROID
+#elif EUGENE_ANDROID
 #define VK_USE_PLATFORM_ANDROID_KHR
 #include <game-activity/native_app_glue/android_native_app_glue.h>
 #endif
 
 #define VMA_IMPLEMENTATION
-#include "VkGraphics.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 #include "../../../Include/Utils/EugeneLibException.h"
-#include "VkGpuEngine.h"
-#include  "../../../Include/Graphics/Shader.h"
-#include "VkResourceBindLayout.h"
-#include "VkCommandList.h"
-#include "VkImageResource.h"
-#include "VkBufferResource.h"
-#include "VkDepthStencilViews.h"
-#include "VkGraphicsPipeline.h"
-#include "VkVertexView.h"
-#include "VkIndexView.h"
-#include "VkShaderResourceViews.h"
-#include "VkSampler.h"
-#include "VkSamplerViews.h"
-#include "VkRenderTargetViews.h"
+
+#include "../../System/System.h"
+
+//#include "VkGpuEngine.h"
+//#include  "../../../Include/Graphics/Shader.h"
+//#include "VkResourceBindLayout.h"
+//#include "VkCommandList.h"
+//#include "VkImageResource.h"
+//#include "VkBufferResource.h"
+//#include "VkDepthStencilViews.h"
+//#include "VkGraphicsPipeline.h"
+//#include "VkVertexView.h"
+//#include "VkIndexView.h"
+//#include "VkShaderResourceViews.h"
+//#include "VkSampler.h"
+//#include "VkSamplerViews.h"
+//#include "VkRenderTargetViews.h"
 
 #ifdef USE_IMGUI
 #include "../../../Include/ThirdParty/imgui/imgui.h"
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
 
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_win32.h"
 #endif
 #endif
 
-#ifdef USE_EFFEKSEER
-#include <Effekseer.h>
-#include <EffekseerRendererVulkan.h>
-#endif
 
 #include "../../../Include/Debug/Debug.h"
 
@@ -45,8 +44,6 @@ VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 namespace
 {
-	std::uint32_t nextQueueIdx_ = 0;
-
 #ifdef USE_IMGUI
 	void CheckVkResult(VkResult err)
 	{
@@ -59,7 +56,7 @@ namespace
 
 	ImGui_ImplVulkanH_Window imguiWindowH{};
 
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 	VkAllocationCallbacks* callbacks = nullptr;
 	int ImGui_ImplVulkan_CreateVkSurface(ImGuiViewport* viewport, ImU64 vk_instance, const void* vk_allocator, ImU64* out_vk_surface)
 	{
@@ -72,19 +69,20 @@ namespace
 #endif
 #endif
 
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 	HWND hWindow;
-#else USE_ANDROID
+#else EUGENE_ANDROID
     android_app* pApp{nullptr};
 #endif
 }
 
-#ifdef USE_WINDOWS
-Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum) :
+#ifdef EUGENE_WINDOWS
+Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum):
 	backBufferIdx_{0}, isMinimized{false}
 {
-	hWindow = hwnd;
-
+	DynamicSingleton::instance_.reset(this);
+	hWindow = static_cast<HWND>(System::GetInstance().GetWindow());;
+	auto size = System::GetInstance().GetWindowSize();
 	CreateInstance();
 
 	CreateDevice();
@@ -107,7 +105,7 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	
 	auto useVkformat = CreateSwapChain(size);
 
-	gpuEngine = new VkGpuEngine{ queue_,maxNum };
+	gpuEngine = GpuEngine{ maxNum };
 
 	buffers_.resize(bufferNum);
 
@@ -116,8 +114,8 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 	
 	
 	device_->resetFences(*fence_);
-	auto result = device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
-	result = device_->waitForFences(*fence_,true,UINT64_MAX);
+	device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
+	device_->waitForFences(*fence_,true,UINT64_MAX);
 	device_->resetFences(*fence_);
 
 	const auto& limits{ physicalDevice_.getProperties().limits };
@@ -157,16 +155,9 @@ Eugene::VkGraphics::VkGraphics(HWND& hwnd, const glm::vec2& size, GpuEngine*& gp
 #ifdef USE_IMGUI
 	InitImgui(useVkformat, bufferNum, size);
 #endif
-
-#ifdef USE_EFFEKSEER
-	vk::CommandPoolCreateInfo poolInfo{};
-	poolInfo.setQueueFamilyIndex(graphicFamilly_);
-	poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
-	effekseerPool_ = device_->createCommandPoolUnique(poolInfo);
-#endif
 }
-#else  USE_ANDROID
-Eugene::VkGraphics::VkGraphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+#else  EUGENE_ANDROID
+Eugene::Graphics::Graphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
     pApp = app;
 
@@ -209,7 +200,7 @@ Eugene::VkGraphics::VkGraphics(android_app* app,const glm::vec2& size, GpuEngine
 
 
 
-void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
+void Eugene::Graphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
 {
 	if (isMinimized)
 	{
@@ -226,15 +217,15 @@ void Eugene::VkGraphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec
 	}
 
 	auto images = device_->getSwapchainImagesKHR(*swapchain_);
-	renderTargetViews_.reset(CreateRenderTargetViews(buffers_.size(), true));
+	renderTargetViews_ = {static_cast<std::uint32_t>(buffers_.size())};
 	for (std::uint64_t i = 0u; i < buffers_.size(); i++)
 	{
-		buffers_[i] = std::make_unique<VkImageResource>(size, backBufferFormat_, images[i], *device_);
-		renderTargetViews_->Create(*buffers_[i], i);
+		buffers_[i] = ImageResource{ size, backBufferFormat_, images[i] };
+		renderTargetViews_.Create(buffers_[i], i);
 	}
 }
 
-vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
+vk::Format Eugene::Graphics::CreateSwapChain(const glm::vec2& size)
 {
 
 
@@ -314,7 +305,7 @@ vk::Format Eugene::VkGraphics::CreateSwapChain(const glm::vec2& size)
 
 }
 
-Eugene::VkGraphics::~VkGraphics()
+Eugene::Graphics::~Graphics()
 {
 	queue_.waitIdle();
 	device_->waitIdle();
@@ -332,188 +323,160 @@ Eugene::VkGraphics::~VkGraphics()
 #endif
 }
 
-vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::UniqueImage& image) const
-{
-	auto memProps = physicalDevice_.getMemoryProperties();
-	auto memRq = device_->getImageMemoryRequirements(*image);
-	std::uint32_t heapIdx = 0u;
-	std::uint32_t memIdx = 0u;
-
-	// ヒープを探す
-	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
-	{
-		if (memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal)
-		{
-			heapIdx = i;
-			break;
-		}
-	}
-
-	// メモリータイプを探す
-	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
-	{
-		if (memProps.memoryTypes[i].propertyFlags & vk::MemoryPropertyFlagBits::eDeviceLocal)
-		{
-			if ((memRq.memoryTypeBits >> i) & 0x1)
-			{
-				if (memProps.memoryTypes[i].heapIndex == heapIdx)
-				{
-					memIdx = i;
-					break;
-				}
-			}
-		}
-	}
-	vk::MemoryAllocateInfo allocateInfo{};
-	allocateInfo.setAllocationSize(memRq.size);
-	allocateInfo.setMemoryTypeIndex(memIdx);
-	return image.getOwner().allocateMemoryUnique(allocateInfo);
-}
-
-vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal, bool isHostVisible) const
-{
-	auto memProps = physicalDevice_.getMemoryProperties();
-	auto memRq = device_->getBufferMemoryRequirements(buffer);
-	std::uint32_t heapIdx = 0u;
-	std::uint32_t memIdx = 0u;
-
-	// ヒープを探す
-	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
-	{
-		if (((memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal) == vk::MemoryHeapFlagBits::eDeviceLocal) == isDeviceLoacal)
-		{
-			heapIdx = i;
-			break;
-		}
-	}
-
-	// メモリータイプを探す
-	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
-	{
-		auto propFlag = isHostVisible ? (vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent) : vk::MemoryPropertyFlagBits::eDeviceLocal;
-		if (memProps.memoryTypes[i].propertyFlags & propFlag)
-		{
-			if ((memRq.memoryTypeBits >> i) & 0x1)
-			{
-				if (memProps.memoryTypes[i].heapIndex == heapIdx)
-				{
-					memIdx = i;
-					break;
-				}
-			}
-		}
-	}
-	vk::MemoryAllocateInfo allocateInfo{};
-	allocateInfo.setAllocationSize(memRq.size);
-	allocateInfo.setMemoryTypeIndex(memIdx);
-	return device_->allocateMemoryUnique(allocateInfo);
-}
+//vk::UniqueDeviceMemory Eugene::Graphics::CreateMemory(vk::UniqueImage& image) const
+//{
+//	auto memProps = physicalDevice_.getMemoryProperties();
+//	auto memRq = device_->getImageMemoryRequirements(*image);
+//	std::uint32_t heapIdx = 0u;
+//	std::uint32_t memIdx = 0u;
+//
+//	// ヒープを探す
+//	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
+//	{
+//		if (memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal)
+//		{
+//			heapIdx = i;
+//			break;
+//		}
+//	}
+//
+//	// メモリータイプを探す
+//	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
+//	{
+//		if (memProps.memoryTypes[i].propertyFlags & vk::MemoryPropertyFlagBits::eDeviceLocal)
+//		{
+//			if ((memRq.memoryTypeBits >> i) & 0x1)
+//			{
+//				if (memProps.memoryTypes[i].heapIndex == heapIdx)
+//				{
+//					memIdx = i;
+//					break;
+//				}
+//			}
+//		}
+//	}
+//	vk::MemoryAllocateInfo allocateInfo{};
+//	allocateInfo.setAllocationSize(memRq.size);
+//	allocateInfo.setMemoryTypeIndex(memIdx);
+//	return image.getOwner().allocateMemoryUnique(allocateInfo);
+//}
+//
+//vk::UniqueDeviceMemory Eugene::VkGraphics::CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal, bool isHostVisible) const
+//{
+//	auto memProps = physicalDevice_.getMemoryProperties();
+//	auto memRq = device_->getBufferMemoryRequirements(buffer);
+//	std::uint32_t heapIdx = 0u;
+//	std::uint32_t memIdx = 0u;
+//
+//	// ヒープを探す
+//	for (std::uint32_t i = 0; i < memProps.memoryHeapCount; i++)
+//	{
+//		if (((memProps.memoryHeaps[i].flags & vk::MemoryHeapFlagBits::eDeviceLocal) == vk::MemoryHeapFlagBits::eDeviceLocal) == isDeviceLoacal)
+//		{
+//			heapIdx = i;
+//			break;
+//		}
+//	}
+//
+//	// メモリータイプを探す
+//	for (std::uint32_t i = 0; i < memProps.memoryTypeCount; i++)
+//	{
+//		auto propFlag = isHostVisible ? (vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent) : vk::MemoryPropertyFlagBits::eDeviceLocal;
+//		if (memProps.memoryTypes[i].propertyFlags & propFlag)
+//		{
+//			if ((memRq.memoryTypeBits >> i) & 0x1)
+//			{
+//				if (memProps.memoryTypes[i].heapIndex == heapIdx)
+//				{
+//					memIdx = i;
+//					break;
+//				}
+//			}
+//		}
+//	}
+//	vk::MemoryAllocateInfo allocateInfo{};
+//	allocateInfo.setAllocationSize(memRq.size);
+//	allocateInfo.setMemoryTypeIndex(memIdx);
+//	return device_->allocateMemoryUnique(allocateInfo);
+//}
 
 #ifdef USE_IMGUI
-ImGui_ImplVulkanH_Window* Eugene::VkGraphics::GetImguiWindow(void)
+ImGui_ImplVulkanH_Window* Eugene::Graphics::GetImguiWindow(void)
 {
 	return &::imguiWindowH;
 }
 
-vk::RenderPass Eugene::VkGraphics::GetRenderPass(void)
+vk::RenderPass Eugene::Graphics::GetRenderPass(void)
 {
 	return *imguiRenderPass_;
 }
 
-vk::Framebuffer Eugene::VkGraphics::GetFrameBuffer(void)
+vk::Framebuffer Eugene::Graphics::GetFrameBuffer(void)
 {
 	return *imguiFrameBuffer_[backBufferIdx_];
 }
 #endif
 
-Eugene::GpuEngine* Eugene::VkGraphics::CreateGpuEngine(std::uint64_t maxSize) const
-{
-	return new VkGpuEngine{graphicFamilly_, nextQueueIdx_,*device_,maxSize};
-}
-
-Eugene::CommandList* Eugene::VkGraphics::CreateCommandList(void) const
-{
-	return new VkCommandList{*device_, graphicFamilly_ };
-}
-
-Eugene::BufferResource* Eugene::VkGraphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered)const
-{
-	return new VkUnloadableBufferResource{ *allocator_, size, isUnordered};
-}
-
-Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
-{
-	return new VkBufferResource{*allocator_, size, isUnordered};
-}
-
-Eugene::BufferResource* Eugene::VkGraphics::CreateBufferResource(Image& texture) const
-{
-	return new VkUnloadableBufferResource{ *allocator_, texture};
-}
-
-Eugene::BufferResource* Eugene::VkGraphics::CreateUnloadableBufferResource(std::uint64_t size) const
-{
-	return new VkUnloadableBufferResource{ *allocator_, size,false };
-}
-
-Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(const TextureInfo& formatData) const
-{
-	// 
-	return new VkImageResource{ *allocator_,formatData};
-}
-
-Eugene::ImageResource* Eugene::VkGraphics::CreateImageResource(
-	const glm::ivec2& size, Format format,
-	std::uint32_t arraySize,
-	std::uint8_t mipLeveles,
-	std::uint8_t sampleCount,
-	std::optional<std::span<float, 4>> clearColor
-	)
-{
-	if (format == Format::AUTO_BACKBUFFER)
-	{
-		format = backBufferFormat_;
-	}
-	return new VkImageResource{ *allocator_, size,format,arraySize,mipLeveles,sampleCount,clearColor};
-}
+//Eugene::BufferResource* Eugene::Graphics::CreateReadableBufferResource(std::uint64_t size, bool isUnordered)const
+//{
+//	return new VkUnloadableBufferResource{ *allocator_, size, isUnordered};
+//}
+//
+//Eugene::BufferResource* Eugene::Graphics::CreateBufferResource(std::uint64_t size, bool isUnordered) const
+//{
+//	return new VkBufferResource{*allocator_, size, isUnordered};
+//}
+//
+//Eugene::BufferResource* Eugene::Graphics::CreateBufferResource(Image& texture) const
+//{
+//	return new VkUnloadableBufferResource{ *allocator_, texture};
+//}
+//
+//Eugene::BufferResource* Eugene::Graphics::CreateUnloadableBufferResource(std::uint64_t size) const
+//{
+//	return new VkUnloadableBufferResource{ *allocator_, size,false };
+//}
+//
+//Eugene::ImageResource* Eugene::Graphics::CreateImageResource(const TextureInfo& formatData) const
+//{
+//	// 
+//	return new VkImageResource{ *allocator_,formatData};
+//}
+//
+//Eugene::ImageResource* Eugene::Graphics::CreateImageResource(
+//	const glm::ivec2& size, Format format,
+//	std::uint32_t arraySize,
+//	std::uint8_t mipLeveles,
+//	std::uint8_t sampleCount,
+//	std::optional<std::span<float, 4>> clearColor
+//	)
+//{
+//	if (format == Format::AUTO_BACKBUFFER)
+//	{
+//		format = backBufferFormat_;
+//	}
+//	return new VkImageResource{ *allocator_, size,format,arraySize,mipLeveles,sampleCount,clearColor};
+//}
 
 
-Eugene::ShaderResourceViews* Eugene::VkGraphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
-{
-	return new VkShaderResourceViews{*device_, viewTypes};
-}
+//Eugene::ShaderResourceViews* Eugene::Graphics::CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+//{
+//	return new VkShaderResourceViews{*device_, viewTypes};
+//}
+//
+//Eugene::DepthStencilViews* Eugene::Graphics::CreateDepthStencilViews(std::uint64_t size) const
+//{
+//	return new VkDepthStencilView{*device_, static_cast<std::uint32_t>(size)};
+//}
+//
+//Eugene::RenderTargetViews* Eugene::Graphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
+//{
+//	return new VkRenderTargetViews{*device_,size};
+//}
 
-Eugene::DepthStencilViews* Eugene::VkGraphics::CreateDepthStencilViews(std::uint64_t size) const
-{
-	return new VkDepthStencilView{*device_, static_cast<std::uint32_t>(size)};
-}
 
-Eugene::RenderTargetViews* Eugene::VkGraphics::CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const
-{
-	return new VkRenderTargetViews{*device_,size};
-}
 
-Eugene::VertexView* Eugene::VkGraphics::CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const
-{
-	return new VkVertexView{ static_cast<std::uint32_t>(size),static_cast<std::uint32_t>(vertexNum), *static_cast<VkBufferData*>(resource.GetResource())->buffer_};
-}
-
-Eugene::ImageResource& Eugene::VkGraphics::GetBackBufferResource(std::uint64_t idx)
-{
-	return *buffers_[idx];
-}
-
-Eugene::RenderTargetViews& Eugene::VkGraphics::GetViews(void)
-{
-	return *renderTargetViews_;
-}
-
-std::uint64_t Eugene::VkGraphics::GetNowBackBufferIndex(void) const
-{
-    return backBufferIdx_;
-}
-
-void Eugene::VkGraphics::Present(void)
+void Eugene::Graphics::Present(void)
 {
 	if (isMinimized)
 	{
@@ -566,17 +529,12 @@ void Eugene::VkGraphics::Present(void)
 #endif
 }
 
-Eugene::Sampler* Eugene::VkGraphics::CreateSampler(const SamplerLayout& layout) const
-{
-	return new VkSampler{ *device_, layout };
-}
+//Eugene::SamplerViews* Eugene::Graphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+//{
+//	return new VkSamplerViews{*device_, viewTypes};
+//}
 
-Eugene::SamplerViews* Eugene::VkGraphics::CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
-{
-	return new VkSamplerViews{*device_, viewTypes};
-}
-
-void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
+void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
     queue_.waitIdle();
     device_->waitIdle();
 
@@ -601,9 +559,9 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
     }
 
 
-    renderTargetViews_.reset();
+    renderTargetViews_.Final();
     for (auto &buffer: buffers_) {
-        buffer.reset();
+        buffer.Final();
     }
     swapchain_.reset();
 
@@ -631,7 +589,7 @@ void Eugene::VkGraphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
 }
 
 
-void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
+void Eugene::Graphics::SetFullScreenFlag(bool isFullScreen)
 {
 	//queue_.waitIdle();
 	//device_->waitIdle();
@@ -659,7 +617,7 @@ void Eugene::VkGraphics::SetFullScreenFlag(bool isFullScreen)
 
 }
 
-void Eugene::VkGraphics::CreateInstance(void)
+void Eugene::Graphics::CreateInstance(void)
 {
 	VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
 
@@ -677,9 +635,9 @@ void Eugene::VkGraphics::CreateInstance(void)
 	};
 	std::vector<const char*> extens{
 		VK_KHR_SURFACE_EXTENSION_NAME,
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
-#else USE_ANDROID
+#else EUGENE_ANDROID
         VK_KHR_ANDROID_SURFACE_EXTENSION_NAME,
 #endif
 
@@ -704,7 +662,7 @@ void Eugene::VkGraphics::CreateInstance(void)
 	VULKAN_HPP_DEFAULT_DISPATCHER.init(*instance_);
 }
 
-void Eugene::VkGraphics::CreateDevice(void)
+void Eugene::Graphics::CreateDevice(void)
 {
 	for (const auto& d : instance_->enumeratePhysicalDevices())
 	{
@@ -750,7 +708,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 		//VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME,
 		//VK_KHR_DEPTH_STENCIL_RESOLVE_EXTENSION_NAME,
 		
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 		VK_EXT_FULL_SCREEN_EXCLUSIVE_EXTENSION_NAME
 #endif
 	};
@@ -775,7 +733,7 @@ void Eugene::VkGraphics::CreateDevice(void)
 	VULKAN_HPP_DEFAULT_DISPATCHER.init(*device_);
 }
 
-void Eugene::VkGraphics::SetUpVma(void)
+void Eugene::Graphics::SetUpVma(void)
 {
     vma::VulkanFunctions vulkanFunc{};
 
@@ -792,31 +750,8 @@ void Eugene::VkGraphics::SetUpVma(void)
     allocator_ = vma::createAllocatorUnique(allocatorInfo);
 }
 
-Eugene::Pipeline* Eugene::VkGraphics::CreateGraphicsPipeline(
-	ResourceBindLayout& resourceBindLayout,
-	const ArgsSpan<ShaderInputLayout>& layout,
-	const ArgsSpan<ShaderPair>& shaders,
-	const ArgsSpan<RendertargetLayout>& rendertarges, 
-	TopologyType topologyType, 
-	bool isCulling,
-	bool useDepth,
-	std::uint8_t sampleCount
-) const
-{
-	return new VkGraphicsPipeline{*device_, resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth,sampleCount};
-}
 
-Eugene::ResourceBindLayout* Eugene::VkGraphics::CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
-{
-	return new VkResourceBindLayout{*device_,viewTypes};
-}
-
-Eugene::ImageResource* Eugene::VkGraphics::CreateDepthResource(const glm::ivec2& size, float clear, std::uint8_t sampleCount) const
-{
-	return new VkImageResource{*allocator_, size, clear, sampleCount};
-}
-
-std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::VkGraphics::GetGpuMemoryInfo(void) const
+std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::Graphics::GetGpuMemoryInfo(void) const
 {
 	auto budgets = allocator_->getHeapBudgets();
 	auto properties = physicalDevice_.getMemoryProperties();
@@ -838,198 +773,13 @@ std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::VkGraphics::GetG
 }
 
 
-#ifdef USE_EFFEKSEER
-
-namespace Eugene
-{
-	class VkEffekseerWarpper :
-		public EffekseerWarpper
-	{
-	public:
-		VkEffekseerWarpper(
-			const vk::PhysicalDevice& physicalDevice,
-			const vk::Device& device,
-			const vk::Queue& queue, 
-			const vk::CommandPool& pool,
-			std::uint32_t swapchainCount, vk::Format rtFormat, vk::Format depthFormtat, bool reverseDepth, std::uint64_t maxNum)
-		{
-			
-			auto graphicsDevice = EffekseerRendererVulkan::CreateGraphicsDevice
-			(
-				VkPhysicalDevice{ physicalDevice },
-				device,
-				queue,
-				pool,
-				swapchainCount
-			);
-
-		
-			EffekseerRendererVulkan::RenderPassInformation renderPassInfo;
-			renderPassInfo.DoesPresentToScreen = false;
-			renderPassInfo.RenderTextureCount = 1;
-			renderPassInfo.RenderTextureFormats[0] = static_cast<VkFormat>(VkGraphics::FormatToVkFormat[static_cast<size_t>(rtFormat)]);
-			//renderPassInfo.DepthFormat = VK_FORMAT_D32_SFLOAT;
-			
-			renderer_ = EffekseerRendererVulkan::Create(graphicsDevice, renderPassInfo, maxNum);
-			manager_ = Effekseer::Manager::Create(maxNum);
-
-			// レンダラーセット
-			manager_->SetSpriteRenderer(renderer_->CreateSpriteRenderer());
-			manager_->SetRibbonRenderer(renderer_->CreateRibbonRenderer());
-			manager_->SetRingRenderer(renderer_->CreateRingRenderer());
-			manager_->SetTrackRenderer(renderer_->CreateTrackRenderer());
-			manager_->SetModelRenderer(renderer_->CreateModelRenderer());
-
-			// ローダーセット
-			manager_->SetTextureLoader(renderer_->CreateTextureLoader());
-			manager_->SetModelLoader(renderer_->CreateModelLoader());
-			manager_->SetMaterialLoader(renderer_->CreateMaterialLoader());
-
-			// メモリープールとコマンドリストを生成
-			memoryPool_ = EffekseerRenderer::CreateSingleFrameMemoryPool(renderer_->GetGraphicsDevice());
-			cmdList_ = EffekseerRenderer::CreateCommandList(renderer_->GetGraphicsDevice(), memoryPool_);
-			renderer_->SetCommandList(cmdList_);
-
-			auto viewerPosition = ::Effekseer::Vector3D(0.0f, 0.0f, -20.0f);
-			renderer_->SetCameraMatrix(
-				Effekseer::Matrix44().LookAtRH(
-					viewerPosition, Effekseer::Vector3D(0.0f, 0.0f, 0.0f), Effekseer::Vector3D(0.0f, 1.0f, 0.0f)
-				)
-			);
-		}
-
-		// EffekseerWarpper を介して継承されました
-		void Update(float delta) override
-		{
-			// 1フレームの経過時間を60フレーム基準での経過フレームに変換用
-			constexpr auto frameParSec = 1.0f / 60.0f;
-
-			// 開始処理
-			memoryPool_->NewFrame();
-
-			// 更新処理
-			manager_->Update(delta / frameParSec);
-		}
-
-		void Draw(CommandList& cmdList) override
-		{
-			auto vkCmdList{ static_cast<vk::UniqueCommandBuffer*>(cmdList.GetCommandList()) };
-			
-			Effekseer::Manager::DrawParameter drawParameter;
-			drawParameter.ZNear = 0.0f;
-			drawParameter.ZFar = 1.0f;
-			drawParameter.ViewProjectionMatrix = renderer_->GetCameraProjectionMatrix();
-			
-			EffekseerRendererVulkan::BeginCommandList(cmdList_, **vkCmdList);
-			renderer_->SetCommandList(cmdList_);
-			renderer_->BeginRendering();
-			manager_->Draw(drawParameter);
-			renderer_->EndRendering();
-			renderer_->SetCommandList(nullptr);
-			EffekseerRendererVulkan::EndCommandList(cmdList_);
-		}
-		Effekseer::RefPtr<Effekseer::Manager>& GetManager() & final
-		{
-			return manager_;
-
-		}
-		void SetCameraPos(const glm::vec3& eye, const glm::vec3& at, const glm::vec3& up) final
-		{
-			renderer_->SetCameraMatrix(
-				Effekseer::Matrix44().LookAtLH(
-					Effekseer::Vector3D{ eye.x,eye.y, eye.z }, Effekseer::Vector3D{ at.x, at.y, at.z }, Effekseer::Vector3D{ up.x, up.y, up.z }
-				)
-			);
-		}
-		void SetCameraProjection(float fov, float aspect, const glm::vec2& nearfar) final
-		{
-			renderer_->SetProjectionMatrix(
-				Effekseer::Matrix44().PerspectiveFovLH(fov, aspect, nearfar.x, nearfar.y));
-		}
-
-		void SetCameraPos(const glm::mat4& mat) final
-		{
-			Effekseer::Matrix44 tmp;
-			for (int y = 0; y < 4; y++)
-			{
-				for (int x = 0; x < 4; x++)
-				{
-					tmp.Values[y][x] = mat[y][x];
-				}
-			}
-			renderer_->SetCameraMatrix(
-				tmp
-			);
-		}
-
-		void SetCameraProjection(const glm::mat4& mat) final
-		{
-			Effekseer::Matrix44 tmp;
-			for (int y = 0; y < 4; y++)
-			{
-				for (int x = 0; x < 4; x++)
-				{
-					tmp.Values[y][x] = mat[y][x];
-				}
-			}
-			renderer_->SetProjectionMatrix(tmp);
-		}
-
-	private:
-
-		/// <summary>
-		/// レンダラー
-		/// </summary>
-		EffekseerRenderer::RendererRef renderer_;
-
-		/// <summary>
-		/// マネージャー
-		/// </summary>
-		Effekseer::RefPtr<Effekseer::Manager> manager_;
-
-		/// <summary>
-		/// メモリプール
-		/// </summary>
-		Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> memoryPool_;
-
-		/// <summary>
-		/// コマンドリスト
-		/// </summary>
-		Effekseer::RefPtr<EffekseerRenderer::CommandList> cmdList_;
-	};
-}
-
-Eugene::EffekseerWarpper* Eugene::VkGraphics::CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat, bool reverseDepth, std::uint64_t maxNumm) const
-{
-	if (rtFormat == Format::AUTO_BACKBUFFER)
-	{
-		rtFormat = backBufferFormat_;
-	}
-	return new VkEffekseerWarpper{
-		physicalDevice_,
-		*device_,
-		queue_,
-		*effekseerPool_,
-		rtNum,
-		FormatToVkFormat[static_cast<size_t>(rtFormat)],
-		FormatToVkFormat[static_cast<size_t>(depthFormat)],
-		reverseDepth,
-		maxNumm
-	};
-}
-#endif
-
-Eugene::IndexView* Eugene::VkGraphics::CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const
-{
-	return new VkIndexView{ size, num, *static_cast<VkBufferData*>(resource.GetResource())->buffer_ };
-}
 
 #ifdef USE_IMGUI
-void Eugene::VkGraphics::ImguiNewFrame(void) const
+void Eugene::Graphics::ImguiNewFrame(void) const
 {
 	ImGui_ImplVulkan_NewFrame();
 }
-void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
+void* Eugene::Graphics::GetImguiImageID(std::uint64_t index) const
 {
 	if (index >= imguiImageMax_)
 	{
@@ -1038,22 +788,22 @@ void* Eugene::VkGraphics::GetImguiImageID(std::uint64_t index) const
 	return *imageDatas_[index].descriptorSet;
 }
 
-void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64_t index)
+void Eugene::Graphics::SetImguiImage(ImageResource& imageResource, std::uint64_t index)
 {
 	if (index >= imguiImageMax_)
 	{
 		return;
 	}
 
-	auto data{ static_cast<VkImageResource::Data*>(imageResource.GetResource()) };
-	auto format = VkGraphics::FormatToVkFormat[static_cast<size_t>(imageResource.GetFormat())];
+	auto& data{imageResource.GetResource() };
+	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(imageResource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
-	viewInfo.setImage(*data->image_);
+	viewInfo.setImage(*data.image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
-	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
+	viewInfo.subresourceRange.setLevelCount(data.mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(data.arraySize_);
 	imageDatas_[index].imageView = device_->createImageViewUnique(viewInfo);
 	if (imageDatas_[index].descriptorSet)
 	{
@@ -1077,7 +827,7 @@ void Eugene::VkGraphics::SetImguiImage(ImageResource& imageResource, std::uint64
 	}
 }
 
-void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
+void Eugene::Graphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferNum, const glm::vec2& size)
 {
 	ImGui_ImplVulkan_LoadFunctions([](const char* function_name, void* data) {
 		return reinterpret_cast<vk::DynamicLoader*>(data)->getProcAddress<PFN_vkVoidFunction>(function_name);
@@ -1192,10 +942,10 @@ void Eugene::VkGraphics::InitImgui(vk::Format useVkformat, const uint32_t& buffe
 
 }
 
-void Eugene::VkGraphics::CreateImguiFrameBuffer(const glm::vec2& size)
+void Eugene::Graphics::CreateImguiFrameBuffer(const glm::vec2& size)
 {
 	imguiFrameBuffer_.resize(buffers_.size());
-	auto& backViews = *static_cast<VkRenderTargetViews::ViewsType*>(renderTargetViews_->GetViews());
+	auto& backViews = renderTargetViews_.GetViews();
 	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
 	{
 		vk::ImageView attachments[] = {
@@ -1212,11 +962,5 @@ void Eugene::VkGraphics::CreateImguiFrameBuffer(const glm::vec2& size)
 		imguiFrameBuffer_[i] = device_->createFramebufferUnique(info);
 	}
 }
-
-Eugene::Pipeline* Eugene::VkGraphics::CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
-{
-	return new VkGraphicsPipeline{*device_, resourceBindLayout, csShader};
-}
-
 
 #endif 

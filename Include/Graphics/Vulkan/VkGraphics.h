@@ -1,18 +1,32 @@
 ﻿#pragma once
-#include "../../../Include/Graphics/Graphics.h"
 #include <vulkan/vulkan.hpp>
-#include "../../../Include/ThirdParty/VulkanMemoryAllocator-Hpp/include/vk_mem_alloc.hpp"
+#include "../../Utils/Utils.h"
+#include "../GraphicsCommon.h"
+#include <vk_mem_alloc.hpp>
 #include <memory>
 #include <array>
 
-#ifdef USE_WINDOWS
+#include "VkGpuEngine.h"
+#include "VkGraphicsPipeline.h"
+#include "VkResourceBindLayout.h"
+#include "VkCommandList.h"
+#include "VkBufferResource.h"
+#include "VkImageResource.h"
+#include "VkRenderTargetViews.h"
+#include "VkDepthStencilViews.h"
+#include "VkShaderResourceViews.h"
+#include "VkSamplerViews.h"
+#include "VkSampler.h"
+#include "VkIndexView.h"
+#include "VkVertexView.h"
+
+#ifdef EUGENE_WINDOWS
 #include <Windows.h>
-#else USE_ANDROID
+#elif EUGENE_ANDROID
 struct android_app;
 #endif
 
-#include "../../../Include/Graphics/ImageResource.h"
-#include "../../../Include/Graphics/RenderTargetViews.h"
+
 
 #ifdef USE_IMGUI
 struct ImGui_ImplVulkanH_Window;
@@ -20,14 +34,18 @@ struct ImGui_ImplVulkanH_Window;
 
 namespace Eugene
 {
-#ifdef USE_EFFEKSEER
-	class EffekseerWarpper;
-#endif
-
-	class VkGraphics :
-		public Graphics
+	class Graphics :
+		public DynamicSingleton<Graphics>
 	{
 	public:
+
+		static GpuEngine Create(std::uint32_t bufferNum = 2, std::uint64_t maxNum = 100)
+		{
+			GpuEngine gpuEngine;
+			new Graphics{ gpuEngine, bufferNum, maxNum };
+			return gpuEngine;
+		}
+
 		static constexpr std::array<vk::Format, FormatMax> FormatToVkFormat{
 			vk::Format::eUndefined,
 
@@ -114,12 +132,12 @@ namespace Eugene
 			return Graphics::backBufferFormat_;
 		}
 
-#ifdef USE_WINDOWS
-		VkGraphics(HWND& hwnd,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-#else  USE_ANDROID
-        VkGraphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#ifdef EUGENE_WINDOWS
+		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#else  EUGENE_ANDROID
+		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
 #endif
-		~VkGraphics();
+		~Graphics();
 
 		/// <summary>
 		/// バックバッファ生成
@@ -135,72 +153,174 @@ namespace Eugene
 		/// <returns></returns>
 		vk::Format CreateSwapChain(const glm::vec2& size);
 
-		/// <summary>
-		/// Image用デバイスメモリを生成する
-		/// </summary>
-		/// <param name="image"></param>
-		/// <returns></returns>
-		vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
+		vk::Queue GetNextQueue()
+		{
+			return device_->getQueue(graphicFamilly_, nextQueueIdx_++);
+		}
 
-		/// <summary>
-		/// buffer用デバイスメモリを生成する
-		/// </summary>
-		/// <param name="buffer"></param>
-		/// <param name="isDeviceLoacal"></param>
-		/// <param name="isHostVisible"></param>
-		/// <returns></returns>
-		vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
+		///// <summary>
+		///// Image用デバイスメモリを生成する
+		///// </summary>
+		///// <param name="image"></param>
+		///// <returns></returns>
+		//vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
+
+		///// <summary>
+		///// buffer用デバイスメモリを生成する
+		///// </summary>
+		///// <param name="buffer"></param>
+		///// <param name="isDeviceLoacal"></param>
+		///// <param name="isHostVisible"></param>
+		///// <returns></returns>
+		//vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
 
 #ifdef USE_IMGUI
 		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
 		vk::RenderPass GetRenderPass(void);
 		vk::Framebuffer GetFrameBuffer(void);
 #endif
-	private:
-		GpuEngine* CreateGpuEngine(std::uint64_t maxSize) const final;
-		CommandList* CreateCommandList(void) const final;
-		BufferResource* CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const final;
-		BufferResource* CreateBufferResource(std::uint64_t size, bool isUnordered = false) const final;
-		BufferResource* CreateBufferResource(Image& texture) const final;
-		ImageResource* CreateImageResource(const TextureInfo& formatData) const final;
+		GpuEngine CreateGpuEngine(std::size_t initSize) const
+		{
+			return { initSize };
+		}
 
-		ImageResource* CreateImageResource(
+
+		CommandList CreateCommandList(void) const
+		{
+			return {};
+		}
+
+		BufferResource CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const
+		{
+			return { size,isUnordered,GpuResourceType::ReadBack };
+		}
+		BufferResource CreateBufferResource(std::uint64_t size, bool isUnordered = false) const
+		{
+			return { size, isUnordered, GpuResourceType::Default };
+		}
+
+		BufferResource CreateBufferResource(Image& texture) const
+		{
+			return { texture };
+		}
+
+		BufferResource CreateUnloadableBufferResource(std::uint64_t size) const
+		{
+			return { size, false,GpuResourceType::Upload };
+		}
+
+		ImageResource CreateImageResource(const TextureInfo& formatData) const
+		{
+			return { formatData };
+		}
+
+		ImageResource CreateImageResource(
 			const glm::ivec2& size,
-			Format format, 
+			Format format,
 			std::uint32_t arraySize = 1,
 			std::uint8_t mipLeveles = 1,
 			std::uint8_t sampleCount = 1,
 			std::optional<std::span<float, 4>> clearColor = std::nullopt
-			) final;
-		ShaderResourceViews* CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const final;
-		DepthStencilViews* CreateDepthStencilViews(std::uint64_t size) const final;
-		RenderTargetViews* CreateRenderTargetViews(std::uint64_t size, bool isShaderVisible) const final;
-		VertexView* CreateVertexView(std::uint64_t size, std::uint64_t vertexNum, BufferResource& resource) const final;
-		IndexView* CreateIndexView(std::uint32_t size, std::uint32_t num, Format format, BufferResource& resource) const final;
-		ImageResource& GetBackBufferResource(std::uint64_t idx) final;
-		RenderTargetViews& GetViews(void) final;
-		std::uint64_t GetNowBackBufferIndex(void) const final;
-		void Present(void) final;
-		Sampler* CreateSampler(const SamplerLayout& layout) const final;
-		SamplerViews* CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const final;
-		void ResizeBackBuffer(const glm::vec2& size, void* window = nullptr) final;
-		void SetFullScreenFlag(bool isFullScreen) final;
-		Pipeline* CreateGraphicsPipeline(
+		)
+		{
+			if (format == Format::AUTO_BACKBUFFER)
+			{
+				format = backBufferFormat_;
+			}
+			return { size, format,arraySize,mipLeveles,sampleCount,clearColor };
+		}
+
+		ShaderResourceViews CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
+		{
+			return { viewTypes };
+		}
+
+		DepthStencilViews CreateDepthStencilViews(std::uint32_t size) const
+		{
+			return { size };
+		}
+
+		RenderTargetViews CreateRenderTargetViews(std::uint32_t size, bool isShaderVisible) const
+		{
+			return { size };
+		}
+
+		ImageResource& GetBackBufferResource(std::uint64_t idx)
+		{
+			return buffers_[idx];
+		}
+
+		RenderTargetViews& GetViews(void) noexcept
+		{
+			return renderTargetViews_;
+		}
+		std::uint64_t GetNowBackBufferIndex(void) const noexcept
+		{
+			return backBufferIdx_;
+		}
+
+
+		ImageResource& GetBackBufferResource() noexcept
+		{
+			return GetBackBufferResource(GetNowBackBufferIndex());
+		}
+
+		void Present(void);
+		Sampler CreateSampler(const SamplerLayout& layout) const
+		{
+			return { layout };
+		}
+
+		SamplerViews CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
+		{
+			return { viewTypes };
+		}
+
+		void ResizeBackBuffer(const glm::vec2& size, void* window = nullptr);
+		void SetFullScreenFlag(bool isFullScreen);
+
+		Pipeline CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
-			const ArgsSpan<ShaderInputLayout>& layout, 
-			const ArgsSpan<ShaderPair>& shaders, 
+			const ArgsSpan<ShaderInputLayout>& layout,
+			const ArgsSpan<ShaderPair>& shaders,
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
 			bool useDepth = false,
 			std::uint8_t sampleCount = 1
-		) const final;
-		ResourceBindLayout* CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const final;
-		ImageResource* CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const final;
-		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const final;
+		) const
+		{
+			return {resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth, sampleCount};
+		}
+
+		// Graphics を介して継承されました
+		Pipeline CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
+		{
+			return { resourceBindLayout, csShader };
+		}
+
+
+		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
+		{
+			return CreateResourceBindLayout(viewTypes, std::to_underlying(flag));
+		}
+		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
+		{
+			return { viewTypes };
+		}
+
+
+
+
+		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
+		{
+			return { size,clear,sampleCount };
+		}
+
+		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const;
 		void CreateInstance(void);
 		void CreateDevice(void);
-        void SetUpVma(void);
+		void SetUpVma(void);
 
 		/// <summary>
 		/// ダイナミックローダー
@@ -260,26 +380,26 @@ namespace Eugene
 		/// <summary>
 		/// バックバッファ
 		/// </summary>
-		std::vector<std::unique_ptr<ImageResource>> buffers_;
+		std::vector<ImageResource> buffers_;
 		
 		/// <summary>
 		/// レンダーターゲットビュー
 		/// </summary>
-		std::unique_ptr<RenderTargetViews> renderTargetViews_;
+		RenderTargetViews renderTargetViews_;
 
 		/// <summary>
 		/// 画面が最小状態か？
 		/// </summary>
 		bool isMinimized;
 
-#ifdef USE_EFFEKSEER
-		// Graphics を介して継承されました
-		EffekseerWarpper* CreateEffekseerWarpper(GpuEngine& gpuEngine, Format rtFormat, std::uint32_t rtNum, Format depthFormat = Format::NON,
-			bool reverseDepth = false,
-			std::uint64_t maxNumm = 8000) const final;
+		std::uint8_t multiSampleCount_;
 
-		vk::UniqueCommandPool effekseerPool_;
-#endif
+		std::uint32_t nextQueueIdx_ = 0;
+
+		/// <summary>
+		/// バックバッファのフォーマット
+		/// </summary>
+		static inline Format backBufferFormat_;
 
 #ifdef USE_IMGUI
 
@@ -324,11 +444,12 @@ namespace Eugene
 		/// </summary>
 		vk::UniqueSampler imguiSampler_;
 
+		std::uint64_t imguiImageMax_{ 1000ull };
 
-		void ImguiNewFrame(void) const final;
-		void* GetImguiImageID(std::uint64_t index) const final;
-		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull) final;
-#ifdef USE_WINDOWS
+		void ImguiNewFrame(void) const;
+		void* GetImguiImageID(std::uint64_t index) const;
+		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull);
+#ifdef EUGENE_WINDOWS
 
 		/// <summary>
 		/// Imgui用の初期化処理
@@ -345,15 +466,17 @@ namespace Eugene
 		void CreateImguiFrameBuffer(const glm::vec2& size);
 #endif
 #endif
-
-
-
-
-		// Graphics を介して継承されました
-		Pipeline* CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const override;
-
-		BufferResource* CreateUnloadableBufferResource(std::uint64_t size) const override;
-
-};
+		friend class System;
+		friend class GpuEngine;
+		friend class CommandList;
+		friend class ImageResource;
+		friend class BufferResource;
+		friend class RenderTargetViews;
+		friend class DepthStencilViews;
+		friend class ShaderResourceViews;
+		friend class SamplerViews;
+		friend class ResourceBindLayout;
+		friend class Pipeline;
+	};
 
 }

@@ -9,18 +9,10 @@
 
 #ifdef EUGENE_DX12
 #include "DirectX12/Dx12Graphics.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkGraphics.h"
 #endif
 
-#ifdef USE_EFFEKSEER
-#include "../ThirdParty/glm/glm/mat4x4.hpp"
-namespace Effekseer
-{
-	template<class T>
-	class RefPtr;
-
-	class Manager;
-}
-#endif
 
 namespace Eugene
 {

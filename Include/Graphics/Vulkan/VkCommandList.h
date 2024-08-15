@@ -82,10 +82,10 @@ namespace Eugene
 
 		void Final() noexcept
 		{
-			commandBuffer_.release();
-			commandPool_.release();
+			commandBuffer_.reset();
+			commandPool_.reset();
 			isRendering_ = false;
-			nowLayout_ = nullptr;
+			nowLayout_.reset();
 		}
 	private:
 		CommandList();
@@ -110,7 +110,7 @@ namespace Eugene
 		/// <summary>
 		/// 現在のパイプラインのレイアウト
 		/// </summary>
-		vk::PipelineLayout* nowLayout_;
+		std::shared_ptr<vk::UniquePipelineLayout> nowLayout_;
 
 		friend class Graphics;
 

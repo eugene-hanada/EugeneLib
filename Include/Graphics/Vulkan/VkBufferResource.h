@@ -43,8 +43,8 @@ namespace Eugene
 		void Final()noexcept
 		{
 			AllUnMap();
-			buffer_.release();
-			allocation_.release();
+			buffer_.reset();
+			allocation_.reset();
 		}
 
 		BufferResource(BufferResource&& bufferResource) noexcept :

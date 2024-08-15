@@ -57,20 +57,20 @@ namespace Eugene
 
 		void Final() noexcept
 		{
-			descriptorPool_.release();
-			data_.descriptorSet_.release();
-			data_.layout_.release();
-			typeData_.clear();
 			imageViewMap_.clear();
+			typeData_.clear();
+			data_.layout_.reset();
+			data_.descriptorSet_.reset();
+			descriptorPool_.reset();
 		}
 
-		ShaderResourceViews(ShaderResourceViews&& views) :
+		ShaderResourceViews(ShaderResourceViews&& views) noexcept :
 			descriptorPool_{std::move(views.descriptorPool_)}, data_{std::move(views.data_)},
 			typeData_{std::move(views.typeData_)}, imageViewMap_{std::move(views.imageViewMap_)}
 		{
 
 		}
-		ShaderResourceViews& operator=(ShaderResourceViews&& views)
+		ShaderResourceViews& operator=(ShaderResourceViews&& views) noexcept
 		{
 			descriptorPool_ = std::move(views.descriptorPool_);
 			data_ = std::move(views.data_);

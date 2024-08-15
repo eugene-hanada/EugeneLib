@@ -19,6 +19,8 @@
 #include <Debug/Debug.h>
 
 
+#include <stacktrace>
+
 struct Vertex2D
 {
 	Eugene::vec2 pos;
@@ -26,7 +28,7 @@ struct Vertex2D
 };
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{	
+{
 	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
 	auto gpuEngine = Eugene::Graphics::Create();
 
@@ -136,6 +138,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	samplerView.CreateSampler(sampler, 0);
 
+	//Eugene::System::GetInstance().SetFullScreen(true);
+
 	ImGuiIO& io = ImGui::GetIO();
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
 	while (Eugene::System::GetInstance().Update())
@@ -219,10 +223,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	samplerView.Final();
 	textureAndTransformView.Final();
 	renderTargetView.Final();
+
+	sampler.Final();
 	textureTransformBuffer.Final();
 	renderTargetBuffer.Final();
 	texture.Final();
 	vertexBuffer.Final();
+
 	graphicsPipeline.Final();
 	resourceBind.Final();
 	cmdList.Final();

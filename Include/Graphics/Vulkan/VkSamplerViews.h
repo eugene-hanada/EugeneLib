@@ -52,9 +52,9 @@ namespace Eugene
 		void Final() noexcept
 		{
 			typeData_.clear();
-			data_.layout_.release();
-			data_.descriptorSet_.release();
-			descriptorPool_.release();
+			data_.layout_.reset();
+			data_.descriptorSet_.reset();
+			descriptorPool_.reset();
 		}
 
 		SamplerViews(const SamplerViews&) = delete;

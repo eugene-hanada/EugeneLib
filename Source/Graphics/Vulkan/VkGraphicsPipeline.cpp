@@ -308,7 +308,7 @@ void Eugene::Pipeline::Init(
 		pipelineInfo.setPDepthStencilState(&depthInfo);
 	}
 	pipelineInfo.setPColorBlendState(&blendInfo);
-	pipelineInfo.setLayout(data_.layout_);
+	pipelineInfo.setLayout(**data_.layout_);
 
 	//pipelineInfo.setRenderPass(nullptr);
 
@@ -339,7 +339,7 @@ void Eugene::Pipeline::Init(ResourceBindLayout& resourceBindLayout, const Shader
 	shaderStageInfo.setPName("main");
 
 	vk::ComputePipelineCreateInfo createInfo{};
-	createInfo.setLayout(data_.layout_);
+	createInfo.setLayout(**data_.layout_);
 	createInfo.setStage(shaderStageInfo);
 	auto [result, pipeline] = Graphics::GetInstance().device_->createComputePipelineUnique(nullptr,createInfo);
 	data_.pipeline_ = std::move(pipeline);

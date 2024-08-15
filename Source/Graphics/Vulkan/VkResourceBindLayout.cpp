@@ -40,6 +40,7 @@ void Eugene::ResourceBindLayout::Init(const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
 	}
 	vk::PipelineLayoutCreateInfo pipelineLayoutInfo{};
 	pipelineLayoutInfo.setSetLayouts(descriptorLayoutArray_);
-	pipelineLayout_ = Graphics::GetInstance().device_->createPipelineLayout(pipelineLayoutInfo);
+	pipelineLayout_ = std::make_shared<vk::UniquePipelineLayout>();
+	*pipelineLayout_ = Graphics::GetInstance().device_->createPipelineLayoutUnique(pipelineLayoutInfo);
 }
 

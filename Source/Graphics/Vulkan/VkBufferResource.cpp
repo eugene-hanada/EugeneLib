@@ -191,6 +191,7 @@ void Eugene::BufferResource::AllUnMap()
 	{
 		Graphics::GetInstance().allocator_->unmapMemory(*allocation_);
 	}
+	mapCount_ = 0;
 }
 
 void* Eugene::BufferResource::Map(void) noexcept

@@ -5,7 +5,7 @@
 #include <bitset>
 #include <sstream>
 #include <filesystem>
-
+#include <stacktrace>
 
 
 #if defined(_DEBUG)
@@ -13,9 +13,11 @@
 #define DebugIOLogDebug(str, ...) (Eugene::Debug::GetInstance().LogDebug(str,__VA_ARGS__))
 #define DebugIOError(str, ...) (Eugene::Debug::GetInstance().Error(str,__VA_ARGS__))
 #define DebugIOWarning(str,...) (Eugene::Debug::GetInstance().Warning(str,__VA_ARGS__))
+
 #else
 #define DebugLog(...) 
 #endif
+
 
 #define DebugIO (Eugene::Debug::GetInstance())
 

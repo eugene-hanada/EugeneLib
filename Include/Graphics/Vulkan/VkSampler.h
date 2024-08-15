@@ -11,7 +11,7 @@ namespace Eugene
 
 		void Final()noexcept
 		{
-			sampler_.release();
+			sampler_.reset();
 		}
 		Sampler(Sampler&& sampler) noexcept :
 			sampler_{ std::move(sampler.sampler_) }

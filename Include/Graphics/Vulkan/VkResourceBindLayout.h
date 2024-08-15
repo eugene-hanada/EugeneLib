@@ -13,15 +13,19 @@ namespace Eugene
 		~ResourceBindLayout() noexcept
 		{
 			descriptorLayoutArray_.clear();
-			pipelineLayout_ = vk::PipelineLayout{};
+			pipelineLayout_.reset();
 		}
 
 		void Init(const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
 
 		void Final() noexcept
 		{
+			for (auto& setLayout : descriptorLayoutArray_)
+			{
+				pipelineLayout_->getOwner().destroy(setLayout);
+			}
 			descriptorLayoutArray_.clear();
-			pipelineLayout_ = vk::PipelineLayout{};
+			pipelineLayout_.reset();
 		}
 
 		ResourceBindLayout(ResourceBindLayout&& resourceBind) noexcept :
@@ -53,7 +57,7 @@ namespace Eugene
 		/// <summary>
 		/// パイプラインのレイアウト
 		/// </summary>
-		vk::PipelineLayout pipelineLayout_;
+		std::shared_ptr<vk::UniquePipelineLayout> pipelineLayout_;
 
 		friend class Graphics;
 		friend class Pipeline;

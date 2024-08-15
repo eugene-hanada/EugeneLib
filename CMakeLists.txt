@@ -240,9 +240,7 @@ elseif(EUGENE_USE_VULKAN)
 	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
 	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/include)
 
-	target_compile_definitions(EugeneLib PUBLIC VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
-	target_compile_definitions(EugeneLib PUBLIC VMA_STATIC_VULKAN_FUNCTIONS=0)
-	 
+	target_compile_definitions(EugeneLib PUBLIC VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1 VMA_STATIC_VULKAN_FUNCTIONS=0)
 	if (EUGENE_USE_IMGUI)
 		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
 	endif()

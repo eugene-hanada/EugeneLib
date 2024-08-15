@@ -22,7 +22,7 @@ namespace Eugene
 			{
 			}
 
-			ImageData& operator=(ImageData&& imageData)
+			ImageData& operator=(ImageData&& imageData) noexcept
 			{
 				image_ = std::move(imageData.image_);
 				arraySize_ = imageData.arraySize_;
@@ -54,7 +54,7 @@ namespace Eugene
 	public:
 		using ResourceType = ImageData;
 		ImageResource() noexcept :
-			canMap_{false}
+			canMap_{false}, isBackBuffer_{false}
 		{
 		}
 
@@ -62,8 +62,11 @@ namespace Eugene
 
 		void Final()
 		{
-			imageData_.image_.release();
-			allocation_.release();
+			if (!isBackBuffer_)
+			{
+				imageData_.image_.reset();
+			}
+			allocation_.reset();
 		}
 
 		bool CanMap(void) const noexcept
@@ -95,8 +98,24 @@ namespace Eugene
 
 		ImageResource& operator=(ImageResource&& imageResource) noexcept
 		{
+			isBackBuffer_ = imageResource.isBackBuffer_;
 			allocation_ = std::move(imageResource.allocation_);
-			imageData_ = std::move(imageResource.imageData_);
+			
+
+			if (!isBackBuffer_)
+			{
+				imageData_ = std::move(imageResource.imageData_);
+			}
+			else
+			{
+				imageData_.image_.release();
+				imageData_.image_.reset(*imageResource.imageData_.image_);
+				imageData_.arraySize_ = imageResource.imageData_.arraySize_;
+				imageData_.mipmapLevels_ = imageResource.imageData_.mipmapLevels_;
+				imageData_.pixelPerSize_ = imageResource.imageData_.pixelPerSize_;
+			}
+			
+
 			size_ = imageResource.size_;
 			isBackBuffer_ = imageResource.isBackBuffer_;
 			canMap_ = imageResource.canMap_;

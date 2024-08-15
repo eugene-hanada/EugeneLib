@@ -13,7 +13,7 @@ namespace Eugene
 
 		struct Data
 		{
-			vk::PipelineLayout layout_;
+			std::shared_ptr<vk::UniquePipelineLayout> layout_;
 			vk::UniquePipeline pipeline_;
 		};
 		using PipelineType = Data;
@@ -25,8 +25,8 @@ namespace Eugene
 
 		void Final() noexcept
 		{
-			data_.layout_ = vk::PipelineLayout{};
-			data_.pipeline_.release();
+			data_.pipeline_.reset();
+			data_.layout_.reset();
 		}
 
 		void Init(ResourceBindLayout& resourceBindLayout,

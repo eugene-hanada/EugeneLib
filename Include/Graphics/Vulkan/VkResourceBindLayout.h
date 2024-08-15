@@ -16,8 +16,6 @@ namespace Eugene
 			pipelineLayout_.reset();
 		}
 
-		void Init(const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
-
 		void Final() noexcept
 		{
 			for (auto& setLayout : descriptorLayoutArray_)
@@ -40,14 +38,12 @@ namespace Eugene
 			pipelineLayout_ = std::move(resourceBind.pipelineLayout_);
 		}
 
-	private:
 		ResourceBindLayout(const ResourceBindLayout&) = delete;
 		ResourceBindLayout& operator=(const ResourceBindLayout) = delete;
+	private:
 
-		ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
-		{
-			Init(viewTypes);
-		}
+
+		ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes);
 
 		/// <summary>
 		/// ディスクリプタセットのレイアウト

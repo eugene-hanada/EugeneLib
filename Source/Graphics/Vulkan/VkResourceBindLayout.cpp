@@ -1,7 +1,7 @@
 ﻿#include "../../../Include/Graphics/Vulkan/VkResourceBindLayout.h"
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 
-void Eugene::ResourceBindLayout::Init(const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
+Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes)
 {
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	std::vector<std::vector<vk::DescriptorSetLayoutBinding>> bindingVector(viewTypes.size());

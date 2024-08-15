@@ -29,18 +29,21 @@ namespace Eugene
 			data_.layout_.reset();
 		}
 
-		void Init(ResourceBindLayout& resourceBindLayout,
-			const ArgsSpan<ShaderInputLayout>& layout,
-			const ArgsSpan<ShaderPair>& shaders,
-			const ArgsSpan<RendertargetLayout>& rendertarges,
-			TopologyType topologyType,
-			bool isCulling,
-			bool useDepth,
-			std::uint8_t sampleCount);
 
-		void Init(ResourceBindLayout& resourceBindLayout,
-			const Shader& csShader);
+		Pipeline(Pipeline&& pipeline) noexcept 
+		{
+			data_.layout_ = std::move(pipeline.data_.layout_);
+			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
+		}
+		Pipeline& operator=(Pipeline&& pipeline) noexcept
+		{
+			data_.layout_ = std::move(pipeline.data_.layout_);
+			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
+		}
 
+		Pipeline(const Pipeline&) = delete;
+		Pipeline& operator=(const Pipeline&) = delete;
+		Pipeline() = default;
 	private:
 
 		Pipeline(
@@ -52,21 +55,15 @@ namespace Eugene
 			bool isCulling,
 			bool useDepth,
 			std::uint8_t sampleCount
-		)
-		{
-			Init(resourceBindLayout, layout, shaders,rendertarges, topologyType, isCulling, useDepth, sampleCount);
-		}
+		);
 
 		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
 			const Shader& csShader
-		)
-		{
-			Init(resourceBindLayout, csShader);
-		}
+		);
 
 		// GraphicsPipeline を介して継承されました
-		Data data_;
+		PipelineType data_;
 
 		friend class Graphics;
 	};

@@ -132,53 +132,8 @@ namespace Eugene
 			return Graphics::backBufferFormat_;
 		}
 
-#ifdef EUGENE_WINDOWS
-		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-#else  EUGENE_ANDROID
-		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-#endif
 		~Graphics();
 
-		/// <summary>
-		/// バックバッファ生成
-		/// </summary>
-		/// <param name="useVkformat"></param>
-		/// <param name="size"></param>
-		void CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size);
-
-		/// <summary>
-		/// スワップチェイン生成
-		/// </summary>
-		/// <param name="size"></param>
-		/// <returns></returns>
-		vk::Format CreateSwapChain(const glm::vec2& size);
-
-		vk::Queue GetNextQueue()
-		{
-			return device_->getQueue(graphicFamilly_, nextQueueIdx_++);
-		}
-
-		///// <summary>
-		///// Image用デバイスメモリを生成する
-		///// </summary>
-		///// <param name="image"></param>
-		///// <returns></returns>
-		//vk::UniqueDeviceMemory CreateMemory(vk::UniqueImage& image) const;
-
-		///// <summary>
-		///// buffer用デバイスメモリを生成する
-		///// </summary>
-		///// <param name="buffer"></param>
-		///// <param name="isDeviceLoacal"></param>
-		///// <param name="isHostVisible"></param>
-		///// <returns></returns>
-		//vk::UniqueDeviceMemory CreateMemory(vk::Buffer& buffer, bool isDeviceLoacal = true, bool isHostVisible = false) const;
-
-#ifdef USE_IMGUI
-		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
-		vk::RenderPass GetRenderPass(void);
-		vk::Framebuffer GetFrameBuffer(void);
-#endif
 		GpuEngine CreateGpuEngine(std::size_t initSize) const
 		{
 			return { initSize };
@@ -318,6 +273,46 @@ namespace Eugene
 		}
 
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const;
+
+#ifdef USE_IMGUI
+		void ImguiNewFrame(void) const;
+		void* GetImguiImageID(std::uint64_t index) const;
+		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull);
+#endif	
+
+private:
+
+#ifdef EUGENE_WINDOWS
+		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#else  EUGENE_ANDROID
+		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+#endif
+
+#ifdef USE_IMGUI
+		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
+		vk::RenderPass GetRenderPass(void);
+		vk::Framebuffer GetFrameBuffer(void);
+#endif
+
+		/// <summary>
+		/// バックバッファ生成
+		/// </summary>
+		/// <param name="useVkformat"></param>
+		/// <param name="size"></param>
+		void CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size);
+
+		/// <summary>
+		/// スワップチェイン生成
+		/// </summary>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		vk::Format CreateSwapChain(const glm::vec2& size);
+
+		vk::Queue GetNextQueue()
+		{
+			return device_->getQueue(graphicFamilly_, nextQueueIdx_++);
+		}
+
 		void CreateInstance(void);
 		void CreateDevice(void);
 		void SetUpVma(void);
@@ -446,9 +441,6 @@ namespace Eugene
 
 		std::uint64_t imguiImageMax_{ 1000ull };
 
-		void ImguiNewFrame(void) const;
-		void* GetImguiImageID(std::uint64_t index) const;
-		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull);
 #ifdef EUGENE_WINDOWS
 
 		/// <summary>
@@ -477,6 +469,7 @@ namespace Eugene
 		friend class SamplerViews;
 		friend class ResourceBindLayout;
 		friend class Pipeline;
+		friend class Sampler;
 	};
 
 }

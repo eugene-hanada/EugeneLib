@@ -22,11 +22,25 @@ namespace Eugene
 			/// 画像サイズ
 			/// </summary>
 			glm::ivec2 size{ 0,0 };
+
+			Data(Data&& data) noexcept :
+				imageView{ std::move(data.imageView) }, size{ data.size }
+			{
+			}
+
+			Data& operator=(Data&& data)
+			{
+				imageView = std::move(data.imageView);
+				size = data.size;
+				return *this;
+			}
+
+			Data() = default;
 		};
 
 		using ViewsType = std::vector<Data>;
 
-		RenderTargetViews() = default;
+		
 
 		// RenderTargetViews を介して継承されました
 		void Create(ImageResource& resource, std::uint32_t idx);
@@ -40,6 +54,19 @@ namespace Eugene
 		{
 			return imageViews_;
 		}
+
+		RenderTargetViews(RenderTargetViews&& views) :
+			imageViews_{std::move(views.imageViews_)}
+		{
+		}
+		RenderTargetViews& operator=(RenderTargetViews&& views)
+		{
+			imageViews_ = std::move(views.imageViews_);
+			return *this;
+		}
+		RenderTargetViews() = default;
+		RenderTargetViews(const RenderTargetViews&) = delete;
+		RenderTargetViews& operator=(const RenderTargetViews&) = delete;
 	private:
 
 		RenderTargetViews(std::uint32_t size);

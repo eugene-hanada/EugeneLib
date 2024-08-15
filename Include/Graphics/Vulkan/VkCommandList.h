@@ -87,6 +87,24 @@ namespace Eugene
 			isRendering_ = false;
 			nowLayout_.reset();
 		}
+
+		CommandList(CommandList&& cmdList):
+			commandPool_{std::move(cmdList.commandPool_)}, commandBuffer_{std::move(cmdList.commandBuffer_)},
+			isRendering_{cmdList.isRendering_}, nowLayout_{std::move(cmdList.nowLayout_)}
+		{
+		}
+
+		CommandList& operator=(CommandList&& cmdList)
+		{
+			commandPool_ = std::move(cmdList.commandPool_);
+			commandBuffer_ = std::move(cmdList.commandBuffer_);
+			isRendering_ = cmdList.isRendering_;
+			nowLayout_ = std::move(cmdList.nowLayout_);
+		}
+
+
+		CommandList(const CommandList&) = delete;
+		CommandList& operator=(const CommandList&) = delete;
 	private:
 		CommandList();
 

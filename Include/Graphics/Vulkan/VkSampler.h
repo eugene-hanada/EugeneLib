@@ -13,15 +13,20 @@ namespace Eugene
 		{
 			sampler_.reset();
 		}
+
 		Sampler(Sampler&& sampler) noexcept :
 			sampler_{ std::move(sampler.sampler_) }
 		{
 		}
-
-
-	private:
+		Sampler& operator=(Sampler&& sampler)
+		{
+			sampler_ = std::move(sampler.sampler_);
+			return *this;
+		}
 		Sampler(const Sampler&) = delete;
 		Sampler& operator=(const Sampler&) = delete;
+	private:
+
 
 		Sampler(const SamplerLayout& layout);
 

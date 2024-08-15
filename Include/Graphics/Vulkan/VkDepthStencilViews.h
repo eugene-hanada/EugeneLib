@@ -19,6 +19,20 @@ namespace Eugene
 
 		// DepthStencilViews を介して継承されました
 		void Create(ImageResource& resource, std::uint32_t idx);
+
+
+		DepthStencilViews(DepthStencilViews&& views) :
+			imageViews_{std::move(views.imageViews_)}
+		{
+		}
+
+		DepthStencilViews& operator=(DepthStencilViews&& views)
+		{
+			imageViews_ = std::move(views.imageViews_);
+		}
+
+		DepthStencilViews(const DepthStencilViews&) = delete;
+		DepthStencilViews& operator=(const DepthStencilViews&) = delete;
 	private:
 
 		DepthStencilViews(std::uint32_t size);

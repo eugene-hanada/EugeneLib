@@ -77,10 +77,10 @@ namespace Eugene
 			typeData_ = std::move(views.typeData_);
 			imageViewMap_ = std::move(views.imageViewMap_);
 		}
-	private:
 
 		ShaderResourceViews(const ShaderResourceViews&) = delete;
 		ShaderResourceViews& operator=(const ShaderResourceViews&) = delete;
+	private:
 
 		ShaderResourceViews(const ArgsSpan<Bind>& ViewTypes);
 

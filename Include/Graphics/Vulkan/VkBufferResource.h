@@ -48,7 +48,8 @@ namespace Eugene
 		}
 
 		BufferResource(BufferResource&& bufferResource) noexcept :
-			buffer_{ std::move(bufferResource.buffer_) }, allocation_{ std::move(bufferResource.allocation_) }, canMap_{ bufferResource.canMap_ }
+			buffer_{ std::move(bufferResource.buffer_) }, allocation_{ std::move(bufferResource.allocation_) }, canMap_{ bufferResource.canMap_ },
+			mapCount_{bufferResource.mapCount_},size_{bufferResource.size_}
 		{
 		}
 
@@ -57,24 +58,18 @@ namespace Eugene
 			buffer_ = std::move(bufferResource.buffer_);
 			allocation_ = std::move(bufferResource.allocation_);
 			canMap_ = bufferResource.canMap_;
+			mapCount_ = bufferResource.mapCount_;
+			size_ = bufferResource.size_;
 		}
 
 		void* Map() noexcept;
 		void UnMap() noexcept;
-		void Init(std::uint64_t size, bool isUnordered, GpuResourceType type);
-		void Init(Image& image);
-	private:
-		BufferResource(Image& image):
-			size_{0}, mapCount_{0}
-		{
-			Init(image);
-		}
-		BufferResource(std::uint64_t size, bool isUnordered, GpuResourceType type) : mapCount_{0}
-		{
-			Init(size, isUnordered, type);
-		}
 		BufferResource(const BufferResource&) = delete;
 		BufferResource& operator=(const BufferResource&) = delete;
+	private:
+		BufferResource(Image& image);
+		BufferResource(std::uint64_t size, bool isUnordered, GpuResourceType type);
+
 		
 		void AllUnMap();
 

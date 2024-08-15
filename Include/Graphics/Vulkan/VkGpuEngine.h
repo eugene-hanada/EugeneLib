@@ -28,6 +28,20 @@ namespace Eugene
 			cmdBuffers_.clear();
 			queue_ = vk::Queue{};
 		}
+
+		GpuEngine(GpuEngine&& gpuEngine) :
+			queue_{std::move(gpuEngine.queue_)}, cmdBuffers_{std::move(gpuEngine.cmdBuffers_)}
+		{
+		}
+		GpuEngine& operator=(GpuEngine&& gpuEngine)
+		{
+			queue_ = std::move(gpuEngine.queue_);
+			cmdBuffers_ = std::move(gpuEngine.cmdBuffers_);
+			return *this;
+		}
+
+		GpuEngine(const GpuEngine&) = delete;
+		GpuEngine& operator=(const GpuEngine&) = delete;
 	private:
 
 		GpuEngine(std::size_t initSize);

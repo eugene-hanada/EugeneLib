@@ -4,7 +4,7 @@
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Math/Math.h"
 
-void Eugene::Pipeline::Init(
+Eugene::Pipeline::Pipeline(
 	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout, 
 	const ArgsSpan<ShaderPair>& shaders,
@@ -323,7 +323,7 @@ void Eugene::Pipeline::Init(
 }
 
 
-void Eugene::Pipeline::Init(ResourceBindLayout& resourceBindLayout, const Shader& csShader)
+Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader)
 {
 	data_.layout_ = resourceBindLayout.pipelineLayout_;
 

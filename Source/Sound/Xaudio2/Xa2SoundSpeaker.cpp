@@ -117,7 +117,7 @@ Eugene::Xaudio2Speaker::Xaudio2Speaker(IXAudio2* xaudio2, const SoundFile& sound
 	// ソースボイス生成
 	if (FAILED(xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate_)))
 	{
-		throw CreateErrorException("ソースボイス生成失敗");
+		throw EugeneLibException("ソースボイス生成失敗");
 	}
 
 	// バッファも用意

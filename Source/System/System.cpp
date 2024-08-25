@@ -150,7 +150,7 @@ Eugene::TouchData::TouchData() :
 //{
 //	if (isCreate)
 //	{
-//		throw CreateErrorException{"Systemはすでに生成しています"};
+//		throw EugeneLibException{"Systemはすでに生成しています"};
 //	}
 //	isCreate = true;
 //

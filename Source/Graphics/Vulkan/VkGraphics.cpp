@@ -116,12 +116,12 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 	device_->resetFences(*fence_);
 	if (device_->acquireNextImageKHR(*swapchain_, std::numeric_limits<std::uint64_t>::max(), {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
 	{
-		throw CreateErrorException{"AcquireNextImageKHR Error"};
+		throw EugeneLibException{"AcquireNextImageKHR Error"};
 	}
 
 	if (device_->waitForFences(*fence_, true, std::numeric_limits<std::uint64_t>::max()) != vk::Result::eSuccess)
 	{
-		throw CreateErrorException{ "WaitForFences Error" };
+		throw EugeneLibException{ "WaitForFences Error" };
 	}
 	device_->resetFences(*fence_);
 
@@ -505,13 +505,13 @@ void Eugene::Graphics::Present(void)
 	}
 	catch (const std::exception& e)
 	{
-		DebugIO.Error(e.what());
+		DebugClass.Error(e.what());
 		throw e;
 	}
 
 	if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR)
 	{
-		DebugIO.Error("PresentError");
+		DebugClass.Error("PresentError");
 		return;
 	}
 	device_->resetFences(*fence_);
@@ -519,13 +519,13 @@ void Eugene::Graphics::Present(void)
 	
 	if (device_->acquireNextImageKHR(*swapchain_, UINT64_MAX, {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
 	{
-		DebugIO.Error("acquireNextImageKHR Error");
+		DebugClass.Error("acquireNextImageKHR Error");
 		return;
 	}
 
 	if (device_->waitForFences(*fence_, true, UINT64_MAX) != vk::Result::eSuccess)
 	{
-		DebugIO.Error("WaitFence Error");
+		DebugClass.Error("WaitFence Error");
 		return;
 	}
 
@@ -588,12 +588,12 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
     }
     catch (std::exception& e)
     {
-        DebugIO.Log("ResizeError={}",e.what());
+		DebugClass.Log("ResizeError={}",e.what());
         throw e;
     }
     device_->resetFences(*fence_);
 
-    DebugIO.Log("Resize完了");
+	DebugClass.Log("Resize完了");
 }
 
 
@@ -661,7 +661,7 @@ void Eugene::Graphics::CreateDevice(void)
 
 	if (!physicalDevice_)
 	{
-		throw CreateErrorException{"使用できる物理デバイスがありません"};
+		throw EugeneLibException{"使用できる物理デバイスがありません"};
 	}
 
 

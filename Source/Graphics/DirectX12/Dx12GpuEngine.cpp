@@ -65,11 +65,11 @@ void Eugene::GpuEngine::Init(std::size_t initSize)
 	// キューを生成
 	if (FAILED(Graphics::GetInstance().device_->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("GpuEngineのコマンドキュー(ID3D12CommandQueue)作成失敗");
+		throw EugeneLibException("GpuEngineのコマンドキュー(ID3D12CommandQueue)作成失敗");
 	}
 
 	if (FAILED(Graphics::GetInstance().device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("GpuEngineのフェンス(ID3D12Fence)作成失敗");
+		throw EugeneLibException("GpuEngineのフェンス(ID3D12Fence)作成失敗");
 	}
 }

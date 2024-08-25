@@ -2,7 +2,6 @@
 #include <Xinput.h>
 #include <filesystem>
 #include <functional>
-#include "Dll.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Debug/Debug.h"
 #include "../../../Include/Graphics/Graphics.h"
@@ -13,7 +12,6 @@
 #include <backends/imgui_impl_win32.h>
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
-
 
 #pragma comment(lib, "Xinput.lib")
 
@@ -111,7 +109,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 		};
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
 	{
-		throw CreateErrorException("Comの初期化に失敗");
+		throw EugeneLibException("Comの初期化に失敗");
 	}
 
 	std::filesystem::path tmpTitle{ title };
@@ -121,7 +119,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	::windowClass.hInstance = GetModuleHandle(nullptr);
 	if (!RegisterClassEx(&::windowClass))
 	{
-		throw CreateErrorException("ウィンドウクラスの登録に失敗");
+		throw EugeneLibException("ウィンドウクラスの登録に失敗");
 	}
 
 	// ウィンドウのサイズ設定
@@ -129,7 +127,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
 	if (!AdjustWindowRect(&wSize, style, false))
 	{
-		throw CreateErrorException("ウィンドウサイズ調整に失敗");
+		throw EugeneLibException("ウィンドウサイズ調整に失敗");
 	}
 
 	// ウィンドウの生成
@@ -200,7 +198,7 @@ Eugene::System::~System()
 //{
 //	if (graphics && gpuEngine)
 //	{
-//		throw CreateErrorException{"Graphics&GpuEngineはすでに生成されています"};
+//		throw EugeneLibException{"Graphics&GpuEngineはすでに生成されています"};
 //	}
 //
 //	if (graphics == nullptr)
@@ -341,7 +339,7 @@ void Eugene::System::ResizeWindow(const glm::vec2& size)
 	
 	if (!AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false))
 	{
-		throw CreateErrorException("ウィンドウサイズ調整に失敗");
+		throw EugeneLibException("ウィンドウサイズ調整に失敗");
 	}
 
 	MONITORINFO monitorInfo{};

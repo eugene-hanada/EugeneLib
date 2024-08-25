@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../ThirdParty/fmt/include/fmt/core.h"
+#include "../Utils/EugeneLibException.h"
 #include <string>
 #include <semaphore>
 #include <bitset>
@@ -8,18 +9,13 @@
 #include <stacktrace>
 
 
-#if defined(_DEBUG)
-#define DebugIOLog(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
-#define DebugIOLogDebug(str, ...) (Eugene::Debug::GetInstance().LogDebug(str,__VA_ARGS__))
-#define DebugIOError(str, ...) (Eugene::Debug::GetInstance().Error(str,__VA_ARGS__))
-#define DebugIOWarning(str,...) (Eugene::Debug::GetInstance().Warning(str,__VA_ARGS__))
-
-#else
-#define DebugLog(...) 
-#endif
+#define EUGENE_DEBUG_LOG(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
+#define EUGENE_DEBUG_DEBUGLOG(str, ...) (Eugene::Debug::GetInstance().LogDebug(str,__VA_ARGS__))
+#define EUGENE_DEBUG_ERRORLOG(str, ...) (Eugene::Debug::GetInstance().Error(str,__VA_ARGS__))
+#define EUGENE_DEBUG_WARNINGLOG(str,...) (Eugene::Debug::GetInstance().Warning(str,__VA_ARGS__))
 
 
-#define DebugIO (Eugene::Debug::GetInstance())
+#define DebugClass (Eugene::Debug::GetInstance())
 
 namespace Eugene
 {
@@ -226,3 +222,19 @@ namespace Eugene
 }
 
 
+#ifdef EUGENE_DEBUG
+
+#define EUGENE_ASSERT_MSG(check,message)\
+if (!check)\
+{\
+	auto stack = std::stacktrace::current()[0];\
+	Eugene::Debug::GetInstance().Error("Assertion! {0:} Function={1:} File={2:} Line={3:}",message, stack.description(),stack.source_file(),stack.source_line());\
+	std::terminate();\
+}\
+
+#define EUGENE_ASSERT(check) EUGENE_ASSERT_MSG(check,"")
+
+#elif EUGENE_RELEASE
+#define EUGENE_ASSERT_MSG(check,message)
+#define EUGENE_ASSERT(check)
+#endif

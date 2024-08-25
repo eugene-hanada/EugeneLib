@@ -41,7 +41,7 @@ Eugene::AaudioSound::AaudioSound()  :
     AAudioStream * tmpStream{nullptr};
     if (AAudioStreamBuilder_openStream(streamBuilder, &tmpStream) != AAUDIO_OK)
     {
-        throw CreateErrorException{"AAudioストリームオープン失敗"};
+        throw EugeneLibException{"AAudioストリームオープン失敗"};
     }
 
     aaudioStream_.reset(tmpStream);
@@ -55,7 +55,7 @@ Eugene::AaudioSound::AaudioSound()  :
     master_ = std::make_unique<AaMaster>(*this,nullptr,sampleRate_,AAudioStream_getFramesPerBurst(aaudioStream_.get()) * 2 * inChannel_);
     if (AAudioStream_requestStart(aaudioStream_.get()) != AAUDIO_OK)
     {
-        throw CreateErrorException{"AAudioスタート失敗"};
+        throw EugeneLibException{"AAudioスタート失敗"};
     }
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <exception>
 #include <string>
+#include <stacktrace>
 
 namespace Eugene
 {
@@ -11,25 +12,28 @@ namespace Eugene
 		public std::exception
 	{
 	public:
-		EugeneLibException(const std::string& mess);
+		EugeneLibException(const std::string& mess, const std::stacktrace& stackTrace = {});
 		~EugeneLibException();
+
+		/// <summary>
+		/// スタックトレースを取得する
+		/// </summary>
+		/// <returns></returns>
+		const std::stacktrace& GetStackTrace() const noexcept
+		{
+			return stackTrace_;
+		}
 	private:
 		const char* what() const noexcept final;
 
 		/// <summary>
-		/// メッセージe
+		/// メッセージ
 		/// </summary>
 		std::string mess_;
-	};
 
-	/// <summary>
-	/// 生成時のエラーを表すエクセプション、メッセージが[CreateError]messとなる
-	/// </summary>
-	class CreateErrorException :
-		public EugeneLibException
-	{
-	public:
-		CreateErrorException(const std::string& mess);
-		~CreateErrorException();
+		/// <summary>
+		/// スタックトレース
+		/// </summary>
+		std::stacktrace stackTrace_;
 	};
 };

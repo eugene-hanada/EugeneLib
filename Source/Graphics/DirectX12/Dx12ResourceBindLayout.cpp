@@ -92,7 +92,7 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 	))
 	{
 		// throwかく
-		throw CreateErrorException("ルードシグネチャ生成失敗");
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 
 	if (FAILED(Graphics::GetInstance().device_->CreateRootSignature(
@@ -102,6 +102,6 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
-		throw CreateErrorException("ルードシグネチャ生成失敗");
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 }

@@ -27,7 +27,7 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info) :
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw CreateErrorException("テクスチャ用リソース生成失敗");
+		throw EugeneLibException("テクスチャ用リソース生成失敗");
 	}
 }
 
@@ -64,7 +64,7 @@ Eugene::ImageResource::ImageResource(
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw CreateErrorException("レンダーターゲット用リソース生成失敗");
+		throw EugeneLibException("レンダーターゲット用リソース生成失敗");
 	}
 }
 
@@ -90,7 +90,7 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, floa
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 	)))
 	{
-		throw CreateErrorException("デプス用リソース生成失敗");
+		throw EugeneLibException("デプス用リソース生成失敗");
 	}
 }
 
@@ -100,7 +100,7 @@ Eugene::ImageResource::ImageResource(std::uint32_t idx) :
 {
 	if (FAILED(Graphics::GetInstance().swapChain_->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("スワップチェイン用リソース生成失敗");
+		throw EugeneLibException("スワップチェイン用リソース生成失敗");
 	}
 }
 

@@ -222,7 +222,7 @@ std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::AndroidSystem::CreateGr
 {
     if (graphics && gpuEngine)
     {
-        throw CreateErrorException("すでにGraphicsは生成されています");
+        throw EugeneLibException("すでにGraphicsは生成されています");
     }
 
     graphics = new VkGraphics{app_,maxWindowSize_,gpuEngine,bufferNum,maxSize};

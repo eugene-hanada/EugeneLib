@@ -60,7 +60,7 @@ namespace Eugene
 		{
 			if (!instance_)
 			{
-				instance_ = std::make_unique<T>(args...);
+				instance_.reset(new T{args...});
 			}
 		}
 

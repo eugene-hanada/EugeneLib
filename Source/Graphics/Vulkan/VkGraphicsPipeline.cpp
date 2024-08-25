@@ -316,7 +316,7 @@ Eugene::Pipeline::Pipeline(
 
 	if (result != vk::Result::eSuccess)
 	{
-		throw CreateErrorException{ "グラフィックスパイプラインステート生成失敗" };
+		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
 	}
 
 	data_.pipeline_ = std::move(pipeline);

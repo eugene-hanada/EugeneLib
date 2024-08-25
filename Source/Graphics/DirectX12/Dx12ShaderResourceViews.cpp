@@ -119,6 +119,6 @@ void Eugene::ShaderResourceViews::Init(std::uint32_t size)
 
 	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("DirectX12ディスクリプタヒープの作成に失敗");
+		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
 	}
 }

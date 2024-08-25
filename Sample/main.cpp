@@ -16,8 +16,6 @@
 #include <ImGuizmo.h>
 #endif
 
-#include <Debug/Debug.h>
-
 
 #include <stacktrace>
 

@@ -162,7 +162,7 @@ Eugene::Pipeline::Pipeline(
 
 	if (FAILED(Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException{ "グラフィックスパイプラインステート生成失敗" };
+		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
 	}
 }
 
@@ -179,7 +179,7 @@ Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const Shader&
 	auto result = Graphics::GetInstance().device_->CreateComputePipelineState(&computePipelineDesc, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
 	if (FAILED(result))
 	{
-		throw CreateErrorException{ "コンピュートパイプラインステート生成失敗" };
+		throw EugeneLibException{ "コンピュートパイプラインステート生成失敗" };
 	}
 }
 

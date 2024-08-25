@@ -10,11 +10,29 @@
 #include <iostream>
 
 
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 #include <Windows.h>
+
+namespace
+{
+	class WindowsOut :
+		public std::stringbuf
+	{
+	public:
+		int sync() final {
+			std::printf("%s",str().c_str());
+			OutputDebugStringA(str().c_str());
+			str("");
+			return 0;
+		}
+	};
+	auto windowsOut{ WindowsOut{} };
+	std::ostream windowsOs{ &windowsOut };
+}
+
 #endif
 
-#ifdef USE_ANDROID
+#ifdef EUGENE_ANDROID
 #include <android/log.h>
 
 namespace
@@ -57,7 +75,7 @@ Eugene::Debug::Debug() :
 #ifdef USE_ANDROID
     os_{androidOs}
 #else
-	os_{std::cout}
+	os_{ windowsOs }
 #endif
 {
 	// スレッドIDを文字列に変換してバッファのサイズにする
@@ -92,7 +110,7 @@ void Eugene::Debug::ClearBuffer(void)
 
 void Eugene::Debug::OpenConsole(void)
 {
-#ifdef USE_WINDOWS
+#ifdef EUGENE_WINDOWS
 
 	// コンソールを開く
 	AllocConsole();
@@ -172,7 +190,7 @@ void Eugene::Debug::Out(Type type, const std::string_view& string)
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
-		os_ << fmt::format(format, colorNames[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
+		os_ << fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
 		
 		if (logStringBuffer_.size() > 0)
 		{

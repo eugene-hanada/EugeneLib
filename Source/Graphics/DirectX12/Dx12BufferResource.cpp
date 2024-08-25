@@ -47,7 +47,7 @@ Eugene::BufferResource::BufferResource(std::uint64_t size, bool isUnordered, Gpu
 			IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 		)))
 	{
-		throw CreateErrorException("ID3D12Resourceをデフォルトリソースで生成に失敗");
+		throw EugeneLibException("ID3D12Resourceをデフォルトリソースで生成に失敗");
 	}
 }
 
@@ -81,7 +81,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("ID3D12Resourceをアップロードリソースで作成に失敗");
+		throw EugeneLibException("ID3D12Resourceをアップロードリソースで作成に失敗");
 	}
 
 	std::uint8_t* ptr{ nullptr };
@@ -143,7 +143,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 //		allocation_.ReleaseAndGetAddressOf(),
 //		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
 //	{
-//		throw CreateErrorException("ID3D12Resourceをアップロードリソースで作成に失敗");
+//		throw EugeneLibException("ID3D12Resourceをアップロードリソースで作成に失敗");
 //	}
 //
 //	std::uint8_t* ptr{ nullptr };
@@ -193,7 +193,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 //		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 //	)))
 //	{
-//		throw CreateErrorException("ID3D12Resourceをアップロードリソースで作成に失敗");
+//		throw EugeneLibException("ID3D12Resourceをアップロードリソースで作成に失敗");
 //	}
 //}
 //
@@ -242,7 +242,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 //		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
 //	)))
 //	{
-//		throw CreateErrorException("ID3D12Resourceを読み取り用リソースで生成に失敗");
+//		throw EugeneLibException("ID3D12Resourceを読み取り用リソースで生成に失敗");
 //	}
 //}
 //

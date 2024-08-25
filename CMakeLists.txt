@@ -31,7 +31,6 @@ set(LIBRARY_OUTPUT_PATH ../)
 set(SystemSource 
 	Source/System/System.cpp
 	Source/System/GamePad.cpp
-	Source/System/DynamicLibrary.cpp
 )
 
 if(EUGENE_USE_IMGUI)
@@ -255,9 +254,16 @@ endif()
 
 
 
- target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
- target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_LEFT_HANDED)
- target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_DEPTH_ZERO_TO_ONE)
+ target_compile_definitions(EugeneLib PUBLIC NOMINMAX GLM_FORCE_LEFT_HANDED GLM_FORCE_DEPTH_ZERO_TO_ONE)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_DEBUG)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_RELEASE)
+endif()
+
+ 
+
 
  add_subdirectory("Include/ThirdParty/fmt")
  target_link_libraries(EugeneLib PRIVATE fmt::fmt)

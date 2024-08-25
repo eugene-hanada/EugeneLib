@@ -13,7 +13,7 @@ Eugene::Xaudio23DControl::Xaudio23DControl(IXAudio2* xaudio2, std::uint32_t samp
 {
 	if (FAILED(xaudio2->CreateSubmixVoice(std::out_ptr(submix_), inChannel_, sample, XAUDIO2_VOICE_USEFILTER, stage)))
 	{
-		throw CreateErrorException("サブミックスボイスの作成に失敗");
+		throw EugeneLibException("サブミックスボイスの作成に失敗");
 	}
 }
 

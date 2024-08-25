@@ -52,7 +52,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
 	if (FAILED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("DirectX12ディスクリプタヒープの作成に失敗");
+		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
 	}
 
 	ImGui_ImplDX12_Init(
@@ -91,7 +91,7 @@ void Eugene::Graphics::CreateDevice(void)
 
 	if (FAILED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("DXGIファクトリーの生成に失敗");
+		throw EugeneLibException("DXGIファクトリーの生成に失敗");
 	}
 
 
@@ -120,14 +120,14 @@ void Eugene::Graphics::CreateDevice(void)
 			allocatorDesc.pDevice = device_.Get();
 			if (FAILED(D3D12MA::CreateAllocator(&allocatorDesc, allocator_.ReleaseAndGetAddressOf())))
 			{
-				throw CreateErrorException("D3D12MAのアロケーター生成失敗");
+				throw EugeneLibException("D3D12MAのアロケーター生成失敗");
 			}
 			tmpAdapter->Release();
 			return;
 		}
 	}
 
-	throw CreateErrorException("D3D12デバイスの作成に失敗");
+	throw EugeneLibException("D3D12デバイスの作成に失敗");
 }
 
 void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
@@ -175,11 +175,11 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 	IDXGISwapChain1* swapchain = nullptr;
 	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(gpuEngine.cmdQueue_.Get(), hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	{
-		throw CreateErrorException("スワップチェイン生成失敗");
+		throw EugeneLibException("スワップチェイン生成失敗");
 	}
 	if (FAILED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))))
 	{
-		throw CreateErrorException("スワップチェイン生成失敗");
+		throw EugeneLibException("スワップチェイン生成失敗");
 	}
 
 	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);

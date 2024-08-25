@@ -25,7 +25,7 @@ Eugene::Sound* Eugene::CreateSound(void)
 {
 	if (isCreate)
 	{
-		throw CreateErrorException{"すでにSoundは生成されています"};
+		throw EugeneLibException{"すでにSoundは生成されています"};
 	}
 	isCreate = true;
 #ifdef EUGENE_WINDOWS

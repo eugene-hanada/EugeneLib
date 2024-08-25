@@ -15,7 +15,7 @@ void Eugene::DepthStencilViews::Create(ImageResource& resource, std::uint32_t id
 	
 	vk::ImageViewCreateInfo info{};
 	info.setFormat(Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())]);
-	info.setImage(*resource.GetResource().image_);
+	info.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	info.setViewType(vk::ImageViewType::e2D);
 	info.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
 	info.subresourceRange.setLayerCount(1u);

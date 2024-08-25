@@ -2,25 +2,6 @@
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 #include "../../../Include/Graphics/Vulkan/VkCommandList.h"
 
-//Eugene::GpuEngine::GpuEngine(vk::Queue& queue, std::uint64_t size) :
-//	queue_{queue}
-//{
-//	nowNum_ = 0ull;
-//	cmdBuffers_.resize(size);
-//}
-
-//Eugene::GpuEngine::GpuEngine(std::uint32_t familyIndex, std::uint32_t& queueIndex, const vk::Device& device, std::uint64_t size)
-//{
-//	queue_ = device.getQueue(familyIndex, queueIndex++);
-//
-//	nowNum_ = 0ull;
-//	cmdBuffers_.resize(size);
-//}
-
-//Eugene::GpuEngine::~GpuEngine()
-//{ 
-//}
-
 void Eugene::GpuEngine::Execute(void)
 {
 	vk::SubmitInfo info{};

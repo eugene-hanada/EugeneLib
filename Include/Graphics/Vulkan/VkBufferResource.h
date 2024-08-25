@@ -14,7 +14,6 @@ namespace Eugene
 	class BufferResource
 	{
 	public:
-		using ResrouceType = vk::Buffer;
 		BufferResource() noexcept :
 			size_{0},canMap_{false}, mapCount_{0}
 		{
@@ -25,21 +24,36 @@ namespace Eugene
 			AllUnMap();
 		}
 
+		/// <summary>
+		/// マップ可能か？
+		/// </summary>
+		/// <returns> マップ可能な場合true不可能な場合false </returns>
 		bool CanMap(void) const noexcept
 		{
 			return canMap_;
 		}
 
-		ResrouceType& GetResource(void) noexcept
+		/// <summary>
+		/// API側のリソースを取得する
+		/// </summary>
+		/// <returns> リソースのポインタ </returns>
+		void* GetResource(void) noexcept
 		{
-			return *buffer_;
+			return &*buffer_;
 		}
 
+		/// <summary>
+		/// サイズを取得(バイト数)
+		/// </summary>
+		/// <returns></returns>
 		std::uint64_t GetSize(void) const noexcept
 		{
 			return size_;
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final()noexcept
 		{
 			AllUnMap();
@@ -47,12 +61,21 @@ namespace Eugene
 			allocation_.reset();
 		}
 
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="bufferResource"></param>
 		BufferResource(BufferResource&& bufferResource) noexcept :
 			buffer_{ std::move(bufferResource.buffer_) }, allocation_{ std::move(bufferResource.allocation_) }, canMap_{ bufferResource.canMap_ },
 			mapCount_{bufferResource.mapCount_},size_{bufferResource.size_}
 		{
 		}
 
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="bufferResource"></param>
+		/// <returns></returns>
 		BufferResource& operator=(BufferResource&& bufferResource) noexcept
 		{
 			buffer_ = std::move(bufferResource.buffer_);
@@ -62,7 +85,15 @@ namespace Eugene
 			size_ = bufferResource.size_;
 		}
 
+		/// <summary>
+		/// マップする
+		/// </summary>
+		/// <returns></returns>
 		void* Map() noexcept;
+
+		/// <summary>
+		/// アンマップする
+		/// </summary>
 		void UnMap() noexcept;
 		BufferResource(const BufferResource&) = delete;
 		BufferResource& operator=(const BufferResource&) = delete;

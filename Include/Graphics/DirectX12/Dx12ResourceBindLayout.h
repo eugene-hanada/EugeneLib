@@ -6,6 +6,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// シェーダへのリソースバインドのレイアウトを定義したクラス
+	/// </summary>
 	class ResourceBindLayout
 	{
 	public:
@@ -18,6 +21,9 @@ namespace Eugene
 			rootSignature_ = std::move(bindLayout.rootSignature_);
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			rootSignature_.Reset();

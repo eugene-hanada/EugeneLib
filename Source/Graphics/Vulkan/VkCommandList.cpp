@@ -50,7 +50,7 @@ void Eugene::CommandList::End(void)
 
 void Eugene::CommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 {
-	auto& pipeline = gpipeline.GetPipeline();
+	auto& pipeline = *static_cast<Pipeline::Data*>(gpipeline.GetPipeline());
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline.pipeline_);
 	nowLayout_ = pipeline.layout_;
 }
@@ -84,13 +84,13 @@ void Eugene::CommandList::SetViewPort(const glm::vec2& leftTop, const glm::vec2&
 void Eugene::CommandList::SetVertexView(VertexView& view)
 {
 	vk::DeviceSize deviceSize{0};
-	commandBuffer_->bindVertexBuffers(0u, view.GetView(), deviceSize);
+	commandBuffer_->bindVertexBuffers(0u, *static_cast<vk::Buffer*>(view.GetView()), deviceSize);
 }
 
 void Eugene::CommandList::SetIndexView(IndexView& view)
 {
 	vk::DeviceSize deviceSize{0};
-	commandBuffer_->bindIndexBuffer(view.GetView(), deviceSize, vk::IndexType::eUint16);
+	commandBuffer_->bindIndexBuffer(*static_cast<vk::Buffer*>(view.GetView()), deviceSize, vk::IndexType::eUint16);
 }
 
 void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx)
@@ -104,7 +104,7 @@ void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std:
 		**nowLayout_,
 		static_cast<std::uint32_t>(paramIdx),
 		1u, 
-		&*views.GetViews().descriptorSet_,
+		&*static_cast<ShaderResourceViews::Data*>(views.GetViews())->descriptorSet_,
 		0u, 
 		nullptr
 	);
@@ -122,7 +122,7 @@ void Eugene::CommandList::SetSamplerView(SamplerViews& views, std::uint64_t para
 		**nowLayout_,
 		static_cast<std::uint32_t>(paramIdx),
 		1u,
-		&*views.GetViews().descriptorSet_,
+		&*static_cast<SamplerViews::Data*>(views.GetViews())->descriptorSet_,
 		0u,
 		nullptr
 	);
@@ -157,7 +157,7 @@ void Eugene::CommandList::SetRenderTarget(
 	}
 
 	
-	auto& renderTarget{ renderTargetViews.GetViews() };
+	auto& renderTarget{ *static_cast<std::vector<RenderTargetViews::Data>*>(renderTargetViews.GetViews()) };
 	vk::RenderingInfo rdInfo{};
 	
 	// レンダーターゲットをセットする
@@ -181,7 +181,7 @@ void Eugene::CommandList::SetRenderTarget(
 
 	// 深度バッファをセットする
 	vk::RenderingAttachmentInfo depthAttachment{};
-	auto& depth{ depthViews.GetViews() };
+	auto& depth{ *static_cast<std::vector<vk::UniqueImageView>*>(depthViews.GetViews())};
 	depthAttachment.setImageView(*depth[depthIndex]);
 	depthAttachment.setImageLayout(vk::ImageLayout::eDepthAttachmentOptimal);
 	depthAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
@@ -217,7 +217,7 @@ void Eugene::CommandList::SetRenderTarget(
 	}
 
 
-	auto& renderTarget{ renderTargetViews.GetViews() };
+	auto& renderTarget{*static_cast<std::vector<RenderTargetViews::Data>*>(renderTargetViews.GetViews()) };
 	vk::RenderingInfo rdInfo{};
 
 	// レンダーターゲットをセットする
@@ -263,7 +263,7 @@ void Eugene::CommandList::TransitionRenderTargetBegin(ImageResource& resource)
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
-	barrier.setImage(*resource.GetResource().image_);
+	barrier.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
@@ -325,7 +325,7 @@ void Eugene::CommandList::TransitionShaderResourceBegin(ImageResource& resource)
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eShaderRead);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
-	barrier.setImage(*resource.GetResource().image_);
+	barrier.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
@@ -350,7 +350,7 @@ void Eugene::CommandList::TransitionShaderResourceEnd(ImageResource& resource)
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
-	barrier.setImage(*resource.GetResource().image_);
+	barrier.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
@@ -376,7 +376,7 @@ void Eugene::CommandList::TransitionDepthBegin(ImageResource& resource)
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eDepthStencilAttachmentWrite);
-	barrier.setImage(*resource.GetResource().image_);
+	barrier.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 
@@ -421,8 +421,8 @@ void Eugene::CommandList::TransitionDepthEnd(ImageResource& resource)
 
 void Eugene::CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 {
-	auto& destData = dest.GetResource();
-	auto& srcData = src.GetResource();
+	auto& destData = *static_cast<ImageResource::ImageData*>(dest.GetResource());
+	auto& srcData = *static_cast<vk::Buffer*>(src.GetResource());
 	auto mipmapLevels = destData.mipmapLevels_;
 	auto arraySize = destData.arraySize_;
 	vk::ImageMemoryBarrier barrier{};
@@ -475,8 +475,8 @@ void Eugene::CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 
 void Eugene::CommandList::CopyBuffer(BufferResource& dest, BufferResource& src)
 {
-	auto destData =  dest.GetResource();
-	auto srcData = src.GetResource();
+	auto destData =  *static_cast<vk::Buffer*>(dest.GetResource());
+	auto srcData = *static_cast<vk::Buffer*>(src.GetResource());
 	vk::BufferCopy cpy{};
 	cpy.setDstOffset(0);
 	cpy.setSrcOffset(0);
@@ -486,8 +486,8 @@ void Eugene::CommandList::CopyBuffer(BufferResource& dest, BufferResource& src)
 
 void Eugene::CommandList::Resolve(ImageResource& dest, ImageResource& src)
 {
-	auto& destData = dest.GetResource();
-	auto& srcData = src.GetResource();
+	auto& destData = *static_cast<ImageResource::ImageData*>(dest.GetResource());
+	auto& srcData = *static_cast<ImageResource::ImageData*>(src.GetResource());
 
 	vk::ImageMemoryBarrier barrier{};
 	barrier.setOldLayout(vk::ImageLayout::eUndefined);
@@ -550,14 +550,14 @@ void Eugene::CommandList::Resolve(ImageResource& dest, ImageResource& src)
 
 }
 
-void* Eugene::CommandList::GetCommandList(void)
+void* Eugene::CommandList::GetCommandList(void) noexcept
 {
 	return &commandBuffer_;
 }
 
 void Eugene::CommandList::SetComputePipeline(Pipeline& gpipeline)
 {
-	auto& pipeline{ gpipeline.GetPipeline() };
+	auto& pipeline{ *static_cast<Pipeline::Data*>(gpipeline.GetPipeline()) };
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eCompute, *pipeline.pipeline_);
 	nowLayout_ = pipeline.layout_;
 }
@@ -572,7 +572,7 @@ void Eugene::CommandList::SetShaderResourceViewComputeShader(ShaderResourceViews
 		**nowLayout_,
 		static_cast<std::uint32_t>(paramIdx),
 		1u,
-		&*views.GetViews().descriptorSet_,
+		&*static_cast<ShaderResourceViews::Data*>(views.GetViews())->descriptorSet_,
 		0u,
 		nullptr
 	);
@@ -585,7 +585,7 @@ void Eugene::CommandList::Dispatch(const glm::u32vec3& count)
 void Eugene::CommandList::TransitionUnorderedAccessBegin(BufferResource& resource)
 {
 	vk::BufferMemoryBarrier barrier{};
-	barrier.setBuffer(resource.GetResource());
+	barrier.setBuffer(*static_cast<vk::Buffer*>(resource.GetResource()));
 	barrier.setDstAccessMask(vk::AccessFlagBits::eShaderWrite | vk::AccessFlagBits::eShaderRead);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eShaderWrite | vk::AccessFlagBits::eShaderRead);
 	barrier.setSize(resource.GetSize());

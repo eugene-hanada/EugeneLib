@@ -8,8 +8,13 @@ namespace Eugene
 {
 	class ImageResource;
 	class BufferResource;
+
+	/// <summary>
+	/// シェーダリソースビュー
+	/// </summary>
 	class ShaderResourceViews
 	{
+	public:
 		/// <summary>
 		/// データ
 		/// </summary>
@@ -17,12 +22,12 @@ namespace Eugene
 		{
 			Data() = default;
 
-			Data(Data&& data) :
-				descriptorSet_{std::move(data.descriptorSet_)}, layout_{std::move(data.layout_)}
+			Data(Data&& data) noexcept :
+				descriptorSet_{ std::move(data.descriptorSet_) }, layout_{ std::move(data.layout_) }
 			{
 			}
 
-			Data& operator=(Data&& data)
+			Data& operator=(Data&& data) noexcept
 			{
 				descriptorSet_ = std::move(data.descriptorSet_);
 				layout_ = std::move(data.layout_);
@@ -38,23 +43,52 @@ namespace Eugene
 			/// </summary>
 			vk::UniqueDescriptorSetLayout layout_;
 		};
-	public:
-		using ViewsType = Data;
 		ShaderResourceViews() = default;
 		~ShaderResourceViews() = default;
 
-		// ShaderResourceViews を介して継承されました
+		/// <summary>
+		/// テクスチャ用のビューを生成する
+		/// </summary>
+		/// <param name="resource"> リソース </param>
+		/// <param name="idx"> インデックス </param>
 		void CreateTexture(ImageResource& resource, std::uint32_t idx);
-		void CreateConstantBuffer(BufferResource& resource, std::uint32_t idx) ;
-		void CreateCubeMap(ImageResource& resource, std::uint32_t idx) ;
-		void CreateUnorderedAccessBuffer(BufferResource& resource, std::uint32_t idx, std::uint32_t numElements, std::uint64_t strideSize);
-		std::uint64_t GetImg(void) ;
 
-		ViewsType& GetViews() noexcept
+		/// <summary>
+		/// 定数バッファ用のビューを生成する
+		/// </summary>
+		/// <param name="resource"> リソース </param>
+		/// <param name="idx"> インデックス </param>
+		void CreateConstantBuffer(BufferResource& resource, std::uint32_t idx) ;
+
+		/// <summary>
+		/// キューブマップ用のビューを生成する
+		/// </summary>
+		/// <param name="resource"></param>
+		/// <param name="idx"></param>
+		void CreateCubeMap(ImageResource& resource, std::uint32_t idx) ;
+
+		/// <summary>
+		/// Unorderedで使用するバッファ用のビューを生成する
+		/// </summary>
+		/// <param name="resource"> リソース </param>
+		/// <param name="idx"> インデックス </param>
+		/// <param name="numElements"> 要素の数 </param>
+		/// <param name="strideSize"> 要素一つ当たりのサイズ </param>
+		void CreateUnorderedAccessBuffer(BufferResource& resource, std::uint32_t idx, std::uint32_t numElements, std::uint64_t strideSize);
+
+		/// <summary>
+		/// API側のビューを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		void* GetViews() noexcept
 		{
-			return data_;
+			return &data_;
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			imageViewMap_.clear();
@@ -78,6 +112,16 @@ namespace Eugene
 			imageViewMap_ = std::move(views.imageViewMap_);
 		}
 
+		/// <summary>
+		/// サイズ(保持できるビューの数)
+		/// </summary>
+		/// <returns></returns>
+		std::uint32_t GetSize() const noexcept
+		{
+			return static_cast<std::uint32_t>(typeData_.size());
+		}
+
+
 		ShaderResourceViews(const ShaderResourceViews&) = delete;
 		ShaderResourceViews& operator=(const ShaderResourceViews&) = delete;
 	private:
@@ -94,7 +138,7 @@ namespace Eugene
 		/// <summary>
 		/// データ
 		/// </summary>
-		ViewsType data_;
+		Data data_;
 		
 		/// <summary>
 		/// インデックスごとのビュータイプとbindingと配列の要素数

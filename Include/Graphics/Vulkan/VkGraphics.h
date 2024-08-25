@@ -34,11 +34,20 @@ struct ImGui_ImplVulkanH_Window;
 
 namespace Eugene
 {
+	/// <summary>
+	/// グラフィックスクラス
+	/// </summary>
 	class Graphics :
 		public DynamicSingleton<Graphics>
 	{
 	public:
 
+		/// <summary>
+		/// 生成する
+		/// </summary>
+		/// <param name="bufferNum"> バックバッファの数 </param>
+		/// <param name="initNum"> デフォルトのGPUエンジンのコマンドリスト数の初期値 </param>
+		/// <returns> GPUエンジン </returns>
 		static GpuEngine Create(std::uint32_t bufferNum = 2, std::uint64_t maxNum = 100)
 		{
 			GpuEngine gpuEngine;
@@ -46,6 +55,9 @@ namespace Eugene
 			return gpuEngine;
 		}
 
+		/// <summary>
+		/// フォーマットをvk::Formatに変換するための定数配列
+		/// </summary>
 		static constexpr std::array<vk::Format, FormatMax> FormatToVkFormat{
 			vk::Format::eUndefined,
 
@@ -134,41 +146,87 @@ namespace Eugene
 
 		~Graphics();
 
+		/// <summary>
+		/// GpuEngineを生成する
+		/// </summary>
+		/// <param name="initSize"> GpuEngineのコマンドリストの初期数 </param>
+		/// <returns> GpuEngine </returns>
 		GpuEngine CreateGpuEngine(std::size_t initSize) const
 		{
 			return { initSize };
 		}
 
-
+		/// <summary>
+		/// CommandListを生成する
+		/// </summary>
+		/// <returns> CommandList </returns>
 		CommandList CreateCommandList(void) const
 		{
 			return {};
 		}
-
+		
+		/// <summary>
+		/// BufferResourceを生成
+		/// </summary>
+		/// <param name="size"> サイズ </param>
+		/// <param name="isUnordered"> Unorderedで使用するか？ </param>
+		/// <returns> BufferResource </returns>
 		BufferResource CreateReadableBufferResource(std::uint64_t size, bool isUnordered = false) const
 		{
 			return { size,isUnordered,GpuResourceType::ReadBack };
 		}
+
+		/// <summary>
+		/// BufferResourceを生成
+		/// </summary>
+		/// <param name="size"> サイズ </param>
+		/// <param name="isUnordered"> Unorderedで使用するか？ </param>
+		/// <returns> BufferResource </returns>
 		BufferResource CreateBufferResource(std::uint64_t size, bool isUnordered = false) const
 		{
 			return { size, isUnordered, GpuResourceType::Default };
 		}
 
+		/// <summary>
+		/// BufferResourceをImageをもとにアップロード用のBufferResourceを生成する
+		/// </summary>
+		/// <param name="image"> 画像 </param>
+		/// <returns> BufferResource </returns>
 		BufferResource CreateBufferResource(Image& texture) const
 		{
 			return { texture };
 		}
 
+		/// <summary>
+		/// アプロード用のBufferResourceを生成
+		/// </summary>
+		/// <param name="size"> サイズ </param>
+		/// <returns> BufferResource </returns>
 		BufferResource CreateUnloadableBufferResource(std::uint64_t size) const
 		{
 			return { size, false,GpuResourceType::Upload };
 		}
 
+		/// <summary>
+		/// テクスチャ用画像情報をもとにImageResourceを生成する
+		/// </summary>
+		/// <param name="info">  </param>
+		/// <returns> ImageResource </returns>
 		ImageResource CreateImageResource(const TextureInfo& formatData) const
 		{
 			return { formatData };
 		}
 
+		/// <summary>
+		/// ImageResourceをレンダーターゲットとして生成する
+		/// </summary>
+		/// <param name="size">　縦横のサイズ　</param>
+		/// <param name="format"> フォーマット </param>
+		/// <param name="arraySize"> 配列数 </param>
+		/// <param name="mipLeveles"> ミップマップレベル </param>
+		/// <param name="sampleCount"> サンプル数 </param>
+		/// <param name="clearColor"> クリア時の色 </param>
+		/// <returns> ImageResource </returns>
 		ImageResource CreateImageResource(
 			const glm::ivec2& size,
 			Format format,
@@ -185,54 +243,104 @@ namespace Eugene
 			return { size, format,arraySize,mipLeveles,sampleCount,clearColor };
 		}
 
+		/// <summary>
+		/// ShaderResourceViewsを生成する
+		/// </summary>
+		/// <param name="viewTypes"> リソースのバインドレイアウト </param>
+		/// <returns> ShaderResourceViews </returns>
 		ShaderResourceViews CreateShaderResourceViews(const ArgsSpan<Bind>& viewTypes) const
 		{
 			return { viewTypes };
 		}
 
+		/// <summary>
+		/// DepthStencilViewsを生成する
+		/// </summary>
+		/// <param name="size"> ビューの数 </param>
+		/// <param name="isShaderVisible"> シェーダ側から見えるか？ </param>
+		/// <returns> DepthStencilViews </returns>
 		DepthStencilViews CreateDepthStencilViews(std::uint32_t size) const
 		{
 			return { size };
 		}
 
+		/// <summary>
+		/// RenderTargetViewsを生成する
+		/// </summary>
+		/// <param name="size"> ビューの数 </param>
+		/// <param name="isShaderVisible"> シェーダー側から見えるか？ </param>
+		/// <returns> RenderTargetViews </returns>
 		RenderTargetViews CreateRenderTargetViews(std::uint32_t size, bool isShaderVisible) const
 		{
 			return { size };
 		}
 
+		/// <summary>
+		/// バックバッファのリソースを取得する
+		/// </summary>
+		/// <param name="idx"> インデックス </param>
+		/// <returns> バックバッファのImageResourceの参照 </returns>
 		ImageResource& GetBackBufferResource(std::uint64_t idx)
 		{
 			return buffers_[idx];
 		}
 
+		/// <summary>
+		/// バックバッファのRenderTargetViewsを取得する
+		/// </summary>
+		/// <returns> RenderTargetViews </returns>
 		RenderTargetViews& GetViews(void) noexcept
 		{
 			return renderTargetViews_;
 		}
+
+		/// <summary>
+		/// 現在のバックバッファのインデックスを取得する
+		/// </summary>
+		/// <returns></returns>
 		std::uint64_t GetNowBackBufferIndex(void) const noexcept
 		{
 			return backBufferIdx_;
 		}
 
-
+		/// <summary>
+		/// 現在のバックバッファを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> ImageResourceの参照 </returns>
 		ImageResource& GetBackBufferResource() noexcept
 		{
 			return GetBackBufferResource(GetNowBackBufferIndex());
 		}
 
 		void Present(void);
+
+		/// <summary>
+		/// Samplerを生成する
+		/// </summary>
+		/// <param name="layout"> サンプラーのレイアウト </param>
+		/// <returns> Sampler </returns>
 		Sampler CreateSampler(const SamplerLayout& layout) const
 		{
 			return { layout };
 		}
 
+		/// <summary>
+		/// SamplerViewsを生成する
+		/// </summary>
+		/// <param name="viewTypes"> リソースのバインドレイアウト </param>
+		/// <returns> SamplerViews </returns>
 		SamplerViews CreateSamplerViews(const ArgsSpan<Bind>& viewTypes) const
 		{
 			return { viewTypes };
 		}
 
+		/// <summary>
+		/// バックバッファをリサイズする
+		/// </summary>
+		/// <param name="size"> サイズ </param>
+		/// <param name="window"></param>
 		void ResizeBackBuffer(const glm::vec2& size, void* window = nullptr);
-		void SetFullScreenFlag(bool isFullScreen);
 
 		Pipeline CreateGraphicsPipeline(
 			ResourceBindLayout& resourceBindLayout,
@@ -248,35 +356,75 @@ namespace Eugene
 			return {resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth, sampleCount};
 		}
 
-		// Graphics を介して継承されました
+		/// <summary>
+		/// コンピュート用のPipelineを生成する
+		/// </summary>
+		/// <param name="resourceBindLayout"> リソースのバインド方法 </param>
+		/// <param name="csShader"> コンピュートシェーダ </param>
+		/// <returns> Pipeline </returns>
 		Pipeline CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
 		{
 			return { resourceBindLayout, csShader };
 		}
 
-
+		/// <summary>
+		/// ResourceBindLayoutを生成する
+		/// </summary>
+		/// <param name="viewTypes"> ビューをバインドする際のレイアウト </param>
+		/// <param name="flag"> リソースの使用方法のフラグ </param>
+		/// <returns> ResourceBindLayout </returns>
 		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
 		{
 			return CreateResourceBindLayout(viewTypes, std::to_underlying(flag));
 		}
+
+		/// <summary>
+		/// ResourceBindLayoutを生成する
+		/// </summary>
+		/// <param name="viewTypes"> ビューをバインドする際のレイアウト </param>
+		/// <param name="flags"> ResourceBindFlag組み合わせ </param>
+		/// <returns> ResourceBindLayout </returns>
 		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlags flags) const
 		{
 			return { viewTypes };
 		}
 
-
-
-
+		/// <summary>
+		/// ImageResourceをデプスステンシルとして生成する
+		/// </summary>
+		/// <param name="size"> 縦横のサイズ </param>
+		/// <param name="clear"> クリア時の値 </param>
+		/// <param name="sampleCount">　サンプル数　</param>
+		/// <returns> ImageResource </returns>
 		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
 		{
 			return { size,clear,sampleCount };
 		}
 
+		/// <summary>
+		/// GPUメモリの情報
+		/// </summary>
+		/// <returns></returns>
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const;
 
 #ifdef USE_IMGUI
+		/// <summary>
+		/// Imguiのフレーム開始処理
+		/// </summary>
 		void ImguiNewFrame(void) const;
+
+		/// <summary>
+		/// ImGui用の画像を取得する
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		void* GetImguiImageID(std::uint64_t index) const;
+
+		/// <summary>
+		/// ImGui用に画像をセットする
+		/// </summary>
+		/// <param name="imageResource"> 画像のリソース </param>
+		/// <param name="index"> インデックス </param>
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull);
 #endif	
 

@@ -139,6 +139,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	samplerView.CreateSampler(sampler, 0);
 
 	//Eugene::System::GetInstance().SetFullScreen(true);
+	Eugene::Graphics::GetInstance().SetImguiImage(texture, 0);
 
 	ImGuiIO& io = ImGui::GetIO();
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
@@ -153,6 +154,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			float pos[]{ (*textureTransform)[3][0],(*textureTransform)[3][1] };
 			bool dirty = false;
+			ImGui::Image(
+				Eugene::Graphics::GetInstance().GetImguiImageID(0),
+				{ 128,128 }
+			);
 			if (ImGui::DragFloat2("Position", pos))
 			{
 				*textureTransform = Eugene::translate(Eugene::vec3{pos[0],pos[1], 0.0f});

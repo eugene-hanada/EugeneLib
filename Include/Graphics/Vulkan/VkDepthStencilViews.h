@@ -10,23 +10,34 @@ namespace Eugene
 	class DepthStencilViews
 	{
 	public:
-		using ViewsType = std::vector<vk::UniqueImageView>;
 
-		ViewsType& GetViews() noexcept
+		/// <summary>
+		/// API側のビューを取得する
+		/// </summary>
+		/// <returns> ビューのポインタ </returns>
+		void* GetViews() noexcept
 		{
-			return imageViews_;
+			return &imageViews_;
 		}
 
 		// DepthStencilViews を介して継承されました
 		void Create(ImageResource& resource, std::uint32_t idx);
 
-
-		DepthStencilViews(DepthStencilViews&& views) :
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="views"></param>
+		DepthStencilViews(DepthStencilViews&& views) noexcept :
 			imageViews_{std::move(views.imageViews_)}
 		{
 		}
 
-		DepthStencilViews& operator=(DepthStencilViews&& views)
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="views"></param>
+		/// <returns></returns>
+		DepthStencilViews& operator=(DepthStencilViews&& views) noexcept
 		{
 			imageViews_ = std::move(views.imageViews_);
 		}
@@ -42,7 +53,7 @@ namespace Eugene
 		/// <summary>
 		/// ImageViewsのstd::vector
 		/// </summary>
-		ViewsType imageViews_;
+		std::vector<vk::UniqueImageView> imageViews_;
 
 		friend class Graphics;
 	};

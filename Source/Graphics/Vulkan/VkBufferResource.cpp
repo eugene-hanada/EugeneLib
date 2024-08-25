@@ -4,7 +4,7 @@
 
 
 Eugene::BufferResource::BufferResource(std::uint64_t size, bool isUnordered, GpuResourceType type) :
-	mapCount_{0}
+	mapCount_{0}, canMap_{false}
 {
 	size_ = size;
 	vk::BufferCreateInfo bufferInfo{};
@@ -25,7 +25,6 @@ Eugene::BufferResource::BufferResource(std::uint64_t size, bool isUnordered, Gpu
 	{
 	case Eugene::GpuResourceType::Default:
 		usage |= vk::BufferUsageFlagBits::eTransferDst;
-		canMap_ = false;
 		break;
 	case Eugene::GpuResourceType::Upload:
 		usage |= vk::BufferUsageFlagBits::eTransferSrc;

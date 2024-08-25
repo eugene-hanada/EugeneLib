@@ -236,12 +236,12 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window)
 	}
 }
 
-void Eugene::Graphics::SetFullScreenFlag(bool isFullScreen)
-{
-	DXGI_SWAP_CHAIN_DESC1 dec;
-	swapChain_->GetDesc1(&dec);
-	swapChain_->SetFullscreenState(isFullScreen, nullptr);
-}
+//void Eugene::Graphics::SetFullScreenFlag(bool isFullScreen)
+//{
+//	DXGI_SWAP_CHAIN_DESC1 dec;
+//	swapChain_->GetDesc1(&dec);
+//	swapChain_->SetFullscreenState(isFullScreen, nullptr);
+//}
 
 
 

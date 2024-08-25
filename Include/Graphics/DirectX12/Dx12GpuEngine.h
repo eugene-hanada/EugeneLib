@@ -7,15 +7,31 @@ namespace Eugene
 {
 	class CommandList;
 
+	/// <summary>
+	/// コマンドリストを実行するGPUエンジン(キュー)
+	/// </summary>
 	class GpuEngine
 	{
 	public:
+
+		/// <summary>
+		/// デフォルトコンストラクタ
+		/// </summary>
 		GpuEngine() noexcept :
 			fenceVal_{ 0 }
 		{
 
 		}
+
+		/// <summary>
+		/// デストラクタ
+		/// </summary>
 		~GpuEngine() = default;
+
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="gpuEngine"></param>
 		GpuEngine(GpuEngine&& gpuEngine) noexcept:
 			cmdQueue_{ std::move(gpuEngine.cmdQueue_ )}, fenceVal_{ gpuEngine.fenceVal_ }, fence_{ std::move(gpuEngine.fence_)}, commandLists_{std::move(gpuEngine.commandLists_)}
 		{
@@ -23,6 +39,11 @@ namespace Eugene
 			gpuEngine.commandLists_.clear();
 		}
 
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="gpuEngine"></param>
+		/// <returns></returns>
 		GpuEngine& operator=(GpuEngine&& gpuEngine) noexcept
 		{
 			cmdQueue_ = std::move(gpuEngine.cmdQueue_);
@@ -37,17 +58,27 @@ namespace Eugene
 			return *this;
 		}
 
-		GpuEngine(std::size_t initSize) : fenceVal_{ 0 }
-		{
-			Init(initSize);
-		}
-
+		/// <summary>
+		/// 保持しているコマンドリストを実行する
+		/// </summary>
 		void Execute(void);
 		
+		/// <summary>
+		/// 実行完了まで待機する
+		/// </summary>
 		void Wait(void);
 
+		/// <summary>
+		/// 実行するコマンドリストをプッシュする
+		/// </summary>
+		/// <param name="commandList"> コマンドリスト </param>
 		void Push(CommandList& commandList);
 		
+		/// <summary>
+		/// API側のキューを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> ポインタ </returns>
 		void* GetQueue(void) const noexcept
 		{
 			return cmdQueue_.Get();
@@ -65,6 +96,15 @@ namespace Eugene
 	private:
 		GpuEngine(const GpuEngine&) = delete;
 		GpuEngine& operator=(const GpuEngine&) = delete;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="initSize"></param>
+		GpuEngine(std::size_t initSize) : fenceVal_{ 0 }
+		{
+			Init(initSize);
+		}
 
 		/// <summary>
 		/// 初期化処理(遅延初期化用)

@@ -5,6 +5,10 @@
 namespace Eugene
 {
 	class ImageResource;
+
+	/// <summary>
+	/// レンダーターゲット用のビュー
+	/// </summary>
 	class RenderTargetViews
 	{
 	public:
@@ -28,7 +32,7 @@ namespace Eugene
 			{
 			}
 
-			Data& operator=(Data&& data)
+			Data& operator=(Data&& data) noexcept
 			{
 				imageView = std::move(data.imageView);
 				size = data.size;
@@ -38,28 +42,46 @@ namespace Eugene
 			Data() = default;
 		};
 
-		using ViewsType = std::vector<Data>;
-
-		
-
-		// RenderTargetViews を介して継承されました
+		/// <summary>
+		/// ビューを生成する
+		/// </summary>
+		/// <param name="resource"> リソース </param>
+		/// <param name="idx"> インデックス </param>
 		void Create(ImageResource& resource, std::uint32_t idx);
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			imageViews_.clear();
 		}
 
-		ViewsType& GetViews(void) noexcept
+		/// <summary>
+		/// API側のビューを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
+		void* GetViews(void) noexcept
 		{
-			return imageViews_;
+			return &imageViews_;
 		}
 
-		RenderTargetViews(RenderTargetViews&& views) :
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="views"></param>
+		RenderTargetViews(RenderTargetViews&& views) noexcept :
 			imageViews_{std::move(views.imageViews_)}
 		{
 		}
-		RenderTargetViews& operator=(RenderTargetViews&& views)
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="views"></param>
+		/// <returns></returns>
+		RenderTargetViews& operator=(RenderTargetViews&& views) noexcept
 		{
 			imageViews_ = std::move(views.imageViews_);
 			return *this;
@@ -74,7 +96,7 @@ namespace Eugene
 		/// <summary>
 		/// ビューのデータ
 		/// </summary>
-		ViewsType imageViews_;
+		std::vector<Data> imageViews_;
 
 		friend class Graphics;
 	};

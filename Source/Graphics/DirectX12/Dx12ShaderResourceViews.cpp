@@ -90,14 +90,6 @@ void Eugene::ShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& re
 	Graphics::GetInstance().device_->CreateUnorderedAccessView(dx12Resource, nullptr, &viewDesc, handle);
 }
 
-std::uint64_t Eugene::ShaderResourceViews::GetImg(void)
-{
-	auto handle = descriptorHeap_->GetGPUDescriptorHandleForHeapStart();
-	
-	handle.ptr += Graphics::GetInstance().device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	return handle.ptr;
-}
-
 Eugene::ShaderResourceViews& Eugene::ShaderResourceViews::operator=(const ShaderResourceViews& views)
 {
 	if (GetSize() > 0u)

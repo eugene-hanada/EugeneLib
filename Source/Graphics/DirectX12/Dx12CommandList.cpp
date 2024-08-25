@@ -23,7 +23,7 @@
 #include <backends/imgui_impl_dx12.h>
 #endif
 
-Eugene::CommandList::CommandList()
+Eugene::CommandList::CommandList(void*)
 {
 	if (FAILED(Graphics::GetInstance().device_->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))))
@@ -41,7 +41,7 @@ Eugene::CommandList::CommandList()
 	End();
 }
 
-void* Eugene::CommandList::GetCommandList(void)
+void* Eugene::CommandList::GetCommandList(void) noexcept
 {
 	return cmdList_.Get();
 }

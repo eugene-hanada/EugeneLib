@@ -80,12 +80,12 @@ void Eugene::ShaderResourceViews::CreateTexture(ImageResource& resource, std::ui
 
 	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
-	viewInfo.setImage(*resource.GetResource().image_);
+	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(resource.GetResource().mipmapLevels_);
-	viewInfo.subresourceRange.setLayerCount(resource.GetResource().arraySize_);
+	viewInfo.subresourceRange.setLevelCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->arraySize_);
 	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
@@ -114,7 +114,7 @@ void Eugene::ShaderResourceViews::CreateConstantBuffer(BufferResource& resource,
 	}
 
 	vk::DescriptorBufferInfo bufferInfo{};
-	bufferInfo.setBuffer(resource.GetResource());
+	bufferInfo.setBuffer(*static_cast<vk::Buffer*>(resource.GetResource()));
 	bufferInfo.setOffset(0);
 	bufferInfo.setRange(resource.GetSize());
 
@@ -140,12 +140,12 @@ void Eugene::ShaderResourceViews::CreateCubeMap(ImageResource& resource, std::ui
 
 	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
-	viewInfo.setImage(*resource.GetResource().image_);
+	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::eCube);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(resource.GetResource().mipmapLevels_);
-	viewInfo.subresourceRange.setLayerCount(resource.GetResource().arraySize_);
+	viewInfo.subresourceRange.setLevelCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->arraySize_);
 	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
@@ -172,7 +172,7 @@ void Eugene::ShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& re
 	}
 
 	vk::DescriptorBufferInfo bufferInfo{};
-	bufferInfo.setBuffer(resource.GetResource());
+	bufferInfo.setBuffer(*static_cast<vk::Buffer*>(resource.GetResource()));
 	bufferInfo.setOffset(0);
 	bufferInfo.setRange(resource.GetSize());
 
@@ -188,9 +188,3 @@ void Eugene::ShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& re
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
-
-
-std::uint64_t Eugene::ShaderResourceViews::GetImg(void)
-{
-	return std::uint64_t();
-}

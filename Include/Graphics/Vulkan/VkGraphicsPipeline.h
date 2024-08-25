@@ -7,6 +7,10 @@
 namespace Eugene
 {
 	class ResourceBindLayout;
+
+	/// <summary>
+	/// パイプラインクラス
+	/// </summary>
 	class Pipeline
 	{
 	public:
@@ -16,25 +20,40 @@ namespace Eugene
 			std::shared_ptr<vk::UniquePipelineLayout> layout_;
 			vk::UniquePipeline pipeline_;
 		};
-		using PipelineType = Data;
 
-		PipelineType& GetPipeline(void) noexcept
+		/// <summary>
+		/// API側のパイプラインを取得する
+		/// </summary>
+		/// <returns> パイプラインのポインタ </returns>
+		void* GetPipeline(void) noexcept
 		{
-			return data_;
+			return &data_;
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			data_.pipeline_.reset();
 			data_.layout_.reset();
 		}
 
-
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="pipeline"></param>
 		Pipeline(Pipeline&& pipeline) noexcept 
 		{
 			data_.layout_ = std::move(pipeline.data_.layout_);
 			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
 		}
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="pipeline"></param>
+		/// <returns></returns>
 		Pipeline& operator=(Pipeline&& pipeline) noexcept
 		{
 			data_.layout_ = std::move(pipeline.data_.layout_);
@@ -63,7 +82,7 @@ namespace Eugene
 		);
 
 		// GraphicsPipeline を介して継承されました
-		PipelineType data_;
+		Data data_;
 
 		friend class Graphics;
 	};

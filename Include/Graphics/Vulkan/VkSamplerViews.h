@@ -6,18 +6,23 @@
 namespace Eugene
 {
 	class Sampler;
+
+	/// <summary>
+	/// サンプラービュー
+	/// </summary>
 	class SamplerViews
 	{
+	public:
 		struct Data
 		{
 			Data() = default;
 
-			Data(Data&& data) :
-			descriptorSet_{ std::move(data.descriptorSet_) }, layout_{ std::move(data.layout_) }
+			Data(Data&& data) noexcept :
+				descriptorSet_{ std::move(data.descriptorSet_) }, layout_{ std::move(data.layout_) }
 			{
 			}
 
-			Data& operator=(Data&& data)
+			Data& operator=(Data&& data) noexcept
 			{
 				descriptorSet_ = std::move(data.descriptorSet_);
 				layout_ = std::move(data.layout_);
@@ -27,28 +32,48 @@ namespace Eugene
 			vk::UniqueDescriptorSetLayout layout_;
 		};
 
-	public:
-		using ViewsType = Data;
 
-		// SamplerViews を介して継承されました
+		/// <summary>
+		/// ビューを生成する
+		/// </summary>
+		/// <param name="sampler"> サンプラー </param>
+		/// <param name="idx"> インデックス </param>
 		void CreateSampler(Sampler& sampler, std::uint32_t idx);
-		ViewsType& GetViews() noexcept
+
+		/// <summary>
+		/// API側のビューを取得する
+		/// </summary>
+		/// <returns> ビューのポインタ </returns>
+		void* GetViews() noexcept
 		{
-			return data_;
+			return &data_;
 		}
 
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="views"></param>
 		SamplerViews(SamplerViews&& views) noexcept :
 			descriptorPool_{std::move(views.descriptorPool_)}, data_{std::move(views.data_)},
 			typeData_{std::move(views.typeData_)}
 		{
 		}
-		SamplerViews& operator=(SamplerViews&& views)
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="views"></param>
+		/// <returns></returns>
+		SamplerViews& operator=(SamplerViews&& views) noexcept
 		{
 			descriptorPool_ = std::move(views.descriptorPool_);
 			data_ = std::move(views.data_);
 			typeData_ = std::move(views.typeData_);
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			typeData_.clear();

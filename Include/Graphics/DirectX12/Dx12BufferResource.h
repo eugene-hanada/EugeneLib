@@ -17,6 +17,9 @@ namespace Eugene
 {
 	class Image;
 
+	/// <summary>
+	/// グラフィックスAPI用のバッファリソース
+	/// </summary>
 	class BufferResource
 	{
 	public:
@@ -25,32 +28,56 @@ namespace Eugene
 		BufferResource(Image& image);
 		~BufferResource() = default;
 
+		/// <summary>
+		/// マップ可能か？
+		/// </summary>
+		/// <returns> マップ可能な場合true不可能な場合false </returns>
 		bool CanMap(void) const noexcept
 		{
 			return canMap_;
 		}
 		
-		void* GetResource(void) const
+		/// <summary>
+		/// API側のリソースの取得
+		/// </summary>
+		/// <returns> リソースのポインタ </returns>
+		void* GetResource(void) noexcept
 		{
 			return resource_.Get();
 		}
 
+		/// <summary>
+		/// サイズを取得する(バイト数)
+		/// </summary>
+		/// <returns> サイズ(バイト数) </returns>
 		std::uint64_t GetSize(void) const
 		{
 			return resource_->GetDesc().Width;
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final()noexcept
 		{
 			resource_.Reset();
 			allocation_.Reset();
 		}
 
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="bufferResource"></param>
 		BufferResource(BufferResource&& bufferResource) noexcept :
 			resource_{std::move(bufferResource.resource_)}, allocation_{std::move(bufferResource.allocation_)}, canMap_{bufferResource.canMap_}
 		{
 		}
 
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="bufferResource"></param>
+		/// <returns></returns>
 		BufferResource& operator=(BufferResource&& bufferResource) noexcept
 		{
 			resource_ = std::move(bufferResource.resource_);
@@ -58,6 +85,10 @@ namespace Eugene
 			canMap_ = bufferResource.canMap_;
 		}
 
+		/// <summary>
+		/// マップする
+		/// </summary>
+		/// <returns> ポインタ </returns>
 		void* Map() noexcept
 		{
 			void* ptr{ nullptr };
@@ -65,6 +96,9 @@ namespace Eugene
 			return ptr;
 		}
 
+		/// <summary>
+		/// アンマップする
+		/// </summary>
 		void UnMap() noexcept
 		{
 			resource_->Unmap(0, nullptr);
@@ -83,6 +117,9 @@ namespace Eugene
 		/// </summary>
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource_;
 
+		/// <summary>
+		/// マップ可能か？
+		/// </summary>
 		bool canMap_;
 
 	};

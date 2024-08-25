@@ -4,11 +4,17 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// サンプラー
+	/// </summary>
 	class Sampler
 	{
 	public:
 		Sampler() = default;
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final()noexcept
 		{
 			sampler_.reset();
@@ -18,7 +24,7 @@ namespace Eugene
 			sampler_{ std::move(sampler.sampler_) }
 		{
 		}
-		Sampler& operator=(Sampler&& sampler)
+		Sampler& operator=(Sampler&& sampler) noexcept
 		{
 			sampler_ = std::move(sampler.sampler_);
 			return *this;

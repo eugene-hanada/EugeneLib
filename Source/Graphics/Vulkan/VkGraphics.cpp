@@ -114,8 +114,15 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 	
 	
 	device_->resetFences(*fence_);
-	device_->acquireNextImageKHR(*swapchain_, UINT64_MAX,{}, *fence_, &backBufferIdx_);
-	device_->waitForFences(*fence_,true,UINT64_MAX);
+	if (device_->acquireNextImageKHR(*swapchain_, std::numeric_limits<std::uint64_t>::max(), {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
+	{
+		throw CreateErrorException{"AcquireNextImageKHR Error"};
+	}
+
+	if (device_->waitForFences(*fence_, true, std::numeric_limits<std::uint64_t>::max()) != vk::Result::eSuccess)
+	{
+		throw CreateErrorException{ "WaitForFences Error" };
+	}
 	device_->resetFences(*fence_);
 
 	const auto& limits{ physicalDevice_.getProperties().limits };
@@ -159,6 +166,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 #else  EUGENE_ANDROID
 Eugene::Graphics::Graphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
+	DynamicSingleton::instance_.reset(this);
     pApp = app;
 
     // インスタンス生成
@@ -589,34 +597,6 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
 }
 
 
-void Eugene::Graphics::SetFullScreenFlag(bool isFullScreen)
-{
-	//queue_.waitIdle();
-	//device_->waitIdle();
-
-	//auto capabilities = physicalDevice_.getSurfaceCapabilitiesKHR(*surfaceKhr_);
-
-	//VkResult(*func)(VkDevice, VkSwapchainKHR) { nullptr };
-	//if (isFullScreen)
-	//{
-	//	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkAcquireFullScreenExclusiveModeEXT"));
-	//}
-	//else
-	//{
-	//	func = reinterpret_cast<decltype(func)>(device_->getProcAddr("vkReleaseFullScreenExclusiveModeEXT"));
-	//}
-	//
-	//auto result = func(*device_, *swapchain_);
-	//device_->waitIdle();
-	//queue_.waitIdle();
-	//if (result != VkResult::VK_SUCCESS)
-	//{
-	//	DebugLog("フルスクリーン失敗 [:0] エラー[:1]", isFullScreen, static_cast<int>(result));
-	//	return;
-	//}
-
-}
-
 void Eugene::Graphics::CreateInstance(void)
 {
 	VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
@@ -795,7 +775,7 @@ void Eugene::Graphics::SetImguiImage(ImageResource& imageResource, std::uint64_t
 		return;
 	}
 
-	auto& data{imageResource.GetResource() };
+	auto& data{ *static_cast<ImageResource::ImageData*>(imageResource.GetResource())};
 	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(imageResource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
 	viewInfo.setImage(*data.image_);
@@ -945,7 +925,7 @@ void Eugene::Graphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferN
 void Eugene::Graphics::CreateImguiFrameBuffer(const glm::vec2& size)
 {
 	imguiFrameBuffer_.resize(buffers_.size());
-	auto& backViews = renderTargetViews_.GetViews();
+	auto& backViews = *static_cast<std::vector<RenderTargetViews::Data>*>(renderTargetViews_.GetViews());
 	for (auto i = 0ull; i < imguiFrameBuffer_.size(); i++)
 	{
 		vk::ImageView attachments[] = {

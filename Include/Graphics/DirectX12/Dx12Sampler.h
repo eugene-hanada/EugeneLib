@@ -5,6 +5,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// サンプラー
+	/// </summary>
 	class Sampler
 	{
 	public:
@@ -12,27 +15,36 @@ namespace Eugene
 		{
 		}
 
-		void Final()noexcept
+		/// <summary>
+		/// 終了処理
+		/// </summary>
+		constexpr void Final()noexcept
 		{
-
+			//何もしない
 		}
 
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="sampler"></param>
 		Sampler(Sampler&& sampler) noexcept :
 			desc_{sampler.desc_}
 		{
 		}
 
-
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="sampler"></param>
+		/// <returns></returns>
 		Sampler& operator=(Sampler&& sampler) noexcept
 		{
 			desc_ = sampler.desc_;
 		}
-
+		Sampler(const Sampler&) = delete;
+		Sampler& operator=(const Sampler&) = delete;
 	private:
 		Sampler(const SamplerLayout& layout);
-
-		Sampler(const Sampler& ) = delete;
-		Sampler& operator=(const Sampler&) = delete;
 
 		D3D12_SAMPLER_DESC desc_;
 		friend class Graphics;

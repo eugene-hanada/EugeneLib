@@ -5,6 +5,10 @@
 namespace Eugene
 {
 	class CommandList;
+
+	/// <summary>
+	/// コマンドリストを実行するGPUエンジン(キュー)
+	/// </summary>
 	class GpuEngine
 	{
 	public:
@@ -12,28 +16,56 @@ namespace Eugene
 
 		~GpuEngine() = default;
 
+		/// <summary>
+		/// 保持しているコマンドリストを実行する
+		/// </summary>
 		void Execute(void);
 		
+		/// <summary>
+		/// 実行完了まで待機する
+		/// </summary>
 		void Wait(void);
 		
+		/// <summary>
+		/// 実行するコマンドリストをプッシュする
+		/// </summary>
+		/// <param name="commandList"> コマンドリスト </param>
 		void Push(CommandList& commandList);
 
-		void* GetQueue(void) const noexcept
+		/// <summary>
+		/// API側のキューを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> ポインタ </returns>
+		void* GetQueue(void) noexcept
 		{
-			return const_cast<void*>(static_cast<const void*>(&queue_));
+			return &queue_;
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			cmdBuffers_.clear();
 			queue_ = vk::Queue{};
 		}
 
-		GpuEngine(GpuEngine&& gpuEngine) :
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="gpuEngine"></param>
+		GpuEngine(GpuEngine&& gpuEngine) noexcept:
 			queue_{std::move(gpuEngine.queue_)}, cmdBuffers_{std::move(gpuEngine.cmdBuffers_)}
 		{
 		}
-		GpuEngine& operator=(GpuEngine&& gpuEngine)
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="gpuEngine"></param>
+		/// <returns></returns>
+		GpuEngine& operator=(GpuEngine&& gpuEngine) noexcept
 		{
 			queue_ = std::move(gpuEngine.queue_);
 			cmdBuffers_ = std::move(gpuEngine.cmdBuffers_);

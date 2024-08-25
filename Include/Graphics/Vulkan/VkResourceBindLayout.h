@@ -6,6 +6,9 @@
 
 namespace Eugene
 {
+	/// <summary>
+	/// シェーダへのリソースバインドのレイアウトを定義したクラス
+	/// </summary>
 	class ResourceBindLayout
 	{
 	public:
@@ -16,6 +19,9 @@ namespace Eugene
 			pipelineLayout_.reset();
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final() noexcept
 		{
 			for (auto& setLayout : descriptorLayoutArray_)

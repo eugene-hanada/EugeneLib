@@ -9,16 +9,21 @@
 namespace Eugene
 {
 	struct TextureInfo;
+
+	/// <summary>
+	/// 画像用のリソース
+	/// </summary>
 	class ImageResource
 	{
+	public:
 		struct ImageData
 		{
 			ImageData()
 			{
 			}
 
-			ImageData(ImageData&& imageData) :
-				image_{std::move(imageData.image_)}, arraySize_{imageData.arraySize_}, mipmapLevels_{imageData.mipmapLevels_}, pixelPerSize_{imageData.pixelPerSize_}
+			ImageData(ImageData&& imageData) noexcept :
+				image_{ std::move(imageData.image_) }, arraySize_{ imageData.arraySize_ }, mipmapLevels_{ imageData.mipmapLevels_ }, pixelPerSize_{ imageData.pixelPerSize_ }
 			{
 			}
 
@@ -51,15 +56,23 @@ namespace Eugene
 			/// </summary>
 			std::uint8_t pixelPerSize_{ 0u };
 		};
-	public:
-		using ResourceType = ImageData;
+
+		/// <summary>
+		/// デフォルトコンストラクタ
+		/// </summary>
 		ImageResource() noexcept :
-			canMap_{false}, isBackBuffer_{false}
+			canMap_{false}, isBackBuffer_{false}, format_{Format::NON}, size_{0,0}
 		{
 		}
 
+		/// <summary>
+		/// デストラクタ
+		/// </summary>
 		~ImageResource() noexcept;
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
 		void Final()
 		{
 			if (!isBackBuffer_)
@@ -69,33 +82,61 @@ namespace Eugene
 			allocation_.reset();
 		}
 
+		/// <summary>
+		/// マップ可能か？
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		bool CanMap(void) const noexcept
 		{
 			return canMap_;
 		}
 
-		ResourceType& GetResource(void) noexcept
+
+		/// <summary>
+		/// API側のリソースを取得
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns> リソースのポインタ </returns>
+		void* GetResource(void) noexcept
 		{
-			return imageData_;
+			return &imageData_;
 		}
 
+		/// <summary>
+		/// サイズを取得する
+		/// </summary>
+		/// <param name=""></param>
+		/// <returns></returns>
 		glm::ivec2 GetSize(void) const noexcept
 		{
 			return size_;
 		}
 
+		/// <summary>
+		/// フォーマットを取得する
+		/// </summary>
+		/// <returns></returns>
 		Format GetFormat() const noexcept
 		{
 			return format_;
 		}
 
-
+		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="imageResource"></param>
 		ImageResource(ImageResource&& imageResource) noexcept :
 			allocation_{std::move(imageResource.allocation_)}, imageData_{std::move(imageResource.imageData_)},
 			size_{imageResource.size_}, canMap_{imageResource.canMap_}, isBackBuffer_{imageResource.isBackBuffer_}, format_{imageResource.format_}
 		{
 		}
 
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="imageResource"></param>
+		/// <returns></returns>
 		ImageResource& operator=(ImageResource&& imageResource) noexcept
 		{
 			isBackBuffer_ = imageResource.isBackBuffer_;
@@ -174,7 +215,7 @@ namespace Eugene
 		/// </summary>
 		vma::UniqueAllocation allocation_;
 
-		ResourceType imageData_;
+		ImageData imageData_;
 
 		/// <summary>
 		/// 画像サイズ

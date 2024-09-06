@@ -2,7 +2,7 @@
 #include "../SystemCommon.h"
 #include "../../Utils/Utils.h"
 #include <Windows.h>
-#include <memory>
+
 
 namespace Eugene
 {

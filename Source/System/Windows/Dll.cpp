@@ -22,8 +22,8 @@ Eugene::DynamicLibrary::~DynamicLibrary()
 	FreeLibrary(handle_);
 }
 
-void* Eugene::DynamicLibrary::FindFunction(const std::string& functionName) const
+void* Eugene::DynamicLibrary::FindFunction(const std::string_view& functionName) const
 {
 	// 指定の名前の関数を取得し返す
-	return GetProcAddress(handle_,functionName.c_str());
+	return GetProcAddress(handle_,functionName.data());
 }

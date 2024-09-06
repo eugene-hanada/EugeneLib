@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "../SystemCommon.h"
 #include "../../Utils/Utils.h"
 #include "../../ThirdParty/glm/glm/vec2.hpp"
@@ -9,21 +9,26 @@
 
 
 struct android_app;
+struct GameActivityMotionEvent;
+struct GameActivity;
+struct ANativeWindow;
 
 namespace Eugene
 {
-
-
-    class System
+    struct Mouse;
+    struct TouchData;
+    struct GamePad;
+    class System :
+            public DynamicSingleton<System>
     {
     public:
         /// <summary>
-        /// ¶¬‚·‚é
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="size"> ƒEƒBƒ“ƒhƒEƒTƒCƒY </param>
-        /// <param name="title"> ƒ^ƒCƒgƒ‹ </param>
-        /// <param name="other"> ‚»‚Ì‚Ù‚©‚Ìƒf[ƒ^(ƒvƒ‰ƒbƒgƒtƒH[ƒ€‚É‚æ‚Á‚Ä‚Íg—p‚·‚é) </param>
-        /// <param name="directories"> ƒRƒs[‚ğs‚¤ƒfƒBƒŒƒNƒgƒŠ(ƒvƒ‰ƒbƒgƒtƒH[ƒ€‚É‚æ‚Á‚Ä‚Íg—p‚·‚é) </param>
+        /// <param name="size"> ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Y </param>
+        /// <param name="title"> ï¿½^ï¿½Cï¿½gï¿½ï¿½ </param>
+        /// <param name="other"> ï¿½ï¿½ï¿½Ì‚Ù‚ï¿½ï¿½Ìƒfï¿½[ï¿½^(ï¿½vï¿½ï¿½ï¿½bï¿½gï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½Ä‚Ígï¿½pï¿½ï¿½ï¿½ï¿½) </param>
+        /// <param name="directories"> ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½(ï¿½vï¿½ï¿½ï¿½bï¿½gï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½Ä‚Ígï¿½pï¿½ï¿½ï¿½ï¿½) </param>
         static void Create(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {})
         {
             DynamicSingleton::Create(size, title, other, directories);
@@ -31,48 +36,48 @@ namespace Eugene
         ~System();
 
         /// <summary>
-        /// XVˆ—
+        /// ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <returns> Œp‘±‚µ‚È‚¢ê‡false </returns>
+        /// <returns> ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡false </returns>
         bool Update(void);
 
         /// <summary>
-        /// ƒ}ƒEƒXî•ñ‚ğæ“¾‚·‚é
+        /// ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="outMouse"></param>
         /// <returns></returns>
         bool GetMouse(Mouse& outMouse) const&;
 
         /// <summary>
-        /// ƒ}ƒEƒXî•ñ‚ğƒZƒbƒg‚·‚é
+        /// ï¿½}ï¿½Eï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="outMouse"></param>
         /// <returns></returns>
         bool SetMouse(Mouse& outMouse) const;
 
         /// <summary>
-        /// ƒL[“ü—Í‚³‚ê‚½‚©H
+        /// ï¿½Lï¿½[ï¿½ï¿½ï¿½Í‚ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½H
         /// </summary>
         /// <param name="keyID"></param>
         /// <returns></returns>
         bool IsHitKey(KeyID keyID) const;
 
         /// <summary>
-        /// ƒL[ƒ{[ƒhƒf[ƒ^‚ğæ“¾‚·‚é
+        /// ï¿½Lï¿½[ï¿½{ï¿½[ï¿½hï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="keyData"></param>
         /// <returns></returns>
         bool GetKeyData(KeyDataSpan keyData) const;
 
         /// <summary>
-        /// ƒL[ƒ{[ƒhƒf[ƒ^‚ğƒZƒbƒg‚·‚é
+        /// ï¿½Lï¿½[ï¿½{ï¿½[ï¿½hï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="keyCodeTable"></param>
         /// <returns></returns>
         bool SetKeyCodeTable(KeyCodeTable& keyCodeTable);
 
         /// <summary>
-        /// ƒQ[ƒ€ƒpƒbƒhî•ñ‚ğæ“¾‚·‚é
+        /// ï¿½Qï¿½[ï¿½ï¿½ï¿½pï¿½bï¿½hï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="pad"></param>
         /// <param name="idx"></param>
@@ -81,7 +86,7 @@ namespace Eugene
 
 
         /// <summary>
-        /// ƒ^ƒbƒ`î•ñ‚ğæ“¾‚·‚é
+        /// ï¿½^ï¿½bï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="pressed"></param>
         /// <param name="move"></param>
@@ -90,26 +95,26 @@ namespace Eugene
         bool GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const;
 
         /// <summary>
-        /// I—¹‚·‚é‚©H
+        /// ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½H
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
         bool IsEnd(void) const;
 
         /// <summary>
-        /// ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğƒŠƒTƒCƒY‚·‚é
+        /// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="size"></param>
         void ResizeWindow(const glm::vec2& size);
 
         /// <summary>
-        /// ƒtƒ‹ƒXƒNƒŠ[ƒ“ó‘Ô‚ğƒZƒbƒg‚·‚é
+        /// ï¿½tï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="isFullScreen"> true‚Åƒtƒ‹ƒXƒNƒŠ[ƒ“ </param>
+        /// <param name="isFullScreen"> trueï¿½Åƒtï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ </param>
         void SetFullScreen(bool isFullScreen);
 
         /// <summary>
-        /// ƒAƒNƒeƒBƒuƒtƒ‰ƒO‚©H
+        /// ï¿½Aï¿½Nï¿½eï¿½Bï¿½uï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½H
         /// </summary>
         /// <returns></returns>
         bool IsActive() const noexcept
@@ -118,17 +123,17 @@ namespace Eugene
         }
 
         /// <summary>
-        /// ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğæ“¾‚·‚é
+        /// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name=""></param>
-        /// <returns> ƒEƒBƒ“ƒhƒEƒTƒCƒY </returns>
+        /// <returns> ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Y </returns>
         const glm::vec2& GetWindowSize(void) const& noexcept
         {
             return windowSize_;
         }
 
         /// <summary>
-        /// Å‘åƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğæ“¾‚·‚é
+        /// ï¿½Å‘ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
@@ -138,9 +143,9 @@ namespace Eugene
         }
 
         /// <summary>
-        /// API‘¤‚ÌƒEƒBƒ“ƒhƒE‚ğæ“¾‚·‚é
+        /// APIï¿½ï¿½ï¿½ÌƒEï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <returns> ƒEƒBƒ“ƒhƒE‚Ìƒ|ƒCƒ“ƒ^ </returns>
+        /// <returns> ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ </returns>
         void* GetWindow() const noexcept
         {
             return app_;
@@ -149,7 +154,7 @@ namespace Eugene
 #ifdef USE_IMGUI
 
         /// <summary>
-        /// IMGUI‚ÅƒtƒŒ[ƒ€ŠJnˆ—‚ğs‚¤
+        /// IMGUIï¿½Åƒtï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
         /// </summary>
         /// <param name=""></param>
         void ImguiNewFrame(void) const;
@@ -158,13 +163,25 @@ namespace Eugene
 
         System(const glm::vec2& size, const std::u8string& title, std::intptr_t other = 0, std::span<std::string_view> directories = {});
 
+        static void OnHandleCmd(android_app *pApp, std::int32_t cmd);
+
+        static void OnPause(GameActivity* activity);
+
+        static void OnResume(GameActivity* activity);
+
+        static void OnChangeFocus(GameActivity* activity,bool flag);
+
+        static void OnWindowCreated(GameActivity* activity,ANativeWindow* window);
+
+        static bool OnMotionEventFilter(const GameActivityMotionEvent* motionEvent);
+
         /// <summary>
-        /// ƒEƒBƒ“ƒhƒEƒTƒCƒY
+        /// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Y
         /// </summary>
         glm::vec2 windowSize_;
 
         /// <summary>
-        /// Å‘åƒEƒBƒ“ƒhƒEƒTƒCƒY
+        /// ï¿½Å‘ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Y
         /// </summary>
         glm::vec2 maxWindowSize_;
 
@@ -173,5 +190,6 @@ namespace Eugene
         android_app* app_;
 
         bool isEnd_;
+        friend class DynamicSingleton<System>;
     };
 }

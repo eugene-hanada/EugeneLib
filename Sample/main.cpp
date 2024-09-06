@@ -19,15 +19,30 @@
 
 #include <stacktrace>
 
+#include <source_location>
+
 struct Vertex2D
 {
 	Eugene::vec2 pos;
 	Eugene::vec2 uv;
 };
 
+struct TestC
+{
+	void t();
+};
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
+
 	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
+	Eugene::Sound::Create();
+
+	Eugene::SoundFile soundFile{ "./test.wav" };
+	auto speaker = Eugene::Sound::GetInstance().CreateSoundSpeaker(soundFile);
+	speaker.SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
+	speaker.Play();
+
 	auto gpuEngine = Eugene::Graphics::Create();
 
 	//コマンドリスト作成

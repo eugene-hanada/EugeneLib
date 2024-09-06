@@ -299,7 +299,7 @@ void Eugene::CommandList::TransitionRenderTargetEnd(ImageResource& resource)
 	barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
 	barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
 	barrier.setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
-	barrier.setImage(*resource.GetResource().image_);
+	barrier.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	barrier.subresourceRange.setLayerCount(1);
 	barrier.subresourceRange.setLevelCount(1);
 

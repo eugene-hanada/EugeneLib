@@ -109,6 +109,7 @@ if (EUGENE_USE_WINDOWS)
 elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
 		Source/System/Android/AndroidSystem.cpp
+		Source/System/Linux/SharedObject.cpp
 	)
 
 	set(
@@ -256,9 +257,9 @@ endif()
 
  target_compile_definitions(EugeneLib PUBLIC NOMINMAX GLM_FORCE_LEFT_HANDED GLM_FORCE_DEPTH_ZERO_TO_ONE)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_CONFIGURATION_TYPES STREQUAL "Debug")
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_DEBUG)
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES STREQUAL "Release")
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_RELEASE)
 endif()
 

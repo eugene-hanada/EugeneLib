@@ -1,8 +1,10 @@
 ﻿#pragma once
 #include "../GraphicsCommon.h"
 #include <vulkan/vulkan.hpp>
+#include <optional>
 #include "../../../ThirdParty/glm/glm/vec2.hpp"
 #include "../../../ThirdParty/glm/glm/vec3.hpp"
+
 #ifdef USE_IMGUI
 struct ImDrawData;
 #endif

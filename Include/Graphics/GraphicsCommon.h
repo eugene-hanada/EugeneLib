@@ -4,6 +4,7 @@
 #include <bitset>
 #include <span>
 #include <vector>
+#include <type_traits>
 
 namespace Eugene
 {
@@ -283,7 +284,8 @@ namespace Eugene
 
 	constexpr ResourceBindFlags operator|(ResourceBindFlag rflag, ResourceBindFlag lflag)
 	{
-		return ResourceBindFlags{ std::to_underlying(rflag) | std::to_underlying(lflag) };
+        using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
+		return ResourceBindFlags{ static_cast<UnderlyingType>(rflag) | static_cast<UnderlyingType>(lflag) };
 	}
 
 	struct Bind

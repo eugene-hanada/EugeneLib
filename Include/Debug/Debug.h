@@ -1,13 +1,11 @@
 ﻿#pragma once
 #include "../ThirdParty/fmt/include/fmt/core.h"
-#include "../Utils/EugeneLibException.h"
 #include <string>
 #include <semaphore>
 #include <bitset>
 #include <sstream>
 #include <filesystem>
-#include <stacktrace>
-
+#include <source_location>
 
 #define EUGENE_DEBUG_LOG(str,...) (Eugene::Debug::GetInstance().Log(str,__VA_ARGS__))
 #define EUGENE_DEBUG_DEBUGLOG(str, ...) (Eugene::Debug::GetInstance().LogDebug(str,__VA_ARGS__))
@@ -223,12 +221,11 @@ namespace Eugene
 
 
 #ifdef EUGENE_DEBUG
-
 #define EUGENE_ASSERT_MSG(check,message)\
 if (!check)\
 {\
-	auto stack = std::stacktrace::current()[0];\
-	Eugene::Debug::GetInstance().Error("Assertion! {0:} Function={1:} File={2:} Line={3:}",message, stack.description(),stack.source_file(),stack.source_line());\
+	constexpr auto sourceLocation = std::source_location::current();\
+	Eugene::Debug::GetInstance().Error("Assertion! {0:} Function={1:} File={2:} Line={3:}",message, sourceLocation.function_name(),sourceLocation.file_name(),sourceLocation.line());\
 	std::terminate();\
 }\
 

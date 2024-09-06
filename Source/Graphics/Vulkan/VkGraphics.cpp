@@ -10,22 +10,7 @@
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 
-#include "../../System/System.h"
-
-//#include "VkGpuEngine.h"
-//#include  "../../../Include/Graphics/Shader.h"
-//#include "VkResourceBindLayout.h"
-//#include "VkCommandList.h"
-//#include "VkImageResource.h"
-//#include "VkBufferResource.h"
-//#include "VkDepthStencilViews.h"
-//#include "VkGraphicsPipeline.h"
-//#include "VkVertexView.h"
-//#include "VkIndexView.h"
-//#include "VkShaderResourceViews.h"
-//#include "VkSampler.h"
-//#include "VkSamplerViews.h"
-//#include "VkRenderTargetViews.h"
+#include "../../../Include/System/System.h"
 
 #ifdef USE_IMGUI
 #include "../../../Include/ThirdParty/imgui/imgui.h"
@@ -77,9 +62,11 @@ namespace
 }
 
 #ifdef EUGENE_WINDOWS
-Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum):
+Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum):
 	backBufferIdx_{0}, isMinimized{false}
 {
+	EUGENE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
+
 	DynamicSingleton::instance_.reset(this);
 	hWindow = static_cast<HWND>(System::GetInstance().GetWindow());;
 	auto size = System::GetInstance().GetWindowSize();
@@ -164,10 +151,10 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 #endif
 }
 #else  EUGENE_ANDROID
-Eugene::Graphics::Graphics(android_app* app,const glm::vec2& size, GpuEngine*& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
+Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum)
 {
 	DynamicSingleton::instance_.reset(this);
-    pApp = app;
+    pApp = static_cast<android_app*>(System::GetInstance().GetWindow());
 
     // インスタンス生成
     CreateInstance();
@@ -188,9 +175,11 @@ Eugene::Graphics::Graphics(android_app* app,const glm::vec2& size, GpuEngine*& g
     fence_ = device_->createFenceUnique(fenceInfo);
     queue_ = device_->getQueue(graphicFamilly_, nextQueueIdx_++);
 
+    auto size = System::GetInstance().GetWindowSize();
+
     auto useVkformat = CreateSwapChain(size);
 
-    gpuEngine = new VkGpuEngine{ queue_,maxNum };
+    gpuEngine = GpuEngine{maxNum };
 
     buffers_.resize(bufferNum);
 
@@ -289,7 +278,26 @@ vk::Format Eugene::Graphics::CreateSwapChain(const glm::vec2& size)
 	// 一つのキューからの操作できる状態にする
 	info.setImageSharingMode(vk::SharingMode::eExclusive);
 
-	info.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
+    constexpr  vk::CompositeAlphaFlagBitsKHR checkCompositeAlphaArray[] = {
+            vk::CompositeAlphaFlagBitsKHR::eOpaque,
+            vk::CompositeAlphaFlagBitsKHR::ePreMultiplied,
+            vk::CompositeAlphaFlagBitsKHR::ePostMultiplied,
+            vk::CompositeAlphaFlagBitsKHR::eInherit,
+    };
+
+    auto compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eInherit;
+
+    for (auto flag : checkCompositeAlphaArray)
+    {
+        if (flag & capabilities.supportedCompositeAlpha)
+        {
+            compositeAlpha = flag;
+            break;
+        }
+    }
+
+
+	info.setCompositeAlpha(compositeAlpha);
 
 	info.setImageFormat(useFormat);
 
@@ -553,17 +561,7 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
     } else if (isMinimized) {
         // 最小状態から復帰時
         isMinimized = false;
-#ifdef USE_ANDROID
-        if (window != nullptr)
-        {
-            pApp->window = static_cast<ANativeWindow *>(window);
-        }
-        vk::AndroidSurfaceCreateInfoKHR surfaceInfo{};
-        surfaceInfo.setWindow(pApp->window);
-        surfaceKhr_ = instance_->createAndroidSurfaceKHRUnique(surfaceInfo);
-#else
         return;
-#endif
     }
 
 
@@ -572,6 +570,17 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
         buffer.Final();
     }
     swapchain_.reset();
+
+#ifdef EUGENE_ANDROID
+    surfaceKhr_.reset();
+    if (window != nullptr)
+    {
+        pApp->window = static_cast<ANativeWindow *>(window);
+    }
+    vk::AndroidSurfaceCreateInfoKHR surfaceInfo{};
+    surfaceInfo.setWindow(pApp->window);
+    surfaceKhr_ = instance_->createAndroidSurfaceKHRUnique(surfaceInfo);
+#endif
 
     auto swapChainFormat = CreateSwapChain(size);
     CreateBackBuffer(swapChainFormat, size);

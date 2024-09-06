@@ -3,6 +3,7 @@
 
 // システム系
 #include "System/System.h"
+#include "System/DynamicLibrary.h"
 
 // グラフィック系
 #include "Graphics/Graphics.h"

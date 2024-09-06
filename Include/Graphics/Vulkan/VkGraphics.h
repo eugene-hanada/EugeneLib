@@ -375,7 +375,8 @@ namespace Eugene
 		/// <returns> ResourceBindLayout </returns>
 		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
 		{
-			return CreateResourceBindLayout(viewTypes, std::to_underlying(flag));
+            using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
+			return CreateResourceBindLayout(viewTypes, static_cast<UnderlyingType>(flag));
 		}
 
 		/// <summary>
@@ -430,11 +431,7 @@ namespace Eugene
 
 private:
 
-#ifdef EUGENE_WINDOWS
-		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-#else  EUGENE_ANDROID
-		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
-#endif
+		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum);
 
 #ifdef USE_IMGUI
 		ImGui_ImplVulkanH_Window* GetImguiWindow(void);

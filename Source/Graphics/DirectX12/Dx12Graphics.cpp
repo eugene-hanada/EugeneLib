@@ -27,6 +27,7 @@
 
 Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
+	EUGENE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
 	CreateDevice();
 	instance_.reset(this);
 

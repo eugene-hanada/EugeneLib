@@ -72,9 +72,9 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 Eugene::Debug::Debug() :
 	binarySemphore_{1},  filter_{0u}, exportPath_{"./Log.txt"}, isExport_{true},
 
-#ifdef USE_ANDROID
+#ifdef EUGENE_ANDROID
     os_{androidOs}
-#else
+#elif EUGENE_WINDOWS
 	os_{ windowsOs }
 #endif
 {

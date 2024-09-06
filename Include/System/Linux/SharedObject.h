@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <filesystem>
-#include <Windows.h>
 #include <string_view>
 
 namespace Eugene {
@@ -8,7 +7,7 @@ namespace Eugene {
 	class DynamicLibrary
 	{
 	public:
-		DynamicLibrary(const std::filesystem::path& path);
+        DynamicLibrary(const std::filesystem::path& path);
 		~DynamicLibrary();
 
 
@@ -25,11 +24,11 @@ namespace Eugene {
 		}
 
 	private:
-		void* FindFunction(const std::string_view& functionName) const;
+        void* FindFunction(const std::string_view& functionName) const;
 
 		/// <summary>
-		/// DLLのハンドル
+		/// 共有library
 		/// </summary>
-		HMODULE handle_;
+		void* dl_;
 	};
 }

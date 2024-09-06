@@ -1,15 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include <array>
+#include <span>
+#include "KeyID.h"
 
 namespace Eugene
 {
 	/// <summary>
-	/// ƒL[ƒ{[ƒh‚Ìî•ñ()
+	/// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®span
 	/// </summary>
 	using KeyDataSpan = std::span<bool, KEYID_MAX>;
 
 	/// <summary>
-	/// ƒL[ƒR[ƒh‚Ìƒe[ƒuƒ‹
+	/// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã®å‹
 	/// </summary>
 	using KeyCodeTable = std::array<int, KEYID_MAX>;
 }

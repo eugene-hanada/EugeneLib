@@ -1,5 +1,5 @@
 ﻿#ifndef BUILD_DOCTEST
-#include <mimalloc-new-delete.h>
+//#include <mimalloc-new-delete.h>
 #endif
 
 #include "../../Include/System/System.h"
@@ -7,11 +7,6 @@
 #include "../../Include/Graphics/GpuEngine.h"
 #include "../../Include/Graphics/Graphics.h"
 
-#ifdef USE_WINDOWS
-#include "../../Source/System/Windows/WindowsSystem.h"
-#elif USE_ANDROID
-#include "../../Source/System/Android/AndroidSystem.h"
-#endif
 
 #ifdef USE_IMGUI
 #include "../../Include/ThirdParty/imgui/imgui.h"

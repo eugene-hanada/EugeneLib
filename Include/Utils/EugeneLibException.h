@@ -1,39 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #include <exception>
 #include <string>
-#include <stacktrace>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒGƒNƒZƒvƒVƒ‡ƒ“
+	/// ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ÌƒGï¿½Nï¿½Zï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	class EugeneLibException :
 		public std::exception
 	{
 	public:
-		EugeneLibException(const std::string& mess, const std::stacktrace& stackTrace = {});
+		EugeneLibException(const std::string& mess);
 		~EugeneLibException();
 
-		/// <summary>
-		/// ƒXƒ^ƒbƒNƒgƒŒ[ƒX‚ğæ“¾‚·‚é
-		/// </summary>
-		/// <returns></returns>
-		const std::stacktrace& GetStackTrace() const noexcept
-		{
-			return stackTrace_;
-		}
 	private:
 		const char* what() const noexcept final;
 
 		/// <summary>
-		/// ƒƒbƒZ[ƒW
+		/// ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
 		/// </summary>
 		std::string mess_;
 
-		/// <summary>
-		/// ƒXƒ^ƒbƒNƒgƒŒ[ƒX
-		/// </summary>
-		std::stacktrace stackTrace_;
 	};
 };

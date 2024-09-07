@@ -1,4 +1,4 @@
-﻿#include "Xa2SoundStreamSpeaker.h"
+﻿#include "../../../Include/Sound/Xaudio2/Xa2SoundStreamSpeaker.h"
 #include "../../../Include/Sound/SoundCommon.h"
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundFile.h"
@@ -6,12 +6,11 @@
 
 #include "../SoundStreamFile.h"
 
-Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate) :
-	SoundStreamSpeaker{streamFile->GetFormat().channel,outChannel,maxPitchRate}, nowLoop_{0}, maxLoop_{0}, streamSize_{0}, streamFile_{std::move(streamFile)}
+Eugene::SoundStreamSpeaker::SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate)
 {
 	isPlay_.store(false);
 	isRun_.store(true);
-	collback_ = std::make_unique<CollBack>(*this);
+	callback_ = std::make_unique<CollBack>(*this);
 
 	const auto& format{ streamFile_->GetFormat() };
 	const auto ext{ streamFile_->GetFormatEx() };
@@ -33,7 +32,7 @@ Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::uniqu
 	std::copy(std::begin(ext.d4), std::end(ext.d4), formatEx.SubFormat.Data4);
 
 	// ソースボイスの作成
-	xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate_, collback_.get());
+	xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate, callback_.get());
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
 
 	// バイト数入れとく
@@ -43,10 +42,10 @@ Eugene::Xaudio2StreamSpeaker::Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::uniqu
 	bufferData_.resize(bytesPerSec);
 	streamData_.resize(bytesPerSec);
 	inChannel_ = formatEx.Format.nChannels;
-	streamThread_ = std::thread{ &Xaudio2StreamSpeaker::Worker,this };
+	streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
 }
 
-Eugene::Xaudio2StreamSpeaker::~Xaudio2StreamSpeaker()
+Eugene::SoundStreamSpeaker::~SoundStreamSpeaker()
 {
 	isRun_.store(false);
 	semaphore_.release();
@@ -54,7 +53,7 @@ Eugene::Xaudio2StreamSpeaker::~Xaudio2StreamSpeaker()
 	source_->Stop();
 }
 
-void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)
+void Eugene::SoundStreamSpeaker::Play(int loopCount)
 {
 	isPlay_.store(false);
 
@@ -73,23 +72,23 @@ void Eugene::Xaudio2StreamSpeaker::Play(int loopCount)
 	isPlay_.store(true);
 }
 
-void Eugene::Xaudio2StreamSpeaker::Stop(void)
+void Eugene::SoundStreamSpeaker::Stop(void)
 {
 	isPlay_.store(false);
 	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
 
-bool Eugene::Xaudio2StreamSpeaker::IsEnd(void) const
+bool Eugene::SoundStreamSpeaker::IsEnd(void) const
 {
 	return isPlay_.load();
 }
 
-void Eugene::Xaudio2StreamSpeaker::SetPitchRate(float rate)
+void Eugene::SoundStreamSpeaker::SetPitchRate(float rate)
 {
 	source_->SetFrequencyRatio(rate);
 }
 
-void Eugene::Xaudio2StreamSpeaker::SetOutput(SoundControl& control)
+void Eugene::SoundStreamSpeaker::SetOutput(SoundControl& control)
 {
 	outChannel_ = control.GetInChannel();
 	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
@@ -98,7 +97,7 @@ void Eugene::Xaudio2StreamSpeaker::SetOutput(SoundControl& control)
 	source_->SetOutputVoices(&sends);
 }
 
-void Eugene::Xaudio2StreamSpeaker::SetVolume(float volume)
+void Eugene::SoundStreamSpeaker::SetVolume(float volume)
 {
 	if (volume != volume_)
 	{
@@ -107,7 +106,7 @@ void Eugene::Xaudio2StreamSpeaker::SetVolume(float volume)
 	}
 }
 
-void Eugene::Xaudio2StreamSpeaker::SetPan(std::span<float> volumes)
+void Eugene::SoundStreamSpeaker::SetPan(std::span<float> volumes)
 {
 	if ((inChannel_ * outChannel_) >= volumes.size())
 	{
@@ -115,7 +114,7 @@ void Eugene::Xaudio2StreamSpeaker::SetPan(std::span<float> volumes)
 	}
 }
 
-void Eugene::Xaudio2StreamSpeaker::SetUp(void)
+void Eugene::SoundStreamSpeaker::SetUp(void)
 {
 	// 読み込むデータのサイズ
 	auto size{ std::min(bytesPerSec, streamFile_->GetDataSize()) };
@@ -143,7 +142,7 @@ void Eugene::Xaudio2StreamSpeaker::SetUp(void)
 	}
 }
 
-void Eugene::Xaudio2StreamSpeaker::Worker(void)
+void Eugene::SoundStreamSpeaker::Worker(void)
 {
 	while (true)
 	{
@@ -200,37 +199,37 @@ void Eugene::Xaudio2StreamSpeaker::Worker(void)
 }
 
 
-Eugene::Xaudio2StreamSpeaker::CollBack::CollBack(Xaudio2StreamSpeaker& speaker) :
+Eugene::SoundStreamSpeaker::CollBack::CollBack(SoundStreamSpeaker& speaker) :
 	speaker_{speaker}
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnBufferEnd(void* pBufferContext) noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnBufferEnd(void* pBufferContext) noexcept
 {
 	// 待機を解除
 	speaker_.semaphore_.release();
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnBufferStart(void* pBufferContext) noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnBufferStart(void* pBufferContext) noexcept
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnLoopEnd(void* pBufferContext) noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnLoopEnd(void* pBufferContext) noexcept
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnStreamEnd() noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnStreamEnd() noexcept
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnVoiceError(void* pBufferContext, HRESULT Error) noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnVoiceError(void* pBufferContext, HRESULT Error) noexcept
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnVoiceProcessingPassEnd() noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnVoiceProcessingPassEnd() noexcept
 {
 }
 
-void Eugene::Xaudio2StreamSpeaker::CollBack::OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept
+void Eugene::SoundStreamSpeaker::CollBack::OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept
 {
 }

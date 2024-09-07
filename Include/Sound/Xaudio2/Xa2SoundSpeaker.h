@@ -13,10 +13,15 @@ namespace Eugene
 		public SoundBase
 	{
 	public:
+		SoundSpeaker() :
+			maxPitchRate_{2.0f}
+		{
+
+		}
 		~SoundSpeaker();
 	
 		void Play(int loopCount = 0);
-		void Stop(void);
+		void Stop(void) noexcept;
 		bool IsEnd(void) const;
 		void SetPitchRate(float rate);
 
@@ -24,7 +29,7 @@ namespace Eugene
 
 		void SetPan(std::span<float> volumes) final;
 
-		void SetOutput(SoundControl& control);
+		void SetOutput(SoundControl& control) final;
 
 		void SetData(const std::uint8_t* ptr, const std::uint64_t size);
 
@@ -35,10 +40,17 @@ namespace Eugene
 
 		SoundSpeaker& operator=(SoundSpeaker&& speaker) noexcept
 		{
-			*this = std::move(speaker);
+			static_cast<SoundBase&>(*this) = std::move(speaker);
 			source_ = std::move(speaker.source_);
 			buffer_ = std::move(speaker.buffer_);
 			EUGENE_ASSERT_MSG(static_cast<bool>(speaker.maxPitchRate_ <= maxPitchRate_), "ピッチレートの最大値は大きくすることはできません");
+		}
+
+		void Final() noexcept
+		{
+			buffer_.reset();
+			source_->Stop();
+			source_.reset();
 		}
 
 		SoundSpeaker(const SoundSpeaker&) = delete;

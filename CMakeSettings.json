@@ -70,6 +70,11 @@
           "name": "MI_OVERRIDE",
           "value": "False",
           "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_USE_DX12",
+          "value": "False",
+          "type": "BOOL"
         }
       ]
     }

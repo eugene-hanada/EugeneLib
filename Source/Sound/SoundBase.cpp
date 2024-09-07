@@ -26,7 +26,7 @@ Eugene::SoundBase::SoundBase() :
 
 void Eugene::SoundBase::SetOutput(SoundControl& output)
 {
-
+	// 何もしない
 }
 
 Eugene::SoundBase::SoundBase(std::uint16_t inChannel, std::uint16_t outChannel) :

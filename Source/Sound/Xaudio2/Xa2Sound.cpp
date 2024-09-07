@@ -7,11 +7,6 @@
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundStreamSpeaker.h"
 
-#include "Xa2SoundControl.h"
-#include "Xa2Sound3DControl.h"
-#include "Xa2SoundStreamSpeaker.h"
-#include "../SoundStreamFile.h"
-
 #pragma comment (lib,"xaudio2.lib")
 
 namespace

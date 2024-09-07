@@ -4,6 +4,7 @@
 #include <wrl.h>
 #include <xaudio2.h>
 #include "Xa2SoundSpeaker.h"
+#include "Xa2SoundControl.h"
 
 namespace Eugene
 {
@@ -25,9 +26,13 @@ namespace Eugene
 
 		SoundSpeaker CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate = 2.0f)
 		{
-			return {xaudio2_.Get(), soundFile, outChannel_,maxPitchRate };
+			return {xaudio2_.Get(), soundFile, inChannel_,maxPitchRate };
 		}
 
+		SoundControl CreateSoundControl(std::uint32_t sample, std::uint32_t stage, std::uint16_t inChannel)
+		{
+			return { xaudio2_.Get(), sample, stage, inChannel, inChannel_ };
+		}
 		/*SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate ) const final;
 
 		SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const final;

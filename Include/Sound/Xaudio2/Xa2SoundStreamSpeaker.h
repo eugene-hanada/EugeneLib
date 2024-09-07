@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../../../Include/Sound/SoundStreamSpeaker.h"
+#include "../SoundBase.h"
 #include <filesystem>
 #include <thread>
 #include <atomic>
@@ -15,26 +15,37 @@ namespace Eugene
 {
 	class SoundStreamFile;
 
-	class Xaudio2StreamSpeaker:
-		public SoundStreamSpeaker
+	class SoundStreamSpeaker :
+		public SoundBase
 	{
 	public:
-		Xaudio2StreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
-		~Xaudio2StreamSpeaker();
+		SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
+		~SoundStreamSpeaker();
 
-		void Play(int loopCount = 0) final;
-		void Stop(void) final;
-		bool IsEnd(void) const final;
+		void Play(int loopCount = 0);
+		void Stop(void) ;
+		bool IsEnd(void) const;
 		void SetPitchRate(float rate);
 		void SetOutput(SoundControl& control);
 		void SetVolume(float volume);
 		void SetPan(std::span<float> volumes);
+
+		//SoundStreamSpeaker(SoundStreamSpeaker&& streamSpeaker) noexcept :
+		//	SoundBase{std::move(streamSpeaker)},
+		//	source_{std::move(streamSpeaker.source_)}, callback_{std::move(streamSpeaker.callback_)}, streamThread_{std::move(streamSpeaker.streamThread_)},
+		//	isRun_ {streamSpeaker.isRun_.load()}, isPlay_{streamSpeaker.isPlay_.load()}, semaphore_{std::move(streamSpeaker.semaphore_)},
+		//{
+
+		//}
+
+		SoundStreamSpeaker(const SoundStreamSpeaker&) = delete;
+		SoundStreamSpeaker& operator=(const SoundStreamSpeaker&) = delete;
 	private:
 
 		class CollBack : public IXAudio2VoiceCallback
 		{
 		public:
-			CollBack(Xaudio2StreamSpeaker& speaker);
+			CollBack(SoundStreamSpeaker& speaker);
 			void OnBufferEnd(void* pBufferContext) noexcept final;
 			void OnBufferStart(void* pBufferContext) noexcept final;
 			void OnLoopEnd(void* pBufferContext) noexcept final;
@@ -43,7 +54,7 @@ namespace Eugene
 			void OnVoiceProcessingPassEnd() noexcept final;
 			void OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept final;
 		private:
-			Xaudio2StreamSpeaker& speaker_;
+			SoundStreamSpeaker& speaker_;
 		};
 
 		struct SourceVoiceDeleter
@@ -74,7 +85,7 @@ namespace Eugene
 		/// <summary>
 		/// コールバック用オブジェクト
 		/// </summary>
-		std::unique_ptr<CollBack> collback_;
+		std::unique_ptr<CollBack> callback_;
 		
 		/// <summary>
 		/// ストリーミングで使用するスレッド

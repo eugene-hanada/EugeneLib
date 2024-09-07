@@ -131,7 +131,10 @@ Eugene::SoundSpeaker::SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile
 
 Eugene::SoundSpeaker::~SoundSpeaker()
 {
-	source_->Stop();
+	if (source_)
+	{
+		source_->Stop(XAUDIO2_PLAY_TAILS);
+	}
 }
 
 void Eugene::SoundSpeaker::Play(int loopCount)
@@ -146,7 +149,7 @@ void Eugene::SoundSpeaker::Play(int loopCount)
 	}
 }
 
-void Eugene::SoundSpeaker::Stop(void)
+void Eugene::SoundSpeaker::Stop(void) noexcept
 {
 	source_->Stop(XAUDIO2_PLAY_TAILS);
 }
@@ -186,7 +189,7 @@ void Eugene::SoundSpeaker::SetOutput(SoundControl& control)
 	auto ptr{ static_cast<IXAudio2SubmixVoice*>(control.Get()) };
 	XAUDIO2_SEND_DESCRIPTOR sDescriptor{ 0,ptr };
 	XAUDIO2_VOICE_SENDS sends{ 1, &sDescriptor };
-	source_->SetOutputVoices(&sends);
+	auto A = source_->SetOutputVoices(&sends);
 }
 
 void Eugene::SoundSpeaker::SetData(const std::uint8_t* ptr, const std::uint64_t size)

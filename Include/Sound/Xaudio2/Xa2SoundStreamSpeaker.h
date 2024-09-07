@@ -19,7 +19,8 @@ namespace Eugene
 		public SoundBase
 	{
 	public:
-		SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
+		SoundStreamSpeaker() = default;
+
 		~SoundStreamSpeaker();
 
 		void Play(int loopCount = 0);
@@ -30,17 +31,27 @@ namespace Eugene
 		void SetVolume(float volume);
 		void SetPan(std::span<float> volumes);
 
-		//SoundStreamSpeaker(SoundStreamSpeaker&& streamSpeaker) noexcept :
-		//	SoundBase{std::move(streamSpeaker)},
-		//	source_{std::move(streamSpeaker.source_)}, callback_{std::move(streamSpeaker.callback_)}, streamThread_{std::move(streamSpeaker.streamThread_)},
-		//	isRun_ {streamSpeaker.isRun_.load()}, isPlay_{streamSpeaker.isPlay_.load()}, semaphore_{std::move(streamSpeaker.semaphore_)},
-		//{
+		SoundStreamSpeaker(SoundStreamSpeaker&& streamSpeaker) noexcept;
+		SoundStreamSpeaker& operator=(SoundStreamSpeaker&& streamSpeaker) noexcept;
 
-		//}
+		void Final() noexcept
+		{
+			isRun_.store(false);
+			semaphore_.release();
+			if (streamThread_.joinable())
+			{
+				streamThread_.join();
+			}
+			if (source_)
+			{
+				source_->Stop();
+			}
+		}
 
 		SoundStreamSpeaker(const SoundStreamSpeaker&) = delete;
 		SoundStreamSpeaker& operator=(const SoundStreamSpeaker&) = delete;
 	private:
+		SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate);
 
 		class CollBack : public IXAudio2VoiceCallback
 		{
@@ -53,8 +64,13 @@ namespace Eugene
 			void OnVoiceError(void* pBufferContext, HRESULT Error) noexcept final;
 			void OnVoiceProcessingPassEnd() noexcept final;
 			void OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept final;
+			void SetStreamSpeaker(SoundStreamSpeaker& speaker) noexcept
+			{
+				std::lock_guard<std::mutex> lock{ speaker_->mutex_ };
+				speaker_ = &speaker;
+			}
 		private:
-			SoundStreamSpeaker& speaker_;
+			SoundStreamSpeaker* speaker_;
 		};
 
 		struct SourceVoiceDeleter
@@ -165,5 +181,6 @@ namespace Eugene
 		std::mutex mutex_;
 
 		friend class CollBack;
+		friend class Sound;
 	};
 }

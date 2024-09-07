@@ -1,7 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <memory>
-#include "../../Include/Sound/SoundCommon.h"
+#include "SoundCommon.h"
 
 namespace Eugene
 {

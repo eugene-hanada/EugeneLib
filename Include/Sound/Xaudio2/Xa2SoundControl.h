@@ -34,6 +34,7 @@ namespace Eugene
 		{
 			static_cast<SoundBase&>(*this) = control;
 			submix_ = std::move(control.submix_);
+			return *this;
 		}
 
 		void Final() noexcept

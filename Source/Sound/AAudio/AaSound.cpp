@@ -65,41 +65,41 @@ Eugene::AaudioSound::~AaudioSound()
 
 }
 
-Eugene::Sound3DControl *
-Eugene::AaudioSound::CreateSound3DControl(
-        std::uint32_t stage, std::uint32_t sample,
-        std::uint16_t inputChannel,
-        std::uint16_t outChannel) const
-{
-    return nullptr;
-}
-
-Eugene::SoundControl *
-Eugene::AaudioSound::CreateSoundControl(
-    std::uint32_t stage, std::uint32_t sample,
-    std::uint16_t inputChannel,
-    std::uint16_t outChannel) const
-{
-    return new AaudioControl{master_.get(),sample,inputChannel,outChannel,stage};
-}
-
-Eugene::SoundSpeaker *Eugene::AaudioSound::CreateSoundSpeaker(
-        const Eugene::SoundFile &soundFile,
-        const float maxPitchRate) const
-{
-    return new AaudioSpeaker{master_.get(),soundFile,inChannel_};
-}
-
-Eugene::SoundStreamSpeaker* Eugene::AaudioSound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
-{
-    try {
-        return new AaudioStreamSpeaker{CreateSoundStreamFile(path),master_.get(), inChannel_};
-    }
-    catch (const std::exception& e)
-    {
-        return nullptr;
-    }
-}
+//Eugene::Sound3DControl *
+//Eugene::AaudioSound::CreateSound3DControl(
+//        std::uint32_t stage, std::uint32_t sample,
+//        std::uint16_t inputChannel,
+//        std::uint16_t outChannel) const
+//{
+//    return nullptr;
+//}
+//
+//Eugene::SoundControl *
+//Eugene::AaudioSound::CreateSoundControl(
+//    std::uint32_t stage, std::uint32_t sample,
+//    std::uint16_t inputChannel,
+//    std::uint16_t outChannel) const
+//{
+//    return new AaudioControl{master_.get(),sample,inputChannel,outChannel,stage};
+//}
+//
+//Eugene::SoundSpeaker *Eugene::AaudioSound::CreateSoundSpeaker(
+//        const Eugene::SoundFile &soundFile,
+//        const float maxPitchRate) const
+//{
+//    return new AaudioSpeaker{master_.get(),soundFile,inChannel_};
+//}
+//
+//Eugene::SoundStreamSpeaker* Eugene::AaudioSound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
+//{
+//    try {
+//        return new AaudioStreamSpeaker{CreateSoundStreamFile(path),master_.get(), inChannel_};
+//    }
+//    catch (const std::exception& e)
+//    {
+//        return nullptr;
+//    }
+//}
 
 
 void Eugene::AaudioSound::SetVolume(float volume)

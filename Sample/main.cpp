@@ -38,12 +38,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
 	Eugene::Sound::Create();
 
-	Eugene::SoundFile soundFile{ "./test.ogg" };
+	/*Eugene::SoundFile soundFile{ "./test.wav" };
 
 	Eugene::SoundSpeaker sp;
 	sp = Eugene::Sound::GetInstance().CreateSoundSpeaker(soundFile);
+
+	Eugene::SoundControl ctrl;
+	ctrl = Eugene::Sound::GetInstance().CreateSoundControl(soundFile.GetFormat().sample, 0, soundFile.GetFormat().channel);*/
+
+
+	Eugene::SoundStreamSpeaker streamSp;
+	streamSp = Eugene::Sound::GetInstance().CreateSoundStreamSpeaker(Eugene::CreateSoundStreamFile("./test.wav"));
+	streamSp.SetVolume(0.2f);
+	streamSp.Play();
+
+	/*ctrl.SetVolume(0.5f);
+	sp.SetOutput(ctrl);
 	sp.SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
-	sp.Play();
+	sp.Play();*/
 
 
 	auto gpuEngine = Eugene::Graphics::Create();
@@ -257,6 +269,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	
 	gpuEngine.Final();
 
+
+	streamSp.Final();
 
 	Eugene::Graphics::Destroy();
 	Eugene::System::Destroy();

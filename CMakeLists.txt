@@ -76,7 +76,7 @@ set(SoundSource
 	Source/Sound/SoundSpeaker.cpp
 	Source/Sound/SoundStreamSpeaker.cpp
 	Source/Sound/SoundControl.cpp
-	Source/Sound/Sound3DControl.cpp
+	
 	Source/Sound/SoundFile.cpp
 	Source/Sound/SoundStreamFile.cpp
 )
@@ -104,7 +104,7 @@ if (EUGENE_USE_WINDOWS)
 		Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
 		Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
 		Source/Sound/Xaudio2/Xa2SoundControl.cpp
-		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
+		
 	)
 elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
@@ -118,7 +118,6 @@ elseif(EUGENE_USE_ANDROID)
 		Source/Sound/AAudio/AaSoundSpeaker.cpp
 		Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
 		Source/Sound/AAudio/AaSoundControl.cpp
-		Source/Sound/AAudio/AaSound3DControl.cpp
 		Source/Sound/AAudio/AaSubmix.cpp
 		Source/Sound/AAudio/AaVoice.cpp
 		Source/Sound/AAudio/AaSourceVoice.cpp
@@ -275,10 +274,10 @@ endif()
 
  # サンプルをビルドするか？
  if (EUGENE_BUILD_SAMPLE)
- add_subdirectory("Sample")
+	add_subdirectory("Sample")
  endif()
 
  if (EUGENE_BUILD_DOCTEST)
  add_subdirectory("Test")
- target_compile_definitions(EugeneLib PRIVATE BUILD_DOCTEST)
+	target_compile_definitions(EugeneLib PRIVATE BUILD_DOCTEST)
  endif()

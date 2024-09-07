@@ -4,9 +4,10 @@
 #include "../../../Include/Sound/SoundFile.h"
 #include "../../../Include/Debug/Debug.h"
 
-#include "../SoundStreamFile.h"
+#include "../../../Include/Sound/SoundStreamFile.h"
 
-Eugene::SoundStreamSpeaker::SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate)
+Eugene::SoundStreamSpeaker::SoundStreamSpeaker(IXAudio2* xaudio2, std::unique_ptr<SoundStreamFile>&& streamFile, std::uint16_t outChannel, const float maxPitchRate):
+	streamFile_{std::move(streamFile)}
 {
 	isPlay_.store(false);
 	isRun_.store(true);
@@ -49,8 +50,14 @@ Eugene::SoundStreamSpeaker::~SoundStreamSpeaker()
 {
 	isRun_.store(false);
 	semaphore_.release();
-	streamThread_.join();
-	source_->Stop();
+	if (streamThread_.joinable())
+	{
+		streamThread_.join();
+	}
+	if (source_)
+	{
+		source_->Stop();
+	}
 }
 
 void Eugene::SoundStreamSpeaker::Play(int loopCount)
@@ -200,14 +207,14 @@ void Eugene::SoundStreamSpeaker::Worker(void)
 
 
 Eugene::SoundStreamSpeaker::CollBack::CollBack(SoundStreamSpeaker& speaker) :
-	speaker_{speaker}
+	speaker_{&speaker}
 {
 }
 
 void Eugene::SoundStreamSpeaker::CollBack::OnBufferEnd(void* pBufferContext) noexcept
 {
 	// 待機を解除
-	speaker_.semaphore_.release();
+	speaker_->semaphore_.release();
 }
 
 void Eugene::SoundStreamSpeaker::CollBack::OnBufferStart(void* pBufferContext) noexcept
@@ -232,4 +239,40 @@ void Eugene::SoundStreamSpeaker::CollBack::OnVoiceProcessingPassEnd() noexcept
 
 void Eugene::SoundStreamSpeaker::CollBack::OnVoiceProcessingPassStart(std::uint32_t BytesRequired) noexcept
 {
+}
+
+Eugene::SoundStreamSpeaker::SoundStreamSpeaker(SoundStreamSpeaker&& streamSpeaker) noexcept
+	:
+	SoundBase{ std::move(streamSpeaker) },
+	source_{ std::move(streamSpeaker.source_) }, callback_{ std::move(streamSpeaker.callback_) }, streamThread_{ std::move(streamSpeaker.streamThread_) },
+	isRun_{ streamSpeaker.isRun_.load() }, isPlay_{ streamSpeaker.isPlay_.load() }, semaphore_{ 0 },
+	streamFile_{ std::move(streamSpeaker.streamFile_) }, buffer_{ std::move(streamSpeaker.buffer_) }, bufferData_{ std::move(streamSpeaker.bufferData_) }, streamData_{ std::move(streamSpeaker.streamData_) },
+	streamSize_{ streamSpeaker.streamSize_ }, bytesPerSec{ streamSpeaker.bytesPerSec }, nowLoop_{ streamSpeaker.nowLoop_ }, maxLoop_{ streamSpeaker.maxLoop_ }
+{
+	streamThread_.detach();
+	callback_->SetStreamSpeaker(*this);
+	streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
+}
+
+Eugene::SoundStreamSpeaker& Eugene::SoundStreamSpeaker::operator=(SoundStreamSpeaker&& streamSpeaker) noexcept
+{
+	static_cast<SoundBase&>(*this) = std::move(streamSpeaker);
+	source_ = std::move(streamSpeaker.source_);
+	callback_ = std::move(streamSpeaker.callback_);
+	streamThread_ = std::move(streamSpeaker.streamThread_);
+	streamThread_.detach();
+	callback_->SetStreamSpeaker(*this);
+	streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
+	
+	isRun_.store(streamSpeaker.isRun_.load());
+	isPlay_.store(streamSpeaker.isPlay_.load());
+	streamFile_ = std::move(streamSpeaker.streamFile_);
+	buffer_ = std::move(streamSpeaker.buffer_);
+	bufferData_ = std::move(streamSpeaker.bufferData_);
+	streamData_ = std::move(streamSpeaker.streamData_);
+	streamSize_ = streamSpeaker.streamSize_;
+	bytesPerSec = streamSpeaker.bytesPerSec;
+	nowLoop_ = streamSpeaker.nowLoop_;
+	maxLoop_ = streamSpeaker.maxLoop_;
+	return *this;
 }

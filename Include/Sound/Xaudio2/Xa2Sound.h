@@ -5,9 +5,11 @@
 #include <xaudio2.h>
 #include "Xa2SoundSpeaker.h"
 #include "Xa2SoundControl.h"
+#include "Xa2SoundStreamSpeaker.h"
 
 namespace Eugene
 {
+	class SoundStreamFile;
 	class Sound:
 		public DynamicSingleton<Sound>, SoundBase
 	{
@@ -33,6 +35,12 @@ namespace Eugene
 		{
 			return { xaudio2_.Get(), sample, stage, inChannel, inChannel_ };
 		}
+
+		SoundStreamSpeaker CreateSoundStreamSpeaker(std::unique_ptr<SoundStreamFile>&& streamFile, const float maxPitchRate = 2.0f)
+		{
+			return { xaudio2_.Get(), std::move(streamFile), inChannel_, maxPitchRate };
+		}
+
 		/*SoundSpeaker* CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate ) const final;
 
 		SoundStreamSpeaker* CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const final;

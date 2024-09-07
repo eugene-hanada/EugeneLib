@@ -30,8 +30,8 @@
 #include "Sound/SoundSpeaker.h"
 #include "Sound/SoundFile.h"
 #include "Sound/SoundControl.h"
-#include "Sound/Sound3DControl.h"
 #include "Sound/SoundStreamSpeaker.h"
+#include "Sound/SoundStreamFile.h"
 #endif
 
 #include "Math/Math.h"

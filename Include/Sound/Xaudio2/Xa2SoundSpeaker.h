@@ -44,6 +44,7 @@ namespace Eugene
 			source_ = std::move(speaker.source_);
 			buffer_ = std::move(speaker.buffer_);
 			EUGENE_ASSERT_MSG(static_cast<bool>(speaker.maxPitchRate_ <= maxPitchRate_), "ピッチレートの最大値は大きくすることはできません");
+			return *this;
 		}
 
 		void Final() noexcept

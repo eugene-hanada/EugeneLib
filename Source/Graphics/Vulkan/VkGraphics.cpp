@@ -153,6 +153,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::s
 #else  EUGENE_ANDROID
 Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum)
 {
+	EUGENE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
 	DynamicSingleton::instance_.reset(this);
     pApp = static_cast<android_app*>(System::GetInstance().GetWindow());
 

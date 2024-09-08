@@ -71,11 +71,11 @@ set(MathSource
 
 # サウンド系のクラスのソースファイルをセット
 set(SoundSource
-	Source/Sound/Sound.cpp
+	
 	Source/Sound/SoundBase.cpp
-	Source/Sound/SoundSpeaker.cpp
-	Source/Sound/SoundStreamSpeaker.cpp
-	Source/Sound/SoundControl.cpp
+	
+	
+	
 	
 	Source/Sound/SoundFile.cpp
 	Source/Sound/SoundStreamFile.cpp

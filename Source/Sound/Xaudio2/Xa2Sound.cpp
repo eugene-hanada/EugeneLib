@@ -2,7 +2,6 @@
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include "../../../Include/Utils/EugeneLibException.h"
-#include "../../../Include/Sound/Sound3DControl.h"
 
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundStreamSpeaker.h"

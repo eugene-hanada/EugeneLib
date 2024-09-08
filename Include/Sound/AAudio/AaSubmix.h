@@ -16,6 +16,23 @@ public:
     void AddVoice(AaVoice* voice);
     void RemoveVoice(AaVoice* voice);
     void GetNextFrame(std::span<float> outSpan) final;
+
+    AaSubmix(AaSubmix&& submix) noexcept :
+            AaVoice{std::move(submix)},voices_{std::move(submix.voices_)}, resamplerMap_{std::move(submix.resamplerMap_)},
+            convertBuffer_{std::move(submix.convertBuffer_)}
+    {
+    }
+
+    AaSubmix& operator=(AaSubmix&& submix) noexcept
+    {
+        static_cast<AaVoice&>(*this) = std::move(submix);
+        voices_ = std::move(submix.voices_);
+        resamplerMap_ = std::move(submix.resamplerMap_);
+        convertBuffer_ = std::move(submix.convertBuffer_);
+    }
+
+    AaSubmix(const AaSubmix&) = delete;
+    AaSubmix& operator=(const AaSubmix&) = delete;
 protected:
     std::set<AaVoice*> voices_;
     std::map<

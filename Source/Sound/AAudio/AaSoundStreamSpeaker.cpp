@@ -1,9 +1,9 @@
-#include "AaSoundStreamSpeaker.h"
-#include "../SoundStreamFile.h"
+#include "../../../Include/Sound/AAudio/AaSoundStreamSpeaker.h"
+#include "../../../Include/Sound/SoundStreamFile.h"
 #include "../../../Include/Sound/SoundControl.h"
 
-Eugene::AaudioStreamSpeaker::AaudioStreamSpeaker(std::unique_ptr<SoundStreamFile>&& streamFile,AaSubmix*  submix,std::uint16_t outChannel) :
-        SoundStreamSpeaker{streamFile->GetFormat().channel,outChannel,0.0f},
+Eugene::SoundStreamSpeaker::SoundStreamSpeaker(std::unique_ptr<SoundStreamFile>&& streamFile,AaSubmix*  submix,std::uint16_t outChannel) :
+        SoundBase{streamFile->GetFormat().channel, outChannel},
         callBack_{*this},
         voice_{static_cast<SoundBase&>(*this),submix,streamFile->GetFormat(), &callBack_},
         streamFile_{std::move(streamFile)},
@@ -14,16 +14,16 @@ Eugene::AaudioStreamSpeaker::AaudioStreamSpeaker(std::unique_ptr<SoundStreamFile
     streamData_.resize(bytePerSec);
     isRun_.store(true);
     isPlay_.store(false);
-    streamThread_ = std::thread{ &AaudioStreamSpeaker::Worker,this };
+    streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
 }
 
-Eugene::AaudioStreamSpeaker::~AaudioStreamSpeaker()
+Eugene::SoundStreamSpeaker::~SoundStreamSpeaker()
 {
     isRun_.store(false);
     streamThread_.join();
 }
 
-void Eugene::AaudioStreamSpeaker::Play(int loopCount)
+void Eugene::SoundStreamSpeaker::Play(int loopCount)
 {
     isPlay_.store(false);
     voice_.Stop();
@@ -40,40 +40,40 @@ void Eugene::AaudioStreamSpeaker::Play(int loopCount)
     isPlay_.store(true);
 }
 
-void Eugene::AaudioStreamSpeaker::Stop(void)
+void Eugene::SoundStreamSpeaker::Stop(void)
 {
     isPlay_.store(false);
     voice_.Stop();
 }
 
-bool Eugene::AaudioStreamSpeaker::IsEnd(void) const
+bool Eugene::SoundStreamSpeaker::IsEnd(void) const
 {
 	return true;
 }
 
-void Eugene::AaudioStreamSpeaker::SetPitchRate(float rate)
+void Eugene::SoundStreamSpeaker::SetPitchRate(float rate)
 {
 	
 }
 
-void Eugene::AaudioStreamSpeaker::SetOutput(SoundControl& control)
+void Eugene::SoundStreamSpeaker::SetOutput(SoundControl& control)
 {
     outChannel_ = control.GetInChannel();
     auto submix = reinterpret_cast<AaSubmix*>(control.Get());
     voice_.SetOut(submix, inChannel_,outChannel_);
 }
 
-void Eugene::AaudioStreamSpeaker::SetVolume(float volume)
+void Eugene::SoundStreamSpeaker::SetVolume(float volume)
 {
     volume_ = volume * volume;
 }
 
-void Eugene::AaudioStreamSpeaker::SetPan(std::span<float> volumes)
+void Eugene::SoundStreamSpeaker::SetPan(std::span<float> volumes)
 {
     voice_.SetOutMatrix(volumes);
 }
 
-void Eugene::AaudioStreamSpeaker::SetUp(void) {
+void Eugene::SoundStreamSpeaker::SetUp(void) {
     // 読み込むデータのサイズ
     auto size{
         std::min(static_cast<std::uint64_t>(streamFile_->GetFormat().byte),
@@ -99,7 +99,7 @@ void Eugene::AaudioStreamSpeaker::SetUp(void) {
     }
 }
 
-void Eugene::AaudioStreamSpeaker::Worker(void) {
+void Eugene::SoundStreamSpeaker::Worker(void) {
     while (true)
     {
         // 待機
@@ -151,16 +151,51 @@ void Eugene::AaudioStreamSpeaker::Worker(void) {
 
 }
 
-
-void Eugene::AaudioStreamSpeaker::StreamCallBack::OnPlayEnd(std::int32_t loopCount)
+Eugene::SoundStreamSpeaker::SoundStreamSpeaker(
+        Eugene::SoundStreamSpeaker &&streamSpeaker) noexcept :
+        SoundBase{std::move(streamSpeaker)}, voice_{std::move(streamSpeaker.voice_)},
+        callBack_{std::move(streamSpeaker.callBack_)}, streamFile_{std::move(streamSpeaker.streamFile_)},
+        streamData_{std::move(streamSpeaker.streamData_)}, bufferData_{std::move(streamSpeaker.bufferData_)},
+        streamThread_{std::move(streamSpeaker.streamThread_)},semaphore_{0},
+        streamSize_{streamSpeaker.streamSize_}, nowLoop_{streamSpeaker.nowLoop_}, maxLoop_{streamSpeaker.maxLoop_}
 {
-    // 待機を解除
-    streamSpeaker_.semaphore_.release();
+    streamThread_.detach();
+    callBack_.Set(this);
+    streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
 }
 
-Eugene::AaudioStreamSpeaker::StreamCallBack::StreamCallBack(
-        Eugene::AaudioStreamSpeaker &streamSpeaker) :
-        streamSpeaker_{streamSpeaker}
+Eugene::SoundStreamSpeaker &
+Eugene::SoundStreamSpeaker::operator=(Eugene::SoundStreamSpeaker &&streamSpeaker) noexcept
+{
+    static_cast<SoundBase&>(*this) = std::move(streamSpeaker);
+    voice_ = std::move(streamSpeaker.voice_);
+    callBack_ = std::move(streamSpeaker.callBack_);
+    streamThread_ = std::move(streamSpeaker.streamThread_);
+    streamThread_.detach();
+    callBack_.Set(this);
+    streamThread_ = std::thread{ &SoundStreamSpeaker::Worker,this };
+
+    isRun_.store(streamSpeaker.isRun_.load());
+    isPlay_.store(streamSpeaker.isPlay_.load());
+    streamFile_ = std::move(streamSpeaker.streamFile_);
+    bufferData_ = std::move(streamSpeaker.bufferData_);
+    streamData_ = std::move(streamSpeaker.streamData_);
+    streamSize_ = streamSpeaker.streamSize_;
+    nowLoop_ = streamSpeaker.nowLoop_;
+    maxLoop_ = streamSpeaker.maxLoop_;
+    return *this;
+}
+
+
+void Eugene::SoundStreamSpeaker::StreamCallBack::OnPlayEnd(std::int32_t loopCount)
+{
+    // 待機を解除
+    streamSpeaker_->semaphore_.release();
+}
+
+Eugene::SoundStreamSpeaker::StreamCallBack::StreamCallBack(
+        Eugene::SoundStreamSpeaker &streamSpeaker) :
+        streamSpeaker_{&streamSpeaker}
 {
 
 }

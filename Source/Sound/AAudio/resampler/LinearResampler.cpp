@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "LinearResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/LinearResampler.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

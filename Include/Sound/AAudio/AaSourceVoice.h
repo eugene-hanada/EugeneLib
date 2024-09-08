@@ -3,7 +3,7 @@
 //
 #pragma once
 #include "AaVoice.h"
-#include "../../../Include/Sound/SoundCommon.h"
+#include "../SoundCommon.h"
 
 class AaSourceVoice :
         public AaVoice

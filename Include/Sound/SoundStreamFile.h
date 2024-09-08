@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <filesystem>
 #include <memory>
 #include "SoundCommon.h"
@@ -6,7 +6,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ÌƒXƒgƒŠ[ƒ€
+	/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	/// </summary>
 	class SoundStreamFile
 	{
@@ -14,70 +14,70 @@ namespace Eugene
 		virtual ~SoundStreamFile();
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚ğæ“¾
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’å–å¾—
 		/// </summary>
 		/// <returns></returns>
 		const SoundFormat& GetFormat() const;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚ÌŠg’£•”•ª‚ğæ“¾
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ‹¡å¼µéƒ¨åˆ†ã‚’å–å¾—
 		/// </summary>
 		/// <returns></returns>
 		const SoundFormatEx& GetFormatEx() const;
 
 		/// <summary>
-		/// ƒf[ƒ^‚Ì‘ƒTƒCƒY‚ğæ“¾‚·‚é
+		/// ãƒ‡ãƒ¼ã‚¿ã®ç·ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <returns></returns>
 		const std::uint64_t GetDataSize() const;
 
 		/// <summary>
-		/// “Ç‚İæ‚è‚ğs‚Á‚½ƒTƒCƒY
+		/// èª­ã¿å–ã‚Šã‚’è¡Œã£ãŸã‚µã‚¤ã‚º
 		/// </summary>
 		/// <returns></returns>
 		const std::uint64_t GetReadSize() const;
 
 		/// <summary>
-		/// “Ç‚İæ‚èˆ—‚ğ‚·‚é
+		/// èª­ã¿å–ã‚Šå‡¦ç†ã‚’ã™ã‚‹
 		/// </summary>
-		/// <param name="ptr"> ‘‚«‚İæƒ|ƒCƒ“ƒ^ </param>
-		/// <param name="size"> “Ç‚İ‚İƒTƒCƒY </param>
+		/// <param name="ptr"> æ›¸ãè¾¼ã¿å…ˆãƒã‚¤ãƒ³ã‚¿ </param>
+		/// <param name="size"> èª­ã¿è¾¼ã¿ã‚µã‚¤ã‚º </param>
 		virtual void Read(std::uint8_t* ptr, std::uint64_t size) = 0;
 
 		/// <summary>
-		/// æ“ªˆÊ’u‚ÖƒV[ƒN‚·‚é
+		/// å…ˆé ­ä½ç½®ã¸ã‚·ãƒ¼ã‚¯ã™ã‚‹
 		/// </summary>
 		virtual void SeekStart() = 0;
 	protected:
 		
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		SoundStreamFile();
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		/// </summary>
 		SoundFormat format_;
 
 		/// <summary>
-		/// ƒtƒH[ƒ}ƒbƒg‚ÌŠg’£•”
+		/// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ‹¡å¼µéƒ¨
 		/// </summary>
 		SoundFormatEx formatEx_;
 
 		/// <summary>
-		/// ƒf[ƒ^‚Ì‘ƒTƒCƒY
+		/// ãƒ‡ãƒ¼ã‚¿ã®ç·ã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint64_t dataSize_;
 
 		/// <summary>
-		/// “Ç‚İæ‚Á‚½ƒTƒCƒY
+		/// èª­ã¿å–ã£ãŸã‚µã‚¤ã‚º
 		/// </summary>
 		std::uint64_t readSize_;
 	};
 
 	/// <summary>
-	/// w’è‚Ìƒtƒ@ƒCƒ‹
+	/// æŒ‡å®šã®ãƒ•ã‚¡ã‚¤ãƒ«
 	/// </summary>
 	/// <param name="path"></param>
 	/// <returns></returns>

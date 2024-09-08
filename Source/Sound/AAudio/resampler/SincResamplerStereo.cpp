@@ -18,7 +18,7 @@
 #include <cassert>
 #include <math.h>
 
-#include "SincResamplerStereo.h"
+#include "../../../../Include/Sound/AAudio/resampler/SincResamplerStereo.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

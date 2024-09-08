@@ -17,8 +17,8 @@
 #include <algorithm>   // Do NOT delete. Needed for LLVM. See #1746
 #include <cassert>
 #include <math.h>
-#include "IntegerRatio.h"
-#include "PolyphaseResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/IntegerRatio.h"
+#include "../../../../Include/Sound/AAudio/resampler/PolyphaseResampler.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

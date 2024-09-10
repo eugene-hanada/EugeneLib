@@ -11,6 +11,10 @@ namespace Eugene {
 
     class SoundFile;
     class SoundControl;
+
+    /// <summary>
+    /// サウンドスピーカークラス
+    /// </summary>
     class SoundSpeaker :
             public SoundBase
     {
@@ -48,6 +52,11 @@ namespace Eugene {
             static_cast<SoundBase&>(*this) = std::move(speaker);
             voice_ = std::move(speaker.voice_);
             return *this;
+        }
+
+        void Final() noexcept
+        {
+            voice_.Stop();
         }
 
         SoundSpeaker(const SoundSpeaker&) = delete;

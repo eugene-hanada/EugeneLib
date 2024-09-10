@@ -5,7 +5,9 @@
 
 namespace Eugene
 {
-
+	/// <summary>
+	/// サウンドコントロール
+	/// </summary>
 	class SoundControl : 
 		public SoundBase
 	{
@@ -20,6 +22,7 @@ namespace Eugene
 		{
 			return submix_.get();
 		}
+
 		void SetOutChannel(std::uint16_t channel) noexcept
 		{
 			outChannel_ = channel;

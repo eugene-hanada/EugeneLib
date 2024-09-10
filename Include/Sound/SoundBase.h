@@ -5,10 +5,14 @@
 namespace Eugene
 {
 	class SoundControl;
+
+	/// <summary>
+	/// サウンド関係のベースクラス
+	/// </summary>
 	class SoundBase
 	{
 	public:
-		virtual ~SoundBase();
+		virtual ~SoundBase() = default;
 
 		/// <summary>
 		/// 全体のボリュームをセットする
@@ -27,21 +31,30 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		float GetVolume(void) const;
+		float GetVolume(void) const noexcept
+		{
+			return volume_;
+		}
 
 		/// <summary>
 		/// 出力チャンネルを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		std::uint16_t GetOutChannel(void) const;
+		std::uint16_t GetOutChannel(void) const noexcept
+		{
+			return outChannel_;
+		}
 
 		/// <summary>
 		/// 入力チャンネルを取得する
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns></returns>
-		std::uint16_t GetInChannel(void) const;
+		std::uint16_t GetInChannel(void) const noexcept
+		{
+			return inChannel_;
+		}
 
 		/// <summary>
 		/// サウンドコントロールクラスに出力する(出力先でコントロールできる)

@@ -21,6 +21,10 @@ public:
     void Stop();
     bool IsEnd() const;
     void SetFormat(const Eugene::SoundFormat format);
+    void Final() noexcept
+    {
+        Stop();
+    }
 private:
     void GetNextFrame(std::span<float> outSpan) final;
     void GetPcm16NextFrame(std::span<float> outSpan, std::uint64_t size);

@@ -12,25 +12,39 @@ namespace Eugene
 {
     class SoundStreamFile;
 
-	class SoundStreamSpeaker :
+    /// <summary>
+    /// サウンドストリームスピーカークラス
+    /// </summary>
+    class SoundStreamSpeaker :
             public SoundBase
-	{
-	public:
-		~SoundStreamSpeaker();
+    {
+    public:
+        ~SoundStreamSpeaker();
 
-		void Play(int loopCount = 0);
-		void Stop(void);
-		bool IsEnd(void) const ;
-		void SetPitchRate(float rate);
-		void SetOutput(SoundControl& control) final;
-		void SetVolume(float volume) final;
-		void SetPan(std::span<float> volumes) final;
+        void Play(int loopCount = 0);
+        void Stop(void);
+        bool IsEnd(void) const ;
+        void SetPitchRate(float rate);
+        void SetOutput(SoundControl& control) final;
+        void SetVolume(float volume) final;
+        void SetPan(std::span<float> volumes) final;
+
+        void Final() noexcept
+        {
+            isRun_.store(false);
+            semaphore_.release();
+            if (streamThread_.joinable())
+            {
+                streamThread_.join();
+            }
+            voice_.Stop();
+        }
 
         SoundStreamSpeaker(SoundStreamSpeaker&& streamSpeaker) noexcept ;
         SoundStreamSpeaker& operator=(SoundStreamSpeaker&& streamSpeaker) noexcept;
         SoundStreamSpeaker(const SoundStreamSpeaker&) = delete;
         SoundStreamSpeaker& operator=(const SoundStreamSpeaker&) = delete;
-	private:
+    private:
         SoundStreamSpeaker(std::unique_ptr<SoundStreamFile>&& streamFile,AaSubmix*  submix,std::uint16_t outChannel);
         struct StreamCallBack :
             public AaSourceVoice::CallBack
@@ -80,5 +94,5 @@ namespace Eugene
         std::mutex mutex_;
 
         friend class Sound;
-	};
+    };
 }

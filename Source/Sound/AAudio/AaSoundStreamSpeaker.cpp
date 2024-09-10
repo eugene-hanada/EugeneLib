@@ -2,6 +2,8 @@
 #include "../../../Include/Sound/SoundStreamFile.h"
 #include "../../../Include/Sound/SoundControl.h"
 
+#include "../../../Include/Debug/Debug.h"
+
 Eugene::SoundStreamSpeaker::SoundStreamSpeaker(std::unique_ptr<SoundStreamFile>&& streamFile,AaSubmix*  submix,std::uint16_t outChannel) :
         SoundBase{streamFile->GetFormat().channel, outChannel},
         callBack_{*this},
@@ -107,6 +109,7 @@ void Eugene::SoundStreamSpeaker::Worker(void) {
 
         if (!isRun_.load())
         {
+            //DebugClass.Log("Break");
             // 実行フラグがfalseの時ループを抜け処理をやめる
             break;
         }
@@ -125,6 +128,7 @@ void Eugene::SoundStreamSpeaker::Worker(void) {
                 // あらかじめ読み込んだデータと入れ替える
                 bufferData_.swap(streamData_);
 
+                //DebugClass.Log("SetData size={}", streamSize_);
                 // バッファーをセット
                 voice_.SetData(bufferData_.data(),streamSize_);
                 voice_.Play(0);

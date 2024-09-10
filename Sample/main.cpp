@@ -52,12 +52,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	streamSp.SetVolume(0.2f);
 	streamSp.Play();
 
-	/*ctrl.SetVolume(0.5f);
-	sp.SetOutput(ctrl);
-	sp.SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
-	sp.Play();*/
-
-
 	auto gpuEngine = Eugene::Graphics::Create();
 
 	//コマンドリスト作成

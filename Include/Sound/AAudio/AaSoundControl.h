@@ -7,20 +7,22 @@
 namespace Eugene
 {
 
-
-	class SoundControl :
+    /// <summary>
+    /// サウンドコントロールクラス
+    /// </summary>
+    class SoundControl :
             public SoundBase
-	{
-	public:
-		~SoundControl();
-		void SetPan(std::span<float> volumes) final;
-		void SetVolume(float volume) final;
-		void SetOutput(SoundControl& control) final;
-		void* Get(void) noexcept
+    {
+    public:
+        ~SoundControl();
+        void SetPan(std::span<float> volumes) final;
+        void SetVolume(float volume) final;
+        void SetOutput(SoundControl& control) final;
+        void* Get(void) noexcept
         {
             return &submix_;
         }
-		void SetOutChannel(std::uint16_t channel);
+        void SetOutChannel(std::uint16_t channel);
 
         SoundControl(SoundControl&& control) noexcept :
                 SoundBase{std::move(control)}, submix_{std::move(control.submix_)}
@@ -37,11 +39,16 @@ namespace Eugene
 
         SoundControl(const SoundControl&) = delete;
         SoundControl& operator=(const SoundControl&) = delete;
-	private:
+
+        void Final() noexcept
+        {
+            // 一応用意
+        }
+    private:
         SoundControl(AaSubmix*  submix, std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage);
         AaSubmix submix_;
         friend class Sound;
-	};
+    };
 }
 
 

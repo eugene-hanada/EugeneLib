@@ -1,7 +1,7 @@
-#include "Dx12Sampler.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Sampler.h"
 #include <array>
 
-Eugene::Dx12Sampler::Dx12Sampler(const SamplerLayout& layout)
+Eugene::Sampler::Sampler(const SamplerLayout& layout)
 {
 	desc_.Filter = static_cast<D3D12_FILTER>(layout.filter_);
 	desc_.AddressU = static_cast<D3D12_TEXTURE_ADDRESS_MODE>(layout.u_);

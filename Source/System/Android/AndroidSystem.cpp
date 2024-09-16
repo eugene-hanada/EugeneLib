@@ -1,11 +1,15 @@
-#include "AndroidSystem.h"
+#include "../../../Include/System/System.h"
 #include <functional>
 #include <fstream>
 #include <vector>
-#include "../../Graphics/Vulkan/VkGraphics.h"
+#include "../../../Include/Graphics/Graphics.h"
 
 #include <game-activity/native_app_glue/android_native_app_glue.h>
+
 #include "../../../Include/Debug/Debug.h"
+#include "../../../Include/Utils/Utils.h"
+#include "../../../Include/System/Android/AndroidSystem.h"
+
 
 namespace
 {
@@ -14,62 +18,21 @@ namespace
     std::function<void(void)> onPause;
     std::function<void(ANativeWindow*)> onResume;
     std::function<void(android_app*,int,int)> reSize;
-    bool isResized = false;
-    void OnHandleCmd(android_app *pApp, int32_t cmd)
-    {
-        switch (cmd)
-        {
-            case APP_CMD_INIT_WINDOW:
-                // A new window is created, associate a renderer with it. You may replace this with a
-                // "game" class if that suits your needs. Remember to change all instances of userData
-                // if you change the class here as a reinterpret_cast is dangerous this in the
-                // android_main function and the APP_CMD_TERM_WINDOW handler case
-                DebugIO.Log("InitWindow");
-                break;
-            case APP_CMD_TERM_WINDOW:
-                DebugIO.Log("TermWindow");
-                break;
-            case APP_CMD_WINDOW_RESIZED:
-                DebugIO.Log("WindowResized x={}y={}",ANativeWindow_getWidth(pApp->window),ANativeWindow_getHeight(pApp->window));
-                reSize(pApp,ANativeWindow_getWidth(pApp->window),ANativeWindow_getHeight(pApp->window));
-                break;
-            case APP_CMD_LOST_FOCUS:
-                DebugIO.Log("LostFocus");
-                break;
-            case APP_CMD_PAUSE:
-
-                DebugIO.Log("Pause");
-                break;
-            case APP_CMD_GAINED_FOCUS:
-                DebugIO.Log("GainedFocus");
-                break;
-            default:
-                break;
-        }
-        command = cmd;
-        DebugIO.Log("Cmd={}",command);
-    }
-
-    bool OnMotionEventFilter(const GameActivityMotionEvent* motionEvent)
-    {
-        auto sourceClass = motionEvent->source & AINPUT_SOURCE_CLASS_MASK;
-        return (sourceClass == AINPUT_SOURCE_CLASS_POINTER ||
-                sourceClass == AINPUT_SOURCE_CLASS_JOYSTICK);
-    }
+    std::atomic_bool isResized = false;
 
     bool OnKeyEventFilter(const GameActivityKeyEvent* event)
     {
-        DebugIO.Log("KeyEvent");
+        DebugClass.Log("KeyEvent");
         return true;
     }
 }
 
-Eugene::AndroidSystem::AndroidSystem(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories) :
-	System{size,title},app_{reinterpret_cast<android_app*>(other)},isEnd_{false}
+Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::intptr_t other,std::span<std::string_view> directories)
 {
-    app_->onAppCmd = OnHandleCmd;
+    app_ = reinterpret_cast<android_app*>(other);
+    app_->onAppCmd = System::OnHandleCmd;
     app_->userData = this;
-    DebugIO.Log("internalDataPath={}",app_->activity->internalDataPath);
+    DebugClass.Log("internalDataPath={}",app_->activity->internalDataPath);
 
     AAssetDir* dir{nullptr};
     for (const auto& directory:directories)
@@ -142,94 +105,48 @@ Eugene::AndroidSystem::AndroidSystem(const glm::vec2& size, const std::u8string&
     maxWindowSize_.x = ANativeWindow_getWidth(app_->window);
     maxWindowSize_.y = ANativeWindow_getHeight(app_->window);
     windowSize_ = maxWindowSize_;
-    DebugIO.Log("Init");
+    DebugClass.Log("Init");
 
-    onPause = []()
-    {
-        DebugIO.Log("onPause");
-        graphics->ResizeBackBuffer({0.0f,0.0f});
-    };
+    app_->activity->callbacks->onPause = OnPause;
 
-    onResume = [this](ANativeWindow* window)
-    {
-        DebugIO.Log("Recreate");
-        if (graphics != nullptr)
-        {
-
-            app_->window = window;
-            isResized = true;
-        }
-    };
-
-    app_->activity->callbacks->onPause = [](GameActivity* activity)
-    {
-        onPause();
-    };
-
-    app_->activity->callbacks->onStop = [](GameActivity* activity)
-    {
-        DebugIO.Log("onStop");
-    };
-
-    app_->activity->callbacks->onStart = [](GameActivity* activity)
-    {
-        DebugIO.Log("onStart");
-    };
-
+    app_->activity->callbacks->onResume = OnResume;
 
     app_->activity->callbacks->onWindowInsetsChanged = [](GameActivity* activity)
     {
-        DebugIO.Log("onWindowInsetsChanged");
+        DebugClass.Log("onWindowInsetsChanged");
     };
 
     app_->activity->callbacks->onNativeWindowDestroyed = [](GameActivity* activity,ANativeWindow* wnd)
     {
-        DebugIO.Log("onNativeWindowDestroyed={}",graphics != nullptr);
+        DebugClass.Log("onNativeWindowDestroyed={}",Graphics::IsCreate());
     };
 
-    app_->activity->callbacks->onNativeWindowCreated =[](GameActivity* activity,ANativeWindow* wnd)
-    {
-        onResume(wnd);
-    };
+    app_->activity->callbacks->onNativeWindowCreated =OnWindowCreated;
 
     reSize = [this](android_app* app,int x, int y)
     {
-        graphics->ResizeBackBuffer({static_cast<float>(x),static_cast<float>(y)});
+        Graphics::GetInstance().ResizeBackBuffer({static_cast<float>(x),static_cast<float>(y)});
     };
 
-    app_->activity->callbacks->onWindowFocusChanged= [](GameActivity* activity,bool flag)
-    {
-        DebugIO.Log("changed={}",flag);
-    };
+    app_->activity->callbacks->onWindowFocusChanged = System::OnChangeFocus;
 
     app_->activity->callbacks->onTrimMemory = [](GameActivity* activity,int val)
     {
-        DebugIO.Log("onTrimMemory={}",val);
+        DebugClass.Log("onTrimMemory={}",val);
     };
 
     app_->activity->callbacks->onSaveInstanceState = [](GameActivity* activity,SaveInstanceStateRecallback save, void* data)
     {
-        DebugIO.Log("onSaveInstanceState");
+        DebugClass.Log("onSaveInstanceState");
     };
-    DebugIO.Log("SystemInit終了");
+    DebugClass.Log("SystemInit終了");
 }
 
-Eugene::AndroidSystem::~AndroidSystem()
+Eugene::System::~System()
 {
 }
 
-std::pair<Eugene::Graphics*, Eugene::GpuEngine*> Eugene::AndroidSystem::CreateGraphics(std::uint32_t bufferNum, std::uint64_t maxSize) const
-{
-    if (graphics && gpuEngine)
-    {
-        throw CreateErrorException("すでにGraphicsは生成されています");
-    }
-
-    graphics = new VkGraphics{app_,maxWindowSize_,gpuEngine,bufferNum,maxSize};
-    return {graphics,gpuEngine};
-}
-
-bool Eugene::AndroidSystem::Update(void)
+bool Eugene::System::Update(void)
 {
     int events;
     android_poll_source *pSource;
@@ -242,46 +159,47 @@ bool Eugene::AndroidSystem::Update(void)
     }
     isEnd_ = app_->destroyRequested;
 
-    if (isResized)
+    if (isResized.load() && !isActive_.load())
     {
-        isResized = false;
-        graphics->ResizeBackBuffer(maxWindowSize_,app_->window);
+        isResized.store(false);
+        Graphics::GetInstance().ResizeBackBuffer(maxWindowSize_,app_->window);
+        isActive_.store(true);
     }
 
     return !isEnd_;
 }
 
-bool Eugene::AndroidSystem::GetMouse(Mouse& outMouse) const&
+bool Eugene::System::GetMouse(Mouse& outMouse) const&
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::SetMouse(Mouse& inMouse) const
+bool Eugene::System::SetMouse(Mouse& inMouse) const
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::IsHitKey(KeyID keyID) const
+bool Eugene::System::IsHitKey(KeyID keyID) const
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::GetKeyData(KeyDataSpan keyData) const
+bool Eugene::System::GetKeyData(KeyDataSpan keyData) const
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
+bool Eugene::System::SetKeyCodeTable(KeyCodeTable& keyCodeTable)
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::GetGamePad(GamePad& pad, std::uint32_t idx) const
+bool Eugene::System::GetGamePad(GamePad& pad, std::uint32_t idx) const
 {
 	return false;
 }
 
-bool Eugene::AndroidSystem::GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const
+bool Eugene::System::GetTouch(TouchData& pressed, TouchData& move, TouchData& released) const
 {
     auto& input = app_->inputBuffers[app_->currentInputBuffer];
     pressed.touchCount_ = 0;
@@ -329,26 +247,83 @@ bool Eugene::AndroidSystem::GetTouch(TouchData& pressed, TouchData& move, TouchD
     return pressed.touchCount_ > 0 || move.touchCount_ > 0 || released.touchCount_ > 0;
 }
 
-bool Eugene::AndroidSystem::IsEnd(void) const
+void Eugene::System::OnHandleCmd(android_app *pApp, int32_t cmd)
 {
-	return isEnd_;
+    switch (cmd)
+    {
+        case APP_CMD_INIT_WINDOW:
+            // A new window is created, associate a renderer with it. You may replace this with a
+            // "game" class if that suits your needs. Remember to change all instances of userData
+            // if you change the class here as a reinterpret_cast is dangerous this in the
+            // android_main function and the APP_CMD_TERM_WINDOW handler case
+            DebugClass.Log("InitWindow");
+            break;
+        case APP_CMD_TERM_WINDOW:
+            DebugClass.Log("TermWindow");
+            break;
+        case APP_CMD_WINDOW_RESIZED:
+            DebugClass.Log("WindowResized x={}y={}",ANativeWindow_getWidth(pApp->window),ANativeWindow_getHeight(pApp->window));
+            //reSize(pApp,ANativeWindow_getWidth(pApp->window),ANativeWindow_getHeight(pApp->window));
+            break;
+        case APP_CMD_LOST_FOCUS:
+            DebugClass.Log("LostFocus");
+            break;
+        case APP_CMD_PAUSE:
+
+            DebugClass.Log("Pause");
+            break;
+        case APP_CMD_GAINED_FOCUS:
+            DebugClass.Log("GainedFocus");
+            break;
+        default:
+            break;
+    }
+    command = cmd;
+    DebugClass.Log("Cmd={}",command);
 }
 
-void Eugene::AndroidSystem::OnResizeWindow(const glm::vec2& size)
-{
+bool Eugene::System::OnMotionEventFilter(const GameActivityMotionEvent *motionEvent) {
+    auto sourceClass = motionEvent->source & AINPUT_SOURCE_CLASS_MASK;
+    return (sourceClass == AINPUT_SOURCE_CLASS_POINTER ||
+            sourceClass == AINPUT_SOURCE_CLASS_JOYSTICK);
 }
 
-void Eugene::AndroidSystem::OnSetFullScreen(bool isFullScreen)
-{
+void Eugene::System::OnPause(GameActivity *activity) {
+    if (System::IsCreate())
+    {
+        instance_->isActive_.store(false);
+    }
+    DebugClass.Log("OnPause");
 }
 
-Eugene::DynamicLibrary* Eugene::AndroidSystem::CreateDynamicLibrary(const std::filesystem::path& path) const
-{
-	return nullptr;
+void Eugene::System::OnResume(GameActivity *activity) {
+    if (System::IsCreate())
+    {
+        //instance_->isActive_.store(true);
+    }
+    DebugClass.Log("OnResume");
 }
+
+void Eugene::System::OnChangeFocus(GameActivity *activity, bool flag)
+{
+    if (System::IsCreate())
+    {
+        instance_->isActive_.store(flag);
+    }
+}
+
+void Eugene::System::OnWindowCreated(GameActivity *activity, ANativeWindow *window)
+{
+    if (System::IsCreate() && Graphics::IsCreate())
+    {
+        System::GetInstance().app_->window = window;
+        isResized.store(true);
+    }
+}
+
 
 #ifdef USE_IMGUI
-void Eugene::AndroidSystem::ImguiNewFrame(void) const
+void Eugene::System::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();
 }

@@ -16,14 +16,14 @@
 
 #include <math.h>
 
-#include "IntegerRatio.h"
-#include "LinearResampler.h"
-#include "MultiChannelResampler.h"
-#include "PolyphaseResampler.h"
-#include "PolyphaseResamplerMono.h"
-#include "PolyphaseResamplerStereo.h"
-#include "SincResampler.h"
-#include "SincResamplerStereo.h"
+#include "../../../../Include/Sound/AAudio/resampler/IntegerRatio.h"
+#include "../../../../Include/Sound/AAudio/resampler/LinearResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/MultiChannelResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/PolyphaseResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/PolyphaseResamplerMono.h"
+#include "../../../../Include/Sound/AAudio/resampler/PolyphaseResamplerStereo.h"
+#include "../../../../Include/Sound/AAudio/resampler/SincResampler.h"
+#include "../../../../Include/Sound/AAudio/resampler/SincResamplerStereo.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

@@ -1,12 +1,49 @@
-﻿#include "Dx12DepthStencilViews.h"
-#include "../../../Include/Graphics/ImageResource.h"
+﻿#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Graphics/DirectX12/Dx12DepthStencilViews.h"
+#include "../../../Include/Graphics/DirectX12/Dx12ImageResource.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 
-Eugene::Dx12DepthStencilViews::Dx12DepthStencilViews(ID3D12Device* device, std::uint64_t size) :
-	Dx12Views{device, size, false, D3D12_DESCRIPTOR_HEAP_TYPE_DSV }, DepthStencilViews{size}
+void Eugene::DepthStencilViews::Init(std::uint32_t size, bool isShaderVisible)
 {
+	size_ = size;
+	isShaderVisible_ = isShaderVisible;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{
+	D3D12_DESCRIPTOR_HEAP_TYPE_DSV,
+	size,
+	(isShaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE),
+		0
+	};
+
+	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
+	}
 }
 
-void Eugene::Dx12DepthStencilViews::Create(ImageResource& resource, std::uint64_t idx)
+Eugene::DepthStencilViews::DepthStencilViews(const DepthStencilViews& views):
+	isShaderVisible_{ views.isShaderVisible_ }
+{
+	*this = views;
+}
+
+Eugene::DepthStencilViews& Eugene::DepthStencilViews::operator=(const DepthStencilViews& views)
+{
+	if (GetSize() > 0u)
+	{
+		Init(views.GetSize(), views.isShaderVisible_);
+	}
+
+	// コピーする
+	Graphics::GetInstance().device_->CopyDescriptorsSimple(
+		views.GetSize(),
+		descriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		views.descriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		D3D12_DESCRIPTOR_HEAP_TYPE_DSV
+	);
+	return *this;
+}
+
+void Eugene::DepthStencilViews::Create(ImageResource& resource, std::uint32_t idx)
 {
 	if (size_ <= idx)
 	{
@@ -35,7 +72,3 @@ void Eugene::Dx12DepthStencilViews::Create(ImageResource& resource, std::uint64_
 	device->CreateDepthStencilView(dx12Resource, &viewDesc, handle);
 }
 
-void* Eugene::Dx12DepthStencilViews::GetViews(void)
-{
-	return descriptorHeap_.Get();
-}

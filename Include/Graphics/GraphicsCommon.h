@@ -1,5 +1,10 @@
 ﻿#pragma once
 #include <cstdint>
+#include <limits>
+#include <bitset>
+#include <span>
+#include <vector>
+#include <type_traits>
 
 namespace Eugene
 {
@@ -212,5 +217,302 @@ namespace Eugene
 		std::uint64_t budget;
 	};
 
+	/// <summary>
+	/// Gpuリソースの種類
+	/// </summary>
+	enum class GpuResourceType
+	{
+		/// <summary>
+		/// デフォルト
+		/// </summary>
+		Default,
 
+		/// <summary>
+		/// アップロード用
+		/// </summary>
+		Upload,
+
+		/// <summary>
+		/// 読み取り用
+		/// </summary>
+		ReadBack
+	};
+
+	/// <summary>
+/// ビューのタイプ
+/// </summary>
+	enum class ViewType
+	{
+		/// <summary>
+		/// テクスチャ
+		/// </summary>
+		Texture,
+
+		/// <summary>
+		/// UA
+		/// </summary>
+		UnoderedAccess,
+
+		/// <summary>
+		/// 定数バッファ
+		/// </summary>
+		ConstantBuffer,
+
+		/// <summary>
+		/// サンプラー
+		/// </summary>
+		Sampler
+	};
+
+	enum class ResourceBindFlag :
+		std::uint32_t
+	{
+		Non = 0,
+
+		/// <summary>
+		/// 入力(読み込みのみ)
+		/// </summary>
+		Input = 1,
+
+		/// <summary>
+		/// ストリーム用出力(書き換え可)
+		/// </summary>
+		StreamOutput = 2,
+	};
+
+	using ResourceBindFlags = std::bitset<4>;
+
+	constexpr ResourceBindFlags operator|(ResourceBindFlag rflag, ResourceBindFlag lflag)
+	{
+        using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
+		return ResourceBindFlags{ static_cast<UnderlyingType>(rflag) | static_cast<UnderlyingType>(lflag) };
+	}
+
+	struct Bind
+	{
+		ViewType viewType_{ ViewType::ConstantBuffer };
+		std::uint32_t viewNum_{ 1u };
+	};
+
+	/// <summary>
+/// シェーダの入力レイアウト用構造体
+/// </summary>
+	struct ShaderInputLayout
+	{
+		constexpr ShaderInputLayout() :
+			format_{ Format::NON }, semanticIdx_{ 0u }, semanticName_{ nullptr }, slot_{ 0u }
+		{
+
+		}
+		constexpr ShaderInputLayout(const char* semanticName, std::uint32_t semanticIdx, Format format, std::uint32_t slot = 0) :
+			semanticName_{ semanticName }, semanticIdx_{ semanticIdx }, format_{ format }, slot_{ slot }
+		{
+
+		}
+		std::uint32_t semanticIdx_;
+		Format format_;
+		std::uint32_t slot_;
+		const char* semanticName_;
+	};
+
+	/// <summary>
+	/// シェーダタイプ
+	/// </summary>
+	enum class ShaderType
+	{
+		/// <summary>
+		/// 頂点
+		/// </summary>
+		Vertex,
+
+		/// <summary>
+		/// ピクセル
+		/// </summary>
+		Pixel,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Frag = Pixel,
+
+		/// <summary>
+		/// ジオメトリ
+		/// </summary>
+		Geometry,
+
+		/// <summary>
+		/// ドメイン
+		/// </summary>
+		Domain,
+
+		/// <summary>
+		/// ハル
+		/// </summary>
+		Hull,
+	};
+
+	/// <summary>
+	/// ブレンドタイプ
+	/// </summary>
+	enum class BlendType
+	{
+		/// <summary>
+		/// 無し
+		/// </summary>
+		Non,
+
+		/// <summary>
+		/// アルファ
+		/// </summary>
+		Alpha,
+
+		/// <summary>
+		/// 加算
+		/// </summary>
+		Add,
+
+		/// <summary>
+		/// 減算
+		/// </summary>
+		Sub,
+
+		/// <summary>
+		/// 逆
+		/// </summary>
+		Inv
+	};
+
+	/// <summary>
+	/// レンダーターゲットのレイアウト
+	/// </summary>
+	struct RendertargetLayout
+	{
+		constexpr RendertargetLayout() :
+			format_{ Format::NON }, blendType_{ BlendType::Non }
+		{
+
+		}
+		constexpr RendertargetLayout(Format format, BlendType blendType = BlendType::Non) :
+			format_{ format }, blendType_{ blendType }
+		{
+
+		}
+		/// <summary>
+		/// フォーマット
+		/// </summary>
+		Format format_;
+
+		/// <summary>
+		/// ブレンドタイプ
+		/// </summary>
+		BlendType blendType_;
+	};
+
+	/// <summary>
+	/// シェーダーレイアウト用構造体
+	/// </summary>
+	struct ShaderLayout
+	{
+		/// <summary>
+		/// ビューのタイプ
+		/// </summary>
+		ViewType viewType_;
+
+		/// <summary>
+		/// ビューの数
+		/// </summary>
+		std::uint32_t numView_;
+
+		/// <summary>
+		/// ベースレジスタ
+		/// </summary>
+		std::uint32_t baseRegister_;
+	};
+
+	/// <summary>
+	/// トポロジータイプ
+	/// </summary>
+	enum class TopologyType
+	{
+		Non = 0,
+		Point = 1,
+		Line = 2,
+		Triangle = 3,
+		Patch = 4
+	};
+
+
+	using ShaderInputSpan = std::span<ShaderInputLayout>;
+	class Shader;
+	using ShaderPair = std::pair<Shader, ShaderType>;
+	using ShaderTypePaisrSpan = std::span<ShaderPair>;
+	struct SamplerLayout;
+	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
+	using SamplerSpan = std::span<SamplerLayout>;
+	using RenderTargetSpan = std::span <RendertargetLayout>;
+
+	/// <summary>
+/// テクスチャアドレッシングモード
+/// </summary>
+	enum class TextureAddressMode
+	{
+		Wrap = 1,
+		Mirror = 2,
+		Clamp = 3,
+		Border = 4,
+		MirrorOnce = 5
+	};
+
+	/// <summary>
+	/// サンプラーのフィルター
+	/// </summary>
+	enum class SampleFilter
+	{
+		Point = 0,
+		Linear = 0x15,
+		Anisotropic = 0x55
+	};
+
+	/// <summary>
+	/// サンプラーの比較演算用
+	/// </summary>
+	enum class SamplerComparison
+	{
+		Non,
+		Never,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
+	};
+
+	/// <summary>
+	/// サンプラーのレイアウト用
+	/// </summary>
+	struct SamplerLayout
+	{
+		constexpr SamplerLayout(
+			TextureAddressMode u = TextureAddressMode::Wrap,
+			TextureAddressMode v = TextureAddressMode::Wrap,
+			TextureAddressMode w = TextureAddressMode::Wrap,
+			SampleFilter filter = SampleFilter::Point
+		) : u_{u}, v_{v}, w_{w}, filter_{filter}
+		{
+			maxAnisotropy_ = 16;
+			comparison_ = SamplerComparison::Non;
+			minLod_ = 0.0f;
+			maxLod_ = std::numeric_limits<float>::max();
+		}
+		TextureAddressMode u_;
+		TextureAddressMode v_;
+		TextureAddressMode w_;
+		SampleFilter filter_;
+		std::uint32_t maxAnisotropy_;
+		SamplerComparison comparison_;
+		float maxLod_;
+		float minLod_;
+	};
 }

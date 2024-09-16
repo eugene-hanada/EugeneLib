@@ -7,17 +7,12 @@
 #include "Sampler.h"
 #include "../Utils/ArgsSpan.h"
 
-
-#ifdef USE_EFFEKSEER
-#include "../ThirdParty/glm/glm/mat4x4.hpp"
-namespace Effekseer
-{
-	template<class T>
-	class RefPtr;
-
-	class Manager;
-}
+#ifdef EUGENE_DX12
+#include "DirectX12/Dx12Graphics.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkGraphics.h"
 #endif
+
 
 namespace Eugene
 {
@@ -79,7 +74,7 @@ namespace Eugene
 	/// <summary>
 	/// グラフィックスの処理を行うクラス
 	/// </summary>
-	class Graphics
+	/*class Graphics
 	{
 	public:
 		virtual ~Graphics();
@@ -331,7 +326,7 @@ namespace Eugene
 		/// <returns></returns>
 		const std::uint8_t GetMaxMultiSampleCount() const;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// imgui用のフレーム開始の処理をする
@@ -390,5 +385,5 @@ namespace Eugene
 		/// </summary>
 		const std::uint64_t imguiImageMax_{1000ull};
 #endif
-	};
+	};*/
 }

@@ -9,10 +9,10 @@ option(EUGENE_USE_ANDROID "ANDROID向けにビルドするか？" OFF)
 option(EUGENE_USE_IMGUI "Imguiを使用するか?" OFF)
 option(EUGENE_USE_VULKAN "Vulkanを使用するか?" OFF)
 option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
-option(EUGENE_USE_EFFEKSEER "Effekseerを使用するか?" OFF)
 option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
-set(EUGENE_EFFEKSEER_DIR "" CACHE PATH "エフェクシアビルド済みファイルのディレクトリ")
+option(EUGENE_BUILD_SOUND "サウンド機能をビルドするか？" ON)
+
 
 if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
@@ -23,15 +23,13 @@ if(EUGENE_USE_WINDOWS)
 elseif(EUGENE_USE_ANDROID)
 	set(EUGENE_USE_VULKAN ON)
 	set(EUGENE_USE_DX12 OFF)
+	
 endif()
-
-set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
 	Source/System/System.cpp
 	Source/System/GamePad.cpp
-	Source/System/DynamicLibrary.cpp
 )
 
 if(EUGENE_USE_IMGUI)
@@ -54,23 +52,9 @@ endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
-	Source/Graphics/Graphics.cpp
-	Source/Graphics/GpuEngine.cpp
-	Source/Graphics/CommandList.cpp
-	Source/Graphics/GpuResource.cpp
-	Source/Graphics/BufferResource.cpp
-	Source/Graphics/ImageResource.cpp
-	Source/Graphics/GraphicsPipeline.cpp
-	Source/Graphics/RenderTargetViews.cpp
-	Source/Graphics/DepthStencilViews.cpp
-	Source/Graphics/ShaderResourceViews.cpp
-	Source/Graphics/VertexView.cpp
-	Source/Graphics/IndexView.cpp
 	Source/Graphics/Shader.cpp
 	Source/Graphics/Image.cpp
-	Source/Graphics/Sampler.cpp
-	Source/Graphics/SamplerViews.cpp
-	Source/Graphics/ResourceBindLayout.cpp)
+	)
 
 # Utils系のソースファイルをセット
 set(UtilsSource
@@ -84,18 +68,14 @@ set(MathSource
 	Source/Math/Math.cpp
 )
 
-# サウンド系のクラスのソースファイルをセット
-set(SoundSource
-	Source/Sound/Sound.cpp
-	Source/Sound/SoundBase.cpp
-	Source/Sound/SoundSpeaker.cpp
-	Source/Sound/SoundStreamSpeaker.cpp
-	Source/Sound/SoundControl.cpp
-	Source/Sound/Sound3DControl.cpp
-	Source/Sound/SoundFile.cpp
-	Source/Sound/SoundStreamFile.cpp
-)
-
+if (EUGENE_BUILD_SOUND)
+	# サウンド系のクラスのソースファイルをセット
+	set(SoundSource
+		Source/Sound/SoundBase.cpp
+		Source/Sound/SoundFile.cpp
+		Source/Sound/SoundStreamFile.cpp
+	)
+endif()
 
 
 if (EUGENE_USE_WINDOWS)
@@ -113,40 +93,43 @@ if (EUGENE_USE_WINDOWS)
 			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp)
 	endif()
 
-	# サウンド系の実装クラスのソースファイルをセット
-	set(SoundApiSource
-		Source/Sound/Xaudio2/Xa2Sound.cpp
-		Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
-		Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
-		Source/Sound/Xaudio2/Xa2SoundControl.cpp
-		Source/Sound/Xaudio2/Xa2Sound3DControl.cpp
-	)
+	if (EUGENE_BUILD_SOUND)
+		# サウンド系の実装クラスのソースファイルをセット
+		set(SoundApiSource
+			Source/Sound/Xaudio2/Xa2Sound.cpp
+			Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+			Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
+			Source/Sound/Xaudio2/Xa2SoundControl.cpp
+		)
+	endif()
+
 elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
 		Source/System/Android/AndroidSystem.cpp
+		Source/System/Linux/SharedObject.cpp
 	)
 
-	set(
-		SoundApiSource
-		Source/Sound/AAudio/AaSound.cpp
-		Source/Sound/AAudio/AaSoundSpeaker.cpp
-		Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
-		Source/Sound/AAudio/AaSoundControl.cpp
-		Source/Sound/AAudio/AaSound3DControl.cpp
-		Source/Sound/AAudio/AaSubmix.cpp
-		Source/Sound/AAudio/AaVoice.cpp
-		Source/Sound/AAudio/AaSourceVoice.cpp
-		Source/Sound/AAudio/AaMaster.cpp
-		Source/Sound/AAudio/resampler/IntegerRatio.cpp
-		Source/Sound/AAudio/resampler/LinearResampler.cpp
-		Source/Sound/AAudio/resampler/MultiChannelResampler.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResampler.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResamplerMono.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResamplerStereo.cpp
-		Source/Sound/AAudio/resampler/SincResampler.cpp
-		Source/Sound/AAudio/resampler/SincResamplerStereo.cpp
-	)
-
+	if (EUGENE_BUILD_SOUND)
+		set(
+			SoundApiSource
+			Source/Sound/AAudio/AaSound.cpp
+			Source/Sound/AAudio/AaSoundSpeaker.cpp
+			Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
+			Source/Sound/AAudio/AaSoundControl.cpp
+			Source/Sound/AAudio/AaSubmix.cpp
+			Source/Sound/AAudio/AaVoice.cpp
+			Source/Sound/AAudio/AaSourceVoice.cpp
+			Source/Sound/AAudio/AaMaster.cpp
+			Source/Sound/AAudio/resampler/IntegerRatio.cpp
+			Source/Sound/AAudio/resampler/LinearResampler.cpp
+			Source/Sound/AAudio/resampler/MultiChannelResampler.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResampler.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResamplerMono.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResamplerStereo.cpp
+			Source/Sound/AAudio/resampler/SincResampler.cpp
+			Source/Sound/AAudio/resampler/SincResamplerStereo.cpp
+		)
+	endif()
 endif()
 
 if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
@@ -163,7 +146,7 @@ if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
 		Source/Graphics/DirectX12/Dx12ShaderResourceViews.cpp
 		Source/Graphics/DirectX12/Dx12VertexView.cpp
 		Source/Graphics/DirectX12/Dx12IndexView.cpp
-		Source/Graphics/DirectX12/Dx12Views.cpp
+		
 		Source/Graphics/DirectX12/Dx12Sampler.cpp
 		Source/Graphics/DirectX12/Dx12SamplerViews.cpp
 		Source/Graphics/DirectX12/Dx12ResourceBindLayout.cpp
@@ -222,54 +205,63 @@ add_library(EugeneLib STATIC
 	${SoundApiSource}
 )
 
-if (EUGENE_USE_WINDOWS)
-	target_compile_definitions(EugeneLib PRIVATE USE_WINDOWS)
-elseif(EUGENE_USE_ANDROID)
-	target_compile_definitions(EugeneLib PRIVATE USE_ANDROID)
-	find_package(game-activity REQUIRED CONFIG)
-	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity aaudio)
+if (EUGENE_BUILD_SOUND)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_SOUND)
 endif()
 
-if (EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
+if (EUGENE_USE_WINDOWS)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_WINDOWS)
+
+	if (EUGENE_BUILD_SOUND)
+		target_compile_definitions(EugeneLib PUBLIC EUGENE_XAUDIO)
+	endif()
+elseif(EUGENE_USE_ANDROID)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_ANDROID)
+	target_include_directories(EugeneLib PUBLIC ${EUGENE_AGDK_PATH}/include)
+	if (EUGENE_BUILD_SOUND)
+		target_compile_definitions(EugeneLib PUBLIC EUGENE_AAUDIO)
+	endif()
+
+	find_package(game-activity REQUIRED CONFIG)
+	target_link_libraries(EugeneLib PUBLIC android log aaudio)
+endif()
+
+if (EUGENE_USE_DX12)
 	# DirectX12使用時defineを用意
-	target_compile_definitions(EugeneLib PRIVATE USE_DX12)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_DX12)
 	target_include_directories(EugeneLib PRIVATE Include/ThirdParty/D3D12MemoryAllocator/include)
 elseif(EUGENE_USE_VULKAN)
 	# Vulkan使用時define用意
-	target_compile_definitions(EugeneLib PRIVATE USE_VULKAN)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
-	target_include_directories(EugeneLib PRIVATE ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_VULKAN)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/Vulkan-Hpp/Vulkan-Headers/include)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include)
+	target_include_directories(EugeneLib PUBLIC ./Include/ThirdParty/VulkanMemoryAllocator-Hpp/include)
 
-	target_compile_definitions(EugeneLib PRIVATE VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1)
-	target_compile_definitions(EugeneLib PRIVATE VMA_STATIC_VULKAN_FUNCTIONS=0)
-	 
+	target_compile_definitions(EugeneLib PUBLIC VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1 VMA_STATIC_VULKAN_FUNCTIONS=0)
 	if (EUGENE_USE_IMGUI)
 		target_compile_definitions(EugeneLib PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
 	endif()
 
-
-	if (NOT USE_EFFEKSEER)
-		if (NOT EUGENE_USE_ANDROID)
-			target_link_libraries(EugeneLib PRIVATE $ENV{VULKAN_SDK}/Lib/VkLayer_utils.lib)
-		endif()
-	endif()
-
-
-
 endif()
 
 if (EUGENE_USE_IMGUI)
-	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
 endif()
 
 
 
- target_compile_definitions(EugeneLib PUBLIC NOMINMAX)
- target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_LEFT_HANDED)
- target_compile_definitions(EugeneLib PUBLIC GLM_FORCE_DEPTH_ZERO_TO_ONE)
+ target_compile_definitions(EugeneLib PUBLIC NOMINMAX GLM_FORCE_LEFT_HANDED GLM_FORCE_DEPTH_ZERO_TO_ONE)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_CONFIGURATION_TYPES STREQUAL "Debug")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_DEBUG)
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES STREQUAL "Release")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_RELEASE)
+endif()
+
+ 
+
 
  add_subdirectory("Include/ThirdParty/fmt")
  target_link_libraries(EugeneLib PRIVATE fmt::fmt)
@@ -279,38 +271,11 @@ endif()
  target_include_directories(EugeneLib PUBLIC "Include/ThirdParty/mimalloc/include")
 
  # サンプルをビルドするか？
- if (EUGENE_BUILD_SAMPLE)
- add_subdirectory("Sample")
- endif()
-
-
- # Effekseerを使用するか？
- if (EUGENE_USE_EFFEKSEER)
-
-	# 使用時
-	target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/Effekseer)
-	target_compile_definitions(EugeneLib PUBLIC USE_EFFEKSEER)
-	if (EUGENE_USE_ANDROID)
-		message("対応していない")
-	else ()
-		target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/LLGId.lib ${EUGENE_EFFEKSEER_DIR}/lib/Effekseerd.lib)
-
-
-		# Vulkan使用するか？
-		if (EUGENE_USE_VULKAN)
-			# VULKAN使用時
-			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererVulkand.lib $ENV{VULKAN_SDK}/Lib/vulkan-1.lib)
-			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererVulkan)
-		else()
-			#
-			target_link_libraries(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/lib/EffekseerRendererDX12d.lib)
-			target_include_directories(EugeneLib PUBLIC ${EUGENE_EFFEKSEER_DIR}/include/EffekseerRendererDX12)
-		endif()
-
-	endif()
+ if (EUGENE_BUILD_SAMPLE AND NOT EUGENE_USE_ANDROID)
+	add_subdirectory("Sample")
  endif()
 
  if (EUGENE_BUILD_DOCTEST)
  add_subdirectory("Test")
- target_compile_definitions(EugeneLib PRIVATE BUILD_DOCTEST)
+	target_compile_definitions(EugeneLib PRIVATE BUILD_DOCTEST)
  endif()

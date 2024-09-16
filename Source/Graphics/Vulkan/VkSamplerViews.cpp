@@ -1,9 +1,8 @@
-﻿#include "VkSamplerViews.h"
-#include "VkSampler.h"
-#include "VkSampler.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkSamplerViews.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
+#include "../../../Include/Graphics/Vulkan/VkSampler.h"
 
-Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<Bind>& viewTypes) :
-	SamplerViews{}
+Eugene::SamplerViews::SamplerViews(const ArgsSpan<Bind>& viewTypes)
 {
 	std::vector<vk::DescriptorSetLayoutBinding> binding(viewTypes.size());
 	std::vector<vk::DescriptorPoolSize> poolSize(viewTypes.size());
@@ -22,19 +21,19 @@ Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	layoutInfo.setBindingCount(1);
 	layoutInfo.setBindings(binding);
-	data_.layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
+	data_.layout_ = Graphics::GetInstance().device_->createDescriptorSetLayoutUnique(layoutInfo);
 
 	vk::DescriptorPoolCreateInfo poolInfo{};
 	poolInfo.setPoolSizes(poolSize);
 	poolInfo.setMaxSets(1);
 	poolInfo.setFlags(vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet);
-	descriptorPool_ = device.createDescriptorPoolUnique(poolInfo);
+	descriptorPool_ = Graphics::GetInstance().device_->createDescriptorPoolUnique(poolInfo);
 
 	vk::DescriptorSetAllocateInfo allocateInfo{};
 	allocateInfo.setDescriptorPool(*descriptorPool_);
 	allocateInfo.setDescriptorSetCount(1);
 	allocateInfo.setSetLayouts(*data_.layout_);
-	data_.descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
+	data_.descriptorSet_ = std::move(Graphics::GetInstance().device_->allocateDescriptorSetsUnique(allocateInfo)[0]);
 
 
 	typeData_.resize(num);
@@ -50,7 +49,7 @@ Eugene::VkSamplerViews::VkSamplerViews(const vk::Device& device, const ArgsSpan<
 	}
 }
 
-void Eugene::VkSamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
+void Eugene::SamplerViews::CreateSampler(Sampler& sampler, std::uint32_t idx)
 {
 	if (idx >= typeData_.size())
 	{
@@ -60,7 +59,7 @@ void Eugene::VkSamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
 	auto& type{ typeData_[idx] };
 
 	vk::DescriptorImageInfo  info{};
-	info.setSampler(*static_cast<VkSampler&>(sampler).sampler_);
+	info.setSampler(*sampler.sampler_);
 
 	vk::WriteDescriptorSet write;
 	write.setDescriptorType(vk::DescriptorType::eSampler);
@@ -71,9 +70,4 @@ void Eugene::VkSamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
 	write.setDstSet(*data_.descriptorSet_);
 
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
-}
-
-void* Eugene::VkSamplerViews::GetViews(void)
-{
-	return &data_;
 }

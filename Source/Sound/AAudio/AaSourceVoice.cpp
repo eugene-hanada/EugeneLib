@@ -2,7 +2,7 @@
 // Created by eugen on 2024/04/27.
 //
 
-#include "AaSourceVoice.h"
+#include "../../../Include/Sound/AAudio/AaSourceVoice.h"
 #include "../../../Include/Sound/SoundBase.h"
 
 void AaSourceVoice::GetNextFrame(std::span<float> outSpan) {
@@ -38,8 +38,7 @@ AaSourceVoice::AaSourceVoice(Eugene::SoundBase &soundBase, AaSubmix *submix,
         callBack_{callBack},loopCount_{0},dataSize_{0},playBytye_{0},isEnd_{true}
 {
     auto sample = format.sample;
-    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.bit) / 8ull) / sample;
-
+    byteParFrame_ = (sample * (soundBase_->GetInChannel() * format.bit) / 8ull) / sample;
     getNextFrameFunc_ = &AaSourceVoice::GetPcm16NextFrame;
     if (format.bit == 32)
     {
@@ -52,14 +51,14 @@ void AaSourceVoice::GetPcm16NextFrame(std::span<float> outSpan, std::uint64_t si
             reinterpret_cast<std::int16_t*>(dataPtr_ + playBytye_),
             static_cast<std::size_t>(size /2ull )
     };
-    for (int y = 0; y < soundBase_.GetOutChannel(); y++)
+    for (int y = 0; y < soundBase_->GetOutChannel(); y++)
     {
-        for (int x = 0; x < soundBase_.GetInChannel(); x++)
+        for (int x = 0; x < soundBase_->GetInChannel(); x++)
         {
             outSpan[y] += (static_cast<float>(now[x]) /
                            static_cast<float>(std::numeric_limits<std::int16_t >::max())) *
-                          outMatrix_[(y *  soundBase_.GetOutChannel()) + x] *
-                          soundBase_.GetVolume();
+                          outMatrix_[(y *  soundBase_->GetOutChannel()) + x] *
+                          soundBase_->GetVolume();
         }
     }
 }
@@ -69,13 +68,13 @@ void AaSourceVoice::GetPcm32NextFrame(std::span<float> outSpan, std::uint64_t si
             reinterpret_cast<std::int32_t *>(dataPtr_ + playBytye_),
             static_cast<std::size_t>(size /4ull )
     };
-    for (int y = 0; y < soundBase_.GetOutChannel(); y++)
+    for (int y = 0; y < soundBase_->GetOutChannel(); y++)
     {
-        for (int x = 0; x < soundBase_.GetInChannel(); x++)
+        for (int x = 0; x < soundBase_->GetInChannel(); x++)
         {
             outSpan[y] += (static_cast<float>(now[x]) /
                            static_cast<float>(std::numeric_limits<std::int32_t >::max())) *
-                          outMatrix_[(y * soundBase_.GetOutChannel()) + x] * soundBase_.GetVolume();
+                          outMatrix_[(y * soundBase_->GetOutChannel()) + x] * soundBase_->GetVolume();
         }
     }
 }
@@ -105,9 +104,9 @@ bool AaSourceVoice::IsEnd() const{
 }
 
 void AaSourceVoice::SetFormat(const Eugene::SoundFormat format) {
-    SetChannel(soundBase_.GetInChannel(),soundBase_.GetOutChannel());
+    SetChannel(soundBase_->GetInChannel(),soundBase_->GetOutChannel());
     auto sample = format.sample;
-    byteParFrame_ = (sample * (soundBase_.GetInChannel() * format.bit) / 8ull) / sample;
+    byteParFrame_ = (sample * (soundBase_->GetInChannel() * format.bit) / 8ull) / sample;
 
     getNextFrameFunc_ = &AaSourceVoice::GetPcm16NextFrame;
     if (format.bit == 32)

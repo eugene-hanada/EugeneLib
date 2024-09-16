@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 #include <exception>
 #include <string>
 
 namespace Eugene
 {
 	/// <summary>
-	/// ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒGƒNƒZƒvƒVƒ‡ƒ“
+	/// ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ÌƒGï¿½Nï¿½Zï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	class EugeneLibException :
 		public std::exception
@@ -13,23 +13,14 @@ namespace Eugene
 	public:
 		EugeneLibException(const std::string& mess);
 		~EugeneLibException();
+
 	private:
 		const char* what() const noexcept final;
 
 		/// <summary>
-		/// ƒƒbƒZ[ƒW
+		/// ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
 		/// </summary>
 		std::string mess_;
-	};
 
-	/// <summary>
-	/// ¶¬‚ÌƒGƒ‰[‚ğ•\‚·ƒGƒNƒZƒvƒVƒ‡ƒ“AƒƒbƒZ[ƒW‚ª[CreateError]mess‚Æ‚È‚é
-	/// </summary>
-	class CreateErrorException :
-		public EugeneLibException
-	{
-	public:
-		CreateErrorException(const std::string& mess);
-		~CreateErrorException();
 	};
 };

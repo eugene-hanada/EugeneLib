@@ -1,10 +1,11 @@
-#include "Dx12ResourceBindLayout.h"
+#include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include <vector>
 #include "../../../Include/ThirdParty/d3dx12.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 
 
-Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, const ArgsSpan<ArgsSpan<Bind>>& viewTypes,ResourceBindFlags flags)
+Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes,ResourceBindFlags flags)
 {
 	auto b = viewTypes.begin();
 	auto size = viewTypes.size();
@@ -91,16 +92,16 @@ Eugene::Dx12ResourceBindLayout::Dx12ResourceBindLayout(ID3D12Device* device, con
 	))
 	{
 		// throwかく
-		throw CreateErrorException("ルードシグネチャ生成失敗");
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 
-	if (FAILED(device->CreateRootSignature(
+	if (FAILED(Graphics::GetInstance().device_->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf())))
 		)
 	{
-		throw CreateErrorException("ルードシグネチャ生成失敗");
+		throw EugeneLibException("ルードシグネチャ生成失敗");
 	}
 }

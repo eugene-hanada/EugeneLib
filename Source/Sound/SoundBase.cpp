@@ -1,23 +1,5 @@
 ﻿#include "../../Include/Sound/SoundBase.h"
 
-Eugene::SoundBase::~SoundBase()
-{
-}
-
-float Eugene::SoundBase::GetVolume(void) const
-{
-	return volume_;
-}
-
-std::uint16_t Eugene::SoundBase::GetOutChannel(void) const
-{
-	return outChannel_;
-}
-
-std::uint16_t Eugene::SoundBase::GetInChannel(void) const
-{
-	return inChannel_;
-}
 
 Eugene::SoundBase::SoundBase() :
 	volume_{1.0f}, outChannel_{1u}
@@ -26,7 +8,7 @@ Eugene::SoundBase::SoundBase() :
 
 void Eugene::SoundBase::SetOutput(SoundControl& output)
 {
-
+	// 何もしない
 }
 
 Eugene::SoundBase::SoundBase(std::uint16_t inChannel, std::uint16_t outChannel) :

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "IntegerRatio.h"
+#include "../../../../Include/Sound/AAudio/resampler/IntegerRatio.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

@@ -3,11 +3,10 @@
 
 // システム系
 #include "System/System.h"
+#include "System/DynamicLibrary.h"
 
 // グラフィック系
 #include "Graphics/Graphics.h"
-#include "Graphics/GpuEngine.h"
-#include "Graphics/CommandList.h"
 
 #include "Graphics/GpuResource.h"
 #include "Graphics/BufferResource.h"
@@ -26,13 +25,14 @@
 #include "Graphics/Sampler.h"
 
 // サウンド系
+#ifdef EUGENE_SOUND
 #include "Sound/Sound.h"
 #include "Sound/SoundSpeaker.h"
 #include "Sound/SoundFile.h"
 #include "Sound/SoundControl.h"
-#include "Sound/Sound3DControl.h"
 #include "Sound/SoundStreamSpeaker.h"
-
+#include "Sound/SoundStreamFile.h"
+#endif
 
 #include "Math/Math.h"
 #include "Math/Random.h"
@@ -40,5 +40,8 @@
 #include "Utils/RingBuffer.h"
 #include "Utils/SharedPtr.h"
 #include "Utils/Hash.h"
+#include "Utils/Array.h"
 
 #include "Debug/Debug.h"
+
+

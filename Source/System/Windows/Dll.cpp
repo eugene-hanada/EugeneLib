@@ -1,7 +1,7 @@
-﻿#include "Dll.h"
+﻿#include "../../../Include/System/Windows/Dll.h"
 #include "../../../Include/Utils/EugeneLibException.h"
 
-Eugene::Dll::Dll(const std::filesystem::path& path)
+Eugene::DynamicLibrary::DynamicLibrary(const std::filesystem::path& path)
 {
 	// DLLを読み込む
 #ifdef UNICODE
@@ -12,19 +12,18 @@ Eugene::Dll::Dll(const std::filesystem::path& path)
 
 	if (handle_ == nullptr)
 	{
-		throw CreateErrorException{ "Dllロード失敗" + path.string() };
+		throw EugeneLibException{ "Dllロード失敗" + path.string() };
 	}
-
 }
 
-Eugene::Dll::~Dll()
+Eugene::DynamicLibrary::~DynamicLibrary()
 {
 	// DLLを解放する
 	FreeLibrary(handle_);
 }
 
-void* Eugene::Dll::FindFunction(const std::string& functionName) const
+void* Eugene::DynamicLibrary::FindFunction(const std::string_view& functionName) const
 {
 	// 指定の名前の関数を取得し返す
-	return GetProcAddress(handle_,functionName.c_str());
+	return GetProcAddress(handle_,functionName.data());
 }

@@ -1,10 +1,10 @@
-﻿#include "VkShaderResourceViews.h"
-#include "VkBufferResource.h"
-#include "VkImageResource.h"
-#include "VkGraphics.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkShaderResourceViews.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
+#include "../../../Include/Graphics/Vulkan/VkBufferResource.h"
+#include "../../../Include/Graphics/Vulkan/VkImageResource.h"
 
-Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, const ArgsSpan<Bind>& viewTypes) :
-	ShaderResourceViews{viewTypes.size()}
+
+Eugene::ShaderResourceViews::ShaderResourceViews(const ArgsSpan<Bind>& viewTypes)
 {
 	std::vector<vk::DescriptorSetLayoutBinding> binding(viewTypes.size());
 	std::vector<vk::DescriptorPoolSize> poolSize(viewTypes.size());
@@ -42,23 +42,22 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 	vk::DescriptorSetLayoutCreateInfo layoutInfo{};
 	layoutInfo.setBindingCount(1);
 	layoutInfo.setBindings(binding);
-	data_.layout_ = device.createDescriptorSetLayoutUnique(layoutInfo);
+	data_.layout_ = Graphics::GetInstance().device_->createDescriptorSetLayoutUnique(layoutInfo);
 
 	vk::DescriptorPoolCreateInfo poolInfo{};
 	poolInfo.setPoolSizes(poolSize);
 	poolInfo.setMaxSets(1);
 	poolInfo.setFlags(vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet);
-	descriptorPool_ = device.createDescriptorPoolUnique(poolInfo);
+	descriptorPool_ = Graphics::GetInstance().device_->createDescriptorPoolUnique(poolInfo);
 
 	vk::DescriptorSetAllocateInfo allocateInfo{};
 	allocateInfo.setDescriptorPool(*descriptorPool_);
 	allocateInfo.setDescriptorSetCount(1);
 	allocateInfo.setSetLayouts(*data_.layout_);
-	data_.descriptorSet_ = std::move(device.allocateDescriptorSetsUnique(allocateInfo)[0]);
+	data_.descriptorSet_ = std::move(Graphics::GetInstance().device_->allocateDescriptorSetsUnique(allocateInfo)[0]);
 
 	int idx = 0;
 	typeData_.resize(num);
-	size_ = num;
 	for (std::uint64_t i = 0ull; i < viewTypes.size(); i++)
 	{
 		for (std::uint32_t j = 0ull; j < viewTypes.at(i).viewNum_; j++)
@@ -71,27 +70,22 @@ Eugene::VkShaderResourceViews::VkShaderResourceViews(const vk::Device& device, c
 	}
 }
 
-Eugene::VkShaderResourceViews::~VkShaderResourceViews()
-{
-	size_;
-}
 
-void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::uint64_t idx)
+void Eugene::ShaderResourceViews::CreateTexture(ImageResource& resource, std::uint32_t idx)
 {
-	if (idx >= size_)
+	if (idx >= typeData_.size())
 	{
 		return;
 	}
 
-	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource())};
-	auto format = VkGraphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
+	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
-	viewInfo.setImage(*data->image_);
+	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
-	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
+	viewInfo.subresourceRange.setLevelCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->arraySize_);
 	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
@@ -112,15 +106,15 @@ void Eugene::VkShaderResourceViews::CreateTexture(ImageResource& resource, std::
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
-void Eugene::VkShaderResourceViews::CreateConstantBuffer(BufferResource& resource, std::uint64_t idx)
+void Eugene::ShaderResourceViews::CreateConstantBuffer(BufferResource& resource, std::uint32_t idx)
 {
-	if (idx >= size_)
+	if (idx >= typeData_.size())
 	{
 		return;
 	}
 
 	vk::DescriptorBufferInfo bufferInfo{};
-	bufferInfo.setBuffer(*static_cast<VkBufferData*>(resource.GetResource())->buffer_);
+	bufferInfo.setBuffer(*static_cast<vk::Buffer*>(resource.GetResource()));
 	bufferInfo.setOffset(0);
 	bufferInfo.setRange(resource.GetSize());
 
@@ -136,22 +130,22 @@ void Eugene::VkShaderResourceViews::CreateConstantBuffer(BufferResource& resourc
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1,&write, 0, nullptr);
 }
 
-void Eugene::VkShaderResourceViews::CreateCubeMap(ImageResource& resource, std::uint64_t idx)
+void Eugene::ShaderResourceViews::CreateCubeMap(ImageResource& resource, std::uint32_t idx)
 {
-	if (idx >= size_)
+	if (idx >= typeData_.size())
 	{
 		return;
 	}
 
-	auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
-	auto format = VkGraphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
+
+	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
 	vk::ImageViewCreateInfo viewInfo{};
-	viewInfo.setImage(*data->image_);
+	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::eCube);
 	viewInfo.setFormat(format);
 	viewInfo.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eColor);
-	viewInfo.subresourceRange.setLevelCount(data->mipmapLevels_);
-	viewInfo.subresourceRange.setLayerCount(data->arraySize_);
+	viewInfo.subresourceRange.setLevelCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->mipmapLevels_);
+	viewInfo.subresourceRange.setLayerCount(static_cast<ImageResource::ImageData*>(resource.GetResource())->arraySize_);
 	imageViewMap_.emplace(idx, descriptorPool_.getOwner().createImageViewUnique(viewInfo));
 	auto& type = typeData_[idx];
 
@@ -170,15 +164,15 @@ void Eugene::VkShaderResourceViews::CreateCubeMap(ImageResource& resource, std::
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
-void Eugene::VkShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& resource, std::uint64_t idx, std::uint64_t numElements, std::uint64_t strideSize)
+void Eugene::ShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& resource, std::uint32_t idx, std::uint32_t numElements, std::uint64_t strideSize)
 {
-	if (idx >= size_)
+	if (idx >= typeData_.size())
 	{
 		return;
 	}
 
 	vk::DescriptorBufferInfo bufferInfo{};
-	bufferInfo.setBuffer(*static_cast<VkBufferData*>(resource.GetResource())->buffer_);
+	bufferInfo.setBuffer(*static_cast<vk::Buffer*>(resource.GetResource()));
 	bufferInfo.setOffset(0);
 	bufferInfo.setRange(resource.GetSize());
 
@@ -194,12 +188,3 @@ void Eugene::VkShaderResourceViews::CreateUnorderedAccessBuffer(BufferResource& 
 	data_.descriptorSet_.getOwner().updateDescriptorSets(1, &write, 0, nullptr);
 }
 
-void* Eugene::VkShaderResourceViews::GetViews(void)
-{
-	return &data_;
-}
-
-std::uint64_t Eugene::VkShaderResourceViews::GetImg(void)
-{
-	return std::uint64_t();
-}

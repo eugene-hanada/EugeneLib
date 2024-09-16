@@ -1,25 +1,15 @@
-﻿#include "Dx12RenderTargetViews.h"
-#include "Dx12Graphics.h"
+﻿#include "../../../Include/Graphics/DirectX12/Dx12RenderTargetViews.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include "../../../Include/Graphics/ImageResource.h"
 
-Eugene::Dx12RenderTargetViews::Dx12RenderTargetViews(ID3D12Device* device, std::uint64_t size, bool isShaderVisible) :
-	Dx12Views{ device, size, isShaderVisible, D3D12_DESCRIPTOR_HEAP_TYPE_RTV },
-	RenderTargetViews{size}
-{
-}
-
-void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_t idx)
+void Eugene::RenderTargetViews::Create(ImageResource& resource, std::uint32_t idx)
 {
 	if (size_ <= idx)
 	{
 		return;
 	}
-	ID3D12Device* device{ nullptr };
+
 	ID3D12Resource* dx12Resource{ static_cast<ID3D12Resource*>(resource.GetResource()) };
-	if (FAILED(dx12Resource->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
-	{
-		return;
-	}
 	
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_RENDER_TARGET_VIEW_DESC rtViewDesc{};
@@ -31,12 +21,40 @@ void Eugene::Dx12RenderTargetViews::Create(ImageResource& resource, std::uint64_
 		// サンプルカウントが1以上の場合はMSAAとする
 		rtViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2DMS;
 	}
-	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-	device->CreateRenderTargetView(static_cast<ID3D12Resource*>(resource.GetResource()), &rtViewDesc, handle);
+	handle.ptr += idx * Graphics::GetInstance().device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	Graphics::GetInstance().device_->CreateRenderTargetView(static_cast<ID3D12Resource*>(resource.GetResource()), &rtViewDesc, handle);
 }
 
-void* Eugene::Dx12RenderTargetViews::GetViews(void)
+Eugene::RenderTargetViews& Eugene::RenderTargetViews::operator=(const RenderTargetViews& views)
 {
-	return descriptorHeap_.Get();
+	if (GetSize() > 0u)
+	{
+		Init(views.GetSize(), views.isShaderVisible_);
+	}
+
+	// コピーする
+	Graphics::GetInstance().device_->CopyDescriptorsSimple(
+		views.GetSize(), 
+		descriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		views.descriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		D3D12_DESCRIPTOR_HEAP_TYPE_RTV
+	);
+	return *this;
+}
+
+void Eugene::RenderTargetViews::Init(std::uint32_t size, bool isShaderVisible)
+{
+	size_ = size;
+	isShaderVisible_ = isShaderVisible;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{
+	D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
+	size,
+	(isShaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE),
+		0
+	};
+
+	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
+	}
 }

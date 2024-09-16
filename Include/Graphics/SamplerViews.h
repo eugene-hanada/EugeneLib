@@ -1,27 +1,6 @@
 #pragma once
-#include <cstdint>
-
-
-namespace Eugene
-{
-	class Sampler;
-
-	/// <summary>
-	/// サンプラー用ビュー
-	/// </summary>
-	class SamplerViews
-	{
-	public:
-		virtual ~SamplerViews();
-
-		/// <summary>
-		/// サンプラービュー生成
-		/// </summary>
-		/// <param name="sampler"> サンプラー </param>
-		/// <param name="idx"> インデックス </param>
-		virtual void CreateSampler(Sampler& sampler, std::uint64_t idx) = 0;
-		virtual void* GetViews(void) = 0;
-	protected:
-		SamplerViews();
-	};
-}
+#ifdef EUGENE_DX12
+#include "DirectX12/Dx12SamplerViews.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkSamplerViews.h"
+#endif

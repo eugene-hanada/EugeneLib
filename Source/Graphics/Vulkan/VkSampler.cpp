@@ -1,7 +1,8 @@
-﻿#include "VkSampler.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkSampler.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 
-Eugene::VkSampler::VkSampler(const vk::Device& device, const SamplerLayout& layout) :
-	Sampler{}
+
+Eugene::Sampler::Sampler( const SamplerLayout& layout)
 {
 	constexpr vk::SamplerAddressMode toAddressMode[]{
 		vk::SamplerAddressMode::eRepeat,
@@ -51,6 +52,6 @@ Eugene::VkSampler::VkSampler(const vk::Device& device, const SamplerLayout& layo
 	smpInfo.setMinLod(layout.minLod_);
 	smpInfo.setMaxLod(layout.maxLod_);
 	
-	sampler_ = device.createSamplerUnique(smpInfo);
+	sampler_ = Graphics::GetInstance().device_->createSamplerUnique(smpInfo);
 
 }

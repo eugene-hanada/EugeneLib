@@ -1,17 +1,10 @@
-﻿#include "Xa2Sound.h"
+﻿#include "../../../Include/Sound/Xaudio2/Xa2Sound.h"
 #include <xaudio2.h>
 #include <x3daudio.h>
 #include "../../../Include/Utils/EugeneLibException.h"
-#include "../../../Include/Sound/Sound3DControl.h"
 
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundStreamSpeaker.h"
-
-#include "Xa2SoundSpeaker.h"
-#include "Xa2SoundControl.h"
-#include "Xa2Sound3DControl.h"
-#include "Xa2SoundStreamSpeaker.h"
-#include "../SoundStreamFile.h"
 
 #pragma comment (lib,"xaudio2.lib")
 
@@ -19,12 +12,11 @@ namespace
 {
 	X3DAUDIO_HANDLE handle;
 }
-Eugene::Xaudio2Sound::Xaudio2Sound():
-	Sound{}
+Eugene::Sound::Sound()
 {
 	if (FAILED(XAudio2Create(&xaudio2_, 0)))
 	{
-		throw CreateErrorException("XAudio2生成失敗");
+		throw EugeneLibException("XAudio2生成失敗");
 	}
 #ifdef _DEBUG
 	// デバッグ設定
@@ -35,7 +27,7 @@ Eugene::Xaudio2Sound::Xaudio2Sound():
 #endif
 	if (FAILED(xaudio2_->CreateMasteringVoice(std::out_ptr(mastering_))))
 	{
-		throw CreateErrorException("マスタリングボイスの作成に失敗");
+		throw EugeneLibException("マスタリングボイスの作成に失敗");
 	}
 	
 	XAUDIO2_VOICE_DETAILS details;
@@ -48,15 +40,15 @@ Eugene::Xaudio2Sound::Xaudio2Sound():
 	
 	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
 	{
-		throw CreateErrorException("X3DAudioの初期化に失敗");
+		throw EugeneLibException("X3DAudioの初期化に失敗");
 	}
 }
 
-Eugene::Xaudio2Sound::~Xaudio2Sound()
+Eugene::Sound::~Sound()
 {
 }
 
-void Eugene::Xaudio2Sound::SetVolume(float volume)
+void Eugene::Sound::SetVolume(float volume)
 {
 	if (volume_ != volume)
 	{
@@ -65,47 +57,10 @@ void Eugene::Xaudio2Sound::SetVolume(float volume)
 	}
 }
 
-void Eugene::Xaudio2Sound::SetPan(std::span<float> volumes)
+void Eugene::Sound::SetPan(std::span<float> volumes)
 {
 	if (outChannel_ == volumes.size())
 	{
 		mastering_->SetOutputMatrix(nullptr, outChannel_, outChannel_, volumes.data());
 	}
 }
-
-Eugene::SoundSpeaker* Eugene::Xaudio2Sound::CreateSoundSpeaker(const SoundFile& soundFile, const float maxPitchRate) const
-{
-	return new Xaudio2Speaker{xaudio2_.Get(),soundFile,outChannel_,maxPitchRate};
-}
-
-
-Eugene::SoundStreamSpeaker* Eugene::Xaudio2Sound::CreateSoundStreamSpeaker(const std::filesystem::path& path, const float maxPitchRate) const
-{
-	return new Xaudio2StreamSpeaker{xaudio2_.Get(), CreateSoundStreamFile(path),outChannel_,maxPitchRate};
-}
-
-Eugene::SoundControl* Eugene::Xaudio2Sound::CreateSoundControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
-{
-	return new Xaudio2Control{
-		xaudio2_.Get(),
-		(sample == 0u ? sampleRate_ : sample),
-		stage,
-		(inputChannel == 0u ? inChannel_ : inputChannel),
-		(outChannel == 0u ? inChannel_ : outChannel) 
-		
-	};
-}
-
-Eugene::Sound3DControl* Eugene::Xaudio2Sound::CreateSound3DControl(std::uint32_t stage, std::uint32_t sample, std::uint16_t inputChannel, std::uint16_t outChannel) const
-{
-	std::span<std::uint8_t, 20> h{ handle };
-	return new Xaudio23DControl{
-		xaudio2_.Get(), 
-		(sample == 0u ? sampleRate_ : sample),
-		stage,
-		(outChannel == 0u ?inChannel_ : outChannel),
-		(inputChannel == 0u ? inChannel_ : inputChannel),
-		h
-	};
-}
-

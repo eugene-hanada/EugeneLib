@@ -15,7 +15,7 @@
  */
 
 #include <cassert>
-#include "PolyphaseResamplerMono.h"
+#include "../../../../Include/Sound/AAudio/resampler/PolyphaseResamplerMono.h"
 
 using namespace RESAMPLER_OUTER_NAMESPACE::resampler;
 

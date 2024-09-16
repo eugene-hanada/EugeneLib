@@ -1,38 +1,32 @@
-#include "AaSoundControl.h"
-#include "resampler/MultiChannelResampler.h"
+#include "../../../Include/Sound/AAudio/AaSoundControl.h"
+#include "../../../Include/Sound/AAudio/resampler/MultiChannelResampler.h"
 #include "../../../Include/Utils//EugeneLibException.h"
 
-Eugene::AaudioControl::AaudioControl(AaSubmix*  submix,std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage) :
-        SoundControl{sample,inChannel,outChannel,stage} ,submix_{*this,submix,sample}
-{
-
-}
-
-Eugene::AaudioControl::~AaudioControl()
+Eugene::SoundControl::SoundControl(AaSubmix*  submix,std::uint32_t sample, std::uint16_t inChannel, std::uint16_t outChannel, std::uint32_t stage) :
+        SoundBase{inChannel,outChannel},submix_{*this,submix,sample}
 {
 }
 
-void* Eugene::AaudioControl::Get(void)
+Eugene::SoundControl::~SoundControl()
 {
-	return &submix_;
 }
 
-void Eugene::AaudioControl::SetOutChannel(std::uint16_t channel)
+void Eugene::SoundControl::SetOutChannel(std::uint16_t channel)
 {
 	outChannel_ = channel;
 }
 
-void Eugene::AaudioControl::SetPan(std::span<float> volumes)
+void Eugene::SoundControl::SetPan(std::span<float> volumes)
 {
 	submix_.SetOutMatrix(volumes);
 }
 
-void Eugene::AaudioControl::SetVolume(float volume)
+void Eugene::SoundControl::SetVolume(float volume)
 {
 	volume_ = volume * volume;
 }
 
-void Eugene::AaudioControl::SetOutput(SoundControl& control)
+void Eugene::SoundControl::SetOutput(SoundControl& control)
 {
     outChannel_ = control.GetInChannel();
     auto submix = static_cast<AaSubmix*>(control.Get());

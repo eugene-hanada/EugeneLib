@@ -37,14 +37,14 @@ Eugene::SoundFile::SoundFile(const std::filesystem::path& path)
 	{
 		if (!LoadOggVorbis(path))
 		{
-			throw CreateErrorException("OggVorbissファイルが開けませんでした");
+			throw EugeneLibException("OggVorbissファイルが開けませんでした");
 		}
 	}
 	else
 	{
 		if (!LoadWave(path))
 		{
-			throw CreateErrorException("Waveファイルが開けませんでした");
+			throw EugeneLibException("Waveファイルが開けませんでした");
 		}
 	}
 }

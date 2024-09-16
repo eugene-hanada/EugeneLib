@@ -1,47 +1,32 @@
-﻿#include "VkGpuEngine.h"
-#include "VkCommandList.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkGpuEngine.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
+#include "../../../Include/Graphics/Vulkan/VkCommandList.h"
 
-Eugene::VkGpuEngine::VkGpuEngine(vk::Queue& queue, std::uint64_t size) :
-	queue_{queue}
-{
-	nowNum_ = 0ull;
-	cmdBuffers_.resize(size);
-}
-
-Eugene::VkGpuEngine::VkGpuEngine(std::uint32_t familyIndex, std::uint32_t& queueIndex, const vk::Device& device, std::uint64_t size)
-{
-	queue_ = device.getQueue(familyIndex, queueIndex++);
-
-	nowNum_ = 0ull;
-	cmdBuffers_.resize(size);
-}
-
-Eugene::VkGpuEngine::~VkGpuEngine()
-{ 
-}
-
-void Eugene::VkGpuEngine::Execute(void)
+void Eugene::GpuEngine::Execute(void)
 {
 	vk::SubmitInfo info{};
-	info.setCommandBufferCount(nowNum_);
+	info.setCommandBufferCount(cmdBuffers_.size());
 	info.setPCommandBuffers(cmdBuffers_.data());
 	queue_.submit(info);
-	nowNum_ = 0;
+	cmdBuffers_.clear();
 }
 
-void Eugene::VkGpuEngine::Wait(void)
+void Eugene::GpuEngine::Wait(void)
 {
 	queue_.waitIdle();
 }
 
-void Eugene::VkGpuEngine::Push(CommandList& commandList)
+void Eugene::GpuEngine::Push(CommandList& commandList)
 {
 	auto data = static_cast<vk::UniqueCommandBuffer*>(commandList.GetCommandList());
-	cmdBuffers_[nowNum_] = **data;
-	nowNum_++;
+	cmdBuffers_.emplace_back(
+		**data
+	);
+
 }
 
-void* Eugene::VkGpuEngine::GetQueue(void) const
+Eugene::GpuEngine::GpuEngine(std::size_t initSize)
 {
-	return const_cast<void*>(static_cast<const void*>(&queue_));
+	queue_ = Graphics::GetInstance().GetNextQueue();
+	cmdBuffers_.reserve(initSize);
 }

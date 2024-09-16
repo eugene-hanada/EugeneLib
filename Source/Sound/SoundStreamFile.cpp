@@ -1,4 +1,4 @@
-#include "SoundStreamFile.h"
+ï»¿#include "../../../../Include/Sound/SoundStreamFile.h"
 #include <fstream>
 #include "../../Include/Sound/SoundFile.h"
 #define STB_VORBIS_HEADER_ONLY
@@ -7,7 +7,7 @@
 namespace Eugene
 {
 	/// <summary>
-	/// Waveƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Şƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€ƒNƒ‰ƒX
+	/// Waveãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚¯ãƒ©ã‚¹
 	/// </summary>
 	class WaveStreamFile :
 		public SoundStreamFile
@@ -21,7 +21,7 @@ namespace Eugene
 			file_.read(reinterpret_cast<char*>(&riff), sizeof(riff));
 			std::int32_t id{ 0 };
 
-			// fmtƒ`ƒƒƒ“ƒN‚ğŒ©‚Â‚¯‚é
+			// fmtãƒãƒ£ãƒ³ã‚¯ã‚’è¦‹ã¤ã‘ã‚‹
 			while (true)
 			{
 				file_.read(reinterpret_cast<char*>(&id), sizeof(id));
@@ -45,7 +45,7 @@ namespace Eugene
 				file_.seekg(now);
 			}
 
-			// ƒf[ƒ^ƒ`ƒƒƒ“ƒN‚ğŒ©‚Â‚¯‚é
+			// ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯ã‚’è¦‹ã¤ã‘ã‚‹
 			while (true)
 			{
 				file_.read(reinterpret_cast<char*>(&id), 4);
@@ -58,11 +58,11 @@ namespace Eugene
 
 			file_.read(reinterpret_cast<char*>(&dataSize_), sizeof(dataSize_));
 
-			// ƒf[ƒ^ŠJnˆÊ’u‚ğƒZƒbƒg
+			// ãƒ‡ãƒ¼ã‚¿é–‹å§‹ä½ç½®ã‚’ã‚»ãƒƒãƒˆ
 			startPos_ = file_.tellg();
 		}
 
-		// SoundStreamFile ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// SoundStreamFile ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Read(std::uint8_t* ptr, std::uint64_t size) final
 		{
 			file_.read(reinterpret_cast<char*>(ptr), size);
@@ -79,18 +79,18 @@ namespace Eugene
 	private:
 
 		/// <summary>
-		/// ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+		/// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 		/// </summary>
 		std::ifstream file_;
 
 		/// <summary>
-		/// ƒTƒEƒ“ƒhƒf[ƒ^‚ÌŠJnˆÊ’u
+		/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®é–‹å§‹ä½ç½®
 		/// </summary>
 		std::streampos startPos_;
 	};
 
 	/// <summary>
-	/// OggVorbisƒtƒ@ƒCƒ‹‚Ìƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	/// OggVorbisãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	/// </summary>
 	class OggVorbisStreamFile :
 		public SoundStreamFile
@@ -118,7 +118,7 @@ namespace Eugene
 			stb_vorbis_close(vorbisPtr_);
 		}
 
-		// SoundStreamFile ‚ğ‰î‚µ‚ÄŒp³‚³‚ê‚Ü‚µ‚½
+		// SoundStreamFile ã‚’ä»‹ã—ã¦ç¶™æ‰¿ã•ã‚Œã¾ã—ãŸ
 		void Read(std::uint8_t* ptr, std::uint64_t size) final
 		{
 			auto sampleNum{ size / sizeof(std::int16_t)};
@@ -133,12 +133,12 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// stb_vorbis‚Ìallocƒ|ƒCƒ“ƒ^
+		/// stb_vorbisã®allocãƒã‚¤ãƒ³ã‚¿
 		/// </summary>
 		stb_vorbis_alloc* allocPtr_;
 
 		/// <summary>
-		/// stb_vorbis‚Ìƒ|ƒCƒ“ƒ^
+		/// stb_vorbisã®ãƒã‚¤ãƒ³ã‚¿
 		/// </summary>
 		stb_vorbis* vorbisPtr_;
 

@@ -4,19 +4,83 @@
 
 TEST_CASE("Game")
 {
-	std::unique_ptr<Eugene::System> sys;
-	REQUIRE_NOTHROW(sys.reset(Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"Test")));
+	REQUIRE_NOTHROW(Eugene::System::Create({ 1280.0f, 720.0f }, u8"Test"));
 
-	std::unique_ptr<Eugene::Graphics> graphics;
-	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	// �E�B���h�E�T�C�Y�̎擾���`�F�b�N
+	CHECK(static_cast<glm::ivec2>(Eugene::System::GetInstance().GetWindowSize()) == glm::ivec2{1280, 720});
+
+	CHECK(Eugene::System::GetInstance().GetWindow());
+
+	constexpr auto bufferNum = 2u;
+	Eugene::GpuEngine gpuEngine;
 	REQUIRE_NOTHROW(
-		auto tmp = sys->CreateGraphicsUnique();
-		graphics = std::move(tmp.first);
-		gpuEngine = std::move(tmp.second);
+		Eugene::Graphics::Create(bufferNum)
 	);
 
-	std::unique_ptr<Eugene::BufferResource> buffer;
-	REQUIRE_NOTHROW(buffer.reset(graphics->CreateBufferResource(256)));
+	// �o�b�t�@�̐����`�F�b�N
+	CHECK(Eugene::Graphics::GetInstance().GetViews().GetSize() == bufferNum);
+
+	{
+		Eugene::BufferResource buffer;
+
+		// �o�b�t�@���\�[�X����
+		REQUIRE_NOTHROW(buffer = Eugene::Graphics::GetInstance().CreateBufferResource(256));
+
+		// API���̃��\�[�X�擾���ă`�F�b�N
+		CHECK(buffer.GetResource());
+
+		// �T�C�Y�`�F�b�N
+		CHECK(buffer.GetSize() == 256);
+
+		// �}�b�v�\���̃`�F�b�N
+		CHECK(!buffer.CanMap());
+
+		buffer.Final();
+
+		buffer = Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256);
+
+		// API���̃��\�[�X�擾���ă`�F�b�N
+		CHECK(buffer.GetResource());
+
+		// �T�C�Y�`�F�b�N
+		CHECK(buffer.GetSize() == 256);
+
+		// �}�b�v�\���̃`�F�b�N
+		CHECK(buffer.CanMap());
+
+		buffer.Final();
+	}
+
+	{
+		Eugene::ImageResource imageResource;
+		// Image���\�[�X����
+		REQUIRE_NOTHROW(imageResource = Eugene::Graphics::GetInstance().CreateImageResource({640,480}, Eugene::Format::AUTO_BACKBUFFER));
+
+		// API���̃��\�[�X�擾���ă`�F�b�N
+		CHECK(imageResource.GetResource());
+
+		// �T�C�Y�`�F�b�N
+		CHECK(imageResource.GetSize() == glm::ivec2{640, 480});
+
+		// �}�b�v�\���̃`�F�b�N
+		CHECK(!imageResource.CanMap());
+
+		//�t�H�[�}�b�g�`�F�b�N
+		CHECK(imageResource.GetFormat() == Eugene::Graphics::BackBufferFormat());
+
+		imageResource.Final();
+	}
+
+	gpuEngine.Final();
+	REQUIRE_NOTHROW(Eugene::Graphics::Destroy());
+
+#ifdef EUGENE_SOUND
+	REQUIRE_NOTHROW(Eugene::Sound::Create());
+	
+	REQUIRE_NOTHROW(Eugene::Sound::Destroy());
+#endif
+
+	REQUIRE_NOTHROW(Eugene::System::Destroy());
 }
 
 TEST_CASE("AlignmentedSize")

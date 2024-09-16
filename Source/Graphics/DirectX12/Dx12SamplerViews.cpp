@@ -1,25 +1,32 @@
-#include "Dx12SamplerViews.h"
-#include <d3d12.h>
-#include "Dx12Sampler.h"
+#include "../../../Include/Graphics/DirectX12/Dx12SamplerViews.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Sampler.h"
+#include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 
-Eugene::Dx12SamplerViews::Dx12SamplerViews(ID3D12Device* device, std::uint64_t size) :
-	Dx12Views{ device, size,true ,D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER}, SamplerViews{}
-{
-}
 
-void Eugene::Dx12SamplerViews::CreateSampler(Sampler& sampler, std::uint64_t idx)
+void Eugene::SamplerViews::CreateSampler(Sampler& sampler, std::uint32_t idx)
 {
-	ID3D12Device* device{ nullptr };
-	if (FAILED(descriptorHeap_->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	if (size_ <= idx)
 	{
 		return;
 	}
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
-	handle.ptr += idx * device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER);
-	device->CreateSampler(&static_cast<Dx12Sampler&>(sampler).desc_, handle);
+	handle.ptr += idx * Graphics::GetInstance().device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER);
+	Graphics::GetInstance().device_->CreateSampler(&sampler.desc_, handle);
 }
 
-void* Eugene::Dx12SamplerViews::GetViews(void)
+void Eugene::SamplerViews::Init(std::uint32_t size)
 {
-	return descriptorHeap_.Get();
+	size_ = size;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{
+	D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,
+	size,
+	D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE,
+		0
+	};
+
+	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
+	{
+		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
+	}
+
 }

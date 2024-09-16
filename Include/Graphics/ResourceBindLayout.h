@@ -1,47 +1,6 @@
 #pragma once
-#include <cstdint>
-
-namespace Eugene
-{
-	/// <summary>
-/// ビューのタイプ
-/// </summary>
-	enum class ViewType
-	{
-		/// <summary>
-		/// テクスチャ
-		/// </summary>
-		Texture,
-
-		/// <summary>
-		/// UA
-		/// </summary>
-		UnoderedAccsec,
-
-		/// <summary>
-		/// 定数バッファ
-		/// </summary>
-		ConstantBuffer,
-
-		/// <summary>
-		/// サンプラー
-		/// </summary>
-		Sampler
-	};
-
-	struct Bind
-	{
-		ViewType viewType_{ViewType::ConstantBuffer};
-		std::uint32_t viewNum_{1u};
-	};
-
-	/// <summary>
-	/// シェーダにリソースをバインドする際のレイアウト等を決めるクラス(GraphicsPipeline生成に必要)
-	/// </summary>
-	class ResourceBindLayout
-	{
-	public:
-		virtual ~ResourceBindLayout();
-	private:
-	};
-}
+#ifdef EUGENE_DX12
+#include "DirectX12/Dx12ResourceBindLayout.h"
+#elif EUGENE_VULKAN
+#include "Vulkan/VkResourceBindLayout.h"
+#endif

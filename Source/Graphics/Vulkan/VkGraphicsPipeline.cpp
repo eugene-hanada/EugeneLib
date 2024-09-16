@@ -1,26 +1,22 @@
-﻿#include "VkGraphicsPipeline.h"
-#include "VkResourceBindLayout.h"
-#include "VkGraphics.h"
+﻿#include "../../../Include/Graphics/Vulkan/VkGraphicsPipeline.h"
+#include "../../../Include/Graphics/Vulkan/VkResourceBindLayout.h"
+#include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Math/Math.h"
 
-
-
-Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
-	const vk::Device& device,
-	ResourceBindLayout& resourceBindLayout, 
+Eugene::Pipeline::Pipeline(
+	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout, 
 	const ArgsSpan<ShaderPair>& shaders,
 	const ArgsSpan<RendertargetLayout>& rendertarges,
 	TopologyType topologyType,
 	bool isCulling,
-	bool useDepth,
+	bool useDepth, 
 	std::uint8_t sampleCount
 )
 {
-	auto& bindLayout{ static_cast<VkResourceBindLayout&>(resourceBindLayout) };
-	data_.layout_ = *bindLayout.pipelineLayout_;
-	
+	data_.layout_ = resourceBindLayout.pipelineLayout_;
+
 	// シェーダーステージの設定
 	std::vector<vk::PipelineShaderStageCreateInfo> shaderStage(shaders.size());
 	std::vector<vk::UniqueShaderModule> modules(shaders.size());
@@ -30,12 +26,12 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		vk::ShaderModuleCreateInfo info{};
 		info.setPCode(reinterpret_cast<const std::uint32_t*>(shaders.at(i).first.GetPtr()));
 		info.setCodeSize(shaders.at(i).first.GetSize());
-		
-		modules[shaderIndex] = device.createShaderModuleUnique(info);
+
+		modules[shaderIndex] = Graphics::GetInstance().device_->createShaderModuleUnique(info);
 		shaderStage[shaderIndex].setModule(*modules[shaderIndex]);
 		shaderStage[shaderIndex].setPName("main");
 		//shaderStage[shaderIndex].setPName("main");
-		
+
 		switch (shaders.at(i).second)
 		{
 		case ShaderType::Vertex:
@@ -55,7 +51,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 			break;
 		default:
 			break;
-		} 
+		}
 		shaderIndex++;
 	}
 
@@ -80,14 +76,14 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		auto tmpFormat = layout.at(i).format_;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
-			tmpFormat = VkGraphics::BackBufferFormat();
+			tmpFormat = Graphics::BackBufferFormat();
 		}
 		vertexInputAtr[i].setBinding(0);
 		vertexInputAtr[i].setLocation(i);
-		vertexInputAtr[i].setFormat(VkGraphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)]);
+		vertexInputAtr[i].setFormat(Graphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)]);
 		vertexInputAtr[i].setOffset(layoutByte);
 		layoutByte += FormatSize[static_cast<size_t>(layout.at(i).format_)];
-		
+
 	}
 	vertexInputLayout.setStride(layoutByte);
 	vk::PipelineVertexInputStateCreateInfo vertexInputInfo;
@@ -107,7 +103,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		vk::PrimitiveTopology::ePatchList
 	};
 	inputAssembly.setTopology(toVkPrimitiveTopology[static_cast<size_t>(topologyType)]);
-	
+
 	// trueで線と三角形になったり_STRIPだったりdocument見る
 	inputAssembly.setPrimitiveRestartEnable(false);
 
@@ -123,7 +119,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	{
 		rasterizer.setCullMode(vk::CullModeFlagBits::eBack);
 	}
-		// 時計周りにする(DirectXと同じ)
+	// 時計周りにする(DirectXと同じ)
 	rasterizer.setFrontFace(vk::FrontFace::eClockwise);
 
 	vk::PipelineMultisampleStateCreateInfo multiSampleInfo{};
@@ -138,7 +134,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		multiSampleInfo.setRasterizationSamples(vk::SampleCountFlagBits::e1);
 	}
 
-	std::vector<vk::PipelineColorBlendAttachmentState> attachments{rendertarges.size()};
+	std::vector<vk::PipelineColorBlendAttachmentState> attachments{ rendertarges.size() };
 	std::vector<vk::Format> attachmentsFormat(rendertarges.size());
 
 	for (size_t i = 0ull; i < rendertarges.size(); i++)
@@ -146,9 +142,9 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		auto tmpFormat = rendertarges.at(i).format_;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
-			tmpFormat = VkGraphics::BackBufferFormat();
+			tmpFormat = Graphics::BackBufferFormat();
 		}
-		attachmentsFormat[i] = VkGraphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)];
+		attachmentsFormat[i] = Graphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)];
 		constexpr vk::ColorComponentFlags toComponentFlag[]{
 			static_cast<const vk::ColorComponentFlags>(0u),
 			// R32G32B32A32
@@ -284,7 +280,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
 	scissor.setOffset({ 0,0 });
-	scissor.setExtent(vk::Extent2D{1280, 720});
+	scissor.setExtent(vk::Extent2D{ 1280, 720 });
 
 	// これでシザーとビューポート固定できる(指定しなければ動的になる)
 	vk::PipelineViewportStateCreateInfo viewportState;
@@ -295,7 +291,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 
 	// グラフィックパイプラインの設定
 	vk::GraphicsPipelineCreateInfo pipelineInfo{};
-	
+
 	pipelineInfo.setStages(shaderStage);
 	pipelineInfo.setPVertexInputState(&vertexInputInfo);
 	pipelineInfo.setPInputAssemblyState(&inputAssembly);
@@ -304,7 +300,7 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 	pipelineInfo.setPMultisampleState(&multiSampleInfo);
 	pipelineInfo.setPViewportState(&viewportState);
 	pipelineInfo.setPNext(&renderingInfo);
-	
+
 	//pipelineInfo.setRenderPass(*tmp);
 	// デプス周りとりあえずなしで実装
 	if (useDepth)
@@ -312,21 +308,39 @@ Eugene::VkGraphicsPipeline::VkGraphicsPipeline(
 		pipelineInfo.setPDepthStencilState(&depthInfo);
 	}
 	pipelineInfo.setPColorBlendState(&blendInfo);
-	pipelineInfo.setLayout(data_.layout_);
+	pipelineInfo.setLayout(**data_.layout_);
 
 	//pipelineInfo.setRenderPass(nullptr);
-	
-	auto [result, pipeline] = device.createGraphicsPipelineUnique(nullptr, pipelineInfo);
+
+	auto [result, pipeline] = Graphics::GetInstance().device_->createGraphicsPipelineUnique(nullptr, pipelineInfo);
 
 	if (result != vk::Result::eSuccess)
 	{
-		throw CreateErrorException{ "グラフィックスパイプラインステート生成失敗" };
+		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
 	}
 
 	data_.pipeline_ = std::move(pipeline);
 }
 
-void* Eugene::VkGraphicsPipeline::GetPipeline(void)
+
+Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader)
 {
-	return &data_;
+	data_.layout_ = resourceBindLayout.pipelineLayout_;
+
+	vk::ShaderModuleCreateInfo info{};
+	info.setPCode(reinterpret_cast<const std::uint32_t*>(csShader.GetPtr()));
+	info.setCodeSize(csShader.GetSize());
+
+	auto csModule = Graphics::GetInstance().device_->createShaderModuleUnique(info);
+
+	vk::PipelineShaderStageCreateInfo shaderStageInfo{};
+	shaderStageInfo.setStage(vk::ShaderStageFlagBits::eCompute);
+	shaderStageInfo.setModule(*csModule);
+	shaderStageInfo.setPName("main");
+
+	vk::ComputePipelineCreateInfo createInfo{};
+	createInfo.setLayout(**data_.layout_);
+	createInfo.setStage(shaderStageInfo);
+	auto [result, pipeline] = Graphics::GetInstance().device_->createComputePipelineUnique(nullptr,createInfo);
+	data_.pipeline_ = std::move(pipeline);
 }

@@ -151,7 +151,7 @@ namespace Eugene
             return app_;
         }
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
         /// <summary>
         /// IMGUI�Ńt���[���J�n�������s��

@@ -18,7 +18,7 @@
 #include "../../../Include/Graphics/DirectX12/Dx12GraphicsPipeline.h"
 #include "../../../Include/Graphics/DirectX12/Dx12SamplerViews.h"
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include <backends/imgui_impl_dx12.h>
 #endif
@@ -417,7 +417,7 @@ void Eugene::CommandList::CopyBuffer(BufferResource& dest, BufferResource& src)
 	cmdList_->ResourceBarrier(1, &barrier);
 }
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 void Eugene::CommandList::SetImguiCommand(ImDrawData* data) const
 {
 	auto dh = Graphics::GetInstance().imguiDescriptorHeap_.Get();

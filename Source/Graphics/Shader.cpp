@@ -19,7 +19,7 @@ const char* Eugene::Shader::GetPtr(void) const
 	return code_.data();
 }
 
-size_t Eugene::Shader::GetSize(void) const
+std::uint64_t Eugene::Shader::GetSize(void) const
 {
 	return code_.size();
 }

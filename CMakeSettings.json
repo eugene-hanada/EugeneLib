@@ -23,13 +23,13 @@
           "type": "BOOL"
         },
         {
-          "name": "EUGENE_USE_EFFEKSEER",
+          "name": "MI_OVERRIDE",
           "value": "False",
           "type": "BOOL"
         },
         {
-          "name": "MI_OVERRIDE",
-          "value": "False",
+          "name": "EUGENE_BUILD_DOCTEST",
+          "value": "True",
           "type": "BOOL"
         }
       ]

@@ -1,7 +1,5 @@
 ﻿#include <Windows.h>
 #include <EugeneLib.h>
-#include <memory>
-#include <vector>
 
 
 #include <ThirdParty/glm/glm/gtc/matrix_transform.hpp>
@@ -10,16 +8,10 @@
 #include <iostream>
 
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include <ThirdParty/imgui/imgui.h>
-#include <ThirdParty/imgui/imgui_internal.h>
 #include <ImGuizmo.h>
 #endif
-
-
-#include <stacktrace>
-
-#include <source_location>
 
 struct Vertex2D
 {
@@ -27,30 +19,21 @@ struct Vertex2D
 	Eugene::vec2 uv;
 };
 
-struct TestC
-{
-	void t();
-};
-
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
-
+	
 	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
 	Eugene::Sound::Create();
 
-	/*Eugene::SoundFile soundFile{ "./test.wav" };
-
+#ifdef EUGENE_SOUND
+	Eugene::SoundFile soundFile{ "./seSound.wav" };
 	Eugene::SoundSpeaker sp;
 	sp = Eugene::Sound::GetInstance().CreateSoundSpeaker(soundFile);
-
-	Eugene::SoundControl ctrl;
-	ctrl = Eugene::Sound::GetInstance().CreateSoundControl(soundFile.GetFormat().sample, 0, soundFile.GetFormat().channel);*/
-
+	sp.SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
 
 	Eugene::SoundStreamSpeaker streamSp;
-	streamSp = Eugene::Sound::GetInstance().CreateSoundStreamSpeaker(Eugene::CreateSoundStreamFile("./test.wav"));
-	streamSp.SetVolume(0.2f);
-	streamSp.Play();
+	streamSp = Eugene::Sound::GetInstance().CreateSoundStreamSpeaker(Eugene::CreateSoundStreamFile("./bgmSound.wav"));
+#endif
 
 	auto gpuEngine = Eugene::Graphics::Create();
 
@@ -160,14 +143,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	samplerView.CreateSampler(sampler, 0);
 
-	//Eugene::System::GetInstance().SetFullScreen(true);
+#ifdef EUGENE_IMGUI
 	Eugene::Graphics::GetInstance().SetImguiImage(texture, 0);
-
 	ImGuiIO& io = ImGui::GetIO();
+#endif
 	float clearColor[]{ 1.0f,0.0f,0.0f,1.0f };
+
 	while (Eugene::System::GetInstance().Update())
 	{
-		
+#ifdef EUGENE_IMGUI
 		Eugene::Graphics::GetInstance().ImguiNewFrame();
 		Eugene::System::GetInstance().ImguiNewFrame();
 		ImGui::NewFrame();
@@ -187,6 +171,38 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		ImGui::End();
 
+#ifdef EUGENE_SOUND
+		if (ImGui::Begin("SE"))
+		{
+			float volume{sp.GetVolume()};
+			if (ImGui::DragFloat("Volume", &volume,0.01f, 0.0f, 1.0f))
+			{
+				sp.SetVolume(volume);
+			}
+
+			if (ImGui::Button("Play"))
+			{
+				sp.Play();
+			}
+		}
+		ImGui::End();
+
+		if (ImGui::Begin("BGM"))
+		{
+			float volume{ streamSp.GetVolume() };
+			if (ImGui::DragFloat("Volume", &volume, 0.01f, 0.0f, 1.0f))
+			{
+				streamSp.SetVolume(volume);
+			}
+
+			if (ImGui::Button("Play"))
+			{
+				streamSp.Play();
+			}
+		}
+		ImGui::End();
+#endif
+
 		ImGui::Render();
 
 		if (!Eugene::System::GetInstance().IsEnd())
@@ -197,6 +213,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 				ImGui::RenderPlatformWindowsDefault();
 			}
 		}
+#endif
 
 		if (Eugene::System::GetInstance().IsActive())
 		{
@@ -236,8 +253,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 			cmdList.TransitionRenderTargetEnd(Eugene::Graphics::GetInstance().GetBackBufferResource());
 
+#ifdef EUGENE_IMGUI
 			cmdList.SetImguiCommand(ImGui::GetDrawData());
-
+#endif
 			cmdList.End();
 
 			gpuEngine.Push(cmdList);

@@ -1,5 +1,5 @@
 ﻿#ifndef BUILD_DOCTEST
-//#include <mimalloc-new-delete.h>
+#include <mimalloc-new-delete.h>
 #endif
 
 #include "../../Include/System/System.h"

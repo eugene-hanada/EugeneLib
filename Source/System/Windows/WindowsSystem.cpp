@@ -7,7 +7,7 @@
 #include "../../../Include/Graphics/Graphics.h"
 
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -57,7 +57,7 @@ namespace {
 	/// <returns></returns>
 	LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	{
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 		if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
 		{
 			return true;
@@ -167,7 +167,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 
 	ShowWindow(hwnd, SW_SHOW);
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -184,7 +184,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 Eugene::System::~System()
 {
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 #endif
@@ -378,7 +378,7 @@ void Eugene::System::SetFullScreen(bool isFullScreen)
 	ShowWindow(hwnd, isFullScreen ? SW_SHOWMAXIMIZED : SW_SHOW);
 }
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 void Eugene::System::ImguiNewFrame(void) const
 {
 	ImGui_ImplWin32_NewFrame();

@@ -40,6 +40,7 @@
 #include "Utils/RingBuffer.h"
 #include "Utils/SharedPtr.h"
 #include "Utils/Hash.h"
+#include "Utils/Array.h"
 
 #include "Debug/Debug.h"
 

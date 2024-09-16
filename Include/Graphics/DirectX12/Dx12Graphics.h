@@ -435,7 +435,7 @@ namespace Eugene
 			return GetBackBufferResource(GetNowBackBufferIndex());
 		}
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// Imguiのフレーム開始処理
@@ -503,7 +503,7 @@ private:
 		friend class SamplerViews;
 		friend class ResourceBindLayout;
 		friend class Pipeline;
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// imguiで使用する画像の最大数

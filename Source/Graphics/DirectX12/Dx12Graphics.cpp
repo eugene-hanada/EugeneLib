@@ -11,7 +11,7 @@
 
 #include "../../../Include/ThirdParty/glm/glm/vec3.hpp"
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_dx12.h>
 
@@ -49,7 +49,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 	}
 	multiSampleCount_ = f.SampleCount - 1;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
 	if (FAILED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))))
 	{
@@ -70,7 +70,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 
 Eugene::Graphics::~Graphics()
 {
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	ImGui_ImplDX12_Shutdown();
 #endif
 
@@ -253,7 +253,7 @@ std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::Graphics::GetGpu
 	return { {local.UsageBytes,local.BudgetBytes},{sys.UsageBytes,sys.BudgetBytes} };
 }
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 void Eugene::Graphics::ImguiNewFrame(void) const
 {

@@ -23,6 +23,7 @@ namespace Eugene
 			char type[4];
 		};
 
+		SoundFile() = default;
 		SoundFile(const std::filesystem::path& path);
 		SoundFile(SoundFile&& soundFile) noexcept;
 
@@ -55,7 +56,10 @@ namespace Eugene
 		/// <param name=""></param>
 		/// <returns></returns>
 		const SoundFormatEx& GetFormatExt(void) const noexcept;
-	protected:
+
+		SoundFile(const SoundFile&) = delete;
+		SoundFile& operator=(const SoundFile&) = delete;
+	private:
 
 		/// <summary>
 		/// waveファイルを読み込む

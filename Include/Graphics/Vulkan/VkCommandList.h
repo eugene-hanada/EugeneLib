@@ -5,7 +5,7 @@
 #include "../../../ThirdParty/glm/glm/vec2.hpp"
 #include "../../../ThirdParty/glm/glm/vec3.hpp"
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 struct ImDrawData;
 #endif
 
@@ -202,7 +202,7 @@ namespace Eugene
 		/// <returns> コマンドリストのポインタ </returns>
 		void* GetCommandList(void) noexcept;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 		/// <summary>
 		/// ImGui用のコマンドをセットする
 		/// </summary>

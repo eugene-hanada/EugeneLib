@@ -12,7 +12,7 @@
 
 #include "../../../Include/System/System.h"
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include "../../../Include/ThirdParty/imgui/imgui.h"
 #include "../../../Include/ThirdParty/imgui/backends/imgui_impl_vulkan.h"
 
@@ -29,7 +29,7 @@ VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 namespace
 {
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	void CheckVkResult(VkResult err)
 	{
 		if (err != VkResult::VK_SUCCESS)
@@ -146,7 +146,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::s
 
 	
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 	InitImgui(useVkformat, bufferNum, size);
 #endif
 }
@@ -327,7 +327,7 @@ Eugene::Graphics::~Graphics()
 	queue_.waitIdle();
 	device_->waitIdle();
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 	for (auto& image : imageDatas_)
 	{
@@ -417,7 +417,7 @@ Eugene::Graphics::~Graphics()
 //	return device_->allocateMemoryUnique(allocateInfo);
 //}
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 ImGui_ImplVulkanH_Window* Eugene::Graphics::GetImguiWindow(void)
 {
 	return &::imguiWindowH;
@@ -586,7 +586,7 @@ void Eugene::Graphics::ResizeBackBuffer(const glm::vec2& size,void* window) {
     auto swapChainFormat = CreateSwapChain(size);
     CreateBackBuffer(swapChainFormat, size);
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
     CreateImguiFrameBuffer(size);
 #endif
     device_->resetFences(*fence_);
@@ -764,7 +764,7 @@ std::pair<Eugene::GpuMemoryInfo, Eugene::GpuMemoryInfo> Eugene::Graphics::GetGpu
 
 
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 void Eugene::Graphics::ImguiNewFrame(void) const
 {
 	ImGui_ImplVulkan_NewFrame();

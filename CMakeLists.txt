@@ -23,9 +23,8 @@ if(EUGENE_USE_WINDOWS)
 elseif(EUGENE_USE_ANDROID)
 	set(EUGENE_USE_VULKAN ON)
 	set(EUGENE_USE_DX12 OFF)
+	
 endif()
-
-set(LIBRARY_OUTPUT_PATH ../)
 
 # システム系のクラスのソースファイルをセット
 set(SystemSource 
@@ -69,18 +68,14 @@ set(MathSource
 	Source/Math/Math.cpp
 )
 
-# サウンド系のクラスのソースファイルをセット
-set(SoundSource
-	
-	Source/Sound/SoundBase.cpp
-	
-	
-	
-	
-	Source/Sound/SoundFile.cpp
-	Source/Sound/SoundStreamFile.cpp
-)
-
+if (EUGENE_BUILD_SOUND)
+	# サウンド系のクラスのソースファイルをセット
+	set(SoundSource
+		Source/Sound/SoundBase.cpp
+		Source/Sound/SoundFile.cpp
+		Source/Sound/SoundStreamFile.cpp
+	)
+endif()
 
 
 if (EUGENE_USE_WINDOWS)
@@ -98,40 +93,43 @@ if (EUGENE_USE_WINDOWS)
 			 Include/ThirdParty/imgui/backends/imgui_impl_win32.cpp)
 	endif()
 
-	# サウンド系の実装クラスのソースファイルをセット
-	set(SoundApiSource
-		Source/Sound/Xaudio2/Xa2Sound.cpp
-		Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
-		Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
-		Source/Sound/Xaudio2/Xa2SoundControl.cpp
-		
-	)
+	if (EUGENE_BUILD_SOUND)
+		# サウンド系の実装クラスのソースファイルをセット
+		set(SoundApiSource
+			Source/Sound/Xaudio2/Xa2Sound.cpp
+			Source/Sound/Xaudio2/Xa2SoundSpeaker.cpp
+			Source/Sound/Xaudio2/Xa2SoundStreamSpeaker.cpp
+			Source/Sound/Xaudio2/Xa2SoundControl.cpp
+		)
+	endif()
+
 elseif(EUGENE_USE_ANDROID)
 	set(SystemApiSource
 		Source/System/Android/AndroidSystem.cpp
 		Source/System/Linux/SharedObject.cpp
 	)
 
-	set(
-		SoundApiSource
-		Source/Sound/AAudio/AaSound.cpp
-		Source/Sound/AAudio/AaSoundSpeaker.cpp
-		Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
-		Source/Sound/AAudio/AaSoundControl.cpp
-		Source/Sound/AAudio/AaSubmix.cpp
-		Source/Sound/AAudio/AaVoice.cpp
-		Source/Sound/AAudio/AaSourceVoice.cpp
-		Source/Sound/AAudio/AaMaster.cpp
-		Source/Sound/AAudio/resampler/IntegerRatio.cpp
-		Source/Sound/AAudio/resampler/LinearResampler.cpp
-		Source/Sound/AAudio/resampler/MultiChannelResampler.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResampler.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResamplerMono.cpp
-		Source/Sound/AAudio/resampler/PolyphaseResamplerStereo.cpp
-		Source/Sound/AAudio/resampler/SincResampler.cpp
-		Source/Sound/AAudio/resampler/SincResamplerStereo.cpp
-	)
-
+	if (EUGENE_BUILD_SOUND)
+		set(
+			SoundApiSource
+			Source/Sound/AAudio/AaSound.cpp
+			Source/Sound/AAudio/AaSoundSpeaker.cpp
+			Source/Sound/AAudio/AaSoundStreamSpeaker.cpp
+			Source/Sound/AAudio/AaSoundControl.cpp
+			Source/Sound/AAudio/AaSubmix.cpp
+			Source/Sound/AAudio/AaVoice.cpp
+			Source/Sound/AAudio/AaSourceVoice.cpp
+			Source/Sound/AAudio/AaMaster.cpp
+			Source/Sound/AAudio/resampler/IntegerRatio.cpp
+			Source/Sound/AAudio/resampler/LinearResampler.cpp
+			Source/Sound/AAudio/resampler/MultiChannelResampler.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResampler.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResamplerMono.cpp
+			Source/Sound/AAudio/resampler/PolyphaseResamplerStereo.cpp
+			Source/Sound/AAudio/resampler/SincResampler.cpp
+			Source/Sound/AAudio/resampler/SincResamplerStereo.cpp
+		)
+	endif()
 endif()
 
 if(EUGENE_USE_DX12 AND NOT EUGENE_USE_VULKAN)
@@ -219,13 +217,13 @@ if (EUGENE_USE_WINDOWS)
 	endif()
 elseif(EUGENE_USE_ANDROID)
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_ANDROID)
-
+	target_include_directories(EugeneLib PUBLIC ${EUGENE_AGDK_PATH}/include)
 	if (EUGENE_BUILD_SOUND)
 		target_compile_definitions(EugeneLib PUBLIC EUGENE_AAUDIO)
 	endif()
 
 	find_package(game-activity REQUIRED CONFIG)
-	target_link_libraries(EugeneLib PUBLIC android log game-activity::game-activity aaudio)
+	target_link_libraries(EugeneLib PUBLIC android log aaudio)
 endif()
 
 if (EUGENE_USE_DX12)
@@ -247,7 +245,7 @@ elseif(EUGENE_USE_VULKAN)
 endif()
 
 if (EUGENE_USE_IMGUI)
-	target_compile_definitions(EugeneLib PUBLIC USE_IMGUI)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_IMGUI)
 	target_include_directories(EugeneLib PUBLIC Include/ThirdParty/imgui)
 	target_include_directories(EugeneLib PUBLIC ./ImGuizmo)
 endif()
@@ -273,7 +271,7 @@ endif()
  target_include_directories(EugeneLib PUBLIC "Include/ThirdParty/mimalloc/include")
 
  # サンプルをビルドするか？
- if (EUGENE_BUILD_SAMPLE)
+ if (EUGENE_BUILD_SAMPLE AND NOT EUGENE_USE_ANDROID)
 	add_subdirectory("Sample")
  endif()
 

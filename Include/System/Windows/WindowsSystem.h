@@ -149,7 +149,7 @@ namespace Eugene
 			return hwnd;
 		}
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// IMGUIでフレーム開始処理を行う
@@ -187,7 +187,7 @@ namespace Eugene
 		/// </summary>
 		bool isActive_;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// Imgui用コンテキスト

@@ -4,23 +4,83 @@
 
 TEST_CASE("Game")
 {
-	std::unique_ptr<Eugene::System> sys;
-	REQUIRE_NOTHROW(sys.reset(Eugene::CreateSystem({ 1280.0f, 720.0f }, u8"Test")));
-	CHECK(static_cast<glm::ivec2>(sys->GetWindowSize()) == glm::ivec2{ 1280, 720 });
+	REQUIRE_NOTHROW(Eugene::System::Create({ 1280.0f, 720.0f }, u8"Test"));
 
-	std::unique_ptr<Eugene::Graphics> graphics;
-	std::unique_ptr<Eugene::GpuEngine> gpuEngine;
+	// ウィンドウサイズの取得をチェック
+	CHECK(static_cast<glm::ivec2>(Eugene::System::GetInstance().GetWindowSize()) == glm::ivec2{1280, 720});
+
+	CHECK(Eugene::System::GetInstance().GetWindow());
+
+	constexpr auto bufferNum = 2u;
+	Eugene::GpuEngine gpuEngine;
 	REQUIRE_NOTHROW(
-		auto tmp = sys->CreateGraphicsUnique();
-		graphics = std::move(tmp.first);
-		gpuEngine = std::move(tmp.second);
+		Eugene::Graphics::Create(bufferNum)
 	);
 
-	std::unique_ptr<Eugene::BufferResource> buffer;
-	REQUIRE_NOTHROW(buffer.reset(graphics->CreateBufferResource(256)));
+	// バッファの数をチェック
+	CHECK(Eugene::Graphics::GetInstance().GetViews().GetSize() == bufferNum);
 
-	std::unique_ptr<Eugene::Sound> sound;
-	REQUIRE_NOTHROW(sound.reset(Eugene::CreateSound()));
+	{
+		Eugene::BufferResource buffer;
+
+		// バッファリソース生成
+		REQUIRE_NOTHROW(buffer = Eugene::Graphics::GetInstance().CreateBufferResource(256));
+
+		// API側のリソース取得してチェック
+		CHECK(buffer.GetResource());
+
+		// サイズチェック
+		CHECK(buffer.GetSize() == 256);
+
+		// マップ可能かのチェック
+		CHECK(!buffer.CanMap());
+
+		buffer.Final();
+
+		buffer = Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256);
+
+		// API側のリソース取得してチェック
+		CHECK(buffer.GetResource());
+
+		// サイズチェック
+		CHECK(buffer.GetSize() == 256);
+
+		// マップ可能かのチェック
+		CHECK(buffer.CanMap());
+
+		buffer.Final();
+	}
+
+	{
+		Eugene::ImageResource imageResource;
+		// Imageリソース生成
+		REQUIRE_NOTHROW(imageResource = Eugene::Graphics::GetInstance().CreateImageResource({640,480}, Eugene::Format::AUTO_BACKBUFFER));
+
+		// API側のリソース取得してチェック
+		CHECK(imageResource.GetResource());
+
+		// サイズチェック
+		CHECK(imageResource.GetSize() == glm::ivec2{640, 480});
+
+		// マップ可能かのチェック
+		CHECK(!imageResource.CanMap());
+
+		//フォーマットチェック
+		CHECK(imageResource.GetFormat() == Eugene::Graphics::BackBufferFormat());
+
+		imageResource.Final();
+	}
+
+	gpuEngine.Final();
+	REQUIRE_NOTHROW(Eugene::Graphics::Destroy());
+
+#ifdef EUGENE_SOUND
+	REQUIRE_NOTHROW(Eugene::Sound::Create());
+	
+	REQUIRE_NOTHROW(Eugene::Sound::Destroy());
+#endif
+
+	REQUIRE_NOTHROW(Eugene::System::Destroy());
 }
 
 TEST_CASE("AlignmentedSize")

@@ -263,7 +263,7 @@ namespace Eugene
 		/// <param name="src"></param>
 		void CopyBuffer(BufferResource& dest, BufferResource& src);
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 		/// <summary>
 		/// ImGui用のコマンドをセットする
 		/// </summary>

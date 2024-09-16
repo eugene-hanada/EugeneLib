@@ -83,6 +83,7 @@ namespace Eugene
 			resource_ = std::move(bufferResource.resource_);
 			allocation_ = std::move(bufferResource.allocation_);
 			canMap_ = bufferResource.canMap_;
+			return *this;
 		}
 
 		/// <summary>

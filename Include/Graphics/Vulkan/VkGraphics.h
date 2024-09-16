@@ -28,7 +28,7 @@ struct android_app;
 
 
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 struct ImGui_ImplVulkanH_Window;
 #endif
 
@@ -408,7 +408,7 @@ namespace Eugene
 		/// <returns></returns>
 		std::pair<GpuMemoryInfo, GpuMemoryInfo> GetGpuMemoryInfo(void) const;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 		/// <summary>
 		/// Imguiのフレーム開始処理
 		/// </summary>
@@ -433,7 +433,7 @@ private:
 
 		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum);
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 		ImGui_ImplVulkanH_Window* GetImguiWindow(void);
 		vk::RenderPass GetRenderPass(void);
 		vk::Framebuffer GetFrameBuffer(void);
@@ -541,7 +541,7 @@ private:
 		/// </summary>
 		static inline Format backBufferFormat_;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// Imgui用の画像データ

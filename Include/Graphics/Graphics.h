@@ -326,7 +326,7 @@ namespace Eugene
 		/// <returns></returns>
 		const std::uint8_t GetMaxMultiSampleCount() const;
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 
 		/// <summary>
 		/// imgui用のフレーム開始の処理をする

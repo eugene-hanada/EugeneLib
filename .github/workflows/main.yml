@@ -1,4 +1,4 @@
-name: develop
+name: main
 
 on:
   push:
@@ -30,20 +30,20 @@ jobs:
       # ビルド
     - name: Build
       run: |
-        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
+        cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DEUGENE_BUILD_DOCTEST=ON -DMI_OVERRIDE=OFF -A x64
         cmake --build ${{github.workspace}}/build
-    
-    # テストをビルド
-    - name: BuildTest
+    - name: RunTest
       run: |
-        cmake -S ${{github.workspace}}/Test -B ${{github.workspace}}/Test/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -A x64
-        cmake --build ${{github.workspace}}/Test/build
-        
-    - name: Run Tests
-      run: ${{github.workspace}}\Test\build\Debug\tests.exe --reporter junit --out ./result.xml
-
-    - name: Show test results
+        ${{github.workspace}}/build/Test/${{env.BUILD_TYPE}}/tests.exe -r=junit -o="./result.xml"
+    
+    - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
       with:
-        check_name: Catch2 tests
-        path: ${{github.workspace}}/result.xml
+        files: |
+           ${{github.workspace}}/result.xml
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MyArtifact
+        path: ${{github.workspace}}/${{env.BUILD_TYPE}}/EugeneLib.lib

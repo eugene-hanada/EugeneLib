@@ -6,7 +6,7 @@ TEST_CASE("Game")
 {
 	REQUIRE_NOTHROW(Eugene::System::Create({ 1280.0f, 720.0f }, u8"Test"));
 
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY‚Ìæ“¾‚ğƒ`ƒFƒbƒN
+	// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Tï¿½Cï¿½Yï¿½Ìæ“¾ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 	CHECK(static_cast<glm::ivec2>(Eugene::System::GetInstance().GetWindowSize()) == glm::ivec2{1280, 720});
 
 	CHECK(Eugene::System::GetInstance().GetWindow());
@@ -17,35 +17,35 @@ TEST_CASE("Game")
 		Eugene::Graphics::Create(bufferNum)
 	);
 
-	// ƒoƒbƒtƒ@‚Ì”‚ğƒ`ƒFƒbƒN
+	// ï¿½oï¿½bï¿½tï¿½@ï¿½Ìï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
 	CHECK(Eugene::Graphics::GetInstance().GetViews().GetSize() == bufferNum);
 
 	{
 		Eugene::BufferResource buffer;
 
-		// ƒoƒbƒtƒ@ƒŠƒ\[ƒX¶¬
+		// ï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ï¿½ï¿½ï¿½
 		REQUIRE_NOTHROW(buffer = Eugene::Graphics::GetInstance().CreateBufferResource(256));
 
-		// API‘¤‚ÌƒŠƒ\[ƒXæ“¾‚µ‚Äƒ`ƒFƒbƒN
+		// APIï¿½ï¿½ï¿½Ìƒï¿½ï¿½\ï¿½[ï¿½Xï¿½æ“¾ï¿½ï¿½ï¿½Äƒ`ï¿½Fï¿½bï¿½N
 		CHECK(buffer.GetResource());
 
-		// ƒTƒCƒYƒ`ƒFƒbƒN
+		// ï¿½Tï¿½Cï¿½Yï¿½`ï¿½Fï¿½bï¿½N
 		CHECK(buffer.GetSize() == 256);
 
-		// ƒ}ƒbƒv‰Â”\‚©‚Ìƒ`ƒFƒbƒN
+		// ï¿½}ï¿½bï¿½vï¿½Â”\ï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 		CHECK(!buffer.CanMap());
 
 		buffer.Final();
 
 		buffer = Eugene::Graphics::GetInstance().CreateUnloadableBufferResource(256);
 
-		// API‘¤‚ÌƒŠƒ\[ƒXæ“¾‚µ‚Äƒ`ƒFƒbƒN
+		// APIï¿½ï¿½ï¿½Ìƒï¿½ï¿½\ï¿½[ï¿½Xï¿½æ“¾ï¿½ï¿½ï¿½Äƒ`ï¿½Fï¿½bï¿½N
 		CHECK(buffer.GetResource());
 
-		// ƒTƒCƒYƒ`ƒFƒbƒN
+		// ï¿½Tï¿½Cï¿½Yï¿½`ï¿½Fï¿½bï¿½N
 		CHECK(buffer.GetSize() == 256);
 
-		// ƒ}ƒbƒv‰Â”\‚©‚Ìƒ`ƒFƒbƒN
+		// ï¿½}ï¿½bï¿½vï¿½Â”\ï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 		CHECK(buffer.CanMap());
 
 		buffer.Final();
@@ -53,19 +53,19 @@ TEST_CASE("Game")
 
 	{
 		Eugene::ImageResource imageResource;
-		// ImageƒŠƒ\[ƒX¶¬
+		// Imageï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ï¿½ï¿½ï¿½
 		REQUIRE_NOTHROW(imageResource = Eugene::Graphics::GetInstance().CreateImageResource({640,480}, Eugene::Format::AUTO_BACKBUFFER));
 
-		// API‘¤‚ÌƒŠƒ\[ƒXæ“¾‚µ‚Äƒ`ƒFƒbƒN
+		// APIï¿½ï¿½ï¿½Ìƒï¿½ï¿½\ï¿½[ï¿½Xï¿½æ“¾ï¿½ï¿½ï¿½Äƒ`ï¿½Fï¿½bï¿½N
 		CHECK(imageResource.GetResource());
 
-		// ƒTƒCƒYƒ`ƒFƒbƒN
+		// ï¿½Tï¿½Cï¿½Yï¿½`ï¿½Fï¿½bï¿½N
 		CHECK(imageResource.GetSize() == glm::ivec2{640, 480});
 
-		// ƒ}ƒbƒv‰Â”\‚©‚Ìƒ`ƒFƒbƒN
+		// ï¿½}ï¿½bï¿½vï¿½Â”\ï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½N
 		CHECK(!imageResource.CanMap());
 
-		//ƒtƒH[ƒ}ƒbƒgƒ`ƒFƒbƒN
+		//ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½`ï¿½Fï¿½bï¿½N
 		CHECK(imageResource.GetFormat() == Eugene::Graphics::BackBufferFormat());
 
 		imageResource.Final();

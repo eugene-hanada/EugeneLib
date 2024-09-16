@@ -43,7 +43,7 @@ jobs:
         files: |
            ${{github.workspace}}/result.xml
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: MyArtifact
         path: ${{github.workspace}}/${{env.BUILD_TYPE}}/EugeneLib.lib

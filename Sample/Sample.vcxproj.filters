@@ -23,5 +23,6 @@
     <FxCompile Include="PixelShader.hlsl" />
     <FxCompile Include="VertexShader.hlsl" />
     <FxCompile Include="MultiRenderTargetPS.hlsl" />
+    <FxCompile Include="ComputeShader.hlsl" />
   </ItemGroup>
 </Project>

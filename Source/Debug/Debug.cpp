@@ -194,7 +194,6 @@ void Eugene::Debug::Out(Type type, const std::string_view& string)
 		
 		if (logStringBuffer_.size() > 0)
 		{
-			logStringBuffer_.erase(logStringBuffer_.size() - 1);
 			logStringBuffer_ += '\n';
 		}
 		

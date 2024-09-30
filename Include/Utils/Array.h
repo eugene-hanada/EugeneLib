@@ -1,4 +1,4 @@
-﻿#pragma
+﻿#pragma once
 #include <memory>
 
 namespace Eugene
@@ -16,7 +16,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"> サイズ </param>
 		Array(std::size_t size) :
-			pointer_{ new T[size]() }, size_{size}
+			pointer_{ new T[size]() }, size_{ size }
 		{
 		}
 
@@ -24,7 +24,7 @@ namespace Eugene
 		/// デフォルトコンストラクタ
 		/// </summary>
 		Array() noexcept :
-			size_{0}
+			size_{ 0 }
 		{
 		}
 
@@ -34,13 +34,13 @@ namespace Eugene
 		/// <param name="size"> サイズ </param>
 		constexpr void Resize(std::size_t size)
 		{
-			std::unique_ptr<T[]> newPointer{new T[size]()};
-			std::size_t copySize = size;
+			std::unique_ptr<T[]> newPointer{ new T[size]() };
+			std::size_t copySize = size_;
 			if (size < size_)
 			{
-				copySize = size_;
+				copySize = size;
 			}
-			
+
 			for (std::size_t i = 0; i < copySize; i++)
 			{
 				new(newPointer.get() + i)T{ std::move(*(pointer_.get() + i)) };
@@ -73,9 +73,9 @@ namespace Eugene
 		struct iterator
 		{
 			iterator();
-			
+
 			iterator(Array* arrayPtr, std::size_t index) :
-				arrayPtr_{arrayPtr}, index_{index}
+				arrayPtr_{ arrayPtr }, index_{ index }
 			{
 			}
 
@@ -196,7 +196,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		constexpr const T& operator[](std::size_t index) const &
+		constexpr const T& operator[](std::size_t index) const&
 		{
 			if (index >= size_)
 			{
@@ -210,11 +210,11 @@ namespace Eugene
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		T& operator[](std::size_t index) &
+		T& operator[](std::size_t index)&
 		{
 			if (index >= size_)
 			{
-				throw std::out_of_range{"範囲外です"};
+				throw std::out_of_range{ "範囲外です" };
 			}
 			return *(pointer_.get() + index);
 		}

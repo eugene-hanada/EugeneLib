@@ -64,6 +64,7 @@ namespace Eugene
 		{
 			pipeline_.state_ = std::move(pipeline.pipeline_.state_);
 			pipeline_.rootSignature_ = std::move(pipeline.pipeline_.rootSignature_);
+			return *this;
 		}
 
 		Pipeline(const Pipeline& pipeline) = delete;

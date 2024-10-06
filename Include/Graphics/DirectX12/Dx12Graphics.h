@@ -477,7 +477,7 @@ private:
 		// スワップチェイン
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_{ nullptr };
 	
-		std::vector<ImageResource> buffers_;
+		std::vector<ImageResource,mi_stl_allocator<ImageResource>> buffers_;
 
 		RenderTargetViews renderTargetViews_;
 

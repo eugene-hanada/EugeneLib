@@ -62,6 +62,7 @@ namespace Eugene
 		{
 			cmdList_ = std::move(cmdList.cmdList_);
 			cmdAllocator_ = std::move(cmdList.cmdAllocator_);
+			return *this;
 		}
 
 		/// <summary>

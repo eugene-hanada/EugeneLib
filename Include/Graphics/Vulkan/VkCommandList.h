@@ -273,6 +273,7 @@ namespace Eugene
 			commandBuffer_ = std::move(cmdList.commandBuffer_);
 			isRendering_ = cmdList.isRendering_;
 			nowLayout_ = std::move(cmdList.nowLayout_);
+			return *this;
 		}
 
 

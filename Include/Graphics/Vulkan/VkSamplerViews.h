@@ -2,6 +2,7 @@
 #include <vulkan/vulkan.hpp>
 #include "../../Utils//ArgsSpan.h"
 #include "../GraphicsCommon.h"
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -26,6 +27,7 @@ namespace Eugene
 			{
 				descriptorSet_ = std::move(data.descriptorSet_);
 				layout_ = std::move(data.layout_);
+				return *this;
 			}
 
 			vk::UniqueDescriptorSet descriptorSet_;
@@ -69,6 +71,7 @@ namespace Eugene
 			descriptorPool_ = std::move(views.descriptorPool_);
 			data_ = std::move(views.data_);
 			typeData_ = std::move(views.typeData_);
+			return *this;
 		}
 
 		/// <summary>
@@ -90,7 +93,7 @@ namespace Eugene
 		
 		vk::UniqueDescriptorPool descriptorPool_;
 		Data data_;
-		std::vector<std::pair<std::uint32_t, std::uint32_t>> typeData_;
+		std::vector<std::pair<std::uint32_t, std::uint32_t>, mi_stl_allocator<std::pair<std::uint32_t, std::uint32_t>>> typeData_;
 
 		friend class Graphics;
 	};

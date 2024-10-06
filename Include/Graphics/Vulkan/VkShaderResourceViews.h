@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include "../../Utils/ArgsSpan.h"
 #include <map>
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -31,6 +32,7 @@ namespace Eugene
 			{
 				descriptorSet_ = std::move(data.descriptorSet_);
 				layout_ = std::move(data.layout_);
+				return *this;
 			}
 
 			/// <summary>
@@ -110,6 +112,7 @@ namespace Eugene
 			data_ = std::move(views.data_);
 			typeData_ = std::move(views.typeData_);
 			imageViewMap_ = std::move(views.imageViewMap_);
+			return *this;
 		}
 
 		/// <summary>
@@ -143,12 +146,12 @@ namespace Eugene
 		/// <summary>
 		/// インデックスごとのビュータイプとbindingと配列の要素数
 		/// </summary>
-		std::vector<std::tuple<ViewType, std::uint32_t, std::uint32_t>> typeData_;
+		std::vector<std::tuple<ViewType, std::uint32_t, std::uint32_t>, mi_stl_allocator<std::tuple<ViewType, std::uint32_t, std::uint32_t>>> typeData_;
 
 		/// <summary>
 		/// ImageViewのマップ
 		/// </summary>
-		std::map<std::uint64_t, vk::UniqueImageView> imageViewMap_;
+		std::map<std::uint64_t, vk::UniqueImageView, std::less<std::uint64_t>,  mi_stl_allocator<std::pair<const std::uint64_t, vk::UniqueImageView>> > imageViewMap_;
 
 		friend class Graphics;
 	};

@@ -520,7 +520,7 @@ private:
 		/// <summary>
 		/// バックバッファ
 		/// </summary>
-		std::vector<ImageResource> buffers_;
+		std::vector<ImageResource, mi_stl_allocator<ImageResource>> buffers_;
 		
 		/// <summary>
 		/// レンダーターゲットビュー
@@ -572,12 +572,12 @@ private:
 		/// <summary>
 		/// Imgui用フレームバッファ
 		/// </summary>
-		std::vector<vk::UniqueFramebuffer> imguiFrameBuffer_;
+		std::vector<vk::UniqueFramebuffer, mi_stl_allocator<vk::UniqueFramebuffer>> imguiFrameBuffer_;
 
 		/// <summary>
 		/// Imgui用イメージデータ
 		/// </summary>
-		std::vector<ImguiImageData> imageDatas_;
+		std::vector<ImguiImageData, mi_stl_allocator<ImguiImageData>> imageDatas_;
 
 		/// <summary>
 		/// Imgui用サンプラー

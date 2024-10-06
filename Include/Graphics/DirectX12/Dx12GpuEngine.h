@@ -2,6 +2,7 @@
 #include <wrl.h>
 #include <vector>
 #include <d3d12.h>
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -124,7 +125,7 @@ namespace Eugene
 		/// <summary>
 		/// 実行するコマンドリスト
 		/// </summary>
-		std::vector<ID3D12CommandList*> commandLists_;
+		std::vector<ID3D12CommandList*, mi_stl_allocator<ID3D12CommandList*>> commandLists_;
 
 		friend class Graphics;
 	};

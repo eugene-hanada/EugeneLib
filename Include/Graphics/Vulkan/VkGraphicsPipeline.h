@@ -58,6 +58,7 @@ namespace Eugene
 		{
 			data_.layout_ = std::move(pipeline.data_.layout_);
 			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
+			return *this;
 		}
 
 		Pipeline(const Pipeline&) = delete;

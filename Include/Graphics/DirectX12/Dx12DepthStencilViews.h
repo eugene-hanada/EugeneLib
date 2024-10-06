@@ -62,8 +62,8 @@ namespace Eugene
 			descriptorHeap_ = std::move(views.descriptorHeap_);
 			size_ = views.size_;
 			isShaderVisible_ = views.isShaderVisible_;
-
 			views.size_ = 0;
+			return *this;
 		}
 
 		/// <summary>

@@ -75,6 +75,7 @@ namespace Eugene
 			size_ = views.size_;
 			views.size_ = 0;
 			isShaderVisible_ = views.isShaderVisible_;
+			return *this;
 		}
 
 		/// <summary>

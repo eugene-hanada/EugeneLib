@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vulkan/vulkan.hpp>
 #include <vector>
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -86,7 +87,7 @@ namespace Eugene
 		/// <summary>
 		/// 実行するコマンドバッファ
 		/// </summary>
-		std::vector<vk::CommandBuffer> cmdBuffers_;
+		std::vector<vk::CommandBuffer, mi_stl_allocator<vk::CommandBuffer>> cmdBuffers_;
 
 		friend class Graphics;
 	};

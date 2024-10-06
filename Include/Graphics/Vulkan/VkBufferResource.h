@@ -83,6 +83,7 @@ namespace Eugene
 			canMap_ = bufferResource.canMap_;
 			mapCount_ = bufferResource.mapCount_;
 			size_ = bufferResource.size_;
+			return *this;
 		}
 
 		/// <summary>

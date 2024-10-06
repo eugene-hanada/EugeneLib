@@ -19,6 +19,7 @@ namespace Eugene
 		ResourceBindLayout& operator=(ResourceBindLayout&& bindLayout) noexcept
 		{
 			rootSignature_ = std::move(bindLayout.rootSignature_);
+			return *this;
 		}
 
 		/// <summary>

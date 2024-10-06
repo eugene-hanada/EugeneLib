@@ -75,6 +75,7 @@ namespace Eugene
 		{
 			buffer_ = view.buffer_;
 			vertexNum_ = view.vertexNum_;
+			return *this;
 		}
 	private:
 		

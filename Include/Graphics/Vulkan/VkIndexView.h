@@ -83,6 +83,7 @@ namespace Eugene
 		{
 			buffer_ = view.buffer_;
 			indexNum_ = view.indexNum_;
+			return *this;
 		}
 	private:
 	

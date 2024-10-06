@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <vulkan/vulkan.hpp>
+#include <mimalloc.h>
 #include "../../../Include/Math/Math.h"
 
 namespace Eugene
@@ -96,7 +97,7 @@ namespace Eugene
 		/// <summary>
 		/// ビューのデータ
 		/// </summary>
-		std::vector<Data> imageViews_;
+		std::vector<Data, mi_stl_allocator<Data>> imageViews_;
 
 		friend class Graphics;
 	};

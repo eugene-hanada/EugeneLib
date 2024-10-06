@@ -40,6 +40,7 @@ namespace Eugene
 		Sampler& operator=(Sampler&& sampler) noexcept
 		{
 			desc_ = sampler.desc_;
+			return *this;
 		}
 		Sampler(const Sampler&) = delete;
 		Sampler& operator=(const Sampler&) = delete;

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vulkan/vulkan.hpp>
 #include <vector>
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -40,6 +41,7 @@ namespace Eugene
 		DepthStencilViews& operator=(DepthStencilViews&& views) noexcept
 		{
 			imageViews_ = std::move(views.imageViews_);
+			return *this;
 		}
 
 		DepthStencilViews(const DepthStencilViews&) = delete;
@@ -53,7 +55,7 @@ namespace Eugene
 		/// <summary>
 		/// ImageViewsのstd::vector
 		/// </summary>
-		std::vector<vk::UniqueImageView> imageViews_;
+		std::vector<vk::UniqueImageView, mi_stl_allocator<vk::UniqueImageView>> imageViews_;
 
 		friend class Graphics;
 	};

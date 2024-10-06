@@ -13,7 +13,7 @@
 #include "../../../Include/Graphics/Vulkan/VkSamplerViews.h"
 #include "../../../Include/Graphics/Image.h"
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 #include <imgui.h>
 #include <backends/imgui_impl_vulkan.h>
 #endif
@@ -598,7 +598,7 @@ void Eugene::CommandList::TransitionUnorderedAccessEnd(BufferResource& resource)
 {
 }
 
-#ifdef USE_IMGUI
+#ifdef EUGENE_IMGUI
 void Eugene::CommandList::SetImguiCommand(ImDrawData* data) const
 {
 	const bool main_is_minimized = (data->DisplaySize.x <= 0.0f || data->DisplaySize.y <= 0.0f);

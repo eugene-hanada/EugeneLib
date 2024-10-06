@@ -71,6 +71,7 @@ namespace Eugene
 			descriptorHeap_ = std::move(samplerViews.descriptorHeap_);
 			size_ = samplerViews.size_;
 			samplerViews.size_ = 0;
+			return *this;
 		}
 	private:
 		SamplerViews(std::uint32_t size)

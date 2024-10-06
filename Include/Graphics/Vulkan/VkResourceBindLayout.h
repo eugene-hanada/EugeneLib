@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 #include "../../Utils/ArgsSpan.h"
+#include <mimalloc.h>
 
 namespace Eugene
 {
@@ -42,6 +43,7 @@ namespace Eugene
 		{
 			descriptorLayoutArray_ = std::move(resourceBind.descriptorLayoutArray_);
 			pipelineLayout_ = std::move(resourceBind.pipelineLayout_);
+			return *this;
 		}
 
 		ResourceBindLayout(const ResourceBindLayout&) = delete;
@@ -54,7 +56,7 @@ namespace Eugene
 		/// <summary>
 		/// ディスクリプタセットのレイアウト
 		/// </summary>
-		std::vector<vk::DescriptorSetLayout> descriptorLayoutArray_;
+		std::vector<vk::DescriptorSetLayout, mi_stl_allocator<vk::DescriptorSetLayout>> descriptorLayoutArray_;
 
 		/// <summary>
 		/// パイプラインのレイアウト

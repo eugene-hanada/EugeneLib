@@ -108,7 +108,7 @@ namespace Eugene
 		/// データのポインタを取得
 		/// </summary>
 		/// <returns></returns>
-		constexpr const T* data() const noexcept
+		constexpr T* data() const noexcept
 		{
 			return pointer_.get();
 		}

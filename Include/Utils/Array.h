@@ -21,11 +21,57 @@ namespace Eugene
 		}
 
 		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="array"></param>
+		Array(Array&& array) noexcept :
+			pointer_{ std::move(array.pointer_) }, size_{ array.size_ }
+		{
+			array.size_ = 0;
+		}
+
+		/// <summary>
+		/// コピーコンストラクタ
+		/// </summary>
+		/// <param name="array"></param>
+		Array(const Array& array) noexcept :
+			Array{}
+		{
+			Resize(array.size());
+			std::copy_n(array.cbegin(), array.size(), begin());
+		}
+
+		/// <summary>
 		/// デフォルトコンストラクタ
 		/// </summary>
 		Array() noexcept :
 			size_{ 0 }
 		{
+		}
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="array"></param>
+		/// <returns></returns>
+		Array& operator=(Array&& array) noexcept
+		{
+			pointer_ = std::move(array.pointer_);
+			size_ = array.size_;
+			array.size_ = 0;
+			return *this;
+		}
+
+		/// <summary>
+		/// コピー演算子
+		/// </summary>
+		/// <param name="array"></param>
+		/// <returns></returns>
+		Array& operator=(const Array& array) noexcept
+		{
+			Resize(array.size());
+			std::copy_n(array.cbegin(), array.size(), begin());
+			return *this;
 		}
 
 		/// <summary>

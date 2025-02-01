@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <memory>
+#include "EugeneLibException.h"
 
 namespace Eugene
 {
@@ -246,7 +247,7 @@ namespace Eugene
 		{
 			if (index >= size_)
 			{
-				throw std::out_of_range{ "範囲外です" };
+				throw EugeneLibException( "範囲外です" );
 			}
 			return *(pointer_.get() + index);
 		}
@@ -260,7 +261,7 @@ namespace Eugene
 		{
 			if (index >= size_)
 			{
-				throw std::out_of_range{ "範囲外です" };
+				throw EugeneLibException{ "範囲外です" };
 			}
 			return *(pointer_.get() + index);
 		}

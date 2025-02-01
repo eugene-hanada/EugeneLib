@@ -10,16 +10,22 @@ Eugene::Shader::Shader(const std::filesystem::path& path)
 	{
 		throw EugeneLibException{"ファイルを開けませんでした"};
 	}
-	code_.resize((std::filesystem::file_size(path) / 4ull) * 4ull);
-	file.read(code_.data(), code_.size());
+	byteCode_.Resize((std::filesystem::file_size(path) / 4ull) * 4ull);
+	file.read(reinterpret_cast<char*>(byteCode_.data()), byteCode_.size());
 }
 
-const char* Eugene::Shader::GetPtr(void) const
+Eugene::Shader::Shader(std::span<const std::uint8_t> byteCode) :
+	byteCode_{(byteCode.size() / 4ull) * 4ull}
 {
-	return code_.data();
+	std::copy_n(byteCode.begin(), byteCode_.size(), byteCode_.begin());
 }
 
-std::uint64_t Eugene::Shader::GetSize(void) const
+const char* Eugene::Shader::GetPtr(void) const noexcept
 {
-	return code_.size();
+	return reinterpret_cast<const char*>(byteCode_.data());
+}
+
+std::uint64_t Eugene::Shader::GetSize(void) const noexcept
+{
+	return byteCode_.size();
 }

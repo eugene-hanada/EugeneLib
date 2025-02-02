@@ -7,7 +7,7 @@ namespace Eugene
 	class SpinLock
 	{
 	public:
-		SpinLock() noexcept : flag_(ATOMIC_FLAG_INIT) {}
+		SpinLock() noexcept {}
 
 		void lock() noexcept
 		{

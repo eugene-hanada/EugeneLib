@@ -73,6 +73,11 @@ namespace Eugene
 			engine_.seed(std::random_device()());
 		}
 
+		Random(std::uint64_t seed)
+		{
+			engine_.seed(seed);
+		}
+
 		/// <summary>
 		/// 引数で指定した確率でtrueを返す
 		/// </summary>

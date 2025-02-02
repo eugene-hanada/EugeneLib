@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <memory>
+#include "EugeneLibException.h"
 
 namespace Eugene
 {
@@ -21,11 +22,57 @@ namespace Eugene
 		}
 
 		/// <summary>
+		/// ムーブコンストラクタ
+		/// </summary>
+		/// <param name="array"></param>
+		Array(Array&& array) noexcept :
+			pointer_{ std::move(array.pointer_) }, size_{ array.size_ }
+		{
+			array.size_ = 0;
+		}
+
+		/// <summary>
+		/// コピーコンストラクタ
+		/// </summary>
+		/// <param name="array"></param>
+		Array(const Array& array) noexcept :
+			Array{}
+		{
+			Resize(array.size());
+			std::copy_n(array.cbegin(), array.size(), begin());
+		}
+
+		/// <summary>
 		/// デフォルトコンストラクタ
 		/// </summary>
 		Array() noexcept :
 			size_{ 0 }
 		{
+		}
+
+		/// <summary>
+		/// ムーブ演算子
+		/// </summary>
+		/// <param name="array"></param>
+		/// <returns></returns>
+		Array& operator=(Array&& array) noexcept
+		{
+			pointer_ = std::move(array.pointer_);
+			size_ = array.size_;
+			array.size_ = 0;
+			return *this;
+		}
+
+		/// <summary>
+		/// コピー演算子
+		/// </summary>
+		/// <param name="array"></param>
+		/// <returns></returns>
+		Array& operator=(const Array& array) noexcept
+		{
+			Resize(array.size());
+			std::copy_n(array.cbegin(), array.size(), begin());
+			return *this;
 		}
 
 		/// <summary>
@@ -62,7 +109,7 @@ namespace Eugene
 		/// データのポインタを取得
 		/// </summary>
 		/// <returns></returns>
-		constexpr const T* data() const noexcept
+		constexpr T* data() const noexcept
 		{
 			return pointer_.get();
 		}
@@ -200,7 +247,7 @@ namespace Eugene
 		{
 			if (index >= size_)
 			{
-				throw std::out_of_range{ "範囲外です" };
+				throw EugeneLibException( "範囲外です" );
 			}
 			return *(pointer_.get() + index);
 		}
@@ -214,7 +261,7 @@ namespace Eugene
 		{
 			if (index >= size_)
 			{
-				throw std::out_of_range{ "範囲外です" };
+				throw EugeneLibException{ "範囲外です" };
 			}
 			return *(pointer_.get() + index);
 		}

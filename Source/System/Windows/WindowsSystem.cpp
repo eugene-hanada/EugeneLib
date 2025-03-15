@@ -90,7 +90,6 @@ namespace {
 			return DefWindowProc(hwnd, msg, wparam, lparam);
 		}
 	}
-
 }
 
 Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::intptr_t other, std::span<std::string_view> directories):
@@ -112,6 +111,12 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 		throw EugeneLibException("Comの初期化に失敗");
 	}
 
+	auto mode = reinterpret_cast<const WindowMode&>(other);
+	if (mode == WindowMode::None)
+	{
+		return;
+	}
+
 	std::filesystem::path tmpTitle{ title };
 	::windowClass.cbSize = sizeof(WNDCLASSEX);
 	::windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
@@ -124,29 +129,64 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
-	auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+
+	DWORD style = 0;
+
+	switch (mode)
+	{
+	case WindowMode::Window:
+		style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+		break;
+	case WindowMode::Borderless:
+		style = (WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS) & (~WS_BORDER) & (~WS_DLGFRAME) & (~WS_THICKFRAME);
+		style |= static_cast<long>(WS_POPUP);
+		break;
+	default:
+		// 何もしない
+		break;
+	}
+	
+
 	if (!AdjustWindowRect(&wSize, style, false))
 	{
 		throw EugeneLibException("ウィンドウサイズ調整に失敗");
 	}
 
-	// ウィンドウの生成
-	hwnd = CreateWindow(
-		::windowClass.lpszClassName,
-		tmpTitle.c_str(),
-		style,			// タイトルバーと境界線のあるウィンドウ
-		CW_USEDEFAULT,					// OSに任せる
-		CW_USEDEFAULT,
-		wSize.right - wSize.left,		// ウィンドウ幅と高さ
-		wSize.bottom - wSize.top,
-		nullptr,
-		nullptr,
-		windowClass.hInstance,
-		nullptr
-	);
-
-
-	SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE | WS_EX_ACCEPTFILES);
+	if (mode == WindowMode::Transparent)
+	{
+		hwnd = CreateWindow(
+			::windowClass.lpszClassName,
+			tmpTitle.c_str(),
+			WS_POPUP,			// タイトルバーと境界線のあるウィンドウ
+			CW_USEDEFAULT,					// OSに任せる
+			CW_USEDEFAULT,
+			wSize.right - wSize.left,		// ウィンドウ幅と高さ
+			wSize.bottom - wSize.top,
+			nullptr,
+			nullptr,
+			windowClass.hInstance,
+			nullptr
+		);
+		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST);
+	}
+	else
+	{
+		// ウィンドウの生成
+		hwnd = CreateWindow(
+			::windowClass.lpszClassName,
+			tmpTitle.c_str(),
+			style,			// タイトルバーと境界線のあるウィンドウ
+			CW_USEDEFAULT,					// OSに任せる
+			CW_USEDEFAULT,
+			wSize.right - wSize.left,		// ウィンドウ幅と高さ
+			wSize.bottom - wSize.top,
+			nullptr,
+			nullptr,
+			windowClass.hInstance,
+			nullptr
+		);
+		SetWindowLong(hwnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE | WS_EX_ACCEPTFILES);
+	}
 	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY), &monitorInfo);
@@ -163,7 +203,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 
 	maxWindowSize_ = {static_cast<float>(monitorWidth), static_cast<float>(monitorHeight)};
 
-	SetWindowPos(hwnd, nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
+	SetWindowPos(hwnd, mode == WindowMode::Transparent ? HWND_TOPMOST : nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
 
 	ShowWindow(hwnd, SW_SHOW);
 

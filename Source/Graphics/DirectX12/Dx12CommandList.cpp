@@ -260,6 +260,62 @@ void Eugene::CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 	cmdList_->ResourceBarrier(subResource, barrier.data());
 }
 
+void Eugene::CommandList::CopyTexture(BufferResource& dest, ImageResource& src)
+{
+	auto dx12source{ static_cast<ID3D12Resource*>(src.GetResource()) };
+	auto dx12destination{ static_cast<ID3D12Resource*>(dest.GetResource()) };
+	ID3D12Device* device{ nullptr };
+	if (FAILED(dx12source->GetDevice(__uuidof(*device), reinterpret_cast<void**>(&device))))
+	{
+		return;
+	}
+
+	auto subResource = dx12source->GetDesc().MipLevels * dx12source->GetDesc().DepthOrArraySize;
+	std::array<CD3DX12_RESOURCE_BARRIER, maxSubResource> barrier;
+
+	for (int i = 0; i < subResource; i++)
+	{
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12source, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_SOURCE, i);
+	}
+
+
+	auto defState = D3D12_RESOURCE_STATE_COMMON;
+
+
+	cmdList_->ResourceBarrier(subResource, barrier.data());
+
+	barrier[0] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COMMON, D3D12_RESOURCE_STATE_COPY_DEST);
+	cmdList_->ResourceBarrier(1, barrier.data());
+
+	D3D12_TEXTURE_COPY_LOCATION dstLoc = {};
+	dstLoc.pResource = dx12destination;
+	dstLoc.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
+	dstLoc.PlacedFootprint.Offset = 0;
+	dstLoc.PlacedFootprint.Footprint.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	dstLoc.PlacedFootprint.Footprint.Width = dx12source->GetDesc().Width;
+	dstLoc.PlacedFootprint.Footprint.Height = dx12source->GetDesc().Height;
+	dstLoc.PlacedFootprint.Footprint.Depth = 1;
+	dstLoc.PlacedFootprint.Footprint.RowPitch = (dx12source->GetDesc().Width * 4 + 255) & ~255; // 256バイトアライメント
+
+	D3D12_TEXTURE_COPY_LOCATION srcLoc = {};
+	srcLoc.pResource = dx12source;
+	srcLoc.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
+	srcLoc.SubresourceIndex = 0;
+
+	cmdList_->CopyTextureRegion(&dstLoc, 0, 0, 0, &srcLoc, nullptr);
+
+	for (int i = 0; i < subResource; i++)
+	{
+		// すべてのサブリソースにバリアをセット
+		barrier[i] = CD3DX12_RESOURCE_BARRIER::Transition(dx12source, D3D12_RESOURCE_STATE_COPY_SOURCE | defState, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | defState);
+	}
+	cmdList_->ResourceBarrier(subResource, barrier.data());
+
+	barrier[0] = CD3DX12_RESOURCE_BARRIER::Transition(dx12destination, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_COMMON);
+	cmdList_->ResourceBarrier(1, barrier.data());
+}
+
 void Eugene::CommandList::Resolve(ImageResource& dest, ImageResource& src)
 {
 	auto dx12source{ static_cast<ID3D12Resource*>(src.GetResource()) };

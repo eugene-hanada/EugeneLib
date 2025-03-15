@@ -232,6 +232,13 @@ namespace Eugene
 		void CopyTexture(ImageResource& dest, BufferResource& src);
 
 		/// <summary>
+		/// テクスチャをバッファへコピーする
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="src"></param>
+		void CopyTexture(BufferResource& dest, ImageResource& src);
+
+		/// <summary>
 		/// MSAAのResolve処理を行う
 		/// </summary>
 		/// <param name="dest"></param>

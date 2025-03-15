@@ -179,7 +179,14 @@ namespace Eugene
 		/// </summary>
 		/// <param name="dest"></param>
 		/// <param name="src"></param>
-		void CopyTexture(ImageResource& dest, BufferResource& src) ;
+		void CopyTexture(ImageResource& dest, BufferResource& src);
+
+		/// <summary>
+		/// テクスチャをバッファへコピーする
+		/// </summary>
+		/// <param name="dest"></param>
+		/// <param name="src"></param>
+		void CopyTexture(BufferResource& dest, ImageResource& src);
 
 		/// <summary>
 		/// バッファをコピーする

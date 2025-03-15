@@ -469,8 +469,52 @@ void Eugene::CommandList::CopyTexture(ImageResource& dest, BufferResource& src)
 	barrier.setDstAccessMask(vk::AccessFlagBits::eShaderRead);
 	commandBuffer_->pipelineBarrier(vk::PipelineStageFlagBits::eAllGraphics, vk::PipelineStageFlagBits::eAllGraphics, static_cast<vk::DependencyFlagBits>(0), 0, nullptr, 0, nullptr, 1, &barrier);
 
+}
 
+void Eugene::CommandList::CopyTexture(BufferResource& dest, ImageResource& src)
+{
+	auto& srcData = *static_cast<ImageResource::ImageData*>(src.GetResource());
+	auto& destData = *static_cast<vk::Buffer*>(dest.GetResource());
+	auto mipmapLevels = srcData.mipmapLevels_;
+	auto arraySize = srcData.arraySize_;
 
+	vk::ImageMemoryBarrier barrier;
+	barrier.oldLayout = vk::ImageLayout::eColorAttachmentOptimal;
+	barrier.newLayout = vk::ImageLayout::eTransferSrcOptimal;
+	barrier.image = *srcData.image_;
+	barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
+	barrier.subresourceRange.baseMipLevel = 0;
+	barrier.subresourceRange.levelCount = mipmapLevels;
+	barrier.subresourceRange.baseArrayLayer = 0;
+	barrier.subresourceRange.layerCount = arraySize;
+	barrier.srcAccessMask = vk::AccessFlagBits::eColorAttachmentWrite;
+	barrier.dstAccessMask = vk::AccessFlagBits::eTransferRead;
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eColorAttachmentOutput,
+		vk::PipelineStageFlagBits::eTransfer,
+		{}, {}, {}, barrier
+	);
+
+	vk::BufferImageCopy region;
+	region.imageSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
+	region.imageSubresource.mipLevel = 0;
+	region.imageSubresource.baseArrayLayer = 0;
+	region.imageSubresource.layerCount = arraySize;
+	
+	region.imageExtent = vk::Extent3D{static_cast<std::uint32_t>(src.GetSize().x), static_cast<std::uint32_t>(src.GetSize().y), 1 };
+	commandBuffer_->copyImageToBuffer(*srcData.image_, vk::ImageLayout::eTransferSrcOptimal, destData, region);
+
+	barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
+	barrier.newLayout = vk::ImageLayout::eColorAttachmentOptimal;
+	barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
+	barrier.dstAccessMask = vk::AccessFlagBits::eColorAttachmentWrite;
+
+	commandBuffer_->pipelineBarrier(
+		vk::PipelineStageFlagBits::eTransfer,
+		vk::PipelineStageFlagBits::eColorAttachmentOutput,
+		{}, {}, {}, barrier
+	);
 }
 
 void Eugene::CommandList::CopyBuffer(BufferResource& dest, BufferResource& src)

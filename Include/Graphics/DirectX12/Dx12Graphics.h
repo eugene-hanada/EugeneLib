@@ -258,7 +258,7 @@ namespace Eugene
 		/// <returns> ImageResource </returns>
 		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
 		{
-			return { size, Format::R32_TYPELESS,clear,sampleCount };
+			return { size, Format::D32_FLOAT,clear,sampleCount };
 		}
 
 		/// <summary>

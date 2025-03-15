@@ -10,6 +10,7 @@
 #include "../../../Include/Graphics/Shader.h"
 
 #include "../../../Include/ThirdParty/glm/glm/vec3.hpp"
+#include <dcomp.h>
 
 #ifdef EUGENE_IMGUI
 #include <imgui.h>
@@ -21,9 +22,53 @@
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
+#pragma comment(lib, "dcomp")
 
+namespace
+{
+	Microsoft::WRL::ComPtr<IDCompositionDevice> dcompDevice;
+	Microsoft::WRL::ComPtr<IDCompositionTarget> dcompTarget;
+	Microsoft::WRL::ComPtr<IDCompositionVisual> dcompVisual;
+	bool CreateDcomp(HWND hwnd, IDXGISwapChain1* swapChain)
+	{
+		if (FAILED(DCompositionCreateDevice(nullptr,
+			IID_PPV_ARGS(&dcompDevice))))
+		{
+			return false;
+		}
 
+		if (FAILED(dcompDevice->CreateTargetForHwnd(
+			hwnd,
+			true,
+			&dcompTarget
+		)))
+		{
+			return false;
+		}
 
+		if (FAILED(dcompDevice->CreateVisual(&dcompVisual)))
+		{
+			return false;
+		}
+
+		if (FAILED(dcompVisual->SetContent(swapChain)))
+		{
+			return false;
+		}
+
+		if (FAILED(dcompTarget->SetRoot(dcompVisual.Get())))
+		{
+			return false;
+		}
+
+		if (FAILED(dcompDevice->Commit()))
+		{
+			return false;
+		}
+
+		return true;
+	}
+}
 
 Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
@@ -68,17 +113,38 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 #endif
 }
 
+Eugene::Graphics::Graphics()
+{
+	CreateDevice();
+	instance_.reset(this);
+	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS f;
+	f.Format = static_cast<DXGI_FORMAT>(FormatToDxgiFormat_.at(static_cast<std::size_t>(backBufferFormat_)));
+	f.SampleCount = 1;
+
+	while (SUCCEEDED(device_->CheckFeatureSupport(
+		D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
+		&f,
+		sizeof(f))))
+	{
+
+		f.SampleCount++;
+	}
+	multiSampleCount_ = f.SampleCount - 1;
+}
+
 Eugene::Graphics::~Graphics()
 {
 #ifdef EUGENE_IMGUI
 	ImGui_ImplDX12_Shutdown();
 #endif
-
-	swapChain_->SetFullscreenState(false, nullptr);
-	if (swapChain_ != nullptr)
+	if (swapChain_)
 	{
-		swapChain_->Release();
-		swapChain_.Detach();
+		swapChain_->SetFullscreenState(false, nullptr);
+		if (swapChain_ != nullptr)
+		{
+			swapChain_->Release();
+			swapChain_.Detach();
+		}
 	}
 }
 
@@ -161,7 +227,7 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 	swapchainDesc.BufferCount = bufferNum;
 	swapchainDesc.Scaling = DXGI_SCALING_STRETCH;
 	swapchainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-	swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
+	swapchainDesc.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
 	swapchainDesc.Flags = 0;
 
 
@@ -174,7 +240,9 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 
 	// スワップチェイン生成
 	IDXGISwapChain1* swapchain = nullptr;
-	if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(gpuEngine.cmdQueue_.Get(), hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
+	//if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(gpuEngine.cmdQueue_.Get(), hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
+	
+		if (FAILED(dxgiFactory_->CreateSwapChainForComposition(gpuEngine.cmdQueue_.Get(), &swapchainDesc, nullptr, &swapchain)))
 	{
 		throw EugeneLibException("スワップチェイン生成失敗");
 	}
@@ -182,7 +250,7 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 	{
 		throw EugeneLibException("スワップチェイン生成失敗");
 	}
-
+	auto r = CreateDcomp(hwnd, swapChain_.Get());
 	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
 	swapchain->Release();
 }

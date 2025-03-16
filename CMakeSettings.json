@@ -14,7 +14,7 @@
       "variables": [
         {
           "name": "EUGENE_USE_IMGUI",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {
@@ -48,7 +48,7 @@
       "variables": [
         {
           "name": "EUGENE_USE_IMGUI",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         },
         {

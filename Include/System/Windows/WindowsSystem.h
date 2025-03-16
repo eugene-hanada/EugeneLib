@@ -2,7 +2,7 @@
 #include "../SystemCommon.h"
 #include "../../Utils/Utils.h"
 #include <Windows.h>
-
+#include "../../ThirdParty/glm/glm/ext/vector_uint4_sized.hpp"
 
 namespace Eugene
 {
@@ -19,6 +19,29 @@ namespace Eugene
 		public DynamicSingleton<System>
 	{
 	public:
+
+		enum class WindowMode : std::uint8_t
+		{
+			/// <summary>
+			/// ウィンドウ無し
+			/// </summary>
+			None,
+
+			/// <summary>
+			/// ウィンドウ
+			/// </summary>
+			Window,
+
+			/// <summary>
+			/// フルスクリーン
+			/// </summary>
+			Borderless,
+		
+			/// <summary>
+			/// 透過
+			/// </summary>
+			Transparent,
+		};
 
 		/// <summary>
 		/// 生成する

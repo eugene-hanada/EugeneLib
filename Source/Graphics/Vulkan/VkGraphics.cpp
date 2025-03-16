@@ -196,7 +196,48 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::s
 
 #endif
 
+Eugene::Graphics::Graphics():
+	backBufferIdx_{ 0 }
+{
+	DynamicSingleton::instance_.reset(this);
+	CreateInstance();
 
+	CreateDevice();
+
+	SetUpVma();
+
+	const auto& limits{ physicalDevice_.getProperties().limits };
+	auto flag = limits.framebufferColorSampleCounts & limits.framebufferDepthSampleCounts;
+
+	if (flag & vk::SampleCountFlagBits::e64)
+	{
+		multiSampleCount_ = 64;
+	}
+	else if (flag & vk::SampleCountFlagBits::e32)
+	{
+		multiSampleCount_ = 32;
+	}
+	else if (flag & vk::SampleCountFlagBits::e16)
+	{
+		multiSampleCount_ = 16;
+	}
+	else if (flag & vk::SampleCountFlagBits::e8)
+	{
+		multiSampleCount_ = 8;
+	}
+	else if (flag & vk::SampleCountFlagBits::e4)
+	{
+		multiSampleCount_ = 4;
+	}
+	else if (flag & vk::SampleCountFlagBits::e2)
+	{
+		multiSampleCount_ = 2;
+	}
+	else
+	{
+		multiSampleCount_ = 1;
+	}
+}
 
 void Eugene::Graphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2& size)
 {
@@ -324,7 +365,10 @@ vk::Format Eugene::Graphics::CreateSwapChain(const glm::vec2& size)
 
 Eugene::Graphics::~Graphics()
 {
-	queue_.waitIdle();
+	if (queue_)
+	{
+		queue_.waitIdle();
+	}
 	device_->waitIdle();
 
 #ifdef EUGENE_IMGUI

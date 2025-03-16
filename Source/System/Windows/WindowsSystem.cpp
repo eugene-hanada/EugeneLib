@@ -112,10 +112,13 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	}
 
 	auto mode = reinterpret_cast<const WindowMode&>(other);
+#ifndef EUGENE_IMGUI
+
 	if (mode == WindowMode::None)
 	{
 		return;
 	}
+#endif
 
 	std::filesystem::path tmpTitle{ title };
 	::windowClass.cbSize = sizeof(WNDCLASSEX);
@@ -204,8 +207,10 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	maxWindowSize_ = {static_cast<float>(monitorWidth), static_cast<float>(monitorHeight)};
 
 	SetWindowPos(hwnd, mode == WindowMode::Transparent ? HWND_TOPMOST : nullptr, centerX, centerY, wSize.right - wSize.left, wSize.bottom - wSize.top, false);
-
-	ShowWindow(hwnd, SW_SHOW);
+	if (mode != WindowMode::None)
+	{
+		ShowWindow(hwnd, SW_SHOW);
+	}
 
 #ifdef EUGENE_IMGUI
 	IMGUI_CHECKVERSION();

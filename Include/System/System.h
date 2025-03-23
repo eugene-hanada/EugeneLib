@@ -73,7 +73,10 @@ namespace Eugene
 		/// </summary>
 		/// <param name="flag"> チェックしたいフラグ </param>
 		/// <returns> 結果 </returns>
-		bool CheckFlags(Flags flag) const;
+		bool CheckFlags(Flags flag) const
+		{
+			return flags.test(static_cast<size_t>(flag));
+		}
 
 		/// <summary>
 		/// マウス座標

@@ -12,7 +12,7 @@ option(EUGENE_USE_DX12 "DirectX12を使用するか？" ON)
 option(EUGENE_BUILD_SAMPLE "サンプルをbuildするか？" OFF)
 option(EUGENE_BUILD_DOCTEST "doctestを使ったテストをビルドするか？" OFF)
 option(EUGENE_BUILD_SOUND "サウンド機能をビルドするか？" ON)
-
+option(EUGENE_BUILD_NETWORK "ネットワーク通信関連の機能をビルドするか？" ON)
 
 if(EUGENE_USE_WINDOWS)
 	# Windows向けビルド時
@@ -75,6 +75,10 @@ if (EUGENE_BUILD_SOUND)
 		Source/Sound/SoundFile.cpp
 		Source/Sound/SoundStreamFile.cpp
 	)
+endif()
+
+if (EUGENE_BUILD_NETWORK)
+	set(SystemSource Source/System/NetSocket.cpp)
 endif()
 
 
@@ -207,6 +211,10 @@ add_library(EugeneLib STATIC
 
 if (EUGENE_BUILD_SOUND)
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_SOUND)
+endif()
+
+if (EUGENE_BUILD_NETWORK)
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_NETWORK)
 endif()
 
 if (EUGENE_USE_WINDOWS)

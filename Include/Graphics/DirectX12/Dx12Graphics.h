@@ -139,11 +139,16 @@ namespace Eugene
 		/// <param name="bufferNum"> バックバッファの数 </param>
 		/// <param name="initNum"> デフォルトのGPUエンジンのコマンドリスト数の初期値 </param>
 		/// <returns> GPUエンジン </returns>
-		static GpuEngine Create(std::uint32_t bufferNum = 2, std::uint64_t initNum = 100)
+		static GpuEngine Create(std::uint32_t bufferNum, std::uint64_t initNum = 100)
 		{
 			GpuEngine gpuEngine;
 			new Graphics{ gpuEngine, bufferNum, initNum };
 			return gpuEngine;
+		}
+
+		static void Create()
+		{
+			new Graphics{ };
 		}
 	
 		/// <summary>
@@ -258,7 +263,7 @@ namespace Eugene
 		/// <returns> ImageResource </returns>
 		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
 		{
-			return { size, Format::R32_TYPELESS,clear,sampleCount };
+			return { size, Format::D32_FLOAT,clear,sampleCount };
 		}
 
 		/// <summary>
@@ -459,6 +464,8 @@ namespace Eugene
 private:
 
 		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum);
+
+		Graphics();
 
 		void CreateDevice(void);
 

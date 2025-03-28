@@ -27,10 +27,6 @@ Eugene::Mouse::Mouse() :
 	flags.set(static_cast<size_t>(Flags::ShowCursor));
 }
 
-bool Eugene::Mouse::CheckFlags(Flags flag) const
-{
-	return flags.test(static_cast<size_t>(flag));
-}
 
 Eugene::TouchData::Touch::Touch() :
 	pos{0.0f,0.0f}, nowTime{0.0f},downTime{0.0f}

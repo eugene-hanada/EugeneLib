@@ -48,11 +48,16 @@ namespace Eugene
 		/// <param name="bufferNum"> バックバッファの数 </param>
 		/// <param name="initNum"> デフォルトのGPUエンジンのコマンドリスト数の初期値 </param>
 		/// <returns> GPUエンジン </returns>
-		static GpuEngine Create(std::uint32_t bufferNum = 2, std::uint64_t maxNum = 100)
+		static GpuEngine Create(std::uint32_t bufferNum, std::uint64_t maxNum = 100)
 		{
 			GpuEngine gpuEngine;
 			new Graphics{ gpuEngine, bufferNum, maxNum };
 			return gpuEngine;
+		}
+
+		static void Create()
+		{
+			new Graphics{};
 		}
 
 		/// <summary>
@@ -151,7 +156,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="initSize"> GpuEngineのコマンドリストの初期数 </param>
 		/// <returns> GpuEngine </returns>
-		GpuEngine CreateGpuEngine(std::size_t initSize) const
+		GpuEngine CreateGpuEngine(std::size_t initSize = 100) const
 		{
 			return { initSize };
 		}
@@ -432,6 +437,8 @@ namespace Eugene
 private:
 
 		Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum);
+
+		Graphics();
 
 #ifdef EUGENE_IMGUI
 		ImGui_ImplVulkanH_Window* GetImguiWindow(void);

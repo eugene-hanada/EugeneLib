@@ -104,6 +104,7 @@ Eugene::Pipeline::Pipeline(
 			tmpFormat = Graphics::BackBufferFormat();
 		}
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(tmpFormat)));
+
 		switch (renderTargets.at(i).blendType_)
 		{
 			using enum BlendType;
@@ -117,6 +118,7 @@ Eugene::Pipeline::Pipeline(
 			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
 			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
+			gpipeline.BlendState.RenderTarget[i].BlendOpAlpha = D3D12_BLEND_OP_ADD;
 			break;
 		case Add:
 			gpipeline.BlendState.RenderTarget[i].BlendEnable = true;

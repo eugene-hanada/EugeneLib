@@ -47,6 +47,22 @@ namespace Eugene
 			Close();
 		}
 
+		
+		TCPSocket(TCPSocket& tcpSocket) : socketHandle{ tcpSocket.socketHandle }, isServer{ tcpSocket.isServer }
+		{
+			tcpSocket.socketHandle = INVALID_SOCKET;
+			tcpSocket.isServer = false;
+		}
+
+		TCPSocket& operator=(TCPSocket& tcpSocket)
+		{
+			socketHandle = tcpSocket.socketHandle;
+			tcpSocket.socketHandle = INVALID_SOCKET;
+			isServer = tcpSocket.isServer;
+			tcpSocket.isServer = false;
+			return *this;
+		}
+
 		/// <summary>
 		/// サーバーとしてポート番号をバインド
 		/// </summary>
@@ -161,6 +177,8 @@ namespace Eugene
 		}
 
 	private:
+		TCPSocket(const TCPSocket&) = delete;
+		TCPSocket& operator=(const TCPSocket&) = delete;
 		SocketHandle socketHandle;
 		bool isServer;
 #else

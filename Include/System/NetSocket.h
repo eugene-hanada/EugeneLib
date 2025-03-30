@@ -48,13 +48,13 @@ namespace Eugene
 		}
 
 		
-		TCPSocket(TCPSocket& tcpSocket) : socketHandle{ tcpSocket.socketHandle }, isServer{ tcpSocket.isServer }
+		TCPSocket(TCPSocket&& tcpSocket) : socketHandle{ tcpSocket.socketHandle }, isServer{ tcpSocket.isServer }
 		{
 			tcpSocket.socketHandle = INVALID_SOCKET;
 			tcpSocket.isServer = false;
 		}
 
-		TCPSocket& operator=(TCPSocket& tcpSocket)
+		TCPSocket& operator=(TCPSocket&& tcpSocket)
 		{
 			socketHandle = tcpSocket.socketHandle;
 			tcpSocket.socketHandle = INVALID_SOCKET;

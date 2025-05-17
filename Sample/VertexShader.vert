@@ -6,11 +6,11 @@ layout(location = 1) in vec2 inUV;
 
 layout(location = 0) out vec2 outputUV;
 
-layout(set=0, binding = 0) uniform RtMatrix {
+layout(push_constant) uniform RtMatrix {
 	mat4 matrix;
 } rt;
 
-layout(set=1, binding=1) uniform TexMatrix
+layout(set=0, binding=1) uniform TexMatrix
 {
 	mat4 matrix;
 } tex;

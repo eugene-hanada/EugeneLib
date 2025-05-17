@@ -261,7 +261,12 @@ namespace Eugene
 		/// <summary>
 		/// サンプラー
 		/// </summary>
-		Sampler
+		Sampler,
+
+		/// <summary>
+		/// 32ビットの定数
+		/// </summary>
+		Constans
 	};
 
 	enum class ResourceBindFlag :

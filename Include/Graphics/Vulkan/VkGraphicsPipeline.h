@@ -19,6 +19,7 @@ namespace Eugene
 		{
 			std::shared_ptr<vk::UniquePipelineLayout> layout_;
 			vk::UniquePipeline pipeline_;
+			std::uint32_t pushConstantSize_{ 0 };
 		};
 
 		/// <summary>
@@ -37,6 +38,7 @@ namespace Eugene
 		{
 			data_.pipeline_.reset();
 			data_.layout_.reset();
+			data_.pushConstantSize_ = 0;
 		}
 
 		/// <summary>
@@ -47,6 +49,8 @@ namespace Eugene
 		{
 			data_.layout_ = std::move(pipeline.data_.layout_);
 			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
+			data_.pushConstantSize_ = pipeline.data_.pushConstantSize_;
+			pipeline.data_.pushConstantSize_ = 0;
 		}
 
 		/// <summary>
@@ -58,6 +62,7 @@ namespace Eugene
 		{
 			data_.layout_ = std::move(pipeline.data_.layout_);
 			data_.pipeline_ = std::move(pipeline.data_.pipeline_);
+			data_.pushConstantSize_ = pipeline.data_.pushConstantSize_;
 			return *this;
 		}
 
@@ -82,9 +87,11 @@ namespace Eugene
 			const Shader& csShader
 		);
 
-		// GraphicsPipeline を介して継承されました
 		Data data_;
 
+
+
 		friend class Graphics;
+		friend class CommandList;
 	};
 }

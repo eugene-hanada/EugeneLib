@@ -80,6 +80,22 @@ namespace Eugene
 		void SetIndexView(IndexView& view) ;
 
 		/// <summary>
+		/// グラフィック系シェーダ用に指定のパラメータインデックスに指定の定数をセットする
+		/// </summary>
+		/// <param name="paramIdx"> 他バックエンドと合わせるため存在してるが有効ではありません </param>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		void SetGraphicsConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size);
+
+		/// <summary>
+		/// コンピュートシェーダ用に指定のパラメータインデックスに指定の定数をセットする
+		/// </summary>
+		/// <param name="paramIdx"> 他バックエンドと合わせるため存在してるが有効ではありません </param>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		void SetComputeConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size);
+
+		/// <summary>
 		/// sシェーダリソースビューをセットする
 		/// </summary>
 		/// <param name="views"> インデックス </param>
@@ -310,6 +326,8 @@ namespace Eugene
 		/// 現在のパイプラインのレイアウト
 		/// </summary>
 		std::shared_ptr<vk::UniquePipelineLayout> nowLayout_;
+
+		std::uint32_t nowPipelinePushConstantNum_ = 0;
 
 		friend class Graphics;
 

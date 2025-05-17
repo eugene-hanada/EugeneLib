@@ -16,7 +16,7 @@ Eugene::Pipeline::Pipeline(
 )
 {
 	data_.layout_ = resourceBindLayout.pipelineLayout_;
-
+	data_.pushConstantSize_ = resourceBindLayout.pushConstantSize_;
 	// シェーダーステージの設定
 	std::vector<vk::PipelineShaderStageCreateInfo> shaderStage(shaders.size());
 	std::vector<vk::UniqueShaderModule> modules(shaders.size());

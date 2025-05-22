@@ -68,7 +68,7 @@ namespace Eugene
 		/// </summary>
 		std::shared_ptr<vk::UniquePipelineLayout> pipelineLayout_;
 
-		std::uint32_t pushConstantSize_{ 0 };
+		std::uint8_t pushConstantSize_{ 0 };
 
 		friend class Graphics;
 		friend class Pipeline;

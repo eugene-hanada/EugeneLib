@@ -19,7 +19,7 @@
 #endif
 
 Eugene::CommandList::CommandList():
-	isRendering_{false}, nowLayout_{nullptr}
+	isRendering_{ false }, nowLayout_{ nullptr }, nowPipelinePushConstantNum_{ 0 }
 {
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(Graphics::GetInstance().graphicFamilly_);

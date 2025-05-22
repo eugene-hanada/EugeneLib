@@ -310,8 +310,6 @@ namespace Eugene
 		/// </summary>
 		vk::UniqueCommandPool commandPool_;
 
-
-
 		/// <summary>
 		/// コマンドバッファ
 		/// </summary>
@@ -327,7 +325,7 @@ namespace Eugene
 		/// </summary>
 		std::shared_ptr<vk::UniquePipelineLayout> nowLayout_;
 
-		std::uint32_t nowPipelinePushConstantNum_ = 0;
+		std::uint8_t nowPipelinePushConstantNum_ = 0;
 
 		friend class Graphics;
 

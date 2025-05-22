@@ -121,7 +121,7 @@ namespace Eugene
 		/// </summary>
 		std::uint64_t size_;
 
-		std::uint64_t mapCount_;
+		std::uint32_t mapCount_;
 
 
 		bool canMap_;

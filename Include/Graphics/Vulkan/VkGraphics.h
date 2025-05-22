@@ -432,7 +432,7 @@ namespace Eugene
 		/// <param name="imageResource"> 画像のリソース </param>
 		/// <param name="index"> インデックス </param>
 		void SetImguiImage(ImageResource& imageResource, std::uint64_t index = 0ull);
-#endif	
+#endif
 
 private:
 
@@ -475,11 +475,6 @@ private:
 		vk::DynamicLoader dl;
 
 		/// <summary>
-		/// バックバッファのインデックス
-		/// </summary>
-		std::uint32_t backBufferIdx_;
-
-		/// <summary>
 		/// vulkanのインスタンス
 		/// </summary>
 		vk::UniqueInstance instance_;
@@ -508,6 +503,11 @@ private:
 		/// ファミリーキュー
 		/// </summary>
 		std::uint32_t graphicFamilly_;
+
+		/// <summary>
+		/// バックバッファのインデックス
+		/// </summary>
+		std::uint32_t backBufferIdx_;
 
 		/// <summary>
 		/// キュー
@@ -541,7 +541,7 @@ private:
 
 		std::uint8_t multiSampleCount_;
 
-		std::uint32_t nextQueueIdx_ = 0;
+		std::uint8_t nextQueueIdx_ = 0;
 
 		/// <summary>
 		/// バックバッファのフォーマット

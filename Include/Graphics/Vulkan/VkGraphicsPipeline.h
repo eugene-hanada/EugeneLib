@@ -19,7 +19,7 @@ namespace Eugene
 		{
 			std::shared_ptr<vk::UniquePipelineLayout> layout_;
 			vk::UniquePipeline pipeline_;
-			std::uint32_t pushConstantSize_{ 0 };
+			std::uint8_t pushConstantSize_{ 0 };
 		};
 
 		/// <summary>

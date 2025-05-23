@@ -10,7 +10,12 @@ Eugene::Shader::Shader(const std::filesystem::path& path)
 	{
 		throw EugeneLibException{"ファイルを開けませんでした"};
 	}
-	byteCode_.Resize((std::filesystem::file_size(path) / 4ull) * 4ull);
+#ifdef EUGENE_USE_VULKAN
+	auto size = (std::filesystem::file_size(path) / 4ull) * 4ull;
+#else
+	auto size = std::filesystem::file_size(path);
+#endif
+	byteCode_.Resize(size);
 	file.read(reinterpret_cast<char*>(byteCode_.data()), byteCode_.size());
 }
 

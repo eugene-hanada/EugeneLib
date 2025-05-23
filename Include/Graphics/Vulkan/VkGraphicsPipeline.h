@@ -84,7 +84,7 @@ namespace Eugene
 
 		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
-			const Shader& csShader
+			std::span<std::uint8_t> csShader
 		);
 
 		Data data_;

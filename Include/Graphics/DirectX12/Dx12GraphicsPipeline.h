@@ -100,7 +100,7 @@ namespace Eugene
 		/// <param name="csShader"></param>
 		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
-			const Shader& csShader
+			const std::span<const std::uint8_t> csShader
 		);
 
 		PipeLineSet pipeline_;

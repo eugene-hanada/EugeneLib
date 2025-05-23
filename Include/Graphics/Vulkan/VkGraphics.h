@@ -367,7 +367,7 @@ namespace Eugene
 		/// <param name="resourceBindLayout"> リソースのバインド方法 </param>
 		/// <param name="csShader"> コンピュートシェーダ </param>
 		/// <returns> Pipeline </returns>
-		Pipeline CreateComputePipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader) const
+		Pipeline CreateComputePipeline(ResourceBindLayout& resourceBindLayout, std::span<std::uint8_t> csShader) const
 		{
 			return { resourceBindLayout, csShader };
 		}

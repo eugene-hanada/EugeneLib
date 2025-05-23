@@ -32,24 +32,24 @@ Eugene::Pipeline::Pipeline(
 		{
 			using enum ShaderType;
 		case Pixel:
-			gpipeline.PS.pShaderBytecode = shader.first.GetPtr();
-			gpipeline.PS.BytecodeLength = shader.first.GetSize();
+			gpipeline.PS.pShaderBytecode = shader.first.data();
+			gpipeline.PS.BytecodeLength = shader.first.size();
 			break;
 		case Vertex:
-			gpipeline.VS.pShaderBytecode = shader.first.GetPtr();
-			gpipeline.VS.BytecodeLength = shader.first.GetSize();
+			gpipeline.VS.pShaderBytecode = shader.first.data();
+			gpipeline.VS.BytecodeLength = shader.first.size();
 			break;
 		case Geometry:
-			gpipeline.GS.pShaderBytecode = shader.first.GetPtr();
-			gpipeline.GS.BytecodeLength = shader.first.GetSize();
+			gpipeline.GS.pShaderBytecode = shader.first.data();
+			gpipeline.GS.BytecodeLength = shader.first.size();
 			break;
 		case Domain:
-			gpipeline.DS.pShaderBytecode = shader.first.GetPtr();
-			gpipeline.DS.BytecodeLength = shader.first.GetSize();
+			gpipeline.DS.pShaderBytecode = shader.first.data();
+			gpipeline.DS.BytecodeLength = shader.first.size();
 			break;
 		case Hull:
-			gpipeline.HS.pShaderBytecode = shader.first.GetPtr();
-			gpipeline.HS.BytecodeLength = shader.first.GetSize();
+			gpipeline.HS.pShaderBytecode = shader.first.data();
+			gpipeline.HS.BytecodeLength = shader.first.size();
 			break;
 		default:
 			break;
@@ -96,8 +96,13 @@ Eugene::Pipeline::Pipeline(
 	}
 
 	// レンダーターゲット設定
-	for (std::uint64_t i = 0; i < renderTargets.size(); i++)
+	for (std::uint64_t i = 0; i < std::size(gpipeline.RTVFormats); i++)
 	{
+		if (i >= renderTargets.size())
+		{
+			//gpipeline.RTVFormats[i] = DXGI_FORMAT_UNKNOWN;	// レンダーターゲットがない場合はUNKNOWNをセット
+			continue;
+		}
 		auto tmpFormat = renderTargets.at(i).format_;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
@@ -148,6 +153,7 @@ Eugene::Pipeline::Pipeline(
 			break;
 		}
 	}
+	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(renderTargets.size());	// レンダーターゲットの数をセット
 
 	// サンプリングに関する設定
 	gpipeline.SampleDesc.Count = sampleCount;
@@ -160,21 +166,22 @@ Eugene::Pipeline::Pipeline(
 	{
 		CD3DX12_DEPTH_STENCIL_DESC depthDesc(CD3DX12_DEFAULT{});
 		gpipeline.DepthStencilState = depthDesc;
+		//gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 	}
-
-	if (FAILED(Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()))))
+	auto result = Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
+	if (FAILED(result))
 	{
 		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
 	}
 }
 
-Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader)
+Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const std::span<const std::uint8_t> csShader)
 {
 	pipeline_.rootSignature_ = resourceBindLayout.rootSignature_;
 
 	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineDesc{};
-	computePipelineDesc.CS.pShaderBytecode = csShader.GetPtr();
-	computePipelineDesc.CS.BytecodeLength = csShader.GetSize();
+	computePipelineDesc.CS.pShaderBytecode = csShader.data();
+	computePipelineDesc.CS.BytecodeLength = csShader.size();
 	computePipelineDesc.NodeMask = 0;
 	computePipelineDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
 	computePipelineDesc.pRootSignature = pipeline_.rootSignature_.Get();

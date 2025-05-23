@@ -171,7 +171,8 @@ void Eugene::Graphics::CreateDevice(void)
 
 	
 	// フューチャーレベル
-	D3D_FEATURE_LEVEL levels[]{
+	constexpr D3D_FEATURE_LEVEL levels[]{
+		D3D_FEATURE_LEVEL_12_2,			// dxcがシェーダーモデル6.0からコンパイルできるので最低限ここまでは必要
 		D3D_FEATURE_LEVEL_12_1,
 		D3D_FEATURE_LEVEL_12_0,
 		D3D_FEATURE_LEVEL_11_1,

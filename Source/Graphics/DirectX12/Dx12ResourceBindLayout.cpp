@@ -16,6 +16,7 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 	std::uint32_t smpRegister = 0u;
 
 	std::vector<std::vector<CD3DX12_DESCRIPTOR_RANGE>> range(size);
+	std::vector <CD3DX12_ROOT_PARAMETER> rootparam(size);
 	
 	for (std::uint64_t i = 0ull; i < size; i++)
 	{
@@ -25,6 +26,13 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 		{
 			auto bind = now->begin() + j;
 			std::uint32_t nowRegister = 0u;
+
+			if (bind->viewType_ == ViewType::Constans)
+			{
+				range[i].clear();
+				rootparam[i].InitAsConstants(bind->viewNum_, cbRegister++);
+				break;
+			}
 
 			switch (bind->viewType_)
 			{
@@ -52,9 +60,13 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 		}
 	}
 
-	std::vector <CD3DX12_ROOT_PARAMETER> rootparam(range.size());
+	
 	for (std::uint64_t i = 0ull; i < rootparam.size(); i++)
 	{
+		if (range[i].empty())
+		{
+			continue;
+		}
 		rootparam[i].InitAsDescriptorTable(static_cast<std::uint32_t>(range[i].size()), range[i].data());
 	}
 

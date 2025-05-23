@@ -18,6 +18,7 @@ namespace Eugene
 		{
 			descriptorLayoutArray_.clear();
 			pipelineLayout_.reset();
+			pushConstantSize_ = 0;
 		}
 
 		/// <summary>
@@ -31,11 +32,13 @@ namespace Eugene
 			}
 			descriptorLayoutArray_.clear();
 			pipelineLayout_.reset();
+			pushConstantSize_ = 0;
 		}
 
 		ResourceBindLayout(ResourceBindLayout&& resourceBind) noexcept :
 			descriptorLayoutArray_{ std::move(resourceBind.descriptorLayoutArray_) },
-			pipelineLayout_{std::move(resourceBind.pipelineLayout_)}
+			pipelineLayout_{std::move(resourceBind.pipelineLayout_)}, 
+			pushConstantSize_{ resourceBind.pushConstantSize_ }
 		{
 		}
 
@@ -43,6 +46,8 @@ namespace Eugene
 		{
 			descriptorLayoutArray_ = std::move(resourceBind.descriptorLayoutArray_);
 			pipelineLayout_ = std::move(resourceBind.pipelineLayout_);
+			pushConstantSize_ = resourceBind.pushConstantSize_;
+			resourceBind.pushConstantSize_ = 0;
 			return *this;
 		}
 
@@ -62,6 +67,8 @@ namespace Eugene
 		/// パイプラインのレイアウト
 		/// </summary>
 		std::shared_ptr<vk::UniquePipelineLayout> pipelineLayout_;
+
+		std::uint8_t pushConstantSize_{ 0 };
 
 		friend class Graphics;
 		friend class Pipeline;

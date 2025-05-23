@@ -19,7 +19,7 @@
 #endif
 
 Eugene::CommandList::CommandList():
-	isRendering_{false}, nowLayout_{nullptr}
+	isRendering_{ false }, nowLayout_{ nullptr }, nowPipelinePushConstantNum_{ 0 }
 {
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(Graphics::GetInstance().graphicFamilly_);
@@ -50,9 +50,11 @@ void Eugene::CommandList::End(void)
 
 void Eugene::CommandList::SetGraphicsPipeline(Pipeline& gpipeline)
 {
+	
 	auto& pipeline = *static_cast<Pipeline::Data*>(gpipeline.GetPipeline());
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eGraphics, *pipeline.pipeline_);
 	nowLayout_ = pipeline.layout_;
+	nowPipelinePushConstantNum_ = pipeline.pushConstantSize_;
 }
 
 void Eugene::CommandList::SetPrimitiveType(PrimitiveType type)
@@ -93,6 +95,24 @@ void Eugene::CommandList::SetIndexView(IndexView& view)
 	commandBuffer_->bindIndexBuffer(*static_cast<vk::Buffer*>(view.GetView()), deviceSize, vk::IndexType::eUint16);
 }
 
+void Eugene::CommandList::SetGraphicsConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size)
+{
+	if (nowLayout_ == nullptr)
+	{
+		return;
+	}
+	commandBuffer_->pushConstants(**nowLayout_, vk::ShaderStageFlagBits::eAll, 0,size, data);
+}
+
+void Eugene::CommandList::SetComputeConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size)
+{
+	if (nowLayout_ == nullptr)
+	{
+		return;
+	}
+	commandBuffer_->pushConstants(**nowLayout_, vk::ShaderStageFlagBits::eAll, 0, size, data);
+}
+
 void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
 	if (nowLayout_ == nullptr)
@@ -102,7 +122,7 @@ void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std:
 	commandBuffer_->bindDescriptorSets(
 		vk::PipelineBindPoint::eGraphics,
 		**nowLayout_,
-		static_cast<std::uint32_t>(paramIdx),
+		static_cast<std::uint32_t>(paramIdx) - nowPipelinePushConstantNum_,
 		1u, 
 		&*static_cast<ShaderResourceViews::Data*>(views.GetViews())->descriptorSet_,
 		0u, 
@@ -120,7 +140,7 @@ void Eugene::CommandList::SetSamplerView(SamplerViews& views, std::uint64_t para
 	commandBuffer_->bindDescriptorSets(
 		vk::PipelineBindPoint::eGraphics,
 		**nowLayout_,
-		static_cast<std::uint32_t>(paramIdx),
+		static_cast<std::uint32_t>(paramIdx) - nowPipelinePushConstantNum_,
 		1u,
 		&*static_cast<SamplerViews::Data*>(views.GetViews())->descriptorSet_,
 		0u,
@@ -604,6 +624,7 @@ void Eugene::CommandList::SetComputePipeline(Pipeline& gpipeline)
 	auto& pipeline{ *static_cast<Pipeline::Data*>(gpipeline.GetPipeline()) };
 	commandBuffer_->bindPipeline(vk::PipelineBindPoint::eCompute, *pipeline.pipeline_);
 	nowLayout_ = pipeline.layout_;
+	nowPipelinePushConstantNum_ = pipeline.pushConstantSize_;
 }
 void Eugene::CommandList::SetShaderResourceViewComputeShader(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
@@ -614,7 +635,7 @@ void Eugene::CommandList::SetShaderResourceViewComputeShader(ShaderResourceViews
 	commandBuffer_->bindDescriptorSets(
 		vk::PipelineBindPoint::eCompute,
 		**nowLayout_,
-		static_cast<std::uint32_t>(paramIdx),
+		static_cast<std::uint32_t>(paramIdx) - nowPipelinePushConstantNum_,
 		1u,
 		&*static_cast<ShaderResourceViews::Data*>(views.GetViews())->descriptorSet_,
 		0u,

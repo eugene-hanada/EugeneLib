@@ -133,6 +133,22 @@ namespace Eugene
 		// シェーダリソースセット系 //
 
 		/// <summary>
+		/// グラフィック系シェーダ用に指定のパラメータインデックスに指定の定数をセットする
+		/// </summary>
+		/// <param name="paramIdx"></param>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		void SetGraphicsConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size);
+
+		/// <summary>
+		/// コンピュートシェーダ用に指定のパラメータインデックスに指定の定数をセットする
+		/// </summary>
+		/// <param name="paramIdx"></param>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		void SetComputeConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size);
+
+		/// <summary>
 		///  指定のパラメータインデックスに指定のビューのインデックスを先頭にセットする
 		/// </summary>
 		/// <param name="views"> シェーダリソースビュー </param>

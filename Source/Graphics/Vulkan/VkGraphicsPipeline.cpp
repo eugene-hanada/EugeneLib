@@ -16,7 +16,7 @@ Eugene::Pipeline::Pipeline(
 )
 {
 	data_.layout_ = resourceBindLayout.pipelineLayout_;
-
+	data_.pushConstantSize_ = resourceBindLayout.pushConstantSize_;
 	// シェーダーステージの設定
 	std::vector<vk::PipelineShaderStageCreateInfo> shaderStage(shaders.size());
 	std::vector<vk::UniqueShaderModule> modules(shaders.size());
@@ -24,8 +24,8 @@ Eugene::Pipeline::Pipeline(
 	for (std::uint64_t i = 0ull; i < shaders.size(); i++)
 	{
 		vk::ShaderModuleCreateInfo info{};
-		info.setPCode(reinterpret_cast<const std::uint32_t*>(shaders.at(i).first.GetPtr()));
-		info.setCodeSize(shaders.at(i).first.GetSize());
+		info.setPCode(reinterpret_cast<const std::uint32_t*>(shaders.at(i).first.data()));
+		info.setCodeSize(shaders.at(i).first.size());
 
 		modules[shaderIndex] = Graphics::GetInstance().device_->createShaderModuleUnique(info);
 		shaderStage[shaderIndex].setModule(*modules[shaderIndex]);
@@ -323,13 +323,13 @@ Eugene::Pipeline::Pipeline(
 }
 
 
-Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const Shader& csShader)
+Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, std::span<std::uint8_t> csShader)
 {
 	data_.layout_ = resourceBindLayout.pipelineLayout_;
 
 	vk::ShaderModuleCreateInfo info{};
-	info.setPCode(reinterpret_cast<const std::uint32_t*>(csShader.GetPtr()));
-	info.setCodeSize(csShader.GetSize());
+	info.setPCode(reinterpret_cast<const std::uint32_t*>(csShader.data()));
+	info.setCodeSize(csShader.size());
 
 	auto csModule = Graphics::GetInstance().device_->createShaderModuleUnique(info);
 

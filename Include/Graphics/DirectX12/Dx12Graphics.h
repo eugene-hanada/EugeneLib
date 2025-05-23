@@ -388,7 +388,7 @@ namespace Eugene
 		/// <returns> Pipeline </returns>
 		Pipeline CreateComputePipeline(
 			ResourceBindLayout& resourceBindLayout,
-			const Shader& csShader
+			const std::span<const std::uint8_t> csShader
 		) const
 		{
 			return { resourceBindLayout, csShader };

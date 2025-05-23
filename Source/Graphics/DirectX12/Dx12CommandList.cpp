@@ -100,6 +100,16 @@ void Eugene::CommandList::SetIndexView(IndexView& view)
 	cmdList_->IASetIndexBuffer(ptr);
 }
 
+void Eugene::CommandList::SetGraphicsConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size)
+{
+	cmdList_->SetGraphicsRoot32BitConstants(static_cast<std::uint32_t>(paramIdx), static_cast<std::uint32_t>(size / sizeof(std::uint32_t)), data, 0);
+}
+
+void Eugene::CommandList::SetComputeConstant(std::uint64_t paramIdx, const void* data, std::uint64_t size)
+{
+	cmdList_->SetComputeRoot32BitConstants(static_cast<std::uint32_t>(paramIdx), static_cast<std::uint32_t>(size / sizeof(std::uint32_t)), data, 0);
+}
+
 void Eugene::CommandList::SetShaderResourceView(ShaderResourceViews& views, std::uint64_t paramIdx)
 {
 	auto descriptorHeap{ static_cast<ID3D12DescriptorHeap*>(views.GetViews())};

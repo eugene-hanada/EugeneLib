@@ -11,7 +11,8 @@ namespace Eugene
 	/// <summary>
 	/// フォーマット
 	/// </summary>
-	enum class Format
+	enum class Format :
+		std::uint8_t
 	{
 		NON,
 
@@ -163,7 +164,8 @@ namespace Eugene
 	/// </summary>
 	constexpr auto FormatMax = 54ull;
 
-	enum class IndexType
+	enum class IndexType :
+		std::uint8_t
 	{
 		UINT32,
 		UINT16,
@@ -187,7 +189,8 @@ namespace Eugene
 	/// <summary>
 	/// プリミティブタイプ
 	/// </summary>
-	enum class PrimitiveType
+	enum class PrimitiveType :
+		std::uint8_t
 	{
 		Point = 1,
 		Line = 2,
@@ -220,7 +223,8 @@ namespace Eugene
 	/// <summary>
 	/// Gpuリソースの種類
 	/// </summary>
-	enum class GpuResourceType
+	enum class GpuResourceType :
+		std::uint8_t
 	{
 		/// <summary>
 		/// デフォルト
@@ -241,7 +245,8 @@ namespace Eugene
 	/// <summary>
 /// ビューのタイプ
 /// </summary>
-	enum class ViewType
+	enum class ViewType : 
+		std::uint8_t
 	{
 		/// <summary>
 		/// テクスチャ
@@ -261,7 +266,12 @@ namespace Eugene
 		/// <summary>
 		/// サンプラー
 		/// </summary>
-		Sampler
+		Sampler,
+
+		/// <summary>
+		/// 32ビットの定数
+		/// </summary>
+		Constans
 	};
 
 	enum class ResourceBindFlag :
@@ -284,7 +294,7 @@ namespace Eugene
 
 	constexpr ResourceBindFlags operator|(ResourceBindFlag rflag, ResourceBindFlag lflag)
 	{
-        using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
+		using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
 		return ResourceBindFlags{ static_cast<UnderlyingType>(rflag) | static_cast<UnderlyingType>(lflag) };
 	}
 
@@ -318,7 +328,8 @@ namespace Eugene
 	/// <summary>
 	/// シェーダタイプ
 	/// </summary>
-	enum class ShaderType
+	enum class ShaderType : 
+		std::uint8_t
 	{
 		/// <summary>
 		/// 頂点
@@ -354,7 +365,8 @@ namespace Eugene
 	/// <summary>
 	/// ブレンドタイプ
 	/// </summary>
-	enum class BlendType
+	enum class BlendType : 
+		std::uint8_t
 	{
 		/// <summary>
 		/// 無し
@@ -432,7 +444,8 @@ namespace Eugene
 	/// <summary>
 	/// トポロジータイプ
 	/// </summary>
-	enum class TopologyType
+	enum class TopologyType :
+		std::uint8_t
 	{
 		Non = 0,
 		Point = 1,
@@ -443,8 +456,7 @@ namespace Eugene
 
 
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
-	class Shader;
-	using ShaderPair = std::pair<Shader, ShaderType>;
+	using ShaderPair = std::pair<std::span<std::uint8_t>, ShaderType>;
 	using ShaderTypePaisrSpan = std::span<ShaderPair>;
 	struct SamplerLayout;
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;
@@ -454,7 +466,8 @@ namespace Eugene
 	/// <summary>
 /// テクスチャアドレッシングモード
 /// </summary>
-	enum class TextureAddressMode
+	enum class TextureAddressMode :
+		std::uint8_t
 	{
 		Wrap = 1,
 		Mirror = 2,
@@ -466,7 +479,8 @@ namespace Eugene
 	/// <summary>
 	/// サンプラーのフィルター
 	/// </summary>
-	enum class SampleFilter
+	enum class SampleFilter :
+		std::uint8_t
 	{
 		Point = 0,
 		Linear = 0x15,
@@ -476,7 +490,8 @@ namespace Eugene
 	/// <summary>
 	/// サンプラーの比較演算用
 	/// </summary>
-	enum class SamplerComparison
+	enum class SamplerComparison :
+		std::uint8_t
 	{
 		Non,
 		Never,

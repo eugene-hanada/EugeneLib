@@ -37,16 +37,20 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 			switch (bind->viewType_)
 			{
 			case ViewType::Texture:
-				nowRegister = texRegister++;
+				nowRegister = texRegister;
+				texRegister += bind->viewNum_;
 				break;
 			case ViewType::UnoderedAccess:
-				nowRegister = uaRegister++;
+				nowRegister = uaRegister;
+				uaRegister += bind->viewNum_;
 				break;
 			case ViewType::ConstantBuffer:
-				nowRegister = cbRegister++;
+				nowRegister = cbRegister;
+				cbRegister += bind->viewNum_;
 				break;
 			case ViewType::Sampler:
-				nowRegister = smpRegister++;
+				nowRegister = smpRegister ;
+				smpRegister += bind->viewNum_;
 				break;
 			default:
 				break;

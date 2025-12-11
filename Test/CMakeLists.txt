@@ -9,6 +9,8 @@ if(MSVC)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
+option(EUGENE_USE_SYSTEM_TEST "システムのテストをビルドするか?" OFF)
+option(EUGENE_USE_GRAPHICS_TEST "グラフィックスのテストをビルドするか？" OFF)
 
 
 
@@ -18,3 +20,9 @@ target_include_directories(tests PRIVATE "./doctest")
 target_include_directories(tests PRIVATE "../Include")
 target_link_libraries(tests PRIVATE EugeneLib)
 
+if (EUGENE_USE_SYSTEM_TEST)
+	target_compile_definitions(tests PRIVATE EUGENE_USE_SYSTEM_TEST)
+endif()
+if (EUGENE_USE_GRAPHICS_TEST)
+	target_compile_definitions(tests PRIVATE EUGENE_USE_GRAPHICS_TEST)
+endif()

@@ -456,7 +456,7 @@ namespace Eugene
 
 
 	using ShaderInputSpan = std::span<ShaderInputLayout>;
-	using ShaderPair = std::pair<std::span<std::uint8_t>, ShaderType>;
+	using ShaderPair = std::pair<std::span<const std::uint8_t>, ShaderType>;
 	using ShaderTypePaisrSpan = std::span<ShaderPair>;
 	struct SamplerLayout;
 	using ShaderLayoutSpan = std::span<std::vector<ShaderLayout>>;

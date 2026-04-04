@@ -29,7 +29,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name=""></param>
 		/// <returns> 先頭ポインタ </returns>
-		const char* GetPtr(void) const noexcept;
+		const std::uint8_t* GetPtr(void) const noexcept;
 
 		/// <summary>
 		/// シェーダーのサイズを取得する

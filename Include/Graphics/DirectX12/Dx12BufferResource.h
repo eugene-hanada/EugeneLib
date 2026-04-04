@@ -8,8 +8,8 @@
 
 namespace D3D12MA
 {
-	struct Allocation;
-	struct Allocator;
+	class Allocation;
+	class Allocator;
 }
 
 

@@ -9,7 +9,7 @@
 
 namespace Eugene
 {
-	class TextureInfo;
+	struct TextureInfo;
 
 	/// <summary>
 	/// 画像用のリソース

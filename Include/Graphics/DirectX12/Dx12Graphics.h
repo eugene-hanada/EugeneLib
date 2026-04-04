@@ -26,7 +26,7 @@ struct IDXGISwapChain4;
 
 namespace D3D12MA
 {
-	struct Allocator;
+	class Allocator;
 }
 
 namespace Eugene

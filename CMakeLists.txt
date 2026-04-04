@@ -52,7 +52,6 @@ endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
-	Source/Graphics/Shader.cpp
 	Source/Graphics/Image.cpp
 	)
 
@@ -78,7 +77,7 @@ if (EUGENE_BUILD_SOUND)
 endif()
 
 if (EUGENE_BUILD_NETWORK)
-	set(SystemSource Source/System/NetSocket.cpp)
+	set(SystemSource ${SystemSource} Source/System/NetSocket.cpp)
 endif()
 
 

@@ -14,7 +14,7 @@
       "variables": [
         {
           "name": "EUGENE_USE_IMGUI",
-          "value": "False",
+          "value": "True",
           "type": "BOOL"
         },
         {

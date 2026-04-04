@@ -25,9 +25,9 @@ Eugene::Shader::Shader(std::span<const std::uint8_t> byteCode) :
 	std::copy_n(byteCode.begin(), byteCode_.size(), byteCode_.begin());
 }
 
-const char* Eugene::Shader::GetPtr(void) const noexcept
+const std::uint8_t* Eugene::Shader::GetPtr(void) const noexcept
 {
-	return reinterpret_cast<const char*>(byteCode_.data());
+	return byteCode_.data();
 }
 
 std::uint64_t Eugene::Shader::GetSize(void) const noexcept

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <memory>
+#include <span>
 #include "EugeneLibException.h"
 
 namespace Eugene
@@ -8,7 +9,7 @@ namespace Eugene
 	/// 可変配列(Pushやreserve無しのvectorみたいなの)
 	/// </summary>
 	/// <typeparam name="T"> 要素の型 </typeparam>
-	template<class T>
+	template<class T, class SizeType = std::uint32_t>
 	class Array
 	{
 	public:
@@ -16,7 +17,7 @@ namespace Eugene
 		/// サイズ指定コンストラクタ
 		/// </summary>
 		/// <param name="size"> サイズ </param>
-		Array(std::size_t size) :
+		Array(SizeType size) :
 			pointer_{ new T[size]() }, size_{ size }
 		{
 		}
@@ -265,6 +266,11 @@ namespace Eugene
 			}
 			return *(pointer_.get() + index);
 		}
+
+		constexpr const std::span<T> AsSpan() const & noexcept
+		{
+			return { pointer_.get(), size_ };
+		}
 	private:
 		/// <summary>
 		/// 配列のポインター
@@ -274,7 +280,7 @@ namespace Eugene
 		/// <summary>
 		/// 配列のサイズ
 		/// </summary>
-		std::size_t size_;
+		SizeType size_;
 
 	};
 }

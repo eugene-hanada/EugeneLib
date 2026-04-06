@@ -314,10 +314,7 @@ Eugene::Pipeline::Pipeline(
 
 	auto [result, pipeline] = Graphics::GetInstance().device_->createGraphicsPipelineUnique(nullptr, pipelineInfo);
 
-	if (result != vk::Result::eSuccess)
-	{
-		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
-	}
+	EUGENE_ASSERT_MSG(result == vk::Result::eSuccess, "グラフィックスパイプラインステート生成失敗");
 
 	data_.pipeline_ = std::move(pipeline);
 }

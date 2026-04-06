@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <memory>
 #include <span>
-#include "EugeneLibException.h"
+#include "../Debug/Debug.h"
 
 namespace Eugene
 {
@@ -246,10 +246,7 @@ namespace Eugene
 		/// <returns></returns>
 		constexpr const T& operator[](std::size_t index) const&
 		{
-			if (index >= size_)
-			{
-				throw EugeneLibException( "範囲外です" );
-			}
+			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
 			return *(pointer_.get() + index);
 		}
 
@@ -260,10 +257,7 @@ namespace Eugene
 		/// <returns></returns>
 		T& operator[](std::size_t index)&
 		{
-			if (index >= size_)
-			{
-				throw EugeneLibException{ "範囲外です" };
-			}
+			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
 			return *(pointer_.get() + index);
 		}
 

@@ -222,7 +222,7 @@ namespace Eugene
 
 #ifdef EUGENE_DEBUG
 #define EUGENE_ASSERT_MSG(check,message)\
-if (!check)\
+if (!static_cast<bool>(check))\
 {\
 	constexpr auto sourceLocation = std::source_location::current();\
 	Eugene::Debug::GetInstance().Error("Assertion! {0:} Function={1:} File={2:} Line={3:}",message, sourceLocation.function_name(),sourceLocation.file_name(),sourceLocation.line());\

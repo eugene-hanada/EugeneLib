@@ -25,6 +25,7 @@ endif()
 # HLSLシェーダをコンパイルしてexe出力ディレクトリにコピー
 find_program(DXC_EXECUTABLE dxc REQUIRED)
 
+
 set(HLSL_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(SHADER_OUTPUT_DIR "$<TARGET_FILE_DIR:Sample>")
 
@@ -45,13 +46,13 @@ elseif(EUGENE_USE_VULKAN)
 
 	# 頂点シェーダ
 	add_custom_command(TARGET Sample POST_BUILD
-		COMMAND ${GLSLC_EXECUTABLE} "${HLSL_SOURCE_DIR}/VertexShader.glsl" -o "${SHADER_OUTPUT_DIR}/VertexShader.spv"
+		COMMAND glslc "${HLSL_SOURCE_DIR}/VertexShader.vert" -o "${SHADER_OUTPUT_DIR}/VertexShader.vso"
 		COMMENT "Compiling VertexShader.glsl with glslc"
 	)
 	
 	# ピクセルシェーダ
 	add_custom_command(TARGET Sample POST_BUILD
-		COMMAND ${GLSLC_EXECUTABLE} "${HLSL_SOURCE_DIR}/PixelShader.glsl" -o "${SHADER_OUTPUT_DIR}/PixelShader.spv"
+		COMMAND glslc "${HLSL_SOURCE_DIR}/FragmentShader.frag" -o "${SHADER_OUTPUT_DIR}/PixelShader.pso"
 		COMMENT "Compiling PixelShader.glsl with glslc"
 	)
 endif()

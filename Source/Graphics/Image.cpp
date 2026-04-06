@@ -1,5 +1,5 @@
 ﻿#include "../../Include/Graphics/Image.h"
-#include "../../Include/Utils/EugeneLibException.h"
+#include "../../Include/Debug/Debug.h"
 #include <fstream>
 #include <bit>
 
@@ -42,20 +42,14 @@ Eugene::Image::Image(const std::filesystem::path& path) :
 	info_{}
 {
 	auto tmp = std::hash<std::string_view>()(path.extension().string());
-	if (!(this->*loadFromFileFuncMap_.at(tmp))(path))
-	{
-		throw EugeneLibException{ "ファイル読み込み失敗" };
-	}
+	EUGENE_ASSERT_MSG((this->*loadFromFileFuncMap_.at(tmp))(path), "ファイル読み込み失敗");
 }
 
 Eugene::Image::Image(std::span<std::uint8_t> data, const std::string_view& ext):
 	info_{}
 {
 	auto tmp = std::hash<std::string_view>()(ext);
-	if (!(this->*loadFromMemoryMap_.at(tmp))(data))
-	{
-		throw EugeneLibException{ "画像読み込み失敗" };
-	}
+	EUGENE_ASSERT_MSG((this->*loadFromMemoryMap_.at(tmp))(data), "画像読み込み失敗");
 }
 
 const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&

@@ -2,7 +2,7 @@
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include <vector>
 #include "../../../Include/ThirdParty/d3dx12.h"
-#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 
 Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes,ResourceBindFlags flags)
@@ -100,24 +100,16 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
-	if (FAILED(D3D12SerializeRootSignature(
+	EUGENE_ASSERT_MSG(SUCCEEDED(D3D12SerializeRootSignature(
 		&rootSignatureDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob)
-	))
-	{
-		// throwかく
-		throw EugeneLibException("ルードシグネチャ生成失敗");
-	}
+	), "ルードシグネチャ生成失敗");
 
-	if (FAILED(Graphics::GetInstance().device_->CreateRootSignature(
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf())))
-		)
-	{
-		throw EugeneLibException("ルードシグネチャ生成失敗");
-	}
+		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf()))), "ルードシグネチャ生成失敗");
 }

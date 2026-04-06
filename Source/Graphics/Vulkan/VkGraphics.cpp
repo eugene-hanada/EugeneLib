@@ -21,7 +21,6 @@
 #endif
 #endif
 
-
 #include "../../../Include/Debug/Debug.h"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
@@ -274,11 +273,7 @@ vk::Format Eugene::Graphics::CreateSwapChain(const glm::vec2& size)
 	auto format = physicalDevice_.getSurfaceFormatsKHR(*surfaceKhr_);
 	auto modes = physicalDevice_.getSurfacePresentModesKHR(*surfaceKhr_);
 
-	if (format.size() <= 0 || modes.size() <= 0)
-	{
-		// フォーマットもPresentも0以下ならスワップチェイン使えないのでやめる
-		throw EugeneLibException{ "対応フォーマットがありません" };
-	}
+	EUGENE_ASSERT_MSG(!(format.size() <= 0 || modes.size() <= 0), "対応フォーマットがありません");
 
 	auto itr = std::find_if(
 		format.begin(), format.end(),
@@ -713,10 +708,7 @@ void Eugene::Graphics::CreateDevice(void)
 		}
 	}
 
-	if (!physicalDevice_)
-	{
-		throw EugeneLibException{"使用できる物理デバイスがありません"};
-	}
+	EUGENE_ASSERT_MSG(physicalDevice_, "使用できる物理デバイスがありません");
 
 
 	auto queueFamilyProp = physicalDevice_.getQueueFamilyProperties();

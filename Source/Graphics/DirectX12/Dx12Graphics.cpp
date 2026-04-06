@@ -243,7 +243,7 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 	IDXGISwapChain1* swapchain = nullptr;
 	//if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(gpuEngine.cmdQueue_.Get(), hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 	
-		if (FAILED(dxgiFactory_->CreateSwapChainForComposition(gpuEngine.cmdQueue_.Get(), &swapchainDesc, nullptr, &swapchain)))
+	if (FAILED(dxgiFactory_->CreateSwapChainForComposition(gpuEngine.cmdQueue_.Get(), &swapchainDesc, nullptr, &swapchain)))
 	{
 		throw EugeneLibException("スワップチェイン生成失敗");
 	}

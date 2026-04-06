@@ -1,7 +1,7 @@
 ﻿#include "../../../Include/Graphics/DirectX12/Dx12ImageResource.h"
 #include <dxgi1_6.h>
 #include "../../../Include/ThirdParty/d3dx12.h"
-#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 #include "../../../Include/Graphics/Graphics.h"
 
 Eugene::ImageResource::ImageResource(const TextureInfo& info) :
@@ -55,17 +55,15 @@ Eugene::ImageResource::ImageResource(
 	{
 		clear = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM, clearColor.value().data());
 	}
-	if (FAILED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
 		clearColor.has_value() ? &clear : nullptr,
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("レンダーターゲット用リソース生成失敗");
-	}
+	)), "レンダーターゲット用リソース生成失敗");
+	
 }
 
 Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, float clearValue, std::uint8_t sampleCount) :

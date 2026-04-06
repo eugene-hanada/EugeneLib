@@ -112,13 +112,6 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	}
 
 	auto mode = reinterpret_cast<const WindowMode&>(other);
-#ifndef EUGENE_IMGUI
-
-	if (mode == WindowMode::None)
-	{
-		return;
-	}
-#endif
 
 	std::filesystem::path tmpTitle{ title };
 	::windowClass.cbSize = sizeof(WNDCLASSEX);
@@ -215,13 +208,8 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 #ifdef EUGENE_IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplWin32_Init(hwnd);
-
 	context_ = ImGui::GetCurrentContext();
-
 #endif
 
 }

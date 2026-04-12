@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include <aaudio/AAudio.h>
 #include <vector>
@@ -12,7 +12,7 @@
 namespace Eugene
 {
     /// <summary>
-    /// ƒTƒEƒ“ƒhƒNƒ‰ƒX
+    /// ã‚µã‚¦ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹
     /// </summary>
     class Sound :
             public DynamicSingleton<Sound> ,SoundBase

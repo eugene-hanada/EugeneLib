@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 //#include "GpuResource.h"
 //#include "GraphicsCommon.h"
 //#include "../ThirdParty/glm/glm/vec2.hpp"

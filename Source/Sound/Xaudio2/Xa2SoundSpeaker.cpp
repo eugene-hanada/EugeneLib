@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "../../../Include/Sound/SoundFile.h"
 #include "../../../Include/Sound/SoundControl.h"
-#include "../../../Include/Utils/EugeneLibException.h"
 
 
 Eugene::SoundSpeaker::SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile, std::uint16_t outChannel, const float maxPitchRate) :
@@ -32,10 +31,7 @@ Eugene::SoundSpeaker::SoundSpeaker(IXAudio2* xaudio2, const SoundFile& soundFile
 	std::copy(std::begin(ext.d4), std::end(ext.d4), formatEx.SubFormat.Data4);
 
 	// ソースボイス生成
-	if (FAILED(xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate_)))
-	{
-		throw EugeneLibException("ソースボイス生成失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(xaudio2->CreateSourceVoice(std::out_ptr(source_), &formatEx.Format, 0, maxPitchRate_)), "ソースボイス生成失敗");
 
 	// バッファも用意
 	buffer_ = std::make_unique<XAUDIO2_BUFFER>();
@@ -56,13 +52,10 @@ Eugene::SoundSpeaker::~SoundSpeaker()
 void Eugene::SoundSpeaker::Play(int loopCount)
 {
 	buffer_->LoopCount = loopCount == -1 ? XAUDIO2_LOOP_INFINITE : static_cast<std::uint32_t>(loopCount);
-	if (FAILED(source_->Stop(XAUDIO2_PLAY_TAILS)) ||
-		FAILED(source_->FlushSourceBuffers())|| 
-		FAILED(source_->SubmitSourceBuffer(buffer_.get())) ||
-		FAILED(source_->Start()))
-	{
-		throw EugeneLibException("failedPlay");
-	}
+	source_->Stop(XAUDIO2_PLAY_TAILS);
+	source_->FlushSourceBuffers();
+	source_->SubmitSourceBuffer(buffer_.get());
+	source_->Start();
 }
 
 void Eugene::SoundSpeaker::Stop(void) noexcept

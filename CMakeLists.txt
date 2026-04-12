@@ -57,7 +57,7 @@ set(GraphicsSource
 
 # Utils系のソースファイルをセット
 set(UtilsSource
-	Source/Utils/EugeneLibException.cpp
+	
 	Source/Debug/Debug.cpp
 )
 

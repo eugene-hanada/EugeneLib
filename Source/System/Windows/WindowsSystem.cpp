@@ -2,7 +2,6 @@
 #include <Xinput.h>
 #include <filesystem>
 #include <functional>
-#include "../../../Include/Utils/EugeneLibException.h"
 #include "../../../Include/Debug/Debug.h"
 #include "../../../Include/Graphics/Graphics.h"
 
@@ -106,10 +105,8 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	activateCall = [this](bool active) {
 		isActive_ = active;
 		};
-	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)))
-	{
-		throw EugeneLibException("Comの初期化に失敗");
-	}
+
+	EUGENE_ASSERT_MSG(SUCCEEDED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)), "COMの初期化に失敗");
 
 	auto mode = reinterpret_cast<const WindowMode&>(other);
 
@@ -118,10 +115,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	::windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
 	::windowClass.lpszClassName = tmpTitle.c_str();
 	::windowClass.hInstance = GetModuleHandle(nullptr);
-	if (!RegisterClassEx(&::windowClass))
-	{
-		throw EugeneLibException("ウィンドウクラスの登録に失敗");
-	}
+	EUGENE_ASSERT_MSG(RegisterClassEx(&::windowClass), "ウィンドウクラスの登録に失敗");
 
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
@@ -143,10 +137,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	}
 	
 
-	if (!AdjustWindowRect(&wSize, style, false))
-	{
-		throw EugeneLibException("ウィンドウサイズ調整に失敗");
-	}
+	EUGENE_ASSERT_MSG(AdjustWindowRect(&wSize, style, false), "ウィンドウサイズ調整に失敗");
 
 	if (mode == WindowMode::Transparent)
 	{
@@ -210,6 +201,9 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	ImGui::CreateContext();
 	ImGui_ImplWin32_Init(hwnd);
 	context_ = ImGui::GetCurrentContext();
+	ImGuiIO& io = ImGui::GetIO();
+	io.Fonts->AddFontDefault();
+	io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 #endif
 
 }
@@ -369,11 +363,8 @@ bool Eugene::System::IsEnd(void) const
 void Eugene::System::ResizeWindow(const glm::vec2& size)
 {
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
-	
-	if (!AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false))
-	{
-		throw EugeneLibException("ウィンドウサイズ調整に失敗");
-	}
+
+	EUGENE_ASSERT_MSG(AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false), "ウィンドウサイズ調整に失敗");
 
 	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);

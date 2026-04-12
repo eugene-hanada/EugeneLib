@@ -1,4 +1,4 @@
-#include "../../../Include/System/Linux/SharedObject.h"
+﻿#include "../../../Include/System/Linux/SharedObject.h"
 #include <dlfcn.h>
 #include "../../../Include/Utils/EugeneLibException.h"
 

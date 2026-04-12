@@ -18,17 +18,14 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info) :
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
 
-	if (FAILED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
 		nullptr,
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("テクスチャ用リソース生成失敗");
-	}
+	)), "テクスチャ用リソース生成失敗");
 }
 
 Eugene::ImageResource::ImageResource(
@@ -79,26 +76,20 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, floa
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
 
-	if (FAILED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
 		&clear,
 		allocation_.ReleaseAndGetAddressOf(),
 		IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf())
-	)))
-	{
-		throw EugeneLibException("デプス用リソース生成失敗");
-	}
+	)), "デプス用リソース生成失敗");
 }
 
 
 Eugene::ImageResource::ImageResource(std::uint32_t idx) :
 	format_{Format::R8G8B8A8_UNORM}
 {
-	if (FAILED(Graphics::GetInstance().swapChain_->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))))
-	{
-		throw EugeneLibException("スワップチェイン用リソース生成失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().swapChain_->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))), "スワップチェイン用リソース生成失敗");
 }
 

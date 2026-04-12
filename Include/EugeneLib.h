@@ -41,6 +41,7 @@
 #include "Utils/SharedPtr.h"
 #include "Utils/Hash.h"
 #include "Utils/Array.h"
+#include "Utils/HashMap.h"
 #include "Utils/SpinLock.h"
 #include "Debug/Debug.h"
 

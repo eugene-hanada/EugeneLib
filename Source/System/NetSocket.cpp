@@ -1,4 +1,4 @@
-#include "../../Include/System/NetSocket.h"
+ï»¿#include "../../Include/System/NetSocket.h"
 #include "../../Include/Debug/Debug.h"
 
 #ifdef EUGENE_NETWORK
@@ -9,7 +9,7 @@ namespace Eugene
 	void TCPSocket::Init()
 	{
 		WSADATA wsaData;
-		EUGENE_ASSERT_MSG(WSAStartup(WINSOCK_VERSION, &wsaData) == 0, "WSAStartupŽ¸”s");
+		EUGENE_ASSERT_MSG(WSAStartup(WINSOCK_VERSION, &wsaData) == 0, "WSAStartupå¤±æ•—");
 	}
 
 	void TCPSocket::Finalize()

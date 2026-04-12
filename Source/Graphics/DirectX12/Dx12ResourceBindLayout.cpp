@@ -1,4 +1,4 @@
-#include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
+ï»¿#include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include <vector>
 #include "../../../Include/ThirdParty/d3dx12.h"
@@ -105,11 +105,11 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob)
-	), "ƒ‹[ƒhƒVƒOƒlƒ`ƒƒ¶¬¸”s");
+	), "ãƒ«ãƒ¼ãƒ‰ã‚·ã‚°ãƒãƒãƒ£ç”Ÿæˆå¤±æ•—");
 
 	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),
-		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf()))), "ƒ‹[ƒhƒVƒOƒlƒ`ƒƒ¶¬¸”s");
+		IID_PPV_ARGS(rootSignature_.ReleaseAndGetAddressOf()))), "ãƒ«ãƒ¼ãƒ‰ã‚·ã‚°ãƒãƒãƒ£ç”Ÿæˆå¤±æ•—");
 }

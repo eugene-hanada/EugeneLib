@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <memory>
 #include <span>
+#include <iterator>
 #include "../Debug/Debug.h"
 
 namespace Eugene
@@ -120,40 +121,103 @@ namespace Eugene
 		/// </summary>
 		struct iterator
 		{
-			iterator();
+			using iterator_category = std::random_access_iterator_tag;
+			using value_type = T;
+			using difference_type = std::ptrdiff_t;
+			using pointer = T*;
+			using reference = T&;
+
+			iterator() : arrayPtr_{ nullptr }, index_{ 0 } {}
 
 			iterator(Array* arrayPtr, std::size_t index) :
 				arrayPtr_{ arrayPtr }, index_{ index }
 			{
 			}
 
-			T& operator*()
+			reference operator*() const
 			{
 				return *(arrayPtr_->pointer_.get() + index_);
 			}
 
-
 			iterator& operator++()
 			{
-				index_++;
+				++index_;
 				return *this;
+			}
+
+			iterator operator++(int)
+			{
+				iterator tmp = *this;
+				++*this;
+				return tmp;
 			}
 
 			iterator& operator--()
 			{
-				index_--;
+				--index_;
 				return *this;
 			}
 
-			bool operator==(const iterator& itr)
+			iterator operator--(int)
+			{
+				iterator tmp = *this;
+				--*this;
+				return tmp;
+			}
+
+			iterator& operator+=(difference_type n)
+			{
+				if (n >= 0)
+					index_ += static_cast<std::size_t>(n);
+				else
+					index_ -= static_cast<std::size_t>(-n);
+				return *this;
+			}
+
+			iterator& operator-=(difference_type n)
+			{
+				return *this += -n;
+			}
+
+			iterator operator+(difference_type n) const
+			{
+				iterator tmp = *this;
+				tmp += n;
+				return tmp;
+			}
+
+			iterator operator-(difference_type n) const
+			{
+				iterator tmp = *this;
+				tmp -= n;
+				return tmp;
+			}
+
+			difference_type operator-(const iterator& rhs) const
+			{
+				return static_cast<difference_type>(index_) - static_cast<difference_type>(rhs.index_);
+			}
+
+			reference operator[](difference_type n) const
+			{
+				return *(*this + n);
+			}
+
+			bool operator==(const iterator& itr) const
 			{
 				return index_ == itr.index_;
 			}
 
-			bool operator!=(const iterator& itr)
+			bool operator!=(const iterator& itr) const
 			{
 				return index_ != itr.index_;
 			}
+
+			bool operator<(const iterator& itr) const { return index_ < itr.index_; }
+			bool operator<=(const iterator& itr) const { return index_ <= itr.index_; }
+			bool operator>(const iterator& itr) const { return index_ > itr.index_; }
+			bool operator>=(const iterator& itr) const { return index_ >= itr.index_; }
+
 		private:
 			Array* arrayPtr_;
 			std::size_t index_;
@@ -182,40 +246,103 @@ namespace Eugene
 		/// </summary>
 		struct const_iterator
 		{
-			const_iterator();
+			using iterator_category = std::random_access_iterator_tag;
+			using value_type = T;
+			using difference_type = std::ptrdiff_t;
+			using pointer = const T*;
+			using reference = const T&;
+
+			const_iterator() : arrayPtr_{ nullptr }, index_{ 0 } {}
 
 			const_iterator(const Array* arrayPtr, std::size_t index) :
 				arrayPtr_{ arrayPtr }, index_{ index }
 			{
 			}
 
-			const T& operator*() const
+			reference operator*() const
 			{
 				return *(arrayPtr_->pointer_.get() + index_);
 			}
 
-
 			const_iterator& operator++()
 			{
-				index_++;
+				++index_;
 				return *this;
+			}
+
+			const_iterator operator++(int)
+			{
+				const_iterator tmp = *this;
+				++*this;
+				return tmp;
 			}
 
 			const_iterator& operator--()
 			{
-				index_--;
+				--index_;
 				return *this;
 			}
 
-			bool operator==(const const_iterator& itr)
+			const_iterator operator--(int)
+			{
+				const_iterator tmp = *this;
+				--*this;
+				return tmp;
+			}
+
+			const_iterator& operator+=(difference_type n)
+			{
+				if (n >= 0)
+					index_ += static_cast<std::size_t>(n);
+				else
+					index_ -= static_cast<std::size_t>(-n);
+				return *this;
+			}
+
+			const_iterator& operator-=(difference_type n)
+			{
+				return *this += -n;
+			}
+
+			const_iterator operator+(difference_type n) const
+			{
+				const_iterator tmp = *this;
+				tmp += n;
+				return tmp;
+			}
+
+			const_iterator operator-(difference_type n) const
+			{
+				const_iterator tmp = *this;
+				tmp -= n;
+				return tmp;
+			}
+
+			difference_type operator-(const const_iterator& rhs) const
+			{
+				return static_cast<difference_type>(index_) - static_cast<difference_type>(rhs.index_);
+			}
+
+			reference operator[](difference_type n) const
+			{
+				return *(*this + n);
+			}
+
+			bool operator==(const const_iterator& itr) const
 			{
 				return index_ == itr.index_;
 			}
 
-			bool operator!=(const const_iterator& itr)
+			bool operator!=(const const_iterator& itr) const
 			{
 				return index_ != itr.index_;
 			}
+
+			bool operator<(const const_iterator& itr) const { return index_ < itr.index_; }
+			bool operator<=(const const_iterator& itr) const { return index_ <= itr.index_; }
+			bool operator>(const const_iterator& itr) const { return index_ > itr.index_; }
+			bool operator>=(const const_iterator& itr) const { return index_ >= itr.index_; }
+
 		private:
 			const Array* arrayPtr_;
 			std::size_t index_;
@@ -276,5 +403,358 @@ namespace Eugene
 		/// </summary>
 		SizeType size_;
 
+	};
+
+	/// <summary>
+	/// vectorっぽいやつ（サイズがsize_t型以外にしたいときにでも）
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="SizeType"></typeparam>
+	/// <typeparam name="PushReserve"></typeparam>
+	template<class T, class SizeType = std::uint32_t, SizeType PushReserve = 2>
+	class Vector
+	{
+	public:
+		struct iterator
+		{
+			iterator() :
+				vectorPtr_{ nullptr }, index_{ 0 }
+			{
+			}
+			iterator(Vector* vectorPtr, SizeType index) :
+				vectorPtr_{ vectorPtr }, index_{ index }
+			{
+			}
+			T& operator*()
+			{
+				return *(vectorPtr_->pointer_.get() + index_);
+			}
+			iterator& operator++()
+			{
+				index_++;
+				return *this;
+			}
+			iterator& operator--()
+			{
+				index_--;
+				return *this;
+			}
+			bool operator==(const iterator& itr)
+			{
+				return index_ == itr.index_;
+			}
+			bool operator!=(const iterator& itr)
+			{
+				return index_ != itr.index_;
+			}
+		private:
+			Vector* vectorPtr_;
+			SizeType index_;
+			friend class Vector;
+		};
+
+		struct const_iterator
+		{
+			using iterator_category = std::random_access_iterator_tag;
+			using value_type = T;
+			using difference_type = std::ptrdiff_t;
+			using pointer = const T*;
+			using reference = const T&;
+
+			const_iterator() : vectorPtr_{ nullptr }, index_{ 0 } {}
+
+			const_iterator(const Vector* vectorPtr, SizeType index) :
+				vectorPtr_{ vectorPtr }, index_{ index }
+			{
+			}
+
+			reference operator*() const
+			{
+				return *(vectorPtr_->pointer_.get() + index_);
+			}
+
+			const_iterator& operator++()
+			{
+				++index_;
+				return *this;
+			}
+
+			const_iterator operator++(int)
+			{
+				const_iterator tmp = *this;
+				++*this;
+				return tmp;
+			}
+
+			const_iterator& operator--()
+			{
+				--index_;
+				return *this;
+			}
+
+			const_iterator operator--(int)
+			{
+				const_iterator tmp = *this;
+				--*this;
+				return tmp;
+			}
+
+			const_iterator& operator+=(difference_type n)
+			{
+				if (n >= 0)
+					index_ += static_cast<SizeType>(n);
+				else
+					index_ -= static_cast<SizeType>(-n);
+				return *this;
+			}
+
+			const_iterator& operator-=(difference_type n)
+			{
+				return *this += -n;
+			}
+
+			const_iterator operator+(difference_type n) const
+			{
+				const_iterator tmp = *this;
+				tmp += n;
+				return tmp;
+			}
+
+			const_iterator operator-(difference_type n) const
+			{
+				const_iterator tmp = *this;
+				tmp -= n;
+				return tmp;
+			}
+
+			difference_type operator-(const const_iterator& rhs) const
+			{
+				return static_cast<difference_type>(index_) - static_cast<difference_type>(rhs.index_);
+			}
+
+			reference operator[](difference_type n) const
+			{
+				return *(*this + n);
+			}
+
+			bool operator==(const const_iterator& itr) const
+			{
+				return index_ == itr.index_;
+			}
+
+			bool operator!=(const const_iterator& itr) const
+			{
+				return index_ != itr.index_;
+			}
+
+			bool operator<(const const_iterator& itr) const { return index_ < itr.index_; }
+			bool operator<=(const const_iterator& itr) const { return index_ <= itr.index_; }
+			bool operator>(const const_iterator& itr) const { return index_ > itr.index_; }
+			bool operator>=(const const_iterator& itr) const { return index_ >= itr.index_; }
+
+		private:
+			const Vector* vectorPtr_;
+			SizeType index_;
+			friend class Vector;
+		};
+
+		Vector() : size_{ 0 }, capacity_{ 0 }
+		{
+		}
+
+		Vector(const SizeType size) : size_{ size }, capacity_{ size }, pointer_{ new T[size]() }
+		{
+		}
+
+		Vector(std::initializer_list<T> init) : size_{ static_cast<SizeType>(init.size()) }, capacity_{ size_ }, pointer_{ new T[size_] }
+		{
+			std::copy(init.begin(), init.end(), pointer_.get());
+		}
+
+		Vector(const Vector& vector) : size_{ vector.size_ }, capacity_{ vector.capacity_ }, pointer_{ new T[vector.capacity_]() }
+		{
+			std::copy_n(vector.pointer_.get(), size_, pointer_.get());
+		}
+
+		Vector(Vector&& vector) noexcept : size_{ vector.size_ }, capacity_{ vector.capacity_ }, pointer_{ std::move(vector.pointer_) }
+		{
+			vector.size_ = 0;
+			vector.capacity_ = 0;
+		}
+
+		T& operator[](const SizeType index) &
+		{
+			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
+			return *(pointer_.get() + index);
+		}
+
+		const T& operator[](const SizeType index) const&
+		{
+			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
+			return *(pointer_.get() + index);
+		}
+
+		const size_t size() const
+		{
+			return size_;
+		}
+
+		iterator begin()
+		{
+			return { this, 0 };
+		}
+
+		iterator end()
+		{
+			return { this, size_ };
+		}
+
+		const_iterator cbegin() const
+		{
+			return { this, 0 };
+		}
+
+		const_iterator cend() const
+		{
+			return { this, size_ };
+		}
+
+		void Reserve(const SizeType capacity)
+		{
+			if (capacity > capacity_)
+			{
+				std::unique_ptr<T[]> newPointer{ new T[capacity]() };
+				for (SizeType i = 0; i < size_; i++)
+				{
+					new(newPointer.get() + i)T{ std::move(*(pointer_.get() + i)) };
+				}
+				capacity_ = capacity;
+				pointer_.swap(newPointer);
+			}
+		}
+
+		void Resize(const SizeType size)
+		{
+			if (size <= size_)
+			{
+				for (SizeType i = size; i < size_; i++)
+				{
+					(pointer_.get() + i)->~T();
+				}
+			}
+			else
+			{
+				if (size > capacity_)
+				{
+					Reserve(size);
+
+				}
+				for (SizeType i = size_; i < size; i++)
+				{
+					new(pointer_.get() + i)T{};
+				}
+			}
+			size_ = size;
+		}
+
+		void PushBack(const T& value)
+		{
+			if (size_ == capacity_)
+			{
+				Reserve(capacity_ == 0 ? 1 : capacity_ * PushReserve);
+			}
+			new(pointer_.get() + size_)T{ value };
+			size_++;
+		}
+
+		void EmplaceBack(T&& value)
+		{
+			if (size_ == capacity_)
+			{
+				Reserve(capacity_ == 0 ? 1 : capacity_ * PushReserve);
+			}
+			new(pointer_.get() + size_)T{ std::move(value) };
+			size_++;
+		}
+
+		void Insert(SizeType index, const T& value)
+		{
+			EUGENE_ASSERT_MSG(index <= size_, "範囲外です");
+			if (size_ == capacity_)
+			{
+				Reserve(capacity_ == 0 ? 1 : capacity_ * 2);
+			}
+			for (SizeType i = size_; i > index; i--)
+			{
+				new(pointer_.get() + i)T{ std::move(*(pointer_.get() + i - 1)) };
+				(pointer_.get() + i - 1)->~T();
+			}
+			new(pointer_.get() + index)T{ value };
+			size_++;
+		}
+
+		void Insert(iterator itr, const T& value)
+		{
+			Insert(itr.index_, value);
+		}
+
+		void Emplace(SizeType index, T&& value)
+		{
+			EUGENE_ASSERT_MSG(index <= size_, "範囲外です");
+			if (size_ == capacity_)
+			{
+				Reserve(capacity_ == 0 ? 1 : capacity_ * 2);
+			}
+			for (SizeType i = size_; i > index; i--)
+			{
+				new(pointer_.get() + i)T{ std::move(*(pointer_.get() + i - 1)) };
+				(pointer_.get() + i - 1)->~T();
+			}
+			new(pointer_.get() + index)T{ std::move(value) };
+			size_++;
+		}
+
+		void Emplace(iterator itr, T&& value)
+		{
+			Emplace(itr.index_, std::move(value));
+		}
+
+		void Erase(SizeType index)
+		{
+			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
+			(pointer_.get() + index)->~T();
+			for (SizeType i = index; i < size_ - 1; i++)
+			{
+				new(pointer_.get() + i)T{ std::move(*(pointer_.get() + i + 1)) };
+				(pointer_.get() + i + 1)->~T();
+			}
+			size_--;
+		}
+
+		void Erase(iterator itr)
+		{
+			Erase(itr.index_);
+		}
+
+		void PopBack()
+		{
+			EUGENE_ASSERT_MSG(size_ > 0, "要素がありません");
+			size_--;
+			(pointer_.get() + size_)->~T();
+		}
+
+		void Clear()
+		{
+			for (SizeType i = 0; i < size_; i++)
+			{
+				(pointer_.get() + i)->~T();
+			}
+			size_ = 0;
+		}
+
+	private:
+		SizeType size_;
+		SizeType capacity_;
+		std::unique_ptr<T[]> pointer_;
 	};
 }

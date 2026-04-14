@@ -22,7 +22,7 @@ namespace Eugene
 				map_{ nullptr }, index_{ 0 }
 			{
 			}
-			iterator(const FixedHashMap* map, const IndexSizeType index) :
+			iterator(FixedHashMap* map, const IndexSizeType index) :
 				map_{ map }, index_{ index }
 			{
 			}
@@ -44,7 +44,7 @@ namespace Eugene
 				return index_ != itr.index_;
 			}
 		private:
-			const FixedHashMap* map_;
+			FixedHashMap* map_;
 			IndexSizeType index_;
 		};
 
@@ -114,12 +114,22 @@ namespace Eugene
 			return dataTable_[index];
 		}
 
-		iterator begin() const
+		iterator begin()
 		{
 			return { this, 0 };
 		}
 
-		iterator end() const
+		iterator end()
+		{
+			return { this, static_cast<IndexSizeType>(dataTable_.size()) };
+		}
+
+		const_iterator begin() const
+		{
+			return { this, 0 };
+		}
+
+		const_iterator end() const
 		{
 			return { this, static_cast<IndexSizeType>(dataTable_.size()) };
 		}

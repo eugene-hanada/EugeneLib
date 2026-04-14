@@ -19,7 +19,7 @@ add_executable(tests ./test.cpp)
 target_include_directories(tests PRIVATE "./doctest")
 target_include_directories(tests PRIVATE "../Include")
 target_link_libraries(tests PRIVATE EugeneLib)
-target_compile_definitions(tests PRIVATE EUGENE_TEST)
+target_compile_definitions(EugeneLib PUBLIC EUGENE_TEST)
 
 if (EUGENE_USE_SYSTEM_TEST)
 	target_compile_definitions(tests PRIVATE EUGENE_USE_SYSTEM_TEST)

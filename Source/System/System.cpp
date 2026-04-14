@@ -1,4 +1,4 @@
-﻿#ifndef BUILD_DOCTEST
+﻿#ifndef EUGENE_TEST
 #include <mimalloc-new-delete.h>
 #endif
 

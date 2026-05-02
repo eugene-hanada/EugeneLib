@@ -29,7 +29,7 @@
         },
         {
           "name": "EUGENE_BUILD_DOCTEST",
-          "value": "True",
+          "value": "False",
           "type": "BOOL"
         }
       ]

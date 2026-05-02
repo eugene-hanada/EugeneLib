@@ -1,6 +1,9 @@
 ﻿#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>
 #include <EugeneLib.h>
+#include <vector>
+#include <cstddef>
+#include <cstdint>
 
 TEST_CASE("AlignmentedSize")
 {
@@ -76,9 +79,9 @@ TEST_CASE("Vector")
 
 	Eugene::Vector<int> v2{ 1, 2, 3 };
 	CHECK(v2.size() == 3);
-    CHECK(v2[0] == 1);
-    CHECK(v2[1] == 2);
-    CHECK(v2[2] == 3);
+	CHECK(v2[0] == 1);
+	CHECK(v2[1] == 2);
+	CHECK(v2[2] == 3);
 
 	Eugene::Vector<int> v3{ v2 };
 	CHECK(v3.size() == 3);
@@ -124,7 +127,7 @@ TEST_CASE("FixedHashMap")
 {
 	struct SimpleHash { std::uint32_t operator()(int k) const noexcept { return static_cast<std::uint32_t>(k); } };
 
-	Eugene::FixedHashMap<int, int, SimpleHash> map(8);
+	Eugene::FixedHashMap<int, int, std::uint32_t, SimpleHash> map(8);
 	map[1] = 10;
 	map[2] = 20;
 
@@ -145,6 +148,41 @@ TEST_CASE("FixedHashMap")
 	CHECK(cmap[1] == 10);
 }
 
+TEST_CASE("SwissTable")
+{
+	struct SimpleHash { std::uint32_t operator()(int k) const noexcept { return static_cast<std::uint32_t>(k); } };
+
+	Eugene::SwissTable<int, int, std::uint32_t, SimpleHash> swissTable;
+	swissTable[1] = 10;
+	swissTable[2] = 20;
+
+	CHECK(swissTable[1] == 10);
+	CHECK(swissTable[2] == 20);
+
+	// Use Find to locate entries rather than iterating raw storage
+	bool found1 = false, found2 = false;
+	auto it1 = swissTable.Find(1);
+	if (it1 != swissTable.end())
+	{
+		CHECK(it1.first() == 1);
+		CHECK(it1.second() == 10);
+		found1 = true;
+	}
+	auto it2 = swissTable.Find(2);
+	if (it2 != swissTable.end())
+	{
+		CHECK(it2.first() == 2);
+		CHECK(it2.second() == 20);
+		found2 = true;
+	}
+
+	CHECK(found1);
+	CHECK(found2);
+
+	const auto& cswissTable = swissTable;
+	CHECK(cswissTable.At(1) == 10);
+}
+
 TEST_CASE("Random")
 {
 	{
@@ -152,17 +190,17 @@ TEST_CASE("Random")
 		{
 			int max = 10;
 			int min = 0;
-            auto result = random(min, max);
-            CHECK(result <= max);
-            CHECK(result >= min);
+			auto result = random(min, max);
+			CHECK(result <= max);
+			CHECK(result >= min);
 		}
 
 		{
 			float max = 5.0f;
 			float min = -5.0f;
-            auto result = random(min, max);
-            CHECK(result <= max);
-            CHECK(result >= min);
+			auto result = random(min, max);
+			CHECK(result <= max);
+			CHECK(result >= min);
 		}
 	}
 
@@ -171,17 +209,17 @@ TEST_CASE("Random")
 		{
 			int max = 10;
 			int min = 0;
-            auto result = random(min, max);
-            CHECK(result <= max);
-            CHECK(result >= min);
+			auto result = random(min, max);
+			CHECK(result <= max);
+			CHECK(result >= min);
 		}
 
 		{
 			float max = 5.0f;
 			float min = -5.0f;
-            auto result = random(min, max);
-            CHECK(result <= max);
-            CHECK(result >= min);
+			auto result = random(min, max);
+			CHECK(result <= max);
+			CHECK(result >= min);
 		}
 	}
 }

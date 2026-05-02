@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <mimalloc.h>
 #include <memory>
 #include <span>
 #include <iterator>
@@ -582,6 +583,31 @@ namespace Eugene
 			vector.capacity_ = 0;
 		}
 
+		Vector& operator=(const Vector& vector)
+		{
+			if (this != &vector)
+			{
+				size_ = vector.size_;
+				capacity_ = vector.capacity_;
+				pointer_.reset(new T[capacity_]());
+				std::copy_n(vector.pointer_.get(), size_, pointer_.get());
+			}
+			return *this;
+		}
+
+		Vector& operator=(Vector&& vector) noexcept
+		{
+			if (this != &vector)
+			{
+				size_ = vector.size_;
+				capacity_ = vector.capacity_;
+				pointer_ = std::move(vector.pointer_);
+				vector.size_ = 0;
+				vector.capacity_ = 0;
+			}
+			return *this;
+		}
+
 		T& operator[](const SizeType index) &
 		{
 			EUGENE_ASSERT_MSG(index < size_, "範囲外です");
@@ -750,6 +776,31 @@ namespace Eugene
 				(pointer_.get() + i)->~T();
 			}
 			size_ = 0;
+		}
+
+		void Assign(SizeType count, const T& value)
+		{
+			Clear();
+			if (count > capacity_)
+			{
+				Reserve(count);
+			}
+			for (SizeType i = 0; i < count; i++)
+			{
+				new(pointer_.get() + i)T{ value };
+			}
+			size_ = count;
+		}
+
+		void Assign(iterator first, iterator last)
+		{
+			Clear();
+			SizeType count = 0;
+			for (auto it = first; it != last; ++it)
+			{
+				PushBack(*it);
+				count++;
+			}
 		}
 
 	private:

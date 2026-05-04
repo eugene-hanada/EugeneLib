@@ -6,6 +6,7 @@
 #include <ThirdParty/glm/glm/gtx/transform.hpp>
 #include <ThirdParty/glm/glm/gtx/matrix_decompose.hpp>
 #include <iostream>
+#include <fstream>
 
 
 #ifdef EUGENE_IMGUI
@@ -22,20 +23,21 @@ struct Vertex2D
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	
-	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample");
+	Eugene::System::WindowMode mode = Eugene::System::WindowMode::Window;
+	Eugene::System::Create({ 1280.0f,720.0f }, u8"Sample", reinterpret_cast<std::intptr_t&>(mode));
 	Eugene::Sound::Create();
 
 #ifdef EUGENE_SOUND
-	Eugene::SoundFile soundFile{ "./seSound.wav" };
+	/*Eugene::SoundFile soundFile{ "./seSound.wav" };
 	Eugene::SoundSpeaker sp;
 	sp = Eugene::Sound::GetInstance().CreateSoundSpeaker(soundFile);
 	sp.SetData(soundFile.GetDataPtr(), soundFile.GetDataSize());
 
 	Eugene::SoundStreamSpeaker streamSp;
-	streamSp = Eugene::Sound::GetInstance().CreateSoundStreamSpeaker(Eugene::CreateSoundStreamFile("./bgmSound.wav"));
+	streamSp = Eugene::Sound::GetInstance().CreateSoundStreamSpeaker(Eugene::CreateSoundStreamFile("./bgmSound.wav"));*/
 #endif
 
-	auto gpuEngine = Eugene::Graphics::Create();
+	auto gpuEngine = Eugene::Graphics::Create(2);
 
 	//コマンドリスト作成
 	auto cmdList = Eugene::Graphics::GetInstance().CreateCommandList();
@@ -50,11 +52,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		Eugene::ResourceBindFlag::Input
 	) };
 
+	auto LoadBinary = [](const std::filesystem::path& path)
+	{
+		Eugene::Array<std::uint8_t> bin;
+		std::ifstream file{ path, std::ios::binary };
+		bin.Resize(std::filesystem::file_size(path));
+		file.read(reinterpret_cast<char*>(bin.data()), bin.size());
+		return bin;
+	};
+
+	auto pixelShader = LoadBinary("PixelShader.pso");
+	auto vertexShader = LoadBinary("VertexShader.vso");
+
 	// グラフィックスパイプライン
 	auto graphicsPipeline{ Eugene::Graphics::GetInstance().CreateGraphicsPipeline(
 		resourceBind,
 		{ Eugene::ShaderInputLayout{"POSITION", 0, Eugene::Format::R32G32_FLOAT},Eugene::ShaderInputLayout{"TEXCOORD", 0, Eugene::Format::R32G32_FLOAT} },
-		{ Eugene::ShaderPair{{"VertexShader.vso"}, Eugene::ShaderType::Vertex}, Eugene::ShaderPair{Eugene::Shader{"PixelShader.pso"}, Eugene::ShaderType::Pixel} },
+		{ Eugene::ShaderPair{vertexShader.AsSpan(), Eugene::ShaderType::Vertex}, Eugene::ShaderPair{pixelShader.AsSpan(), Eugene::ShaderType::Pixel}},
 		Eugene::RendertargetLayout{ Eugene::Format::AUTO_BACKBUFFER, Eugene::BlendType::Alpha },
 		Eugene::TopologyType::Triangle,
 		false,
@@ -172,35 +186,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		ImGui::End();
 
 #ifdef EUGENE_SOUND
-		if (ImGui::Begin("SE"))
-		{
-			float volume{sp.GetVolume()};
-			if (ImGui::DragFloat("Volume", &volume,0.01f, 0.0f, 1.0f))
-			{
-				sp.SetVolume(volume);
-			}
+		//if (ImGui::Begin("SE"))
+		//{
+		//	float volume{sp.GetVolume()};
+		//	if (ImGui::DragFloat("Volume", &volume,0.01f, 0.0f, 1.0f))
+		//	{
+		//		sp.SetVolume(volume);
+		//	}
 
-			if (ImGui::Button("Play"))
-			{
-				sp.Play();
-			}
-		}
-		ImGui::End();
+		//	if (ImGui::Button("Play"))
+		//	{
+		//		sp.Play();
+		//	}
+		//}
+		//ImGui::End();
 
-		if (ImGui::Begin("BGM"))
-		{
-			float volume{ streamSp.GetVolume() };
-			if (ImGui::DragFloat("Volume", &volume, 0.01f, 0.0f, 1.0f))
-			{
-				streamSp.SetVolume(volume);
-			}
+		//if (ImGui::Begin("BGM"))
+		//{
+		//	float volume{ streamSp.GetVolume() };
+		//	if (ImGui::DragFloat("Volume", &volume, 0.01f, 0.0f, 1.0f))
+		//	{
+		//		streamSp.SetVolume(volume);
+		//	}
 
-			if (ImGui::Button("Play"))
-			{
-				streamSp.Play();
-			}
-		}
-		ImGui::End();
+		//	if (ImGui::Button("Play"))
+		//	{
+		//		streamSp.Play();
+		//	}
+		//}
+		//ImGui::End();
 #endif
 
 		ImGui::Render();
@@ -282,7 +296,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	gpuEngine.Final();
 
 
-	streamSp.Final();
+	//streamSp.Final();
 
 	Eugene::Graphics::Destroy();
 	Eugene::System::Destroy();

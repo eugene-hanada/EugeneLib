@@ -1,7 +1,7 @@
 ﻿#include "../../../Include/Sound/Xaudio2/Xa2Sound.h"
 #include <xaudio2.h>
 #include <x3daudio.h>
-#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 #include "../../../Include/Sound/SoundControl.h"
 #include "../../../Include/Sound/SoundStreamSpeaker.h"
@@ -14,10 +14,7 @@ namespace
 }
 Eugene::Sound::Sound()
 {
-	if (FAILED(XAudio2Create(&xaudio2_, 0)))
-	{
-		throw EugeneLibException("XAudio2生成失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(XAudio2Create(&xaudio2_, 0)), "XAudio2生成失敗");
 #ifdef _DEBUG
 	// デバッグ設定
 	XAUDIO2_DEBUG_CONFIGURATION debug{ 0 };
@@ -25,10 +22,7 @@ Eugene::Sound::Sound()
 	debug.BreakMask = XAUDIO2_LOG_ERRORS;
 	xaudio2_->SetDebugConfiguration(&debug, 0);
 #endif
-	if (FAILED(xaudio2_->CreateMasteringVoice(std::out_ptr(mastering_))))
-	{
-		throw EugeneLibException("マスタリングボイスの作成に失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(xaudio2_->CreateMasteringVoice(std::out_ptr(mastering_))), "マスタリングボイスの作成に失敗");
 	
 	XAUDIO2_VOICE_DETAILS details;
 	mastering_->GetVoiceDetails(&details);
@@ -38,10 +32,7 @@ Eugene::Sound::Sound()
 	mastering_->GetChannelMask(&tmpMask);
 	channelMask_ = tmpMask;
 	
-	if (FAILED(X3DAudioInitialize(channelMask_, 340.0f, handle)))
-	{
-		throw EugeneLibException("X3DAudioの初期化に失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(X3DAudioInitialize(channelMask_, 340.0f, handle)), "X3DAudioの初期化に失敗");
 }
 
 Eugene::Sound::~Sound()

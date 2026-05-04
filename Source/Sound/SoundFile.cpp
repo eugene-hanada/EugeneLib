@@ -1,9 +1,10 @@
-#include "../../Include/Sound/SoundFile.h"
+ï»¿#include "../../Include/Sound/SoundFile.h"
 #include "../../Include/Utils/Utils.h"
 #include <fstream>
-#include "../../Include/Utils/EugeneLibException.h"
 #define STB_VORBIS_IMPLEMENTATION
 #include "../../Include/ThirdParty/stb/stb_vorbis.c"
+
+#include "../../Include/Debug/Debug.h"
 
 
 const std::uint8_t* Eugene::SoundFile::GetDataPtr(void) const noexcept
@@ -35,17 +36,11 @@ Eugene::SoundFile::SoundFile(const std::filesystem::path& path)
 	auto ext{ path.extension() };
 	if (ext == ".ogg")
 	{
-		if (!LoadOggVorbis(path))
-		{
-			throw EugeneLibException("OggVorbissƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½");
-		}
+		EUGENE_ASSERT_MSG(LoadOggVorbis(path), "OggVorbissãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ");
 	}
 	else
 	{
-		if (!LoadWave(path))
-		{
-			throw EugeneLibException("Waveƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½");
-		}
+		EUGENE_ASSERT_MSG(LoadWave(path), "Waveãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ");
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../ThirdParty/fmt/include/fmt/core.h"
+#include <format>
 #include <string>
 #include <semaphore>
 #include <bitset>
@@ -36,7 +36,16 @@ namespace Eugene
 		};
 
 		static Debug& GetInstance(void);
-		
+
+		/// <summary>
+		/// ログを出力する
+		/// </summary>
+		/// <param name="string"> 文字列 </param>
+		void Log(const std::string_view& string)
+		{
+			Out(Type::Log, string);
+		}
+
 		/// <summary>
 		/// ログを出力する(フォーマット版)
 		/// </summary>
@@ -45,16 +54,19 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Log(fmt::format_string<Args...> format, const Args ...args)
+		void Log(std::format_string<Args...> format, Args&& ...args)
 		{
-			Log(fmt::vformat(format, fmt::make_format_args(args...)));
+			Out(Type::Log, std::format(format, std::forward<Args>(args)...));
 		}
 
 		/// <summary>
-		/// ログを出力する
+		/// ログにエラー出力する
 		/// </summary>
 		/// <param name="string"> 文字列 </param>
-		void Log(const std::string_view& string);
+		void Error(const std::string_view& string)
+		{
+			Out(Type::Error, string);
+		}
 
 		/// <summary>
 		/// ログにエラー出力する(フォーマット版)
@@ -64,16 +76,12 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Error(fmt::format_string<Args...> format, const Args& ...args)
+		void Error(std::format_string<Args...> format, Args&& ...args)
 		{
-			Error(fmt::vformat(format, fmt::make_format_args(args...)));
+			Out(Type::Error, std::format(format, std::forward<Args>(args)...));
 		}
 
-		/// <summary>
-		/// ログにエラー出力する
-		/// </summary>
-		/// <param name="string"> 文字列 </param>
-		void Error(const std::string_view& string);
+
 
 		/// <summary>
 		/// ログにワーニング出力する(フォーマット版)
@@ -83,16 +91,19 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void Warning(fmt::format_string<Args...> format, const Args ...args)
+		void Warning(std::format_string<Args...> format, Args&& ...args)
 		{
-			Warning(fmt::vformat(format, fmt::make_format_args(args...)));
+			Out(Type::Warning, std::format(format, std::forward<Args>(args)...));
 		}
 
 		/// <summary>
 		/// ログにワーニング出力する
 		/// </summary>
 		/// <param name="string"> 文字列 </param>
-		void Warning(const std::string_view& string);
+		void Warning(const std::string_view& string)
+		{
+			Out(Type::Warning, string);
+		}
 
 		/// <summary>
 		/// ログにデバッグ用ログを出力する(フォーマット版)
@@ -102,34 +113,56 @@ namespace Eugene
 		/// <param name="fmt"> フォーマットの文字列 </param>
 		/// <param name="...args"> 引数 </param>
 		template<class ...Args>
-		void LogDebug(fmt::format_string<Args...> format, const Args ...args)
+		void LogDebug(std::format_string<Args...> format, Args&& ...args)
 		{
-			LogDebug(fmt::vformat(format.get(), fmt::make_format_args(args...)));
+			Out(Type::Debug, std::format(format.get(), std::move(args)...));
 		}
 
 		/// <summary>
 		/// ログにデバッグ用ログを出力する
 		/// </summary>
 		/// <param name="string"> 文字列 </param>
-		void LogDebug(const std::string_view& string);
+		void LogDebug(const std::string_view& string)
+		{
+			Out(Type::Debug, string);
+		}
 
 		/// <summary>
 		/// フィルターをクリアする
 		/// </summary>
 		/// <param name="flag"> クリアする値 </param>
-		void ClearFillter(bool flag);
+		void ClearFillter(bool flag) noexcept
+		{
+			filter_ = 0ull;
+			if (flag)
+			{
+				filter_.flip();
+			}
+		}
 
 		/// <summary>
 		/// フィルターに表示するタイプを追加する
 		/// </summary>
 		/// <param name="type"> 追加するタイプ </param>
-		void AddFilter(Type type);
+		void AddFilter(Type type)
+		{
+#ifndef EUGENE_DEBUG
+			if (type == Type::Debug)
+			{
+				return;
+			}
+#endif
+			filter_.set(static_cast<std::size_t>(type), true);
+		}
 
 		/// <summary>
 		/// フィルターから表示するタイプを削除する
 		/// </summary>
 		/// <param name="type"> 削除するタイプ </param>
-		void RemoveFilter(Type type);
+		void RemoveFilter(Type type)
+		{
+			filter_.set(static_cast<std::size_t>(type), false);
+		}
 
 		/// <summary>
 		/// 現在のバッファにある文字列を取得する
@@ -144,7 +177,12 @@ namespace Eugene
 		/// バッファをクリアする
 		/// </summary>
 		/// <param name=""></param>
-		void ClearBuffer(void);
+		void ClearBuffer(void) noexcept
+		{
+			logStringBuffer_.clear();
+		}
+
+
 
 		/// <summary>
 		/// デバッグ用のコンソールを開く
@@ -219,17 +257,19 @@ namespace Eugene
 
 }
 
-
-#ifdef EUGENE_DEBUG
-#define EUGENE_ASSERT_MSG(check,message)\
-if (!check)\
+#define EUGENE_RELEASE_ASSERT_MSG(check,message)\
+if (!static_cast<bool>(check))\
 {\
 	constexpr auto sourceLocation = std::source_location::current();\
 	Eugene::Debug::GetInstance().Error("Assertion! {0:} Function={1:} File={2:} Line={3:}",message, sourceLocation.function_name(),sourceLocation.file_name(),sourceLocation.line());\
 	std::terminate();\
 }\
 
-#define EUGENE_ASSERT(check) EUGENE_ASSERT_MSG(check,"")
+#define EUGENE_RELEASE_ASSERT(check) EUGENE_RELEASE_ASSERT_MSG(check,"")
+
+#ifdef EUGENE_DEBUG
+#define EUGENE_ASSERT_MSG(check,message) EUGENE_RELEASE_ASSERT_MSG(check,message)
+#define EUGENE_ASSERT(check) EUGENE_RELEASE_ASSERT_MSG(check,"")
 
 #elif EUGENE_RELEASE
 #define EUGENE_ASSERT_MSG(check,message)

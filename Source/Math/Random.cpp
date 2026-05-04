@@ -1,4 +1,4 @@
-#include "../../Include/Math/Random.h"
+﻿#include "../../Include/Math/Random.h"
 
 Eugene::XorShift64Engine::result_type Eugene::XorShift64Engine::operator()()
 {

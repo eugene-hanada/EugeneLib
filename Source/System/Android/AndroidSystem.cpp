@@ -1,4 +1,4 @@
-#include "../../../Include/System/System.h"
+﻿#include "../../../Include/System/System.h"
 #include <functional>
 #include <fstream>
 #include <vector>
@@ -139,7 +139,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
     {
         DebugClass.Log("onSaveInstanceState");
     };
-    DebugClass.Log("SystemInit終了");
+    DebugClass.Log("SystemInit邨ゆｺ・);
 }
 
 Eugene::System::~System()

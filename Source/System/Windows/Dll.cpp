@@ -1,5 +1,5 @@
 ﻿#include "../../../Include/System/Windows/Dll.h"
-#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 Eugene::DynamicLibrary::DynamicLibrary(const std::filesystem::path& path)
 {
@@ -10,10 +10,7 @@ Eugene::DynamicLibrary::DynamicLibrary(const std::filesystem::path& path)
 	handle_ = LoadLibrary(path.string().c_str());
 #endif
 
-	if (handle_ == nullptr)
-	{
-		throw EugeneLibException{ "Dllロード失敗" + path.string() };
-	}
+	EUGENE_ASSERT_MSG((handle_ != nullptr), "Dllロード失敗");
 }
 
 Eugene::DynamicLibrary::~DynamicLibrary()

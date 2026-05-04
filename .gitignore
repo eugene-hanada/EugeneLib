@@ -352,3 +352,4 @@ DirectX12Debug/EugeneLib.idb
 *.idb
 *.lib
 build
+*.spv

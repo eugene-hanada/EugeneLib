@@ -52,13 +52,12 @@ endif()
 
 # グラフィック系クラスのソースファイルをセット
 set(GraphicsSource
-	Source/Graphics/Shader.cpp
 	Source/Graphics/Image.cpp
 	)
 
 # Utils系のソースファイルをセット
 set(UtilsSource
-	Source/Utils/EugeneLibException.cpp
+	
 	Source/Debug/Debug.cpp
 )
 
@@ -78,7 +77,7 @@ if (EUGENE_BUILD_SOUND)
 endif()
 
 if (EUGENE_BUILD_NETWORK)
-	set(SystemSource Source/System/NetSocket.cpp)
+	set(SystemSource ${SystemSource} Source/System/NetSocket.cpp)
 endif()
 
 
@@ -194,7 +193,7 @@ if(MSVC)
 	# visual stdio用にunicodeを使うように
 	add_definitions(-D_UNICODE -DUNICODE)
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /EHs-c-")
 endif()
 
 # ライブラリを作る

@@ -2,6 +2,7 @@
 #include <vector>
 #include <array>
 #include <atomic>
+#include "Array.h"
 
 
 namespace Eugene
@@ -10,7 +11,7 @@ namespace Eugene
 	/// リングバッファ
 	/// </summary>
 	/// <typeparam name="T"> 要素の型 </typeparam>
-	template<class T>
+	template<class T, class SizeType = std::uint32_t>
 	class RingBuffer
 	{
 	public:
@@ -26,14 +27,14 @@ namespace Eugene
 			{
 			}
 
-			iterator(std::span<T> span, std::uint64_t index, std::uint64_t startIndex) :
+			iterator(std::span<T> span, const SizeType index, const SizeType startIndex) :
 				span_{span}, index_{index}, startIndex_{startIndex}
 			{
 			}
 
 			T& operator*()
 			{
-				return span_[(startIndex_ + index_) & (span_.size() - 1ull)];
+				return span_[(startIndex_ + index_) & (span_.size() - 1)];
 			}
 
 
@@ -63,30 +64,88 @@ namespace Eugene
 		private:
 
 			/// <summary>
-			/// ���̃o�b�t�@���Q�Ƃ��邽�߂�span
+			/// バッファの参照
 			/// </summary>
 			std::span<T> span_;
 
 			
 			/// <summary>
-			/// ���݂̃C���f�b�N�X
+			/// インデックスX
 			/// </summary>
-			std::uint64_t index_;
+			SizeType index_;
 
 			/// <summary>
-			/// �J�n�C���f�b�N�X
+			/// 開始インデックス
 			/// </summary>
-			std::uint64_t startIndex_;
+			const SizeType startIndex_;
+		};
+
+		class const_iterator
+		{
+		public :
+			const_iterator() :
+				index_{0}, startIndex_{0}
+			{
+			}
+
+			const_iterator(std::span<T> span, const SizeType index, const SizeType startIndex) :
+				span_{ span }, index_{ index }, startIndex_{ startIndex }
+			{
+			}
+
+			const T& operator*() const
+			{
+				return span_[(startIndex_ + index_) & (span_.size() - 1)];
+			}
+
+
+			const_iterator& operator++()
+			{
+				index_++;
+				return *this;
+			}
+
+			const_iterator& operator--()
+			{
+				index_--;
+				return *this;
+			}
+
+			bool operator==(const const_iterator& itr) const
+			{
+				return index_ == itr.index_;
+			}
+
+			bool operator!=(const const_iterator& itr) const
+			{
+				return index_ != itr.index_;
+			}
+		private:
+			/// <summary>
+			/// バッファの参照
+			/// </summary>
+			std::span<const T> span_;
+
+
+			/// <summary>
+			/// インデックスX
+			/// </summary>
+			SizeType index_;
+
+			/// <summary>
+			/// 開始インデックス
+			/// </summary>
+			const SizeType startIndex_;
 		};
 
 		/// <summary>
 		/// サイズ指定コンストラクタ
 		/// </summary>
 		/// <param name="size"> サイズ </param>
-		RingBuffer(std::uint64_t size) :
+		RingBuffer(const SizeType size) :
 			buffer_(0), writeIndex_{ 0ull }, readIndex_{ 0ull }
 		{
-			buffer_.resize(1ull << static_cast<std::uint64_t>(std::ceil(std::log2(size))));
+			buffer_.Resize(1ull << static_cast<SizeType>(std::ceil(std::log2(size))));
 		}
 
 		/// <summary>
@@ -94,7 +153,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="initList"> 初期化リスト </param>
 		RingBuffer(std::initializer_list<T> initList) :
-			buffer_(initList), writeIndex_{ initList.size()}, readIndex_{0ull}
+			buffer_(initList), writeIndex_{ static_cast<SizeType>(initList.size())}, readIndex_{0}
 		{
 
 		}
@@ -104,18 +163,18 @@ namespace Eugene
 		/// サイズを変更する
 		/// </summary>
 		/// <param name="size"> 変更後のサイズ </param>
-		void Resize(std::uint64_t size)
+		void Resize(const SizeType size)
 		{
-			size = 1ull << static_cast<std::uint64_t>(std::ceil(std::log2(size)));
+			size = 1 << static_cast<SizeType>(std::ceil(std::log2(size)));
 			auto nowSize = Size();
-			for (uint64_t i = 0ull; i < nowSize - 1ull; i++)
+			for (SizeType i = 0; i < nowSize - 1; i++)
 			{
-				std::swap(buffer_[i], buffer_[(readIndex_ + i) & (buffer_.size() - 1ull)]);
+				std::swap(buffer_[i], buffer_[(readIndex_ + i) & (buffer_.size() - 1)]);
 			}
 			
-			readIndex_ = 0ull;
+			readIndex_ = 0;
 			writeIndex_ = std::min(nowSize, size);
-			buffer_.resize(size);
+			buffer_.Resize(size);
 		}
 
 		/// <summary>
@@ -141,7 +200,7 @@ namespace Eugene
 			{
 				readIndex_++;
 			}
-			buffer_[writeIndex_++ & (buffer_.size() - 1ull)] = std::move(value);
+			buffer_[writeIndex_++ & (buffer_.size() - 1)] = std::move(value);
 		}
 
 		/// <summary>
@@ -157,36 +216,36 @@ namespace Eugene
 		/// 先頭の要素を取得する
 		/// </summary>
 		/// <returns></returns>
-		T& Front()
+		T& Front() &
 		{
-			return  buffer_[readIndex_ & (buffer_.size() - 1ull)] ;
+			return  buffer_[readIndex_ & (buffer_.size() - 1)] ;
 		}
 
 		/// <summary>
 		/// 先頭の要素を取得する
 		/// </summary>
 		/// <returns></returns>
-		const T& Front() const
+		const T& Front() const &
 		{
-			return buffer_.at(readIndex_ & (buffer_.size() - 1ull));
+			return buffer_[readIndex_ & (buffer_.size() - 1)];
 		}
 
 		/// <summary>
 		/// 末尾の要素を取得する
 		/// </summary>
 		/// <returns></returns>
-		T& Back()
+		T& Back() &
 		{
-			return buffer_[(writeIndex_ - 1u) & (buffer_.size() - 1ull)];
+			return buffer_[(writeIndex_ - 1) & (buffer_.size() - 1)];
 		}
 
 		/// <summary>
 		/// 末尾の要素を取得する
 		/// </summary>
 		/// <returns></returns>
-		const T& Back() const
+		const T& Back() const &
 		{
-			return buffer_.at((writeIndex_ - 1u) & (buffer_.size() - 1ull));
+			return buffer_[(writeIndex_ - 1) & (buffer_.size() - 1)];
 		}
 
 		/// <summary>
@@ -204,7 +263,7 @@ namespace Eugene
 		/// <returns></returns>
 		iterator begin()
 		{
-			return { buffer_,0ull , readIndex_};
+			return { buffer_,0 , readIndex_};
 		}
 
 		/// <summary>
@@ -215,22 +274,40 @@ namespace Eugene
 		{
 			return { buffer_,buffer_.size(),readIndex_};
 		}
+
+		/// <summary>
+		/// 先頭のconstイテレーターを取得する
+		/// </summary>
+		/// <returns></returns>
+		const_iterator cbegin() const
+		{
+			return { buffer_,0 , readIndex_ };
+		}
+
+		/// <summary>
+		/// 末端のconstイテレーターを取得する
+		/// </summary>
+		/// <returns></returns>
+		const_iterator cend() const
+		{
+			return { buffer_,buffer_.size(),readIndex_ };
+		}
 	private:
 
 		/// <summary>
 		/// 配列
 		/// </summary>
-		std::vector<T> buffer_;
+		Array<T, SizeType> buffer_;
 
 		/// <summary>
 		/// 書き込みインデックス
 		/// </summary>
-		std::uint64_t writeIndex_;
+		SizeType writeIndex_;
 
 		/// <summary>
 		/// 読み込みインデックス
 		/// </summary>
-		std::uint64_t readIndex_;
+		SizeType readIndex_;
 	};
 
 	/// <summary>

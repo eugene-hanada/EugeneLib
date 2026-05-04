@@ -1,7 +1,5 @@
 ﻿#include "../../Include/Debug/Debug.h"
 
-
-#include "fmt/chrono.h"
 #include <cuchar>
 #include <chrono>
 #include <thread>
@@ -9,10 +7,14 @@
 #include <fstream>
 #include <iostream>
 
-
+#ifdef EUGENE_TEST
+namespace
+{
+	std::ostream& os{ std::cout };
+}
+#else
 #ifdef EUGENE_WINDOWS
 #include <Windows.h>
-
 namespace
 {
 	class WindowsOut :
@@ -29,10 +31,7 @@ namespace
 	auto windowsOut{ WindowsOut{} };
 	std::ostream windowsOs{ &windowsOut };
 }
-
-#endif
-
-#ifdef EUGENE_ANDROID
+#elifdef EUGENE_ANDROID
 #include <android/log.h>
 
 namespace
@@ -51,6 +50,8 @@ namespace
     std::ostream androidOs{&androidOut};
 }
 #endif
+#endif
+
 
 namespace
 {
@@ -84,29 +85,6 @@ Eugene::Debug::Debug() :
 	filter_.flip();
 }
 
-void Eugene::Debug::ClearFillter(bool flag)
-{
-	filter_ = 0ull;
-	if (flag)
-	{
-		filter_.flip();
-	}
-}
-
-void Eugene::Debug::AddFilter(Type type)
-{
-	filter_.set(static_cast<std::size_t>(type), true);
-}
-
-void Eugene::Debug::RemoveFilter(Type type)
-{
-	filter_.set(static_cast<std::size_t>(type), false);
-}
-
-void Eugene::Debug::ClearBuffer(void)
-{
-	logStringBuffer_.clear();
-}
 
 void Eugene::Debug::OpenConsole(void)
 {
@@ -156,49 +134,36 @@ Eugene::Debug::~Debug()
 }
 
 
-void Eugene::Debug::Log(const std::string_view& string)
-{
-	Out(Type::Log, string);
-}
-
-void Eugene::Debug::Error(const std::string_view& string)
-{
-	Out(Type::Error, string);
-}
-
-void Eugene::Debug::Warning(const std::string_view& string)
-{
-	Out(Type::Warning, string);
-}
-
-void Eugene::Debug::LogDebug(const std::string_view& string)
-{
-	Out(Type::Debug, string);
-}
-
-
 void Eugene::Debug::Out(Type type, const std::string_view& string)
 {
 	binarySemphore_.acquire();
-	constexpr auto format = "{0:}[{1:%H:%M:%S}][Thread={2:}]{3:}\0";
+	// 秒の小数点4桁（00.xxxx）を出力するため、フォーマットに小数部プレースホルダを追加
+	constexpr auto format = "[{0:%Y/%m/%d/%H:%M-%S}.{3:04}][Thread={1:}]{2:}";
 	std::bitset<4> tmp;
 	tmp.set(static_cast<std::size_t>(type), true);
 	if ((filter_ & tmp).any())
 	{
-		// 現在時刻を
-		std::time_t t = std::time(nullptr);
+		// 現在時刻を取得（秒単位切り捨て）とその小数部を計算
+		auto now = std::chrono::system_clock::now();
+		auto sec = std::chrono::floor<std::chrono::seconds>(now);
+		auto z = std::chrono::zoned_seconds{ std::chrono::current_zone(), sec };
+
+		// 小数部を 4 桁 (1/10000秒単位) にする：
+		// nanoseconds / 100000 -> 0..9999
+		auto sub_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now - sec).count();
+		int frac4 = static_cast<int>((sub_ns / 100000) % 10000);
 
 		// バッファを利用したストリームからスレッドIDを文字列に変換
 		oss_ << std::this_thread::get_id();
-		os_ << fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string) << std::endl;
-		
+		auto formatedString = std::format(format, z, oss_.str(), string, frac4);
+		os_ << formatedString << std::endl;
+
 		if (logStringBuffer_.size() > 0)
 		{
 			logStringBuffer_ += '\n';
 		}
-		
-		auto finalString = fmt::format(format, names[static_cast<std::size_t>(type)], fmt::localtime(t), oss_.str(), string);
-		logStringBuffer_ += finalString;
+
+		logStringBuffer_ += formatedString;
 		oss_.seekp(0);
 	}
 	binarySemphore_.release();

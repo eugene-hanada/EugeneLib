@@ -1,5 +1,5 @@
-#include "../../Include/System/NetSocket.h"
-#include "../../Include/Utils/EugeneLibException.h"
+ï»¿#include "../../Include/System/NetSocket.h"
+#include "../../Include/Debug/Debug.h"
 
 #ifdef EUGENE_NETWORK
 #pragma comment(lib, "ws2_32.lib")
@@ -9,10 +9,7 @@ namespace Eugene
 	void TCPSocket::Init()
 	{
 		WSADATA wsaData;
-		if (WSAStartup(WINSOCK_VERSION, &wsaData) != 0)
-		{
-			throw EugeneLibException{ "WSAStartupŽ¸”s" };
-		}
+		EUGENE_ASSERT_MSG(WSAStartup(WINSOCK_VERSION, &wsaData) == 0, "WSAStartupå¤±æ•—");
 	}
 
 	void TCPSocket::Finalize()

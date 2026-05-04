@@ -1,4 +1,4 @@
-#include "../../../Include/Graphics/DirectX12/Dx12Sampler.h"
+﻿#include "../../../Include/Graphics/DirectX12/Dx12Sampler.h"
 #include <array>
 
 Eugene::Sampler::Sampler(const SamplerLayout& layout)

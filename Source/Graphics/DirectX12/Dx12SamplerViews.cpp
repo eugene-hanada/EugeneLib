@@ -1,4 +1,4 @@
-#include "../../../Include/Graphics/DirectX12/Dx12SamplerViews.h"
+ï»¿#include "../../../Include/Graphics/DirectX12/Dx12SamplerViews.h"
 #include "../../../Include/Graphics/DirectX12/Dx12Sampler.h"
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 
@@ -24,9 +24,5 @@ void Eugene::SamplerViews::Init(std::uint32_t size)
 		0
 	};
 
-	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
-	{
-		throw EugeneLibException("DirectX12ƒfƒBƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìì¬‚É¸”s");
-	}
-
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ãƒ‡ã‚£ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ä½œæˆã«å¤±æ•—");
 }

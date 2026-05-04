@@ -4,7 +4,7 @@
 #include "../../../Include/Graphics/Shader.h"
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
 #include "../../../Include/Graphics/DirectX12/Dx12ResourceBindLayout.h"
-#include "../../../Include/Utils/EugeneLibException.h"
+#include "../../../Include/Debug/Debug.h"
 
 
 
@@ -169,10 +169,7 @@ Eugene::Pipeline::Pipeline(
 		//gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 	}
 	auto result = Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
-	if (FAILED(result))
-	{
-		throw EugeneLibException{ "グラフィックスパイプラインステート生成失敗" };
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(result), "グラフィックスパイプラインステート生成失敗");
 }
 
 Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const std::span<const std::uint8_t> csShader)
@@ -186,9 +183,6 @@ Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const std::sp
 	computePipelineDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
 	computePipelineDesc.pRootSignature = pipeline_.rootSignature_.Get();
 	auto result = Graphics::GetInstance().device_->CreateComputePipelineState(&computePipelineDesc, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
-	if (FAILED(result))
-	{
-		throw EugeneLibException{ "コンピュートパイプラインステート生成失敗" };
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(result), "コンピュートパイプラインステート生成失敗");
 }
 

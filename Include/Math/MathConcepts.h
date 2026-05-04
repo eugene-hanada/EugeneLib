@@ -15,5 +15,5 @@ namespace Eugene
 	concept IntegerByte2 = std::same_as<T, std::uint16_t> || std::same_as<T, std::int16_t> || std::same_as<T, char16_t> || std::same_as<T, wchar_t>;
 
 	template<class T>
-	concept IntegerByte4 = std::same_as<T, std::uint32_t> || std::same_as<T, std::int32_t>;
+	concept IntegerByte4 = std::same_as<T, std::uint32_t> || std::same_as<T, std::int32_t> || std::same_as<T, char32_t>;
 }

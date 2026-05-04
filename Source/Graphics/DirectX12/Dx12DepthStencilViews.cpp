@@ -1,4 +1,4 @@
-﻿#include "../../../Include/Utils/EugeneLibException.h"
+﻿#include "../../../Include/Debug/Debug.h"
 #include "../../../Include/Graphics/DirectX12/Dx12DepthStencilViews.h"
 #include "../../../Include/Graphics/DirectX12/Dx12ImageResource.h"
 #include "../../../Include/Graphics/DirectX12/Dx12Graphics.h"
@@ -14,10 +14,7 @@ void Eugene::DepthStencilViews::Init(std::uint32_t size, bool isShaderVisible)
 		0
 	};
 
-	if (FAILED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))))
-	{
-		throw EugeneLibException("DirectX12ディスクリプタヒープの作成に失敗");
-	}
+	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ディスクリプタヒープの作成に失敗");
 }
 
 Eugene::DepthStencilViews::DepthStencilViews(const DepthStencilViews& views):

@@ -72,11 +72,14 @@ Eugene::Debug& Eugene::Debug::GetInstance(void)
 
 Eugene::Debug::Debug() :
 	binarySemphore_{1},  filter_{0u}, exportPath_{"./Log.txt"}, isExport_{true},
-
+#ifdef EUGENE_TEST
+	os_{ os }
+#else
 #ifdef EUGENE_ANDROID
     os_{androidOs}
 #elif EUGENE_WINDOWS
 	os_{ windowsOs }
+#endif
 #endif
 {
 	// スレッドIDを文字列に変換してバッファのサイズにする

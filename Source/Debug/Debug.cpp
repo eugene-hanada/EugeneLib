@@ -6,6 +6,9 @@
 #include <ostream>
 #include <fstream>
 #include <iostream>
+#ifdef EUGENE_WINDOWS
+#include <Windows.h>
+#endif
 
 #ifdef EUGENE_TEST
 namespace
@@ -14,7 +17,6 @@ namespace
 }
 #else
 #ifdef EUGENE_WINDOWS
-#include <Windows.h>
 namespace
 {
 	class WindowsOut :

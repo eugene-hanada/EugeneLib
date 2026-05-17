@@ -183,6 +183,47 @@ TEST_CASE("SwissTable")
 	CHECK(cswissTable.At(1) == 10);
 }
 
+TEST_CASE("FNV1aHash_Basic")
+{
+	const std::uint8_t bytes[] = { 1, 2, 3, 4, 5 };
+
+	auto h64_a = Eugene::FNV1aHash64(bytes, std::size(bytes));
+	auto h64_b = Eugene::FNV1aHash64(reinterpret_cast<const char*>(bytes), std::size(bytes));
+	CHECK(h64_a == h64_b);
+
+	auto h32_a = Eugene::FNV1aHash32(bytes, std::size(bytes));
+	auto h32_b = Eugene::FNV1aHash32(reinterpret_cast<const char*>(bytes), std::size(bytes));
+	CHECK(h32_a == h32_b);
+
+	// Deterministic
+	CHECK(h64_a == Eugene::FNV1aHash64(bytes, std::size(bytes)));
+	CHECK(h32_a == Eugene::FNV1aHash32(bytes, std::size(bytes)));
+
+	CHECK(h64_a != 0);
+	CHECK(h32_a != 0);
+}
+
+TEST_CASE("FNV1aHash_String")
+{
+	std::string_view a = "hello";
+	std::string_view b = "world";
+
+	auto ha64 = Eugene::FNV1aHash64(a);
+	auto hb64 = Eugene::FNV1aHash64(b);
+	CHECK(ha64 != hb64);
+	CHECK(ha64 == Eugene::FNV1aHash64(a.data(), a.size()));
+
+	auto ha32 = Eugene::FNV1aHash32(a);
+	auto hb32 = Eugene::FNV1aHash32(b);
+	CHECK(ha32 != hb32);
+	CHECK(ha32 == Eugene::FNV1aHash32(a.data(), a.size()));
+
+	// u16/u32 overloads are available and deterministic
+	std::u16string u16 = u"hello";
+	auto hu16_64 = Eugene::FNV1aHash64(u16.data(), u16.size());
+	CHECK(hu16_64 == Eugene::FNV1aHash64(u16.data(), u16.size()));
+}
+
 TEST_CASE("Random")
 {
 	{

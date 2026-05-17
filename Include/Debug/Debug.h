@@ -204,6 +204,14 @@ namespace Eugene
 			isExport_ = isExport;
 		}
 
+		template<class Func>
+		void GetStringBuffer(Func func)
+		{
+			binarySemphore_.acquire();
+			func(logStringBuffer_);
+			logStringBuffer_.clear();
+			binarySemphore_.release();
+		}
 	private:
 		Debug();
 		~Debug();

@@ -172,6 +172,16 @@ namespace Eugene
 		return FNV1aHash32(sv.data(), sv.size());
 	}
 
+	constexpr std::uint64_t FNV1aHash64(const std::u8string_view& sv) noexcept
+	{
+		return FNV1aHash64(sv.data(), sv.size());
+	}
+
+	constexpr std::uint32_t FNV1aHash32(const std::u8string_view& sv) noexcept
+	{
+		return FNV1aHash32(sv.data(), sv.size());
+	}
+
 	constexpr std::uint64_t FNV1aHash64(const std::u16string_view& sv) noexcept
 	{
 		return FNV1aHash64(sv.data(), sv.size());

@@ -115,7 +115,7 @@ namespace Eugene
 		template<class ...Args>
 		void LogDebug(std::format_string<Args...> format, Args&& ...args)
 		{
-			Out(Type::Debug, std::format(format.get(), std::move(args)...));
+			Out(Type::Debug, std::format(format, std::forward<Args>(args)...));
 		}
 
 		/// <summary>

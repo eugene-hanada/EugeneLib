@@ -18,7 +18,7 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info) :
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
@@ -52,7 +52,7 @@ Eugene::ImageResource::ImageResource(
 	{
 		clear = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM, clearColor.value().data());
 	}
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
@@ -76,7 +76,7 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, floa
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,
@@ -90,6 +90,6 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, floa
 Eugene::ImageResource::ImageResource(std::uint32_t idx) :
 	format_{Format::R8G8B8A8_UNORM}
 {
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().swapChain_->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))), "スワップチェイン用リソース生成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().swapChain_->GetBuffer(idx, IID_PPV_ARGS(resource_.ReleaseAndGetAddressOf()))), "スワップチェイン用リソース生成失敗");
 }
 

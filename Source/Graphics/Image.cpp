@@ -42,14 +42,14 @@ Eugene::Image::Image(const std::filesystem::path& path) :
 	info_{}
 {
 	auto tmp = std::hash<std::string_view>()(path.extension().string());
-	EUGENE_ASSERT_MSG((this->*loadFromFileFuncMap_.at(tmp))(path), "ファイル読み込み失敗");
+	EUGENE_RELEASE_ASSERT_MSG((this->*loadFromFileFuncMap_.at(tmp))(path), "ファイル読み込み失敗");
 }
 
 Eugene::Image::Image(std::span<std::uint8_t> data, const std::string_view& ext):
 	info_{}
 {
 	auto tmp = std::hash<std::string_view>()(ext);
-	EUGENE_ASSERT_MSG((this->*loadFromMemoryMap_.at(tmp))(data), "画像読み込み失敗");
+	EUGENE_RELEASE_ASSERT_MSG((this->*loadFromMemoryMap_.at(tmp))(data), "画像読み込み失敗");
 }
 
 const Eugene::TextureInfo& Eugene::Image::GetInfo(void) const&

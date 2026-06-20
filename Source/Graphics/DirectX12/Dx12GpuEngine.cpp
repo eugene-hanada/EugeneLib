@@ -61,7 +61,7 @@ void Eugene::GpuEngine::Init(std::size_t initSize)
 
 
 	// キューを生成
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))), "GpuEngineのコマンドキュー(ID3D12CommandQueue)作成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(cmdQueue_.ReleaseAndGetAddressOf()))), "GpuEngineのコマンドキュー(ID3D12CommandQueue)作成失敗");
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))), "GpuEngineのフェンス(ID3D12Fence)作成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(fence_.ReleaseAndGetAddressOf()))), "GpuEngineのフェンス(ID3D12Fence)作成失敗");
 }

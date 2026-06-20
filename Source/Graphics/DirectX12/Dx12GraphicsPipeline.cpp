@@ -169,7 +169,7 @@ Eugene::Pipeline::Pipeline(
 		//gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 	}
 	auto result = Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
-	EUGENE_ASSERT_MSG(SUCCEEDED(result), "グラフィックスパイプラインステート生成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(result), "グラフィックスパイプラインステート生成失敗");
 }
 
 Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const std::span<const std::uint8_t> csShader)
@@ -183,6 +183,6 @@ Eugene::Pipeline::Pipeline(ResourceBindLayout& resourceBindLayout, const std::sp
 	computePipelineDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
 	computePipelineDesc.pRootSignature = pipeline_.rootSignature_.Get();
 	auto result = Graphics::GetInstance().device_->CreateComputePipelineState(&computePipelineDesc, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
-	EUGENE_ASSERT_MSG(SUCCEEDED(result), "コンピュートパイプラインステート生成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(result), "コンピュートパイプラインステート生成失敗");
 }
 

@@ -106,7 +106,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 		isActive_ = active;
 		};
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)), "COMの初期化に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(CoInitializeEx(nullptr, COINIT_MULTITHREADED)), "COMの初期化に失敗");
 
 	auto mode = reinterpret_cast<const WindowMode&>(other);
 
@@ -115,7 +115,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	::windowClass.lpfnWndProc = (WNDPROC)WindowProcedure;
 	::windowClass.lpszClassName = tmpTitle.c_str();
 	::windowClass.hInstance = GetModuleHandle(nullptr);
-	EUGENE_ASSERT_MSG(RegisterClassEx(&::windowClass), "ウィンドウクラスの登録に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(RegisterClassEx(&::windowClass), "ウィンドウクラスの登録に失敗");
 
 	// ウィンドウのサイズ設定
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
@@ -137,7 +137,7 @@ Eugene::System::System(const glm::vec2& size, const std::u8string& title, std::i
 	}
 	
 
-	EUGENE_ASSERT_MSG(AdjustWindowRect(&wSize, style, false), "ウィンドウサイズ調整に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(AdjustWindowRect(&wSize, style, false), "ウィンドウサイズ調整に失敗");
 
 	if (mode == WindowMode::Transparent)
 	{
@@ -364,7 +364,7 @@ void Eugene::System::ResizeWindow(const glm::vec2& size)
 {
 	RECT wSize{ 0,0,static_cast<long>(windowSize_.x), static_cast<long>(windowSize_.y) };
 
-	EUGENE_ASSERT_MSG(AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false), "ウィンドウサイズ調整に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(AdjustWindowRect(&wSize, GetWindowLong(hwnd, GWL_STYLE), false), "ウィンドウサイズ調整に失敗");
 
 	MONITORINFO monitorInfo{};
 	monitorInfo.cbSize = sizeof(MONITORINFO);

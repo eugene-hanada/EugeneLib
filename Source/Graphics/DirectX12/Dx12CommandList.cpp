@@ -24,10 +24,10 @@
 
 Eugene::CommandList::CommandList(void*)
 {
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandAllocator(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(cmdAllocator_.ReleaseAndGetAddressOf()))), "コマンド(ID3D12CommandAllocator)作成できませんでした");
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandList(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateCommandList(
 		0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator_.Get(), nullptr, IID_PPV_ARGS(cmdList_.ReleaseAndGetAddressOf())
 	)), "コマンド(ID3D12CommandList)作成できませんでした");
 	End();

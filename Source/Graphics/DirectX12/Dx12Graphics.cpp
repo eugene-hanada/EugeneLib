@@ -70,7 +70,7 @@ namespace
 
 Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
 {
-	EUGENE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
+	EUGENE_RELEASE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
 	CreateDevice();
 	instance_.reset(this);
 
@@ -94,7 +94,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 
 #ifdef EUGENE_IMGUI
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{ D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 256,D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, 0 };
-	EUGENE_ASSERT_MSG(SUCCEEDED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ディスクリプタヒープの作成に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(imguiDescriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ディスクリプタヒープの作成に失敗");
 
 	ImGui_ImplDX12_Init(
 		device_.Get(),
@@ -151,7 +151,7 @@ void Eugene::Graphics::CreateDevice(void)
 	flagsDXGI |= DXGI_CREATE_FACTORY_DEBUG;
 #endif
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))), "DXGIファクトリーの生成に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(CreateDXGIFactory2(flagsDXGI, IID_PPV_ARGS(dxgiFactory_.ReleaseAndGetAddressOf()))), "DXGIファクトリーの生成に失敗");
 
 	// アダプター格納用
 	IDXGIAdapter* tmpAdapter = nullptr;
@@ -176,13 +176,13 @@ void Eugene::Graphics::CreateDevice(void)
 			D3D12MA::ALLOCATOR_DESC allocatorDesc{};
 			allocatorDesc.pAdapter = tmpAdapter;
 			allocatorDesc.pDevice = device_.Get();
-			EUGENE_ASSERT_MSG(SUCCEEDED(D3D12MA::CreateAllocator(&allocatorDesc, allocator_.ReleaseAndGetAddressOf())), "D3D12MAのアロケーター生成失敗");
+			EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(D3D12MA::CreateAllocator(&allocatorDesc, allocator_.ReleaseAndGetAddressOf())), "D3D12MAのアロケーター生成失敗");
 			tmpAdapter->Release();
 			return;
 		}
 	}
 
-	EUGENE_ASSERT_MSG(false,"D3D12デバイスの作成に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(false,"D3D12デバイスの作成に失敗");
 }
 
 void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEngine& gpuEngine, std::uint32_t bufferNum, std::uint64_t maxNum)
@@ -230,8 +230,8 @@ void Eugene::Graphics::CreateSwapChain(HWND& hwnd, const glm::vec2& size, GpuEng
 	IDXGISwapChain1* swapchain = nullptr;
 	//if (FAILED(dxgiFactory_->CreateSwapChainForHwnd(gpuEngine.cmdQueue_.Get(), hwnd, &swapchainDesc, &fullScrDesc, nullptr, &swapchain)))
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(dxgiFactory_->CreateSwapChainForComposition(gpuEngine.cmdQueue_.Get(), &swapchainDesc, nullptr, &swapchain)), "スワップチェイン生成失敗");
-	EUGENE_ASSERT_MSG(SUCCEEDED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))), "スワップチェイン生成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(dxgiFactory_->CreateSwapChainForComposition(gpuEngine.cmdQueue_.Get(), &swapchainDesc, nullptr, &swapchain)), "スワップチェイン生成失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(swapchain->QueryInterface(IID_PPV_ARGS(swapChain_.ReleaseAndGetAddressOf()))), "スワップチェイン生成失敗");
 	auto r = CreateDcomp(hwnd, swapChain_.Get());
 	dxgiFactory_->MakeWindowAssociation(hwnd, DXGI_MWA_NO_ALT_ENTER);
 	swapchain->Release();

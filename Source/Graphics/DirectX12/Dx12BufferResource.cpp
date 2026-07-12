@@ -37,7 +37,7 @@ Eugene::BufferResource::BufferResource(std::uint64_t size, bool isUnordered, Gpu
 		resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
 	}
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 			&allocationDesc,
 			&resourceDesc,
 			state,
@@ -69,7 +69,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_UPLOAD;
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_COMMON,

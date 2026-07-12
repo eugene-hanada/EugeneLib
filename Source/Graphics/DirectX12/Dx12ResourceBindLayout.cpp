@@ -100,14 +100,14 @@ Eugene::ResourceBindLayout::ResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& v
 
 	Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
-	EUGENE_ASSERT_MSG(SUCCEEDED(D3D12SerializeRootSignature(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(D3D12SerializeRootSignature(
 		&rootSignatureDesc,
 		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob,
 		&errorBlob)
 	), "ルードシグネチャ生成失敗");
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateRootSignature(
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateRootSignature(
 		0,
 		rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(),

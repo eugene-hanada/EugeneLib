@@ -267,7 +267,13 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_CONFIGURATION_TYPES STREQUAL
 	target_compile_definitions(EugeneLib PUBLIC EUGENE_RELEASE)
 endif()
 
- 
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_SSE2=1)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|ARM64|arm64)$")
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_NEON=1)
+else()
+	target_compile_definitions(EugeneLib PUBLIC EUGENE_SIMD_SCALAR=1)
+endif()
 
 
  add_subdirectory("Include/ThirdParty/fmt")

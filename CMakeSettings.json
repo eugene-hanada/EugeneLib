@@ -1,40 +1,6 @@
 ﻿{
   "configurations": [
     {
-      "name": "x64-Debug",
-      "generator": "Visual Studio 17 2022 Win64",
-      "configurationType": "Debug",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
-      "ctestCommandArgs": "",
-      "intelliSenseMode": "windows-msvc-x64",
-      "variables": [
-        {
-          "name": "EUGENE_USE_IMGUI",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "EUGENE_BUILD_SAMPLE",
-          "value": "True",
-          "type": "BOOL"
-        },
-        {
-          "name": "MI_OVERRIDE",
-          "value": "False",
-          "type": "BOOL"
-        },
-        {
-          "name": "EUGENE_BUILD_DOCTEST",
-          "value": "False",
-          "type": "BOOL"
-        }
-      ]
-    },
-    {
       "name": "x64-Debug-Vulkan",
       "generator": "Ninja",
       "configurationType": "Debug",
@@ -74,6 +40,57 @@
         {
           "name": "EUGENE_USE_DX12",
           "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Visual Studio 18 2026 Win64",
+      "configurationType": "Release",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": [
+        {
+          "name": "MI_OVERRIDE",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_BUILD_SAMPLE",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_BUILD_SOUND",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "x64-Debug",
+      "generator": "Visual Studio 18 2026 Win64",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": [
+        {
+          "name": "MI_OVERRIDE",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "EUGENE_BUILD_SAMPLE",
+          "value": "True",
           "type": "BOOL"
         }
       ]

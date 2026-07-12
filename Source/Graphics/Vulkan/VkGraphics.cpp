@@ -64,7 +64,7 @@ namespace
 Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::size_t maxNum):
 	backBufferIdx_{0}, isMinimized{false}
 {
-	EUGENE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
+	EUGENE_RELEASE_ASSERT_MSG(System::IsCreate(), "Systemが生成されていません。");
 
 	DynamicSingleton::instance_.reset(this);
 	hWindow = static_cast<HWND>(System::GetInstance().GetWindow());;

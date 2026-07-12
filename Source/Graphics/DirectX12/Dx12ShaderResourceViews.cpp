@@ -117,5 +117,5 @@ void Eugene::ShaderResourceViews::Init(std::uint32_t size)
 		0
 	};
 
-	EUGENE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ディスクリプタヒープの作成に失敗");
+	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(descriptorHeap_.ReleaseAndGetAddressOf()))), "DirectX12ディスクリプタヒープの作成に失敗");
 }

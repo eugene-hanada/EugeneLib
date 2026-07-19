@@ -316,6 +316,16 @@ namespace Eugene
 			{
 				return !(*this == itr);
 			}
+
+			Key& Key() noexcept
+			{
+				return map_->keys_[groupIndex_][slotIndex_];
+			}
+
+			Value& Value() noexcept
+			{
+				return map_->values_[groupIndex_][slotIndex_];
+			}
 		private:
 			SwissTable* map_;
 			SizeType groupIndex_;
@@ -355,6 +365,15 @@ namespace Eugene
 			{
 				return !(*this == itr);
 			}
+			const Key& Key() const noexcept
+			{
+				return map_->keys_[groupIndex_][slotIndex_];
+			}
+
+			const Value& Value() const noexcept
+			{
+				return map_->values_[groupIndex_][slotIndex_];
+			}
 		private:
 			const SwissTable* map_;
 			SizeType groupIndex_;
@@ -390,7 +409,6 @@ namespace Eugene
 
 		const Value& At(const Key& key) const & noexcept
 		{
-			CheckRehash();
 			SizeType rtnIdx = 0;
 			SizeType rtnSlot = 0;
 			if (InternalInsert(key, ctrl_, keys_, groupSize_, mask,
@@ -404,7 +422,6 @@ namespace Eugene
 					new(&keys_[idx][slot]) Key{ key };
 					new(&values_[idx][slot]) Value{};
 					ctrl_[idx][slot] = h2;
-					size_++;
 					rtnIdx = idx;
 					rtnSlot = slot;
 				}

@@ -164,15 +164,15 @@ TEST_CASE("SwissTable")
 	auto it1 = swissTable.Find(1);
 	if (it1 != swissTable.end())
 	{
-		CHECK(it1.first() == 1);
-		CHECK(it1.second() == 10);
+		CHECK(it1.Key() == 1);
+		CHECK(it1.Value() == 10);
 		found1 = true;
 	}
 	auto it2 = swissTable.Find(2);
 	if (it2 != swissTable.end())
 	{
-		CHECK(it2.first() == 2);
-		CHECK(it2.second() == 20);
+		CHECK(it2.Key() == 2);
+		CHECK(it2.Value() == 20);
 		found2 = true;
 	}
 

@@ -11,7 +11,7 @@ Eugene::Pipeline::Pipeline(
 	const ArgsSpan<RendertargetLayout>& rendertarges,
 	TopologyType topologyType,
 	bool isCulling,
-	bool useDepth, 
+	const DepthStencilLayout& depthStencil,
 	std::uint8_t sampleCount
 )
 {
@@ -110,7 +110,7 @@ Eugene::Pipeline::Pipeline(
 	// ラスタライザの設定
 	vk::PipelineRasterizationStateCreateInfo rasterizer{};
 	rasterizer.setRasterizerDiscardEnable(false);
-	rasterizer.setDepthBiasEnable(useDepth);
+	rasterizer.setDepthBiasEnable(depthStencil.depthState.enable);
 	rasterizer.setPolygonMode(vk::PolygonMode::eFill);
 	rasterizer.setLineWidth(1.0f);
 
@@ -136,10 +136,46 @@ Eugene::Pipeline::Pipeline(
 
 	std::vector<vk::PipelineColorBlendAttachmentState> attachments{ rendertarges.size() };
 	std::vector<vk::Format> attachmentsFormat(rendertarges.size());
+	//{
+	//	Zero,
+	//		One,
+
+	//		SrcColor,
+	//		InvSrcColor,
+
+	//		SrcAlpha,
+	//		InvSrcAlpha,
+
+	//		DstColor,
+	//		InvDstColor,
+
+	//		DstAlpha,
+	//		InvDstAlpha,
+	//};
+	constexpr vk::BlendOp toVkBlendOp[]{
+		vk::BlendOp::eAdd,
+		vk::BlendOp::eSubtract,
+		vk::BlendOp::eReverseSubtract,
+		vk::BlendOp::eMin,
+		vk::BlendOp::eMax
+	};
+
+	constexpr vk::BlendFactor toVkBlendFactor[]{
+		vk::BlendFactor::eZero,
+		vk::BlendFactor::eOne,
+		vk::BlendFactor::eSrcColor,
+		vk::BlendFactor::eOneMinusSrcColor,
+		vk::BlendFactor::eSrcAlpha,
+		vk::BlendFactor::eOneMinusSrcAlpha,
+		vk::BlendFactor::eDstColor,
+		vk::BlendFactor::eOneMinusDstColor,
+		vk::BlendFactor::eDstAlpha,
+		vk::BlendFactor::eOneMinusDstAlpha
+	};
 
 	for (size_t i = 0ull; i < rendertarges.size(); i++)
 	{
-		auto tmpFormat = rendertarges.at(i).format_;
+		auto tmpFormat = rendertarges.at(i).format;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
 			tmpFormat = Graphics::BackBufferFormat();
@@ -214,69 +250,74 @@ Eugene::Pipeline::Pipeline(
 			vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA,
 		};
 
+		auto state = rendertarges.at(i).blendState;
 		attachments[i].setColorWriteMask(toComponentFlag[static_cast<size_t>(tmpFormat)]);
-		switch (rendertarges.at(i).blendType_)
-		{
-		case BlendType::Non:
-			attachments[i].setBlendEnable(false);
-			break;
-		case BlendType::Alpha:
-			attachments[i].setBlendEnable(true);
-			attachments[i].setColorBlendOp(vk::BlendOp::eAdd);
-			attachments[i].setSrcColorBlendFactor(vk::BlendFactor::eSrcAlpha);
-			attachments[i].setDstColorBlendFactor(vk::BlendFactor::eOneMinusSrcAlpha);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eSrcAlpha);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
-			break;
-		case BlendType::Add:
-			attachments[i].setBlendEnable(true);
-			attachments[i].setColorBlendOp(vk::BlendOp::eAdd);
-			attachments[i].setSrcColorBlendFactor(vk::BlendFactor::eSrcColor);
-			attachments[i].setDstColorBlendFactor(vk::BlendFactor::eDstColor);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eSrcAlpha);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
-			break;
-		case BlendType::Sub:
-			attachments[i].setBlendEnable(true);
-			attachments[i].setColorBlendOp(vk::BlendOp::eSubtract);
-			attachments[i].setSrcColorBlendFactor(vk::BlendFactor::eSrcColor);
-			attachments[i].setDstColorBlendFactor(vk::BlendFactor::eDstColor);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eSrcAlpha);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
-			break;
-		case BlendType::Inv:
-			attachments[i].setBlendEnable(true);
-			attachments[i].setColorBlendOp(vk::BlendOp::eAdd);
-			attachments[i].setSrcColorBlendFactor(vk::BlendFactor::eOneMinusSrcColor);
-			attachments[i].setDstColorBlendFactor(vk::BlendFactor::eDstColor);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eSrcAlpha);
-			attachments[i].setSrcAlphaBlendFactor(vk::BlendFactor::eDstAlpha);
-			break;
-		default:
-			// 実装しない
-			break;
-		}
-
+		
+		attachments[i].setBlendEnable(rendertarges.at(i).blendState.enable);
+		attachments[i].setColorBlendOp(toVkBlendOp[static_cast<size_t>(rendertarges.at(i).blendState.colorOp)]);
+		attachments[i].setSrcColorBlendFactor(toVkBlendFactor[static_cast<size_t>(rendertarges.at(i).blendState.srcColor)]);
+		attachments[i].setDstColorBlendFactor(toVkBlendFactor[static_cast<size_t>(rendertarges.at(i).blendState.dstColor)]);
+		attachments[i].setSrcAlphaBlendFactor(toVkBlendFactor[static_cast<size_t>(rendertarges.at(i).blendState.srcAlpha)]);
+		attachments[i].setDstAlphaBlendFactor(toVkBlendFactor[static_cast<size_t>(rendertarges.at(i).blendState.dstAlpha)]);
+		attachments[i].setAlphaBlendOp(toVkBlendOp[static_cast<size_t>(rendertarges.at(i).blendState.alphaOp)]);
 	}
 
 	vk::PipelineColorBlendStateCreateInfo blendInfo{};
 	blendInfo.setAttachments(attachments);
 	blendInfo.setLogicOpEnable(VK_FALSE);
 
+	constexpr vk::CompareOp toVkCompareOp[]{
+		vk::CompareOp::eNever,
+		vk::CompareOp::eLess,
+		vk::CompareOp::eEqual,
+		vk::CompareOp::eLessOrEqual,
+		vk::CompareOp::eGreater,
+		vk::CompareOp::eNotEqual,
+		vk::CompareOp::eGreaterOrEqual,
+		vk::CompareOp::eAlways
+	};
+
+	constexpr vk::StencilOp toVkStencilOp[]{
+		vk::StencilOp::eKeep,
+		vk::StencilOp::eZero,
+		vk::StencilOp::eReplace,
+		vk::StencilOp::eIncrementAndClamp,
+		vk::StencilOp::eDecrementAndClamp,
+		vk::StencilOp::eInvert,
+		vk::StencilOp::eIncrementAndWrap,
+		vk::StencilOp::eDecrementAndWrap
+	};
+
 	vk::PipelineDepthStencilStateCreateInfo depthInfo{};
-	depthInfo.setDepthTestEnable(useDepth);
-	depthInfo.setDepthWriteEnable(useDepth);
-	depthInfo.setDepthCompareOp(vk::CompareOp::eLessOrEqual);
+	depthInfo.setDepthTestEnable(depthStencil.depthState.enable);
+	depthInfo.setDepthWriteEnable(depthStencil.depthState.writeEnable);
+	depthInfo.setDepthCompareOp(toVkCompareOp[static_cast<size_t>(depthStencil.depthState.func)]);
 	depthInfo.setMaxDepthBounds(1.0f);
 	depthInfo.setMinDepthBounds(0.0f);
 
+	depthInfo.setStencilTestEnable(depthStencil.stencilState.enable);
+	depthInfo.setDepthBoundsTestEnable(false);
+	{
+		vk::StencilOpState stencilState{};
+		stencilState.setCompareMask(depthStencil.stencilState.readMask);
+		stencilState.setWriteMask(depthStencil.stencilState.writeMask);
+		stencilState.setDepthFailOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.frontState.depthFailOp)]);
+		stencilState.setCompareOp(toVkCompareOp[static_cast<size_t>(depthStencil.stencilState.frontState.func)]);
+		stencilState.setFailOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.frontState.failOp)]);
+		stencilState.setPassOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.frontState.passOp)]);
+		depthInfo.setBack(stencilState);
+
+		stencilState.setDepthFailOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.backState.depthFailOp)]);
+		stencilState.setCompareOp(toVkCompareOp[static_cast<size_t>(depthStencil.stencilState.backState.func)]);
+		stencilState.setFailOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.backState.failOp)]);
+		stencilState.setPassOp(toVkStencilOp[static_cast<size_t>(depthStencil.stencilState.backState.passOp)]);	
+		depthInfo.setFront(stencilState);
+	}
+	
 	vk::PipelineRenderingCreateInfo renderingInfo{};
 	renderingInfo.setColorAttachmentCount(static_cast<std::uint32_t>(attachmentsFormat.size()));
 	renderingInfo.setColorAttachmentFormats(attachmentsFormat);
-	if (useDepth)
-	{
-		renderingInfo.setDepthAttachmentFormat(vk::Format::eD32Sfloat);
-	}
+	renderingInfo.setDepthAttachmentFormat(Graphics::FormatToVkFormat[static_cast<size_t>(depthStencil.format)]);
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
 	scissor.setOffset({ 0,0 });
@@ -301,16 +342,10 @@ Eugene::Pipeline::Pipeline(
 	pipelineInfo.setPViewportState(&viewportState);
 	pipelineInfo.setPNext(&renderingInfo);
 
-	//pipelineInfo.setRenderPass(*tmp);
-	// デプス周りとりあえずなしで実装
-	if (useDepth)
-	{
-		pipelineInfo.setPDepthStencilState(&depthInfo);
-	}
+	pipelineInfo.setPDepthStencilState(&depthInfo);
 	pipelineInfo.setPColorBlendState(&blendInfo);
 	pipelineInfo.setLayout(**data_.layout_);
-
-	//pipelineInfo.setRenderPass(nullptr);
+	pipelineInfo.setRenderPass(nullptr);
 
 	auto [result, pipeline] = Graphics::GetInstance().device_->createGraphicsPipelineUnique(nullptr, pipelineInfo);
 

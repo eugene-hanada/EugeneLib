@@ -78,7 +78,7 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
-			bool useDepth,
+			const DepthStencilLayout& depthStencil,
 			std::uint8_t sampleCount
 		);
 

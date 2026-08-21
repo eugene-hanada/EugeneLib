@@ -80,7 +80,7 @@ namespace Eugene
 		/// <param name="rendertarges"></param>
 		/// <param name="topologyType"></param>
 		/// <param name="isCulling"></param>
-		/// <param name="useDepth"></param>
+		/// <param name="depthStencil"></param>
 		/// <param name="sampleCount"></param>
 		Pipeline(
 			ResourceBindLayout& resourceBindLayout,
@@ -89,7 +89,7 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType,
 			bool isCulling,
-			bool useDepth,
+			const DepthStencilLayout& depthStencil,
 			std::uint8_t sampleCount
 		);
 

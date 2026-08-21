@@ -8,7 +8,6 @@
 
 #define VMA_IMPLEMENTATION
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
-#include "../../../Include/Utils/EugeneLibException.h"
 
 #include "../../../Include/System/System.h"
 
@@ -100,15 +99,9 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::s
 	
 	
 	device_->resetFences(*fence_);
-	if (device_->acquireNextImageKHR(*swapchain_, std::numeric_limits<std::uint64_t>::max(), {}, *fence_, &backBufferIdx_) != vk::Result::eSuccess)
-	{
-		throw EugeneLibException{"AcquireNextImageKHR Error"};
-	}
+	device_->acquireNextImageKHR(*swapchain_, std::numeric_limits<std::uint64_t>::max(), {}, *fence_, &backBufferIdx_);
 
-	if (device_->waitForFences(*fence_, true, std::numeric_limits<std::uint64_t>::max()) != vk::Result::eSuccess)
-	{
-		throw EugeneLibException{ "WaitForFences Error" };
-	}
+	device_->waitForFences(*fence_, true, std::numeric_limits<std::uint64_t>::max());
 	device_->resetFences(*fence_);
 
 	const auto& limits{ physicalDevice_.getProperties().limits };
@@ -722,7 +715,7 @@ void Eugene::Graphics::CreateDevice(void)
 			queueMax = queueFamilyProp[i].queueCount;
 			break;
 		}
-		throw EugeneLibException{ "グラフィックスを使用できるデバイスがありません" };
+		EUGENE_RELEASE_ASSERT_MSG(i != queueFamilyProp.size() - 1, "グラフィックキューがありません");
 	}
 	
 	std::vector<float> priority(queueMax);

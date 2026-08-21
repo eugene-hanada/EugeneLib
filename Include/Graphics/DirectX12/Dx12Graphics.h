@@ -373,11 +373,11 @@ namespace Eugene
 			const ArgsSpan<RendertargetLayout>& rendertarges,
 			TopologyType topologyType = TopologyType::Triangle,
 			bool isCulling = false,
-			bool useDepth = false,
+			const DepthStencilLayout& depthStencil = {},
 			std::uint8_t sampleCount = 1
 		) const
 		{
-			return { resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, useDepth, sampleCount };
+			return { resourceBindLayout, layout, shaders, rendertarges, topologyType, isCulling, depthStencil, sampleCount };
 		}
 
 		/// <summary>

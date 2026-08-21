@@ -183,7 +183,7 @@ namespace Eugene
 		std::uint32_t arraySize;		// 配列サイズ
 		std::uint16_t mipLevels;			// ミップマップレベル
 		std::int32_t pixelPerBite;			// ピクセル当たりのバイト数
-		std::uint32_t totalSize_;			// トータルサイズ
+		std::uint32_t totalSize;			// トータルサイズ
 	};
 
 	/// <summary>
@@ -243,8 +243,8 @@ namespace Eugene
 	};
 
 	/// <summary>
-/// ビューのタイプ
-/// </summary>
+	/// ビューのタイプ
+	/// </summary>
 	enum class ViewType : 
 		std::uint8_t
 	{
@@ -305,24 +305,24 @@ namespace Eugene
 	};
 
 	/// <summary>
-/// シェーダの入力レイアウト用構造体
-/// </summary>
+	/// シェーダの入力レイアウト用構造体
+	/// </summary>
 	struct ShaderInputLayout
 	{
 		constexpr ShaderInputLayout() :
-			format_{ Format::NON }, semanticIdx_{ 0u }, semanticName_{ nullptr }, slot_{ 0u }
+			format{ Format::NON }, semanticIdx{ 0u }, semanticName{ nullptr }, slot{ 0u }
 		{
 
 		}
-		constexpr ShaderInputLayout(const char* semanticName, std::uint32_t semanticIdx, Format format, std::uint32_t slot = 0) :
-			semanticName_{ semanticName }, semanticIdx_{ semanticIdx }, format_{ format }, slot_{ slot }
+		constexpr ShaderInputLayout(const char* inSemanticName, std::uint32_t inSemanticIdx, Format inFormat, std::uint32_t inSlot = 0) :
+			semanticName{ inSemanticName }, semanticIdx{ inSemanticIdx }, format{ inFormat }, slot{ inSlot }
 		{
 
 		}
-		std::uint32_t semanticIdx_;
-		Format format_;
-		std::uint32_t slot_;
-		const char* semanticName_;
+		std::uint32_t semanticIdx;
+		Format format;
+		std::uint32_t slot;
+		const char* semanticName;
 	};
 
 	/// <summary>
@@ -371,7 +371,7 @@ namespace Eugene
 		/// <summary>
 		/// 無し
 		/// </summary>
-		Non,
+		Opaque,
 
 		/// <summary>
 		/// アルファ
@@ -394,30 +394,204 @@ namespace Eugene
 		Inv
 	};
 
+	enum class BlendCompareFunc : std::uint8_t
+	{
+		Never,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
+	};
+
+	enum class BlendFactor : std::uint8_t
+	{
+		Zero,
+		One,
+
+		SrcColor,
+		InvSrcColor,
+
+		SrcAlpha,
+		InvSrcAlpha,
+
+		DstColor,
+		InvDstColor,
+
+		DstAlpha,
+		InvDstAlpha,
+	};
+
+	enum class BlendOp : uint8_t
+	{
+		Add,
+		Subtract,
+		ReverseSubtract,
+		Min,
+		Max
+	};
+
+	enum class StencilOp : uint8_t
+	{
+		Keep,
+		Zero,
+		Replace,
+
+		IncrementClamp,
+		DecrementClamp,
+
+		IncrementWrap,
+		DecrementWrap,
+
+		Invert
+	};
+
+	struct BlendState
+	{
+		bool enable;
+
+		BlendFactor srcColor;
+		BlendFactor dstColor;
+		BlendOp colorOp;
+
+		BlendFactor srcAlpha;
+		BlendFactor dstAlpha;
+		BlendOp alphaOp;
+
+		uint8_t writeMask;
+
+		constexpr BlendState() :
+			enable{ false },
+			srcColor{ BlendFactor::One },
+			dstColor{ BlendFactor::Zero },
+			colorOp{ BlendOp::Add },
+			srcAlpha{ BlendFactor::One },
+			dstAlpha{ BlendFactor::Zero },
+			alphaOp{ BlendOp::Add },
+			writeMask{ 0x0F }
+		{
+		}
+
+		constexpr BlendState(BlendType blendType) :
+			enable{ false },
+			srcColor{ BlendFactor::One },
+			dstColor{ BlendFactor::Zero },
+			colorOp{ BlendOp::Add },
+			srcAlpha{ BlendFactor::One },
+			dstAlpha{ BlendFactor::Zero },
+			alphaOp{ BlendOp::Add },
+			writeMask{ 0x0F }
+		{
+			switch (blendType)	
+			{
+			case Eugene::BlendType::Opaque:
+				enable = false;
+				break;
+			case Eugene::BlendType::Alpha:
+				enable = true;
+				srcColor = BlendFactor::SrcAlpha;
+				dstColor = BlendFactor::InvSrcAlpha;
+				colorOp = BlendOp::Add;
+				srcAlpha = BlendFactor::One;
+				dstAlpha = BlendFactor::InvSrcAlpha;
+				alphaOp = BlendOp::Add;
+				break;
+			case Eugene::BlendType::Add:
+				enable = true;
+				srcColor = BlendFactor::One;
+				dstColor = BlendFactor::One;
+				colorOp = BlendOp::Add;
+				srcAlpha = BlendFactor::One;
+				dstAlpha = BlendFactor::One;
+				alphaOp = BlendOp::Add;
+				break;
+			default:
+				break;
+			}
+		}
+	};
+
+
+	struct DepthState
+	{
+		bool enable;
+
+		bool writeEnable;
+
+		BlendCompareFunc func;
+
+		constexpr DepthState() :
+			enable{ false },
+			writeEnable{ false},
+			func{ BlendCompareFunc::LessEqual }
+		{
+		}
+	};
+
+	struct StencilState
+	{
+		struct FaceState
+		{
+			BlendCompareFunc func = BlendCompareFunc::Always;
+			StencilOp passOp = StencilOp::Keep;
+			StencilOp failOp = StencilOp::Keep;
+			StencilOp depthFailOp = StencilOp::Keep;
+		};
+		bool enable = false;
+
+		std::uint8_t readMask = 0xFF;
+		std::uint8_t writeMask = 0xFF;
+		FaceState frontState;
+		FaceState backState;
+
+		constexpr StencilState() :
+			enable{ false },
+			readMask{ 0xFF },
+			writeMask{ 0xFF },
+			frontState{},
+			backState{}
+		{
+		}
+
+	};
+
+	struct DepthStencilLayout
+	{
+		Format format;
+		DepthState depthState;
+		StencilState stencilState;
+
+		constexpr DepthStencilLayout(Format format = Format::NON, const DepthState& depthState = {}, const StencilState& stencilState = {}) :
+			format{ format },
+			depthState{ depthState },
+			stencilState{ stencilState }
+		{
+		}
+	};
+
 	/// <summary>
 	/// レンダーターゲットのレイアウト
 	/// </summary>
 	struct RendertargetLayout
 	{
 		constexpr RendertargetLayout() :
-			format_{ Format::NON }, blendType_{ BlendType::Non }
+			format{ Format::NON }, blendState{}
 		{
 
 		}
-		constexpr RendertargetLayout(Format format, BlendType blendType = BlendType::Non) :
-			format_{ format }, blendType_{ blendType }
+		constexpr RendertargetLayout(Format inFormat, const BlendState& inBlendState = {}) :
+			format{ inFormat }, blendState{inBlendState}
 		{
 
 		}
 		/// <summary>
 		/// フォーマット
 		/// </summary>
-		Format format_;
+		Format format;
 
-		/// <summary>
-		/// ブレンドタイプ
-		/// </summary>
-		BlendType blendType_;
+		BlendState blendState;
 	};
 
 	/// <summary>
@@ -464,8 +638,8 @@ namespace Eugene
 	using RenderTargetSpan = std::span <RendertargetLayout>;
 
 	/// <summary>
-/// テクスチャアドレッシングモード
-/// </summary>
+	/// テクスチャアドレッシングモード
+	/// </summary>
 	enum class TextureAddressMode :
 		std::uint8_t
 	{

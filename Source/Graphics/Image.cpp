@@ -94,9 +94,9 @@ bool Eugene::Image::LoadStbFromFile(const std::filesystem::path& path)
 	info_.width = w;
 	info_.height = h;
 	info_.pixelPerBite = c;
-	info_.totalSize_ = w * h * c;
+	info_.totalSize = w * h * c;
 	data_.resize(1);
-	baseData_.resize(info_.totalSize_);
+	baseData_.resize(info_.totalSize);
 	data_[0] = { baseData_ };
 	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
@@ -118,9 +118,9 @@ bool Eugene::Image::LoadStbFromMemory(const std::span<std::uint8_t>& data)
 	info_.width = w;
 	info_.height = h;
 	info_.pixelPerBite = c;
-	info_.totalSize_ = w * h * c;
+	info_.totalSize = w * h * c;
 	data_.resize(1);
-	baseData_.resize(info_.totalSize_);
+	baseData_.resize(info_.totalSize);
 	data_[0] = { baseData_ };
 	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
@@ -200,7 +200,7 @@ bool Eugene::Image::LoadDdsFromFile(const std::filesystem::path& path)
 		for (int i = 0; i < info_.mipLevels; i++)
 		{
 			// サイズを計算
-			info_.totalSize_ += calcSizeMap.at(info_.format)(
+			info_.totalSize += calcSizeMap.at(info_.format)(
 				std::max(1, static_cast<int>(info_.width) >> i),
 				std::max(1, static_cast<int>(info_.height) >> i),
 				info_.pixelPerBite
@@ -208,8 +208,8 @@ bool Eugene::Image::LoadDdsFromFile(const std::filesystem::path& path)
 		}
 	}
 
-	baseData_.resize(info_.totalSize_);
-	file.read(reinterpret_cast<char*>(baseData_.data()), info_.totalSize_);
+	baseData_.resize(info_.totalSize);
+	file.read(reinterpret_cast<char*>(baseData_.data()), info_.totalSize);
 
 	std::size_t sizeOffset = 0ull;
 	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)
@@ -292,7 +292,7 @@ bool Eugene::Image::LoadDdsFromMemory(const std::span<std::uint8_t>& data)
 		for (int i = 0; i < info_.mipLevels; i++)
 		{
 			// サイズを計算
-			info_.totalSize_ += calcSizeMap.at(info_.format)(
+			info_.totalSize += calcSizeMap.at(info_.format)(
 				std::max(1, static_cast<int>(info_.width) >> i),
 				std::max(1, static_cast<int>(info_.height) >> i),
 				info_.pixelPerBite
@@ -300,9 +300,9 @@ bool Eugene::Image::LoadDdsFromMemory(const std::span<std::uint8_t>& data)
 		}
 	}
 
-	baseData_.resize(info_.totalSize_);
-	std::copy_n(reinterpret_cast<std::uint8_t*>(data.data() + loadByte), info_.totalSize_, baseData_.data());
-	loadByte += info_.totalSize_;
+	baseData_.resize(info_.totalSize);
+	std::copy_n(reinterpret_cast<std::uint8_t*>(data.data() + loadByte), info_.totalSize, baseData_.data());
+	loadByte += info_.totalSize;
 
 	std::size_t sizeOffset = 0ull;
 	for (int j = 0; j < static_cast<int>(info_.arraySize); j++)

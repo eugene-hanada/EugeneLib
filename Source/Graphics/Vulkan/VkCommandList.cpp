@@ -1,6 +1,5 @@
 ﻿#include "../../../Include/Graphics/Vulkan/VkCommandList.h"
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
-#include "../../../Include/Utils/EugeneLibException.h"
 
 #include "../../../Include/Graphics/Vulkan/VkBufferResource.h"
 #include "../../../Include/Graphics/Vulkan/VkImageResource.h"

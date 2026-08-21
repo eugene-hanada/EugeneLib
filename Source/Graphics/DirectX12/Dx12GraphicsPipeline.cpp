@@ -9,12 +9,13 @@
 
 
 Eugene::Pipeline::Pipeline(
-	ResourceBindLayout& resourceBindLayout, 
+	ResourceBindLayout& resourceBindLayout,
 	const ArgsSpan<ShaderInputLayout>& layout,
 	const ArgsSpan<ShaderPair>& shaders,
-	const ArgsSpan<RendertargetLayout>& renderTargets,
-	TopologyType topologyType, 
-	bool isCulling, bool useDepth,
+	const ArgsSpan<RendertargetLayout>& rendertarges,
+	TopologyType topologyType,
+	bool isCulling,
+	const DepthStencilLayout& depthStencil,
 	std::uint8_t sampleCount)
 {
 	pipeline_.rootSignature_ = resourceBindLayout.rootSignature_;
@@ -60,15 +61,15 @@ Eugene::Pipeline::Pipeline(
 	std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout(layout.size());
 	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
-		auto tmpFormat = layout.at(i).format_;
+		auto tmpFormat = layout.at(i).format;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
 			tmpFormat = Graphics::BackBufferFormat();
 		}
-		inputLayout[i].SemanticName = layout.at(i).semanticName_;
-		inputLayout[i].SemanticIndex = layout.at(i).semanticIdx_;
+		inputLayout[i].SemanticName = layout.at(i).semanticName;
+		inputLayout[i].SemanticIndex = layout.at(i).semanticIdx;
 		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<size_t>(tmpFormat)));
-		inputLayout[i].InputSlot = layout.at(i).slot_;
+		inputLayout[i].InputSlot = layout.at(i).slot;
 		inputLayout[i].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 		inputLayout[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
 		inputLayout[i].InstanceDataStepRate = 0;
@@ -85,7 +86,7 @@ Eugene::Pipeline::Pipeline(
 	// トポロジー設定
 	gpipeline.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
 	gpipeline.PrimitiveTopologyType = static_cast<D3D12_PRIMITIVE_TOPOLOGY_TYPE>(topologyType);
-	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(renderTargets.size());
+	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());
 
 	// ラスタライザ周りの設定
 	gpipeline.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
@@ -95,79 +96,101 @@ Eugene::Pipeline::Pipeline(
 		gpipeline.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		// カリングをしない
 	}
 
+	constexpr D3D12_BLEND_OP toDx12BlentOP[] = {
+		D3D12_BLEND_OP_ADD,
+		D3D12_BLEND_OP_SUBTRACT,
+		D3D12_BLEND_OP_REV_SUBTRACT,
+		D3D12_BLEND_OP_MIN,
+		D3D12_BLEND_OP_MAX
+	};
+
+	constexpr D3D12_BLEND toDx12BlendFactor[] = {
+		D3D12_BLEND_ZERO,
+		D3D12_BLEND_ONE,
+		D3D12_BLEND_SRC_COLOR,
+		D3D12_BLEND_INV_SRC_COLOR,
+		D3D12_BLEND_SRC_ALPHA,
+		D3D12_BLEND_INV_SRC_ALPHA,
+		D3D12_BLEND_DEST_COLOR,
+		D3D12_BLEND_INV_DEST_COLOR,
+		D3D12_BLEND_DEST_ALPHA,
+		D3D12_BLEND_INV_DEST_ALPHA
+	};
+
+
+	constexpr D3D12_COMPARISON_FUNC toDx12CompareFunc[] = {
+		D3D12_COMPARISON_FUNC_NEVER,
+		D3D12_COMPARISON_FUNC_LESS,
+		D3D12_COMPARISON_FUNC_EQUAL,
+		D3D12_COMPARISON_FUNC_LESS_EQUAL,
+		D3D12_COMPARISON_FUNC_GREATER,
+		D3D12_COMPARISON_FUNC_NOT_EQUAL,
+		D3D12_COMPARISON_FUNC_GREATER_EQUAL,
+		D3D12_COMPARISON_FUNC_ALWAYS
+	};
+
+	constexpr D3D12_STENCIL_OP toDx12StencilOp[] = {
+		D3D12_STENCIL_OP_KEEP,
+		D3D12_STENCIL_OP_ZERO,
+		D3D12_STENCIL_OP_REPLACE,
+		D3D12_STENCIL_OP_INCR_SAT,
+		D3D12_STENCIL_OP_DECR_SAT,
+		D3D12_STENCIL_OP_INVERT,
+		D3D12_STENCIL_OP_INCR,
+		D3D12_STENCIL_OP_DECR
+	};
+
 	// レンダーターゲット設定
 	for (std::uint64_t i = 0; i < std::size(gpipeline.RTVFormats); i++)
 	{
-		if (i >= renderTargets.size())
+		if (i >= rendertarges.size())
 		{
-			//gpipeline.RTVFormats[i] = DXGI_FORMAT_UNKNOWN;	// レンダーターゲットがない場合はUNKNOWNをセット
+			gpipeline.RTVFormats[i] = DXGI_FORMAT_UNKNOWN;	// レンダーターゲットがない場合はUNKNOWNをセット
 			continue;
 		}
-		auto tmpFormat = renderTargets.at(i).format_;
+		auto tmpFormat = rendertarges.at(i).format;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
 			tmpFormat = Graphics::BackBufferFormat();
 		}
 		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(tmpFormat)));
-
-		switch (renderTargets.at(i).blendType_)
-		{
-			using enum BlendType;
-		case Non:
-			gpipeline.BlendState.RenderTarget[i].BlendEnable = false;
-			break;
-		case Alpha:
-			gpipeline.BlendState.RenderTarget[i].BlendEnable = true;
-			gpipeline.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
-			gpipeline.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].BlendOpAlpha = D3D12_BLEND_OP_ADD;
-			break;
-		case Add:
-			gpipeline.BlendState.RenderTarget[i].BlendEnable = true;
-			gpipeline.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
-			gpipeline.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_COLOR;
-			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_DEST_COLOR;
-			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-			break;
-		case Sub:
-			gpipeline.BlendState.RenderTarget[i].BlendEnable = true;
-			gpipeline.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_SUBTRACT;
-			gpipeline.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_COLOR;
-			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_DEST_COLOR;
-			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-			break;
-		case Inv:
-			gpipeline.BlendState.RenderTarget[i].BlendEnable = true;
-			gpipeline.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
-			gpipeline.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_INV_SRC_COLOR;
-			gpipeline.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_DEST_COLOR;
-			gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-			gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-			break;
-		default:
-			break;
-		}
+		auto tmpState = rendertarges.at(i).blendState;
+ 		gpipeline.BlendState.RenderTarget[i].BlendEnable =  rendertarges.at(i).blendState.enable;
+		gpipeline.BlendState.RenderTarget[i].SrcBlend = toDx12BlendFactor[static_cast<std::uint8_t>(rendertarges.at(i).blendState.srcColor)];
+		gpipeline.BlendState.RenderTarget[i].DestBlend = toDx12BlendFactor[static_cast<std::uint8_t>(rendertarges.at(i).blendState.dstColor)];
+		gpipeline.BlendState.RenderTarget[i].BlendOp = toDx12BlentOP[static_cast<std::uint8_t>(rendertarges.at(i).blendState.colorOp)];
+		gpipeline.BlendState.RenderTarget[i].SrcBlendAlpha = toDx12BlendFactor[static_cast<std::uint8_t>(rendertarges.at(i).blendState.srcAlpha)];
+		gpipeline.BlendState.RenderTarget[i].DestBlendAlpha = toDx12BlendFactor[static_cast<std::uint8_t>(rendertarges.at(i).blendState.dstAlpha)];
+		gpipeline.BlendState.RenderTarget[i].RenderTargetWriteMask = rendertarges.at(i).blendState.writeMask;
 	}
-	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(renderTargets.size());	// レンダーターゲットの数をセット
+	gpipeline.NumRenderTargets = static_cast<std::uint32_t>(rendertarges.size());	// レンダーターゲットの数をセット
 
 	// サンプリングに関する設定
 	gpipeline.SampleDesc.Count = sampleCount;
 	gpipeline.SampleDesc.Quality = 0;
 
 	// デプスバッファ周りの設定
-	gpipeline.DepthStencilState.StencilEnable = false;
-	gpipeline.DepthStencilState.DepthEnable = useDepth;
-	if (useDepth)
-	{
-		CD3DX12_DEPTH_STENCIL_DESC depthDesc(CD3DX12_DEFAULT{});
-		gpipeline.DepthStencilState = depthDesc;
-		//gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
-	}
+	gpipeline.DepthStencilState.StencilEnable = depthStencil.stencilState.enable;
+	gpipeline.DepthStencilState.StencilReadMask = depthStencil.stencilState.readMask;
+	gpipeline.DepthStencilState.StencilWriteMask = depthStencil.stencilState.writeMask;
+	gpipeline.DepthStencilState.DepthEnable = depthStencil.depthState.enable;
+	gpipeline.DepthStencilState.DepthWriteMask = depthStencil.depthState.writeEnable ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
+	gpipeline.DepthStencilState.DepthFunc = toDx12CompareFunc[static_cast<std::uint8_t>(depthStencil.depthState.func)];
+	gpipeline.DSVFormat = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(depthStencil.format)));
+	gpipeline.DepthStencilState.FrontFace = D3D12_DEPTH_STENCILOP_DESC{
+		
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.frontState.failOp)],
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.frontState.depthFailOp)],
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.frontState.passOp)],
+		toDx12CompareFunc[static_cast<std::uint8_t>(depthStencil.stencilState.frontState.func)],
+	};
+	gpipeline.DepthStencilState.BackFace = D3D12_DEPTH_STENCILOP_DESC{
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.backState.failOp)],
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.backState.depthFailOp)],
+		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.backState.passOp)],
+		toDx12CompareFunc[static_cast<std::uint8_t>(depthStencil.stencilState.backState.func)],
+	};
+	
 	auto result = Graphics::GetInstance().device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipeline_.state_.ReleaseAndGetAddressOf()));
 	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(result), "グラフィックスパイプラインステート生成失敗");
 }

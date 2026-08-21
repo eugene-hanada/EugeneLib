@@ -56,7 +56,7 @@ Eugene::BufferResource::BufferResource(Image& image) :
 	mapCount_{0}, canMap_{true}
 {
 	vk::BufferCreateInfo bufferInfo{};
-	bufferInfo.setSize(image.GetInfo().totalSize_);
+	bufferInfo.setSize(image.GetInfo().totalSize);
 	bufferInfo.setUsage(vk::BufferUsageFlagBits::eTransferSrc | vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer);
 	bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
 
@@ -77,11 +77,11 @@ Eugene::BufferResource::BufferResource(Image& image) :
 	buffer_ = std::move(result.first);
 
 	// サイズを保存
-	size_ = image.GetInfo().totalSize_;
+	size_ = image.GetInfo().totalSize;
 
 	auto ptr = static_cast<std::uint8_t*>(Map());
 
-	std::memcpy(ptr, image.GetData(), image.GetInfo().totalSize_);
+	std::memcpy(ptr, image.GetData(), image.GetInfo().totalSize);
 	UnMap();
 }
 

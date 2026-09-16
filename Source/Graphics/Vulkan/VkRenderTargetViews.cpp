@@ -14,7 +14,7 @@ void Eugene::RenderTargetViews::Create(ImageResource& resource, std::uint32_t id
 	}
 
 	auto& data{ *static_cast<ImageResource::ImageData*>(resource.GetResource()) };
-	auto format = Graphics::FormatToVkFormat[static_cast<std::size_t>(resource.GetFormat())];
+	auto format = Graphics::FormatToBackEndFormat(resource.GetFormat());
 	vk::ImageViewCreateInfo viewInfo{};
 	viewInfo.setImage(*data.image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);

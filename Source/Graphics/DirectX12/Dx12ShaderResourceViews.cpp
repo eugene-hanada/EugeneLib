@@ -17,7 +17,25 @@ void Eugene::ShaderResourceViews::CreateTexture(ImageResource& resource, std::ui
 
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_SHADER_RESOURCE_VIEW_DESC viewDesc{};
-	viewDesc.Format = resourceDesc.Format;
+
+	switch (resourceDesc.Format)
+	{
+	case DXGI_FORMAT_D32_FLOAT:
+		viewDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		break;
+	case DXGI_FORMAT_D16_UNORM:
+	case DXGI_FORMAT_R16_TYPELESS:
+		viewDesc.Format = DXGI_FORMAT_D16_UNORM;
+		break;
+	case DXGI_FORMAT_D24_UNORM_S8_UINT:
+	case DXGI_FORMAT_R24G8_TYPELESS:
+		viewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+		break;
+	default:
+		viewDesc.Format = resourceDesc.Format;
+		break;
+	}
+
 	viewDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	viewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	viewDesc.Texture2D.MipLevels = resourceDesc.MipLevels;

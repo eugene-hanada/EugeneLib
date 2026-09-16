@@ -411,30 +411,6 @@ void Eugene::CommandList::TransitionDepthBegin(ImageResource& resource)
 
 void Eugene::CommandList::TransitionDepthEnd(ImageResource& resource)
 {
-	//auto data{ static_cast<VkImageResource::Data*>(resource.GetResource()) };
-
-	//// メモリバリアをレンダーターゲットとして使用できるように変更します
-	//vk::ImageMemoryBarrier barrier{};
-
-	//// レイアウトを未定義からデプスに
-	//barrier.setOldLayout(vk::ImageLayout::eDepthAttachmentOptimal);
-	//barrier.setNewLayout(vk::ImageLayout::eDepthAttachmentOptimal);
-	//barrier.setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
-	//barrier.setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED);
-	//barrier.subresourceRange.setAspectMask(vk::ImageAspectFlagBits::eDepth);
-	//barrier.setSrcAccessMask(vk::AccessFlagBits::eNone);
-	//barrier.setDstAccessMask(vk::AccessFlagBits::eNone);
-	//barrier.setImage(*data->image_);
-	//barrier.subresourceRange.setLayerCount(1);
-	//barrier.subresourceRange.setLevelCount(1);
-
-	//commandBuffer_->pipelineBarrier(
-	//	vk::PipelineStageFlagBits::eAllGraphics,
-	//	vk::PipelineStageFlagBits::eAllGraphics,
-	//	static_cast<vk::DependencyFlagBits>(0),
-	//	0, nullptr, 0, nullptr, 1,
-	//	&barrier
-	//);
 }
 
 
@@ -663,13 +639,21 @@ void Eugene::CommandList::TransitionUnorderedAccessEnd(BufferResource& resource)
 }
 
 #ifdef EUGENE_IMGUI
-void Eugene::CommandList::SetImguiCommand(ImDrawData* data) const
+void Eugene::CommandList::SetImguiCommand(ImDrawData* data)
 {
 	const bool main_is_minimized = (data->DisplaySize.x <= 0.0f || data->DisplaySize.y <= 0.0f);
 	if (main_is_minimized)
 	{
 		return;
 	}
+
+	if (isRendering_)
+	{
+		// すでにDynamicRenderingを開始しているので終了しとく
+		commandBuffer_->endRendering();
+		isRendering_ = false;
+	}
+
 	vk::RenderPassBeginInfo info{};
 	info.setRenderPass(Graphics::GetInstance().GetRenderPass());
 	auto size = Graphics::GetInstance().GetBackBufferResource().GetSize();

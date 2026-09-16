@@ -8,8 +8,8 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info) :
 	format_{info.format}
 {
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-		static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(info.format)))
-		, static_cast<std::uint32_t>(info.width),
+		Graphics::FormatToBackEndFormat(info.format),
+		static_cast<std::uint32_t>(info.width),
 		static_cast<std::uint32_t>(info.height),
 		info.arraySize,
 		info.mipLevels
@@ -37,7 +37,7 @@ Eugene::ImageResource::ImageResource(
 	std::optional<std::span<float, 4>> clearColor) :
 	format_{format}
 {
-	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto tmp = Graphics::FormatToBackEndFormat(format);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),
 		arraySize, mipLeveles,sampleCount
@@ -67,15 +67,26 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, floa
 	format_{format}
 {
 	auto heapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(format)));
+	auto tmp = Graphics::FormatToBackEndFormat(format);
 	auto resourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, static_cast<std::uint64_t>(size.x), static_cast<std::uint64_t>(size.y),1,1);
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 	resourceDesc.SampleDesc.Count = sampleCount;
-	CD3DX12_CLEAR_VALUE clear{ DXGI_FORMAT_D32_FLOAT, clearValue, 0 };
+	CD3DX12_CLEAR_VALUE clear;
+	if (tmp == DXGI_FORMAT_D32_FLOAT)
+	{
+		clear = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, clearValue, 0);
+	}
+	else if (tmp == DXGI_FORMAT_D16_UNORM)
+	{
+		clear = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D16_UNORM, clearValue, 0);
+	}
+	else if (tmp == DXGI_FORMAT_D24_UNORM_S8_UINT)
+	{
+		clear = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D24_UNORM_S8_UINT, clearValue, 0);
+	}
 
 	D3D12MA::ALLOCATION_DESC allocationDesc{};
 	allocationDesc.HeapType = D3D12_HEAP_TYPE_DEFAULT;
-
 	EUGENE_RELEASE_ASSERT_MSG(SUCCEEDED(Graphics::GetInstance().allocator_->CreateResource(
 		&allocationDesc,
 		&resourceDesc,

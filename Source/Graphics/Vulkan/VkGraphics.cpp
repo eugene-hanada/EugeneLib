@@ -30,11 +30,7 @@ namespace
 #ifdef EUGENE_IMGUI
 	void CheckVkResult(VkResult err)
 	{
-		if (err != VkResult::VK_SUCCESS)
-		{
-			throw Eugene::EugeneLibException{ "Vulkan Result is not Success" };
-		}
-	
+		EUGENE_RELEASE_ASSERT_MSG(err == VkResult::VK_SUCCESS, "Vulkan Result is not Success");
 	}
 
 	ImGui_ImplVulkanH_Window imguiWindowH{};
@@ -240,7 +236,7 @@ void Eugene::Graphics::CreateBackBuffer(vk::Format useVkformat, const glm::vec2&
 
 	for (std::uint64_t i = 0ull; i < FormatMax; i++)
 	{
-		if (FormatToVkFormat[i] == useVkformat)
+		if (FormatToBackEndFormat(static_cast<Format>(i)) == useVkformat)
 		{
 			backBufferFormat_ = static_cast<Format>(i);
 			break;
@@ -815,7 +811,7 @@ void Eugene::Graphics::SetImguiImage(ImageResource& imageResource, std::uint64_t
 	}
 
 	auto& data{ *static_cast<ImageResource::ImageData*>(imageResource.GetResource())};
-	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(imageResource.GetFormat())];
+	auto format = Graphics::FormatToBackEndFormat(imageResource.GetFormat());
 	vk::ImageViewCreateInfo viewInfo{};
 	viewInfo.setImage(*data.image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);
@@ -919,10 +915,7 @@ void Eugene::Graphics::InitImgui(vk::Format useVkformat, const uint32_t& bufferN
 	ImGuiPlatformIO& platform_io = ImGui::GetPlatformIO();
 
 	platform_io.Platform_CreateVkSurface = ImGui_ImplVulkan_CreateVkSurface;
-	if (!ImGui_ImplVulkan_Init(&info, *imguiRenderPass_))
-	{
-		throw EugeneLibException{ "Imgui初期化エラー" };
-	}
+	EUGENE_RELEASE_ASSERT_MSG(ImGui_ImplVulkan_Init(&info, *imguiRenderPass_), "Imgui初期化エラー")
 
 	vk::CommandPoolCreateInfo poolInfo{};
 	poolInfo.setQueueFamilyIndex(graphicFamilly_);

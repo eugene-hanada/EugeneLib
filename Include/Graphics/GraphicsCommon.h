@@ -40,6 +40,9 @@ namespace Eugene
 		R32_FLOAT,
 		R32_UINT,
 		R32_SINT,
+		D24_UNORM_S8_UINT,
+		R24_UNORM_X8_TYPELESS,
+		X24_TYPELESS_G8_UINT,
 
 		// R16G16B16A16
 		R16G16B16A16_TYPELESS,
@@ -81,6 +84,14 @@ namespace Eugene
 		B8G8R8A8_UINT,
 		B8G8R8A8_SNORM,
 		B8G8R8A8_SINT,
+
+		// R8G8B8
+		R8G8B8_TYPELESS,
+		R8G8B8_UNORM,
+		R8G8B8_UNORM_SRGB,
+		R8G8B8_UINT,
+		R8G8B8_SNORM,
+		R8G8B8_SINT,
 
 		// 圧縮テクスチャ
 		BC1_UNORM,
@@ -124,6 +135,9 @@ namespace Eugene
 		4ull,
 		4ull,
 		4ull,
+		4ull,
+		4ull,
+		4ull,
 
 		// R16G16B16A16
 		8ull,
@@ -162,7 +176,7 @@ namespace Eugene
 	/// <summary>
 	/// フォーマットの最大数
 	/// </summary>
-	constexpr auto FormatMax = 54ull;
+	constexpr auto FormatMax = 62ull;
 
 	enum class IndexType :
 		std::uint8_t

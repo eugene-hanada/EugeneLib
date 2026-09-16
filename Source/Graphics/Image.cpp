@@ -90,15 +90,33 @@ bool Eugene::Image::LoadStbFromFile(const std::filesystem::path& path)
 
 	info_.arraySize = 1;
 	info_.mipLevels = 1;
-	info_.format = Format::R8G8B8A8_UNORM;
 	info_.width = w;
 	info_.height = h;
-	info_.pixelPerBite = c;
-	info_.totalSize = w * h * c;
+	info_.pixelPerBite = 4;
+	info_.totalSize = w * h * 4;
 	data_.resize(1);
 	baseData_.resize(info_.totalSize);
+	info_.format = Format::R8G8B8A8_UNORM;
+	if (c == 4)
+	{
+		std::copy_n(img, baseData_.size(), baseData_.data());
+	}
+	else if (c == 3)
+	{
+		for (int i = 0; i < w * h; i++)
+		{
+			baseData_[i * 4 + 0] = img[i * 3 + 0];
+			baseData_[i * 4 + 1] = img[i * 3 + 1];
+			baseData_[i * 4 + 2] = img[i * 3 + 2];
+			baseData_[i * 4 + 3] = static_cast<std::uint8_t>(255);
+		}
+	}
+	else
+	{
+		EUGENE_ASSERT_MSG(false, "stbで読み込んだ画像のチャンネル数が不正です");
+	}
+
 	data_[0] = { baseData_ };
-	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
 	return true;
 }
@@ -114,15 +132,34 @@ bool Eugene::Image::LoadStbFromMemory(const std::span<std::uint8_t>& data)
 	}
 	info_.arraySize = 1;
 	info_.mipLevels = 1;
-	info_.format = Format::R8G8B8A8_UNORM;
 	info_.width = w;
 	info_.height = h;
 	info_.pixelPerBite = c;
-	info_.totalSize = w * h * c;
+	info_.totalSize = w * h * 4;
 	data_.resize(1);
 	baseData_.resize(info_.totalSize);
+	info_.format = Format::R8G8B8A8_UNORM;
+	if (c == 4)
+	{
+		
+		std::copy_n(img, baseData_.size(), baseData_.data());
+	}
+	else if (c == 3)
+	{
+		for (int i = 0; i < w * h; i++)
+		{
+			baseData_[i * 4 + 0] = img[i * 3 + 0];
+			baseData_[i * 4 + 1] = img[i * 3 + 1];
+			baseData_[i * 4 + 2] = img[i * 3 + 2];
+			baseData_[i * 4 + 3] = static_cast<std::uint8_t>(255);
+		}
+	}
+	else
+	{
+		EUGENE_ASSERT_MSG(false, "stbで読み込んだ画像のチャンネル数が不正です");
+	}
+	
 	data_[0] = { baseData_ };
-	std::copy_n(img, data_[0].size(), data_[0].data());
 	stbi_image_free(img);
 	return true;
 }

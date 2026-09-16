@@ -68,7 +68,7 @@ Eugene::Pipeline::Pipeline(
 		}
 		inputLayout[i].SemanticName = layout.at(i).semanticName;
 		inputLayout[i].SemanticIndex = layout.at(i).semanticIdx;
-		inputLayout[i].Format = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<size_t>(tmpFormat)));
+		inputLayout[i].Format = Graphics::FormatToBackEndFormat(tmpFormat);
 		inputLayout[i].InputSlot = layout.at(i).slot;
 		inputLayout[i].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 		inputLayout[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
@@ -153,7 +153,7 @@ Eugene::Pipeline::Pipeline(
 		{
 			tmpFormat = Graphics::BackBufferFormat();
 		}
-		gpipeline.RTVFormats[i] = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(tmpFormat)));
+		gpipeline.RTVFormats[i] = Graphics::FormatToBackEndFormat(tmpFormat);
 		auto tmpState = rendertarges.at(i).blendState;
  		gpipeline.BlendState.RenderTarget[i].BlendEnable =  rendertarges.at(i).blendState.enable;
 		gpipeline.BlendState.RenderTarget[i].SrcBlend = toDx12BlendFactor[static_cast<std::uint8_t>(rendertarges.at(i).blendState.srcColor)];
@@ -176,7 +176,7 @@ Eugene::Pipeline::Pipeline(
 	gpipeline.DepthStencilState.DepthEnable = depthStencil.depthState.enable;
 	gpipeline.DepthStencilState.DepthWriteMask = depthStencil.depthState.writeEnable ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
 	gpipeline.DepthStencilState.DepthFunc = toDx12CompareFunc[static_cast<std::uint8_t>(depthStencil.depthState.func)];
-	gpipeline.DSVFormat = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(depthStencil.format)));
+	gpipeline.DSVFormat = Graphics::FormatToBackEndFormat(depthStencil.format);
 	gpipeline.DepthStencilState.FrontFace = D3D12_DEPTH_STENCILOP_DESC{
 		
 		toDx12StencilOp[static_cast<std::uint8_t>(depthStencil.stencilState.frontState.failOp)],

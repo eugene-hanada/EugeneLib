@@ -61,7 +61,7 @@ Eugene::BufferResource::BufferResource( Image& image)
 	std::array<std::uint32_t, maxSubResource> numRaw;
 
 
-	auto tmp = static_cast<DXGI_FORMAT>(Graphics::FormatToDxgiFormat_.at(static_cast<int>(image.GetInfo().format)));
+	auto tmp = Graphics::FormatToBackEndFormat(image.GetInfo().format);
 	auto footDesc = CD3DX12_RESOURCE_DESC::Tex2D(tmp, image.GetInfo().width, image.GetInfo().height, image.GetInfo().arraySize, image.GetInfo().mipLevels);
 	Graphics::GetInstance().device_->GetCopyableFootprints(&footDesc, 0, subResource, 0, footprint.data(), numRaw.data(), rowSize.data(), &totalSize);
 

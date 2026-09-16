@@ -180,7 +180,7 @@ namespace Eugene
 		/// </summary>
 		/// <param name="size"></param>
 		/// <param name="clearValue"></param>
-		ImageResource(const glm::ivec2& size, float clearValue, std::uint8_t sampleCount);
+		ImageResource(const glm::ivec2& size, Format format, float clearValue, std::uint8_t sampleCount);
 
 
 

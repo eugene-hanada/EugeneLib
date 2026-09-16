@@ -54,7 +54,7 @@ void Eugene::DepthStencilViews::Create(ImageResource& resource, std::uint32_t id
 	}
 	auto handle = descriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 	D3D12_DEPTH_STENCIL_VIEW_DESC viewDesc{};
-	viewDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	viewDesc.Format = Graphics::GetInstance().FormatToBackEndFormat(resource.GetFormat());
 	viewDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	viewDesc.Flags = D3D12_DSV_FLAG_NONE;
 

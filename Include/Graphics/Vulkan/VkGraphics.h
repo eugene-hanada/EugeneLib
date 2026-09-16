@@ -61,84 +61,92 @@ namespace Eugene
 		}
 
 		/// <summary>
-		/// フォーマットをvk::Formatに変換するための定数配列
+		/// フォーマットをバックエンド用のフォーマット(vk::Format)に変換
 		/// </summary>
-		static constexpr std::array<vk::Format, FormatMax> FormatToVkFormat{
-			vk::Format::eUndefined,
+		static vk::Format FormatToBackEndFormat(Format format)
+		{
+			constexpr vk::Format FormatToVkFormat[] = {
+				vk::Format::eUndefined,
 
-			// R32G32B32A32
-			vk::Format::eUndefined,
-			vk::Format::eR32G32B32A32Sfloat,
-			vk::Format::eR32G32B32A32Uint,
-			vk::Format::eR32G32B32A32Sint,
-		
-			// R32G32B32
-			vk::Format::eUndefined,
-			vk::Format::eR32G32B32Sfloat,
-			vk::Format::eR32G32B32Uint,
-			vk::Format::eR32G32B32Sint,
+				// R32G32B32A32
+				vk::Format::eUndefined,
+				vk::Format::eR32G32B32A32Sfloat,
+				vk::Format::eR32G32B32A32Uint,
+				vk::Format::eR32G32B32A32Sint,
 
-			// R32G32
-			vk::Format::eUndefined,
-			vk::Format::eR32G32Sfloat,
-			vk::Format::eR32G32Uint,
-			vk::Format::eR32G32Sint,
+				// R32G32B32
+				vk::Format::eUndefined,
+				vk::Format::eR32G32B32Sfloat,
+				vk::Format::eR32G32B32Uint,
+				vk::Format::eR32G32B32Sint,
 
-			// R32
-			vk::Format::eUndefined,
-			vk::Format::eD32Sfloat,
-			vk::Format::eR32Sfloat,
-			vk::Format::eR32Uint,
-			vk::Format::eR32Sint,
+				// R32G32
+				vk::Format::eUndefined,
+				vk::Format::eR32G32Sfloat,
+				vk::Format::eR32G32Uint,
+				vk::Format::eR32G32Sint,
 
-			// R16G16B16A16
-			vk::Format::eUndefined,
-			vk::Format::eR16G16B16A16Sfloat,
-			vk::Format::eR16G16B16A16Unorm,
-			vk::Format::eR16G16B16A16Uint,
-			vk::Format::eR16G16B16A16Snorm,
-			vk::Format::eR16G16B16A16Sint,
+				// R32
+				vk::Format::eUndefined,
+				vk::Format::eD32Sfloat,
+				vk::Format::eR32Sfloat,
+				vk::Format::eR32Uint,
+				vk::Format::eR32Sint,
+				vk::Format::eD24UnormS8Uint,
+				vk::Format::eD24UnormS8Uint,		// VulkanはTypelessがないので、D24_UNORM_S8_UINTにしとく...
+				vk::Format::eD24UnormS8Uint,
 
-			// R16B16
-			vk::Format::eUndefined,
-			vk::Format::eR16G16Sfloat,
-			vk::Format::eR16G16Unorm,
-			vk::Format::eR16G16Uint,
-			vk::Format::eR16G16Snorm,
-			vk::Format::eR16G16Sint,
 
-			// R16
-			vk::Format::eUndefined,
-			vk::Format::eR16Sfloat,
-			vk::Format::eR16Unorm,
-			vk::Format::eD16Unorm,
-			vk::Format::eR16Uint,
-			vk::Format::eR16Snorm,
-			vk::Format::eR16Sint,
+				// R16G16B16A16
+				vk::Format::eUndefined,
+				vk::Format::eR16G16B16A16Sfloat,
+				vk::Format::eR16G16B16A16Unorm,
+				vk::Format::eR16G16B16A16Uint,
+				vk::Format::eR16G16B16A16Snorm,
+				vk::Format::eR16G16B16A16Sint,
 
-			// R8G8B8A8
-			vk::Format::eUndefined,
-			vk::Format::eR8G8B8A8Unorm,
-			vk::Format::eR8G8B8A8Srgb,
-			vk::Format::eR8G8B8A8Uint,
-			vk::Format::eR8G8B8A8Snorm,
-			vk::Format::eR8G8B8A8Sint,
+				// R16B16
+				vk::Format::eUndefined,
+				vk::Format::eR16G16Sfloat,
+				vk::Format::eR16G16Unorm,
+				vk::Format::eR16G16Uint,
+				vk::Format::eR16G16Snorm,
+				vk::Format::eR16G16Sint,
 
-			//
-			vk::Format::eUndefined,
-			vk::Format::eB8G8R8A8Unorm,
-			vk::Format::eB8G8R8A8Srgb,
-			vk::Format::eB8G8R8A8Uint,
-			vk::Format::eB8G8R8A8Snorm,
-			vk::Format::eB8G8R8A8Sint,
+				// R16
+				vk::Format::eUndefined,
+				vk::Format::eR16Sfloat,
+				vk::Format::eR16Unorm,
+				vk::Format::eD16Unorm,
+				vk::Format::eR16Uint,
+				vk::Format::eR16Snorm,
+				vk::Format::eR16Sint,
 
-			// DDS
-			vk::Format::eBc1RgbaUnormBlock,
-			vk::Format::eBc2UnormBlock,
-			vk::Format::eBc3UnormBlock,
-			vk::Format::eBc5UnormBlock,
-			vk::Format::eBc7UnormBlock,
-		};
+				// R8G8B8A8
+				vk::Format::eUndefined,
+				vk::Format::eR8G8B8A8Unorm,
+				vk::Format::eR8G8B8A8Srgb,
+				vk::Format::eR8G8B8A8Uint,
+				vk::Format::eR8G8B8A8Snorm,
+				vk::Format::eR8G8B8A8Sint,
+
+				//
+				vk::Format::eUndefined,
+				vk::Format::eB8G8R8A8Unorm,
+				vk::Format::eB8G8R8A8Srgb,
+				vk::Format::eB8G8R8A8Uint,
+				vk::Format::eB8G8R8A8Snorm,
+				vk::Format::eB8G8R8A8Sint,
+
+				// DDS
+				vk::Format::eBc1RgbaUnormBlock,
+				vk::Format::eBc2UnormBlock,
+				vk::Format::eBc3UnormBlock,
+				vk::Format::eBc5UnormBlock,
+				vk::Format::eBc7UnormBlock,
+			};
+			return FormatToVkFormat[static_cast<std::size_t>(format)];
+		}
 
 		/// <summary>
 		/// バックバッファで使用しているフォーマットを取得する
@@ -380,7 +388,7 @@ namespace Eugene
 		/// <returns> ResourceBindLayout </returns>
 		ResourceBindLayout CreateResourceBindLayout(const ArgsSpan<ArgsSpan<Bind>>& viewTypes, ResourceBindFlag flag) const
 		{
-            using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
+			using UnderlyingType = std::underlying_type<ResourceBindFlag>::type;
 			return CreateResourceBindLayout(viewTypes, static_cast<UnderlyingType>(flag));
 		}
 
@@ -402,9 +410,9 @@ namespace Eugene
 		/// <param name="clear"> クリア時の値 </param>
 		/// <param name="sampleCount">　サンプル数　</param>
 		/// <returns> ImageResource </returns>
-		ImageResource CreateDepthResource(const glm::ivec2& size, float clear = 1, std::uint8_t sampleCount = 1) const
+		ImageResource CreateDepthStencilResource(const glm::ivec2& size, Format format, float clear = 1, std::uint8_t sampleCount = 1) const
 		{
-			return { size,clear,sampleCount };
+			return { size, format, clear, sampleCount };
 		}
 
 		/// <summary>

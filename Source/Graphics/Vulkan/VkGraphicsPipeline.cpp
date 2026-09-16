@@ -73,16 +73,16 @@ Eugene::Pipeline::Pipeline(
 	size_t layoutByte{ 0ull };
 	for (std::uint64_t i = 0ull; i < layout.size(); i++)
 	{
-		auto tmpFormat = layout.at(i).format_;
+		auto tmpFormat = layout.at(i).format;
 		if (tmpFormat == Format::AUTO_BACKBUFFER)
 		{
 			tmpFormat = Graphics::BackBufferFormat();
 		}
 		vertexInputAtr[i].setBinding(0);
 		vertexInputAtr[i].setLocation(i);
-		vertexInputAtr[i].setFormat(Graphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)]);
+		vertexInputAtr[i].setFormat(Graphics::FormatToBackEndFormat(tmpFormat));
 		vertexInputAtr[i].setOffset(layoutByte);
-		layoutByte += FormatSize[static_cast<size_t>(layout.at(i).format_)];
+		layoutByte += FormatSize[static_cast<size_t>(layout.at(i).format)];
 
 	}
 	vertexInputLayout.setStride(layoutByte);
@@ -180,7 +180,7 @@ Eugene::Pipeline::Pipeline(
 		{
 			tmpFormat = Graphics::BackBufferFormat();
 		}
-		attachmentsFormat[i] = Graphics::FormatToVkFormat[static_cast<size_t>(tmpFormat)];
+		attachmentsFormat[i] = Graphics::FormatToBackEndFormat(tmpFormat);
 		constexpr vk::ColorComponentFlags toComponentFlag[]{
 			static_cast<const vk::ColorComponentFlags>(0u),
 			// R32G32B32A32
@@ -317,7 +317,7 @@ Eugene::Pipeline::Pipeline(
 	vk::PipelineRenderingCreateInfo renderingInfo{};
 	renderingInfo.setColorAttachmentCount(static_cast<std::uint32_t>(attachmentsFormat.size()));
 	renderingInfo.setColorAttachmentFormats(attachmentsFormat);
-	renderingInfo.setDepthAttachmentFormat(Graphics::FormatToVkFormat[static_cast<size_t>(depthStencil.format)]);
+	renderingInfo.setDepthAttachmentFormat(Graphics::FormatToBackEndFormat(depthStencil.format));
 	vk::Viewport viewport{ 0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 1.0f };
 	vk::Rect2D scissor;
 	scissor.setOffset({ 0,0 });

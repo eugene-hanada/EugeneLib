@@ -2,9 +2,8 @@
 #include "../../../Include/Graphics/Vulkan/VkGraphics.h"
 
 Eugene::ImageResource::ImageResource(const TextureInfo& info):
-	format_{info.format}
+	format_{ info.format }, canMap_{ false }
 {
-	auto format{ Graphics::FormatToVkFormat[static_cast<size_t>(info.format)] };
 	vk::ImageCreateInfo imageInfo{};
 	imageInfo.setArrayLayers(info.arraySize);
 	imageInfo.setMipLevels(info.mipLevels);
@@ -17,7 +16,7 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info):
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled);
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
 	imageInfo.setSamples(vk::SampleCountFlagBits::e1);
-	imageInfo.setFormat(format);
+	imageInfo.setFormat(Graphics::FormatToBackEndFormat(info.format));
 	vma::AllocationCreateInfo allocInfo{};
 	allocInfo.setUsage(vma::MemoryUsage::eAuto);
 
@@ -32,11 +31,11 @@ Eugene::ImageResource::ImageResource(const TextureInfo& info):
 	size_ = { static_cast<int>(info.width),static_cast<int>(info.height) };
 }
 
-Eugene::ImageResource::ImageResource(const glm::ivec2& size, float clearValue, std::uint8_t sampleCount)
+Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, float clearValue, std::uint8_t sampleCount) :
+	format_{ format }, canMap_{ false }
 {
-	constexpr auto format{ vk::Format::eD32Sfloat };
-	format_ = Format::D32_FLOAT;
 	vk::ImageCreateInfo imageInfo{};
+	imageInfo.setFormat(Graphics::FormatToBackEndFormat(format));
 	imageInfo.setArrayLayers(1);
 	imageInfo.setMipLevels(1);
 	imageInfo.extent.setHeight(size.y);
@@ -48,8 +47,6 @@ Eugene::ImageResource::ImageResource(const glm::ivec2& size, float clearValue, s
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eDepthStencilAttachment);
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
 	imageInfo.setSamples(static_cast<vk::SampleCountFlagBits>(sampleCount));
-	imageInfo.setFormat(format);
-
 	vma::AllocationCreateInfo allocInfo{};
 	allocInfo.setUsage(vma::MemoryUsage::eAuto);
 
@@ -70,7 +67,7 @@ Eugene::ImageResource::ImageResource(
 	std::uint8_t mipLeveles,
 	std::uint8_t sampleCount,
 	std::optional<std::span<float, 4>> clearColor) :
-	format_{format}
+	format_{format}, canMap_{ false }
 {
 	vk::ImageCreateInfo imageInfo{};
 	imageInfo.setArrayLayers(arraySize);
@@ -84,7 +81,7 @@ Eugene::ImageResource::ImageResource(
 	imageInfo.setInitialLayout(vk::ImageLayout::eUndefined);
 	imageInfo.setUsage(vk::ImageUsageFlagBits::eColorAttachment | vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eSampled);
 	imageInfo.setSharingMode(vk::SharingMode::eExclusive);
-	imageInfo.setFormat(Graphics::FormatToVkFormat[static_cast<size_t>(format)]);
+	imageInfo.setFormat(Graphics::FormatToBackEndFormat(format));
 
 	vma::AllocationCreateInfo allocInfo{};
 	allocInfo.setUsage(vma::MemoryUsage::eAuto);
@@ -102,7 +99,7 @@ Eugene::ImageResource::ImageResource(
 
 
 Eugene::ImageResource::ImageResource(const glm::ivec2& size, Format format, vk::Image& image) :
-	format_{format}
+	format_{ format }, canMap_{ false }
 {
 	format_ = Graphics::backBufferFormat_;
 	size_ = size;

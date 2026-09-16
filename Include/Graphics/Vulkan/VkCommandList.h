@@ -230,7 +230,7 @@ namespace Eugene
 		/// ImGui用のコマンドをセットする
 		/// </summary>
 		/// <param name="data"></param>
-		void SetImguiCommand(ImDrawData* data) const;
+		void SetImguiCommand(ImDrawData* data);
 #endif
 
 		/// <summary>

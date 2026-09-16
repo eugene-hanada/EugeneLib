@@ -46,6 +46,11 @@ namespace Eugene
 
 		DepthStencilViews(const DepthStencilViews&) = delete;
 		DepthStencilViews& operator=(const DepthStencilViews&) = delete;
+
+		void Final() noexcept
+		{
+			imageViews_.clear();
+		}
 	private:
 
 		DepthStencilViews(std::uint32_t size);

@@ -78,7 +78,7 @@ void Eugene::ShaderResourceViews::CreateTexture(ImageResource& resource, std::ui
 		return;
 	}
 
-	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
+	auto format = Graphics::FormatToBackEndFormat(resource.GetFormat());
 	vk::ImageViewCreateInfo viewInfo{};
 	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::e2D);
@@ -138,7 +138,7 @@ void Eugene::ShaderResourceViews::CreateCubeMap(ImageResource& resource, std::ui
 	}
 
 
-	auto format = Graphics::FormatToVkFormat[static_cast<size_t>(resource.GetFormat())];
+	auto format = Graphics::FormatToBackEndFormat(resource.GetFormat());
 	vk::ImageViewCreateInfo viewInfo{};
 	viewInfo.setImage(*static_cast<ImageResource::ImageData*>(resource.GetResource())->image_);
 	viewInfo.setViewType(vk::ImageViewType::eCube);

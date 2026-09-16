@@ -79,7 +79,7 @@ Eugene::Graphics::Graphics(GpuEngine& gpuEngine, std::uint32_t bufferNum, std::u
 	CreateBackBuffers(bufferNum);
 
 	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS f;
-	f.Format = static_cast<DXGI_FORMAT>(FormatToDxgiFormat_.at(static_cast<std::size_t>(backBufferFormat_)));
+	f.Format = Graphics::FormatToBackEndFormat(backBufferFormat_);
 	f.SampleCount = 1;
 
 	while (SUCCEEDED(device_->CheckFeatureSupport(
@@ -113,7 +113,7 @@ Eugene::Graphics::Graphics()
 	CreateDevice();
 	instance_.reset(this);
 	D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS f;
-	f.Format = static_cast<DXGI_FORMAT>(FormatToDxgiFormat_.at(static_cast<std::size_t>(backBufferFormat_)));
+	f.Format = Graphics::FormatToBackEndFormat(backBufferFormat_);
 	f.SampleCount = 1;
 
 	while (SUCCEEDED(device_->CheckFeatureSupport(
